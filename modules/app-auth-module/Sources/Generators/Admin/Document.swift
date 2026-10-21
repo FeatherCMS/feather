@@ -4,7 +4,7 @@ import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 struct Info: InfoRepresentable {
-    var title: String { "User Admin API" }
+    var title: String { "Auth Admin API" }
     var version: String { "0.1.0" }
 }
 

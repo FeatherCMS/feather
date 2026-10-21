@@ -8,7 +8,8 @@ extension AdminAPIGateway {
         _ input: Operations.AuthRolePermissionSearch.Input
     ) async throws -> Operations.AuthRolePermissionSearch.Output {
         let query:
-            Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema
+            Components.Schemas
+                .AuthRolePermissionListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -29,7 +30,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: query,
+                        query: responseQuery(query),
                         data: .init(
                             items: result.items.map(map),
                             total: total

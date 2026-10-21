@@ -1,7 +1,7 @@
 import SystemModule
 import CSS
-import AuthFrontend
-import AuthContracts
+import AuthWebAdmin
+import AuthModule
 import FeatherWebAdmin
 import FeatherModuleKit
 import HTML
@@ -37,7 +37,7 @@ struct WebAppTestSuite {
             .first { $0.link == "/admin/auth/credentials/" }
 
         #expect(
-            credentials?.permission == AuthPermissions.Credential.list.rawValue
+            credentials?.permission == Credential.Permissions.list.rawValue
         )
     }
 

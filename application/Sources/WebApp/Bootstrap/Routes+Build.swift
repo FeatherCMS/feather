@@ -18,7 +18,8 @@ import SystemWebAdmin
 import FeatherWebAdmin
 import Hummingbird
 import HummingbirdAuth
-import AuthFrontend
+import AuthWebAdmin
+import AuthWebApp
 import AccountFrontend
 import Logging
 
@@ -148,7 +149,7 @@ func buildRouter(
 
     let authRouter = router.add(
         middleware: DefaultAuthMiddleware(
-            apiBaseURL: environment.apiBaseURL,
+            environment: environment,
             secureCookies: environment.publicOrigins.usesSecureCookies
         )
     )
@@ -163,12 +164,11 @@ func buildRouter(
         publicOrigins: environment.publicOrigins
     )
 
-    AuthFrontendRoutes.registerAppRoutes(
-        router: router,
+    AuthWebApp.Router(
         renderingEngine: renderingEngine,
-        authAPIBuilder: apiBuilder.auth,
+        environment: environment,
         usesSecureCookies: environment.publicOrigins.usesSecureCookies
-    )
+    ).route(on: router)
 
     // MARK: - admin
 

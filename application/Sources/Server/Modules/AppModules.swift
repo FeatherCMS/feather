@@ -49,7 +49,7 @@ struct AppModules: Sendable {
         let query = DatabaseQueryExecutor(
             databaseContext: infrastructure.databaseContext,
             scope: { context in
-                return AuthScope(
+                return AuthModule.Auth.Authorization.Scope(
                     authorization: Identity.Authorization.Query.Database(
                         connection: context.connection
                     ),

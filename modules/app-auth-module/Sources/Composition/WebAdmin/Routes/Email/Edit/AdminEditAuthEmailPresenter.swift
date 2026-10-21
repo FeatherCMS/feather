@@ -1,0 +1,51 @@
+import AuthAdminAPI
+import CSS
+import FeatherValidation
+import FeatherValidationFoundation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemWebAdmin
+import UserAdminAPI
+import UserWebAdmin
+import WebBuilders
+import WebComponents
+
+protocol AdminEditAuthEmailPresenter: Sendable {
+
+    func formState(
+        identityId: String,
+        identities: [AuthCredentialIdentityOption],
+        email: String
+    ) -> AuthEmailForm.State
+
+    func renderPage(
+        id: String,
+        isEdited: Bool,
+        form: AuthEmailForm.State,
+        permissions: Set<String>
+    ) async throws -> HTMLResponse
+
+    func renderError(
+        id: String,
+        error: OpenAPIRepositoryError,
+        permissions: Set<String>
+    ) async throws -> HTMLResponse
+
+    func format(
+        error: OpenAPIRepositoryError
+    ) -> String
+}
+
+extension AdminEditAuthEmailPresenter {
+    func formState(
+        identityId: String,
+        email: String = ""
+    ) -> AuthEmailForm.State {
+        formState(identityId: identityId, identities: [], email: email)
+    }
+}

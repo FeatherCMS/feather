@@ -1,5 +1,6 @@
 public import AuthApplication
 import AuthInfrastructure
+public import AuthModule
 import FeatherInfrastructure
 import UserApplication
 import UserInfrastructure
@@ -7,7 +8,7 @@ import UserModule
 
 extension UseCases {
 
-    public func makeGetCurrentUser() -> AuthApplication.GetCurrentUser {
+    public func makeGetCurrentUser() -> AuthModule.Auth.CurrentUser.UseCase {
         let detailQuery = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in

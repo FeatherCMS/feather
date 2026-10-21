@@ -7,7 +7,8 @@ extension AdminAPIGateway {
     public func authCredentialSearch(
         _ input: Operations.AuthCredentialSearch.Input
     ) async throws -> Operations.AuthCredentialSearch.Output {
-        let query: Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema
+        let query:
+            Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -40,7 +41,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: query,
+                        query: responseQuery(query),
                         data: .init(
                             items: list.items.map(map),
                             total: total

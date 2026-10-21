@@ -1,29 +1,32 @@
-import SystemModule
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 import SystemApplication
 import SystemInfrastructure
+import SystemModule
 
 extension UseCases {
 
-    func makeRequestMagicLink() -> RequestMagicLink {
+    func makeRequestMagicLink() -> MagicLink.Request.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteRequestMagicLink(
-                    credential: CredentialDatabaseRepository(context: context),
-                    authEmail: AuthEmailDatabaseRepository(
+                MagicLink.Request.Scope(
+                    credential: Credential.Repository.Database(
                         context: context
                     ),
-                    magicLink: MagicLinkDatabaseRepository(context: context),
+                    authEmail: AuthEmail.Repository.Database(
+                        context: context
+                    ),
+                    magicLink: MagicLink.Repository.Database(context: context),
                     variable: SystemModule.Variable.Lookup.Database(
                         context: context
                     )
                 )
             }
         )
-        return RequestMagicLink(
+        return MagicLink.Request.UseCase(
             transaction: transaction,
             jobs: jobs
         )

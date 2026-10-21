@@ -1,6 +1,5 @@
 import AccountFrontend
 import AnalyticsFrontend
-import AuthFrontend
 import BlogFrontend
 import ContactFrontend
 import FeatherWebAdmin
@@ -12,7 +11,6 @@ import WebFrontend
 struct APIBuilder: Sendable {
     let account: AccountAPIBuilder
     let analytics: AnalyticsAPIBuilder
-    let auth: AuthAPIBuilder
     let blog: BlogAPIBuilder
     let contact: ContactAPIBuilder
     let media: MediaAPIBuilder
@@ -22,7 +20,6 @@ struct APIBuilder: Sendable {
     init(apiBaseURL: URL) {
         self.account = .init(apiBaseURL: apiBaseURL)
         self.analytics = .init(apiBaseURL: apiBaseURL)
-        self.auth = .init(apiBaseURL: apiBaseURL)
         self.blog = .init(apiBaseURL: apiBaseURL)
         self.contact = .init(apiBaseURL: apiBaseURL)
         self.media = .init(apiBaseURL: apiBaseURL)

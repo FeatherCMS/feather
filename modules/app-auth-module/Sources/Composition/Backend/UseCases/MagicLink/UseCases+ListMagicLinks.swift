@@ -1,20 +1,21 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeListMagicLinks() -> ListMagicLinks {
+    func makeListMagicLinks() -> MagicLink.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadMagicLink(
-                    magicLink: MagicLinkDatabaseQueries(
+                MagicLink.List.Scope(
+                    magicLink: MagicLink.List.Query.Database(
                         context: context
                     )
                 )
             }
         )
-        return ListMagicLinks(authorizer: authorizer, query: query)
+        return MagicLink.List.UseCase(authorizer: authorizer, query: query)
     }
 }

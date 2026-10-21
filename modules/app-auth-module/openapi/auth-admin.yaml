@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: User Admin API
+  title: Auth Admin API
   version: 0.1.0
 tags:
 - name: Auth
@@ -1013,8 +1013,8 @@ components:
         filters:
           type: object
           example:
-            userId: user_7nL3xQ2v
             search: foo
+            userId: user_7nL3xQ2v
           properties:
             search:
               $ref: '#/components/schemas/AuthCredentialSearchField'

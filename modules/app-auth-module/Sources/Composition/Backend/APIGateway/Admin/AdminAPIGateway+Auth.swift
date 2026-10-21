@@ -36,13 +36,11 @@ extension AdminAPIGateway {
         )
     }
 
-    /*
-     curl -i -X 'POST' \
-        'http://127.0.0.1:8080/api/v1/admin/auth/login' \
-        -H 'Accept: application/json' \
-        -H 'Content-Type: application/json' \
-        -d '{"email":"EMAIL","password":"PASS","isPersistent":true}'
-    */
+    // curl -i -X 'POST' \
+    //     'http://127.0.0.1:8080/api/v1/admin/auth/login' \
+    //     -H 'Accept: application/json' \
+    //     -H 'Content-Type: application/json' \
+    //     -d '{"email":"EMAIL","password":"PASS","isPersistent":true}'
     public func authLogin(
         _ input: Operations.AuthLogin.Input
     ) async throws -> Operations.AuthLogin.Output {
@@ -57,11 +55,9 @@ extension AdminAPIGateway {
 
         let result = try await useCase.execute(
             .init(
-                object: .init(
-                    email: body.email,
-                    password: body.password,
-                    isPersistent: body.isPersistent
-                )
+                email: body.email,
+                password: body.password,
+                isPersistent: body.isPersistent
             )
         )
 
@@ -87,7 +83,18 @@ extension AdminAPIGateway {
         _ input: Operations.AuthLogout.Input
     ) async throws -> Operations.AuthLogout.Output {
         guard (try? await CurrentSubject.require()) != nil else {
-            return .unauthorized
+            return .unauthorized(
+                .init(
+                    body: .json(
+                        .init(
+                            error: .init(
+                                message: "Unauthorized",
+                                reason: "Authentication is required."
+                            )
+                        )
+                    )
+                )
+            )
         }
         return .noContent
     }

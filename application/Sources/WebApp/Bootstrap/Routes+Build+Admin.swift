@@ -12,7 +12,7 @@ import RedirectWebAdmin
 import UserWebAdmin
 import AccountFrontend
 import SystemWebAdmin
-import AuthFrontend
+import AuthWebAdmin
 import FeatherWebAdmin
 import FeatherApplication
 import Hummingbird
@@ -26,8 +26,8 @@ func buildAdminRoutes(
     systemRoutes: SystemWebAdmin.Router.Routes,
     redirectRoutes: RedirectWebAdmin.Router.Routes
 ) {
-    AuthFrontend.AdminAuth(
-        apiBuilder: apiBuilder.auth,
+    AuthWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)
@@ -40,7 +40,7 @@ func buildAdminRoutes(
         environment: environment,
         renderingEngine: renderingEngine
     )
-        .route(on: router)
+    .route(on: router)
     SystemWebAdmin.WebAdmin
         .Router(
             environment: environment,

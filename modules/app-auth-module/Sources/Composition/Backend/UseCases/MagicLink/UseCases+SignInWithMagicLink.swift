@@ -1,29 +1,31 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 import UserInfrastructure
 import UserModule
 
 extension UseCases {
 
-    func makeSignInWithMagicLink() -> SignInWithMagicLink {
+    func makeSignInWithMagicLink() -> AuthModule.Auth.SignIn.MagicLink.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteAuth(
+                AuthModule.Auth.SignIn.MagicLink.Scope(
                     identity: Identity.Repository.Database(context: context),
                     authorization: Identity.Authorization.Query.Database(
                         connection: context.connection
                     ),
-                    credential: CredentialDatabaseRepository(context: context),
-                    authEmail: AuthEmailDatabaseRepository(
+                    authEmail: AuthEmail.Repository.Database(
                         context: context
                     ),
-                    session: SessionDatabaseRepository(context: context),
-                    magicLink: MagicLinkDatabaseRepository(context: context)
+                    magicLink: MagicLink.Repository.Database(context: context),
+                    session: Session.Repository.Database(context: context)
                 )
             }
         )
-        return SignInWithMagicLink(transaction: transaction)
+        return AuthModule.Auth.SignIn.MagicLink.UseCase(
+            transaction: transaction
+        )
     }
 }

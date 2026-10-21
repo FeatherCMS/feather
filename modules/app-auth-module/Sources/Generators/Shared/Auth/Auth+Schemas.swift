@@ -1,6 +1,5 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-public import OpenAPIKit30
 import UserOpenAPIGeneratorSupport
 
 // MARK: - fields

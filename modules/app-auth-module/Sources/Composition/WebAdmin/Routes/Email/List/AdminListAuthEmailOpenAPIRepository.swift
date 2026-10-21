@@ -1,0 +1,85 @@
+import AuthAdminAPI
+import CSS
+import FeatherValidation
+import FeatherValidationFoundation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemWebAdmin
+import UserAdminAPI
+import UserWebAdmin
+import WebBuilders
+import WebComponents
+
+struct AdminListAuthEmailOpenAPIRepository:
+    AdminListAuthEmailRepository
+{
+    let api: API.Client
+    let userAPI: UserWebAdmin.API.Client
+    private let listUnauthorizedMessage =
+        "Please sign in again to view user emails."
+    private let deleteUnauthorizedMessage =
+        "Please sign in again to delete this user email."
+
+    func list(
+        page: Int,
+        size: Int,
+        search: String?,
+        userID: String?
+    ) async throws -> (
+        items: [AuthAdminAPI.Components.Schemas.AuthEmailDetailSchema],
+        identityNames: [String: String],
+        total: Int,
+        page: Int, size: Int
+    ) {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response =
+                try await client
+                .authEmailList(
+                    headers: .init(accept: [.init(contentType: .json)])
+                )
+            switch response {
+            case .ok(let ok):
+                let body = try ok.body.json
+                var identityNames: [String: String] = [:]
+                for identityID in Set(body.map(\.identityId)) {
+                    let identityResponse =
+                        try await userAPI
+                        .withOpenAPIRepositoryErrorMapping { client in
+                            try await client.userIdentityGet(
+                                path: .init(userIdentityId: identityID),
+                                headers: .init(accept: [
+                                    .init(contentType: .json)
+                                ])
+                            )
+                        }
+                    if case .ok(let identityOK) = identityResponse {
+                        identityNames[identityID] = try identityOK.body.json
+                            .name
+                    }
+                }
+                return (
+                    items: body,
+                    identityNames: identityNames,
+                    total: body.count,
+                    page: page,
+                    size: size
+                )
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
+}

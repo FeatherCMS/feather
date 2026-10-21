@@ -14,7 +14,7 @@ extension UseCases {
                     invitation: InvitationDatabaseRepository(context: context),
                     identity: Identity.Repository.Database(context: context),
                     role: Role.Repository.Database(context: context),
-                    authEmail: AuthEmailDatabaseRepository(context: context)
+                    authEmail: AuthEmail.Repository.Database(context: context)
                 )
             }
         )

@@ -36,8 +36,8 @@ public struct TableSeedMigration: DatabaseMigration {
             .flatMap { $0 }
 
         let identityRepository = Identity.Repository.Database(context: context)
-        let authEmailRepository = AuthEmailDatabaseRepository(context: context)
-        let credentialRepository = CredentialDatabaseRepository(
+        let authEmailRepository = AuthEmail.Repository.Database(context: context)
+        let credentialRepository = Credential.Repository.Database(
             context: context
         )
         let roleRepository = Role.Repository.Database(context: context)

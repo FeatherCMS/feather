@@ -1,5 +1,6 @@
 public import AuthAdminAPI
 import AuthApplication
+import AuthModule
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -17,7 +18,7 @@ extension AdminAPIGateway {
         let useCase = self.useCases.makeEditMagicLink()
         let result = try await useCase.execute(
             subject: subject,
-            input: AuthApplication.EditMagicLink.Input(
+            input: MagicLink.Edit.Input(
                 id: input.path.authMagicLinkId,
                 authEmailId: body.credentialId,
                 isPersistent: body.isPersistent

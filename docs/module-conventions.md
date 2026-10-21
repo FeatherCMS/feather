@@ -10,8 +10,12 @@ checklist, not a visual comparison of a few representative files.
 ## Package and target boundaries
 
 Use separate products/targets for the module namespace, domain, application,
-infrastructure, each generated API, backend composition, and WebAdmin
-composition. Add an OpenAPI generator executable only for each API the module
+infrastructure, each generated API, backend composition, and web composition.
+Split web composition into `<Module>WebShared`, `<Module>WebApp`, and
+`<Module>WebAdmin` products/targets when the module provides those surfaces,
+using `Sources/Composition/WebShared`, `WebApp`, and `WebAdmin` respectively.
+A module that does not provide one of these surfaces should not create an empty
+target for it. Add an OpenAPI generator executable only for each API the module
 owns. Do not create a generator, generated API, API client, or API-client
 dependency for an API the module does not provide. If schemas are deliberately
 shared with another module's generator, keep only the smallest dedicated schema
@@ -28,7 +32,9 @@ The intended dependency direction is:
 Module <- Domain <- Application <- Infrastructure
                            |             |
                            +------ Backend composition
-Module + generated Admin API + FeatherWebAdmin -> WebAdmin composition
+                         WebShared
+                         /       \
+                    WebApp       WebAdmin
 ```
 
 Keep driver-specific dependencies in infrastructure targets that implement a
@@ -87,12 +93,24 @@ Sources/
   APIs/<API>/                      # Generated Swift; do not hand-edit
   Composition/
     Backend/                       # HTTP gateway and use-case factories
+    WebShared/                     # Helpers genuinely shared by both web surfaces
+    WebApp/                        # App API client, middleware, route composition
     WebAdmin/                      # Admin API client, events, route composition
   Generators/<API>/                # Generator for the module-owned API
 Tests/
   Layers/{Domain,Application,Infrastructure}/
-  Composition/{Backend,WebAdmin}/
+  Composition/{Backend,WebApp,WebAdmin}/
 ```
+
+Keep web target dependencies one-way: `WebApp -> WebShared` and
+`WebAdmin -> WebShared`. `WebShared` must not depend on either surface target;
+place only implementation-neutral helpers used by both surfaces there. Keep
+app-only middleware, generated app API clients, and app routes in `WebApp`, and
+admin-only routes, event handlers, and generated admin API clients in
+`WebAdmin`. If both surfaces need API-client infrastructure, factor only that
+shared transport/error-handling behavior into `WebShared`; do not make a single
+builder depend on both app and admin request-context types. Use separate
+surface-specific builders so target boundaries remain explicit.
 
 Keep entity-specific files in that entity's directory. Put cross-entity
 infrastructure such as the aggregate migration at the infrastructure root.
@@ -238,8 +256,11 @@ Within a route feature, keep its files together under
 Backend gateways adapt generated HTTP operations to application use cases;
 use-case factories are grouped under `UseCases/<Entity>/`. Keep API mapping
 helpers close to the operation or in a narrowly scoped entity mapping file.
-The backend composition target owns backend gateway/factory namespaces; the
-WebAdmin target owns WebAdmin client, event, and route composition namespaces.
+The backend composition target owns backend gateway/factory namespaces;
+WebShared, WebApp, and WebAdmin own their corresponding shared, app, and admin
+composition namespaces. Keep app routes and middleware out of WebAdmin and
+admin-only routes/events out of WebApp. WebAdmin owns admin client, event, and
+route composition namespaces.
 Avoid declaring a WebAdmin-only root namespace in a target imported by backend
 or domain code just to make frontend names shorter.
 
@@ -421,6 +442,9 @@ shared conventions.
 - [ ] Namespace ownership matches target boundaries; frontend-only namespaces
   do not leak into backend/domain targets, and no redundant namespace segment
   remains.
+- [ ] Web composition is split into WebShared/WebApp/WebAdmin where those
+  surfaces exist, with shared helpers below both surfaces and no dependency from
+  WebShared back to WebApp or WebAdmin.
 - [ ] Each operation has sibling `Input`, `Output` (when applicable), and
   `UseCase`; query criteria are not embedded in outputs.
 - [ ] Repository/query interfaces, adapters, tables, permissions, events, and

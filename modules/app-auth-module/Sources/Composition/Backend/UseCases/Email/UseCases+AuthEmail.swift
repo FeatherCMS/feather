@@ -1,42 +1,58 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
-import FeatherModuleKit
-import UserInfrastructure
-import UserModule
 
 extension UseCases {
-    private func authEmailTransaction() -> any TransactionExecutor<
-        WriteAuth
-    > {
-        DatabaseTransactionExecutor(
-            databaseContext: databaseContext,
-        ) { context in
-            WriteAuth(
-                identity: Identity.Repository.Database(context: context),
-                authorization: Identity.Authorization.Query.Database(
-                    connection: context.connection
-                ),
-                credential: CredentialDatabaseRepository(context: context),
-                authEmail: AuthEmailDatabaseRepository(
-                    context: context
-                ),
-                session: SessionDatabaseRepository(context: context),
-                magicLink: MagicLinkDatabaseRepository(context: context)
-            )
-        }
+    func makeListAuthEmails() -> AuthEmail.List.UseCase {
+        .init(
+            authorizer: authorizer,
+            transaction: DatabaseTransactionExecutor(
+                databaseContext: databaseContext
+            ) { context in
+                AuthEmail.List.Scope(
+                    authEmail: AuthEmail.Repository.Database(context: context)
+                )
+            }
+        )
     }
 
-    func makeListAuthEmails() -> ListAuthEmails {
-        .init(authorizer: authorizer, transaction: authEmailTransaction())
+    func makeAddAuthEmail() -> AuthEmail.Add.UseCase {
+        .init(
+            authorizer: authorizer,
+            transaction: DatabaseTransactionExecutor(
+                databaseContext: databaseContext
+            ) { context in
+                AuthEmail.Add.Scope(
+                    authEmail: AuthEmail.Repository.Database(context: context)
+                )
+            }
+        )
     }
-    func makeAddAuthEmail() -> AddAuthEmail {
-        .init(authorizer: authorizer, transaction: authEmailTransaction())
+
+    func makeEditAuthEmail() -> AuthEmail.Edit.UseCase {
+        .init(
+            authorizer: authorizer,
+            transaction: DatabaseTransactionExecutor(
+                databaseContext: databaseContext
+            ) { context in
+                AuthEmail.Edit.Scope(
+                    authEmail: AuthEmail.Repository.Database(context: context)
+                )
+            }
+        )
     }
-    func makeEditAuthEmail() -> EditAuthEmail {
-        .init(authorizer: authorizer, transaction: authEmailTransaction())
-    }
-    func makeRemoveAuthEmails() -> RemoveAuthEmails {
-        .init(authorizer: authorizer, transaction: authEmailTransaction())
+
+    func makeRemoveAuthEmails() -> AuthEmail.Remove.UseCase {
+        .init(
+            authorizer: authorizer,
+            transaction: DatabaseTransactionExecutor(
+                databaseContext: databaseContext
+            ) { context in
+                AuthEmail.Remove.Scope(
+                    authEmail: AuthEmail.Repository.Database(context: context)
+                )
+            }
+        )
     }
 }

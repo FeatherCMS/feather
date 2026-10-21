@@ -3,13 +3,13 @@ import AuthApplication
 import FeatherModuleKit
 
 extension AdminAPIGateway {
-    private func authEmailDetail(_ value: AuthEmailDetail)
+    private func authEmailDetail(id: String, identityId: String, email: String)
         -> Components.Schemas.AuthEmailDetailSchema
     {
         .init(
-            id: value.id,
-            identityId: value.identityId,
-            email: value.email
+            id: id,
+            identityId: identityId,
+            email: email
         )
     }
 
@@ -28,7 +28,17 @@ extension AdminAPIGateway {
                     email: body.email
                 )
             )
-        return .created(.init(body: .json(authEmailDetail(result))))
+        return .created(
+            .init(
+                body: .json(
+                    authEmailDetail(
+                        id: result.id,
+                        identityId: result.identityId,
+                        email: result.email
+                    )
+                )
+            )
+        )
     }
 
     public func authEmailList(
@@ -36,7 +46,19 @@ extension AdminAPIGateway {
     ) async throws -> Operations.AuthEmailList.Output {
         let result = try await useCases.makeListAuthEmails()
             .execute(subject: try await CurrentSubject.require())
-        return .ok(.init(body: .json(result.map(authEmailDetail))))
+        return .ok(
+            .init(
+                body: .json(
+                    result.items.map {
+                        authEmailDetail(
+                            id: $0.id,
+                            identityId: $0.identityId,
+                            email: $0.email
+                        )
+                    }
+                )
+            )
+        )
     }
 
     public func authEmailGet(
@@ -45,7 +67,7 @@ extension AdminAPIGateway {
         let result = try await useCases.makeListAuthEmails()
             .execute(subject: try await CurrentSubject.require())
         guard
-            let value = result.first(where: {
+            let value = result.items.first(where: {
                 $0.id == input.path.authEmailId
             })
         else {
@@ -55,7 +77,17 @@ extension AdminAPIGateway {
                 userFriendlyMessage: "Auth email not found"
             )
         }
-        return .ok(.init(body: .json(authEmailDetail(value))))
+        return .ok(
+            .init(
+                body: .json(
+                    authEmailDetail(
+                        id: value.id,
+                        identityId: value.identityId,
+                        email: value.email
+                    )
+                )
+            )
+        )
     }
 
     public func authEmailPatch(
@@ -67,6 +99,7 @@ extension AdminAPIGateway {
         }
         let current = try await useCases.makeListAuthEmails()
             .execute(subject: try await CurrentSubject.require())
+            .items
             .first { $0.id == input.path.authEmailId }
         guard let current else {
             throw UseCaseError(
@@ -84,7 +117,17 @@ extension AdminAPIGateway {
                     email: body.email ?? current.email
                 )
             )
-        return .ok(.init(body: .json(authEmailDetail(result))))
+        return .ok(
+            .init(
+                body: .json(
+                    authEmailDetail(
+                        id: result.id,
+                        identityId: result.identityId,
+                        email: result.email
+                    )
+                )
+            )
+        )
     }
 
     public func authEmailRemove(

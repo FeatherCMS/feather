@@ -1,30 +1,26 @@
 public import AuthApplication
 import AuthInfrastructure
+public import AuthModule
 import FeatherInfrastructure
 import UserInfrastructure
 import UserModule
 
 extension UseCases {
 
-    public func makeTokenAuth() -> TokenAuth {
+    public func makeTokenAuth() -> AuthModule.Auth.TokenAuth.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteAuth(
+                AuthModule.Auth.TokenAuth.Scope(
                     identity: Identity.Repository.Database(context: context),
                     authorization: Identity.Authorization.Query.Database(
                         connection: context.connection
                     ),
-                    credential: CredentialDatabaseRepository(context: context),
-                    authEmail: AuthEmailDatabaseRepository(
-                        context: context
-                    ),
-                    session: SessionDatabaseRepository(context: context),
-                    magicLink: MagicLinkDatabaseRepository(context: context)
+                    session: Session.Repository.Database(context: context)
                 )
             }
         )
-        return TokenAuth(
+        return AuthModule.Auth.TokenAuth.UseCase(
             transaction: transaction
         )
     }

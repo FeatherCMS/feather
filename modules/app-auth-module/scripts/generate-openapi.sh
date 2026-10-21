@@ -43,6 +43,23 @@ generate_types() {
             "${MODULE_DIR}/openapi/${SPECIFICATIONS[${index}]}"
     done
 
+    # These component wrappers only reference generated Auth schema types;
+    # the generator's blanket external imports are unused and fail this
+    # package's warnings-as-errors settings.
+    for output_directory in "${OUTPUT_DIRECTORIES[@]}"; do
+        for component_name in Components Parameters RequestBodies Responses Headers; do
+            local component_file="${MODULE_DIR}/${output_directory}/Types+Components${component_name:+}+${component_name}.swift"
+            if [[ "${component_name}" == "Components" ]]; then
+                component_file="${MODULE_DIR}/${output_directory}/Types+Components.swift"
+            fi
+            if [[ -f "${component_file}" ]]; then
+                local normalized_file="${component_file}.tmp"
+                grep -v 'import ' "${component_file}" > "${normalized_file}"
+                mv "${normalized_file}" "${component_file}"
+            fi
+        done
+    done
+
 }
 
 case "${1:-run}" in

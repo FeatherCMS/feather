@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -21,6 +20,11 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
+
 
 let package = Package(
     name: "app-auth-module",
@@ -33,11 +37,13 @@ let package = Package(
     ],
     products: [
         .library(name: "AuthDomain", targets: ["AuthDomain"]),
-        .library(name: "AuthContracts", targets: ["AuthContracts"]),
+        .library(name: "AuthModule", targets: ["AuthModule"]),
         .library(name: "AuthApplication", targets: ["AuthApplication"]),
         .library(name: "AuthInfrastructure", targets: ["AuthInfrastructure"]),
         .library(name: "AuthBackend", targets: ["AuthBackend"]),
-        .library(name: "AuthFrontend", targets: ["AuthFrontend"]),
+        .library(name: "AuthWebShared", targets: ["AuthWebShared"]),
+        .library(name: "AuthWebApp", targets: ["AuthWebApp"]),
+        .library(name: "AuthWebAdmin", targets: ["AuthWebAdmin"]),
         .library(name: "AuthAdminAPI", targets: ["AuthAdminAPI"]),
         .library(name: "AuthAppAPI", targets: ["AuthAppAPI"]),
         .library(name: "AuthSharedOpenAPIGenerator", targets: ["AuthSharedOpenAPIGenerator"]),
@@ -59,40 +65,28 @@ let package = Package(
             from: "1.13.2"
         ),
         .package(
+            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            from: "1.5.0"
+        ),
+        .package(
             url: "https://github.com/hummingbird-project/hummingbird",
             from: "2.27.0"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-nio",
+            from: "2.101.3"
         ),
         .package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
+        .package(path: "../../feather-core"),
         .package(
-            url: "https://github.com/feather-framework/feather-database-postgres",
+            url: "https://github.com/feather-framework/feather-database",
             exact: "1.0.0-rc.3"
         ),
         .package(
-            url: "https://github.com/vapor/postgres-nio",
-            from: "1.32.2"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio-ssl",
-            from: "2.34.0"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-dbal-postgres",
-            exact: "1.0.0-alpha.1"
-        ),
-        .package(path: "../../feather-core"),
-        .package(
             url: "https://github.com/feather-framework/feather-dbal",
-            exact: "1.0.0-alpha.1"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-sql",
-            exact: "1.0.0-alpha.1"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-sql-postgres",
             exact: "1.0.0-alpha.1"
         ),
         .package(
@@ -106,19 +100,18 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "AuthContracts",
+            name: "AuthModule",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-core")
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-
-                .target(name: "AuthContracts"),
+                .target(name: "AuthModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -146,14 +139,12 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
 
                 .product(name: "UserApplication", package: "app-user-module"),
                 .product(name: "UserModule", package: "app-user-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
-                .product(name: "WebDomain", package: "app-web-module"),
 
                 .target(name: "AuthApplication"),
             ],
@@ -166,7 +157,10 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "AuthAppAPI",
@@ -174,7 +168,10 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "AuthSharedOpenAPIGenerator",
@@ -212,11 +209,10 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
 
-                .product(name: "SystemAdminAPI", package: "app-system-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
-                .product(name: "UserBackend", package: "app-user-module"),
                 .product(name: "UserModule", package: "app-user-module"),
 
+                .target(name: "AuthModule"),
                 .target(name: "AuthInfrastructure"),
                 .target(name: "AuthApplication"),
                 .target(name: "AuthAdminAPI"),
@@ -226,29 +222,60 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "AuthFrontend",
+            name: "AuthWebShared",
+            dependencies: [
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "AuthWebApp",
+            dependencies: [
+                .product(name: "FeatherWebApp", package: "feather-core"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+
+                .target(name: "AuthModule"),
+                .target(name: "AuthAppAPI"),
+                .target(name: "AuthWebShared"),
+            ],
+            path: "Sources/Composition/WebApp",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "AuthWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
 
-                .product(name: "MediaFrontend", package: "app-media-module"),
                 .product(name: "UserWebAdmin", package: "app-user-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "WebContracts", package: "app-web-module"),
-                .product(name: "WebFrontend", package: "app-web-module"),
 
-                .target(name: "AuthContracts"),
+                .target(name: "AuthModule"),
                 .target(name: "AuthAdminAPI"),
-                .target(name: "AuthAppAPI"),
+                .target(name: "AuthWebShared"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AuthDomainTests",
             dependencies: [
+                .target(name: "AuthModule"),
                 .target(name: "AuthDomain"),
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
@@ -256,6 +283,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherMail", package: "feather-mail"),
+                .target(name: "AuthModule"),
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "UserDomain", package: "app-user-module"),
@@ -263,23 +291,23 @@ let package = Package(
 
                 .target(name: "AuthApplication"),
             ],
+            path: "Tests/Layers/Application",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AuthInfrastructureTests",
             dependencies: [
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
-                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
-                .product(name: "FeatherSQL", package: "feather-sql"),
-                .product(name: "FeatherSQLPostgres", package: "feather-sql-postgres"),
-                .product(name: "PostgresNIO", package: "postgres-nio"),
-                .product(name: "NIOSSL", package: "swift-nio-ssl"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
 
-                .product(name: "SystemInfrastructure", package: "app-system-module"),
-                .product(name: "UserInfrastructure", package: "app-user-module"),
-
+                .target(name: "AuthApplication"),
+                .target(name: "AuthModule"),
                 .target(name: "AuthInfrastructure"),
             ],
+            path: "Tests/Layers/Infrastructure",
             swiftSettings: swiftSettings
         ),
     ]

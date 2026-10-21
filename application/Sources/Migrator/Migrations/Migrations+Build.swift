@@ -2,6 +2,7 @@ public import FeatherModuleKit
 import AccountInfrastructure
 import AnalyticsInfrastructure
 import AuthInfrastructure
+import AuthModule
 import BlogInfrastructure
 import ContactInfrastructure
 public import FeatherDatabase
@@ -48,7 +49,10 @@ public func buildMigrations(
             platform: platform
         ),
         AccountInfrastructure.TableMigration(connection: connection),
-        AuthInfrastructure.TableMigration(connection: connection),
+        AuthInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
         ContactInfrastructure.TableMigration(
             connection: connection,
             platform: platform
@@ -110,7 +114,7 @@ public func buildMigrationEventPublisher(
     var events = EventRegistry()
     SystemModule.Event.Handlers.register(in: &events)
     FeatherVariableSeedEventHandlers.register(in: &events)
-    AuthInfrastructure.EventHandlers.register(in: &events)
+    AuthModule.Event.Handlers.register(in: &events)
     UserModule.Event.Handlers.register(in: &events)
     AccountInfrastructure.EventHandlers.register(in: &events)
     AnalyticsInfrastructure.EventHandlers.register(in: &events)

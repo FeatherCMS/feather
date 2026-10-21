@@ -195,6 +195,7 @@ let package = Package(
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "AuthApplication", package: "app-auth-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
                 .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
@@ -232,6 +233,7 @@ let package = Package(
 
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "app-auth-module"),
                 .product(name: "MediaApplication", package: "app-media-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
@@ -281,7 +283,8 @@ let package = Package(
                 .product(name: "MediaFrontend", package: "app-media-module"),
                 .product(name: "BlogFrontend", package: "app-blog-module"),
                 .product(name: "NewsFrontend", package: "app-news-module"),
-                .product(name: "AuthFrontend", package: "app-auth-module"),
+                .product(name: "AuthWebApp", package: "app-auth-module"),
+                .product(name: "AuthWebAdmin", package: "app-auth-module"),
 
                 .product(name: "ContactAppAPI", package: "app-contact-module"),
                 .product(name: "BlogAppAPI", package: "app-blog-module"),
@@ -359,6 +362,7 @@ let package = Package(
                 .product(name: "NewsInfrastructure", package: "app-news-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "app-auth-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
                 .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),

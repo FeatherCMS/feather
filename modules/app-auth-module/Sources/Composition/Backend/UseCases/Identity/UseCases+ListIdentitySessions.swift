@@ -1,20 +1,24 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeListIdentitySessions() -> ListIdentitySessions {
+    func makeListIdentitySessions() -> Session.ListByIdentity.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadSession(
-                    session: SessionDatabaseQueries(
+                Session.ListByIdentity.Scope(
+                    session: Session.List.Query.Database(
                         context: context
                     )
                 )
             }
         )
-        return ListIdentitySessions(authorizer: authorizer, query: query)
+        return Session.ListByIdentity.UseCase(
+            authorizer: authorizer,
+            query: query
+        )
     }
 }

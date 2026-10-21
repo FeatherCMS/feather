@@ -4,41 +4,18 @@ import OpenAPIKit30
 
 struct PathCollection: PathCollectionRepresentable {
     var pathMap: PathMap {
-        [
-            "api/v1/admin/auth/me": AuthMePathItems(),
-            "api/v1/admin/auth/login": AuthLoginPathItems(),
-            "api/v1/admin/auth/logout": AuthLogoutPathItems(),
-            "api/v1/admin/auth/magic-link": AuthMagicLinkPathItems(),
-            "api/v1/admin/auth/magic-link/verify":
-                AuthMagicLinkVerifyPathItems(),
-            "api/v1/admin/user/identities/{userIdentityId}/sessions":
-                UserIdentitySessionPathItems(),
-            "api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}":
-                UserIdentitySessionIdPathItems(),
-            "api/v1/admin/auth/credentials": AuthCredentialPathItems(),
-            "api/v1/admin/auth/credentials/":
-                AuthCredentialListPathItems(),
-            "api/v1/admin/auth/credentials/search":
-                AuthCredentialSearchPathItems(),
-            "api/v1/admin/auth/credentials/{authCredentialId}":
-                AuthCredentialIdPathItems(),
-            "api/v1/admin/auth/emails": AuthEmailPathItems(),
-            "api/v1/admin/auth/emails/":
-                AuthEmailListPathItems(),
-            "api/v1/admin/auth/emails/{authEmailId}":
-                AuthEmailIdPathItems(),
-            "api/v1/admin/auth/role-permissions": AuthRolePermissionPathItems(),
-            "api/v1/admin/auth/role-permissions/search":
-                AuthRolePermissionSearchPathItems(),
-            "api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}":
-                AuthRolePermissionIdPathItems(),
-            "api/v1/admin/auth/magic-links": AuthMagicLinkManagementPathItems(),
-            "api/v1/admin/auth/magic-links/":
-                AuthMagicLinkListPathItems(),
-            "api/v1/admin/auth/magic-links/search":
-                AuthMagicLinkSearchPathItems(),
-            "api/v1/admin/auth/magic-links/{authMagicLinkId}":
-                AuthMagicLinkIdPathItems(),
-        ]
+        var paths: PathMap = [:]
+        paths.merge(Auth.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Identity.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Credential.PathCollection().pathMap) { current, _ in current
+        }
+        paths.merge(AuthEmail.PathCollection().pathMap) { current, _ in current
+        }
+        paths.merge(RolePermission.PathCollection().pathMap) { current, _ in
+            current
+        }
+        paths.merge(MagicLink.PathCollection().pathMap) { current, _ in current
+        }
+        return paths
     }
 }

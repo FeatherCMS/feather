@@ -10,6 +10,7 @@ import SystemModule
 import UserModule
 import UserInfrastructure
 import AuthInfrastructure
+import AuthModule
 import BlogInfrastructure
 import ContactInfrastructure
 import MediaInfrastructure
@@ -24,7 +25,7 @@ public func buildTestMigrations(
 ) -> [Migration] {
     var events = EventRegistry()
     SystemModule.Event.Handlers.register(in: &events)
-    AuthInfrastructure.EventHandlers.register(in: &events)
+    AuthModule.Event.Handlers.register(in: &events)
     UserModule.Event.Handlers.register(in: &events)
     AccountInfrastructure.EventHandlers.register(in: &events)
     AnalyticsInfrastructure.EventHandlers.register(in: &events)
@@ -57,7 +58,10 @@ public func buildTestMigrations(
             platform: PostgresDatabasePlatform()
         ),
         AccountInfrastructure.TableMigration(connection: connection),
-        AuthInfrastructure.TableMigration(connection: connection),
+        AuthInfrastructure.TableMigration(
+            connection: connection,
+            platform: PostgresDatabasePlatform()
+        ),
         ContactInfrastructure.TableMigration(
             connection: connection,
             platform: PostgresDatabasePlatform()

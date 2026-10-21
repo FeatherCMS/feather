@@ -5,15 +5,16 @@
 //  Created by Tibor Bödecs on 2026. 04. 18.
 //
 
+public import AuthModule
 public import FeatherModuleKit
 import UserApplication
 
 public struct DefaultAuthorizer: Authorizer {
 
-    let query: any QueryExecutor<AuthScope>
+    let query: any QueryExecutor<AuthModule.Auth.Authorization.Scope>
 
     public init(
-        query: any QueryExecutor<AuthScope>
+        query: any QueryExecutor<AuthModule.Auth.Authorization.Scope>
     ) {
         self.query = query
     }

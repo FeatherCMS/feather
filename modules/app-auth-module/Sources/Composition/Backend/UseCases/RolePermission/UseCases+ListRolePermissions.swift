@@ -1,25 +1,29 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 import UserInfrastructure
 import UserModule
 
 extension UseCases {
 
-    func makeListRolePermissions() -> ListRolePermissions {
+    func makeListRolePermissions() -> RolePermission.Search.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                AuthScope(
+                RolePermission.Search.Scope(
                     authorization: Identity.Authorization.Query.Database(
                         connection: context.connection
                     ),
-                    rolePermissions: RolePermissionDatabaseQueries(
+                    rolePermissions: RolePermission.Search.Query.Database(
                         context: context
                     )
                 )
             }
         )
-        return ListRolePermissions(authorizer: authorizer, query: query)
+        return RolePermission.Search.UseCase(
+            authorizer: authorizer,
+            query: query
+        )
     }
 }

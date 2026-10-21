@@ -7,7 +7,8 @@ extension AdminAPIGateway {
     public func authMagicLinkSearch(
         _ input: Operations.AuthMagicLinkSearch.Input
     ) async throws -> Operations.AuthMagicLinkSearch.Output {
-        let query: Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema
+        let query:
+            Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -30,7 +31,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: query,
+                        query: responseQuery(query),
                         data: .init(
                             items: list.items.map(map),
                             total: total
