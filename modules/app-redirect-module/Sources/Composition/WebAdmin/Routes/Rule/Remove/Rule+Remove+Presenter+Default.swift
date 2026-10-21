@@ -9,57 +9,6 @@ extension RedirectModule.Rule.Remove.Presenter {
     let renderingEngine: any RenderingEngine
     let routes: RedirectModule.Rule.Router.Routes
 
-    func renderRemovePage(items: [AdminRemoveItemContext], returnTo: String?)
-        async throws -> HTMLResponse
-    {
-        guard items.count != 1 else {
-            let item = items[0]
-            let nonceToken = await AdminNonceStore.shared.issue(
-                sessionToken: context.sessionToken
-            )
-            return try await renderingEngine.renderAdminDialog(
-                request: request,
-                context: context,
-                title: AdminRemoveConfirmation.dialogTitle,
-                content: RedirectRuleConfirmation(
-                    id: item.id,
-                    source: item.label,
-                    nonceToken: nonceToken,
-                    returnTo: returnTo,
-                    routes: routes
-                ),
-                size: .small
-            )
-        }
-        return try await renderBulkRemovePage(items: items, returnTo: returnTo)
-    }
-
-    private func renderBulkRemovePage(
-        items: [AdminRemoveItemContext],
-        returnTo: String?
-    ) async throws -> HTMLResponse {
-        let nonceToken = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        return try await renderingEngine.renderAdminDialog(
-            request: request,
-            context: context,
-            title: AdminRemoveConfirmation.dialogTitle,
-            content: AdminRemoveConfirmation(
-                header: .primary(
-                    title: "Remove selected redirect rules",
-                    description:
-                        "You’re about to permanently remove the selected redirect rules. This action cannot be undone."
-                ),
-                selectedItems: items.map(\.label),
-                action: routes.remove.path,
-                nonceToken: nonceToken,
-                hiddenFields: items.map { .init(name: "ids", value: $0.id) }
-            ),
-            size: .small
-        )
-    }
-
     func renderErrorPage(error: RedirectModule.Rule.Remove.Error, cancel: String)
         async throws -> HTMLResponse
     {

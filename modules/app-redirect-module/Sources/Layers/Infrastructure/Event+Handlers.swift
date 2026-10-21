@@ -8,7 +8,9 @@ extension RedirectModule.Event {
         public static func register(
             in registry: inout EventRegistry
         ) {
-            registry.register(event: Permission.Event.Seed.self) { _ in
+            registry.register(
+                event: SystemModule.Permission.Event.Seed.self
+            ) { _ in
                 RedirectModule.Permissions.allPermissions().map {
                     .init(permission: $0)
                 }

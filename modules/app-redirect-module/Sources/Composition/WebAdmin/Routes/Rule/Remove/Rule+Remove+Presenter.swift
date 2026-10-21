@@ -8,11 +8,6 @@ extension RedirectModule.Rule.Remove {
 
 extension RedirectModule.Rule.Remove.Presenter {
     protocol Interface: Sendable {
-
-    func renderRemovePage(
-        items: [AdminRemoveItemContext],
-        returnTo: String?
-    ) async throws -> HTMLResponse
     func renderErrorPage(error: RedirectModule.Rule.Remove.Error, cancel: String)
         async throws -> HTMLResponse
     func renderSuccess(location: String, count: Int) -> Response

@@ -242,6 +242,7 @@ let package = Package(
         .testTarget(
             name: "RedirectApplicationTests",
             dependencies: [
+                .product(name: "FeatherTesting", package: "feather-core"),
                 .target(name: "RedirectApplication"),
                 .target(name: "RedirectModule"),
             ],

@@ -52,6 +52,38 @@ struct RedirectInfrastructureDatabaseTests {
                 if case .unique = $0 { true } else { false }
             }
         )
+        #expect(schema.columns[0].type == .string)
+        #expect(schema.columns[1].type == .string)
+        #expect(schema.columns[2].type == .string)
+        #expect(schema.columns[3].type == .integer)
+        #expect(schema.columns[4].type == .string)
+        #expect(schema.columns[5].type == .timestamp)
+        #expect(schema.columns[6].type == .timestamp)
+        #expect(
+            schema.columns[1].constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            }
+        )
+        #expect(
+            schema.columns[2].constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            }
+        )
+        #expect(
+            schema.columns[3].constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            }
+        )
+        #expect(
+            schema.columns[5].constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            }
+        )
+        #expect(
+            schema.columns[6].constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            }
+        )
         #expect(
             schema.columns[5].constraints.contains {
                 if case .default = $0 { true } else { false }
