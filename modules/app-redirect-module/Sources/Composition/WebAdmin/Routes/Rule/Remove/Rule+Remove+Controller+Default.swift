@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import Hummingbird
+import RedirectApplication
 import RedirectModule
 
 extension RedirectModule.Rule.Remove.Controller {
@@ -120,6 +121,5 @@ extension RedirectModule.Rule.Remove.Controller {
                 .response(from: request, context: context)
         }
     }
-}
 }
 }

@@ -1,6 +1,7 @@
 import FeatherDatabaseTesting
 import FeatherHTTP
 import Foundation
+import HTTPTypes
 import Testing
 
 @Suite

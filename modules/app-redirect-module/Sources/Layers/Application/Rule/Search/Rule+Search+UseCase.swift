@@ -1,6 +1,6 @@
-import FeatherApplication
-import FeatherModuleKit
-import RedirectModule
+public import FeatherApplication
+public import FeatherModuleKit
+public import RedirectModule
 
 extension RedirectModule.Rule.Search {
     public struct UseCase: FeatherApplication.UseCase {

@@ -1,5 +1,5 @@
-import FeatherModuleKit
-import RedirectModule
+public import FeatherModuleKit
+public import RedirectModule
 
 extension RedirectModule.Rule.Search {
     public struct Scope: FeatherModuleKit.Scope {

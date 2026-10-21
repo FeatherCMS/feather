@@ -23,7 +23,6 @@ struct RedirectRuleTableContent: Component {
             queryItems: state.statusCode.map { [("statusCode", $0)] } ?? []
         )
     }
-
     func html(context: inout BuilderContext) -> Div {
         let canDelete = state.permissions.allows(
             RedirectModule.Rule.Permissions.delete
@@ -222,3 +221,4 @@ struct RedirectRuleTableContent: Component {
             )
         )
     }
+}

@@ -1,5 +1,5 @@
-import FeatherDomain
-import RedirectModule
+public import FeatherDomain
+public import RedirectModule
 
 extension RedirectModule.Rule {
     public enum Repository {

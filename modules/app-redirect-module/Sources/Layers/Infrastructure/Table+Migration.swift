@@ -1,6 +1,6 @@
-import FeatherDBAL
-import FeatherDatabase
-import FeatherInfrastructure
+public import FeatherDBAL
+public import FeatherDatabase
+public import FeatherInfrastructure
 import RedirectModule
 
 public struct TableMigration: DatabaseMigration {

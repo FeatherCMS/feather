@@ -12,7 +12,7 @@ extension AdminAPIGateway {
         let useCase = self.useCases.makeListRules()
         let result = try await useCase.execute(
             subject: subject,
-            input: .init(query: .init())
+            input: .init()
         )
         return .ok(
             .init(

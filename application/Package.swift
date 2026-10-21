@@ -159,6 +159,7 @@ let package = Package(
             name: "Environment",
             dependencies: [
                 .product(name: "AnalyticsContracts", package: "app-analytics-module"),
+                .product(name: "RedirectWebApp", package: "app-redirect-module"),
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "Jobs", package: "swift-jobs"),
@@ -270,7 +271,7 @@ let package = Package(
                 .product(name: "UserWebAdmin", package: "app-user-module"),
                 .product(name: "AccountFrontend", package: "app-account-module"),
                 .product(name: "RedirectWebAdmin", package: "app-redirect-module"),
-                .product(name: "RedirectBackend", package: "app-redirect-module"),
+                .product(name: "RedirectWebApp", package: "app-redirect-module"),
                 .product(name: "AnalyticsFrontend", package: "app-analytics-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),
                 .product(name: "WebApplication", package: "app-web-module"),

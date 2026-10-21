@@ -10,7 +10,7 @@ struct RedirectRuleTable: Component {
     struct State {
         let permissions: AdminListActions
         let rules:
-            [RedirectAdminAPI.Components.Schemas.RedirectRuleListItemSchema]
+            [RedirectAdminAPI.Components.Schemas.RedirectRuleQueryItemSchema]
         let pageState: AdminListPageState
         let search: String?
         let statusCode: String?
@@ -37,3 +37,4 @@ struct RedirectRuleTable: Component {
         }
         .class("cms-section")
     }
+}

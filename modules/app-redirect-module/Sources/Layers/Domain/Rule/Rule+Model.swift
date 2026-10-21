@@ -1,6 +1,6 @@
-import FeatherDomain
-import Foundation
-import RedirectModule
+public import FeatherDomain
+public import Foundation
+public import RedirectModule
 
 extension RedirectModule.Rule {
     public struct Model: FeatherDomain.Model {
@@ -67,10 +67,14 @@ extension RedirectModule.Rule {
             notes: String?
         ) throws(Error) -> New {
             try validate(source: source)
+            let normalizedSource = source.hasPrefix("/")
+                ? source
+                : "/\(source)"
+            try validate(source: normalizedSource)
             try validate(destination: destination)
             try validate(notes: notes)
             return .init(
-                source: source,
+                source: normalizedSource,
                 destination: destination,
                 statusCode: statusCode,
                 notes: notes
@@ -83,7 +87,11 @@ extension RedirectModule.Rule {
             statusCode: FieldChange<StatusCode> = .unchanged,
             notes: OptionalFieldChange<String> = .unchanged
         ) throws(Error) {
-            let newSource = source.apply(to: self.source)
+            let sourceValue = source.apply(to: self.source)
+            try Self.validate(source: sourceValue)
+            let newSource = sourceValue.hasPrefix("/")
+                ? sourceValue
+                : "/\(sourceValue)"
             let newDestination = destination.apply(to: self.destination)
             let newStatusCode = statusCode.apply(to: self.statusCode)
             let newNotes = notes.apply(to: self.notes)

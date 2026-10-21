@@ -1,10 +1,9 @@
 # User Module Guide
 
-Follow the shared [Feather module conventions](../../docs/module-conventions.md)
-for target boundaries, namespaces, application operations, database adapters,
-OpenAPI generation, WebAdmin composition, and tests. This guide records only
-User-specific details and must remain consistent with the shared conventions
-and the System module's current structure.
+Use this guide as the User module's source of truth for target boundaries,
+namespaces, application operations, database adapters, OpenAPI generation,
+WebAdmin composition, and tests. Keep its structure consistent with the System
+module's current implementation.
 
 ## Module structure and ownership
 
@@ -83,8 +82,6 @@ and the System module's current structure.
   concrete driver. Composition tests exercise the generated API router and
   gateway with the mock database and authorizer; assert the HTTP contract and
   consume mock responses.
-- Keep this guide synchronized with
-  [the shared module conventions](../../docs/module-conventions.md). Before
-  handoff, run formatting, `swift test --parallel`, package build, and generator
-  validation when the corresponding sources changed. Build/test downstream
-  consumers after public namespace or API changes.
+- Before handoff, run formatting, `swift test --parallel`, package build, and
+  generator validation when the corresponding sources changed. Build/test
+  downstream consumers after public namespace or API changes.

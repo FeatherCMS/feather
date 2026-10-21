@@ -1,6 +1,7 @@
 import FeatherWebAdmin
 import FeatherValidation
 import Hummingbird
+import RedirectApplication
 import RedirectModule
 
 extension RedirectModule.Rule.Edit.Controller {
@@ -89,6 +90,5 @@ extension RedirectModule.Rule.Edit.Controller {
                 .response(from: request, context: context)
         }
     }
-}
 }
 }

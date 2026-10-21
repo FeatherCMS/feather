@@ -43,3 +43,4 @@ struct RedirectRuleEditPage: Component {
         }
         .class("cms-section")
     }
+}

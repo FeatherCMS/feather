@@ -1,6 +1,7 @@
 import FeatherWebAdmin
 import Hummingbird
 import RedirectModule
+import RedirectApplication
 
 extension RedirectModule.Rule.List {
     enum Controller {}

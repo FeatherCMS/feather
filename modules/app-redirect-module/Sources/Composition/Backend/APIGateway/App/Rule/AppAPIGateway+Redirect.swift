@@ -11,7 +11,18 @@ extension AppAPIGateway {
             rule = try await useCases.makeResolveRule()
                 .execute(input: .init(source: input.query.source))
         } catch RedirectModule.Rule.Resolve.UseCase.Error.notFound {
-            return .notFound(.init())
+            return .notFound(
+                .init(
+                    body: .json(
+                        .init(
+                            error: .init(
+                                message: "Redirect rule not found",
+                                reason: "No redirect rule matches this source."
+                            )
+                        )
+                    )
+                )
+            )
         }
 
         return .ok(

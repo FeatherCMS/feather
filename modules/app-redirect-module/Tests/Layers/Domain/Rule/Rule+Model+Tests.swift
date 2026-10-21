@@ -7,6 +7,7 @@
 import RedirectModule
 import Testing
 
+import FeatherDomain
 import struct Foundation.Date
 
 @testable import RedirectDomain
@@ -27,6 +28,25 @@ struct RuleModelTestSuite {
         #expect(create.destination == "/to")
         #expect(create.statusCode == .movedPermanently)
         #expect(create.notes == "notes")
+    }
+
+    @Test
+    func ruleSourceUsesLeadingSlashAndKeepsTrailingSlashAndRoot() throws {
+        let nested = try RedirectModule.Rule.Model.create(
+            source: "from/",
+            destination: "/to",
+            statusCode: .movedPermanently,
+            notes: nil
+        )
+        let root = try RedirectModule.Rule.Model.create(
+            source: "/",
+            destination: "/home",
+            statusCode: .movedPermanently,
+            notes: nil
+        )
+
+        #expect(nested.source == "/from/")
+        #expect(root.source == "/")
     }
 
     @Test
@@ -102,16 +122,33 @@ struct RuleModelTestSuite {
         )
 
         try model.update(
-            source: "/from-b",
-            destination: "/to-b",
-            statusCode: .permanentRedirect,
-            notes: "notes-b"
+            source: .set("/from-b"),
+            destination: .set("/to-b"),
+            statusCode: .set(.permanentRedirect),
+            notes: .set("notes-b")
         )
 
         #expect(model.source == "/from-b")
         #expect(model.destination == "/to-b")
         #expect(model.statusCode == .permanentRedirect)
         #expect(model.notes == "notes-b")
+    }
+
+    @Test
+    func ruleUpdateNormalizesSourceWithoutRemovingTrailingSlash() throws {
+        var model = RedirectModule.Rule.Model(
+            id: "rule-1",
+            source: "/from",
+            destination: "/to",
+            statusCode: .movedPermanently,
+            notes: nil,
+            createdAt: .distantPast,
+            updatedAt: .distantFuture
+        )
+
+        try model.update(source: .set("to/"))
+
+        #expect(model.source == "/to/")
     }
 
     @Test
@@ -147,7 +184,7 @@ struct RuleModelTestSuite {
         )
 
         #expect(throws: RedirectModule.Rule.Model.Error.sourceTooShort) {
-            try model.update(source: "")
+            try model.update(source: .set(""))
         }
     }
 
@@ -164,7 +201,9 @@ struct RuleModelTestSuite {
         )
 
         #expect(throws: RedirectModule.Rule.Model.Error.destinationTooLong) {
-            try model.update(destination: String(repeating: "a", count: 255))
+            try model.update(
+                destination: .set(String(repeating: "a", count: 255))
+            )
         }
     }
 
@@ -181,7 +220,9 @@ struct RuleModelTestSuite {
         )
 
         #expect(throws: RedirectModule.Rule.Model.Error.notesTooLong) {
-            try model.update(notes: String(repeating: "a", count: 255))
+            try model.update(
+                notes: .set(String(repeating: "a", count: 255))
+            )
         }
     }
 }

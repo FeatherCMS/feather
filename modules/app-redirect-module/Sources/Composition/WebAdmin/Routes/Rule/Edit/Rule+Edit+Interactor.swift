@@ -1,3 +1,4 @@
+import RedirectApplication
 import RedirectModule
 extension RedirectModule.Rule.Edit {
     enum Interactor {}

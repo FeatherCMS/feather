@@ -97,3 +97,4 @@ extension RedirectRuleEditFormInput {
     func validationFailures() async -> [Failure] {
         await validator.failures()
     }
+}

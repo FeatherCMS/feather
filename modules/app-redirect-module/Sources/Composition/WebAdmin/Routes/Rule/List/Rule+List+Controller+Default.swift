@@ -2,6 +2,7 @@ import FeatherWebAdmin
 import FeatherModuleKit
 import Hummingbird
 import RedirectModule
+import RedirectApplication
 
 extension RedirectModule.Rule.List.Controller {
     struct Default: Interface {
@@ -45,6 +46,5 @@ extension RedirectModule.Rule.List.Controller {
             return try await presenter.renderErrorPage(error: error)
         }
     }
-}
 }
 }

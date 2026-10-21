@@ -1,4 +1,5 @@
 import FeatherDBAL
+import Foundation
 import RedirectModule
 
 extension RedirectModule.Rule.Table: DatabaseTableWithInsert {

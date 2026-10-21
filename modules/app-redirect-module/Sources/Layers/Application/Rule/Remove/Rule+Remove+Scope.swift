@@ -1,5 +1,6 @@
-import FeatherModuleKit
-import RedirectModule
+public import FeatherModuleKit
+public import RedirectDomain
+public import RedirectModule
 
 extension RedirectModule.Rule.Remove {
     public struct Scope: FeatherModuleKit.Scope {

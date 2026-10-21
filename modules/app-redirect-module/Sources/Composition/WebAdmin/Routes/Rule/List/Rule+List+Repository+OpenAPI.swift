@@ -1,6 +1,7 @@
 import FeatherWebAdmin
 import OpenAPIRuntime
 import RedirectAdminAPI
+import RedirectApplication
 import RedirectModule
 
 extension RedirectModule.Rule.List.Repository {

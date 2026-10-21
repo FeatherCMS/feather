@@ -11,7 +11,7 @@ import WebFrontend
 import WebContracts
 import AnalyticsFrontend
 import RedirectWebAdmin
-import RedirectBackend
+import RedirectWebApp
 import UserWebAdmin
 import SystemWebAdmin
 import FeatherWebAdmin
@@ -42,8 +42,10 @@ func buildRouter(
         )
         HTTPErrorMiddleware<DefaultRequestContext>()
         RedirectRuleMiddleware(
-            apiBaseURL: environment.apiBaseURL,
-            siteBaseURL: environment.publicOrigins.siteBaseURL
+            siteBaseURL: environment.publicOrigins.siteBaseURL,
+            resolver: DefaultRedirectRuleResolver(
+                apiBaseURL: environment.apiBaseURL
+            )
         )
     }
 

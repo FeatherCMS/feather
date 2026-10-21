@@ -1,11 +1,12 @@
-import FeatherWebAdmin
+public import FeatherWebAdmin
 public import FeatherModuleKit
 import OpenAPIRuntime
 import RedirectAdminAPI
+public import RedirectModule
 import SystemModule
 import SystemWebAdmin
 
-extension Event {
+extension RedirectModule.Event {
     public enum Handlers {
         public static func register(
             in events: inout EventRegistry,

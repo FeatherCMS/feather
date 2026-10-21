@@ -1,8 +1,10 @@
 public import FeatherWebAdmin
 public import Hummingbird
+public import RedirectModule
+import RedirectApplication
 
 public struct Router {
-    public struct Routes {
+    public struct Routes: Sendable {
         public let admin: WebRoute
         public let root: WebRoute
         public let rule: RedirectModule.Rule.Router.Routes

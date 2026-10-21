@@ -1,8 +1,7 @@
 import FeatherDBAL
-import FeatherDatabase
-import FeatherInfrastructure
-import RedirectApplication
-import RedirectModule
+public import FeatherInfrastructure
+public import RedirectApplication
+public import RedirectModule
 
 extension RedirectModule.Rule.Resolve.Query {
     public struct Database: Interface {
@@ -12,7 +11,7 @@ extension RedirectModule.Rule.Resolve.Query {
             self.accessLayer = .init(context: context)
         }
 
-        public func resolve(source: String) async throws -> Output? {
+        public func resolve(source: String) async throws -> RedirectModule.Rule.Resolve.Output? {
             guard let row = try await accessLayer.selectFirst(
                 by: \.source,
                 equals: source

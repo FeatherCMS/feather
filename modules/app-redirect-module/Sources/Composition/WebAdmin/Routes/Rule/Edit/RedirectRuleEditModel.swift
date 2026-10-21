@@ -6,3 +6,4 @@ struct RedirectRuleEditModel: Sendable {
     let destination: String
     let statusCode: RedirectModule.Rule.StatusCode
     let notes: String?
+}

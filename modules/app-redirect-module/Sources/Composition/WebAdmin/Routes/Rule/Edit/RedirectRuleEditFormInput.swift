@@ -30,3 +30,4 @@ public struct RedirectRuleEditFormInput: Decodable, Sendable, Equatable,
         guard let value = Int(normalizedStatusCode) else { return nil }
         return RedirectModule.Rule.StatusCode(rawValue: value)
     }
+}

@@ -1,6 +1,7 @@
 import FeatherModuleKit
 import FeatherBackend
 import FeatherDomain
+import Hummingbird
 public import RedirectAdminAPI
 import RedirectApplication
 import RedirectModule

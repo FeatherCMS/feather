@@ -10,6 +10,7 @@ import Hummingbird
 import HummingbirdTesting
 import OpenAPIHummingbird
 import RedirectAdminAPI
+import RedirectAppAPI
 import RedirectBackend
 import RedirectModule
 import Testing
@@ -24,6 +25,28 @@ enum RedirectAPIHTTPTestSupport {
             platform: MockDatabasePlatform()
         )
         let gateway = AdminAPIGateway(
+            useCases: UseCases(
+                databaseContext: databaseContext,
+                authorizer: FeatherTesting.Authorizer.Mock(result: true)
+            )
+        )
+        let router = Router()
+        try gateway.registerHandlers(on: router)
+        return HummingbirdTestingHTTPExecutor(
+            app: Application(router: router),
+            testingSetup: .router
+        )
+    }
+
+    static func makeAppExecutor<Key: DatabaseQueryKey>(
+        connection: MockDatabaseConnection<Key>
+    ) throws -> HummingbirdTestingHTTPExecutor {
+        let databaseContext = DatabaseClientContext(
+            database: FeatherTesting.DatabaseClient.Mock(connection: connection),
+            idGenerator: FeatherTesting.IDGenerator.Mock(id: "redirect-1"),
+            platform: MockDatabasePlatform()
+        )
+        let gateway = AppAPIGateway(
             useCases: UseCases(
                 databaseContext: databaseContext,
                 authorizer: FeatherTesting.Authorizer.Mock(result: true)

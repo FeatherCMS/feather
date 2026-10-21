@@ -123,3 +123,4 @@ struct RedirectRuleEditForm: Component {
         }
         return context.build(form)
     }
+}

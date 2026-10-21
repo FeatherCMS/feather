@@ -2,6 +2,7 @@ import RedirectModule
 import FeatherWebAdmin
 import FeatherValidation
 import Hummingbird
+import RedirectApplication
 
 extension RedirectModule.Rule.Add {
     enum Presenter {}

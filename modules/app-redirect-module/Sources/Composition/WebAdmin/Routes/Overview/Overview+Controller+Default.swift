@@ -5,8 +5,8 @@ extension Overview.Controller {
     struct Default: Interface {
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
-                any Interactor.Interface,
-                any Presenter.Interface
+                any Overview.Interactor.Interface,
+                any Overview.Presenter.Interface
             >
 
         func getOverview(

@@ -1,8 +1,8 @@
 import FeatherDBAL
 import FeatherDomain
-import FeatherInfrastructure
-import RedirectDomain
-import RedirectModule
+public import FeatherInfrastructure
+public import RedirectDomain
+public import RedirectModule
 
 extension RedirectModule.Rule.Repository {
     public struct Database: Interface {

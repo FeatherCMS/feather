@@ -1,6 +1,7 @@
 import FeatherWebAdmin
 import FeatherValidation
 import Hummingbird
+import RedirectApplication
 import RedirectModule
 import WebComponents
 

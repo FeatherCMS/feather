@@ -158,7 +158,7 @@ struct RedirectApplicationUseCasesTests {
         #expect(await searchExecutor.runCallCount == 0)
         #expect(await editTransaction.runCallCount == 0)
         #expect(await removeTransaction.runCallCount == 0)
-        #expect(await repository.createCallCount == 0)
+        #expect(await repository.insertCallCount == 0)
         #expect(await repository.findCallCount == 0)
         #expect(await repository.updateCallCount == 0)
         #expect(await repository.deleteCallCount == 0)
@@ -188,7 +188,7 @@ struct RedirectApplicationUseCasesTests {
         )
         #expect(output.id == "r-1")
         #expect(output.source == "/source-r-1")
-        #expect(await repository.createCallCount == 1)
+        #expect(await repository.insertCallCount == 1)
     }
 
     @Test

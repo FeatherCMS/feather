@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import Hummingbird
+import RedirectApplication
 import RedirectModule
 
 extension RedirectModule.Rule.Remove {
@@ -49,3 +50,4 @@ extension RedirectModule.Rule.Remove {
             )
         }
     }
+}

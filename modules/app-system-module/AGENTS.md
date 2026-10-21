@@ -1,9 +1,8 @@
 # System Module Guide
 
-Follow the shared [Feather module conventions](../../docs/module-conventions.md)
-for target boundaries, namespaces, application operations, database adapters,
-OpenAPI generation, WebAdmin composition, and tests. This guide adds System-
-specific context; it must stay consistent with the shared conventions.
+Use this guide as the System module's source of truth for target boundaries,
+namespaces, application operations, database adapters, OpenAPI generation,
+WebAdmin composition, and tests.
 
 ## Module structure
 
@@ -92,9 +91,9 @@ specific context; it must stay consistent with the shared conventions.
   direct product dependency only when required to build. Remove unused direct
   dependencies after code moves, and use `public import` only for deliberate
   re-exports.
-- Keep this guide synchronized with the shared conventions and current source
-  layout. Do not restore instructions for the old `Features/Admin`,
-  `Abstraction/Implementation`, or frontend `buildRuntime` structure.
+- Keep this guide aligned with the current source layout. Do not restore
+  instructions for the old `Features/Admin`, `Abstraction/Implementation`, or
+  frontend `buildRuntime` structure.
 - Before handing off changes, run formatting, the System package tests/build,
   and generator validation when API sources changed. Check downstream callers
   when public namespaces or generated contracts changed.

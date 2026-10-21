@@ -1,4 +1,5 @@
 import RedirectModule
+import RedirectApplication
 extension RedirectModule.Rule.Edit {
     enum Repository {}
 }

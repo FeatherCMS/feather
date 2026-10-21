@@ -1,6 +1,6 @@
-import FeatherApplication
-import FeatherDomain
-import RedirectModule
+public import FeatherApplication
+public import FeatherDomain
+public import RedirectModule
 
 extension RedirectModule.Rule.Edit {
     public struct Input: DTO {

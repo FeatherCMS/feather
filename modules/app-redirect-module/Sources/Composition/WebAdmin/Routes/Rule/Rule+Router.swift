@@ -1,9 +1,9 @@
-import FeatherWebAdmin
-import RedirectModule
+public import FeatherWebAdmin
+public import RedirectModule
 
 extension RedirectModule.Rule {
     public enum Router {
-        public struct Routes {
+        public struct Routes: Sendable {
             public let list: WebRoute
             public let add: WebRoute
             public let remove: WebRoute

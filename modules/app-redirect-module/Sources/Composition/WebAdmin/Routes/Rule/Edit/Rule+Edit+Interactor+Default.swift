@@ -1,5 +1,6 @@
 import RedirectModule
 import FeatherWebAdmin
+import RedirectApplication
 
 extension RedirectModule.Rule.Edit.Interactor {
     struct Default: Interface {

@@ -35,16 +35,29 @@ let package = Package(
         .library(name: "RedirectModule", targets: ["RedirectModule"]),
         .library(name: "RedirectDomain", targets: ["RedirectDomain"]),
         .library(name: "RedirectApplication", targets: ["RedirectApplication"]),
-        .library(name: "RedirectInfrastructure", targets: ["RedirectInfrastructure"]),
+        .library(
+            name: "RedirectInfrastructure",
+            targets: ["RedirectInfrastructure"]
+        ),
         .library(name: "RedirectBackend", targets: ["RedirectBackend"]),
         .library(name: "RedirectAdminAPI", targets: ["RedirectAdminAPI"]),
         .library(name: "RedirectAppAPI", targets: ["RedirectAppAPI"]),
-        .library(name: "RedirectSharedOpenAPIGenerator", targets: ["RedirectSharedOpenAPIGenerator"]),
-        .executable(name: "RedirectAdminOpenAPIGenerator", targets: ["RedirectAdminOpenAPIGenerator"]),
-        .executable(name: "RedirectAppOpenAPIGenerator", targets: ["RedirectAppOpenAPIGenerator"]),
+        .executable(
+            name: "RedirectAdminOpenAPIGenerator",
+            targets: ["RedirectAdminOpenAPIGenerator"]
+        ),
+        .executable(
+            name: "RedirectAppOpenAPIGenerator",
+            targets: ["RedirectAppOpenAPIGenerator"]
+        ),
         .library(name: "RedirectWebAdmin", targets: ["RedirectWebAdmin"]),
+        .library(name: "RedirectWebApp", targets: ["RedirectWebApp"]),
     ],
     dependencies: [
+        .package(
+            url: "https://github.com/apple/swift-log",
+            from: "1.0.0"
+        ),
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "7.0.0"
@@ -62,7 +75,8 @@ let package = Package(
             from: "2.27.0"
         ),
         .package(
-            url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
         ),
         .package(
@@ -70,7 +84,8 @@ let package = Package(
             exact: "1.0.0-beta.1"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            url:
+                "https://github.com/feather-framework/feather-http-hummingbird-testing",
             exact: "1.0.0-beta.1"
         ),
         .package(
@@ -78,7 +93,8 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            url:
+                "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
         ),
         .package(
@@ -104,7 +120,7 @@ let package = Package(
         .target(
             name: "RedirectModule",
             dependencies: [
-                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
             path: "Sources/Module",
             swiftSettings: swiftSettings
@@ -135,10 +151,16 @@ let package = Package(
         .target(
             name: "RedirectInfrastructure",
             dependencies: [
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
                 .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "RedirectModule"),
@@ -150,7 +172,10 @@ let package = Package(
         .target(
             name: "RedirectAdminAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/Admin",
             swiftSettings: sharedSwiftSettings + [
@@ -161,7 +186,10 @@ let package = Package(
         .target(
             name: "RedirectAppAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/App",
             swiftSettings: sharedSwiftSettings + [
@@ -169,22 +197,15 @@ let package = Package(
                 .unsafeFlags(["-suppress-warnings"])
             ]
         ),
-        .target(
-            name: "RedirectSharedOpenAPIGenerator",
-            dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
-            ],
-            path: "Sources/Generators/Shared",
-            swiftSettings: swiftSettings
-        ),
         .executableTarget(
             name: "RedirectAdminOpenAPIGenerator",
             dependencies: [
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
-
-                .target(name: "RedirectSharedOpenAPIGenerator"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -194,8 +215,10 @@ let package = Package(
             dependencies: [
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "RedirectSharedOpenAPIGenerator"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings
@@ -204,6 +227,7 @@ let package = Package(
             name: "RedirectBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "NIOHTTP1", package: "swift-nio"),
 
                 .target(name: "RedirectInfrastructure"),
@@ -217,13 +241,41 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
+            name: "RedirectWebApp",
+            dependencies: [
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "Logging", package: "swift-log"),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
+
+                .target(name: "RedirectAppAPI"),
+            ],
+            path: "Sources/Composition/WebApp",
+            swiftSettings: swiftSettings
+        ),
+        .target(
             name: "RedirectWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
 
                 .target(name: "RedirectModule"),
+                .target(name: "RedirectApplication"),
                 .target(name: "RedirectAdminAPI"),
             ],
             path: "Sources/Composition/WebAdmin",
@@ -253,7 +305,10 @@ let package = Package(
             name: "RedirectInfrastructureTests",
             dependencies: [
                 .product(name: "FeatherDBALTesting", package: "feather-dbal"),
-                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
                 .product(name: "FeatherTesting", package: "feather-core"),
                 .target(name: "RedirectInfrastructure"),
                 .target(name: "RedirectModule"),
@@ -267,22 +322,54 @@ let package = Package(
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherHTTP", package: "feather-http"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherTesting", package: "feather-core"),
-                .product(name: "FeatherHTTPHummingbirdTesting", package: "feather-http-hummingbird-testing"),
-                .product(name: "OpenAPIHummingbird", package: "swift-openapi-hummingbird"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
-                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
                 .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
                 .target(name: "RedirectBackend"),
                 .target(name: "RedirectAdminAPI"),
+                .target(name: "RedirectAppAPI"),
                 .target(name: "RedirectApplication"),
                 .target(name: "RedirectDomain"),
                 .target(name: "RedirectModule"),
             ],
             path: "Tests/Composition/Backend",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "RedirectWebAppTests",
+            dependencies: [
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "HummingbirdTesting", package: "hummingbird"),
+                .target(name: "RedirectAppAPI"),
+                .target(name: "RedirectWebApp"),
+            ],
+            path: "Tests/Composition/WebApp",
             swiftSettings: swiftSettings
         ),
     ]

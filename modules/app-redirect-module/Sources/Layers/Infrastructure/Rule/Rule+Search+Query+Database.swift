@@ -1,9 +1,8 @@
 import FeatherApplication
 import FeatherDBAL
-import FeatherDatabase
-import FeatherInfrastructure
-import RedirectApplication
-import RedirectModule
+public import FeatherInfrastructure
+public import RedirectApplication
+public import RedirectModule
 
 extension RedirectModule.Rule.Search.Query {
     public struct Database: Interface {
@@ -13,7 +12,9 @@ extension RedirectModule.Rule.Search.Query {
             self.accessLayer = .init(context: context)
         }
 
-        public func search(query: Input.Query) async throws -> Output {
+        public func search(
+            query: RedirectModule.Rule.Search.Input.Query
+        ) async throws -> RedirectModule.Rule.Search.Output {
             let items = try await accessLayer.select { queryBuilder in
                 paginatedQuery(
                     applyFilters(query, to: queryBuilder)
@@ -31,7 +32,7 @@ extension RedirectModule.Rule.Search.Query {
 
         private func mapItem(
             _ row: RedirectModule.Rule.Table.List
-        ) throws -> Output.Item {
+        ) throws -> RedirectModule.Rule.Search.Output.Item {
             guard let statusCode = RedirectModule.Rule.StatusCode(
                 rawValue: row.statusCode
             ) else {
@@ -49,7 +50,7 @@ extension RedirectModule.Rule.Search.Query {
         }
 
         private func applyFilters(
-            _ query: Input.Query,
+            _ query: RedirectModule.Rule.Search.Input.Query,
             to initialQuery: DatabaseQuerySelect<RedirectModule.Rule.Table>
         ) -> DatabaseQuerySelect<RedirectModule.Rule.Table> {
             var result = initialQuery
@@ -57,10 +58,18 @@ extension RedirectModule.Rule.Search.Query {
                 result = result.where(
                     searchText: search,
                     columns: [
-                        .init(\.id),
-                        .init(\.source),
-                        .init(\.destination),
-                        .init(\.notes),
+                        DatabaseQueryTextColumn<RedirectModule.Rule.Table>(
+                            \.id
+                        ),
+                        DatabaseQueryTextColumn<RedirectModule.Rule.Table>(
+                            \.source
+                        ),
+                        DatabaseQueryTextColumn<RedirectModule.Rule.Table>(
+                            \.destination
+                        ),
+                        DatabaseQueryTextColumn<RedirectModule.Rule.Table>(
+                            \.notes
+                        ),
                     ]
                 )
             }
@@ -71,24 +80,44 @@ extension RedirectModule.Rule.Search.Query {
         }
 
         private func databaseOrder(
-            for sort: Input.Query.Sort
+            for sort: RedirectModule.Rule.Search.Input.Query.Sort
         ) -> DatabaseQueryOrder<RedirectModule.Rule.Table> {
             let direction: DatabaseQueryDirection =
                 switch sort.direction {
                 case .asc: .ascending
                 case .desc: .descending
                 }
-            switch sort.field {
-            case .id: .init(by: \.id, direction)
-            case .source: .init(by: \.source, direction)
-            case .destination: .init(by: \.destination, direction)
-            case .statusCode: .init(by: \.statusCode, direction)
-            case .notes: .init(by: \.notes, direction)
+            return switch sort.field {
+            case .id:
+                DatabaseQueryOrder<RedirectModule.Rule.Table>(
+                    by: \.id,
+                    direction
+                )
+            case .source:
+                DatabaseQueryOrder<RedirectModule.Rule.Table>(
+                    by: \.source,
+                    direction
+                )
+            case .destination:
+                DatabaseQueryOrder<RedirectModule.Rule.Table>(
+                    by: \.destination,
+                    direction
+                )
+            case .statusCode:
+                DatabaseQueryOrder<RedirectModule.Rule.Table>(
+                    by: \.statusCode,
+                    direction
+                )
+            case .notes:
+                DatabaseQueryOrder<RedirectModule.Rule.Table>(
+                    by: \.notes,
+                    direction
+                )
             }
         }
 
         private func databaseOrders(
-            for sorts: [Input.Query.Sort]
+            for sorts: [RedirectModule.Rule.Search.Input.Query.Sort]
         ) -> [DatabaseQueryOrder<RedirectModule.Rule.Table>] {
             var result = sorts.map(databaseOrder)
             if !sorts.contains(where: { $0.field == .id }) {

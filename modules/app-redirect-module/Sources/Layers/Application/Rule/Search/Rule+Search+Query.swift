@@ -1,4 +1,4 @@
-import RedirectModule
+public import RedirectModule
 
 extension RedirectModule.Rule.Search {
     public enum Query {

@@ -1,3 +1,4 @@
+import RedirectApplication
 import RedirectModule
 extension RedirectModule.Rule.Edit {
     enum Error: Swift.Error, Sendable {
@@ -7,3 +8,4 @@ extension RedirectModule.Rule.Edit {
         case conflict
         case unavailable
     }
+}

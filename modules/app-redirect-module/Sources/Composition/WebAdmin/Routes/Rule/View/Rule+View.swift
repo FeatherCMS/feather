@@ -1,6 +1,7 @@
 import FeatherWebAdmin
 import Hummingbird
 import RedirectModule
+import RedirectApplication
 
 extension RedirectModule.Rule {
     enum View {}
@@ -45,3 +46,4 @@ extension RedirectModule.Rule.View {
             router.get(routes.details.routerPath, use: controller.getRedirectRule)
         }
     }
+}

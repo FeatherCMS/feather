@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import Hummingbird
+import RedirectApplication
 import RedirectModule
 
 extension RedirectModule.Rule.Edit {
@@ -42,3 +43,4 @@ extension RedirectModule.Rule.Edit {
             router.post(routes.edit.routerPath, use: controller.postEditRedirectRule)
         }
     }
+}

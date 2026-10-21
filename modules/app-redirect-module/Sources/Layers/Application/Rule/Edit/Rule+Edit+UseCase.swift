@@ -1,8 +1,8 @@
-import FeatherApplication
+public import FeatherApplication
 import FeatherDomain
-import FeatherModuleKit
+public import FeatherModuleKit
 import RedirectDomain
-import RedirectModule
+public import RedirectModule
 
 extension RedirectModule.Rule.Edit {
     public struct UseCase: FeatherApplication.UseCase {

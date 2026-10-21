@@ -7,7 +7,7 @@ import WebBuilders
 import WebComponents
 
 struct RedirectRuleRow: Component {
-    let rule: RedirectAdminAPI.Components.Schemas.RedirectRuleListItemSchema
+    let rule: RedirectAdminAPI.Components.Schemas.RedirectRuleQueryItemSchema
     let returnTo: String
     let permissions: AdminListActions
     let routes: RedirectModule.Rule.Router.Routes
@@ -67,3 +67,4 @@ struct RedirectRuleRow: Component {
             )
         }
     }
+}

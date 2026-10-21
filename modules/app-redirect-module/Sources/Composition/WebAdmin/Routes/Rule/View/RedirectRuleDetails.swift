@@ -57,3 +57,4 @@ struct RedirectRuleDetails: Component {
         }
         return result
     }
+}

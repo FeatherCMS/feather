@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import RedirectAdminAPI
+import RedirectApplication
 import RedirectModule
 
 extension RedirectModule.Rule.List {
@@ -14,7 +15,7 @@ extension RedirectModule.Rule.List.Interactor {
         search: String?,
         statusCode: RedirectModule.Rule.StatusCode?
     ) async throws -> AdminListModel<
-        Components.Schemas.RedirectRuleListItemSchema
+        Components.Schemas.RedirectRuleQueryItemSchema
     >
 
     }

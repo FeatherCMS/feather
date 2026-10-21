@@ -1,6 +1,7 @@
 import FeatherWebAdmin
 import Hummingbird
 import RedirectAdminAPI
+import RedirectApplication
 import RedirectModule
 
 extension RedirectModule.Rule.List.Presenter {
@@ -11,7 +12,7 @@ extension RedirectModule.Rule.List.Presenter {
     let routes: RedirectModule.Rule.Router.Routes
 
     func renderListPage(
-        model: AdminListModel<Components.Schemas.RedirectRuleListItemSchema>,
+        model: AdminListModel<Components.Schemas.RedirectRuleQueryItemSchema>,
         permissions: AdminListActions,
         search: String?,
         statusCode: String?

@@ -1,8 +1,7 @@
 import FeatherDBAL
-import FeatherDatabase
-import FeatherInfrastructure
-import RedirectApplication
-import RedirectModule
+public import FeatherInfrastructure
+public import RedirectApplication
+public import RedirectModule
 
 extension RedirectModule.Rule.List.Query {
     public struct Database: Interface {
@@ -12,9 +11,16 @@ extension RedirectModule.Rule.List.Query {
             self.accessLayer = .init(context: context)
         }
 
-        public func list() async throws -> Output {
+        public func list() async throws -> RedirectModule.Rule.List.Output {
             let rows = try await accessLayer.select { query in
-                query.order(by: .init(by: \.source, .ascending))
+                query.order(
+                    by: [
+                        DatabaseQueryOrder<RedirectModule.Rule.Table>(
+                            by: \.source,
+                            .ascending
+                        )
+                    ]
+                )
             }
             let items = try rows.map(mapItem)
             return .init(items: items)
@@ -22,7 +28,7 @@ extension RedirectModule.Rule.List.Query {
 
         private func mapItem(
             _ row: RedirectModule.Rule.Table.List
-        ) throws -> Output.Item {
+        ) throws -> RedirectModule.Rule.List.Output.Item {
             guard let statusCode = RedirectModule.Rule.StatusCode(
                 rawValue: row.statusCode
             ) else {

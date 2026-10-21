@@ -2,6 +2,7 @@ import FeatherWebAdmin
 import OpenAPIRuntime
 import RedirectAdminAPI
 import RedirectModule
+import RedirectApplication
 
 extension RedirectModule.Rule.View.Repository {
     struct OpenAPI: Interface {

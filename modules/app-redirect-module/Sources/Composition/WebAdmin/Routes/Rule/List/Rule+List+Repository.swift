@@ -1,4 +1,5 @@
 import RedirectAdminAPI
+import RedirectApplication
 import RedirectModule
 
 extension RedirectModule.Rule.List {

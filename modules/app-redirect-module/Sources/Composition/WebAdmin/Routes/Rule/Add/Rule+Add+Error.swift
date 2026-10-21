@@ -1,4 +1,5 @@
 import RedirectModule
+import RedirectApplication
 extension RedirectModule.Rule.Add {
     enum Error: Swift.Error, Sendable {
         case unauthorized

@@ -2,6 +2,7 @@ import FeatherWebAdmin
 import FeatherValidation
 import Hummingbird
 import RedirectModule
+import RedirectApplication
 import WebComponents
 
 extension RedirectModule.Rule.Add.Presenter {

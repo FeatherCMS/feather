@@ -2,6 +2,7 @@ import FeatherWebAdmin
 import FeatherValidation
 import Hummingbird
 import RedirectModule
+import RedirectApplication
 
 extension RedirectModule.Rule.Add.Controller {
     struct Default: Interface {

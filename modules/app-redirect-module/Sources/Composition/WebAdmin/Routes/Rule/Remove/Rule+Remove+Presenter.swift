@@ -1,6 +1,7 @@
 import RedirectModule
 import FeatherWebAdmin
 import Hummingbird
+import RedirectApplication
 
 extension RedirectModule.Rule.Remove {
     enum Presenter {}
