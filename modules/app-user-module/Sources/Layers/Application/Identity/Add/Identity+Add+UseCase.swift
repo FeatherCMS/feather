@@ -11,8 +11,8 @@ public import UserModule
 
 extension Identity.Add {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Error: UseCaseError {
-            let message: String
+        public enum Error: UseCaseError {
+            case roleNotFound
         }
 
         let authorizer: any Authorizer
@@ -53,7 +53,7 @@ extension Identity.Add {
                 for roleId in roleIds {
                     guard try await scope.role.findBy(id: roleId) != nil
                     else {
-                        throw Error(message: "Role not found: \(roleId)")
+                        throw Error.roleNotFound
                     }
                 }
                 try await scope.identity.replaceRoleIds(

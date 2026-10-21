@@ -11,7 +11,12 @@ extension Identity.Post {
             Identity.Post.RequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: Identity.Get.Response().reference()]
+            [
+                201: Identity.Get.Response().reference(),
+                404: DefaultHTTPErrorContentResponse(
+                    description: "A role assigned to the identity was not found"
+                ),
+            ]
         }
     }
 }

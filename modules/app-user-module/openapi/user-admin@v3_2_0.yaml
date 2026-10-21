@@ -49,6 +49,12 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/UserIdentityDetailResponse'
+        404:
+          description: A role assigned to the identity was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
           content:
@@ -247,6 +253,12 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/UserRoleDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
           content:
@@ -353,6 +365,12 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/UserRoleDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: UserRole not found
           content:

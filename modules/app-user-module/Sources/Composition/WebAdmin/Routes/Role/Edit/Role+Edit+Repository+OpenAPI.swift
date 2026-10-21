@@ -59,6 +59,14 @@ extension Role.Edit.Repository {
                 switch response {
                 case .ok:
                     return
+                case .badRequest:
+                    throw OpenAPIRepositoryError.failure(
+                        .init(
+                            statusCode: 400,
+                            responseBody: nil,
+                            backendError: nil
+                        )
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:

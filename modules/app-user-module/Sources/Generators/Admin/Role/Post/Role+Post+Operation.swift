@@ -8,7 +8,12 @@ extension Role.Post {
             Role.Post.RequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: Role.Get.Response().reference()]
+            [
+                201: Role.Get.Response().reference(),
+                400: DefaultHTTPErrorContentResponse(
+                    description: "Bad Request"
+                ),
+            ]
         }
     }
 }

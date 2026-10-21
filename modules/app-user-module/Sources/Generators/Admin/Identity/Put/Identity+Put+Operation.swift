@@ -11,7 +11,9 @@ extension Identity.Put {
         var responseMap: ResponseMap {
             [
                 200: Identity.Get.Response().reference(),
-                404: CustomResponse(description: "UserIdentity not found"),
+                404: DefaultHTTPErrorContentResponse(
+                    description: "UserIdentity not found"
+                ),
             ]
         }
     }

@@ -355,6 +355,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .unauthorized(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
@@ -1143,6 +1161,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .unauthorized(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
@@ -1694,6 +1730,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {

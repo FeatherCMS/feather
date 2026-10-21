@@ -12,9 +12,9 @@ public import UserModule
 
 extension Identity.Edit {
     public struct UseCase: FeatherApplication.UseCase {
-
-        struct Error: UseCaseError {
-            let message: String
+        public enum Error: UseCaseError {
+            case identityNotFound
+            case roleNotFound
         }
 
         let authorizer: any Authorizer
@@ -42,7 +42,7 @@ extension Identity.Edit {
             return try await transaction.run { scope in
                 guard var model = try await scope.identity.findBy(id: input.id)
                 else {
-                    throw Error(message: "Identity not found")
+                    throw Error.identityNotFound
                 }
 
                 model.update(name: input.name, status: input.status)
@@ -56,7 +56,7 @@ extension Identity.Edit {
                 for roleId in roleIds {
                     guard try await scope.role.findBy(id: roleId) != nil
                     else {
-                        throw Error(message: "Role not found: \(roleId)")
+                        throw Error.roleNotFound
                     }
                 }
                 let persistedRoleIds: [String]

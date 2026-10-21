@@ -11,8 +11,8 @@ public import UserModule
 
 extension Role.Edit {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Error: UseCaseError {
-            let message: String
+        public enum Error: UseCaseError {
+            case notFound
         }
 
         let authorizer: any Authorizer
@@ -40,7 +40,7 @@ extension Role.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.role.findBy(id: input.id)
                 else {
-                    throw Error(message: "Role not found")
+                    throw Error.notFound
                 }
 
                 try model.update(

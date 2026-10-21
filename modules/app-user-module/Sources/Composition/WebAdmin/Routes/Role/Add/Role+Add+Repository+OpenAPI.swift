@@ -28,6 +28,14 @@ extension Role.Add.Repository {
                 switch response {
                 case .created:
                     return
+                case .badRequest:
+                    throw OpenAPIRepositoryError.failure(
+                        .init(
+                            statusCode: 400,
+                            responseBody: nil,
+                            backendError: nil
+                        )
+                    )
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:

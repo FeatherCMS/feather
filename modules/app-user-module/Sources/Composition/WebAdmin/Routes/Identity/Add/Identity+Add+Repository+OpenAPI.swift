@@ -27,6 +27,8 @@ extension Identity.Add.Repository {
                 switch response {
                 case .created:
                     return
+                case .notFound:
+                    throw OpenAPIRepositoryError.notFound
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:

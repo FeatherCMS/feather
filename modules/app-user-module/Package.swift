@@ -207,6 +207,7 @@ let package = Package(
             name: "UserBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
                 .product(
                     name: "SystemApplication",
                     package: "app-system-module"
