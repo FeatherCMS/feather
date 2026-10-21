@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -21,6 +20,7 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
+let swiftSettings = sharedSwiftSettings + [.treatAllWarnings(as: .error)]
 
 let package = Package(
     name: "app-redirect-module",
@@ -32,8 +32,8 @@ let package = Package(
         .visionOS(.v2),
     ],
     products: [
+        .library(name: "RedirectModule", targets: ["RedirectModule"]),
         .library(name: "RedirectDomain", targets: ["RedirectDomain"]),
-        .library(name: "RedirectContracts", targets: ["RedirectContracts"]),
         .library(name: "RedirectApplication", targets: ["RedirectApplication"]),
         .library(name: "RedirectInfrastructure", targets: ["RedirectInfrastructure"]),
         .library(name: "RedirectBackend", targets: ["RedirectBackend"]),
@@ -42,13 +42,9 @@ let package = Package(
         .library(name: "RedirectSharedOpenAPIGenerator", targets: ["RedirectSharedOpenAPIGenerator"]),
         .executable(name: "RedirectAdminOpenAPIGenerator", targets: ["RedirectAdminOpenAPIGenerator"]),
         .executable(name: "RedirectAppOpenAPIGenerator", targets: ["RedirectAppOpenAPIGenerator"]),
-        .library(name: "RedirectFrontend", targets: ["RedirectFrontend"]),
+        .library(name: "RedirectWebAdmin", targets: ["RedirectWebAdmin"]),
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/apple/swift-log",
-            from: "1.0.0"
-        ),
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "7.0.0"
@@ -66,39 +62,51 @@ let package = Package(
             from: "2.27.0"
         ),
         .package(
+            url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            from: "2.0.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-database-postgres",
+            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            from: "1.0.0"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-nio",
+            from: "2.0.0"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-http-types",
+            from: "1.0.0"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-database",
             exact: "1.0.0-rc.3"
-        ),
-        .package(
-            url: "https://github.com/vapor/postgres-nio",
-            from: "1.32.2"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio-ssl",
-            from: "2.34.0"
         ),
         .package(path: "../../feather-core"),
         .package(
             url: "https://github.com/feather-framework/feather-dbal",
             exact: "1.0.0-alpha.1"
         ),
-        .package(
-            url: "https://github.com/feather-framework/feather-dbal-postgres",
-            exact: "1.0.0-alpha.1"
-        ),
         .package(path: "../app-system-module"),
     ],
     targets: [
         .target(
-            name: "RedirectContracts",
+            name: "RedirectModule",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-core"),
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
@@ -106,7 +114,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
 
-                .target(name: "RedirectContracts"),
+                .target(name: "RedirectModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -115,9 +123,10 @@ let package = Package(
             name: "RedirectApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
 
+                .target(name: "RedirectModule"),
                 .target(name: "RedirectDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -128,9 +137,11 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
 
+                .target(name: "RedirectModule"),
                 .target(name: "RedirectApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -142,7 +153,10 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "RedirectAppAPI",
@@ -150,7 +164,10 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "RedirectSharedOpenAPIGenerator",
@@ -165,6 +182,7 @@ let package = Package(
             dependencies: [
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
 
                 .target(name: "RedirectSharedOpenAPIGenerator"),
             ],
@@ -186,8 +204,12 @@ let package = Package(
             name: "RedirectBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
 
                 .target(name: "RedirectInfrastructure"),
+                .target(name: "RedirectApplication"),
+                .target(name: "RedirectDomain"),
+                .target(name: "RedirectModule"),
                 .target(name: "RedirectAdminAPI"),
                 .target(name: "RedirectAppAPI"),
             ],
@@ -195,44 +217,71 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "RedirectFrontend",
+            name: "RedirectWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
 
-                .target(name: "RedirectContracts"),
+                .target(name: "RedirectModule"),
                 .target(name: "RedirectAdminAPI"),
-                .target(name: "RedirectAppAPI"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
 
         .testTarget(
             name: "RedirectDomainTests",
             dependencies: [
+                .target(name: "RedirectModule"),
                 .target(name: "RedirectDomain"),
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "RedirectApplicationTests",
             dependencies: [
                 .target(name: "RedirectApplication"),
+                .target(name: "RedirectModule"),
             ],
+            path: "Tests/Layers/Application",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "RedirectInfrastructureTests",
             dependencies: [
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
-                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
-                .product(name: "PostgresNIO", package: "postgres-nio"),
-                .product(name: "NIOSSL", package: "swift-nio-ssl"),
-
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(name: "FeatherTesting", package: "feather-core"),
                 .target(name: "RedirectInfrastructure"),
+                .target(name: "RedirectModule"),
             ],
+            path: "Tests/Layers/Infrastructure",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "RedirectBackendTests",
+            dependencies: [
+                .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "FeatherHTTPHummingbirdTesting", package: "feather-http-hummingbird-testing"),
+                .product(name: "OpenAPIHummingbird", package: "swift-openapi-hummingbird"),
+                .product(name: "HummingbirdTesting", package: "hummingbird"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .target(name: "RedirectBackend"),
+                .target(name: "RedirectAdminAPI"),
+                .target(name: "RedirectApplication"),
+                .target(name: "RedirectDomain"),
+                .target(name: "RedirectModule"),
+            ],
+            path: "Tests/Composition/Backend",
             swiftSettings: swiftSettings
         ),
     ]

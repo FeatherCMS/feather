@@ -1,25 +1,25 @@
-# Admin Redirect Frontend Module Guide
+# Redirect module guide
 
-Redirect admin features use the same operation boundaries as the system and
-user modules. Each `Add`, `Edit`, `Get`, `List`, and `Remove` operation owns
-its controller, interactor, repository, presenter, and implementation models
-and views where applicable. Operation models and views live under
-`Implementation/Models` and `Implementation/Views`; `Abstraction` contains
-protocols only.
+Follow [`../../docs/module-conventions.md`](../../docs/module-conventions.md)
+for target boundaries, namespace ownership, operation layout, DBAL usage,
+OpenAPI generation, WebAdmin routing, tests, and Docker services. This guide
+records Redirect-specific ownership only.
 
-The module overview lives under `Overview/Get`, with its implementation models
-and views under that operation's `Implementation` directory. Each rule
-operation owns its feature-specific models and views under that operation's
-`Implementation/Models` and `Implementation/Views` directories. Do not create
-a `Rule/Shared` folder.
+The module owns both `RedirectAdminAPI` and `RedirectAppAPI`. Keep their
+generator targets and generated API targets separate. The admin API owns the
+rule-management list and query operations; keep their schemas distinct. The
+app API owns public redirect resolution. Do not add a separate API client or
+builder target: admin clients are constructed from `AppEnvironment` and the
+authenticated request context; the app client and redirect middleware belong
+to backend composition.
 
-The request flow is Router → Controller → Interactor → OpenAPI Repository →
-API client. Controllers own route parameters, permissions, request decoding,
-nonce consumption, validation, and error branching. Interactors translate
-`OpenAPIRepositoryError` into operation-specific errors. Presenters own
-user-facing wording, admin HTML, response status codes, and redirects.
+Use `RedirectModule.Rule` as the domain namespace. Preserve the existing
+permission key strings when reorganizing their declarations. Persist redirect
+rules through `RedirectModule.Rule.Table` and Feather DBAL; ordinary module
+tests use the shared mock database/platform and must not require PostgreSQL,
+certificates, or persistent volumes.
 
-Use Admin components only. Form inputs contain feature fields only and are
-wrapped in `NonceRequest<Input>` at the controller boundary. List and remove
-flows preserve pagination, search, and filter state; bulk removal belongs to
-the Remove operation and is a single repository call.
+Generate OpenAPI YAML and Swift API sources using
+`scripts/generate-openapi.sh`; do not edit generated YAML or API Swift files
+directly. Serve the generated OAS 3.2 files with the pinned
+`swaggerapi/swagger-ui` Compose services.

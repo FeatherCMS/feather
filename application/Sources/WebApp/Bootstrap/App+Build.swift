@@ -4,7 +4,7 @@ import ContactFrontend
 import NewsletterFrontend
 import WebFrontend
 import AnalyticsFrontend
-import RedirectFrontend
+import RedirectWebAdmin
 import UserWebAdmin
 import SystemWebAdmin
 import FeatherWebAdmin

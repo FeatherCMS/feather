@@ -1,16 +1,16 @@
 public import RedirectAppAPI
 import RedirectApplication
-import RedirectContracts
+import RedirectModule
 
 extension AppAPIGateway {
     public func redirectRuleGet(
         _ input: Operations.RedirectRuleGet.Input
     ) async throws -> Operations.RedirectRuleGet.Output {
-        let rule: PublicRedirectRule
+        let rule: RedirectModule.Rule.Resolve.Output
         do {
-            rule = try await useCases.makeGetPublicRuleBySource()
-                .execute(source: input.query.source)
-        } catch GetPublicRuleBySource.Error.notFound {
+            rule = try await useCases.makeResolveRule()
+                .execute(input: .init(source: input.query.source))
+        } catch RedirectModule.Rule.Resolve.UseCase.Error.notFound {
             return .notFound(.init())
         }
 

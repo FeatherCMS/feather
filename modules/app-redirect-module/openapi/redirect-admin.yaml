@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: System Admin API
+  title: Redirect Admin API
   version: 0.1.0
 tags:
 - name: RedirectRules
@@ -11,6 +11,27 @@ security:
 - bearerAuth: []
 paths:
   /api/v1/admin/redirect/rules:
+    get:
+      tags:
+      - RedirectRules
+      operationId: redirectRuleList
+      responses:
+        200:
+          $ref: '#/components/responses/RedirectRuleListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - RedirectRules
@@ -57,42 +78,20 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/redirect/rules/:
-    get:
-      tags:
-      - RedirectRules
-      operationId: redirectRuleList
-      responses:
-        200:
-          $ref: '#/components/responses/RedirectRuleListResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-  /api/v1/admin/redirect/rules/search:
+  /api/v1/admin/redirect/rules/query:
     post:
       tags:
       - RedirectRules
-      operationId: redirectRuleSearch
+      operationId: redirectRuleQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RedirectRuleListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/RedirectRuleQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/RedirectRuleListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/RedirectRuleQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -118,7 +117,7 @@ paths:
         200:
           $ref: '#/components/responses/RedirectRuleDetailResponse'
         404:
-          description: RedirectRule not found
+          description: Redirect rule not found
           content:
             application/json:
               schema:
@@ -149,7 +148,7 @@ paths:
         200:
           $ref: '#/components/responses/RedirectRuleDetailResponse'
         404:
-          description: RedirectRule not found
+          description: Redirect rule not found
           content:
             application/json:
               schema:
@@ -174,13 +173,20 @@ paths:
       operationId: redirectRulePatch
       parameters:
       - $ref: '#/components/parameters/RedirectRuleIdParameter'
+      - $ref: '#/components/parameters/RedirectRuleUpdateMaskParameter'
       requestBody:
         $ref: '#/components/requestBodies/RedirectRulePatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/RedirectRuleDetailResponse'
+        400:
+          description: Invalid update mask or field value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
-          description: RedirectRule not found
+          description: Redirect rule not found
           content:
             application/json:
               schema:
@@ -201,49 +207,38 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    RedirectRuleCreateSchema:
-      type: object
-      properties:
-        source:
-          type: string
-          example: /old-home
-        destination:
-          type: string
-          example: /new-home
-        statusCode:
-          type: integer
-          example: 301
-        notes:
-          $ref: '#/components/schemas/RedirectRuleNotesField'
-      required:
-      - source
-      - destination
-      - statusCode
-    RedirectRuleNotesField:
-      type: string
-      example: Legacy homepage redirect.
-    RedirectRuleDetailSchema:
+    RedirectRuleListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/RedirectRuleListItemSchema'
+    RedirectRuleListItemSchema:
       type: object
       properties:
         id:
-          type: string
-          example: rr_home_old
+          $ref: '#/components/schemas/RedirectRuleIdField'
         source:
-          type: string
-          example: /old-home
+          $ref: '#/components/schemas/RedirectRuleSourceField'
         destination:
-          type: string
-          example: /new-home
+          $ref: '#/components/schemas/RedirectRuleDestinationField'
         statusCode:
-          type: integer
-          example: 301
-        notes:
-          $ref: '#/components/schemas/RedirectRuleNotesField'
+          $ref: '#/components/schemas/RedirectRuleStatusCodeField'
       required:
       - id
       - source
       - destination
       - statusCode
+    RedirectRuleIdField:
+      type: string
+      example: rr_home_old
+    RedirectRuleSourceField:
+      type: string
+      example: /old-home
+    RedirectRuleDestinationField:
+      type: string
+      example: /new-home
+    RedirectRuleStatusCodeField:
+      type: integer
+      example: 301
     DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
       type: object
       properties:
@@ -289,6 +284,49 @@ components:
       required:
       - id
       - message
+    RedirectRuleCreateSchema:
+      type: object
+      properties:
+        source:
+          type: string
+          example: /old-home
+        destination:
+          type: string
+          example: /new-home
+        statusCode:
+          type: integer
+          example: 301
+        notes:
+          $ref: '#/components/schemas/RedirectRuleNotesField'
+      required:
+      - source
+      - destination
+      - statusCode
+    RedirectRuleNotesField:
+      type: string
+      example: Legacy homepage redirect.
+    RedirectRuleDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: rr_home_old
+        source:
+          type: string
+          example: /old-home
+        destination:
+          type: string
+          example: /new-home
+        statusCode:
+          type: integer
+          example: 301
+        notes:
+          $ref: '#/components/schemas/RedirectRuleNotesField'
+      required:
+      - id
+      - source
+      - destination
+      - statusCode
     DeleteRequestSchema:
       type: object
       properties:
@@ -299,39 +337,7 @@ components:
             example: id1
       required:
       - ids
-    RedirectRuleListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/RedirectRuleListItemSchema'
-    RedirectRuleListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/RedirectRuleIdField'
-        source:
-          $ref: '#/components/schemas/RedirectRuleSourceField'
-        destination:
-          $ref: '#/components/schemas/RedirectRuleDestinationField'
-        statusCode:
-          $ref: '#/components/schemas/RedirectRuleStatusCodeField'
-      required:
-      - id
-      - source
-      - destination
-      - statusCode
-    RedirectRuleIdField:
-      type: string
-      example: rr_home_old
-    RedirectRuleSourceField:
-      type: string
-      example: /old-home
-    RedirectRuleDestinationField:
-      type: string
-      example: /new-home
-    RedirectRuleStatusCodeField:
-      type: integer
-      example: 301
-    RedirectRuleListItemSearchRequestQuerySchema:
+    RedirectRuleQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -392,18 +398,18 @@ components:
     RedirectRuleSearchField:
       type: string
       example: /old-home
-    RedirectRuleListItemSearchSchema:
+    RedirectRuleQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/RedirectRuleListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/RedirectRuleQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/RedirectRuleListItemSchema'
+                $ref: '#/components/schemas/RedirectRuleQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -413,7 +419,7 @@ components:
       required:
       - query
       - data
-    RedirectRuleListItemSearchResponseQuerySchema:
+    RedirectRuleQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -457,6 +463,25 @@ components:
       required:
       - size
       - number
+    RedirectRuleQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/RedirectRuleIdField'
+        source:
+          $ref: '#/components/schemas/RedirectRuleSourceField'
+        destination:
+          $ref: '#/components/schemas/RedirectRuleDestinationField'
+        statusCode:
+          $ref: '#/components/schemas/RedirectRuleStatusCodeField'
+      required:
+      - id
+      - source
+      - destination
+      - statusCode
+    RedirectRuleUpdateMask:
+      type: string
+      example: source,destination,statusCode,notes
     RedirectRulePatchSchema:
       type: object
       properties:
@@ -467,8 +492,18 @@ components:
         statusCode:
           $ref: '#/components/schemas/RedirectRuleStatusCodeField'
         notes:
-          $ref: '#/components/schemas/RedirectRuleNotesField'
+          $ref: '#/components/schemas/RedirectRuleNotesFieldNullable'
+    RedirectRuleNotesFieldNullable:
+      type: string
+      example: Legacy homepage redirect.
+      nullable: true
   responses:
+    RedirectRuleListResponse:
+      description: RedirectRule list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RedirectRuleListSchema'
     RedirectRuleDetailResponse:
       description: RedirectRule response
       content:
@@ -477,18 +512,12 @@ components:
             $ref: '#/components/schemas/RedirectRuleDetailSchema'
     NoContentResponse:
       description: Delete succeeded
-    RedirectRuleListResponse:
-      description: RedirectRule list response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/RedirectRuleListSchema'
-    RedirectRuleListItemSearchSchemaSearchResponse:
+    RedirectRuleQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/RedirectRuleListItemSearchSchema'
+            $ref: '#/components/schemas/RedirectRuleQueryItemSearchSchema'
   parameters:
     RedirectRuleIdParameter:
       name: redirectRuleId
@@ -497,6 +526,15 @@ components:
       schema:
         $ref: '#/components/schemas/RedirectRuleIdField'
       description: RedirectRule id
+    RedirectRuleUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/RedirectRuleUpdateMask'
+      description: Comma-separated list of fields to update. Include notes to clear
+        it when omitted from the request body.
   requestBodies:
     RedirectRuleRequestBody:
       content:

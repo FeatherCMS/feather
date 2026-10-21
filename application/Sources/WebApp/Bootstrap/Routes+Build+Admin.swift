@@ -7,7 +7,7 @@ import ContactFrontend
 import NewsletterFrontend
 import WebFrontend
 import AnalyticsFrontend
-import RedirectFrontend
+import RedirectWebAdmin
 import UserWebAdmin
 import AccountFrontend
 import SystemWebAdmin
@@ -22,7 +22,8 @@ func buildAdminRoutes(
     renderingEngine: any RenderingEngine,
     adminEvents: any EventPublisher,
     apiBuilder: APIBuilder,
-    systemRoutes: SystemWebAdmin.Router.Routes
+    systemRoutes: SystemWebAdmin.Router.Routes,
+    redirectRoutes: RedirectWebAdmin.Router.Routes
 ) {
     AuthFrontend.AdminAuth(
         apiBuilder: apiBuilder.auth,
@@ -52,9 +53,10 @@ func buildAdminRoutes(
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AdminRedirect(
-        apiBuilder: apiBuilder.redirect,
-        renderingEngine: renderingEngine
+    RedirectWebAdmin.Router(
+        environment: environment,
+        renderingEngine: renderingEngine,
+        routes: redirectRoutes
     )
     .route(on: router)
     AdminBlog(

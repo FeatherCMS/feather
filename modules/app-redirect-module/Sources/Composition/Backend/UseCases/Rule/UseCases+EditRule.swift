@@ -1,15 +1,16 @@
 import FeatherInfrastructure
 import RedirectApplication
 import RedirectInfrastructure
+import RedirectModule
 
 extension UseCases {
 
-    func makeEditRule() -> EditRule {
+    func makeEditRule() -> RedirectModule.Rule.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteRule(
-                    rule: RuleDatabaseRepository(context: context)
+                RedirectModule.Rule.Edit.Scope(
+                    repository: RedirectModule.Rule.Repository.Database(context: context)
                 )
             }
         )

@@ -10,7 +10,8 @@ import NewsletterFrontend
 import WebFrontend
 import WebContracts
 import AnalyticsFrontend
-import RedirectFrontend
+import RedirectWebAdmin
+import RedirectBackend
 import UserWebAdmin
 import SystemWebAdmin
 import FeatherWebAdmin
@@ -51,6 +52,7 @@ func buildRouter(
     }
 
     let systemRoutes = SystemWebAdmin.Router.Routes.standard
+    let redirectRoutes = RedirectWebAdmin.Router.Routes.standard
     var adminEvents = EventRegistry()
     WebFrontend.WebEventHandlers.register(in: &adminEvents)
     BlogFrontend.BlogEventHandlers.register(in: &adminEvents)
@@ -63,9 +65,10 @@ func buildRouter(
         in: &adminEvents,
         environment: environment
     )
-    RedirectAdminDashboardEventHandlers.register(
+    RedirectWebAdmin.Event.Handlers.register(
         in: &adminEvents,
-        environment: environment
+        environment: environment,
+        routes: redirectRoutes
     )
     AnalyticsAdminDashboardEventHandlers.register(
         in: &adminEvents,
@@ -79,7 +82,6 @@ func buildRouter(
     AuthAdminMenuEventHandlers.register(in: &adminEvents)
     UserModule.Event.Handlers.register(in: &adminEvents)
     MediaAdminMenuEventHandlers.register(in: &adminEvents)
-    RedirectAdminMenuEventHandlers.register(in: &adminEvents)
     AnalyticsAdminMenuEventHandlers.register(in: &adminEvents)
     BlogAdminMenuEventHandlers.register(in: &adminEvents)
     NewsAdminMenuEventHandlers.register(in: &adminEvents)
@@ -182,7 +184,8 @@ func buildRouter(
         renderingEngine: renderingEngine,
         adminEvents: adminEvents,
         apiBuilder: apiBuilder,
-        systemRoutes: systemRoutes
+        systemRoutes: systemRoutes,
+        redirectRoutes: redirectRoutes
     )
 
     return router

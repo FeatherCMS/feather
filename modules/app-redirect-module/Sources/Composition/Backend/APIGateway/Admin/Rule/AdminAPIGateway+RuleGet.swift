@@ -1,6 +1,7 @@
 import FeatherModuleKit
 public import RedirectAdminAPI
 import RedirectApplication
+import RedirectModule
 
 extension AdminAPIGateway {
 
@@ -18,6 +19,18 @@ extension AdminAPIGateway {
             .init(
                 body: .json(map(result))
             )
+        )
+    }
+
+    private func map(
+        _ detail: RedirectModule.Rule.Detail.Output
+    ) -> Components.Schemas.RedirectRuleDetailSchema {
+        .init(
+            id: detail.id,
+            source: detail.source,
+            destination: detail.destination,
+            statusCode: detail.statusCode.rawValue,
+            notes: detail.notes
         )
     }
 }

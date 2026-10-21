@@ -1,15 +1,16 @@
 import FeatherInfrastructure
 import RedirectApplication
 import RedirectInfrastructure
+import RedirectModule
 
 extension UseCases {
 
-    func makeRemoveRule() -> RemoveRule {
+    func makeRemoveRule() -> RedirectModule.Rule.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteRule(
-                    rule: RuleDatabaseRepository(context: context)
+                RedirectModule.Rule.Remove.Scope(
+                    repository: RedirectModule.Rule.Repository.Database(context: context)
                 )
             }
         )

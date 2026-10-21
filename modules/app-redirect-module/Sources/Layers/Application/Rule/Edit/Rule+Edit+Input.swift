@@ -1,0 +1,27 @@
+import FeatherApplication
+import FeatherDomain
+import RedirectModule
+
+extension RedirectModule.Rule.Edit {
+    public struct Input: DTO {
+        public let id: String
+        public let source: FieldChange<String>
+        public let destination: FieldChange<String>
+        public let statusCode: FieldChange<RedirectModule.Rule.StatusCode>
+        public let notes: OptionalFieldChange<String>
+
+        public init(
+            id: String,
+            source: FieldChange<String> = .unchanged,
+            destination: FieldChange<String> = .unchanged,
+            statusCode: FieldChange<RedirectModule.Rule.StatusCode> = .unchanged,
+            notes: OptionalFieldChange<String> = .unchanged
+        ) {
+            self.id = id
+            self.source = source
+            self.destination = destination
+            self.statusCode = statusCode
+            self.notes = notes
+        }
+    }
+}

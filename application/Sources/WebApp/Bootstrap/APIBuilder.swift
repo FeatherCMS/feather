@@ -7,7 +7,6 @@ import FeatherWebAdmin
 import Foundation
 import MediaFrontend
 import NewsletterFrontend
-import RedirectFrontend
 import WebFrontend
 
 struct APIBuilder: Sendable {
@@ -18,7 +17,6 @@ struct APIBuilder: Sendable {
     let contact: ContactAPIBuilder
     let media: MediaAPIBuilder
     let newsletter: NewsletterAPIBuilder
-    let redirect: RedirectAPIBuilder
     let web: WebAPIBuilder
 
     init(apiBaseURL: URL) {
@@ -29,7 +27,6 @@ struct APIBuilder: Sendable {
         self.contact = .init(apiBaseURL: apiBaseURL)
         self.media = .init(apiBaseURL: apiBaseURL)
         self.newsletter = .init(apiBaseURL: apiBaseURL)
-        self.redirect = .init(apiBaseURL: apiBaseURL)
         self.web = .init(apiBaseURL: apiBaseURL)
     }
 }
