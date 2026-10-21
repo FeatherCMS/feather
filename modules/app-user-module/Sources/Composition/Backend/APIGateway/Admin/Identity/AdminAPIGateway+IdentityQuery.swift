@@ -16,10 +16,11 @@ extension AdminAPIGateway {
         case .json(let value):
             query = value
         }
+        let normalizedQuery = normalizedIdentityQuery(from: query)
 
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeSearchIdentities()
-        let objectQuery = identitySearchInput(from: query)
+        let objectQuery = identitySearchInput(from: normalizedQuery)
 
         let result = try await useCase.execute(
             subject: subject,
@@ -30,7 +31,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: mapResponse(query),
+                        query: responseIdentityQuery(from: normalizedQuery),
                         data: .init(
                             items: result.items.map {
                                 identitySearchItemSchema(from: $0)
@@ -44,21 +45,29 @@ extension AdminAPIGateway {
     }
 }
 
-private func mapResponse(
-    _ query: Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema
+private func normalizedIdentityQuery(
+    from query: Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema
+) -> Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema {
+    let page = searchPage(from: query)
+    return .init(
+        page: .init(size: page.size, number: page.number),
+        sort: query.sort,
+        filters: query.filters
+    )
+}
+
+private func responseIdentityQuery(
+    from query: Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema
 ) -> Components.Schemas.UserIdentityQueryItemSearchResponseQuerySchema {
-    .init(
-        page: .init(
-            size: query.page?.size ?? 20,
-            number: query.page?.number ?? 1
-        ),
-        sort: query.sort?
-            .map {
-                .init(
-                    field: .init(rawValue: $0.field.rawValue)!,
-                    direction: $0.direction
-                )
-            },
+    let page = searchPage(from: query)
+    let sort = query.sort?
+        .map { rule in
+            Components.Schemas.UserIdentityQueryItemSearchResponseQuerySchema
+                .SortPayloadPayload(field: .id, direction: rule.direction)
+        }
+    return .init(
+        page: .init(size: page.size, number: page.number),
+        sort: sort,
         filters: .init(
             search: query.filters.search,
             role: query.filters.role
@@ -66,14 +75,23 @@ private func mapResponse(
     )
 }
 
+private func searchPage(
+    from query: Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema
+) -> Search.Page {
+    let defaults = Search.Page()
+    return
+        Search.Page(
+            size: query.page?.size ?? defaults.size,
+            number: query.page?.number ?? defaults.number
+        )
+        .normalized()
+}
+
 private func identitySearchInput(
     from query: Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema
 ) -> Identity.Search.Input.Query {
     .init(
-        page: .init(
-            size: query.page?.size ?? 20,
-            number: query.page?.number ?? 1
-        ),
+        page: searchPage(from: query),
         sort: (query.sort ?? [])
             .map { rule in
                 let direction: Search.SortDirection

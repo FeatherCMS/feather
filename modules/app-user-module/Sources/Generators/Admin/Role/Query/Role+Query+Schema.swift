@@ -8,6 +8,7 @@ extension Role.Query {
                 "id": Role.Schemas.ID().reference(),
                 "key": Role.Schemas.Key().reference(),
                 "name": Role.Schemas.Name().reference(required: false),
+                "notes": Role.Schemas.Notes().reference(required: false),
             ]
         }
     }

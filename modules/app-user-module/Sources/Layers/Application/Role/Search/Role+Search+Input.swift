@@ -7,6 +7,8 @@ extension Role.Search {
             public struct Sort: Sendable {
                 public enum Field: String, Sendable, CaseIterable {
                     case id
+                    case name
+                    case notes
                 }
 
                 public var field: Field

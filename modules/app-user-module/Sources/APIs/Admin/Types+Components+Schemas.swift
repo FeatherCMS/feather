@@ -923,25 +923,31 @@ extension Components {
             public var key: Components.Schemas.UserRoleKeyField
             /// - Remark: Generated from `#/components/schemas/UserRoleQueryItemSchema/name`.
             public var name: Components.Schemas.UserRoleNameField?
+            /// - Remark: Generated from `#/components/schemas/UserRoleQueryItemSchema/notes`.
+            public var notes: Components.Schemas.UserRoleNotesField?
             /// Creates a new `UserRoleQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
             ///   - key:
             ///   - name:
+            ///   - notes:
             public init(
                 id: Components.Schemas.UserRoleIdField,
                 key: Components.Schemas.UserRoleKeyField,
-                name: Components.Schemas.UserRoleNameField? = nil
+                name: Components.Schemas.UserRoleNameField? = nil,
+                notes: Components.Schemas.UserRoleNotesField? = nil
             ) {
                 self.id = id
                 self.key = key
                 self.name = name
+                self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
                 case id
                 case key
                 case name
+                case notes
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserRoleUpdateSchema`.

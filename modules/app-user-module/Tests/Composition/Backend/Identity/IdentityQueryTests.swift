@@ -1,3 +1,4 @@
+import FeatherDatabase
 import FeatherDatabaseTesting
 import FeatherHTTP
 import Foundation
@@ -43,7 +44,7 @@ struct IdentityQueryTests {
             path: "/api/v1/admin/user/identities/query",
             body: Components.Schemas
                 .UserIdentityQueryItemSearchRequestQuerySchema(
-                    page: .init(size: 20, number: 1),
+                    page: .init(size: 500, number: .max),
                     filters: .init(search: "Ada", role: "admin")
                 )
         )
@@ -57,11 +58,22 @@ struct IdentityQueryTests {
             JSONSerialization.jsonObject(with: Data(body.utf8))
                 as? [String: Any]
         )
+        let query = try #require(json["query"] as? [String: Any])
+        let page = try #require(query["page"] as? [String: Any])
+        #expect(page["size"] as? Int == 100)
+        #expect(page["number"] as? Int == .max)
         let data = try #require(json["data"] as? [String: Any])
         #expect(data["total"] as? Int == 1)
         let items = try #require(data["items"] as? [[String: Any]])
         #expect(items.first?["id"] as? String == "identity-1")
         #expect(items.first?["roles"] as? [String] == ["admin"])
+        let queries = await connection.executedQueries()
+        let searchQuery = try #require(queries[.search]?.first)
+        #expect(
+            searchQuery.bindings.suffix(2).map(\.binding) == [
+                .int(100), .int(.max),
+            ]
+        )
         try await connection.assertAllResponsesConsumed()
     }
 }

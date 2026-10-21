@@ -947,6 +947,8 @@ components:
           $ref: '#/components/schemas/UserRoleKeyField'
         name:
           $ref: '#/components/schemas/UserRoleNameField'
+        notes:
+          $ref: '#/components/schemas/UserRoleNotesField'
       required:
       - id
       - key

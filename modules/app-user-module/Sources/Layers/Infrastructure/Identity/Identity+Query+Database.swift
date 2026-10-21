@@ -53,9 +53,13 @@ extension Identity.Query {
         private func pageSizeOffset(
             _ page: Search.Page
         ) -> (size: Int, offset: Int) {
-            let size = max(1, page.size)
-            let number = max(1, page.number)
-            return (size, (number - 1) * size)
+            let page = page.normalized()
+            let pageIndex = page.number - 1
+            let offset =
+                pageIndex > Int.max / page.size
+                ? Int.max
+                : pageIndex * page.size
+            return (page.size, offset)
         }
 
         private func sortDirectionSQL(

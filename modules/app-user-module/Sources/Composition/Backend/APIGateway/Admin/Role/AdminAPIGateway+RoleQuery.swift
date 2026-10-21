@@ -14,10 +14,11 @@ extension AdminAPIGateway {
         case .json(let value):
             query = value
         }
+        let normalizedQuery = normalizedRoleQuery(from: query)
 
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeSearchRoles()
-        let objectQuery = roleSearchInput(from: query)
+        let objectQuery = roleSearchInput(from: normalizedQuery)
 
         let result = try await useCase.execute(
             subject: subject,
@@ -28,7 +29,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: mapResponse(query),
+                        query: responseRoleQuery(from: normalizedQuery),
                         data: .init(
                             items: result.items.map {
                                 roleSearchItemSchema(from: $0)
@@ -42,50 +43,92 @@ extension AdminAPIGateway {
     }
 }
 
-private func mapResponse(
-    _ query: Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema
+private func normalizedRoleQuery(
+    from query: Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema
+) -> Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema {
+    let page = searchPage(from: query)
+    return .init(
+        page: .init(size: page.size, number: page.number),
+        sort: query.sort,
+        filters: query.filters
+    )
+}
+
+private func responseRoleQuery(
+    from query: Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema
 ) -> Components.Schemas.UserRoleQueryItemSearchResponseQuerySchema {
-    .init(
-        page: .init(
-            size: query.page?.size ?? 20,
-            number: query.page?.number ?? 1
-        ),
-        sort: query.sort?
-            .map {
-                .init(
-                    field: .init(rawValue: $0.field.rawValue)!,
-                    direction: $0.direction
-                )
-            },
+    let page = searchPage(from: query)
+    let sort = query.sort?
+        .map { rule in
+            let field:
+                Components.Schemas.UserRoleQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload.FieldPayload
+            switch rule.field {
+            case .id:
+                field = .id
+            case .name:
+                field = .name
+            case .notes:
+                field = .notes
+            }
+            return Components.Schemas.UserRoleQueryItemSearchResponseQuerySchema
+                .SortPayloadPayload(field: field, direction: rule.direction)
+        }
+    return .init(
+        page: .init(size: page.size, number: page.number),
+        sort: sort,
         filters: .init(search: query.filters.search)
     )
+}
+
+private func searchPage(
+    from query: Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema
+) -> Search.Page {
+    let defaults = Search.Page()
+    return
+        Search.Page(
+            size: query.page?.size ?? defaults.size,
+            number: query.page?.number ?? defaults.number
+        )
+        .normalized()
 }
 
 private func roleSearchInput(
     from query: Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema
 ) -> Role.Search.Input.Query {
     .init(
-        page: .init(
-            size: query.page?.size ?? 20,
-            number: query.page?.number ?? 1
-        ),
+        page: searchPage(from: query),
         sort: (query.sort ?? [])
             .map { rule in
-                let direction: Search.SortDirection
-                switch rule.direction {
-                case .asc:
-                    direction = .asc
-                case .desc:
-                    direction = .desc
+                let field: Role.Search.Input.Query.Sort.Field
+                switch rule.field {
+                case .id:
+                    field = .id
+                case .name:
+                    field = .name
+                case .notes:
+                    field = .notes
                 }
-                return .init(field: .id, direction: direction)
+                let direction = searchSortDirection(from: rule.direction)
+                return .init(field: field, direction: direction)
             },
         search: query.filters.search
     )
 }
 
+private func searchSortDirection(
+    from direction: Components.Schemas.SortDirection
+) -> Search.SortDirection {
+    switch direction {
+    case .asc:
+        .asc
+    case .desc:
+        .desc
+    }
+}
+
 private func roleSearchItemSchema(
     from item: Role.Search.Output.Item
 ) -> Components.Schemas.UserRoleQueryItemSchema {
-    .init(id: item.id, key: item.key, name: item.name)
+    .init(id: item.id, key: item.key, name: item.name, notes: item.notes)
 }

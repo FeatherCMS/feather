@@ -49,9 +49,13 @@ extension Role.Query {
         private func pageSizeOffset(
             _ page: Search.Page
         ) -> (size: Int, offset: Int) {
-            let size = max(1, page.size)
-            let number = max(1, page.number)
-            return (size, (number - 1) * size)
+            let page = page.normalized()
+            let pageIndex = page.number - 1
+            let offset =
+                pageIndex > Int.max / page.size
+                ? Int.max
+                : pageIndex * page.size
+            return (page.size, offset)
         }
 
         private func sortDirectionSQL(
@@ -73,6 +77,10 @@ extension Role.Query {
                 switch rule.field {
                 case .id:
                     column = "id"
+                case .name:
+                    column = "name"
+                case .notes:
+                    column = "notes"
                 }
                 return "\(column) \(sortDirectionSQL(rule.direction))"
             }
@@ -86,7 +94,7 @@ extension Role.Query {
         ) async throws -> Role.Detail.Output {
             let table = Role.Table(connection: context.connection)
             guard let row = try await table.find(id: id) else {
-                fatalError()
+                throw RepositoryError.notFound
             }
             return row.asDetail
         }
