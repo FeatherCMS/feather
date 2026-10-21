@@ -86,10 +86,6 @@ let package = Package(
             exact: "1.0.0-alpha.1"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-sql-postgres",
-            exact: "1.0.0-alpha.1"
-        ),
-        .package(
             url: "https://github.com/hummingbird-project/hummingbird",
             from: "2.27.0"
         ),
@@ -184,10 +180,6 @@ let package = Package(
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "FeatherSQL", package: "feather-sql"),
-                .product(
-                    name: "FeatherSQLPostgres",
-                    package: "feather-sql-postgres"
-                ),
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "Jobs", package: "swift-jobs"),
@@ -305,10 +297,6 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherSQL", package: "feather-sql"),
-                .product(
-                    name: "FeatherSQLPostgres",
-                    package: "feather-sql-postgres"
-                ),
                 .target(name: "FeatherModuleKit"),
                 .target(name: "FeatherDomain"),
                 .target(name: "FeatherInfrastructure"),

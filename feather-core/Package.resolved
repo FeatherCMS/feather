@@ -1,5 +1,5 @@
 {
-  "originHash" : "1b193474dd1094a6f7f2f333ccc9e58b4042f0ac07b055134135b0f815cc35e6",
+  "originHash" : "507ca167f34ac9ea2c62199ed89a6d0e3098b1ae0bb1da06c9fd35884e92aa38",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -52,15 +52,6 @@
       "location" : "https://github.com/feather-framework/feather-sql",
       "state" : {
         "revision" : "6f9e5ef57a25d0e36e489ebc71ee8ce133e8c6ed",
-        "version" : "1.0.0-alpha.1"
-      }
-    },
-    {
-      "identity" : "feather-sql-postgres",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-sql-postgres",
-      "state" : {
-        "revision" : "a2190dfa726aab9b0519084cf7ec05b0161bd271",
         "version" : "1.0.0-alpha.1"
       }
     },
