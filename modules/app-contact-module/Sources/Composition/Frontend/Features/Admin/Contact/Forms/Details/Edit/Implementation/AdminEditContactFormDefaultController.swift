@@ -32,6 +32,24 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         }
     }
 
+    func fields(request: Request, context: AuthenticatedRequestContext)
+        async throws
+        -> HTMLResponse
+    {
+        let (interactor, presenter) = buildRuntime((request, context))
+        let formKey = try context.requiredParameter("formKey")
+        do {
+            return try await presenter.renderFieldsPage(
+                item: try await interactor.get(key: formKey),
+                error: nil,
+                permissions: context.currentUserPermissions
+            )
+        }
+        catch let error as AdminEditContactFormError {
+            return try await presenter.renderErrorPage(error: error)
+        }
+    }
+
     func update(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
@@ -60,7 +78,7 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
                 successMessage: form.successMessage ?? "",
                 failureMessage: form.failureMessage ?? "",
                 redirectUrl: form.redirectUrl,
-                fieldIDs: form.fieldIds ?? [],
+                fieldIDs: form.fieldIds ?? current.selectedFieldIDs,
                 mails: form.mails.isEmpty ? current.mails : form.mails
             )
             return Response(
@@ -94,4 +112,71 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
                 .response(from: request, context: context)
         }
     }
+
+    func updateFields(request: Request, context: AuthenticatedRequestContext)
+        async throws
+        -> Response
+    {
+        let (interactor, presenter) = buildRuntime((request, context))
+        let formKey = try context.requiredParameter("formKey")
+        let form = try await request.decode(
+            as: ContactFormFieldsEditForm.self,
+            context: context
+        )
+        let current: AdminContactFormDetailsItem
+        do {
+            current = try await interactor.get(key: formKey)
+        }
+        catch let error as AdminEditContactFormError {
+            return
+                try await presenter
+                .renderErrorPage(error: error)
+                .response(from: request, context: context)
+        }
+        do {
+            _ = try await interactor.update(
+                key: formKey,
+                newKey: current.key,
+                name: current.name,
+                successMessage: current.successMessage,
+                failureMessage: current.failureMessage,
+                redirectUrl: current.redirectUrl,
+                fieldIDs: form.fieldIds ?? [],
+                mails: current.mails
+            )
+            return Response(
+                status: .seeOther,
+                headers: [
+                    .location: AdminNotificationRedirect.location(
+                        defaultPath: "/admin/contact/forms/\(formKey)/fields/",
+                        title: "Saved",
+                        message: "Contact form fields updated successfully."
+                    )
+                ]
+            )
+        }
+        catch {
+            let attempted = AdminContactFormDetailsItem(
+                key: current.key,
+                name: current.name,
+                successMessage: current.successMessage,
+                failureMessage: current.failureMessage,
+                redirectUrl: current.redirectUrl,
+                selectedFieldIDs: form.fieldIds ?? [],
+                availableFields: current.availableFields,
+                mails: current.mails
+            )
+            return
+                try await presenter.renderFieldsPage(
+                    item: attempted,
+                    error: "The fields could not be saved. Please try again.",
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
+        }
+    }
+}
+
+private struct ContactFormFieldsEditForm: Decodable {
+    let fieldIds: [String]?
 }

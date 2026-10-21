@@ -13,6 +13,7 @@ struct ContactFieldAddPage: Component {
         let allowedValues: [String]
         let isRequired: Bool
         let position: String
+        let formKey: String?
         let error: String?
         let fieldErrors: [String: String]
         let breadcrumb: [AdminBreadcrumb.Link]
@@ -26,29 +27,34 @@ struct ContactFieldAddPage: Component {
             context.build(
                 AdminPageHeader(
                     state: .primary(
-                        title: "Add contact form field",
-                        description:
-                            "Create a reusable field for contact forms."
+                        title: state.formKey == nil
+                            ? "Add contact form field"
+                            : "Add field to contact form",
+                        description: state.formKey == nil
+                            ? "Create a reusable field for contact forms."
+                            : "Create a reusable field and add it to this contact form."
                     )
                 )
             )
-            context.build(
-                ContactFieldForm(
-                    field: .init(
-                        id: "",
-                        key: state.key,
-                        type: state.type,
-                        label: state.label,
-                        allowedValues: state.allowedValues,
-                        isRequired: state.isRequired,
-                        position: state.position
-                    ),
-                    action: ContactAdminRoutes.fieldAdd.description,
-                    submitLabel: "Add field",
-                    error: state.error,
-                    fieldErrors: state.fieldErrors
+            if let formKey = state.formKey {
+                context.build(
+                    AdminContactFormTabs(formId: formKey, active: .fields)
                 )
-            )
+                context.build(
+                    NewAdminRelationshipGroup(
+                        pageHeader: .secondary(
+                            title: "Contact form field",
+                            description:
+                                "Configure the field being added to this form."
+                        )
+                    ) {
+                        context.build(fieldForm)
+                    }
+                )
+            }
+            else {
+                context.build(fieldForm)
+            }
         }
         .class("cms-section")
     }

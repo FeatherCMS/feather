@@ -189,27 +189,41 @@ extension Components {
             public var from: Swift.Double
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewQuerySchema/to`.
             public var to: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewQuerySchema/dashboardOnly`.
+            public var dashboardOnly: Components.Schemas.AnalyticsLogOverviewDashboardOnlyField?
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewQuerySchema/notFoundOnly`.
+            public var notFoundOnly: Components.Schemas.AnalyticsLogOverviewDashboardOnlyField?
             /// Creates a new `AnalyticsLogOverviewQuerySchema`.
             ///
             /// - Parameters:
             ///   - source:
             ///   - from:
             ///   - to:
+            ///   - dashboardOnly:
+            ///   - notFoundOnly:
             public init(
                 source: Swift.String,
                 from: Swift.Double,
-                to: Swift.Double
+                to: Swift.Double,
+                dashboardOnly: Components.Schemas.AnalyticsLogOverviewDashboardOnlyField? = nil,
+                notFoundOnly: Components.Schemas.AnalyticsLogOverviewDashboardOnlyField? = nil
             ) {
                 self.source = source
                 self.from = from
                 self.to = to
+                self.dashboardOnly = dashboardOnly
+                self.notFoundOnly = notFoundOnly
             }
             public enum CodingKeys: String, CodingKey {
                 case source
                 case from
                 case to
+                case dashboardOnly
+                case notFoundOnly
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewDashboardOnlyField`.
+        public typealias AnalyticsLogOverviewDashboardOnlyField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewSchema`.
         public struct AnalyticsLogOverviewSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewSchema/query`.
@@ -319,6 +333,18 @@ extension Components {
             public var clientErrorRequests: Swift.Int
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewKPISchema/serverErrorRequests`.
             public var serverErrorRequests: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewKPISchema/pageViews`.
+            public var pageViews: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewKPISchema/searchRequests`.
+            public var searchRequests: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewKPISchema/botRequests`.
+            public var botRequests: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewKPISchema/aiRequests`.
+            public var aiRequests: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewKPISchema/humanRequests`.
+            public var humanRequests: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewKPISchema/uniqueVisitors`.
+            public var uniqueVisitors: Swift.Int
             /// Creates a new `AnalyticsLogOverviewKPISchema`.
             ///
             /// - Parameters:
@@ -328,13 +354,25 @@ extension Components {
             ///   - notFoundRequests:
             ///   - clientErrorRequests:
             ///   - serverErrorRequests:
+            ///   - pageViews:
+            ///   - searchRequests:
+            ///   - botRequests:
+            ///   - aiRequests:
+            ///   - humanRequests:
+            ///   - uniqueVisitors:
             public init(
                 totalRequests: Swift.Int,
                 averageRequestsPerDay: Swift.Double,
                 authenticatedRequests: Swift.Int,
                 notFoundRequests: Swift.Int,
                 clientErrorRequests: Swift.Int,
-                serverErrorRequests: Swift.Int
+                serverErrorRequests: Swift.Int,
+                pageViews: Swift.Int,
+                searchRequests: Swift.Int,
+                botRequests: Swift.Int,
+                aiRequests: Swift.Int,
+                humanRequests: Swift.Int,
+                uniqueVisitors: Swift.Int
             ) {
                 self.totalRequests = totalRequests
                 self.averageRequestsPerDay = averageRequestsPerDay
@@ -342,6 +380,12 @@ extension Components {
                 self.notFoundRequests = notFoundRequests
                 self.clientErrorRequests = clientErrorRequests
                 self.serverErrorRequests = serverErrorRequests
+                self.pageViews = pageViews
+                self.searchRequests = searchRequests
+                self.botRequests = botRequests
+                self.aiRequests = aiRequests
+                self.humanRequests = humanRequests
+                self.uniqueVisitors = uniqueVisitors
             }
             public enum CodingKeys: String, CodingKey {
                 case totalRequests
@@ -350,6 +394,12 @@ extension Components {
                 case notFoundRequests
                 case clientErrorRequests
                 case serverErrorRequests
+                case pageViews
+                case searchRequests
+                case botRequests
+                case aiRequests
+                case humanRequests
+                case uniqueVisitors
             }
         }
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewDailyListSchema`.

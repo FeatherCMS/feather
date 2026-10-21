@@ -11,6 +11,8 @@ public protocol FormFieldRepository: Repository {
         formId: String?
     ) async throws -> [FormField]
 
+    func listUnassigned() async throws -> [FormField]
+
     func assign(
         formId: String,
         fieldId: String,

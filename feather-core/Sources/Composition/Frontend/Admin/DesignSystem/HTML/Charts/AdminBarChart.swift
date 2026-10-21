@@ -1,3 +1,4 @@
+import Foundation
 public import CSS
 public import HTML
 import SGML

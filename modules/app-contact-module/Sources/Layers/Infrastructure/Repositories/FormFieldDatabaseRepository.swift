@@ -69,6 +69,12 @@ public struct FormFieldDatabaseRepository: FormFieldRepository {
         return try await table.list(formId: formId).map { try $0.asDomain }
     }
 
+    public func listUnassigned() async throws -> [FormField] {
+        try await FormFieldTable(connection: context.connection)
+            .listUnassigned()
+            .map { try $0.asDomain }
+    }
+
     public func assign(
         formId: String,
         fieldId: String,

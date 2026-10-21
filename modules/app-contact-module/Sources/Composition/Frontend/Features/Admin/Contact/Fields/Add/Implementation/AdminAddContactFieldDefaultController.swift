@@ -27,6 +27,15 @@ struct AdminAddContactFieldDefaultController:
         else {
             return try await presenter.renderForbiddenPage()
         }
+        let formKey = request.queryString("form")?.whitespaceTrimmed.emptyToNil
+        guard
+            formKey == nil
+                || context.isCurrentUserAllowed(
+                    to: ContactPermissions.Forms.update
+                )
+        else {
+            return try await presenter.renderForbiddenPage()
+        }
         return try await presenter.renderPage(
             model: try await interactor.getAddContactField(),
             permissions: context.currentUserPermissions
@@ -46,22 +55,42 @@ struct AdminAddContactFieldDefaultController:
                 .renderForbiddenPage()
                 .response(from: request, context: context)
         }
+        let formKey = request.queryString("form")?.whitespaceTrimmed.emptyToNil
+        guard
+            formKey == nil
+                || context.isCurrentUserAllowed(
+                    to: ContactPermissions.Forms.update
+                )
+        else {
+            return
+                try await presenter
+                .renderForbiddenPage()
+                .response(from: request, context: context)
+        }
         let payload = try await request.decode(
             as: ContactFieldFormInput.self,
             context: context
         )
         do {
             let model = try await interactor.postAddContactField(
-                payload: payload
+                payload: payload,
+                formKey: formKey
             )
             if model.fieldErrors.isEmpty {
+                let successPath =
+                    formKey.map {
+                        ContactAdminRoutes.formFields(RouterPath($0))
+                            .description
+                    } ?? "/admin/contact/fields/"
                 return Response(
                     status: .seeOther,
                     headers: [
                         .location: AdminNotificationRedirect.location(
-                            defaultPath: "/admin/contact/fields/",
+                            defaultPath: successPath,
                             title: "Added",
-                            message: "Form field added successfully."
+                            message: formKey == nil
+                                ? "Form field added successfully."
+                                : "Form field added and assigned to this form."
                         )
                     ]
                 )
@@ -74,6 +103,23 @@ struct AdminAddContactFieldDefaultController:
                 .response(from: request, context: context)
         }
         catch let error as AdminAddContactFieldError {
+            if case .createdButNotAssigned = error, let formKey {
+                return Response(
+                    status: .seeOther,
+                    headers: [
+                        .location: AdminNotificationRedirect.location(
+                            defaultPath:
+                                ContactAdminRoutes.formFields(
+                                    RouterPath(formKey)
+                                )
+                                .description,
+                            title: "Field created, not assigned",
+                            message:
+                                "The field was created, but could not be assigned. Add it from this form's Fields tab."
+                        )
+                    ]
+                )
+            }
             return
                 try await presenter.renderAddError(
                     input: payload,

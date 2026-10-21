@@ -85,7 +85,13 @@ extension AdminAPIGateway {
     func map(
         _ query: Components.Schemas.AnalyticsLogOverviewQuerySchema
     ) -> LogOverview.Query {
-        .init(source: query.source, from: query.from, to: query.to)
+        .init(
+            source: query.source,
+            from: query.from,
+            to: query.to,
+            dashboardOnly: query.dashboardOnly ?? false,
+            notFoundOnly: query.notFoundOnly ?? false
+        )
     }
 
     func map(
@@ -121,7 +127,13 @@ extension AdminAPIGateway {
                 authenticatedRequests: overview.kpis.authenticatedRequests,
                 notFoundRequests: overview.kpis.notFoundRequests,
                 clientErrorRequests: overview.kpis.clientErrorRequests,
-                serverErrorRequests: overview.kpis.serverErrorRequests
+                serverErrorRequests: overview.kpis.serverErrorRequests,
+                pageViews: overview.kpis.pageViews,
+                searchRequests: overview.kpis.searchRequests,
+                botRequests: overview.kpis.botRequests,
+                aiRequests: overview.kpis.aiRequests,
+                humanRequests: overview.kpis.humanRequests,
+                uniqueVisitors: overview.kpis.uniqueVisitors
             ),
             daily: overview.daily.map(map),
             statusFamilies: overview.statusFamilies.map(map),

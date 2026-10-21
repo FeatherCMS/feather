@@ -222,10 +222,16 @@ components:
           type: number
           format: double
           example: 1.717171717e+9
+        dashboardOnly:
+          $ref: '#/components/schemas/AnalyticsLogOverviewDashboardOnlyField'
+        notFoundOnly:
+          $ref: '#/components/schemas/AnalyticsLogOverviewDashboardOnlyField'
       required:
       - source
       - from
       - to
+    AnalyticsLogOverviewDashboardOnlyField:
+      type: boolean
     AnalyticsLogOverviewSchema:
       type: object
       properties:
@@ -294,6 +300,24 @@ components:
         serverErrorRequests:
           type: integer
           example: 123
+        pageViews:
+          type: integer
+          example: 123
+        searchRequests:
+          type: integer
+          example: 123
+        botRequests:
+          type: integer
+          example: 123
+        aiRequests:
+          type: integer
+          example: 123
+        humanRequests:
+          type: integer
+          example: 123
+        uniqueVisitors:
+          type: integer
+          example: 123
       required:
       - totalRequests
       - averageRequestsPerDay
@@ -301,6 +325,12 @@ components:
       - notFoundRequests
       - clientErrorRequests
       - serverErrorRequests
+      - pageViews
+      - searchRequests
+      - botRequests
+      - aiRequests
+      - humanRequests
+      - uniqueVisitors
     AnalyticsLogOverviewDailyListSchema:
       type: array
       items:

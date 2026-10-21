@@ -23,6 +23,7 @@ struct ContactFormForm: Component {
     var action: String
     var submitLabel: String
     var isReadOnly: Bool = false
+    var mode: Mode = .details
 
     func selectors() -> [any Selector] {
         [
@@ -168,51 +169,53 @@ struct ContactFormForm: Component {
                         isReadOnly: isReadOnly
                     )
                 )
-            )
-            if !state.availableFields.isEmpty {
+            }
+            if mode == .fields, !state.availableFields.isEmpty {
                 Section {
-                    H3("Fields").class("contact-form-field-group-title")
-                    P(
-                        "Choose fields and drag selected fields to set their order."
-                    )
-                    .class("contact-form-field-group-help")
                     Div {
-                        Div {
-                            H4("Selected fields")
-                                .class("contact-form-field-group-title")
-                            Div {
-                                for field in selectedFields {
-                                    fieldRow(
-                                        field: field,
-                                        isSelected: true,
-                                        context: &context
-                                    )
+                        context.build(
+                            NewAdminFormGroup(
+                                id: "contact-form-selected-fields-\(state.key)",
+                                title: "Selected fields",
+                                isOpen: true
+                            ) {
+                                Div {
+                                    for field in selectedFields {
+                                        fieldRow(
+                                            field: field,
+                                            isSelected: true,
+                                            context: &context
+                                        )
+                                    }
                                 }
+                                .class(
+                                    "contact-form-field-list",
+                                    "contact-form-selected-fields"
+                                )
                             }
-                            .class(
-                                "contact-form-field-list",
-                                "contact-form-selected-fields"
-                            )
-                        }
-                        .class("contact-form-field-group")
-                        Div {
-                            H4("Available fields")
-                                .class("contact-form-field-group-title")
-                            Div {
-                                for field in availableUnselectedFields {
-                                    fieldRow(
-                                        field: field,
-                                        isSelected: false,
-                                        context: &context
-                                    )
+                        )
+                        context.build(
+                            NewAdminFormGroup(
+                                id:
+                                    "contact-form-available-fields-\(state.key)",
+                                title: "Available fields",
+                                isOpen: false
+                            ) {
+                                Div {
+                                    for field in availableUnselectedFields {
+                                        fieldRow(
+                                            field: field,
+                                            isSelected: false,
+                                            context: &context
+                                        )
+                                    }
                                 }
+                                .class(
+                                    "contact-form-field-list",
+                                    "contact-form-available-fields"
+                                )
                             }
-                            .class(
-                                "contact-form-field-list",
-                                "contact-form-available-fields"
-                            )
-                        }
-                        .class("contact-form-field-group")
+                        )
                     }
                     .class("contact-form-field-picker")
                 }

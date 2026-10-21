@@ -7,11 +7,14 @@ public import Hummingbird
 public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
 
     public let apiBaseURL: URL
+    private let logFilter: any AnalyticsLogFilter
 
     public init(
-        apiBaseURL: URL
+        apiBaseURL: URL,
+        logFilter: any AnalyticsLogFilter
     ) {
         self.apiBaseURL = apiBaseURL
+        self.logFilter = logFilter
     }
 
     public func handle(
@@ -22,27 +25,27 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
             Response
     ) async throws -> Response {
         let path = request.uri.path
+        let method = request.method.rawValue
         let response = try await next(request, context)
         let responseCode = Int(response.status.code)
-        guard shouldTrack(path: path, responseCode: responseCode) else {
+        guard
+            logFilter.shouldTrack(
+                path: path,
+                method: method,
+                responseCode: responseCode
+            )
+        else {
             return response
         }
 
         let sessionToken = request.cookies["session_token"]?.value
-        let method = request.method.rawValue
         let url = request.uri.description
         let ip = request.headers[HTTPField.Name("x-forwarded-for")!]
         let referer = request.headers[.referer]
         let origin = request.headers[.origin]
         let acceptLanguage = request.headers[.acceptLanguage]
         let userAgent = request.headers[.userAgent]
-        let headers = request.headers.reduce(into: [String: String]()) {
-            result,
-            field in
-            result[field.name.rawName.lowercased()] = field.value
-        }
-        let headersString = headersJSONString(headers)
-
+        let headers = Self.storedHeaders(from: request)
         Task.detached {
             let api = AnalyticsAppAPIClient(
                 apiBaseURL: apiBaseURL,
@@ -51,7 +54,7 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
             let payload = Components.Schemas.AppAnalyticsLogTrackSchema(
                 method: method,
                 url: url,
-                headers: headersString,
+                headers: headers,
                 ip: ip ?? "",
                 path: path,
                 referer: referer ?? "",
@@ -78,39 +81,22 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
         return response
     }
 
-    private func shouldTrack(
-        path: String,
-        responseCode: Int
-    ) -> Bool {
-        if responseCode == 404 {
-            return true
+    private static func storedHeaders(from request: Request) -> String {
+        let allowedNames: Set<String> = ["accept", "content-type"]
+        let headers = request.headers.reduce(into: [String: String]()) {
+            result,
+            field in
+            let name = field.name.canonicalName
+            guard allowedNames.contains(name) else { return }
+            result[name] = String(field.value.prefix(256))
         }
-        if path == "/health" {
-            return false
+        guard
+            let data = try? JSONEncoder().encode(headers),
+            let json = String(data: data, encoding: .utf8)
+        else {
+            return "{}"
         }
-        let lowercased = path.lowercased()
-        for suffix in [
-            ".css",
-            ".js",
-            ".png",
-            ".jpg",
-            ".jpeg",
-            ".gif",
-            ".svg",
-            ".webp",
-            ".ico",
-        ] where lowercased.hasSuffix(suffix) {
-            return false
-        }
-        return true
+        return json
     }
 
-    private func headersJSONString(
-        _ headers: [String: String]
-    ) -> String {
-        let headersData =
-            (try? JSONSerialization.data(withJSONObject: headers))
-            ?? Data("{}".utf8)
-        return String(data: headersData, encoding: .utf8) ?? "{}"
-    }
 }

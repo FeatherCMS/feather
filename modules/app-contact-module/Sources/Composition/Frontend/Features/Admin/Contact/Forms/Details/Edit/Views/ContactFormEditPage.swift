@@ -24,8 +24,8 @@ struct ContactFormEditPage: Component {
                         title: state.isReadOnly
                             ? "Contact form" : "Edit contact form",
                         description: state.isReadOnly
-                            ? "Review form settings and field order."
-                            : "Update form settings and field order."
+                            ? "Review the contact form settings."
+                            : "Update the contact form settings."
                     )
                 )
             )
@@ -37,7 +37,7 @@ struct ContactFormEditPage: Component {
                     pageHeader: .secondary(
                         title: "Form configuration",
                         description:
-                            "Configure the form settings and selected fields."
+                            "Configure the form name, key, and submission messages."
                     )
                 ) {
                     context.build(

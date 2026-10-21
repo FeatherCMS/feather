@@ -32,7 +32,8 @@ public enum AnalyticsAdminDashboardEventHandlers {
                             .init(
                                 source: "web_app",
                                 from: context.from,
-                                to: context.to
+                                to: context.to,
+                                dashboardOnly: true
                             )
                         )
                     )
@@ -63,6 +64,45 @@ public enum AnalyticsAdminDashboardEventHandlers {
                             )
                         },
                         insightCards: [
+                            .init(
+                                title: "Referrers",
+                                items: overview.referrers.map {
+                                    .init(
+                                        label: $0.label,
+                                        count: $0.count,
+                                        share: $0.share
+                                    )
+                                }
+                            ),
+                            .init(
+                                title: "Traffic by type (estimated from User-Agent)",
+                                items: [
+                                    .init(
+                                        label: "Human / unrecognized",
+                                        count: overview.kpis.humanRequests,
+                                        share: trafficShare(
+                                            count: overview.kpis.humanRequests,
+                                            total: overview.kpis.totalRequests
+                                        )
+                                    ),
+                                    .init(
+                                        label: "AI",
+                                        count: overview.kpis.aiRequests,
+                                        share: trafficShare(
+                                            count: overview.kpis.aiRequests,
+                                            total: overview.kpis.totalRequests
+                                        )
+                                    ),
+                                    .init(
+                                        label: "Bot",
+                                        count: overview.kpis.botRequests,
+                                        share: trafficShare(
+                                            count: overview.kpis.botRequests,
+                                            total: overview.kpis.totalRequests
+                                        )
+                                    ),
+                                ]
+                            ),
                             .init(
                                 title: "Operating systems",
                                 items: overview.operatingSystems.map {
@@ -104,7 +144,7 @@ public enum AnalyticsAdminDashboardEventHandlers {
                                 }
                             ),
                             .init(
-                                title: "Regions",
+                                title: "Language regions",
                                 items: overview.regions.map {
                                     .init(
                                         label: $0.label,
@@ -128,5 +168,10 @@ public enum AnalyticsAdminDashboardEventHandlers {
     }
     private static var forbiddenMessage: String {
         "Your account cannot access the admin dashboard."
+    }
+
+    private static func trafficShare(count: Int, total: Int) -> Double {
+        guard total > 0 else { return 0 }
+        return Double(count) / Double(total)
     }
 }

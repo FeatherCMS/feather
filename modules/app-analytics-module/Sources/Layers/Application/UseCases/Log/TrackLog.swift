@@ -30,6 +30,7 @@ public struct TrackLog: UseCase {
         public let origin: String?
         public let acceptLanguage: String?
         public let userAgent: String?
+        public let trafficCategory: Log.TrafficCategory
         public let language: String?
         public let region: String?
         public let osName: String?
@@ -56,6 +57,7 @@ public struct TrackLog: UseCase {
             origin: String?,
             acceptLanguage: String?,
             userAgent: String?,
+            trafficCategory: Log.TrafficCategory = .human,
             language: String?,
             region: String?,
             osName: String?,
@@ -81,6 +83,7 @@ public struct TrackLog: UseCase {
             self.origin = origin
             self.acceptLanguage = acceptLanguage
             self.userAgent = userAgent
+            self.trafficCategory = trafficCategory
             self.language = language
             self.region = region
             self.osName = osName
@@ -114,6 +117,7 @@ public struct TrackLog: UseCase {
                     origin: input.origin,
                     acceptLanguage: input.acceptLanguage,
                     userAgent: input.userAgent,
+                    trafficCategory: input.trafficCategory,
                     language: input.language,
                     region: input.region,
                     osName: input.osName,

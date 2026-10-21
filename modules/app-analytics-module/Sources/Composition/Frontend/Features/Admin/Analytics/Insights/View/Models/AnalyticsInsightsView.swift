@@ -181,7 +181,9 @@ struct AnalyticsInsightsView: Component {
                 sectionHeading(
                     icon: "activity",
                     title: "Traffic summary",
-                    description: "Key request metrics for the selected range."
+                    description: page.source == .web
+                        ? "Key metrics for this range. Unique visitors are estimated from signed-in accounts or anonymous IP/browser signatures."
+                        : "Key request metrics for the selected range."
                 )
                 Div {
                     for item in metrics {
@@ -197,7 +199,10 @@ struct AnalyticsInsightsView: Component {
                 sectionHeading(
                     icon: "trendingUp",
                     title: "Traffic",
-                    description: "Requests across the selected time range."
+                    description:
+                        page.source == .web
+                        ? "Human page views across the selected time range."
+                        : "Logged API events across the selected time range."
                 )
                 context.build(
                     AdminChartCard(
@@ -266,38 +271,81 @@ struct AnalyticsInsightsView: Component {
         let kpis = page.overview.kpis
         if page.source == .web {
             return [
-                ("Requests", "\(kpis.totalRequests)"),
                 (
-                    "Avg/day",
+                    "Tracked web events",
+                    kpis.totalRequests.formatted(.number.grouping(.automatic))
+                ),
+                (
+                    "Events/day",
                     kpis.averageRequestsPerDay.formatted(
-                        .number.precision(.fractionLength(1))
+                        .number.grouping(.automatic).precision(
+                            .fractionLength(1)
+                        )
                     )
                 ),
-                ("Signed-in", "\(kpis.authenticatedRequests)"),
-                ("404s", "\(kpis.notFoundRequests)"),
-                ("4xx", "\(kpis.clientErrorRequests)"),
-                ("5xx", "\(kpis.serverErrorRequests)"),
+                (
+                    "Authenticated requests",
+                    kpis.authenticatedRequests.formatted(
+                        .number.grouping(.automatic)
+                    )
+                ),
+                (
+                    "Estimated unique visitors",
+                    kpis.uniqueVisitors.formatted(.number.grouping(.automatic))
+                ),
+                ("Page views", kpis.pageViews.formatted(.number.grouping(.automatic))),
+                (
+                    "POST requests",
+                    kpis.searchRequests.formatted(.number.grouping(.automatic))
+                ),
+                (
+                    "Human requests (estimated)",
+                    kpis.humanRequests.formatted(.number.grouping(.automatic))
+                ),
+                (
+                    "Bot requests",
+                    kpis.botRequests.formatted(.number.grouping(.automatic))
+                ),
+                ("AI requests", kpis.aiRequests.formatted(.number.grouping(.automatic))),
+                ("404s", kpis.notFoundRequests.formatted(.number.grouping(.automatic))),
+                ("4xx", kpis.clientErrorRequests.formatted(.number.grouping(.automatic))),
+                ("5xx", kpis.serverErrorRequests.formatted(.number.grouping(.automatic))),
             ]
         }
         return [
-            ("Requests", "\(kpis.totalRequests)"),
             (
-                "Avg/day",
+                "Logged API events",
+                kpis.totalRequests.formatted(.number.grouping(.automatic))
+            ),
+            (
+                "Events/day",
                 kpis.averageRequestsPerDay.formatted(
-                    .number.precision(.fractionLength(1))
+                        .number.grouping(.automatic).precision(
+                            .fractionLength(1)
+                        )
                 )
             ),
             (
-                "Success rate",
-                successRate.formatted(.number.precision(.fractionLength(1)))
+                "Non-error events (logged)",
+                successRate.formatted(
+                    .number.grouping(.automatic).precision(.fractionLength(1))
+                )
                     + "%"
             ),
             (
-                "Error rate",
-                errorRate.formatted(.number.precision(.fractionLength(1))) + "%"
+                "Error events (logged)",
+                errorRate.formatted(
+                    .number.grouping(.automatic).precision(.fractionLength(1))
+                ) + "%"
             ),
-            ("4xx errors", "\(kpis.clientErrorRequests)"),
-            ("5xx errors", "\(kpis.serverErrorRequests)"),
+            (
+                "4xx errors",
+                kpis.clientErrorRequests.formatted(.number.grouping(.automatic))
+            ),
+            (
+                "5xx errors",
+                kpis.serverErrorRequests.formatted(.number.grouping(.automatic))
+            ),
         ]
     }
 
@@ -307,18 +355,18 @@ struct AnalyticsInsightsView: Component {
             return [
                 breakdown("Top pages", overview.paths),
                 breakdown("Referrers", overview.referrers),
+                trafficTypeBreakdown,
                 breakdown("Operating systems", overview.operatingSystems),
                 breakdown("Browsers", overview.browsers),
                 breakdown("Device types", overview.deviceTypes),
                 breakdown("Languages", overview.languages),
-                breakdown("Regions", overview.regions),
-                breakdown("404 pages", overview.notFoundPaths),
+                breakdown("Language regions", overview.regions),
+                breakdown("5xx paths", overview.serverErrorPaths),
             ]
         }
         return [
             breakdown("Top paths", overview.paths),
             breakdown("Methods", overview.methods),
-            breakdown("Status codes", overview.statusFamilies),
             breakdown("5xx paths", overview.serverErrorPaths),
         ]
     }
@@ -334,6 +382,49 @@ struct AnalyticsInsightsView: Component {
                 items: items.map {
                     .init(label: $0.label, value: $0.count, share: $0.share)
                 }
+            )
+        )
+    }
+
+    private var trafficTypeBreakdown: NewAdminChartCard<NewAdminBarChart> {
+        let kpis = page.overview.kpis
+        let trackedRequests = max(0, kpis.totalRequests)
+        let humans = min(max(0, kpis.humanRequests), trackedRequests)
+        let bots = min(max(0, kpis.botRequests), trackedRequests - humans)
+        let ai = min(max(0, kpis.aiRequests), trackedRequests - humans - bots)
+        let humanShare =
+            trackedRequests > 0
+            ? Double(humans) / Double(trackedRequests)
+            : 0
+        let botShare =
+            trackedRequests > 0
+            ? Double(bots) / Double(trackedRequests)
+            : 0
+        let aiShare =
+            trackedRequests > 0
+            ? Double(ai) / Double(trackedRequests)
+            : 0
+
+        return NewAdminChartCard(
+            title: "Traffic by type (estimated from User-Agent)",
+            chart: NewAdminBarChart(
+                items: [
+                    .init(
+                        label: "Human / unrecognized",
+                        value: humans,
+                        share: humanShare
+                    ),
+                    .init(
+                        label: "AI",
+                        value: ai,
+                        share: aiShare
+                    ),
+                    .init(
+                        label: "Bot",
+                        value: bots,
+                        share: botShare
+                    ),
+                ]
             )
         )
     }

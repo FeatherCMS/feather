@@ -5,7 +5,7 @@ import WebBuilders
 import WebComponents
 
 struct AdminContactFormTabs: Component {
-    enum Tab { case details, emails, submissions }
+    enum Tab { case details, fields, emails, submissions }
 
     let formId: String
     let active: Tab
@@ -17,6 +17,11 @@ struct AdminContactFormTabs: Component {
                     label: "Details",
                     href: "/admin/contact/forms/\(formId)/details/",
                     isCurrent: active == .details
+                ),
+                .init(
+                    label: "Fields",
+                    href: "/admin/contact/forms/\(formId)/fields/",
+                    isCurrent: active == .fields
                 ),
                 .init(
                     label: "Emails",

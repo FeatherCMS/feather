@@ -10,15 +10,18 @@ public struct WebMarkdownBlockRendererRequest: Sendable, ExecutionContext {
         public let name: String
         public let arguments: [String: String]
         public let html: String
+        public let children: [Child]
 
         public init(
             name: String,
             arguments: [String: String],
-            html: String
+            html: String,
+            children: [Child] = []
         ) {
             self.name = name
             self.arguments = arguments
             self.html = html
+            self.children = children
         }
     }
 

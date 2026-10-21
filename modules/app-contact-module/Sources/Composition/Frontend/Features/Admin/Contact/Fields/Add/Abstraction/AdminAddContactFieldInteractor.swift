@@ -9,6 +9,9 @@ import WebComponents
 
 protocol AdminAddContactFieldInteractor: Sendable {
     func getAddContactField() async throws -> AdminAddContactFieldModel
-    func postAddContactField(payload: ContactFieldFormInput)
+    func postAddContactField(
+        payload: ContactFieldFormInput,
+        formKey: String?
+    )
         async throws -> AdminAddContactFieldModel
 }

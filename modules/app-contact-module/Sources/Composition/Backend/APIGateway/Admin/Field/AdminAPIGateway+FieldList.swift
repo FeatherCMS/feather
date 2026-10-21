@@ -10,7 +10,10 @@ extension AdminAPIGateway {
         let result = try await self.useCases.makeListFormFields()
             .execute(
                 subject: try await CurrentSubject.require(),
-                input: .init(formId: nil)
+                input: .init(
+                    formId: nil,
+                    formKey: input.query.form
+                )
             )
         return .ok(.init(body: .json(result.map(map))))
     }

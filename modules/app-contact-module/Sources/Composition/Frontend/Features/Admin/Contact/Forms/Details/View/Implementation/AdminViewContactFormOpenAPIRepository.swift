@@ -18,7 +18,9 @@ struct AdminViewContactFormOpenAPIRepository {
             switch response {
             case .ok(let value):
                 let item = try value.body.json
-                let fieldsResponse = try await client.contactFieldList()
+                let fieldsResponse = try await client.contactFieldList(
+                    .init(query: .init(form: nil))
+                )
                 let fields: [AdminContactFormFieldOption]
                 switch fieldsResponse {
                 case .ok(let fieldsValue):

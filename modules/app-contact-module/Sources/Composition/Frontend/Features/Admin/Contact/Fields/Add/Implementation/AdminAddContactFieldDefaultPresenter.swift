@@ -29,9 +29,28 @@ struct AdminAddContactFieldDefaultPresenter:
                     allowedValues: model.allowedValues,
                     isRequired: model.isRequired,
                     position: model.position,
+                    formKey: request.queryString("form"),
                     error: model.error,
                     fieldErrors: model.fieldErrors,
-                    breadcrumb: ContactAdminRoutes.fieldsBreadcrumb
+                    breadcrumb: request.queryString("form")
+                        .map { formKey in
+                            ContactAdminRoutes.formsBreadcrumb
+                                + [
+                                    .init(
+                                        label: formKey,
+                                        link:
+                                            ContactAdminRoutes.formFields(
+                                                RouterPath(formKey)
+                                            )
+                                            .description
+                                    ),
+                                    .init(
+                                        label: "Add field",
+                                        link: ContactAdminRoutes.fieldAdd
+                                            .description
+                                    ),
+                                ]
+                        } ?? ContactAdminRoutes.fieldsBreadcrumb
                 )
             )
         )
@@ -63,6 +82,14 @@ struct AdminAddContactFieldDefaultPresenter:
                 input: input,
                 message:
                     "The contact form field could not be created. Please try again.",
+                permissions: permissions,
+                status: .serviceUnavailable
+            )
+        case .createdButNotAssigned:
+            return try await renderFormError(
+                input: input,
+                message:
+                    "The field was created, but could not be assigned to the form. Open the form's Fields tab and add the existing field.",
                 permissions: permissions,
                 status: .serviceUnavailable
             )

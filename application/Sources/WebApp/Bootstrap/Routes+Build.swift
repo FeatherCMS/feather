@@ -35,7 +35,10 @@ func buildRouter(
 
     router.addMiddleware {
         LogRequestsMiddleware(Logger.current.logLevel)
-        WebAppAnalyticsLogMiddleware(apiBaseURL: environment.apiBaseURL)
+        WebAppAnalyticsLogMiddleware(
+            apiBaseURL: environment.apiBaseURL,
+            logFilter: WebAppAnalyticsLogFilter()
+        )
         HTTPErrorMiddleware<DefaultRequestContext>()
         RedirectRuleMiddleware(
             apiBaseURL: environment.apiBaseURL,

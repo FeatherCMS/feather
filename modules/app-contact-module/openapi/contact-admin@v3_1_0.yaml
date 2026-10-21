@@ -144,6 +144,8 @@ paths:
       tags:
       - ContactForms
       operationId: contactFieldList
+      parameters:
+      - $ref: '#/components/parameters/FormFieldListFilterParameter'
       responses:
         200:
           $ref: '#/components/responses/FormFieldListResponse'
@@ -786,6 +788,14 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/ContactFormKeyField'
+    FormFieldListFilterParameter:
+      name: form
+      allowEmptyValue: true
+      in: query
+      schema:
+        $ref: '#/components/schemas/ContactFormKeyField'
+      description: Filter fields by form key or use __unassigned__ for fields not
+        assigned to a form.
     FormFieldIdParameter:
       name: formFieldId
       in: path

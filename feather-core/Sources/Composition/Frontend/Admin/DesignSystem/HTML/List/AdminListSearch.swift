@@ -70,6 +70,12 @@ public struct AdminListSearch: Component {
                 MinWidth(0.px)
                 Width(100.percent)
             }
+            Custom("\(root) > .table-search-filter") {
+                Display(.flex)
+                AlignItems(.center)
+                Flex(0, .number(0), .auto)
+                Margin(0.px)
+            }
             Custom("\(root) :is(button, input[type='submit'])") {
                 Flex(0, .number(0), .auto)
                 Cursor(.pointer)

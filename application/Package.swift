@@ -158,6 +158,7 @@ let package = Package(
         .target(
             name: "Environment",
             dependencies: [
+                .product(name: "AnalyticsContracts", package: "app-analytics-module"),
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "Jobs", package: "swift-jobs"),
@@ -282,6 +283,7 @@ let package = Package(
                 .product(name: "ContactAppAPI", package: "app-contact-module"),
                 .product(name: "BlogAppAPI", package: "app-blog-module"),
                 .product(name: "NewsAppAPI", package: "app-news-module"),
+                .target(name: "Environment"),
 
             ],
             resources: [

@@ -36,6 +36,8 @@ struct ContactFieldsTable: Component {
             context.build(
                 ContactFieldsTableContent(
                     fields: state.fields,
+                    forms: state.forms,
+                    formKey: state.formKey,
                     pageState: state.pageState,
                     search: state.search,
                     permissions: state.permissions

@@ -19,7 +19,11 @@ public struct ListFormFields: UseCase {
     }
     public struct Input: DTO {
         public let formId: String?
-        public init(formId: String?) { self.formId = formId }
+        public let formKey: String?
+        public init(formId: String?, formKey: String? = nil) {
+            self.formId = formId
+            self.formKey = formKey
+        }
     }
     public func execute(
         subject: Subject,
@@ -30,7 +34,18 @@ public struct ListFormFields: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.field.listBy(formId: input.formId).map(\.asDetail)
+            if input.formKey == FormFieldListFilter.unassigned {
+                return try await scope.field.listUnassigned().map(\.asDetail)
+            }
+            if let formKey = input.formKey {
+                guard let form = try await scope.form.findBy(key: formKey) else {
+                    return []
+                }
+                return try await scope.field.listBy(formId: form.id)
+                    .map(\.asDetail)
+            }
+            return try await scope.field.listBy(formId: input.formId)
+                .map(\.asDetail)
         }
     }
 }
