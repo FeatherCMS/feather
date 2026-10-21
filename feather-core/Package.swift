@@ -42,6 +42,7 @@ let package = Package(
             name: "FeatherOpenAPIGenerator",
             targets: ["FeatherOpenAPIGenerator"]
         ),
+        .library(name: "FeatherWebApp", targets: ["FeatherWebApp"]),
         .library(name: "FeatherWebAdmin", targets: ["FeatherWebAdmin"]),
     ],
     dependencies: [
@@ -92,6 +93,10 @@ let package = Package(
         .package(
             url: "https://github.com/hummingbird-project/hummingbird-auth",
             from: "2.3.0"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-configuration",
+            from: "1.0.2"
         ),
         .package(
             url: "https://github.com/BinaryBirds/swift-web-standards",
@@ -213,6 +218,27 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
+            name: "FeatherWebShared",
+            dependencies: [
+                .product(name: "Configuration", package: "swift-configuration"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .target(name: "FeatherModuleKit"),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "FeatherWebApp",
+            dependencies: [
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .target(name: "FeatherModuleKit"),
+                .target(name: "FeatherWebShared"),
+            ],
+            path: "Sources/Composition/WebApp",
+            swiftSettings: swiftSettings
+        ),
+        .target(
             name: "FeatherWebAdmin",
             dependencies: [
                 .product(name: "Hummingbird", package: "hummingbird"),
@@ -229,9 +255,10 @@ let package = Package(
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "NIOCore", package: "swift-nio"),
 
+                .target(name: "FeatherWebShared"),
                 .target(name: "FeatherApplication"),
             ],
-            path: "Sources/Composition/Frontend/Admin",
+            path: "Sources/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
         .testTarget(

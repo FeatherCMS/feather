@@ -1,4 +1,5 @@
 public import FeatherModuleKit
+public import FeatherWebShared
 public import Hummingbird
 
 /// Request context used by routes that require an authenticated account.

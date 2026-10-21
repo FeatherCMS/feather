@@ -1,9 +1,8 @@
-public import FeatherWebAdmin
+public import FeatherWebApp
 import Foundation
 import HTTPTypes
 public import Hummingbird
 import Logging
-import RedirectAppAPI
 
 public struct RedirectRuleMiddleware: RouterMiddleware {
 
@@ -38,7 +37,7 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
             return response
         }
 
-        let rule: RedirectAppAPI.Components.Schemas.RedirectRuleSchema?
+        let rule: ResolvedRedirect?
         do {
             rule = try await resolver.resolveRedirect(
                 source: normalizedRedirectSource(for: path)

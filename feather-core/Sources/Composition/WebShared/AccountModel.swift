@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 03. 01..
 //
 
-public struct AccountModel: Object {
+public struct AccountModel: Codable, Sendable, Equatable, Hashable {
 
     public struct UserModel: Object {
         public let id: String

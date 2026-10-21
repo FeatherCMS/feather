@@ -1,4 +1,16 @@
-public import RedirectAppAPI
+/// A redirect result independent of the generated HTTP API schema.
+public struct ResolvedRedirect: Sendable, Equatable {
+    public let destination: String
+    public let statusCode: Int
+
+    public init(
+        destination: String,
+        statusCode: Int
+    ) {
+        self.destination = destination
+        self.statusCode = statusCode
+    }
+}
 
 /// Decides whether redirect lookup applies and resolves a matching rule.
 public protocol RedirectRuleResolver: Sendable {
@@ -12,5 +24,5 @@ public protocol RedirectRuleResolver: Sendable {
     /// Resolves the rule for a normalized source path, if one exists.
     func resolveRedirect(
         source: String
-    ) async throws -> RedirectAppAPI.Components.Schemas.RedirectRuleSchema?
+    ) async throws -> ResolvedRedirect?
 }

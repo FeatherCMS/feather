@@ -4,7 +4,6 @@ import FeatherWebAdmin
 import Foundation
 import Hummingbird
 import HummingbirdTesting
-import RedirectAppAPI
 import RedirectWebApp
 import Testing
 
@@ -74,7 +73,6 @@ struct RedirectRuleMiddlewareTests {
             resolve: { source in
                 guard source == "/" else { return nil }
                 return .init(
-                    source: source,
                     destination: "/home",
                     statusCode: 301
                 )
@@ -94,7 +92,6 @@ struct RedirectRuleMiddlewareTests {
             resolve: { source in
                 guard source == "/news/" else { return nil }
                 return .init(
-                    source: source,
                     destination: "/latest",
                     statusCode: 302
                 )
@@ -130,7 +127,7 @@ private enum ResolverError: Error, Sendable {
 private struct TestRedirectRuleResolver: RedirectRuleResolver {
     let resolve:
         @Sendable (String) async throws ->
-            RedirectAppAPI.Components.Schemas.RedirectRuleSchema?
+            ResolvedRedirect?
 
     func shouldLookupRedirect(
         path: String,
@@ -142,7 +139,7 @@ private struct TestRedirectRuleResolver: RedirectRuleResolver {
 
     func resolveRedirect(
         source: String
-    ) async throws -> RedirectAppAPI.Components.Schemas.RedirectRuleSchema? {
+    ) async throws -> ResolvedRedirect? {
         try await resolve(source)
     }
 }
@@ -151,7 +148,7 @@ private func makeExecutor(
     path: String,
     resolve:
         @escaping @Sendable (String) async throws ->
-        RedirectAppAPI.Components.Schemas.RedirectRuleSchema?
+        ResolvedRedirect?
 ) -> HummingbirdTestingHTTPExecutor {
     let middleware = RedirectRuleMiddleware(
         siteBaseURL: "https://example.test",

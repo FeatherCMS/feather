@@ -244,7 +244,7 @@ let package = Package(
             name: "RedirectWebApp",
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "HTTPTypes", package: "swift-http-types"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Logging", package: "swift-log"),

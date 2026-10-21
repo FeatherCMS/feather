@@ -1,3 +1,5 @@
+import FeatherWebShared
+
 extension Error {
     public var displayMessage: String {
         if let error = self as? OpenAPIRepositoryError {

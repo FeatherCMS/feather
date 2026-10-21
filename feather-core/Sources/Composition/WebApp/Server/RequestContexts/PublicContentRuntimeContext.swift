@@ -1,4 +1,5 @@
 public import FeatherModuleKit
+public import FeatherWebShared
 public import Foundation
 public import Hummingbird
 

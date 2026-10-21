@@ -1,5 +1,5 @@
 import AsyncHTTPClient
-import FeatherWebAdmin
+import FeatherWebApp
 import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient

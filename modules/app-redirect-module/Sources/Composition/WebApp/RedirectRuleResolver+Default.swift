@@ -1,5 +1,5 @@
 public import Foundation
-public import RedirectAppAPI
+import RedirectAppAPI
 
 /// Resolves redirects through the generated App API client.
 public struct DefaultRedirectRuleResolver: RedirectRuleResolver {
@@ -36,12 +36,9 @@ public struct DefaultRedirectRuleResolver: RedirectRuleResolver {
     /// Fetches a redirect rule for the supplied normalized source path.
     public func resolveRedirect(
         source: String
-    ) async throws -> RedirectAppAPI.Components.Schemas
-        .RedirectRuleSchema?
-    {
+    ) async throws -> ResolvedRedirect? {
         let api = API.AppClient(apiBaseURL: apiBaseURL)
-        let response: RedirectAppAPI.Operations.RedirectRuleGet.Output
-        response = try await api.withOpenAPIRepositoryErrorMapping {
+        let response = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             try await client.redirectRuleGet(
                 .init(query: .init(source: source))
@@ -50,7 +47,11 @@ public struct DefaultRedirectRuleResolver: RedirectRuleResolver {
 
         switch response {
         case .ok(let ok):
-            return try ok.body.json
+            let rule = try ok.body.json
+            return ResolvedRedirect(
+                destination: rule.destination,
+                statusCode: rule.statusCode
+            )
         case .notFound, .undocumented:
             return nil
         }

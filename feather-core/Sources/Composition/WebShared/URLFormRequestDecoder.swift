@@ -12,6 +12,8 @@ public import Hummingbird
 public struct URLFormRequestDecoder: RequestDecoder {
     public let decoder = URLEncodedFormDecoder()
 
+    public init() {}
+
     public func decode<T>(
         _ type: T.Type,
         from request: Request,

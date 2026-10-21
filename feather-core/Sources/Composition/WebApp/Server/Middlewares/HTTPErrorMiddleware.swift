@@ -1,3 +1,4 @@
+import FeatherWebShared
 public import Hummingbird
 
 public struct HTTPErrorMiddleware<Context: RequestContext>: RouterMiddleware {

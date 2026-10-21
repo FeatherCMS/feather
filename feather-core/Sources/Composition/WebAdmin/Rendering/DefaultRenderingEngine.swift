@@ -1,5 +1,6 @@
 import CSS
 public import FeatherModuleKit
+public import FeatherWebShared
 public import HTML
 public import Hummingbird
 import SGML
@@ -9,8 +10,7 @@ public import WebComponents
 public struct DefaultRenderingEngine: RenderingEngine {
     public let publicOrigins: AppPublicOriginConfiguration
     public let adminEvents: any EventPublisher
-    public let richContentEditorBlocks:
-        [AdminRichContentEditorBlockDefinition]
+    public let richContentEditorBlocks: [AdminRichContentEditorBlockDefinition]
     public let adminPageRenderContextProvider:
         any AdminPageRenderContextProvider
 
