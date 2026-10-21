@@ -11,7 +11,7 @@ import WebDomain
 
 public struct RemoveMetadata: UseCase {
     struct Action: PermissionAction {
-        let key = Permissions.Admin.access
+        let key = Admin.Permissions.access
     }
 
     let authorizer: any Authorizer

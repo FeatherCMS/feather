@@ -3,6 +3,7 @@ import AccountDomain
 import AuthDomain
 public import FeatherApplication
 public import FeatherModuleKit
+public import UserModule
 import FeatherMail
 import SystemApplication
 import UserApplication

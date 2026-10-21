@@ -4,6 +4,7 @@ public import AuthDomain
 public import FeatherModuleKit
 public import SystemApplication
 public import UserDomain
+public import UserModule
 
 public struct WriteInvitationWithVariable: Scope {
     public let invitation: any InvitationRepository

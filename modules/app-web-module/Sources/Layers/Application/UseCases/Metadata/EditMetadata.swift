@@ -14,7 +14,7 @@ public import struct Foundation.Date
 public struct EditMetadata: UseCase {
 
     struct Action: PermissionAction {
-        let key = Permissions.Admin.access
+        let key = Admin.Permissions.access
     }
 
     struct Error: UseCaseError {

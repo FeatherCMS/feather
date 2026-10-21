@@ -3,6 +3,7 @@ public import AccountDomain
 public import FeatherModuleKit
 public import SystemApplication
 public import UserDomain
+public import UserModule
 
 public struct WriteInvitationOnlyWithVariable: Scope {
     public let invitation: any InvitationRepository

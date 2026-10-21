@@ -1,6 +1,7 @@
 public import AuthDomain
 public import FeatherModuleKit
 public import UserDomain
+public import UserModule
 
 public struct WriteAccount: Scope {
     public let identity: any Identity.Repository.Interface

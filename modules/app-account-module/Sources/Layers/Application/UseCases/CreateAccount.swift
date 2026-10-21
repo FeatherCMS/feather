@@ -3,6 +3,7 @@ import AuthDomain
 public import FeatherApplication
 public import FeatherModuleKit
 public import FeatherDomain
+public import UserModule
 import UserApplication
 import UserDomain
 

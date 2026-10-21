@@ -8,6 +8,7 @@ import AccountDomain
 import AuthDomain
 public import FeatherApplication
 public import FeatherModuleKit
+public import UserModule
 public import UserApplication
 import UserDomain
 

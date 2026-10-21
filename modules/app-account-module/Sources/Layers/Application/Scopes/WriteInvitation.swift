@@ -8,6 +8,7 @@ public import AuthDomain
 public import AccountDomain
 public import FeatherModuleKit
 public import UserDomain
+public import UserModule
 
 public struct WriteInvitation: Scope {
     public let invitation: any InvitationRepository
