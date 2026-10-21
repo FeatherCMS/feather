@@ -1,4 +1,5 @@
 import AuthAdminAPI
+import FeatherWebShared
 import FeatherWebAdmin
 import OpenAPIRuntime
 

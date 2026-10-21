@@ -225,6 +225,7 @@ let package = Package(
             name: "AccountFrontend",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
 
                 .product(name: "AuthAdminAPI", package: "app-auth-module"),
                 .product(name: "AuthAppAPI", package: "app-auth-module"),

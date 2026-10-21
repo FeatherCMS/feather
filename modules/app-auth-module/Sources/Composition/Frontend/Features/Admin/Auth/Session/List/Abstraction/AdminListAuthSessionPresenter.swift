@@ -1,4 +1,5 @@
 import AuthContracts
+import FeatherWebShared
 import FeatherWebAdmin
 import Hummingbird
 import OpenAPIRuntime

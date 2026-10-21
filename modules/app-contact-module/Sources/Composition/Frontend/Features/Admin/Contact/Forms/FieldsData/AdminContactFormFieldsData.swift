@@ -1,4 +1,5 @@
 import ContactAdminAPI
+import FeatherWebShared
 import FeatherAdmin
 import Foundation
 import Hummingbird

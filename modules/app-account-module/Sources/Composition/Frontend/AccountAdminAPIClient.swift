@@ -1,4 +1,5 @@
 public import AccountAdminAPI
+import FeatherWebShared
 import AsyncHTTPClient
 public import FeatherWebAdmin
 public import Foundation

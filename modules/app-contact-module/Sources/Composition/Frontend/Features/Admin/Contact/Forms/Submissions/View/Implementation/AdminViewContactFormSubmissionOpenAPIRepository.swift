@@ -1,4 +1,5 @@
 import ContactAdminAPI
+import FeatherWebShared
 import FeatherWebAdmin
 import OpenAPIRuntime
 

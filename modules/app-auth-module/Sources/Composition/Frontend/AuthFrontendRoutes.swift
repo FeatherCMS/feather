@@ -1,4 +1,5 @@
 import AuthAdminAPI
+import FeatherWebShared
 import AuthAppAPI
 import CSS
 public import FeatherWebAdmin

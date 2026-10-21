@@ -1,4 +1,5 @@
 import BlogAdminAPI
+import FeatherWebShared
 import BlogAppAPI
 import BlogContracts
 import FeatherWebAdmin

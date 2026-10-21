@@ -1,4 +1,5 @@
 import Foundation
+import FeatherWebShared
 import FeatherWebAdmin
 import Testing
 

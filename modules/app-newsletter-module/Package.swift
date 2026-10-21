@@ -191,6 +191,7 @@ let package = Package(
             name: "NewsletterFrontend",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),

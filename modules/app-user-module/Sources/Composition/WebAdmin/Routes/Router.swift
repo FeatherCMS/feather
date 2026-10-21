@@ -1,4 +1,5 @@
 public import FeatherWebAdmin
+public import FeatherWebShared
 public import Hummingbird
 import UserModule
 

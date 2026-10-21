@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import SystemModule
 
 extension Permission.Edit.Interactor {

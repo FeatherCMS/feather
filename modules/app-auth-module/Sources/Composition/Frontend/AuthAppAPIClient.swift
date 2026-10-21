@@ -1,4 +1,5 @@
 import AsyncHTTPClient
+import FeatherWebShared
 import AuthAdminAPI
 public import AuthAppAPI
 import CSS

@@ -219,6 +219,7 @@ let package = Package(
             name: "NewsFrontend",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
 
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "MediaFrontend", package: "app-media-module"),

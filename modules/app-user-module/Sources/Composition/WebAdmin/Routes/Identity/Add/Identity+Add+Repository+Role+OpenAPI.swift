@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import OpenAPIRuntime
 import UserAdminAPI
 import UserModule

@@ -1,4 +1,5 @@
-public import FeatherWebApp
+import FeatherWebApp
+public import FeatherWebShared
 import Foundation
 import HTTPTypes
 public import Hummingbird

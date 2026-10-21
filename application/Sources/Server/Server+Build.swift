@@ -1,4 +1,5 @@
 import Hummingbird
+import FeatherWebShared
 import Logging
 import FeatherDatabase
 import FeatherDatabasePostgres

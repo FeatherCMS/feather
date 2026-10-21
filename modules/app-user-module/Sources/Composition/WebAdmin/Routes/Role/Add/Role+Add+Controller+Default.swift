@@ -1,4 +1,5 @@
 import FeatherModuleKit
+import FeatherWebShared
 import FeatherValidation
 import FeatherWebAdmin
 import HTML

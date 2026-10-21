@@ -177,6 +177,7 @@ let package = Package(
             name: "AnalyticsFrontend",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
 
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),

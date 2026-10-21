@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Testing
 
 @testable import WebApp

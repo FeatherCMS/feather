@@ -1,4 +1,5 @@
 import AccountAppAPI
+import FeatherWebShared
 import FeatherWebAdmin
 import MediaFrontend
 import OpenAPIRuntime

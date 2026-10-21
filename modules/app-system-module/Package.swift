@@ -194,6 +194,7 @@ let package = Package(
             name: "SystemWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
 
                 .target(name: "SystemModule"),
                 .target(name: "SystemAdminAPI"),

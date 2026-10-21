@@ -1,4 +1,5 @@
 import AsyncHTTPClient
+import FeatherWebShared
 public import FeatherWebAdmin
 public import Foundation
 public import MediaFrontend

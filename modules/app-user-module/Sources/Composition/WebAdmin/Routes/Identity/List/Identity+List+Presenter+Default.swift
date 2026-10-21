@@ -1,4 +1,5 @@
 import FeatherModuleKit
+import FeatherWebShared
 import FeatherWebAdmin
 import Hummingbird
 import UserAdminAPI

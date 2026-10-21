@@ -1,4 +1,5 @@
 public import FeatherWebAdmin
+import FeatherWebShared
 import FeatherValidation
 import HTML
 public import Hummingbird

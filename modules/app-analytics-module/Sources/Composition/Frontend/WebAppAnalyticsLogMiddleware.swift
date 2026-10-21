@@ -1,4 +1,5 @@
 import AnalyticsAppAPI
+import FeatherWebShared
 public import FeatherWebAdmin
 public import Foundation
 import HTTPTypes

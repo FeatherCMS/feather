@@ -259,6 +259,7 @@ let package = Package(
             name: "WebApp",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "WebContracts", package: "app-web-module"),
 
@@ -412,6 +413,7 @@ let package = Package(
             dependencies: [
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "AccountFrontend", package: "app-account-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),

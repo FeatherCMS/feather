@@ -1,4 +1,5 @@
 import AsyncHTTPClient
+import FeatherWebShared
 public import ContactAdminAPI
 public import ContactAppAPI
 public import FeatherWebAdmin

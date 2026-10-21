@@ -1,4 +1,5 @@
 import BlogFrontend
+import FeatherWebShared
 import MediaFrontend
 import ContactFrontend
 import NewsletterFrontend

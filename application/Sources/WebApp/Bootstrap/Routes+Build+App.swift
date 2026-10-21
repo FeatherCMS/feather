@@ -1,4 +1,5 @@
 import Foundation
+import FeatherWebShared
 import FeatherModuleKit
 import BlogFrontend
 import MediaFrontend

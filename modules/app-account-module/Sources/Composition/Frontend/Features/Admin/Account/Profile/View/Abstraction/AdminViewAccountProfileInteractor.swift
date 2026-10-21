@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 
 protocol AdminViewAccountProfileInteractor: Sendable {
     func getAccountProfile() async throws -> AdminAccountProfileModel

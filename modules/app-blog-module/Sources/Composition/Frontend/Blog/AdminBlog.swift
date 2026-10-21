@@ -1,4 +1,5 @@
 import BlogAdminAPI
+import FeatherWebShared
 import BlogAppAPI
 public import FeatherWebAdmin
 public import FeatherModuleKit

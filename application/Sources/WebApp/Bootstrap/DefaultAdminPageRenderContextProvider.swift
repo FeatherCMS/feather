@@ -1,4 +1,5 @@
 import AccountFrontend
+import FeatherWebShared
 import AccountAppAPI
 import FeatherWebAdmin
 import FeatherModuleKit

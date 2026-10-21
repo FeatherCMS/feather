@@ -1,4 +1,5 @@
 import CSS
+import FeatherWebShared
 import FeatherWebAdmin
 import Hummingbird
 import SystemModule

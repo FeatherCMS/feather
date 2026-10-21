@@ -223,6 +223,7 @@ let package = Package(
             name: "WebFrontend",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Markdown", package: "swift-markdown"),
                 .product(name: "Mustache", package: "swift-mustache"),

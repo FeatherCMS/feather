@@ -1,4 +1,5 @@
 import SystemModule
+import FeatherWebShared
 import Foundation
 import FeatherModuleKit
 import WebApplication

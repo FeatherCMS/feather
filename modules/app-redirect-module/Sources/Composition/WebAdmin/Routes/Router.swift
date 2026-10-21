@@ -1,4 +1,5 @@
 public import FeatherWebAdmin
+public import FeatherWebShared
 public import Hummingbird
 public import RedirectModule
 import RedirectApplication

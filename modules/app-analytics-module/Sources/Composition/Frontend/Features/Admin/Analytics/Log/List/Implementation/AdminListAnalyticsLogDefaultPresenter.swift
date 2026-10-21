@@ -1,4 +1,5 @@
 import AnalyticsContracts
+import FeatherWebShared
 import FeatherWebAdmin
 import FeatherModuleKit
 import Hummingbird

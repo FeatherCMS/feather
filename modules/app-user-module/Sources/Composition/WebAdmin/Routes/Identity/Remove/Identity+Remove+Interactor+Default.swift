@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import UserModule
 
 extension Identity.Remove.Interactor {

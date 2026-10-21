@@ -1,4 +1,5 @@
 import ContactContracts
+import FeatherWebShared
 import FeatherWebAdmin
 import FeatherValidation
 import HTML

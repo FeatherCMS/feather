@@ -1,4 +1,5 @@
 public import FeatherWebAdmin
+import FeatherWebShared
 public import Hummingbird
 
 public protocol AdminViewAnalyticsNotFoundController: Sendable {

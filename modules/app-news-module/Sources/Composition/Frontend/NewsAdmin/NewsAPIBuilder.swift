@@ -1,4 +1,5 @@
 public import FeatherWebAdmin
+import FeatherWebShared
 public import Foundation
 
 public struct NewsAPIBuilder: Sendable {

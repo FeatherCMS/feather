@@ -1,4 +1,5 @@
-public import FeatherWebAdmin
+import FeatherWebAdmin
+public import FeatherWebShared
 public import FeatherModuleKit
 import OpenAPIRuntime
 import RedirectAdminAPI

@@ -1,4 +1,5 @@
 public import AnalyticsAdminAPI
+import FeatherWebShared
 public import AnalyticsAppAPI
 import AsyncHTTPClient
 public import FeatherWebAdmin

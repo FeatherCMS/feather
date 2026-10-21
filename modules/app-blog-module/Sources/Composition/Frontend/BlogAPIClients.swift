@@ -1,4 +1,5 @@
 import AsyncHTTPClient
+import FeatherWebShared
 public import BlogAdminAPI
 public import BlogAppAPI
 public import FeatherWebAdmin

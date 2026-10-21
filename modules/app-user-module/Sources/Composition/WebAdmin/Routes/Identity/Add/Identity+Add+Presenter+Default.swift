@@ -1,4 +1,5 @@
 import FeatherValidation
+import FeatherWebShared
 import FeatherWebAdmin
 import Hummingbird
 import UserModule

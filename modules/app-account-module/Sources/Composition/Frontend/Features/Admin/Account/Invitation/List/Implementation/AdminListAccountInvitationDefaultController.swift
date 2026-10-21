@@ -1,4 +1,5 @@
 import AccountContracts
+import FeatherWebShared
 import FeatherWebAdmin
 import Hummingbird
 

@@ -1,4 +1,5 @@
 import AsyncHTTPClient
+import FeatherWebShared
 public import FeatherWebAdmin
 import FeatherValidation
 public import Foundation

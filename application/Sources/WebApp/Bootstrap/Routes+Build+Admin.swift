@@ -1,4 +1,5 @@
 import SystemModule
+import FeatherWebShared
 import FeatherModuleKit
 import WebApplication
 import BlogFrontend

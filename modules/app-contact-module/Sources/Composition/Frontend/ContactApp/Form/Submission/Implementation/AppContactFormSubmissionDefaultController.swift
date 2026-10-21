@@ -1,4 +1,5 @@
 import ContactAppAPI
+import FeatherWebShared
 import FeatherWebAdmin
 import FeatherValidation
 import Foundation

@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 
 struct AdminEditNewsletterCampaignDefaultInteractor:
     AdminEditNewsletterCampaignInteractor

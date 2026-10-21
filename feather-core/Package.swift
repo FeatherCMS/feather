@@ -21,7 +21,6 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
-
 let package = Package(
     name: "feather-core",
     platforms: [
@@ -36,7 +35,10 @@ let package = Package(
         .library(name: "FeatherApplication", targets: ["FeatherApplication"]),
         .library(name: "FeatherModuleKit", targets: ["FeatherModuleKit"]),
         .library(name: "FeatherTesting", targets: ["FeatherTesting"]),
-        .library(name: "FeatherInfrastructure", targets: ["FeatherInfrastructure"]),
+        .library(
+            name: "FeatherInfrastructure",
+            targets: ["FeatherInfrastructure"]
+        ),
         .library(name: "FeatherBackend", targets: ["FeatherBackend"]),
         .library(
             name: "FeatherOpenAPIGenerator",
@@ -44,6 +46,7 @@ let package = Package(
         ),
         .library(name: "FeatherWebApp", targets: ["FeatherWebApp"]),
         .library(name: "FeatherWebAdmin", targets: ["FeatherWebAdmin"]),
+        .library(name: "FeatherWebShared", targets: ["FeatherWebShared"]),
     ],
     dependencies: [
         .package(
@@ -119,7 +122,8 @@ let package = Package(
             from: "7.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            url:
+                "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
         ),
         .package(
@@ -180,12 +184,18 @@ let package = Package(
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "FeatherSQL", package: "feather-sql"),
-                .product(name: "FeatherSQLPostgres", package: "feather-sql-postgres"),
+                .product(
+                    name: "FeatherSQLPostgres",
+                    package: "feather-sql-postgres"
+                ),
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "Subprocess", package: "swift-subprocess"),
-                .product(name: "ServiceLifecycle", package: "swift-service-lifecycle"),
+                .product(
+                    name: "ServiceLifecycle",
+                    package: "swift-service-lifecycle"
+                ),
                 .product(name: "NanoID", package: "swift-nanoid"),
                 .product(name: "BCrypt", package: "swift-bcrypt"),
                 .product(name: "NIOPosix", package: "swift-nio"),
@@ -200,7 +210,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "NIOHTTP1", package: "swift-nio"),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
 
                 .target(name: "FeatherModuleKit"),
                 .target(name: "FeatherInfrastructure"),
@@ -222,7 +235,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
                 .target(name: "FeatherModuleKit"),
             ],
             path: "Sources/Composition/WebShared",
@@ -249,9 +265,18 @@ let package = Package(
                 .product(name: "SGML", package: "swift-web-standards"),
                 .product(name: "SVG", package: "swift-web-standards"),
                 .product(name: "WebComponents", package: "swift-web-standards"),
-                .product(name: "FeatherValidation", package: "feather-validation"),
-                .product(name: "FeatherValidationFoundation", package: "feather-validation"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(
+                    name: "FeatherValidation",
+                    package: "feather-validation"
+                ),
+                .product(
+                    name: "FeatherValidationFoundation",
+                    package: "feather-validation"
+                ),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "NIOCore", package: "swift-nio"),
 
@@ -280,10 +305,13 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherSQL", package: "feather-sql"),
-                .product(name: "FeatherSQLPostgres", package: "feather-sql-postgres"),
+                .product(
+                    name: "FeatherSQLPostgres",
+                    package: "feather-sql-postgres"
+                ),
                 .target(name: "FeatherModuleKit"),
                 .target(name: "FeatherDomain"),
-                .target(name: "FeatherInfrastructure")
+                .target(name: "FeatherInfrastructure"),
             ],
             swiftSettings: swiftSettings
         ),

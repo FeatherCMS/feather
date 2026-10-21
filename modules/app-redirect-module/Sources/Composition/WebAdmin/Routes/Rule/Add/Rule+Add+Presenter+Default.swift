@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import FeatherValidation
 import Hummingbird
 import RedirectModule
