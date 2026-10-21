@@ -12,7 +12,7 @@ extension Role.List.Presenter {
         let routes: Role.Router.Routes
 
         func renderListPage(
-            model: AdminListModel<Components.Schemas.UserRoleListItemSchema>,
+            model: AdminListModel<Components.Schemas.UserRoleQueryItemSchema>,
             permissions: Set<PermissionKey>,
             search: String?
         ) async throws -> HTMLResponse {

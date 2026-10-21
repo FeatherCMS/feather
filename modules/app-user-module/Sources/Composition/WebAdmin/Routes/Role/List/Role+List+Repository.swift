@@ -15,7 +15,7 @@ extension Role.List.Repository {
             search: String?
         ) async throws
             -> UserAdminAPI.Components.Responses
-            .UserRoleListItemSearchSchemaSearchResponse
+            .UserRoleQueryItemSearchSchemaSearchResponse
 
     }
 }

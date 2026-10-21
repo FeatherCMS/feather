@@ -45,7 +45,7 @@ struct JobListTests {
         let request = JSONRequest(
             method: .post,
             path: "/api/v1/admin/system/jobs/query",
-            body: Components.Schemas.SystemJobSearchRequestQuerySchema(
+            body: Components.Schemas.SystemJobQueryItemSearchRequestQuerySchema(
                 page: .init(size: 10, number: 2),
                 sort: [
                     .init(field: .queuedAt, direction: .desc)

@@ -8,7 +8,7 @@ import WebBuilders
 import WebComponents
 
 struct SystemJobTableContent: Component {
-    let jobs: [Components.Schemas.SystemJobSchema]
+    let jobs: [Components.Schemas.SystemJobQueryItemSchema]
     let permissions: AdminListActions
     let pageState: AdminListPageState
     let search: String?

@@ -155,14 +155,21 @@ Within a route feature, keep its files together under
   `List`, `Search`, `Remove`). Avoid mixing synonyms such as `Create`/`Add`,
   `Update`/`Edit`, or `Get`/`Detail` unless the external API contract requires
   that distinction.
-- Keep the HTTP/OpenAPI operation named `Query` when it accepts a query
-  document and returns a filtered, paginated result (for example,
-  `POST /identities/query`, operation ID `userIdentityQuery`). The application
-  use-case remains `Identity.Search`: gateways translate the generated `Query`
-  request into `Search.Input`, invoke `Search.UseCase` once, and map its
-  `items` and `total` to the response. Do not expose a parallel legacy `GET
-  /identities/` list operation or call the HTTP operation `Search`; reserve
-  `Query` for the transport endpoint and `Search` for the application action.
+- `List` and `Query` are distinct HTTP/OpenAPI operations and may coexist for
+  the same resource. Use `GET /<resource>` with a simple set of URL parameters
+  and a bare array response for lightweight lists, especially autocomplete and
+  reference selectors. Use `POST /<resource>/query` for structured filters,
+  sorting, pagination, and a response that includes the normalized query and
+  total result count; table views should use this operation. Do not treat one
+  as a legacy duplicate of the other just because they return similar items.
+  Keep their OpenAPI item and response schemas separate: `List` must reference
+  `List`-owned schemas and `Query` must reference `Query`-owned schemas. Never
+  reuse a `ListItem` schema in a `Query` response or a `QueryItem` schema in a
+  `List` response, even when their fields currently match. Shared primitive
+  field schemas may remain under the entity's `Schemas` namespace.
+  Keep the HTTP/OpenAPI operation named `Query` (not `Search`); its application
+  use-case remains `Entity.Search`, and the gateway translates the generated
+  `Query` request into `Search.Input` and maps the result to the query response.
 - Implement partial updates consistently with System: every PATCH operation
   has a required, entity-specific `updateMask` query parameter listing the
   fields being changed, plus a PATCH-specific request schema and documented

@@ -5,6 +5,9 @@ public import struct Foundation.Data
 public import struct Foundation.Date
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
+    /// - Remark: HTTP `GET /api/v1/admin/user/identities`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/get(userIdentityList)`.
+    func userIdentityList(_ input: Operations.UserIdentityList.Input) async throws -> Operations.UserIdentityList.Output
     /// Create user identity
     ///
     /// Creates a user identity
@@ -27,6 +30,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PUT /api/v1/admin/user/identities/{userIdentityId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)`.
     func userIdentityPut(_ input: Operations.UserIdentityPut.Input) async throws -> Operations.UserIdentityPut.Output
+    /// - Remark: HTTP `GET /api/v1/admin/user/roles`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/get(userRoleList)`.
+    func userRoleList(_ input: Operations.UserRoleList.Input) async throws -> Operations.UserRoleList.Output
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)`.
     func userRolePost(_ input: Operations.UserRolePost.Input) async throws -> Operations.UserRolePost.Output
@@ -49,6 +55,17 @@ public protocol APIProtocol: Sendable {
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
+    /// - Remark: HTTP `GET /api/v1/admin/user/identities`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/get(userIdentityList)`.
+    public func userIdentityList(
+        query: Operations.UserIdentityList.Input.Query = .init(),
+        headers: Operations.UserIdentityList.Input.Headers = .init()
+    ) async throws -> Operations.UserIdentityList.Output {
+        try await userIdentityList(Operations.UserIdentityList.Input(
+            query: query,
+            headers: headers
+        ))
+    }
     /// Create user identity
     ///
     /// Creates a user identity
@@ -123,6 +140,17 @@ extension APIProtocol {
             path: path,
             headers: headers,
             body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/user/roles`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/get(userRoleList)`.
+    public func userRoleList(
+        query: Operations.UserRoleList.Input.Query = .init(),
+        headers: Operations.UserRoleList.Input.Headers = .init()
+    ) async throws -> Operations.UserRoleList.Output {
+        try await userRoleList(Operations.UserRoleList.Input(
+            query: query,
+            headers: headers
         ))
     }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.

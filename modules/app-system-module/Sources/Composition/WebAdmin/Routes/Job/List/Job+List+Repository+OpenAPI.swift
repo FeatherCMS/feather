@@ -11,7 +11,7 @@ extension Job.List.Repository {
             page: Int,
             search: String?,
             status: Int?
-        ) async throws -> Components.Schemas.SystemJobSearchSchema {
+        ) async throws -> Components.Schemas.SystemJobQueryItemSearchSchema {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.systemJobQuery(
                     headers: .init(accept: [.init(contentType: .json)]),

@@ -6,7 +6,7 @@ extension Job.Query {
         var operationId: String? { "systemJobQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: Job.Get.Schema(),
+                items: Job.Query.Schemas.Item(),
                 sortFieldKeys: ["queuedAt"],
                 filters: SearchFilterSchema(
                     additionalProperties: [

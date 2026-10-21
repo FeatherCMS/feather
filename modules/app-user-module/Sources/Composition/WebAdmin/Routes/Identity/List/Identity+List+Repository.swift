@@ -15,7 +15,7 @@ extension Identity.List.Repository {
             role: String?
         ) async throws
             -> UserAdminAPI.Components.Responses
-            .UserIdentityListItemSearchSchemaSearchResponse
+            .UserIdentityQueryItemSearchSchemaSearchResponse
 
     }
 }

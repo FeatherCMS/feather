@@ -12,7 +12,7 @@ extension Identity.List.Interactor {
             search: String?,
             role: String?
         ) async throws -> AdminListModel<
-            Components.Schemas.UserIdentityListItemSchema
+            Components.Schemas.UserIdentityQueryItemSchema
         > {
             do {
                 let response = try await repository.list(

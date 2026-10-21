@@ -12,7 +12,7 @@ extension Role.List.Repository {
             search: String?
         ) async throws
             -> UserAdminAPI.Components.Responses
-            .UserRoleListItemSearchSchemaSearchResponse
+            .UserRoleQueryItemSearchSchemaSearchResponse
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =

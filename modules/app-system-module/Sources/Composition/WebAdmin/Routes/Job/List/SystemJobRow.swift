@@ -1,5 +1,5 @@
-import FeatherWebAdmin
 import FeatherModuleKit
+import FeatherWebAdmin
 import Foundation
 import HTML
 import Hummingbird
@@ -9,7 +9,7 @@ import WebBuilders
 import WebComponents
 
 struct SystemJobRow: Component {
-    let job: Components.Schemas.SystemJobSchema
+    let job: Components.Schemas.SystemJobQueryItemSchema
     let permissions: AdminListActions
     let routes: Job.Router.Routes
 
@@ -25,7 +25,7 @@ struct SystemJobRow: Component {
     }
 
     func html(context: inout BuilderContext) -> Tr {
-        let payload = SystemJobPayload(job: job)
+        let payload = SystemJobPayload(payload: job.payload)
         return Tr {
             Td(payload.name)
                 .data("label", "Job")

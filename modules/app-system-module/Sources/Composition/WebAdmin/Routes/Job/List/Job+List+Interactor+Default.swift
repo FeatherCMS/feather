@@ -1,5 +1,5 @@
-import FeatherWebAdmin
 import FeatherModuleKit
+import FeatherWebAdmin
 import SystemAdminAPI
 import SystemModule
 
@@ -12,7 +12,7 @@ extension Job.List.Interactor {
             search: String?,
             status: Int?
         ) async throws -> Job.List.Model {
-            let result: Components.Schemas.SystemJobSearchSchema
+            let result: Components.Schemas.SystemJobQueryItemSearchSchema
             do {
                 result = try await repository.search(
                     page: page,

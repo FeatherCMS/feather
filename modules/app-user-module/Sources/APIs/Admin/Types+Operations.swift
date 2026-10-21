@@ -5,6 +5,224 @@ public import struct Foundation.Data
 public import struct Foundation.Date
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
+    /// - Remark: HTTP `GET /api/v1/admin/user/identities`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/get(userIdentityList)`.
+    public enum UserIdentityList {
+        public static let id: Swift.String = "userIdentityList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// Search identity names
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/query/search`.
+                public var search: Components.Parameters.IdentityParametersSearch?
+                /// Filter identities by role name
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/query/role`.
+                public var role: Components.Parameters.IdentityParametersRoleFilter?
+                /// Defaults to 20; values are clamped to 1-100
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/query/limit`.
+                public var limit: Components.Parameters.IdentityParametersListLimit?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - search: Search identity names
+                ///   - role: Filter identities by role name
+                ///   - limit: Defaults to 20; values are clamped to 1-100
+                public init(
+                    search: Components.Parameters.IdentityParametersSearch? = nil,
+                    role: Components.Parameters.IdentityParametersRoleFilter? = nil,
+                    limit: Components.Parameters.IdentityParametersListLimit? = nil
+                ) {
+                    self.search = search
+                    self.role = role
+                    self.limit = limit
+                }
+            }
+            public var query: Operations.UserIdentityList.Input.Query
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.UserIdentityList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - headers:
+            public init(
+                query: Operations.UserIdentityList.Input.Query = .init(),
+                headers: Operations.UserIdentityList.Input.Headers = .init()
+            ) {
+                self.query = query
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// User identity list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/get(userIdentityList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.UserIdentityListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.UserIdentityListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.UserIdentityList.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.UserIdentityList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/get(userIdentityList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserIdentityList.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserIdentityList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.UserIdentityList.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.UserIdentityList.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/get(userIdentityList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserIdentityList.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserIdentityList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
     /// Create user identity
     ///
     /// Creates a user identity
@@ -413,7 +631,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.UserIdentityListItemSearchRequestQuerySchema)
+                case json(Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.UserIdentityQuery.Input.Body
             /// Creates a new `Input`.
@@ -435,12 +653,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/query/post(userIdentityQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.UserIdentityListItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.UserIdentityQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.UserIdentityListItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.UserIdentityQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -1422,6 +1640,217 @@ public enum Operations {
             }
         }
     }
+    /// - Remark: HTTP `GET /api/v1/admin/user/roles`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/get(userRoleList)`.
+    public enum UserRoleList {
+        public static let id: Swift.String = "userRoleList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/GET/query`.
+            public struct Query: Sendable, Hashable {
+                /// Search role keys, names, and notes
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/GET/query/search`.
+                public var search: Components.Parameters.RoleParametersSearch?
+                /// Defaults to 20; values are clamped to 1-100
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/GET/query/limit`.
+                public var limit: Components.Parameters.RoleParametersListLimit?
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - search: Search role keys, names, and notes
+                ///   - limit: Defaults to 20; values are clamped to 1-100
+                public init(
+                    search: Components.Parameters.RoleParametersSearch? = nil,
+                    limit: Components.Parameters.RoleParametersListLimit? = nil
+                ) {
+                    self.search = search
+                    self.limit = limit
+                }
+            }
+            public var query: Operations.UserRoleList.Input.Query
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.UserRoleList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - headers:
+            public init(
+                query: Operations.UserRoleList.Input.Query = .init(),
+                headers: Operations.UserRoleList.Input.Headers = .init()
+            ) {
+                self.query = query
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// User role list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/get(userRoleList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.UserRoleListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.UserRoleListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.UserRoleList.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.UserRoleList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/get(userRoleList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.UserRoleList.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.UserRoleList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.UserRoleList.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.UserRoleList.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/get(userRoleList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.UserRoleList.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.UserRoleList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)`.
     public enum UserRolePost {
@@ -1826,7 +2255,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.UserRoleListItemSearchRequestQuerySchema)
+                case json(Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.UserRoleQuery.Input.Body
             /// Creates a new `Input`.
@@ -1848,12 +2277,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/query/post(userRoleQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.UserRoleListItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.UserRoleQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.UserRoleListItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.UserRoleQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):

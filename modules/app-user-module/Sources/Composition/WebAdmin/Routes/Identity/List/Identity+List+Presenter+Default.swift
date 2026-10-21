@@ -14,7 +14,7 @@ extension Identity.List.Presenter {
 
         func renderListPage(
             model: AdminListModel<
-                Components.Schemas.UserIdentityListItemSchema
+                Components.Schemas.UserIdentityQueryItemSchema
             >,
             permissions: Set<PermissionKey>,
             search: String?,

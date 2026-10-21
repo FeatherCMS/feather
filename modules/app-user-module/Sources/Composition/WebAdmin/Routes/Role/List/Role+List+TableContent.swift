@@ -10,7 +10,7 @@ import WebComponents
 extension Role.List {
     struct TableContent: Component {
         let routes: Role.Router.Routes
-        let roles: [Components.Schemas.UserRoleListItemSchema]
+        let roles: [Components.Schemas.UserRoleQueryItemSchema]
         let permissions: AdminListActions
         let pageState: AdminListPageState
         let search: String?

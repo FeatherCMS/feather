@@ -6,6 +6,18 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/parameters` section of the OpenAPI document.
     public enum Parameters {
+        /// Search identity names
+        ///
+        /// - Remark: Generated from `#/components/parameters/IdentityParametersSearch`.
+        public typealias IdentityParametersSearch = Components.Schemas.UserIdentitySearch
+        /// Filter identities by role name
+        ///
+        /// - Remark: Generated from `#/components/parameters/IdentityParametersRoleFilter`.
+        public typealias IdentityParametersRoleFilter = Components.Schemas.UserRoleNameField
+        /// Defaults to 20; values are clamped to 1-100
+        ///
+        /// - Remark: Generated from `#/components/parameters/IdentityParametersListLimit`.
+        public typealias IdentityParametersListLimit = Components.Schemas.UserIdentityListLimit
         /// User identity id
         ///
         /// - Remark: Generated from `#/components/parameters/UserIdentityIdParameter`.
@@ -14,6 +26,14 @@ extension Components {
         ///
         /// - Remark: Generated from `#/components/parameters/IdentityParametersUpdateMask`.
         public typealias IdentityParametersUpdateMask = Components.Schemas.UserIdentityUpdateMask
+        /// Search role keys, names, and notes
+        ///
+        /// - Remark: Generated from `#/components/parameters/RoleParametersSearch`.
+        public typealias RoleParametersSearch = Components.Schemas.UserRoleSearch
+        /// Defaults to 20; values are clamped to 1-100
+        ///
+        /// - Remark: Generated from `#/components/parameters/RoleParametersListLimit`.
+        public typealias RoleParametersListLimit = Components.Schemas.UserRoleListLimit
         /// UserRole id
         ///
         /// - Remark: Generated from `#/components/parameters/RoleParametersID`.

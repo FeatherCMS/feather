@@ -9,7 +9,7 @@ extension AdminAPIGateway {
     public func systemJobQuery(
         _ input: Operations.SystemJobQuery.Input
     ) async throws -> Operations.SystemJobQuery.Output {
-        let query: Components.Schemas.SystemJobSearchRequestQuerySchema
+        let query: Components.Schemas.SystemJobQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -39,7 +39,7 @@ extension AdminAPIGateway {
 
         let responseSort = query.sort.map {
             $0.map {
-                Components.Schemas.SystemJobSearchResponseQuerySchema
+                Components.Schemas.SystemJobQueryItemSearchResponseQuerySchema
                     .SortPayloadPayload(
                         field: .queuedAt,
                         direction: $0.direction
@@ -69,7 +69,8 @@ extension AdminAPIGateway {
     }
 
     private func searchPage(
-        from query: Components.Schemas.SystemJobSearchRequestQuerySchema
+        from query: Components.Schemas
+            .SystemJobQueryItemSearchRequestQuerySchema
     ) -> Search.Page {
         let defaults = Search.Page()
         return
@@ -91,7 +92,7 @@ extension AdminAPIGateway {
 
     private func jobSearchItemSchema(
         from job: Job.Detail.Output
-    ) -> Components.Schemas.SystemJobSchema {
+    ) -> Components.Schemas.SystemJobQueryItemSchema {
         .init(
             id: job.id,
             queueName: job.queueName,

@@ -14,19 +14,14 @@ extension Identity.Detail.Repository.Role {
             guard !ids.isEmpty else { return [] }
 
             return try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.userRoleQuery(
-                    headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(
-                        .init(
-                            page: .init(size: 500, number: 1),
-                            filters: .init(search: nil)
-                        )
-                    )
+                let response = try await client.userRoleList(
+                    query: .init(limit: 100),
+                    headers: .init(accept: [.init(contentType: .json)])
                 )
                 switch response {
                 case .ok(let ok):
                     var namesByID: [String: String] = [:]
-                    for item in try ok.body.json.data.items {
+                    for item in try ok.body.json {
                         if let name = item.name {
                             namesByID[item.id] = name
                         }

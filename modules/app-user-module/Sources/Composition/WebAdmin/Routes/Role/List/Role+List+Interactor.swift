@@ -14,7 +14,7 @@ extension Role.List.Interactor {
             size: Int,
             search: String?
         ) async throws -> AdminListModel<
-            Components.Schemas.UserRoleListItemSchema
+            Components.Schemas.UserRoleQueryItemSchema
         >
     }
 }

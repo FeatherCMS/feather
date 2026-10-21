@@ -1,6 +1,7 @@
 public enum Identity {
     public enum Post {}
     public enum Delete {}
+    public enum List {}
     public enum Query {}
     public enum Get {}
     public enum Put {}

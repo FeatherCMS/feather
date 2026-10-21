@@ -40,7 +40,7 @@ struct RoleQueryTests {
             method: .post,
             path: "/api/v1/admin/user/roles/query",
             body: Components.Schemas
-                .UserRoleListItemSearchRequestQuerySchema(
+                .UserRoleQueryItemSearchRequestQuerySchema(
                     page: .init(size: 20, number: 1),
                     filters: .init(search: "admin")
                 )

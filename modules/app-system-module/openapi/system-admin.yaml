@@ -480,11 +480,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SystemJobSearchRequestQuerySchema'
+              $ref: '#/components/schemas/SystemJobQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/SystemJobSearchSchemaSearchResponse'
+          $ref: '#/components/responses/SystemJobQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -1043,7 +1043,7 @@ components:
       type: string
       example: Application default timezone.
       nullable: true
-    SystemJobSearchRequestQuerySchema:
+    SystemJobQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1076,18 +1076,18 @@ components:
       - filters
     SystemJobStatusField:
       type: integer
-    SystemJobSearchSchema:
+    SystemJobQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/SystemJobSearchResponseQuerySchema'
+          $ref: '#/components/schemas/SystemJobQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/SystemJobSchema'
+                $ref: '#/components/schemas/SystemJobQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -1097,7 +1097,7 @@ components:
       required:
       - query
       - data
-    SystemJobSearchResponseQuerySchema:
+    SystemJobQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1129,7 +1129,7 @@ components:
       required:
       - page
       - filters
-    SystemJobSchema:
+    SystemJobQueryItemSchema:
       type: object
       properties:
         id:
@@ -1155,6 +1155,28 @@ components:
       type: string
     SystemJobIdField:
       type: string
+    SystemJobSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        queueName:
+          type: string
+        status:
+          type: integer
+        workerId:
+          $ref: '#/components/schemas/SystemJobWorkerIdField'
+        lastModified:
+          type: number
+          format: double
+        payload:
+          type: string
+      required:
+      - id
+      - queueName
+      - status
+      - lastModified
+      - payload
   responses:
     SystemPermissionListResponse:
       description: SystemPermission list response
@@ -1194,12 +1216,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SystemVariableQueryItemSearchSchema'
-    SystemJobSearchSchemaSearchResponse:
+    SystemJobQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SystemJobSearchSchema'
+            $ref: '#/components/schemas/SystemJobQueryItemSearchSchema'
     SystemJobResponse:
       description: Worker job response
       content:

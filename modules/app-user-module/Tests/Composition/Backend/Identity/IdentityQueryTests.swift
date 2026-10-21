@@ -42,7 +42,7 @@ struct IdentityQueryTests {
             method: .post,
             path: "/api/v1/admin/user/identities/query",
             body: Components.Schemas
-                .UserIdentityListItemSearchRequestQuerySchema(
+                .UserIdentityQueryItemSearchRequestQuerySchema(
                     page: .init(size: 20, number: 1),
                     filters: .init(search: "Ada", role: "admin")
                 )

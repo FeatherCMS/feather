@@ -17,7 +17,9 @@ extension Identity.Patch {
         var responseMap: ResponseMap {
             [
                 200: UserIdentityDetailResponse().reference(),
-                400: DefaultHTTPErrorContentResponse(description: "Bad Request"),
+                400: DefaultHTTPErrorContentResponse(
+                    description: "Bad Request"
+                ),
                 404: DefaultHTTPErrorContentResponse(
                     description: "UserIdentity not found"
                 ),
@@ -37,7 +39,8 @@ extension Identity.Patch {
         var propertyMap: SchemaMap {
             [
                 "name": UserIdentityNameField().reference(required: false),
-                "roleIds": UserIdentityRoleIdsField().reference(required: false),
+                "roleIds": Identity.Schemas.RoleIDs()
+                    .reference(required: false),
                 "status": UserIdentityStatusField().reference(required: false),
             ]
         }

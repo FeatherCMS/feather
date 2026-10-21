@@ -10,18 +10,13 @@ extension Identity.Edit.Repository.Role {
         let api: API.Client
         func list() async throws -> [Identity.Edit.RoleOption] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.userRoleQuery(
-                    headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(
-                        .init(
-                            page: .init(size: 500, number: 1),
-                            filters: .init(search: nil)
-                        )
-                    )
+                let response = try await client.userRoleList(
+                    query: .init(limit: 100),
+                    headers: .init(accept: [.init(contentType: .json)])
                 )
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json.data.items.map {
+                    return try ok.body.json.map {
                         .init(id: $0.id, name: $0.name ?? "")
                     }
                 case .unauthorized:

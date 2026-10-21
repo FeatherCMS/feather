@@ -7,11 +7,11 @@ extension Identity.Query {
         var operationId: String? { "userIdentityQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: UserIdentityListItemSchema(),
+                items: Identity.Query.ItemSchema(),
                 sortFieldKeys: ["id"],
                 filters: SearchFilterSchema(
                     additionalProperties: [
-                        "role": UserRoleNameField().reference(required: false)
+                        "role": Role.Schemas.Name().reference(required: false)
                     ]
                 )
             )

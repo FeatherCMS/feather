@@ -12,7 +12,7 @@ extension Identity.List {
     struct TableContent: Component {
         let routes: Identity.Router.Routes
         let permissions: AdminListActions
-        let identities: [Components.Schemas.UserIdentityListItemSchema]
+        let identities: [Components.Schemas.UserIdentityQueryItemSchema]
         let pageState: AdminListPageState
         let search: String?
         let role: String?

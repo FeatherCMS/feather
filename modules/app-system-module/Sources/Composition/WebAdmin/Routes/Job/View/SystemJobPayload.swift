@@ -17,8 +17,12 @@ struct SystemJobPayload {
     }
 
     init(job: Components.Schemas.SystemJobSchema) {
+        self.init(payload: job.payload)
+    }
+
+    init(payload: String) {
         guard
-            let data = job.payload.data(using: .utf8),
+            let data = payload.data(using: .utf8),
             let root = try? JSONSerialization.jsonObject(with: data)
                 as? [String: Any],
             let name = root.keys.first,

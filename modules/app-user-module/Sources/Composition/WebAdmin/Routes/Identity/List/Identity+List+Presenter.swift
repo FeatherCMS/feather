@@ -11,7 +11,7 @@ extension Identity.List.Presenter {
     protocol Interface: Sendable {
         func renderListPage(
             model: AdminListModel<
-                Components.Schemas.UserIdentityListItemSchema
+                Components.Schemas.UserIdentityQueryItemSchema
             >,
             permissions: Set<PermissionKey>,
             search: String?,

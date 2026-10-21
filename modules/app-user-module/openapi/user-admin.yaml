@@ -13,6 +13,31 @@ security:
 - bearerAuth: []
 paths:
   /api/v1/admin/user/identities:
+    get:
+      tags:
+      - UserIdentities
+      operationId: userIdentityList
+      parameters:
+      - $ref: '#/components/parameters/IdentityParametersSearch'
+      - $ref: '#/components/parameters/IdentityParametersRoleFilter'
+      - $ref: '#/components/parameters/IdentityParametersListLimit'
+      responses:
+        200:
+          $ref: '#/components/responses/UserIdentityListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - UserIdentities
@@ -70,11 +95,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserIdentityListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/UserIdentityQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/UserIdentityListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/UserIdentityQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -189,6 +214,30 @@ paths:
       security:
       - bearerAuth: []
   /api/v1/admin/user/roles:
+    get:
+      tags:
+      - UserRoles
+      operationId: userRoleList
+      parameters:
+      - $ref: '#/components/parameters/RoleParametersSearch'
+      - $ref: '#/components/parameters/RoleParametersListLimit'
+      responses:
+        200:
+          $ref: '#/components/responses/UserRoleListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - UserRoles
@@ -244,11 +293,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRoleListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/UserRoleQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/UserRoleListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/UserRoleQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -364,17 +413,41 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    UserIdentityCreateSchema:
+    UserIdentitySearch:
+      type: string
+      example: Ada
+    UserRoleNameField:
+      type: string
+      example: manager
+    UserIdentityListLimit:
+      type: integer
+      default: 20
+      description: Maximum number of identities. Defaults to 20; values are clamped
+        to 1-100.
+      example: 100
+    UserIdentityListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserIdentityListItemSchema'
+    UserIdentityListItemSchema:
       type: object
       properties:
+        id:
+          $ref: '#/components/schemas/UserIdentityIDField'
         name:
           $ref: '#/components/schemas/UserIdentityNameField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
-        roleIds:
-          $ref: '#/components/schemas/UserIdentityRoleIdsField'
+        roles:
+          $ref: '#/components/schemas/UserIdentityRoleNamesField'
       required:
+      - id
       - name
+      - status
+      - roles
+    UserIdentityIDField:
+      type: string
+      example: usr_a9x1f7Qk2m
     UserIdentityNameField:
       type: string
       example: Root User
@@ -387,35 +460,10 @@ components:
       - deactivated
       - anonymized
       example: active
-    UserIdentityRoleIdsField:
+    UserIdentityRoleNamesField:
       type: array
       items:
-        $ref: '#/components/schemas/UserRoleIdField'
-    UserRoleIdField:
-      type: string
-      example: role_manager
-    UserIdentityDetailSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/UserIdentityIDField'
-        name:
-          $ref: '#/components/schemas/UserIdentityNameField'
-        status:
-          $ref: '#/components/schemas/UserIdentityStatusField'
-        roleIds:
-          $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
-      required:
-      - id
-      - name
-      - status
-    UserIdentityIDField:
-      type: string
-      example: usr_a9x1f7Qk2m
-    UserIdentityRoleIDListSchema:
-      type: array
-      items:
-        type: string
+        $ref: '#/components/schemas/UserRoleNameField'
     DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
       type: object
       properties:
@@ -461,6 +509,43 @@ components:
       required:
       - id
       - message
+    UserIdentityCreateSchema:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/UserIdentityNameField'
+        status:
+          $ref: '#/components/schemas/UserIdentityStatusField'
+        roleIds:
+          $ref: '#/components/schemas/UserIdentityRoleIdsField'
+      required:
+      - name
+    UserIdentityRoleIdsField:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserRoleIdField'
+    UserRoleIdField:
+      type: string
+      example: role_manager
+    UserIdentityDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UserIdentityIDField'
+        name:
+          $ref: '#/components/schemas/UserIdentityNameField'
+        status:
+          $ref: '#/components/schemas/UserIdentityStatusField'
+        roleIds:
+          $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
+      required:
+      - id
+      - name
+      - status
+    UserIdentityRoleIDListSchema:
+      type: array
+      items:
+        type: string
     DeleteRequestSchema:
       type: object
       properties:
@@ -471,7 +556,7 @@ components:
             example: id1
       required:
       - ids
-    UserIdentityListItemSearchRequestQuerySchema:
+    UserIdentityQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -530,21 +615,18 @@ components:
     SearchStringField:
       type: string
       example: foo
-    UserRoleNameField:
-      type: string
-      example: manager
-    UserIdentityListItemSearchSchema:
+    UserIdentityQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/UserIdentityListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/UserIdentityQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/UserIdentityListItemSchema'
+                $ref: '#/components/schemas/UserIdentityQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -554,7 +636,7 @@ components:
       required:
       - query
       - data
-    UserIdentityListItemSearchResponseQuerySchema:
+    UserIdentityQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -596,7 +678,7 @@ components:
       required:
       - size
       - number
-    UserIdentityListItemSchema:
+    UserIdentityQueryItemSchema:
       type: object
       properties:
         id:
@@ -606,7 +688,7 @@ components:
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
         roles:
-          $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
+          $ref: '#/components/schemas/UserIdentityRoleNamesField'
       required:
       - id
       - name
@@ -633,6 +715,34 @@ components:
           $ref: '#/components/schemas/UserIdentityRoleIdsField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
+    UserRoleSearch:
+      type: string
+      example: editor
+    UserRoleListLimit:
+      type: integer
+      default: 20
+      description: Maximum number of roles. Defaults to 20; values are clamped to
+        1-100.
+      example: 100
+    UserRoleListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserRoleListItemSchema'
+    UserRoleListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/UserRoleIdField'
+        key:
+          $ref: '#/components/schemas/UserRoleKeyField'
+        name:
+          $ref: '#/components/schemas/UserRoleNameField'
+      required:
+      - id
+      - key
+    UserRoleKeyField:
+      type: string
+      example: editor
     UserRoleCreateSchema:
       type: object
       properties:
@@ -644,9 +754,6 @@ components:
           $ref: '#/components/schemas/UserRoleNotesField'
       required:
       - key
-    UserRoleKeyField:
-      type: string
-      example: editor
     UserRoleNotesField:
       type: string
       example: Management role.
@@ -666,7 +773,7 @@ components:
       required:
       - id
       - key
-    UserRoleListItemSearchRequestQuerySchema:
+    UserRoleQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -697,18 +804,18 @@ components:
               $ref: '#/components/schemas/SearchStringField'
       required:
       - filters
-    UserRoleListItemSearchSchema:
+    UserRoleQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/UserRoleListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/UserRoleQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/UserRoleListItemSchema'
+                $ref: '#/components/schemas/UserRoleQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -718,7 +825,7 @@ components:
       required:
       - query
       - data
-    UserRoleListItemSearchResponseQuerySchema:
+    UserRoleQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -750,7 +857,7 @@ components:
       required:
       - page
       - filters
-    UserRoleListItemSchema:
+    UserRoleQueryItemSchema:
       type: object
       properties:
         id:
@@ -788,6 +895,12 @@ components:
       example: Management role.
       nullable: true
   responses:
+    UserIdentityListResponse:
+      description: User identity list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserIdentityListSchema'
     UserIdentityDetailResponse:
       description: UserIdentity response
       content:
@@ -796,25 +909,52 @@ components:
             $ref: '#/components/schemas/UserIdentityDetailSchema'
     NoContentResponse:
       description: Delete succeeded
-    UserIdentityListItemSearchSchemaSearchResponse:
+    UserIdentityQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UserIdentityListItemSearchSchema'
+            $ref: '#/components/schemas/UserIdentityQueryItemSearchSchema'
+    UserRoleListResponse:
+      description: User role list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserRoleListSchema'
     UserRoleDetailResponse:
       description: UserRole response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UserRoleDetailSchema'
-    UserRoleListItemSearchSchemaSearchResponse:
+    UserRoleQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UserRoleListItemSearchSchema'
+            $ref: '#/components/schemas/UserRoleQueryItemSearchSchema'
   parameters:
+    IdentityParametersSearch:
+      name: search
+      allowEmptyValue: true
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserIdentitySearch'
+      description: Search identity names
+    IdentityParametersRoleFilter:
+      name: role
+      allowEmptyValue: true
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserRoleNameField'
+      description: Filter identities by role name
+    IdentityParametersListLimit:
+      name: limit
+      allowEmptyValue: true
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserIdentityListLimit'
+      description: Defaults to 20; values are clamped to 1-100
     UserIdentityIdParameter:
       name: userIdentityId
       in: path
@@ -831,6 +971,20 @@ components:
         $ref: '#/components/schemas/UserIdentityUpdateMask'
       description: Comma-separated list of fields to update. Include an optional field
         to clear it when omitted from the request body.
+    RoleParametersSearch:
+      name: search
+      allowEmptyValue: true
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserRoleSearch'
+      description: Search role keys, names, and notes
+    RoleParametersListLimit:
+      name: limit
+      allowEmptyValue: true
+      in: query
+      schema:
+        $ref: '#/components/schemas/UserRoleListLimit'
+      description: Defaults to 20; values are clamped to 1-100
     RoleParametersID:
       name: userRoleId
       in: path

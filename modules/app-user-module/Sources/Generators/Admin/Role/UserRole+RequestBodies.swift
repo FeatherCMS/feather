@@ -3,7 +3,7 @@ import FeatherOpenAPI
 struct UserRoleRequestBody: RequestBodyRepresentable {
     var contentMap: ContentMap {
         [
-            .json: Content(UserRoleCreateSchema().reference())
+            .json: Content(Role.Post.Schema().reference())
         ]
     }
 }
@@ -11,7 +11,7 @@ struct UserRoleRequestBody: RequestBodyRepresentable {
 struct UserRoleUpdateRequestBody: RequestBodyRepresentable {
     var contentMap: ContentMap {
         [
-            .json: Content(UserRoleUpdateSchema().reference())
+            .json: Content(Role.Put.Schema().reference())
         ]
     }
 }

@@ -15,7 +15,7 @@ extension Identity.List.Interactor {
             search: String?,
             role: String?
         ) async throws -> AdminListModel<
-            Components.Schemas.UserIdentityListItemSchema
+            Components.Schemas.UserIdentityQueryItemSchema
         >
     }
 }

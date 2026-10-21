@@ -4,5 +4,5 @@ import UserOpenAPIGeneratorSupport
 
 struct UserRoleDetailResponse: JSONResponseRepresentable {
     var description: String = "UserRole response"
-    var schema = UserRoleDetailSchema().reference()
+    var schema = Role.Get.Schema().reference()
 }

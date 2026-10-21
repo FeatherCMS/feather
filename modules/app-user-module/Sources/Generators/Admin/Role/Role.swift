@@ -4,6 +4,7 @@ import UserOpenAPIGeneratorSupport
 public enum Role {
     public enum Post {}
     public enum Delete {}
+    public enum List {}
     public enum Query {}
     public enum Get {}
     public enum Put {}
@@ -25,7 +26,7 @@ extension Role.Parameters {
         var name: String { "userRoleId" }
         var description: String? { "UserRole id" }
         var schema: any OpenAPISchemaRepresentable {
-            UserRoleIdField().reference()
+            Role.Schemas.ID().reference()
         }
     }
 }

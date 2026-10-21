@@ -16,7 +16,7 @@ extension Identity.List.Repository {
             role: String?
         ) async throws
             -> UserAdminAPI.Components.Responses
-            .UserIdentityListItemSearchSchemaSearchResponse
+            .UserIdentityQueryItemSearchSchemaSearchResponse
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =

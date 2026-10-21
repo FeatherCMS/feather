@@ -4,7 +4,7 @@ import SystemModule
 
 extension Job.List {
     struct Model: Sendable {
-        let items: [Components.Schemas.SystemJobSchema]
+        let items: [Components.Schemas.SystemJobQueryItemSchema]
         let pageState: AdminListPageState
     }
 }

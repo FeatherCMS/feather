@@ -26,6 +26,17 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.userIdentityList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/user/identities")
+        )
+        try transport.register(
+            {
                 try await server.userIdentityPost(
                     request: $0,
                     body: $1,
@@ -89,6 +100,17 @@ extension APIProtocol {
             },
             method: .put,
             path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/user/identities/{userIdentityId}")
+        )
+        try transport.register(
+            {
+                try await server.userRoleList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/user/roles")
         )
         try transport.register(
             {
@@ -160,6 +182,113 @@ extension APIProtocol {
 }
 
 fileprivate extension UniversalServer where APIHandler: APIProtocol {
+    /// - Remark: HTTP `GET /api/v1/admin/user/identities`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/get(userIdentityList)`.
+    func userIdentityList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.UserIdentityList.id,
+            using: {
+                APIHandler.userIdentityList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let query: Operations.UserIdentityList.Input.Query = .init(
+                    search: try converter.getOptionalQueryItemAsURI(
+                        in: request.soar_query,
+                        style: .form,
+                        explode: true,
+                        name: "search",
+                        as: Components.Parameters.IdentityParametersSearch.self
+                    ),
+                    role: try converter.getOptionalQueryItemAsURI(
+                        in: request.soar_query,
+                        style: .form,
+                        explode: true,
+                        name: "role",
+                        as: Components.Parameters.IdentityParametersRoleFilter.self
+                    ),
+                    limit: try converter.getOptionalQueryItemAsURI(
+                        in: request.soar_query,
+                        style: .form,
+                        explode: true,
+                        name: "limit",
+                        as: Components.Parameters.IdentityParametersListLimit.self
+                    )
+                )
+                let headers: Operations.UserIdentityList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.UserIdentityList.Input(
+                    query: query,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
     /// Create user identity
     ///
     /// Creates a user identity
@@ -387,7 +516,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.UserIdentityListItemSearchRequestQuerySchema.self,
+                        Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -852,6 +981,106 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `GET /api/v1/admin/user/roles`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/get(userRoleList)`.
+    func userRoleList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.UserRoleList.id,
+            using: {
+                APIHandler.userRoleList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let query: Operations.UserRoleList.Input.Query = .init(
+                    search: try converter.getOptionalQueryItemAsURI(
+                        in: request.soar_query,
+                        style: .form,
+                        explode: true,
+                        name: "search",
+                        as: Components.Parameters.RoleParametersSearch.self
+                    ),
+                    limit: try converter.getOptionalQueryItemAsURI(
+                        in: request.soar_query,
+                        style: .form,
+                        explode: true,
+                        name: "limit",
+                        as: Components.Parameters.RoleParametersListLimit.self
+                    )
+                )
+                let headers: Operations.UserRoleList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.UserRoleList.Input(
+                    query: query,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)`.
     func userRolePost(
@@ -1075,7 +1304,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.UserRoleListItemSearchRequestQuerySchema.self,
+                        Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)

@@ -6,6 +6,34 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
     public enum Responses {
+        public struct UserIdentityListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserIdentityListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/UserIdentityListResponse/content/application\/json`.
+                case json(Components.Schemas.UserIdentityListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.UserIdentityListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.UserIdentityListResponse.Body
+            /// Creates a new `UserIdentityListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.UserIdentityListResponse.Body) {
+                self.body = body
+            }
+        }
         public struct UserIdentityDetailResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/UserIdentityDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -38,16 +66,16 @@ extension Components {
             /// Creates a new `NoContentResponse`.
             public init() {}
         }
-        public struct UserIdentityListItemSearchSchemaSearchResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/UserIdentityListItemSearchSchemaSearchResponse/content`.
+        public struct UserIdentityQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserIdentityQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/UserIdentityListItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.UserIdentityListItemSearchSchema)
+                /// - Remark: Generated from `#/components/responses/UserIdentityQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.UserIdentityQueryItemSearchSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.UserIdentityListItemSearchSchema {
+                public var json: Components.Schemas.UserIdentityQueryItemSearchSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -57,12 +85,40 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.UserIdentityListItemSearchSchemaSearchResponse.Body
-            /// Creates a new `UserIdentityListItemSearchSchemaSearchResponse`.
+            public var body: Components.Responses.UserIdentityQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `UserIdentityQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.UserIdentityListItemSearchSchemaSearchResponse.Body) {
+            public init(body: Components.Responses.UserIdentityQueryItemSearchSchemaSearchResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct UserRoleListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserRoleListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/UserRoleListResponse/content/application\/json`.
+                case json(Components.Schemas.UserRoleListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.UserRoleListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.UserRoleListResponse.Body
+            /// Creates a new `UserRoleListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.UserRoleListResponse.Body) {
                 self.body = body
             }
         }
@@ -94,16 +150,16 @@ extension Components {
                 self.body = body
             }
         }
-        public struct UserRoleListItemSearchSchemaSearchResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/UserRoleListItemSearchSchemaSearchResponse/content`.
+        public struct UserRoleQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserRoleQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/UserRoleListItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.UserRoleListItemSearchSchema)
+                /// - Remark: Generated from `#/components/responses/UserRoleQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.UserRoleQueryItemSearchSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.UserRoleListItemSearchSchema {
+                public var json: Components.Schemas.UserRoleQueryItemSearchSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -113,12 +169,12 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.UserRoleListItemSearchSchemaSearchResponse.Body
-            /// Creates a new `UserRoleListItemSearchSchemaSearchResponse`.
+            public var body: Components.Responses.UserRoleQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `UserRoleQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.UserRoleListItemSearchSchemaSearchResponse.Body) {
+            public init(body: Components.Responses.UserRoleQueryItemSearchSchemaSearchResponse.Body) {
                 self.body = body
             }
         }

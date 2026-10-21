@@ -11,7 +11,7 @@ extension AdminAPIGateway {
         _ input: Operations.UserIdentityQuery.Input
     ) async throws -> Operations.UserIdentityQuery.Output {
         let query:
-            Components.Schemas.UserIdentityListItemSearchRequestQuerySchema
+            Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -45,8 +45,8 @@ extension AdminAPIGateway {
 }
 
 private func mapResponse(
-    _ query: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema
-) -> Components.Schemas.UserIdentityListItemSearchResponseQuerySchema {
+    _ query: Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema
+) -> Components.Schemas.UserIdentityQueryItemSearchResponseQuerySchema {
     .init(
         page: .init(
             size: query.page?.size ?? 20,
@@ -67,7 +67,7 @@ private func mapResponse(
 }
 
 private func identitySearchInput(
-    from query: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema
+    from query: Components.Schemas.UserIdentityQueryItemSearchRequestQuerySchema
 ) -> Identity.Search.Input.Query {
     .init(
         page: .init(
@@ -92,7 +92,7 @@ private func identitySearchInput(
 
 private func identitySearchItemSchema(
     from item: Identity.Search.Output.Item
-) -> Components.Schemas.UserIdentityListItemSchema {
+) -> Components.Schemas.UserIdentityQueryItemSchema {
     .init(
         id: item.id,
         name: item.name,

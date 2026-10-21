@@ -9,7 +9,7 @@ extension AdminAPIGateway {
     public func userRoleQuery(
         _ input: Operations.UserRoleQuery.Input
     ) async throws -> Operations.UserRoleQuery.Output {
-        let query: Components.Schemas.UserRoleListItemSearchRequestQuerySchema
+        let query: Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -43,8 +43,8 @@ extension AdminAPIGateway {
 }
 
 private func mapResponse(
-    _ query: Components.Schemas.UserRoleListItemSearchRequestQuerySchema
-) -> Components.Schemas.UserRoleListItemSearchResponseQuerySchema {
+    _ query: Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema
+) -> Components.Schemas.UserRoleQueryItemSearchResponseQuerySchema {
     .init(
         page: .init(
             size: query.page?.size ?? 20,
@@ -62,7 +62,7 @@ private func mapResponse(
 }
 
 private func roleSearchInput(
-    from query: Components.Schemas.UserRoleListItemSearchRequestQuerySchema
+    from query: Components.Schemas.UserRoleQueryItemSearchRequestQuerySchema
 ) -> Role.Search.Input.Query {
     .init(
         page: .init(
@@ -86,6 +86,6 @@ private func roleSearchInput(
 
 private func roleSearchItemSchema(
     from item: Role.Search.Output.Item
-) -> Components.Schemas.UserRoleListItemSchema {
+) -> Components.Schemas.UserRoleQueryItemSchema {
     .init(id: item.id, key: item.key, name: item.name)
 }

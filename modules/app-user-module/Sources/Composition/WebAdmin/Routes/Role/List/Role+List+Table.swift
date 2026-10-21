@@ -10,7 +10,7 @@ extension Role.List {
     struct TableView: Component {
         let routes: Role.Router.Routes
         let permissions: AdminListActions
-        let roles: [Components.Schemas.UserRoleListItemSchema]
+        let roles: [Components.Schemas.UserRoleQueryItemSchema]
         let pageState: AdminListPageState
         let search: String?
 

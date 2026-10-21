@@ -11,7 +11,7 @@ public struct UserIdentityCreateRequestBody: RequestBodyRepresentable {
 
     public var contentMap: ContentMap {
         [
-            .json: Content(UserIdentityCreateSchema().reference())
+            .json: Content(Identity.Post.Schema().reference())
         ]
     }
 
@@ -21,7 +21,7 @@ public struct UserIdentityUpdateRequestBody: RequestBodyRepresentable {
 
     public var contentMap: ContentMap {
         [
-            .json: Content(UserIdentityUpdateSchema().reference())
+            .json: Content(Identity.Put.Schema().reference())
         ]
     }
 

@@ -9,7 +9,7 @@ import WebComponents
 extension Identity.List {
     struct Row: Component {
         let routes: Identity.Router.Routes
-        let identity: Components.Schemas.UserIdentityListItemSchema
+        let identity: Components.Schemas.UserIdentityQueryItemSchema
         let permissions: AdminListActions
 
         func html(context: inout BuilderContext) -> Tr {

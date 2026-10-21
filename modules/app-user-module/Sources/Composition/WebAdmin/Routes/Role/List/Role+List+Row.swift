@@ -9,7 +9,7 @@ import WebComponents
 extension Role.List {
     struct Row: Component {
         let routes: Role.Router.Routes
-        let role: Components.Schemas.UserRoleListItemSchema
+        let role: Components.Schemas.UserRoleQueryItemSchema
         let permissions: AdminListActions
 
         func html(context: inout BuilderContext) -> Tr {
