@@ -11,6 +11,7 @@ import SystemDomain
 import SystemModule
 import Testing
 
+@testable import FeatherDBAL
 @testable import SystemInfrastructure
 
 private enum QueryKeys {
@@ -213,6 +214,106 @@ struct InfrastructureDatabaseTests {
     }
 
     @Test
+    func tableSchemasDeclareColumnsKeysAndDefaults() {
+        let permission = SystemModule.Permission.Table.tableCreationSchema
+        let variable = SystemModule.Variable.Table.tableCreationSchema
+
+        #expect(
+            permission.columns.map(\.name) == [
+                "id", "key", "name", "notes", "created_at", "updated_at",
+            ]
+        )
+        #expect(
+            permission.columns[0].constraints
+                .contains {
+                    if case .primaryKey = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            permission.columns[1].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            permission.columns[1].constraints
+                .contains {
+                    if case .unique = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(permission.columns[4].type == .timestamp)
+        #expect(hasCurrentTimestampDefault(permission.columns[4].constraints))
+        #expect(permission.columns[5].type == .timestamp)
+        #expect(hasCurrentTimestampDefault(permission.columns[5].constraints))
+
+        #expect(
+            variable.columns.map(\.name) == [
+                "id", "key", "value", "name", "notes", "created_at",
+                "updated_at",
+            ]
+        )
+        #expect(variable.columns[0].constraints.isEmpty)
+        #expect(
+            variable.columns[1].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            variable.columns[1].constraints
+                .contains {
+                    if case .unique = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            variable.columns[2].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(variable.columns[5].type == .timestamp)
+        #expect(hasCurrentTimestampDefault(variable.columns[5].constraints))
+        #expect(variable.columns[6].type == .timestamp)
+        #expect(hasCurrentTimestampDefault(variable.columns[6].constraints))
+        #expect(
+            variable.constraints.contains {
+                guard case .primaryKey(let columns) = $0 else { return false }
+                return columns.map(\.name) == ["id"]
+            }
+        )
+    }
+
+    @Test
     func variableListAndCountUseFiltersOrderingAndPagination() async throws {
         let connection = MockDatabaseConnection<QueryKeys.Variable>(
             responses: [
@@ -321,5 +422,15 @@ struct InfrastructureDatabaseTests {
         )
         #expect(select.bindings.contains(where: { $0.binding == .int(3) }))
         #expect(queries[.count]?.first?.sql.contains("COUNT(*)") == true)
+    }
+}
+
+private func hasCurrentTimestampDefault(
+    _ constraints: [DatabaseTableColumnConstraintSchema]
+) -> Bool {
+    constraints.contains { constraint in
+        guard case .default(let value) = constraint else { return false }
+        if case .currentTimestamp = value.storage { return true }
+        return false
     }
 }

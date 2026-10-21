@@ -147,7 +147,7 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(name: "NIOHTTP1", package: "swift-nio"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(
                     name: "SystemApplication",
                     package: "app-system-module"

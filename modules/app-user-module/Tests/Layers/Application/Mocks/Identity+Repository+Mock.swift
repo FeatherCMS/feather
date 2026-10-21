@@ -15,19 +15,23 @@ actor MockIdentityRepository: Identity.Repository.Interface {
     private(set) var replacedRoleIds: [String] = []
     private(set) var findByIdCallCount = 0
     private(set) var deleteCallCount = 0
+    private(set) var findRoleIdsCallCount = 0
 
     private let result: Identity.Model
     private let findByIdResult: Identity.Model?
     private let deleteResult: [String]
+    private let roleIdsResult: [String]
 
     init(
         result: Identity.Model,
         findByIdResult: Identity.Model? = nil,
-        deleteResult: [String] = []
+        deleteResult: [String] = [],
+        roleIdsResult: [String] = []
     ) {
         self.result = result
         self.findByIdResult = findByIdResult
         self.deleteResult = deleteResult
+        self.roleIdsResult = roleIdsResult
     }
 
     func findBy(
@@ -44,7 +48,8 @@ actor MockIdentityRepository: Identity.Repository.Interface {
     func findRoleIdsBy(
         identityId: String
     ) async throws -> [String] {
-        []
+        findRoleIdsCallCount += 1
+        return roleIdsResult
     }
 
     func replaceRoleIds(
