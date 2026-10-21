@@ -36,6 +36,8 @@ extension Role.Add.Repository {
                             backendError: nil
                         )
                     )
+                case .conflict:
+                    throw OpenAPIRepositoryError.conflict
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:

@@ -13,6 +13,9 @@ extension Role.Post {
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),
+                409: DefaultHTTPErrorContentResponse(
+                    description: "Role key already exists"
+                ),
             ]
         }
     }

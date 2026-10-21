@@ -2008,6 +2008,57 @@ public enum Operations {
                     }
                 }
             }
+            public struct Conflict: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/POST/responses/409/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/POST/responses/409/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.UserRolePost.Output.Conflict.Body
+                /// Creates a new `Conflict`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.UserRolePost.Output.Conflict.Body) {
+                    self.body = body
+                }
+            }
+            /// Role key already exists
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)/responses/409`.
+            ///
+            /// HTTP response code: `409 conflict`.
+            case conflict(Operations.UserRolePost.Output.Conflict)
+            /// The associated value of the enum case if `self` is `.conflict`.
+            ///
+            /// - Throws: An error if `self` is not `.conflict`.
+            /// - SeeAlso: `.conflict`.
+            public var conflict: Operations.UserRolePost.Output.Conflict {
+                get throws {
+                    switch self {
+                    case let .conflict(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "conflict",
+                            response: self
+                        )
+                    }
+                }
+            }
             public struct Unauthorized: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
