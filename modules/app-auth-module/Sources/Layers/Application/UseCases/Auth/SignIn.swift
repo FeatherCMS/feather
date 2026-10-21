@@ -14,7 +14,7 @@ import struct Foundation.Date
 protocol SignIn: UseCase {
 
     func makeAuthResponse(
-        userIdentityRepository: any Identity.Repository.Interface,
+        authorization: any Identity.Authorization.Query.Interface,
         userSessionRepository: any SessionRepository,
         user: Identity.Model,
         authenticationType: String,
@@ -27,7 +27,7 @@ protocol SignIn: UseCase {
 extension SignIn {
 
     func makeAuthResponse(
-        userIdentityRepository: any Identity.Repository.Interface,
+        authorization: any Identity.Authorization.Query.Interface,
         userSessionRepository: any SessionRepository,
         user: Identity.Model,
         authenticationType: String,
@@ -37,12 +37,8 @@ extension SignIn {
         let identityId = user.id
 
         let (roles, permissions) = try await (
-            userIdentityRepository.findRolesBy(
-                identityId: identityId
-            ),
-            userIdentityRepository.findPermissionsBy(
-                identityId: identityId
-            )
+            authorization.getRolesBy(identityId: identityId),
+            authorization.getPermissionsBy(identityId: identityId)
         )
 
         let sessionLifetime =

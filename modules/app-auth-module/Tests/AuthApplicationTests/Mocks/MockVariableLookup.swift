@@ -19,7 +19,7 @@ actor MockVariableLookup: SystemModule.Variable.Lookup.Interface {
     func get(_ id: String) async throws -> String? {
         switch id {
         case "auth.magic_link.email.template":
-            "{{email}} {{token}} {{url}}"
+            return "{{email}} {{token}} {{url}}"
         case "system-settings-mail-from-address":
             return mailFromAddress
         case "system-settings-mail-from-name":

@@ -11,6 +11,7 @@ struct RolePatchTests {
     private enum QueryKey: DatabaseQueryKey {
         case find
         case update
+        case updated
     }
 
     @Test
@@ -31,8 +32,9 @@ struct RolePatchTests {
                         ])
                     ]
                 ),
+                .init(key: .update),
                 .init(
-                    key: .update,
+                    key: .updated,
                     rows: [
                         .init([
                             "id": .string("role-1"),

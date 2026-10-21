@@ -27,8 +27,12 @@ extension Role.Detail.Query {
         }
 
         public func find(id: String) async throws -> Role.Detail.Output {
-            let table = Role.Table(connection: context.connection)
-            guard let row = try await table.find(id: id) else {
+            guard
+                let row = try await DatabaseAccessLayer<Role.Table>(
+                    context: context
+                )
+                .selectFirst(by: \.id, equals: id, as: Role.Table.Row.self)
+            else {
                 throw RepositoryError.notFound
             }
             return row.asDetail

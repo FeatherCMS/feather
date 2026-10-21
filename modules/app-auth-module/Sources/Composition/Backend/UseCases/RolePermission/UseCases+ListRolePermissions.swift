@@ -11,8 +11,8 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 AuthScope(
-                    identity: Identity.Authorization.Query.Database(
-                        context: context
+                    authorization: Identity.Authorization.Query.Database(
+                        connection: context.connection
                     ),
                     rolePermissions: RolePermissionDatabaseQueries(
                         context: context

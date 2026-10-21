@@ -9,6 +9,9 @@ import UserAdminAPI
 struct IdentityListTests {
     private enum QueryKey: DatabaseQueryKey {
         case search
+        case roleMatches
+        case identityIDs
+        case links
         case roles
         case count
     }
@@ -19,6 +22,23 @@ struct IdentityListTests {
         let connection = MockDatabaseConnection<QueryKey>(
             responses: [
                 .init(
+                    key: .roleMatches,
+                    rows: [
+                        .init([
+                            "id": .string("role-admin"),
+                            "key": .string("user.admin"),
+                            "name": .string("admin"),
+                            "notes": .null,
+                            "created_at": .date(date),
+                            "updated_at": .date(date),
+                        ])
+                    ]
+                ),
+                .init(
+                    key: .identityIDs,
+                    rows: [.init(["identity_id": .string("identity-1")])]
+                ),
+                .init(
                     key: .search,
                     rows: [
                         .init([
@@ -28,6 +48,15 @@ struct IdentityListTests {
                             "is_root": .bool(false),
                             "created_at": .date(date),
                             "updated_at": .date(date),
+                        ])
+                    ]
+                ),
+                .init(
+                    key: .links,
+                    rows: [
+                        .init([
+                            "role_id": .string("role-admin"),
+                            "identity_id": .string("identity-1"),
                         ])
                     ]
                 ),

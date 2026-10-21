@@ -9,6 +9,7 @@ import UserAdminAPI
 struct RoleCreateTests {
     private enum QueryKey: DatabaseQueryKey {
         case insert
+        case find
     }
 
     @Test
@@ -16,8 +17,9 @@ struct RoleCreateTests {
         let date = Date(timeIntervalSince1970: 1_700_000_000)
         let connection = MockDatabaseConnection<QueryKey>(
             responses: [
+                .init(key: .insert),
                 .init(
-                    key: .insert,
+                    key: .find,
                     rows: [
                         .init([
                             "id": .string("created-1"),
@@ -28,7 +30,7 @@ struct RoleCreateTests {
                             "updated_at": .date(date),
                         ])
                     ]
-                )
+                ),
             ]
         )
         let executor = try UserAPIHTTPTestSupport.makeExecutor(

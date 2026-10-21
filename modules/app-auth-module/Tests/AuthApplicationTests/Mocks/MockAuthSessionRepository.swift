@@ -26,5 +26,5 @@ actor MockAuthSessionRepository: SessionRepository {
         )
     }
     func update(_ model: Session) async throws -> Session { model }
-    func delete(id: String) async throws -> Bool { false }
+    func delete(ids: [String]) async throws -> [String] { [] }
 }

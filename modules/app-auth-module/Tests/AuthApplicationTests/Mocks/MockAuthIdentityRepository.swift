@@ -10,11 +10,7 @@ actor MockAuthIdentityRepository: Identity.Repository.Interface {
 
     func findBy(id: String) async throws -> Identity.Model? { identity }
     func findRoot() async throws -> Identity.Model? { nil }
-    func findRolesBy(identityId: String) async throws -> [String] { ["editor"] }
     func findRoleIdsBy(identityId: String) async throws -> [String] { [] }
-    func findPermissionsBy(identityId: String) async throws -> [String] {
-        ["account:read"]
-    }
     func replaceRoleIds(identityId: String, roleIds: [String]) async throws {}
     func insert(_ model: Identity.Model.New) async throws -> Identity.Model {
         fatalError("not needed")
@@ -22,5 +18,5 @@ actor MockAuthIdentityRepository: Identity.Repository.Interface {
     func update(_ model: Identity.Model) async throws -> Identity.Model {
         model
     }
-    func delete(id: String) async throws -> Bool { false }
+    func delete(ids: [String]) async throws -> [String] { [] }
 }

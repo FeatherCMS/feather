@@ -17,15 +17,7 @@ extension Identity {
 
             func findRoot() async throws -> Identity.Model?
 
-            func findRolesBy(
-                identityId: String
-            ) async throws -> [String]
-
             func findRoleIdsBy(
-                identityId: String
-            ) async throws -> [String]
-
-            func findPermissionsBy(
                 identityId: String
             ) async throws -> [String]
 

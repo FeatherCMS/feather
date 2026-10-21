@@ -25,7 +25,7 @@ actor MockMagicLinkQueries: MagicLinkQueries {
     init(
         findResult: MagicLinkDetail = .init(
             id: "magic-link-1",
-            credentialId: "credential-1",
+            authEmailId: "auth-email-1",
             token: "token-1",
             expiresAt: .init(timeIntervalSince1970: 123_456),
             isPersistent: true,
@@ -153,18 +153,12 @@ struct DummyIdentityQueries: Identity.Authorization.Query.Interface {
     func getRolesBy(
         identityId: String
     ) async throws -> [String] {
-        []
-    }
-
-    func getRoleIdsBy(
-        identityId: String
-    ) async throws -> [String] {
-        []
+        ["editor"]
     }
 
     func getPermissionsBy(
         identityId: String
     ) async throws -> [String] {
-        []
+        ["account:read"]
     }
 }

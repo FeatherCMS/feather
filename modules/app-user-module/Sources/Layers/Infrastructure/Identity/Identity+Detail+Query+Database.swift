@@ -27,11 +27,26 @@ extension Identity.Detail.Query {
         }
 
         public func find(id: String) async throws -> Identity.Detail.Output {
-            let table = Identity.Table(connection: context.connection)
-            guard let row = try await table.find(id: id) else {
+            let accessLayer = DatabaseAccessLayer<Identity.Table>(
+                context: context
+            )
+            guard
+                let row = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: id,
+                    as: Identity.Table.Row.self
+                )
+            else {
                 throw RepositoryError.notFound
             }
-            let roleIds = try await table.listRoleIds(identityId: id)
+            let roleIds = try await DatabaseAccessLayer<
+                Identity.Table.RoleLink
+            >(context: context)
+            .select(as: Identity.Table.RoleLink.RoleID.self) {
+                $0.where(\.identityId, equals: id)
+                    .order(by: [.init(by: \.roleId)])
+            }
+            .map(\.roleId)
             return row.asDetail(roleIds: roleIds)
         }
     }

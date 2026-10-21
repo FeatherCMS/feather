@@ -49,9 +49,9 @@ actor MockSessionRepository: SessionRepository {
     }
 
     func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         deleteCallCount += 1
-        return deleteResult
+        return deleteResult ? ids : []
     }
 }

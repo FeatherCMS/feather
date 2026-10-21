@@ -35,7 +35,7 @@ public struct TokenAuth: Sendable {
         let now = Date()
 
         let resolved: AuthResolvedSession? = try await transaction.run {
-            scope in
+            scope -> AuthResolvedSession? in
             guard
                 let session = try await scope.session.findBy(
                     token: input.token
@@ -54,10 +54,10 @@ public struct TokenAuth: Sendable {
             }
 
             let (roles, permissions) = try await (
-                scope.identity.findRolesBy(
+                scope.authorization.getRolesBy(
                     identityId: identity.id
                 ),
-                scope.identity.findPermissionsBy(
+                scope.authorization.getPermissionsBy(
                     identityId: identity.id
                 )
             )

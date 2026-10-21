@@ -3,10 +3,10 @@ public import UserModule
 
 extension Identity.Authorization.Query {
     public struct Scope: FeatherModuleKit.Scope {
-        public let identity: any Interface
+        public let authorization: any Interface
 
-        public init(identity: any Interface) {
-            self.identity = identity
+        public init(authorization: any Interface) {
+            self.authorization = authorization
         }
     }
 }

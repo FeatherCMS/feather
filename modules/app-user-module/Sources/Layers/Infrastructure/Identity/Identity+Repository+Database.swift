@@ -8,7 +8,7 @@ import FeatherApplication
 import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
-public import UserApplication
+import UserApplication
 public import UserDomain
 public import UserModule
 
@@ -38,41 +38,6 @@ extension Identity.Repository {
             self.context = context
         }
 
-        func pageSizeOffset(
-            _ page: Search.Page
-        ) -> (size: Int, offset: Int) {
-            let size = max(1, page.size)
-            let number = max(1, page.number)
-            return (size, (number - 1) * size)
-        }
-
-        func sortDirectionSQL(
-            _ direction: Search.SortDirection
-        ) -> String {
-            switch direction {
-            case .asc:
-                "ASC"
-            case .desc:
-                "DESC"
-            }
-        }
-
-        func orderByUserIdentity(
-            _ query: Identity.Search.Input.Query
-        ) -> String {
-            let sortParts = query.sort.map { rule -> String in
-                let column: String
-                switch rule.field {
-                case .id:
-                    column = "id"
-                }
-                return "\(column) \(sortDirectionSQL(rule.direction))"
-            }
-            return (sortParts + ["id ASC"]).joined(separator: ", ")
-        }
-
-        // MARK: -
-
         public func insert(
             _ model: Identity.Model.New
         ) async throws -> Identity.Model {
@@ -83,94 +48,92 @@ extension Identity.Repository {
             id: String,
             model: Identity.Model.New
         ) async throws -> Identity.Model {
-            let table = Identity.Table(connection: context.connection)
-            let saved = try await table.save(
-                row: .init(
+            let accessLayer = DatabaseAccessLayer<Identity.Table>(
+                context: context
+            )
+            try await accessLayer.insert(
+                .init(
                     id: id,
                     name: model.name,
                     status: model.status.rawValue,
                     isRoot: model.isRoot
                 )
             )
-            return try saved.asDomain
-        }
-
-        public func listUserIdentities(
-            query: Identity.Search.Input.Query
-        ) async throws -> [Identity.Model] {
-            let search = query.search
-            let page = pageSizeOffset(query.page)
-            let orderBy = orderByUserIdentity(query)
-
-            let table = Identity.Table(connection: context.connection)
-            return
-                try await table.list(
-                    search: search,
-                    orderBy: orderBy,
-                    limit: page.size,
-                    offset: page.offset
+            guard
+                let saved = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: id,
+                    as: Identity.Table.Row.self
                 )
-                .map { try $0.asDomain }
-        }
-
-        public func countUserIdentities(
-            query: Identity.Search.Input.Query
-        ) async throws -> Int {
-            let search = query.search
-            let table = Identity.Table(connection: context.connection)
-            return try await table.count(search: search)
+            else {
+                throw RepositoryError.notFound
+            }
+            return try saved.asDomain
         }
 
         public func findBy(
             id: String
         ) async throws -> Identity.Model? {
-            let table = Identity.Table(connection: context.connection)
-            return try await table.find(id: id)?.asDomain
+            let accessLayer = DatabaseAccessLayer<Identity.Table>(
+                context: context
+            )
+            return try await accessLayer.selectFirst(
+                by: \.id,
+                equals: id,
+                as: Identity.Table.Row.self
+            )?
+            .asDomain
         }
 
         public func findRoot() async throws -> Identity.Model? {
-            let table = Identity.Table(connection: context.connection)
-            return try await table.findRoot()?.asDomain
-        }
-
-        public func findRolesBy(
-            identityId: String
-        ) async throws -> [String] {
-            let table = Identity.Table(connection: context.connection)
-            return try await table.listRoleNames(identityId: identityId)
+            let accessLayer = DatabaseAccessLayer<Identity.Table>(
+                context: context
+            )
+            return try await accessLayer.selectFirst(
+                as: Identity.Table.Row.self
+            ) {
+                $0.where(\.isRoot, equals: true)
+                    .order(by: [.init(by: \.createdAt)]).limit(1)
+            }?
+            .asDomain
         }
 
         public func findRoleIdsBy(
             identityId: String
         ) async throws -> [String] {
-            let table = Identity.Table(connection: context.connection)
-            return try await table.listRoleIds(identityId: identityId)
-        }
-
-        public func findPermissionsBy(
-            identityId: String
-        ) async throws -> [String] {
-            let table = Identity.Table(connection: context.connection)
-            return try await table.listPermissionNames(identityId: identityId)
+            let rows = try await DatabaseAccessLayer<Identity.Table.RoleLink>(
+                context: context
+            )
+            .select(as: Identity.Table.RoleLink.RoleID.self) {
+                $0.where(\.identityId, equals: identityId)
+                    .order(by: [.init(by: \.roleId)])
+            }
+            return rows.map(\.roleId)
         }
 
         public func update(
             _ model: Identity.Model
         ) async throws -> Identity.Model {
-            let table = Identity.Table(connection: context.connection)
-            let rowId = model.id
-            let updated = try await table.update(
-                id: rowId,
-                row: .init(
+            let accessLayer = DatabaseAccessLayer<Identity.Table>(
+                context: context
+            )
+            try await accessLayer.update(
+                .init(
                     id: model.id,
                     name: model.name,
                     status: model.status.rawValue,
-                    isRoot: model.isRoot,
-                    createdAt: model.createdAt,
-                    updatedAt: model.updatedAt
-                )
+                    isRoot: model.isRoot
+                ),
+                where: \.id,
+                equals: model.id
             )
-            guard let updated else {
+            guard
+                let updated = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: model.id,
+                    as: Identity.Table.Row.self
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return try updated.asDomain
@@ -180,10 +143,21 @@ extension Identity.Repository {
             identityId: String,
             roleIds: [String]
         ) async throws {
-            let table = Identity.Table(connection: context.connection)
-            try await table.replaceRoleIds(
-                identityId: identityId,
-                roleIds: roleIds
+            let accessLayer = DatabaseAccessLayer<Identity.Table.RoleLink>(
+                context: context
+            )
+            try await accessLayer.delete(
+                where: \.identityId,
+                equals: identityId
+            )
+            try await accessLayer.insert(
+                Array(Set(roleIds))
+                    .map {
+                        Identity.Table.RoleLink.Insert(
+                            roleId: $0,
+                            identityId: identityId
+                        )
+                    }
             )
         }
 

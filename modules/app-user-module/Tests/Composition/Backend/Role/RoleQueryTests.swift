@@ -75,13 +75,12 @@ struct RoleQueryTests {
         let queries = await connection.executedQueries()
         let searchQuery = try #require(queries[.search]?.first)
         #expect(
-            searchQuery.sql.contains("ORDER BY name ASC, notes DESC, id ASC")
+            searchQuery.sql.contains(
+                "ORDER BY \"name\" ASC, \"notes\" DESC, \"id\" ASC"
+            )
         )
-        #expect(
-            searchQuery.bindings.suffix(2).map(\.binding) == [
-                .int(100), .int(.max),
-            ]
-        )
+        #expect(searchQuery.sql.contains("LIMIT 100"))
+        #expect(searchQuery.sql.contains("OFFSET \(Int.max)"))
         try await connection.assertAllResponsesConsumed()
     }
 }

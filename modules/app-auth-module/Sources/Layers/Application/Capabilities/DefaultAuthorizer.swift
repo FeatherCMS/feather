@@ -24,7 +24,7 @@ public struct DefaultAuthorizer: Authorizer {
     ) async throws -> Bool {
         try await query.run { scope in
             // TODO: use set in call result already.
-            let permissions = try await scope.identity.getPermissionsBy(
+            let permissions = try await scope.authorization.getPermissionsBy(
                 identityId: subject.id
             )
 

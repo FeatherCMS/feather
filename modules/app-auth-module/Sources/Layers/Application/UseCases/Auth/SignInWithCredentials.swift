@@ -6,8 +6,8 @@
 
 import AuthDomain
 public import FeatherApplication
-public import FeatherModuleKit
 public import FeatherDomain
+public import FeatherModuleKit
 import UserDomain
 
 public struct SignInWithCredentials: SignIn {
@@ -57,7 +57,7 @@ public struct SignInWithCredentials: SignIn {
             }
 
             return try await makeAuthResponse(
-                userIdentityRepository: scope.identity,
+                authorization: scope.authorization,
                 userSessionRepository: scope.session,
                 user: user,
                 authenticationType: Session.AuthenticationTypes.credential,

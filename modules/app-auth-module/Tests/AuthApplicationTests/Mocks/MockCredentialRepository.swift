@@ -19,5 +19,5 @@ actor MockCredentialRepository: CredentialRepository {
         return result
     }
     func update(_ model: Credential) async throws -> Credential { model }
-    func delete(id: String) async throws -> Bool { false }
+    func delete(ids: [String]) async throws -> [String] { [] }
 }

@@ -43,11 +43,8 @@ actor MockRolePermissionRepository: RolePermissionRepository {
         result
     }
 
-    func delete(
-        roleId: String,
-        permissionId: String
-    ) async throws -> Bool {
+    func delete(ids: [String]) async throws -> [String] {
         deleteCallCount += 1
-        return deleteResult
+        return deleteResult ? ids : []
     }
 }

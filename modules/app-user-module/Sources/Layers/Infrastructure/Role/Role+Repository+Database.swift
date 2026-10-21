@@ -39,57 +39,74 @@ extension Role.Repository {
         public func findBy(
             id: String
         ) async throws -> Role.Model? {
-            let table = Role.Table(connection: context.connection)
-            return try await table.find(id: id)?.asDomain
+            try await DatabaseAccessLayer<Role.Table>(context: context)
+                .selectFirst(by: \.id, equals: id, as: Role.Table.Row.self)?
+                .asDomain
         }
 
         public func findBy(
             name: String
         ) async throws -> Role.Model? {
-            let table = Role.Table(connection: context.connection)
-            return try await table.find(name: name)?.asDomain
+            try await DatabaseAccessLayer<Role.Table>(context: context)
+                .selectFirst(
+                    as: Role.Table.Row.self
+                ) { $0.where(\.name, equals: name) }?
+                .asDomain
         }
 
         public func findBy(
             key: String
         ) async throws -> Role.Model? {
-            let table = Role.Table(connection: context.connection)
-            return try await table.find(key: key)?.asDomain
+            try await DatabaseAccessLayer<Role.Table>(context: context)
+                .selectFirst(by: \.key, equals: key, as: Role.Table.Row.self)?
+                .asDomain
         }
 
         public func insert(
             _ model: Role.Model.New
         ) async throws -> Role.Model {
-            let table = Role.Table(connection: context.connection)
-            let saved = try await table.save(
-                row: .init(
-                    id: idGenerator.generate(),
+            let accessLayer = DatabaseAccessLayer<Role.Table>(context: context)
+            let id = idGenerator.generate()
+            try await accessLayer.insert(
+                .init(
+                    id: id,
                     key: model.key,
                     name: model.name,
-                    notes: model.notes,
-                    createdAt: .init(timeIntervalSince1970: 0),
-                    updatedAt: .init(timeIntervalSince1970: 0)
+                    notes: model.notes
                 )
             )
+            guard
+                let saved = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: id,
+                    as: Role.Table.Row.self
+                )
+            else {
+                throw RepositoryError.notFound
+            }
             return saved.asDomain
         }
 
         public func update(
             _ model: Role.Model
         ) async throws -> Role.Model {
-            let table = Role.Table(connection: context.connection)
-            let updated = try await table.update(
-                id: model.id,
-                row: .init(
-                    id: model.id,
+            let accessLayer = DatabaseAccessLayer<Role.Table>(context: context)
+            try await accessLayer.update(
+                .init(
                     key: model.key,
                     name: model.name,
-                    notes: model.notes,
-                    createdAt: model.createdAt,
-                    updatedAt: model.updatedAt
-                )
+                    notes: model.notes
+                ),
+                where: \.id,
+                equals: model.id
             )
-            guard let updated else {
+            guard
+                let updated = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: model.id,
+                    as: Role.Table.Row.self
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return updated.asDomain

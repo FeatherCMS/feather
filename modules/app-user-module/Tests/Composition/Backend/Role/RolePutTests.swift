@@ -10,6 +10,7 @@ struct RolePutTests {
     private enum QueryKey: DatabaseQueryKey {
         case find
         case update
+        case updated
     }
 
     @Test
@@ -34,7 +35,8 @@ struct RolePutTests {
         let connection = MockDatabaseConnection<QueryKey>(
             responses: [
                 .init(key: .find, rows: [existing]),
-                .init(key: .update, rows: [updated]),
+                .init(key: .update),
+                .init(key: .updated, rows: [updated]),
             ]
         )
         let executor = try UserAPIHTTPTestSupport.makeExecutor(

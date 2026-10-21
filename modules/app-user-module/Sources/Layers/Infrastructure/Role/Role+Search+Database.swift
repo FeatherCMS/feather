@@ -25,54 +25,71 @@ extension Role.Search {
             self.context = context
         }
 
-        private func pageSizeOffset(_ page: Search.Page) -> (
-            size: Int, offset: Int
-        ) {
-            let page = page.normalized()
-            let pageIndex = page.number - 1
-            let offset =
-                pageIndex > Int.max / page.size
-                ? Int.max : pageIndex * page.size
-            return (page.size, offset)
-        }
-
-        private func sortDirectionSQL(_ direction: Search.SortDirection)
-            -> String
-        {
-            switch direction {
-            case .asc: "ASC"
-            case .desc: "DESC"
-            }
-        }
-
-        private func orderByRole(_ query: Role.Search.Input.Query) -> String {
-            let sortParts = query.sort.map { rule -> String in
-                let column: String
-                switch rule.field {
-                case .id: column = "id"
-                case .name: column = "name"
-                case .notes: column = "notes"
-                }
-                return "\(column) \(sortDirectionSQL(rule.direction))"
-            }
-            return (sortParts + ["id ASC"]).joined(separator: ", ")
-        }
-
         public func search(query: Role.Search.Input.Query) async throws
             -> Role.Search.Output
         {
-            let page = pageSizeOffset(query.page)
-            let table = Role.Table(connection: context.connection)
+            let accessLayer = DatabaseAccessLayer<Role.Table>(context: context)
             let items =
-                try await table.list(
-                    search: query.search,
-                    orderBy: orderByRole(query),
-                    limit: page.size,
-                    offset: page.offset
-                )
+                try await accessLayer.select(as: Role.Table.Row.self) {
+                    initial in
+                    var result = initial
+                    if let search = query.search {
+                        result = result.where(
+                            searchText: search,
+                            columns: [
+                                DatabaseQueryTextColumn<Role.Table>(\.id),
+                                DatabaseQueryTextColumn<Role.Table>(\.key),
+                                DatabaseQueryTextColumn<Role.Table>(\.name),
+                                DatabaseQueryTextColumn<Role.Table>(\.notes),
+                            ]
+                        )
+                    }
+                    let page = query.page.normalized()
+                    let pageIndex = page.number - 1
+                    let offset =
+                        pageIndex > Int.max / page.size
+                        ? Int.max : pageIndex * page.size
+                    return
+                        result
+                        .order(by: databaseOrders(query.sort))
+                        .limit(page.size)
+                        .offset(offset)
+                }
                 .map(\.asSearchItem)
-            let total = try await table.count(search: query.search)
+
+            let total = try await accessLayer.selectCount { initial in
+                guard let search = query.search else { return initial }
+                return initial.where(
+                    searchText: search,
+                    columns: [
+                        DatabaseQueryTextColumn<Role.Table>(\.id),
+                        DatabaseQueryTextColumn<Role.Table>(\.key),
+                        DatabaseQueryTextColumn<Role.Table>(\.name),
+                        DatabaseQueryTextColumn<Role.Table>(\.notes),
+                    ]
+                )
+            }
             return .init(items: items, total: total)
+        }
+
+        private func databaseOrders(
+            _ rules: [Role.Search.Input.Query.Sort]
+        ) -> [DatabaseQueryOrder<Role.Table>] {
+            var orders = rules.map { rule -> DatabaseQueryOrder<Role.Table> in
+                let direction: DatabaseQueryDirection =
+                    rule.direction == .asc ? .ascending : .descending
+                return switch rule.field {
+                case .id: DatabaseQueryOrder<Role.Table>(by: \.id, direction)
+                case .name:
+                    DatabaseQueryOrder<Role.Table>(by: \.name, direction)
+                case .notes:
+                    DatabaseQueryOrder<Role.Table>(by: \.notes, direction)
+                }
+            }
+            if !rules.contains(where: { $0.field == .id }) {
+                orders.append(DatabaseQueryOrder<Role.Table>(by: \.id))
+            }
+            return orders
         }
     }
 }

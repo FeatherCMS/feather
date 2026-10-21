@@ -9,9 +9,6 @@ public enum Identity {
     public enum List {}
     public enum Search {}
     public enum Remove {}
-    public enum Authorization {
-        public enum Query {}
-    }
     public enum Event {
         public enum Seed {}
     }

@@ -55,7 +55,7 @@ public struct SignInWithMagicLink: SignIn {
             }
 
             return try await makeAuthResponse(
-                userIdentityRepository: scope.identity,
+                authorization: scope.authorization,
                 userSessionRepository: scope.session,
                 user: user,
                 authenticationType: Session.AuthenticationTypes.magicLink,

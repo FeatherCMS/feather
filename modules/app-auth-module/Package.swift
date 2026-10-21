@@ -218,6 +218,7 @@ let package = Package(
                 .product(name: "UserModule", package: "app-user-module"),
 
                 .target(name: "AuthInfrastructure"),
+                .target(name: "AuthApplication"),
                 .target(name: "AuthAdminAPI"),
                 .target(name: "AuthAppAPI"),
             ],

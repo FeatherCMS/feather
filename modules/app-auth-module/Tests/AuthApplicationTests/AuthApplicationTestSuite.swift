@@ -130,6 +130,7 @@ struct AuthApplicationTestSuite {
         let transaction = MockTransactionExecutor(
             context: WriteAuth(
                 identity: MockAuthIdentityRepository(identity: identity),
+                authorization: DummyIdentityQueries(),
                 credential: MockCredentialRepository(result: credential),
                 session: sessionRepository,
                 magicLink: magicLinkRepository
@@ -161,6 +162,7 @@ struct AuthApplicationTestSuite {
         let transaction = MockTransactionExecutor(
             context: WriteAuth(
                 identity: MockAuthIdentityRepository(),
+                authorization: DummyIdentityQueries(),
                 credential: MockCredentialRepository(result: makeCredential()),
                 session: MockAuthSessionRepository(),
                 magicLink: magicLinkRepository
@@ -296,7 +298,7 @@ struct AuthApplicationTestSuite {
         )
         let queryExecutor = MockQueryExecutor(
             context: AuthScope(
-                identity: DummyIdentityQueries(),
+                authorization: DummyIdentityQueries(),
                 rolePermissions: rpQueries
             )
         )
@@ -463,7 +465,7 @@ private func makeMagicLink(
 ) -> MagicLink {
     .init(
         id: id,
-        credentialId: "credential-1",
+        authEmailId: "auth-email-1",
         token: "valid-token",
         expiresAt: Date().addingTimeInterval(3600),
         isPersistent: true,

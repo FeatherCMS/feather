@@ -41,12 +41,6 @@ actor MockIdentityRepository: Identity.Repository.Interface {
         findByIdResult
     }
 
-    func findRolesBy(
-        identityId: String
-    ) async throws -> [String] {
-        []
-    }
-
     func findRoleIdsBy(
         identityId: String
     ) async throws -> [String] {
@@ -59,12 +53,6 @@ actor MockIdentityRepository: Identity.Repository.Interface {
     ) async throws {
         replaceRoleIdsCallCount += 1
         replacedRoleIds = roleIds
-    }
-
-    func findPermissionsBy(
-        identityId: String
-    ) async throws -> [String] {
-        []
     }
 
     func insert(

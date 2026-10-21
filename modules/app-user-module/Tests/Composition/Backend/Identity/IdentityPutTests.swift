@@ -10,6 +10,7 @@ struct IdentityPutTests {
     private enum QueryKey: DatabaseQueryKey {
         case find
         case update
+        case updated
         case roleIDs
     }
 
@@ -35,7 +36,8 @@ struct IdentityPutTests {
         let connection = MockDatabaseConnection<QueryKey>(
             responses: [
                 .init(key: .find, rows: [existing]),
-                .init(key: .update, rows: [updated]),
+                .init(key: .update),
+                .init(key: .updated, rows: [updated]),
                 .init(key: .roleIDs),
             ]
         )

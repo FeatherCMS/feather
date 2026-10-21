@@ -47,10 +47,12 @@ public struct GetCurrentUser: UseCase {
             try await scope.identity.find(id: input.id)
         }
         async let roles = authorizationQuery.run { scope in
-            try await scope.identity.getRolesBy(identityId: identity.id)
+            try await scope.authorization.getRolesBy(identityId: identity.id)
         }
         async let permissions = authorizationQuery.run { scope in
-            try await scope.identity.getPermissionsBy(identityId: identity.id)
+            try await scope.authorization.getPermissionsBy(
+                identityId: identity.id
+            )
         }
         return try await CurrentUserDetail(
             user: identity,

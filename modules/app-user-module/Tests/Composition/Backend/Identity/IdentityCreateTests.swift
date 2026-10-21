@@ -9,6 +9,7 @@ import UserAdminAPI
 struct IdentityCreateTests {
     private enum QueryKey: DatabaseQueryKey {
         case insert
+        case find
         case clearRoles
         case roleIDs
     }
@@ -20,6 +21,9 @@ struct IdentityCreateTests {
             responses: [
                 .init(
                     key: .insert,
+                ),
+                .init(
+                    key: .find,
                     rows: [
                         .init([
                             "id": .string("created-1"),
