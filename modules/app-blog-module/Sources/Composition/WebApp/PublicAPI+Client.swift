@@ -1,5 +1,6 @@
 import AsyncHTTPClient
 public import BlogAppAPI
+import BlogWebShared
 public import FeatherWebShared
 public import Foundation
 import Hummingbird
@@ -7,7 +8,7 @@ import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 import WebModuleWebApp
 
-public enum API {
+public enum PublicAPI {
     public struct Client: Sendable {
         public let client: BlogAppAPI.Client
         public let apiBaseURL: URL
@@ -31,22 +32,19 @@ public enum API {
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (BlogAppAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            do { return try await operation(client) }
-            catch let error as OpenAPIRepositoryError { throw error }
-            catch {
-                throw OpenAPIRepositoryError.transport(
-                    description: String(describing: error)
-                )
-            }
+            try await APIClientSupport.withOpenAPIRepositoryErrorMapping(
+                operation,
+                using: client
+            )
         }
 
         public func failure(
             statusCode: Int,
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
-            OpenAPIRepositoryError.parsedFailure(
+            try await APIClientSupport.failure(
                 statusCode: statusCode,
-                responseBody: try await responseBody?.collectString()
+                responseBody: responseBody
             )
         }
     }

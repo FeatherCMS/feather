@@ -220,9 +220,7 @@ extension AuthorLink.List {
                                                                                 )
                                                                                 .description,
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .AuthorLinks
+                                                                                AuthorLink.Permissions
                                                                                 .read
                                                                         ),
                                                                         .init(
@@ -246,9 +244,7 @@ extension AuthorLink.List {
                                                                                     .secondary
                                                                                 ),
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .AuthorLinks
+                                                                                AuthorLink.Permissions
                                                                                 .update
                                                                         ),
                                                                     ],

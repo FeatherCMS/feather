@@ -131,16 +131,16 @@ extension Post.Model {
     }
 
     public mutating func update(
-        title: String? = nil,
-        excerpt: String? = nil,
-        content: String? = nil,
-        imageAssetId: String?? = nil,
-        authorIds: [String]? = nil,
-        tagIds: [String]? = nil
+        title: FieldChange<String>,
+        excerpt: FieldChange<String>,
+        content: FieldChange<String>,
+        imageAssetId: OptionalFieldChange<String>,
+        authorIds: FieldChange<[String]>,
+        tagIds: FieldChange<[String]>
     ) throws(Self.Error) {
-        let newTitle = title ?? self.title
-        let newExcerpt = excerpt ?? self.excerpt
-        let newContent = content ?? self.content
+        let newTitle = title.apply(to: self.title)
+        let newExcerpt = excerpt.apply(to: self.excerpt)
+        let newContent = content.apply(to: self.content)
 
         try Self.validate(title: newTitle)
         try Self.validate(excerpt: newExcerpt)
@@ -149,8 +149,8 @@ extension Post.Model {
         self.title = newTitle
         self.excerpt = newExcerpt
         self.content = newContent
-        self.imageAssetId = imageAssetId ?? self.imageAssetId
-        self.authorIds = authorIds ?? self.authorIds
-        self.tagIds = tagIds ?? self.tagIds
+        self.imageAssetId = imageAssetId.apply(to: self.imageAssetId)
+        self.authorIds = authorIds.apply(to: self.authorIds)
+        self.tagIds = tagIds.apply(to: self.tagIds)
     }
 }

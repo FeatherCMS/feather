@@ -7,4 +7,5 @@ enum BlogTag {
     enum ID {}
     enum Put {}
     enum Patch {}
+    enum Parameters {}
 }

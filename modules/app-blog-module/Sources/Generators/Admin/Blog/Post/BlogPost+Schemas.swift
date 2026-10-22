@@ -1,5 +1,6 @@
 import BlogSharedOpenAPIGenerator
 import FeatherOpenAPI
+import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 struct BlogPostIdField: StringSchemaRepresentable {
@@ -20,6 +21,10 @@ struct BlogPostTitleField: StringSchemaRepresentable {
 
 struct BlogPostImageAssetIdField: StringSchemaRepresentable {
     var example: String? = "media_asset_1"
+}
+
+struct BlogPostUpdateMaskField: StringSchemaRepresentable {
+    var example: String? = "title,imageAssetId"
 }
 
 struct BlogPostAuthorIdsField: ArraySchemaRepresentable {
@@ -63,7 +68,7 @@ struct BlogPostPatchSchema: ObjectSchemaRepresentable {
             "excerpt": BlogPostExcerptField().reference(required: false),
             "content": BlogPostContentField().reference(required: false),
             "imageAssetId": BlogPostImageAssetIdField()
-                .reference(required: false),
+                .nullable().reference(required: false),
             "authorIds": BlogPostAuthorIdsField().reference(required: false),
             "tagIds": BlogPostTagIdsField().reference(required: false),
         ]

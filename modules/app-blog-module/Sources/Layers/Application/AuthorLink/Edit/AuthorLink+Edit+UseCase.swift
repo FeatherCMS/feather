@@ -58,7 +58,7 @@ extension AuthorLink.Edit {
 
                 return try await scope.authorLink.update(model)
             }
-            let detail = model.asDetail
+            let detail = AuthorLink.Detail.Output(model: model)
             return .init(
                 id: detail.id,
                 authorId: detail.authorId,

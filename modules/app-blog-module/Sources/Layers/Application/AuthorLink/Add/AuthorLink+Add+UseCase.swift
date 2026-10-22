@@ -47,7 +47,7 @@ extension AuthorLink.Add {
                     )
                 )
             }
-            let detail = model.asDetail
+            let detail = AuthorLink.Detail.Output(model: model)
             return .init(
                 id: detail.id,
                 authorId: detail.authorId,

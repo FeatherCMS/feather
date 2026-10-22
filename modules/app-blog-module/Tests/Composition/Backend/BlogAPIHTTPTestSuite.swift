@@ -87,6 +87,49 @@ struct BlogAPIHTTPTestSuite {
         try await connection.assertAllResponsesConsumed()
     }
 
+    @Test
+    func authorPatchRejectsUnknownUpdateMask() async throws {
+        let connection = MockDatabaseConnection<QueryKey>(responses: [])
+        let executor = try makeExecutor(connection: connection)
+        let request = JSONRequest(
+            method: .patch,
+            path:
+                "/api/v1/admin/blog/authors/author-1?updateMask=unknown",
+            body: Components.Schemas.BlogAuthorPatchSchema()
+        )
+
+        try await CurrentSubject.set(subject: Subject(id: "admin-1")) {
+            try await executor.withOperation(request: request) { response in
+                let body = try await response.plainTextBody()
+                print("Invalid update mask response: \(body)")
+                #expect(response.status.code == 400)
+            }
+        }
+
+        try await connection.assertAllResponsesConsumed()
+    }
+
+    @Test
+    func authorPatchRejectsSelectedRequiredFieldMissingFromBody() async throws {
+        let connection = MockDatabaseConnection<QueryKey>(responses: [])
+        let executor = try makeExecutor(connection: connection)
+        let request = JSONRequest(
+            method: .patch,
+            path: "/api/v1/admin/blog/authors/author-1?updateMask=name",
+            body: Components.Schemas.BlogAuthorPatchSchema()
+        )
+
+        try await CurrentSubject.set(subject: Subject(id: "admin-1")) {
+            try await executor.withOperation(request: request) { response in
+                let body = try await response.plainTextBody()
+                print("Missing masked value response: \(body)")
+                #expect(response.status.code == 400)
+            }
+        }
+
+        try await connection.assertAllResponsesConsumed()
+    }
+
     private func makeExecutor<Key: DatabaseQueryKey>(
         connection: MockDatabaseConnection<Key>
     ) throws -> HummingbirdTestingHTTPExecutor {

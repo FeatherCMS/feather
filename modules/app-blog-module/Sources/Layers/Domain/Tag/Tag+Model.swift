@@ -119,14 +119,14 @@ extension Tag.Model {
     }
 
     public mutating func update(
-        title: String? = nil,
-        excerpt: String? = nil,
-        content: String? = nil,
-        imageAssetId: String?? = nil
+        title: FieldChange<String>,
+        excerpt: FieldChange<String>,
+        content: FieldChange<String>,
+        imageAssetId: OptionalFieldChange<String>
     ) throws(Self.Error) {
-        let newTitle = title ?? self.title
-        let newExcerpt = excerpt ?? self.excerpt
-        let newContent = content ?? self.content
+        let newTitle = title.apply(to: self.title)
+        let newExcerpt = excerpt.apply(to: self.excerpt)
+        let newContent = content.apply(to: self.content)
 
         try Self.validate(title: newTitle)
         try Self.validate(excerpt: newExcerpt)
@@ -135,6 +135,6 @@ extension Tag.Model {
         self.title = newTitle
         self.excerpt = newExcerpt
         self.content = newContent
-        self.imageAssetId = imageAssetId ?? self.imageAssetId
+        self.imageAssetId = imageAssetId.apply(to: self.imageAssetId)
     }
 }

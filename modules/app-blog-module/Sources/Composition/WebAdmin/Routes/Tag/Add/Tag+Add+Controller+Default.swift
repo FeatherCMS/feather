@@ -176,9 +176,9 @@ extension Tag.Add.Controller {
             keyPath: KeyPath<PublicRouteSettings, String>
         ) async throws -> String {
             let schema = try await AppPublicContentOpenAPIRepository(
-                api: BlogWebShared.API.Client(
-                    apiBaseURL: environment.apiBaseURL,
-                    sessionToken: context.sessionToken
+                api: PublicAPI.Client(
+                    environment: environment,
+                    requestContext: context
                 )
             )
             .getRouteSettings()

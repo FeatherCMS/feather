@@ -8,4 +8,5 @@ enum BlogAuthorLink {
     enum ID {}
     enum Put {}
     enum Patch {}
+    enum Parameters {}
 }

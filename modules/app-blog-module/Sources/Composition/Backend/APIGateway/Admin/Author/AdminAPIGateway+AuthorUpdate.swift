@@ -1,5 +1,6 @@
 public import BlogAdminAPI
 import BlogApplication
+import FeatherDomain
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -19,10 +20,13 @@ extension AdminAPIGateway {
             subject: subject,
             input: .init(
                 id: input.path.blogAuthorId,
-                name: body.name,
-                excerpt: body.excerpt,
-                content: body.content,
-                profileImageAssetId: body.profileImageAssetId,
+                name: body.name.map { .set($0) } ?? .unchanged,
+                excerpt: body.excerpt.map { .set($0) } ?? .unchanged,
+                content: body.content.map { .set($0) } ?? .unchanged,
+                profileImageAssetId: OptionalFieldChange(
+                    value: body.profileImageAssetId ?? nil,
+                    shouldApply: body.profileImageAssetId != nil
+                ),
                 metadata: nil
             )
         )

@@ -249,9 +249,7 @@ extension Post.List {
                                                                                     .primary
                                                                                 ),
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .Posts
+                                                                                Post.Permissions
                                                                                 .read
                                                                         ),
                                                                         .init(
@@ -271,9 +269,7 @@ extension Post.List {
                                                                                     .secondary
                                                                                 ),
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .Posts
+                                                                                Post.Permissions
                                                                                 .update
                                                                         ),
                                                                         .init(
@@ -299,9 +295,7 @@ extension Post.List {
                                                                             style:
                                                                                 .destructive,
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .Posts
+                                                                                Post.Permissions
                                                                                 .delete
                                                                         ),
                                                                     ],

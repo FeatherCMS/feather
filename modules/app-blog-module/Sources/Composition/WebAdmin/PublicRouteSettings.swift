@@ -19,9 +19,9 @@ public struct PublicRouteSettings: Sendable {
 }
 
 public struct AppPublicContentOpenAPIRepository: Sendable {
-    public let api: API.Client
+    public let api: PublicAPI.Client
 
-    public init(api: API.Client) {
+    public init(api: PublicAPI.Client) {
         self.api = api
     }
 

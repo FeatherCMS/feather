@@ -277,9 +277,7 @@ extension Author.List {
                                                                                     .primary
                                                                                 ),
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .Authors
+                                                                                Author.Permissions
                                                                                 .read
                                                                         ),
                                                                         .init(
@@ -299,9 +297,7 @@ extension Author.List {
                                                                                     .secondary
                                                                                 ),
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .Authors
+                                                                                Author.Permissions
                                                                                 .update
                                                                         ),
                                                                         .init(
@@ -327,9 +323,7 @@ extension Author.List {
                                                                             style:
                                                                                 .destructive,
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .Authors
+                                                                                Author.Permissions
                                                                                 .delete
                                                                         ),
                                                                     ],

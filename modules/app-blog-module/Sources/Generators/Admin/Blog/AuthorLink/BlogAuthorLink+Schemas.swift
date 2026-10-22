@@ -29,6 +29,10 @@ struct BlogAuthorLinkNotesField: StringSchemaRepresentable {
     var example: String? = "Visible for all visitors."
 }
 
+struct BlogAuthorLinkUpdateMaskField: StringSchemaRepresentable {
+    var example: String? = "label,url"
+}
+
 struct BlogAuthorLinkCreatedAtField: DoubleSchemaRepresentable {
     var example: Double? { 1_760_000_000 }
 }

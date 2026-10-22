@@ -4,6 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
+package import BlogDomain
 public import BlogModule
 public import FeatherApplication
 
@@ -44,6 +45,21 @@ extension AuthorLink.Detail {
             self.notes = notes
             self.createdAt = createdAt
             self.updatedAt = updatedAt
+        }
+
+        package init(model: AuthorLink.Model) {
+            self.init(
+                id: model.id,
+                authorId: model.authorId,
+                label: model.label,
+                url: model.url,
+                priority: model.priority,
+                isBlank: model.isBlank,
+                permission: model.permission,
+                notes: model.notes,
+                createdAt: model.createdAt,
+                updatedAt: model.updatedAt
+            )
         }
     }
 }

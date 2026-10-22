@@ -178,9 +178,9 @@ extension Author.Add.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> String {
             let schema = try await AppPublicContentOpenAPIRepository(
-                api: BlogWebShared.API.Client(
-                    apiBaseURL: environment.apiBaseURL,
-                    sessionToken: context.sessionToken
+                api: PublicAPI.Client(
+                    environment: environment,
+                    requestContext: context
                 )
             )
             .getRouteSettings()

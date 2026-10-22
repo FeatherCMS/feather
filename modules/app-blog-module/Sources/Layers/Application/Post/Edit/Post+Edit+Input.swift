@@ -1,26 +1,27 @@
 public import BlogModule
 public import FeatherApplication
+public import FeatherDomain
 public import WebApplication
 
 extension Post.Edit {
     public struct Input: DTO {
         public let id: String
-        public let title: String?
-        public let excerpt: String?
-        public let content: String?
-        public let imageAssetId: String??
-        public let authorIds: [String]?
-        public let tagIds: [String]?
+        public let title: FieldChange<String>
+        public let excerpt: FieldChange<String>
+        public let content: FieldChange<String>
+        public let imageAssetId: OptionalFieldChange<String>
+        public let authorIds: FieldChange<[String]>
+        public let tagIds: FieldChange<[String]>
         public let metadata: PageMetadataInput?
 
         public init(
             id: String,
-            title: String?,
-            excerpt: String?,
-            content: String?,
-            imageAssetId: String??,
-            authorIds: [String]?,
-            tagIds: [String]?,
+            title: FieldChange<String>,
+            excerpt: FieldChange<String>,
+            content: FieldChange<String>,
+            imageAssetId: OptionalFieldChange<String>,
+            authorIds: FieldChange<[String]>,
+            tagIds: FieldChange<[String]>,
             metadata: PageMetadataInput?
         ) {
             self.id = id

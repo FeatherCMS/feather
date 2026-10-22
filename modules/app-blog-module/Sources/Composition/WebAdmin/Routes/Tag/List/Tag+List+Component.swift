@@ -249,9 +249,7 @@ extension Tag.List {
                                                                                     .primary
                                                                                 ),
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .Tags
+                                                                                Tag.Permissions
                                                                                 .read
                                                                         ),
                                                                         .init(
@@ -271,9 +269,7 @@ extension Tag.List {
                                                                                     .secondary
                                                                                 ),
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .Tags
+                                                                                Tag.Permissions
                                                                                 .update
                                                                         ),
                                                                         .init(
@@ -299,9 +295,7 @@ extension Tag.List {
                                                                             style:
                                                                                 .destructive,
                                                                             permission:
-                                                                                BlogModule
-                                                                                .Permissions
-                                                                                .Tags
+                                                                                Tag.Permissions
                                                                                 .delete
                                                                         ),
                                                                     ],

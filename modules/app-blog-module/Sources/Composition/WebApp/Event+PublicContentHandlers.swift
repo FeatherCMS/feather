@@ -31,7 +31,7 @@ public enum PublicContent {
     private static func resolve(
         _ context: WebPublicContentEventContext<PublicContentRuntimeContext>
     ) async throws -> WebPublicContentResult? {
-        let api = BlogWebShared.API.Client(
+        let api = PublicAPI.Client(
             apiBaseURL: context.runtime.apiBaseURL,
             sessionToken: context.runtime.context.sessionToken
         )
@@ -70,7 +70,7 @@ public enum PublicContent {
 
     private static func resolvePost(
         context: WebPublicContentEventContext<PublicContentRuntimeContext>,
-        api: BlogWebShared.API.Client,
+        api: PublicAPI.Client,
         mediaResolver: MediaResolver
     ) async throws -> WebPublicContentResult? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
@@ -92,7 +92,7 @@ public enum PublicContent {
 
     private static func resolveAuthor(
         context: WebPublicContentEventContext<PublicContentRuntimeContext>,
-        api: BlogWebShared.API.Client,
+        api: PublicAPI.Client,
         mediaResolver: MediaResolver
     ) async throws -> WebPublicContentResult? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
@@ -114,7 +114,7 @@ public enum PublicContent {
 
     private static func resolveTag(
         context: WebPublicContentEventContext<PublicContentRuntimeContext>,
-        api: BlogWebShared.API.Client,
+        api: PublicAPI.Client,
         mediaResolver: MediaResolver
     ) async throws -> WebPublicContentResult? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
@@ -136,7 +136,7 @@ public enum PublicContent {
 
     private static func resolveList(
         kind: Kind,
-        api: BlogWebShared.API.Client,
+        api: PublicAPI.Client,
         mediaResolver: MediaResolver
     ) async throws -> WebPublicContentResult {
         switch kind {

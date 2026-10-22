@@ -119,16 +119,17 @@ extension Author.Model {
     }
 
     public mutating func update(
-        name: String? = nil,
-        excerpt: String? = nil,
-        content: String? = nil,
-        profileImageAssetId: String? = nil
+        name: FieldChange<String>,
+        excerpt: FieldChange<String>,
+        content: FieldChange<String>,
+        profileImageAssetId: OptionalFieldChange<String>
     ) throws(Self.Error) {
-        let newName = name ?? self.name
-        let newExcerpt = excerpt ?? self.excerpt
-        let newContent = content ?? self.content
-        let newProfileImageAssetId =
-            profileImageAssetId ?? self.profileImageAssetId
+        let newName = name.apply(to: self.name)
+        let newExcerpt = excerpt.apply(to: self.excerpt)
+        let newContent = content.apply(to: self.content)
+        let newProfileImageAssetId = profileImageAssetId.apply(
+            to: self.profileImageAssetId
+        )
 
         try Self.validate(name: newName)
         try Self.validate(excerpt: newExcerpt)

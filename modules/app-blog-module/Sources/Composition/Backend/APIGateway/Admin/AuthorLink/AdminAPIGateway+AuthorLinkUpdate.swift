@@ -1,5 +1,6 @@
 public import BlogAdminAPI
 import BlogApplication
+import FeatherDomain
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -20,12 +21,12 @@ extension AdminAPIGateway {
             input: .init(
                 id: input.path.blogAuthorLinkId,
                 authorId: input.path.blogAuthorId,
-                label: body.label,
-                url: body.url,
-                priority: body.priority,
-                isBlank: body.isBlank,
-                permission: body.permission,
-                notes: body.notes
+                label: .set(body.label),
+                url: .set(body.url),
+                priority: .set(body.priority),
+                isBlank: .set(body.isBlank),
+                permission: .set(body.permission),
+                notes: body.notes.map { .set($0) } ?? .unchanged
             )
         )
 

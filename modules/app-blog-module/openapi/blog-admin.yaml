@@ -182,11 +182,18 @@ paths:
       operationId: blogAuthorPatch
       parameters:
       - $ref: '#/components/parameters/BlogAuthorIdParameter'
+      - $ref: '#/components/parameters/BlogAuthorParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/BlogAuthorPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Blog author not found
           content:
@@ -382,11 +389,18 @@ paths:
       parameters:
       - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
       - $ref: '#/components/parameters/BlogAuthorLinkIdParameter'
+      - $ref: '#/components/parameters/BlogAuthorLinkParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/BlogAuthorLinkPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Blog author link not found
           content:
@@ -571,11 +585,18 @@ paths:
       operationId: blogPostPatch
       parameters:
       - $ref: '#/components/parameters/BlogPostIdParameter'
+      - $ref: '#/components/parameters/BlogPostParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/BlogPostPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/BlogPostDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Blog post not found
           content:
@@ -805,11 +826,18 @@ paths:
       operationId: blogTagPatch
       parameters:
       - $ref: '#/components/parameters/BlogTagIdParameter'
+      - $ref: '#/components/parameters/BlogTagParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/BlogTagPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/BlogTagDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Blog tag not found
           content:
@@ -1216,7 +1244,14 @@ components:
         content:
           $ref: '#/components/schemas/BlogAuthorContentField'
         profileImageAssetId:
-          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdFieldNullable'
+    BlogAuthorProfileImageAssetIdFieldNullable:
+      type: string
+      example: media_asset_1
+      nullable: true
+    BlogAuthorUpdateMaskField:
+      type: string
+      example: name,excerpt
     BlogAuthorLinkCreateSchema:
       type: object
       properties:
@@ -1476,6 +1511,9 @@ components:
       - permission
       - createdAt
       - updatedAt
+    BlogAuthorLinkUpdateMaskField:
+      type: string
+      example: label,url
     BlogAuthorLinkPatchSchema:
       type: object
       properties:
@@ -1727,7 +1765,7 @@ components:
         content:
           $ref: '#/components/schemas/BlogPostContentField'
         imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+          $ref: '#/components/schemas/BlogPostImageAssetIdFieldNullable'
         authorIds:
           $ref: '#/components/schemas/BlogPostAuthorIdsField'
         tagIds:
@@ -1735,6 +1773,13 @@ components:
     BlogPostContentField:
       type: string
       example: <h1>Homepage</h1>
+    BlogPostImageAssetIdFieldNullable:
+      type: string
+      example: media_asset_1
+      nullable: true
+    BlogPostUpdateMaskField:
+      type: string
+      example: title,imageAssetId
     BlogSettingsDetailSchema:
       type: object
       properties:
@@ -2003,10 +2048,17 @@ components:
         content:
           $ref: '#/components/schemas/BlogTagContentField'
         imageAssetId:
-          $ref: '#/components/schemas/BlogTagImageAssetIdField'
+          $ref: '#/components/schemas/BlogTagImageAssetIdFieldNullable'
     BlogTagContentField:
       type: string
       example: <h1>Homepage</h1>
+    BlogTagImageAssetIdFieldNullable:
+      type: string
+      example: media_asset_1
+      nullable: true
+    BlogTagUpdateMaskField:
+      type: string
+      example: title,imageAssetId
   responses:
     BlogAuthorDetailResponse:
       description: BlogAuthor response
@@ -2096,6 +2148,15 @@ components:
       schema:
         $ref: '#/components/schemas/BlogAuthorIdField'
       description: BlogAuthor id
+    BlogAuthorParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogAuthorUpdateMaskField'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
     BlogAuthorLinkMenuIdParameter:
       name: blogAuthorId
       in: path
@@ -2110,6 +2171,15 @@ components:
       schema:
         $ref: '#/components/schemas/BlogAuthorLinkIdField'
       description: BlogAuthorLink id
+    BlogAuthorLinkParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogAuthorLinkUpdateMaskField'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
     BlogPostIdParameter:
       name: blogPostId
       in: path
@@ -2117,6 +2187,15 @@ components:
       schema:
         $ref: '#/components/schemas/BlogPostIdField'
       description: BlogPost id
+    BlogPostParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogPostUpdateMaskField'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
     BlogTagIdParameter:
       name: blogTagId
       in: path
@@ -2124,6 +2203,15 @@ components:
       schema:
         $ref: '#/components/schemas/BlogTagIdField'
       description: BlogTag id
+    BlogTagParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogTagUpdateMaskField'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
   requestBodies:
     BlogAuthorRequestBody:
       content:

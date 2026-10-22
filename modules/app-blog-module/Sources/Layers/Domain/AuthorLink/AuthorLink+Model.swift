@@ -134,18 +134,18 @@ extension AuthorLink.Model {
     }
 
     public mutating func update(
-        label: String? = nil,
-        url: String? = nil,
-        priority: Int? = nil,
-        isBlank: Bool? = nil,
-        permission: String? = nil,
-        notes: String? = nil
+        label: FieldChange<String>,
+        url: FieldChange<String>,
+        priority: FieldChange<Int>,
+        isBlank: FieldChange<Bool>,
+        permission: FieldChange<String>,
+        notes: FieldChange<String>
     ) throws(Self.Error) {
-        let newLabel = label ?? self.label
-        let newURL = url ?? self.url
-        let newPriority = priority ?? self.priority
-        let newPermission = permission ?? self.permission
-        let newNotes = notes ?? self.notes
+        let newLabel = label.apply(to: self.label)
+        let newURL = url.apply(to: self.url)
+        let newPriority = priority.apply(to: self.priority)
+        let newPermission = permission.apply(to: self.permission)
+        let newNotes = notes.apply(to: self.notes)
 
         try Self.validate(label: newLabel)
         try Self.validate(url: newURL)
@@ -155,7 +155,7 @@ extension AuthorLink.Model {
         self.label = newLabel
         self.url = newURL
         self.priority = newPriority
-        self.isBlank = isBlank ?? self.isBlank
+        self.isBlank = isBlank.apply(to: self.isBlank)
         self.permission = newPermission
         self.notes = newNotes
     }
