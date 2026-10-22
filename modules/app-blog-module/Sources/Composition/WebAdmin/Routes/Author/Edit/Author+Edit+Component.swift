@@ -35,16 +35,13 @@ extension Author.Edit {
                         state: state.form,
                         metadataHref: state.routes
                             .authorEditMetadata(
-                                RouterPath(state.id),
-                                RouterPath(state.id)
-                            )
-                            .description,
-                        action: state.routes.authorEdit(RouterPath(state.id))
-                            .description,
+                                state.id,
+                                state.id
+                            ),
+                        action: state.routes.authorEdit(state.id),
                         submitLabel: "Edit author",
                         removeHref: state.routes
-                            .authorRemove(RouterPath(state.id))
-                            .description,
+                            .authorRemove(state.id),
                         removeLabel: "Remove author"
                     )
                 )

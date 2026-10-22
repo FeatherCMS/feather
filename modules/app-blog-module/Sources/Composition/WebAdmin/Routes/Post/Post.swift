@@ -17,39 +17,50 @@ extension Post {
                     ]
             }
 
-            func post(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    posts.appending(parameter: "id")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            var postAddRoute: WebRoute {
+                posts.appending(pathComponent: "add")
             }
 
-            func postAdd() -> RouterPath {
-                posts.appending(pathComponent: "add").routerPath
+            var postRemoveRoute: WebRoute {
+                posts.appending(pathComponent: "remove")
             }
 
-            func postRemove() -> RouterPath {
-                posts.appending(pathComponent: "remove").routerPath
+            var postRemoveByIDRoute: WebRoute {
+                posts.appending(parameter: "id")
+                    .appending(pathComponent: "remove")
             }
 
-            func postRemove(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    posts.appending(parameter: "id")
-                        .appending(pathComponent: "remove")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            var postStatusRoute: WebRoute {
+                posts.appending(parameter: "id")
+                    .appending(pathComponent: "status")
             }
 
-            func postEdit(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    posts.appending(parameter: "id")
-                        .appending(pathComponent: "edit")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            func post(_ id: String) -> String {
+                posts.appending(parameter: "id")
+                    .path(parameter: "id", value: id)
             }
 
-            func postEditMetadata(_ id: RouterPath, _ metadataID: RouterPath)
-                -> RouterPath
+            func postAdd() -> String {
+                postAddRoute.path
+            }
+
+            func postRemove() -> String {
+                postRemoveRoute.path
+            }
+
+            func postRemove(_ id: String) -> String {
+                postRemoveByIDRoute
+                    .path(parameter: "id", value: id)
+            }
+
+            func postEdit(_ id: String) -> String {
+                posts.appending(parameter: "id")
+                    .appending(pathComponent: "edit")
+                    .path(parameter: "id", value: id)
+            }
+
+            func postEditMetadata(_ id: String, _ metadataID: String)
+                -> String
             {
                 resolved(
                     posts.appending(parameter: "id")
@@ -57,44 +68,37 @@ extension Post {
                         .appending(pathComponent: "metadata")
                         .appending(parameter: "metadataID"),
                     parameters: [
-                        "id": Self.parameterValue(id),
-                        "metadataID": Self.parameterValue(metadataID),
+                        "id": id,
+                        "metadataID": metadataID,
                     ]
                 )
             }
 
-            func postEditMetadataRoute() -> RouterPath {
+            func postEditMetadataRoute() -> WebRoute {
                 posts.appending(parameter: "id")
                     .appending(pathComponent: "edit")
                     .appending(pathComponent: "metadata")
                     .appending(parameter: "metadataID")
-                    .routerPath
             }
 
-            func postStatus(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    posts.appending(parameter: "id")
-                        .appending(pathComponent: "status")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            func postStatus(_ id: String) -> String {
+                posts.appending(parameter: "id")
+                    .appending(pathComponent: "status")
+                    .path(parameter: "id", value: id)
             }
 
             private func resolved(
                 _ route: WebRoute,
                 parameters: [String: String]
-            ) -> RouterPath {
+            ) -> String {
                 do {
-                    return RouterPath(try route.path(parameters: parameters))
+                    return try route.path(parameters: parameters)
                 }
                 catch {
                     preconditionFailure("A Blog route is missing a parameter.")
                 }
             }
 
-            private static func parameterValue(_ path: RouterPath) -> String {
-                let value = path.description
-                return value.hasPrefix("/") ? String(value.dropFirst()) : value
-            }
         }
     }
 }

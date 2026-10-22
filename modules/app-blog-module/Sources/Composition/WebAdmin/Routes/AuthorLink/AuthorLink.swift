@@ -13,72 +13,75 @@ extension AuthorLink {
                 self.authorsBreadcrumb = breadcrumb
             }
 
-            func author(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    authors.appending(parameter: "id")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            var authorLinkAddRoute: WebRoute {
+                authors.appending(parameter: "authorID")
+                    .appending(pathComponent: "links")
+                    .appending(pathComponent: "add")
             }
 
-            func authorLinks(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    authors.appending(parameter: "id")
-                        .appending(pathComponent: "links")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            var authorLinkRemoveRoute: WebRoute {
+                authors.appending(parameter: "authorID")
+                    .appending(pathComponent: "links")
+                    .appending(pathComponent: "remove")
             }
 
-            func authorLinksBreadcrumb(_ id: RouterPath)
+            var authorLinkEditRoute: WebRoute {
+                authors.appending(parameter: "authorID")
+                    .appending(pathComponent: "links")
+                    .appending(parameter: "id")
+                    .appending(pathComponent: "edit")
+            }
+
+            func author(_ id: String) -> String {
+                authors.appending(parameter: "id")
+                    .path(parameter: "id", value: id)
+            }
+
+            func authorLinks(_ id: String) -> String {
+                authors.appending(parameter: "id")
+                    .appending(pathComponent: "links")
+                    .path(parameter: "id", value: id)
+            }
+
+            func authorLinksBreadcrumb(_ id: String)
                 -> [AdminBreadcrumb.Link]
             {
                 authorsBreadcrumb + [
                     .init(
                         label: "Links",
-                        link: authorLinks(id).description + "/"
+                        link: authorLinks(id)
                     )
                 ]
             }
 
-            func authorLink(_ authorID: RouterPath, _ id: RouterPath)
-                -> RouterPath
+            func authorLink(_ authorID: String, _ id: String) -> String
             {
                 resolved(
                     authors.appending(parameter: "authorID")
                         .appending(pathComponent: "links")
                         .appending(parameter: "id"),
                     parameters: [
-                        "authorID": Self.parameterValue(authorID),
-                        "id": Self.parameterValue(id),
+                        "authorID": authorID,
+                        "id": id,
                     ]
                 )
             }
 
-            func authorLinkAdd(_ authorID: RouterPath) -> RouterPath {
-                RouterPath(
-                    authors.appending(parameter: "authorID")
-                        .appending(pathComponent: "links")
-                        .appending(pathComponent: "add")
-                        .path(
-                            parameter: "authorID",
-                            value: Self.parameterValue(authorID)
-                        )
-                )
+            func authorLinkAdd(_ authorID: String) -> String {
+                authors.appending(parameter: "authorID")
+                    .appending(pathComponent: "links")
+                    .appending(pathComponent: "add")
+                    .path(parameter: "authorID", value: authorID)
             }
 
-            func authorLinkRemove(_ authorID: RouterPath) -> RouterPath {
-                RouterPath(
-                    authors.appending(parameter: "authorID")
-                        .appending(pathComponent: "links")
-                        .appending(pathComponent: "remove")
-                        .path(
-                            parameter: "authorID",
-                            value: Self.parameterValue(authorID)
-                        )
-                )
+            func authorLinkRemove(_ authorID: String) -> String {
+                authors.appending(parameter: "authorID")
+                    .appending(pathComponent: "links")
+                    .appending(pathComponent: "remove")
+                    .path(parameter: "authorID", value: authorID)
             }
 
-            func authorLinkEdit(_ authorID: RouterPath, _ id: RouterPath)
-                -> RouterPath
+            func authorLinkEdit(_ authorID: String, _ id: String) -> String
             {
                 resolved(
                     authors.appending(parameter: "authorID")
@@ -86,8 +89,8 @@ extension AuthorLink {
                         .appending(parameter: "id")
                         .appending(pathComponent: "edit"),
                     parameters: [
-                        "authorID": Self.parameterValue(authorID),
-                        "id": Self.parameterValue(id),
+                        "authorID": authorID,
+                        "id": id,
                     ]
                 )
             }
@@ -95,19 +98,15 @@ extension AuthorLink {
             private func resolved(
                 _ route: WebRoute,
                 parameters: [String: String]
-            ) -> RouterPath {
+            ) -> String {
                 do {
-                    return RouterPath(try route.path(parameters: parameters))
+                    return try route.path(parameters: parameters)
                 }
                 catch {
                     preconditionFailure("A Blog route is missing a parameter.")
                 }
             }
 
-            private static func parameterValue(_ path: RouterPath) -> String {
-                let value = path.description
-                return value.hasPrefix("/") ? String(value.dropFirst()) : value
-            }
         }
     }
 }

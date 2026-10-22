@@ -61,12 +61,8 @@ extension Tag.View {
                         context.build(
                             AdminStatusSelectFormDefinition(
                                 id: formID,
-                                action: state.routes
-                                    .tagStatus(RouterPath(state.model.id))
-                                    .description,
-                                returnTo: state.routes
-                                    .tag(RouterPath(state.model.id))
-                                    .description
+                                action: state.routes.tagStatus(state.model.id),
+                                returnTo: state.routes.tag(state.model.id)
                             )
                         )
                         context.build(
@@ -91,9 +87,7 @@ extension Tag.View {
                 result.append(
                     .init(
                         label: "Edit tag",
-                        href: state.routes
-                            .tagEdit(RouterPath(state.model.id))
-                            .description,
+                        href: state.routes.tagEdit(state.model.id),
                         style: .primary
                     )
                 )
@@ -104,9 +98,7 @@ extension Tag.View {
                 result.append(
                     .init(
                         label: "Remove tag",
-                        href: state.routes
-                            .tagRemove(RouterPath(state.model.id))
-                            .description,
+                        href: state.routes.tagRemove(state.model.id),
                         style: .destructive
                     )
                 )

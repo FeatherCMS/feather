@@ -45,10 +45,7 @@ extension Tag.List {
         ) {
             router.get(routes.tags.routerPath, use: controller.get)
             router.post(
-                routes.tags
-                    .appending(parameter: "id")
-                    .appending(pathComponent: "status")
-                    .routerPath,
+                routes.tagStatusRoute.routerPath,
                 use: controller.postStatus
             )
         }

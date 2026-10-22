@@ -23,10 +23,7 @@ extension Post.Status {
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
             router.post(
-                routes.posts
-                    .appending(parameter: "id")
-                    .appending(pathComponent: "status")
-                    .routerPath,
+                routes.postStatusRoute.routerPath,
                 use: controller.post
             )
         }

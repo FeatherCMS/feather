@@ -28,7 +28,7 @@ extension AuthorLink.Remove.Presenter {
                         info: info,
                         message: message,
                         breadcrumb: routes.authorLinksBreadcrumb(
-                            RouterPath(authorID)
+                            authorID
                         )
                     )
                 )

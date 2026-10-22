@@ -41,11 +41,7 @@ extension AuthorLink.Remove {
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
             router.post(
-                routes.authors
-                    .appending(parameter: "authorID")
-                    .appending(pathComponent: "links")
-                    .appending(pathComponent: "remove")
-                    .routerPath,
+                routes.authorLinkRemoveRoute.routerPath,
                 use: controller.post
             )
         }

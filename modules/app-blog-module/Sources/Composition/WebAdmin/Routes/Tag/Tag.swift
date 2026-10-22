@@ -17,39 +17,49 @@ extension Tag {
                     ]
             }
 
-            func tag(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    tags.appending(parameter: "id")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            var tagAddRoute: WebRoute {
+                tags.appending(pathComponent: "add")
             }
 
-            func tagAdd() -> RouterPath {
-                tags.appending(pathComponent: "add").routerPath
+            var tagRemoveRoute: WebRoute {
+                tags.appending(pathComponent: "remove")
             }
 
-            func tagRemove() -> RouterPath {
-                tags.appending(pathComponent: "remove").routerPath
+            var tagRemoveByIDRoute: WebRoute {
+                tags.appending(parameter: "id")
+                    .appending(pathComponent: "remove")
             }
 
-            func tagRemove(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    tags.appending(parameter: "id")
-                        .appending(pathComponent: "remove")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            var tagStatusRoute: WebRoute {
+                tags.appending(parameter: "id")
+                    .appending(pathComponent: "status")
             }
 
-            func tagEdit(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    tags.appending(parameter: "id")
-                        .appending(pathComponent: "edit")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            func tag(_ id: String) -> String {
+                tags.appending(parameter: "id")
+                    .path(parameter: "id", value: id)
             }
 
-            func tagEditMetadata(_ id: RouterPath, _ metadataID: RouterPath)
-                -> RouterPath
+            func tagAdd() -> String {
+                tagAddRoute.path
+            }
+
+            func tagRemove() -> String {
+                tagRemoveRoute.path
+            }
+
+            func tagRemove(_ id: String) -> String {
+                tagRemoveByIDRoute
+                    .path(parameter: "id", value: id)
+            }
+
+            func tagEdit(_ id: String) -> String {
+                tags.appending(parameter: "id")
+                    .appending(pathComponent: "edit")
+                    .path(parameter: "id", value: id)
+            }
+
+            func tagEditMetadata(_ id: String, _ metadataID: String) -> String
             {
                 resolved(
                     tags.appending(parameter: "id")
@@ -57,44 +67,37 @@ extension Tag {
                         .appending(pathComponent: "metadata")
                         .appending(parameter: "metadataID"),
                     parameters: [
-                        "id": Self.parameterValue(id),
-                        "metadataID": Self.parameterValue(metadataID),
+                        "id": id,
+                        "metadataID": metadataID,
                     ]
                 )
             }
 
-            func tagEditMetadataRoute() -> RouterPath {
+            func tagEditMetadataRoute() -> WebRoute {
                 tags.appending(parameter: "id")
                     .appending(pathComponent: "edit")
                     .appending(pathComponent: "metadata")
                     .appending(parameter: "metadataID")
-                    .routerPath
             }
 
-            func tagStatus(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    tags.appending(parameter: "id")
-                        .appending(pathComponent: "status")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            func tagStatus(_ id: String) -> String {
+                tags.appending(parameter: "id")
+                    .appending(pathComponent: "status")
+                    .path(parameter: "id", value: id)
             }
 
             private func resolved(
                 _ route: WebRoute,
                 parameters: [String: String]
-            ) -> RouterPath {
+            ) -> String {
                 do {
-                    return RouterPath(try route.path(parameters: parameters))
+                    return try route.path(parameters: parameters)
                 }
                 catch {
                     preconditionFailure("A Blog route is missing a parameter.")
                 }
             }
 
-            private static func parameterValue(_ path: RouterPath) -> String {
-                let value = path.description
-                return value.hasPrefix("/") ? String(value.dropFirst()) : value
-            }
         }
     }
 }

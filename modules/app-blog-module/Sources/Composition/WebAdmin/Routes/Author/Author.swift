@@ -17,39 +17,50 @@ extension Author {
                     ]
             }
 
-            func author(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    authors.appending(parameter: "id")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            var authorAddRoute: WebRoute {
+                authors.appending(pathComponent: "add")
             }
 
-            func authorAdd() -> RouterPath {
-                authors.appending(pathComponent: "add").routerPath
+            var authorRemoveRoute: WebRoute {
+                authors.appending(pathComponent: "remove")
             }
 
-            func authorRemove() -> RouterPath {
-                authors.appending(pathComponent: "remove").routerPath
+            var authorRemoveByIDRoute: WebRoute {
+                authors.appending(parameter: "id")
+                    .appending(pathComponent: "remove")
             }
 
-            func authorRemove(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    authors.appending(parameter: "id")
-                        .appending(pathComponent: "remove")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            var authorStatusRoute: WebRoute {
+                authors.appending(parameter: "id")
+                    .appending(pathComponent: "status")
             }
 
-            func authorEdit(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    authors.appending(parameter: "id")
-                        .appending(pathComponent: "edit")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            func author(_ id: String) -> String {
+                authors.appending(parameter: "id")
+                    .path(parameter: "id", value: id)
             }
 
-            func authorEditMetadata(_ id: RouterPath, _ metadataID: RouterPath)
-                -> RouterPath
+            func authorAdd() -> String {
+                authorAddRoute.path
+            }
+
+            func authorRemove() -> String {
+                authorRemoveRoute.path
+            }
+
+            func authorRemove(_ id: String) -> String {
+                authorRemoveByIDRoute
+                    .path(parameter: "id", value: id)
+            }
+
+            func authorEdit(_ id: String) -> String {
+                authors.appending(parameter: "id")
+                    .appending(pathComponent: "edit")
+                    .path(parameter: "id", value: id)
+            }
+
+            func authorEditMetadata(_ id: String, _ metadataID: String)
+                -> String
             {
                 resolved(
                     authors.appending(parameter: "id")
@@ -57,44 +68,37 @@ extension Author {
                         .appending(pathComponent: "metadata")
                         .appending(parameter: "metadataID"),
                     parameters: [
-                        "id": Self.parameterValue(id),
-                        "metadataID": Self.parameterValue(metadataID),
+                        "id": id,
+                        "metadataID": metadataID,
                     ]
                 )
             }
 
-            func authorEditMetadataRoute() -> RouterPath {
+            func authorEditMetadataRoute() -> WebRoute {
                 authors.appending(parameter: "id")
                     .appending(pathComponent: "edit")
                     .appending(pathComponent: "metadata")
                     .appending(parameter: "metadataID")
-                    .routerPath
             }
 
-            func authorStatus(_ id: RouterPath) -> RouterPath {
-                RouterPath(
-                    authors.appending(parameter: "id")
-                        .appending(pathComponent: "status")
-                        .path(parameter: "id", value: Self.parameterValue(id))
-                )
+            func authorStatus(_ id: String) -> String {
+                authors.appending(parameter: "id")
+                    .appending(pathComponent: "status")
+                    .path(parameter: "id", value: id)
             }
 
             private func resolved(
                 _ route: WebRoute,
                 parameters: [String: String]
-            ) -> RouterPath {
+            ) -> String {
                 do {
-                    return RouterPath(try route.path(parameters: parameters))
+                    return try route.path(parameters: parameters)
                 }
                 catch {
                     preconditionFailure("A Blog route is missing a parameter.")
                 }
             }
 
-            private static func parameterValue(_ path: RouterPath) -> String {
-                let value = path.description
-                return value.hasPrefix("/") ? String(value.dropFirst()) : value
-            }
         }
     }
 }

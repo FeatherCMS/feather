@@ -42,7 +42,7 @@ extension Tag.Remove {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            router.post(routes.tagRemove(), use: controller.post)
+            router.post(routes.tagRemoveRoute.routerPath, use: controller.post)
         }
     }
 }

@@ -40,12 +40,7 @@ extension AuthorLink.Edit {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            let route = routes.authors
-                .appending(parameter: "authorID")
-                .appending(pathComponent: "links")
-                .appending(parameter: "itemId")
-                .appending(pathComponent: "edit")
-                .routerPath
+            let route = routes.authorLinkEditRoute.routerPath
             router.get(route, use: controller.get)
             router.post(route, use: controller.post)
         }

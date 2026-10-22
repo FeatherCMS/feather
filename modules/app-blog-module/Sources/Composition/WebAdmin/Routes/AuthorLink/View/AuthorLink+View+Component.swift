@@ -61,10 +61,9 @@ extension AuthorLink.View {
                         label: "Edit link",
                         href: state.routes
                             .authorLinkEdit(
-                                RouterPath(state.model.authorID),
-                                RouterPath(state.model.id)
-                            )
-                            .description,
+                                state.model.authorID,
+                                state.model.id
+                            ),
                         style: .primary
                     )
                 )
@@ -78,15 +77,13 @@ extension AuthorLink.View {
                         href: AdminLocation.remove(
                             path: state.routes
                                 .authorLinkRemove(
-                                    RouterPath(state.model.authorID)
-                                )
-                                .description,
+                                    state.model.authorID
+                                ),
                             ids: [state.model.id],
                             returnTo: state.routes
                                 .authorLinks(
-                                    RouterPath(state.model.authorID)
+                                    state.model.authorID
                                 )
-                                .description
                         ),
                         style: .destructive
                     )

@@ -41,8 +41,8 @@ extension Post.Add {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            router.get(routes.postAdd(), use: controller.get)
-            router.post(routes.postAdd(), use: controller.post)
+            router.get(routes.postAddRoute.routerPath, use: controller.get)
+            router.post(routes.postAddRoute.routerPath, use: controller.post)
         }
     }
 }

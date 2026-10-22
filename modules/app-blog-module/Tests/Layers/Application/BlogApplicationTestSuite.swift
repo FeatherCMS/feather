@@ -11,6 +11,7 @@ import FeatherApplication
 import FeatherDomain
 import FeatherModuleKit
 import FeatherTesting
+import Foundation
 import Testing
 import WebApplication
 import WebDomain
@@ -374,6 +375,39 @@ struct BlogApplicationTestSuite {
     }
 
     @Test
+    func addAuthorLinkReturnsTheInsertedModel() async throws {
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
+            context: AuthorLink.Add.Scope(
+                authorLink: AuthorLinkRepositoryMock()
+            )
+        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
+        let useCase = AuthorLink.Add.UseCase(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+
+        let output = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(
+                authorId: "author-1",
+                label: "Website",
+                url: "https://example.com",
+                priority: 0,
+                isBlank: false,
+                permission: "",
+                notes: ""
+            )
+        )
+
+        #expect(output.id == "author-link-1")
+        #expect(output.authorId == "author-1")
+        #expect(output.label == "Website")
+        #expect(await authorizer.canCallCount == 1)
+        #expect(await transaction.runCallCount == 1)
+    }
+
+    @Test
     func editAuthorLinkChecksAuthorizationBeforeStartingTransaction()
         async throws
     {
@@ -409,6 +443,39 @@ struct BlogApplicationTestSuite {
     }
 
     @Test
+    func editAuthorLinkReturnsTheUpdatedModel() async throws {
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
+            context: AuthorLink.Edit.Scope(
+                authorLink: AuthorLinkRepositoryMock()
+            )
+        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
+        let useCase = AuthorLink.Edit.UseCase(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+
+        let output = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(
+                id: "author-link-1",
+                authorId: "author-1",
+                label: .set("Updated website"),
+                url: .unchanged,
+                priority: .unchanged,
+                isBlank: .unchanged,
+                permission: .unchanged,
+                notes: .unchanged
+            )
+        )
+
+        #expect(output.label == "Updated website")
+        #expect(output.url == "https://example.com")
+        #expect(await authorizer.canCallCount == 1)
+        #expect(await transaction.runCallCount == 1)
+    }
+
+    @Test
     func removeAuthorLinksChecksAuthorizationBeforeStartingTransaction()
         async throws
     {
@@ -432,6 +499,29 @@ struct BlogApplicationTestSuite {
 
         #expect(await authorizer.canCallCount == 1)
         #expect(await transaction.runCallCount == 0)
+    }
+
+    @Test
+    func removeAuthorLinksReturnsDeletedIDs() async throws {
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
+            context: AuthorLink.Remove.Scope(
+                authorLink: AuthorLinkRepositoryMock()
+            )
+        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
+        let useCase = AuthorLink.Remove.UseCase(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+
+        let output = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(ids: ["author-link-1"], authorId: "author-1")
+        )
+
+        #expect(output.ids == ["author-link-1"])
+        #expect(await authorizer.canCallCount == 1)
+        #expect(await transaction.runCallCount == 1)
     }
 }
 
@@ -498,20 +588,47 @@ private struct AuthorLinkListQueryMock: AuthorLink.List.Query.Interface {
 
 private struct AuthorLinkRepositoryMock: AuthorLink.Repository.Interface {
     func find(id: String) async throws -> AuthorLink.Model? {
-        throw TestError.unexpectedCall
+        guard id == "author-link-1" else { return nil }
+        return model
     }
 
     func insert(_ model: AuthorLink.Model.New) async throws -> AuthorLink.Model
     {
-        throw TestError.unexpectedCall
+        .init(
+            id: "author-link-1",
+            authorId: model.authorId,
+            label: model.label,
+            url: model.url,
+            priority: model.priority,
+            isBlank: model.isBlank,
+            permission: model.permission,
+            notes: model.notes,
+            createdAt: Date(timeIntervalSince1970: 0),
+            updatedAt: Date(timeIntervalSince1970: 0)
+        )
     }
 
     func update(_ model: AuthorLink.Model) async throws -> AuthorLink.Model {
-        throw TestError.unexpectedCall
+        model
     }
 
     func delete(ids: [String]) async throws -> [String] {
-        throw TestError.unexpectedCall
+        ids
+    }
+
+    private var model: AuthorLink.Model {
+        .init(
+            id: "author-link-1",
+            authorId: "author-1",
+            label: "Website",
+            url: "https://example.com",
+            priority: 0,
+            isBlank: false,
+            permission: "",
+            notes: "",
+            createdAt: Date(timeIntervalSince1970: 0),
+            updatedAt: Date(timeIntervalSince1970: 0)
+        )
     }
 }
 

@@ -9,7 +9,7 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Tag {
+extension BlogModule.Tag {
     struct Form: Component {
         struct FieldState: Codable, Sendable, Equatable, Hashable {
             var key: String

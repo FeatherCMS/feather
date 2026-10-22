@@ -40,7 +40,7 @@ extension Post.Remove {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            router.post(routes.postRemove(), use: controller.post)
+            router.post(routes.postRemoveRoute.routerPath, use: controller.post)
         }
     }
 }

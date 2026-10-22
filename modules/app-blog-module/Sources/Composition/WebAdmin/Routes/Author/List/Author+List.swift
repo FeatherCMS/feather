@@ -45,8 +45,7 @@ extension Author.List {
         ) {
             router.get(routes.authors.routerPath, use: controller.get)
             router.post(
-                routes.authors.appending(parameter: "id")
-                    .appending(pathComponent: "status").routerPath,
+                routes.authorStatusRoute.routerPath,
                 use: controller.postStatus
             )
         }

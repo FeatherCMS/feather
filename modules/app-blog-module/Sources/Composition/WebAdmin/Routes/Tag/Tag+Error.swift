@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Tag {
+extension BlogModule.Tag {
     struct Error: Component {
 
         struct State {

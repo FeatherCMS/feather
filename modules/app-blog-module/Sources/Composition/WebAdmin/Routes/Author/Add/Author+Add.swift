@@ -43,7 +43,7 @@ extension Author.Add {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            let path = routes.authorAdd()
+            let path = routes.authorAddRoute.routerPath
             router.get(path, use: controller.get)
             router.post(path, use: controller.post)
         }

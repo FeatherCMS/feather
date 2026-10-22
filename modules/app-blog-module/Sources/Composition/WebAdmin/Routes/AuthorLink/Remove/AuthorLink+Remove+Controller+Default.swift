@@ -32,7 +32,7 @@ extension AuthorLink.Remove.Controller {
 
             let ids = nonceRequest.input.normalizedSelectedIds
             let location = AdminLocation.url(
-                path: routes.author(RouterPath(authorID)).description,
+                path: routes.author(authorID),
                 page: nonceRequest.input.normalizedPage,
                 search: nonceRequest.input.normalizedSearch
             )

@@ -40,11 +40,7 @@ extension AuthorLink.Add {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            let path = routes.authors
-                .appending(parameter: "authorID")
-                .appending(pathComponent: "links")
-                .appending(pathComponent: "add")
-                .routerPath
+            let path = routes.authorLinkAddRoute.routerPath
             router.get(path, use: controller.get)
             router.post(path, use: controller.post)
         }

@@ -42,7 +42,7 @@ extension Author.Remove {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            router.post(routes.authorRemove(), use: controller.post)
+            router.post(routes.authorRemoveRoute.routerPath, use: controller.post)
         }
     }
 }

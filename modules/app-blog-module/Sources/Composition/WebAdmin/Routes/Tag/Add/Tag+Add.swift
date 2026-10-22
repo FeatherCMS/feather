@@ -43,7 +43,7 @@ extension Tag.Add {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            let path = routes.tags.appending(pathComponent: "add").routerPath
+            let path = routes.tagAddRoute.routerPath
             router.get(path, use: controller.get)
             router.post(path, use: controller.post)
         }

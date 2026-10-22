@@ -13,7 +13,7 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Tag.Form {
+extension BlogModule.Tag.Form {
     struct Input: Codable, Sendable, Equatable, Hashable {
 
         let title: String

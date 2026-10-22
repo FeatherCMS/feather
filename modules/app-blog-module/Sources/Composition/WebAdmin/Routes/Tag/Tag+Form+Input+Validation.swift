@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Tag.Form.Input {
+extension BlogModule.Tag.Form.Input {
     enum Validation {
 
         static func title(

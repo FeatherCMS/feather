@@ -107,7 +107,6 @@ let package = Package(
         .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
         .package(path: "../app-user-module"),
-        .package(path: "../app-web-module"),
     ],
     targets: [
         .target(
@@ -138,7 +137,6 @@ let package = Package(
                 .product(name: "UserApplication", package: "app-user-module"),
                 .product(name: "UserDomain", package: "app-user-module"),
                 .product(name: "UserModule", package: "app-user-module"),
-                .product(name: "WebApplication", package: "app-web-module"),
 
                 .target(name: "AuthDomain"),
             ],

@@ -28,7 +28,7 @@ extension AuthorLink.View.Presenter {
                     state: .init(
                         model: model,
                         breadcrumb: routes.authorLinksBreadcrumb(
-                            RouterPath(model.authorID)
+                            model.authorID
                         ),
                         permissions: permissions,
                         routes: routes
@@ -52,7 +52,7 @@ extension AuthorLink.View.Presenter {
                         info: info,
                         message: message,
                         breadcrumb: routes.authorLinksBreadcrumb(
-                            RouterPath(authorID)
+                            authorID
                         )
                     )
                 )
