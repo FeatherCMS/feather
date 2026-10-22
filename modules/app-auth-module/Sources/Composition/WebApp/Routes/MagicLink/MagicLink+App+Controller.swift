@@ -1,6 +1,5 @@
 import AuthModule
 import FeatherWebApp
-import FeatherWebApp
 import FeatherWebShared
 import Hummingbird
 

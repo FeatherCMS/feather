@@ -7,8 +7,8 @@ import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
-import WebInfrastructure
 import WebDomain
+import WebInfrastructure
 
 extension UseCases {
 

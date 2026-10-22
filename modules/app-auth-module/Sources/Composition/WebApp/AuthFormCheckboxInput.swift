@@ -1,4 +1,4 @@
-public struct AuthFormCheckboxInput: Codable, Sendable {
+public struct AuthFormCheckboxInput: Codable, Sendable, Equatable, Hashable {
     public let value: Bool
 
     public init(value: Bool) {

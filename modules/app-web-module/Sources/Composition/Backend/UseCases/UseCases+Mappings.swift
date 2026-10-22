@@ -319,6 +319,36 @@ extension UseCases {
         )
     }
 
+    func map(_ detail: Page.Add.Output)
+        -> WebAdminAPI.Components.Schemas.WebPageDetailSchema
+    {
+        .init(
+            id: detail.id,
+            title: detail.title,
+            excerpt: detail.excerpt,
+            content: detail.content,
+            imageAssetId: detail.imageAssetId,
+            metadata: map(detail.metadata),
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func map(_ detail: Page.Edit.Output)
+        -> WebAdminAPI.Components.Schemas.WebPageDetailSchema
+    {
+        .init(
+            id: detail.id,
+            title: detail.title,
+            excerpt: detail.excerpt,
+            content: detail.content,
+            imageAssetId: detail.imageAssetId,
+            metadata: map(detail.metadata),
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
+    }
+
     func map(_ item: Page.Search.Output.Item)
         -> WebAdminAPI.Components.Schemas.WebPageListItemSchema
     {

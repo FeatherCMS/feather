@@ -97,6 +97,10 @@ let package = Package(
         ),
         .package(path: "../../feather-core"),
         .package(
+            url: "https://github.com/feather-framework/feather-validation",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
             url: "https://github.com/feather-framework/feather-database",
             exact: "1.0.0-rc.3"
         ),
@@ -251,9 +255,13 @@ let package = Package(
         .target(
             name: "AuthWebApp",
             dependencies: [
+                .product(name: "FeatherValidation", package: "feather-validation"),
+                .product(name: "FeatherValidationFoundation", package: "feather-validation"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Mustache", package: "swift-mustache"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
 
                 .target(name: "AuthModule"),
                 .target(name: "AuthAppAPI"),
