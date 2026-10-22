@@ -5,35 +5,37 @@ import NewsletterModule
 
 extension Subscriber.Remove {
     public struct UseCase: FeatherApplication.UseCase {
-    let authorizer: any Authorizer
-    let transaction: any TransactionExecutor<Subscriber.Remove.Scope>
+        let authorizer: any Authorizer
+        let transaction: any TransactionExecutor<Subscriber.Remove.Scope>
 
-    public init(
-        authorizer: any Authorizer,
-        transaction: any TransactionExecutor<Subscriber.Remove.Scope>
-    ) {
-        self.authorizer = authorizer
-        self.transaction = transaction
-    }
-    public func execute(
-        subject: Subject,
-        input: Input
-    ) async throws -> Output {
-        let action = Action()
-        guard try await authorizer.can(subject: subject, perform: action) else {
-            throw AuthError(kind: .forbidden, message: action.key.rawValue)
+        public init(
+            authorizer: any Authorizer,
+            transaction: any TransactionExecutor<Subscriber.Remove.Scope>
+        ) {
+            self.authorizer = authorizer
+            self.transaction = transaction
         }
-        return try await transaction.run { scope in
-            guard
-                let campaign = try await scope.newsletter.findBy(
-                    key: input.campaignKey
+        public func execute(
+            subject: Subject,
+            input: Input
+        ) async throws -> Output {
+            let action = Action()
+            guard try await authorizer.can(subject: subject, perform: action)
+            else {
+                throw AuthError(kind: .forbidden, message: action.key.rawValue)
+            }
+            return try await transaction.run { scope in
+                guard
+                    let campaign = try await scope.newsletter.findBy(
+                        key: input.campaignKey
+                    )
+                else { throw Error.campaignNotFound }
+                let keys = try await scope.subscriber.delete(
+                    newsletterId: campaign.id,
+                    emails: input.emails
                 )
-            else { throw Error.campaignNotFound }
-            let keys = try await scope.subscriber.delete(
-                newsletterId: campaign.id,
-                emails: input.emails
-            )
-            return .init(keys: keys)
+                return .init(keys: keys)
+            }
         }
     }
 }
