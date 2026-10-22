@@ -448,5 +448,14 @@ let package = Package(
             path: "Tests/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
+        .testTarget(
+            name: "BlogWebAppTests",
+            dependencies: [
+                .product(name: "WebModule", package: "app-web-module"),
+                .target(name: "BlogWebApp"),
+            ],
+            path: "Tests/Composition/WebApp",
+            swiftSettings: swiftSettings
+        ),
     ]
 )

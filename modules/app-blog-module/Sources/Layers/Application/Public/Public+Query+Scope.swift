@@ -4,7 +4,6 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import BlogModule
 public import FeatherModuleKit
 public import WebApplication
 public import WebDomain

@@ -1,4 +1,3 @@
-public import BlogModule
 public import FeatherApplication
 
 extension Public.Author.List {

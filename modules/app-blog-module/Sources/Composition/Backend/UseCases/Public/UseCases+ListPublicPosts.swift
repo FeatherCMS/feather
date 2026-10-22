@@ -1,6 +1,5 @@
 public import BlogApplication
 import BlogInfrastructure
-public import BlogModule
 import FeatherApplication
 import FeatherDatabase
 import FeatherDomain

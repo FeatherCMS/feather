@@ -5,7 +5,7 @@ import SystemModule
 import WebDomain
 import WebModule
 
-extension Event {
+extension BlogModule.Event {
     public enum Handlers {
 
         public static func register(
@@ -14,7 +14,7 @@ extension Event {
             registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
-                Permissions.allPermissions()
+                BlogModule.Permissions.allPermissions()
                     .map {
                         .init(permission: $0)
                     }
