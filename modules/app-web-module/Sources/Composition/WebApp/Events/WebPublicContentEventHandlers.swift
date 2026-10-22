@@ -1,9 +1,9 @@
-import FeatherWebApp
 public import FeatherModuleKit
+import FeatherWebApp
+import FeatherWebShared
 import Foundation
 import HummingbirdCore
 import OpenAPIRuntime
-import FeatherWebShared
 import WebAppAPI
 import WebModule
 
@@ -189,7 +189,8 @@ public enum WebPublicContentEventHandlers {
         let metadataImage = page.metadata.imageURL.emptyToNil.flatMap {
             mediaResolver.resolve(imagePath: $0)
         }
-        let image = metadataImage
+        let image =
+            metadataImage
             ?? contentImage
             ?? mediaResolver.resolve(imagePath: siteSettings.metaImage)
         var meta: [String: any Sendable] = [

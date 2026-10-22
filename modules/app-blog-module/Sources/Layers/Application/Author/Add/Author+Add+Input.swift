@@ -1,6 +1,7 @@
 public import BlogModule
 public import FeatherApplication
 public import WebApplication
+public import WebDomain
 
 extension Author.Add {
     public struct Input: DTO {
@@ -8,14 +9,14 @@ extension Author.Add {
         public let excerpt: String
         public let content: String
         public let profileImageAssetId: String?
-        public let metadata: PageMetadataInput
+        public let metadata: Page.Add.Input.MetadataInput
 
         public init(
             name: String,
             excerpt: String,
             content: String,
             profileImageAssetId: String?,
-            metadata: PageMetadataInput
+            metadata: Page.Add.Input.MetadataInput
         ) {
             self.name = name
             self.excerpt = excerpt

@@ -30,10 +30,7 @@ extension Page.Add {
                         excerpt: input.excerpt,
                         content: input.content,
                         imageAssetId: input.imageAssetId,
-                        metadata: input.metadata.asMetadataBase(
-                            template: input.metadata.template,
-                            slug: input.metadata.slug
-                        )
+                        metadata: input.metadata.asMetadataBase()
                     )
                 )
             }

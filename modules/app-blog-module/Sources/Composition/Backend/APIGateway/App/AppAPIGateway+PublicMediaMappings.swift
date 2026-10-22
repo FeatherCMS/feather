@@ -4,11 +4,12 @@ import FeatherModuleKit
 import MediaApplication
 import MediaBackend
 import WebApplication
+public import WebDomain
 
 extension AppAPIGateway {
     func publicMedia(
         assetId: String?
-    ) async -> PublicContentMedia? {
+    ) async -> WebApplication.Public.Page.Detail.Output.Media? {
         guard let assetId, !assetId.isEmpty else {
             return nil
         }
@@ -42,7 +43,7 @@ extension AppAPIGateway {
     }
 
     func mapPublicMedia(
-        _ media: PublicContentMedia?
+        _ media: WebApplication.Public.Page.Detail.Output.Media?
     ) -> BlogAppAPI.Components.Schemas.MediaAssetSchema? {
         guard let media else {
             return nil

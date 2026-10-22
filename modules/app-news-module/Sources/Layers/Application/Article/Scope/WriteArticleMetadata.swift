@@ -1,14 +1,14 @@
+public import FeatherModuleKit
+public import NewsDomain
+public import SystemApplication
 public import SystemModule
+public import WebDomain
+
 //
 //  WriteArticleMetadata.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-public import FeatherModuleKit
-public import NewsDomain
-public import SystemApplication
-public import WebDomain
 
 public struct WriteArticleMetadata: Scope {
     public let article: any ArticleRepository

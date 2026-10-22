@@ -76,9 +76,9 @@ extension Settings {
             self.js = js
         }
     }
-    }
+}
 
-    extension Settings.Model {
+extension Settings.Model {
 
     private static func validate(
         title: String,

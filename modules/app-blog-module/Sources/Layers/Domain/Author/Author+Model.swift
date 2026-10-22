@@ -58,9 +58,9 @@ extension Author {
             self.updatedAt = updatedAt
         }
     }
-    }
+}
 
-    extension Author.Model {
+extension Author.Model {
 
     private static func validate(
         name: String

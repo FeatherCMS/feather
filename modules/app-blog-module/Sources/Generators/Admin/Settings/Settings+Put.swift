@@ -1,4 +1,3 @@
-
 extension Settings {
     enum Put {}
 }

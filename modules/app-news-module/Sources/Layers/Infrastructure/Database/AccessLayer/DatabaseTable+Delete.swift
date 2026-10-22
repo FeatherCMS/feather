@@ -15,4 +15,3 @@ extension CategoryTable: DatabaseTableWithDelete {
 
     static let columns = Columns()
 }
-

@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
+public import WebDomain
 
 extension Public.Page.Detail {
     public struct Output: DTO {

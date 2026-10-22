@@ -84,14 +84,11 @@ extension AppAPIGateway {
         excerpt: String,
         imageURL: String
     ) -> WebAppAPI.Components.Schemas.WebMetadataContentSchema {
-        let resolvedTitle = resolvedMetadata(metadata.title, fallback: title)
-        let resolvedExcerpt = resolvedMetadata(
-            metadata.excerpt,
-            fallback: excerpt
-        )
-        let resolvedImageURL = resolvedMetadata(
-            metadata.imageURL,
-            fallback: imageURL
+        let resolved = Metadata.Detail.Output.Resolved(
+            metadata: metadata,
+            fallbackTitle: title,
+            fallbackExcerpt: excerpt,
+            fallbackImageURL: imageURL
         )
         return .init(
             slug: metadata.slug,
@@ -99,9 +96,9 @@ extension AppAPIGateway {
             publicationDate: metadata.publicationDate.timeIntervalSince1970,
             expirationDate: metadata.expirationDate?.timeIntervalSince1970,
             status: metadata.status.rawValue,
-            title: resolvedTitle,
-            excerpt: resolvedExcerpt,
-            imageURL: resolvedImageURL ?? "",
+            title: resolved.title,
+            excerpt: resolved.excerpt,
+            imageURL: resolved.imageURL ?? "",
             canonicalURL: metadata.canonicalURL,
             noIndex: metadata.noIndex,
             cssCodeInjection: metadata.cssCodeInjection,
@@ -110,21 +107,4 @@ extension AppAPIGateway {
         )
     }
 
-    private func resolvedMetadata(_ value: String?, fallback: String) -> String
-    {
-        let value = value?.trimmingCharacters(in: .whitespacesAndNewlines)
-        let fallback = fallback.trimmingCharacters(in: .whitespacesAndNewlines)
-        return value.flatMap { $0.isEmpty ? nil : $0 }
-            ?? fallback.flatMap { $0.isEmpty ? nil : $0 }
-            ?? ""
-    }
-
-    private func resolvedMetadata(_ value: String?, fallback: String?)
-        -> String?
-    {
-        let value = value?.trimmingCharacters(in: .whitespacesAndNewlines)
-        let fallback = fallback?.trimmingCharacters(in: .whitespacesAndNewlines)
-        return value.flatMap { $0.isEmpty ? nil : $0 }
-            ?? fallback.flatMap { $0.isEmpty ? nil : $0 }
-    }
 }

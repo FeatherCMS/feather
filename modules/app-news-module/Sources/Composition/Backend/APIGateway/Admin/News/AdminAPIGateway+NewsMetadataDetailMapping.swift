@@ -5,7 +5,7 @@ import WebDomain
 
 extension AdminAPIGateway {
     func map(
-        _ item: MetadataDetail
+        _ item: Metadata.Detail.Output
     ) -> Components.Schemas.NewsMetadataDetailSchema {
         .init(
             id: item.id,

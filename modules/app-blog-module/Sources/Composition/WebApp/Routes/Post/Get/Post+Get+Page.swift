@@ -23,9 +23,9 @@ extension Post.Get {
             .class("public-shell")
         }
     }
-    }
+}
 
-    extension Post.Get.Page {
+extension Post.Get.Page {
     fileprivate func articlePanel(context: inout BuilderContext)
         -> some BasicTag
     {

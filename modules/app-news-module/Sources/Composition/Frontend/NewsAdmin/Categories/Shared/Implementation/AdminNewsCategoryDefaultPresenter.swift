@@ -1,6 +1,6 @@
+import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherModuleKit
 import Hummingbird
 import MediaWebAdmin
 import NewsAdminAPI

@@ -22,7 +22,8 @@ struct VideoMarkdownBlockRenderer: WebMarkdownBlockRenderer {
             return nil
         }
 
-        let kind = request.arguments["kind"]
+        let kind =
+            request.arguments["kind"]
             ?? (source.hasPrefix("/") ? "file" : "embed")
         let escapedSource = escapeHTML(source)
 
@@ -30,13 +31,13 @@ struct VideoMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         case "file":
             guard source.hasPrefix("/") else { return nil }
             return """
-            <figure class="markdown-video markdown-video--file"><video controls preload="metadata" src="\(escapedSource)">Your browser does not support video playback.</video></figure>
-            """
+                <figure class="markdown-video markdown-video--file"><video controls preload="metadata" src="\(escapedSource)">Your browser does not support video playback.</video></figure>
+                """
         case "embed":
             guard isAllowedEmbedHost(url.host) else { return nil }
             return """
-            <figure class="markdown-video markdown-video--embed"><iframe src="\(escapedSource)" title="Embedded video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
-            """
+                <figure class="markdown-video markdown-video--embed"><iframe src="\(escapedSource)" title="Embedded video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
+                """
         default:
             return nil
         }
@@ -61,7 +62,9 @@ struct VideoMarkdownBlockRenderer: WebMarkdownBlockRenderer {
 
     private func isAllowedEmbedHost(_ host: String?) -> Bool {
         guard let host = host?.lowercased() else { return false }
-        return allowedEmbedHosts.contains { host == $0 || host.hasSuffix(".\($0)") }
+        return allowedEmbedHosts.contains {
+            host == $0 || host.hasSuffix(".\($0)")
+        }
     }
 
     private func escapeHTML(_ value: String) -> String {

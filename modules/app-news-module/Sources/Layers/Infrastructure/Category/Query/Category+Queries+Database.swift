@@ -9,6 +9,7 @@ import FeatherDBAL
 public import FeatherInfrastructure
 public import NewsApplication
 public import WebApplication
+public import WebDomain
 
 extension CategoryTable.Row {
     var asQueryListItem: CategoryList.Item {
@@ -23,7 +24,7 @@ extension CategoryTable.Row {
     }
 
     func asDetail(
-        metadata: MetadataDetail
+        metadata: Metadata.Detail.Output
     ) -> CategoryDetail {
         .init(
             id: id,

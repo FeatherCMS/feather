@@ -59,9 +59,9 @@ extension Page {
             self.updatedAt = updatedAt
         }
     }
-    }
+}
 
-    extension Page.Model {
+extension Page.Model {
 
     private static func validate(
         title: String

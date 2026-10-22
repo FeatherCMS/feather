@@ -60,9 +60,9 @@ public struct Article: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-    }
+}
 
-    extension Article {
+extension Article {
 
     private static func validate(
         title: String

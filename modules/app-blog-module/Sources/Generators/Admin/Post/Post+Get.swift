@@ -1,4 +1,3 @@
-
 extension Post {
     enum Get {}
 }

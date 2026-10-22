@@ -1,4 +1,3 @@
-
 extension AuthorLink {
     enum ID {}
 }

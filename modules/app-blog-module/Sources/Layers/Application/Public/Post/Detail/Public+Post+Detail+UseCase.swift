@@ -118,9 +118,9 @@ extension Public.Post.Detail {
             }
         }
     }
-    }
+}
 
-    extension Public.Post.Detail.UseCase {
+extension Public.Post.Detail.UseCase {
     fileprivate static func relatedPosts(
         authorIDs: [String],
         tagIDs: [String],

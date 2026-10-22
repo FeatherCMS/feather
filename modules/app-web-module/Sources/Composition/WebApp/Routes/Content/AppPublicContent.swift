@@ -1,6 +1,6 @@
-public import FeatherWebShared
-import FeatherWebApp
 public import FeatherModuleKit
+import FeatherWebApp
+public import FeatherWebShared
 import WebAppAPI
 import WebModule
 

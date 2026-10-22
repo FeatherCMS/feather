@@ -1,7 +1,7 @@
-import FeatherModuleKit
 import FeatherDBAL
 public import FeatherDatabase
 public import FeatherInfrastructure
+import FeatherModuleKit
 import NewsDomain
 import WebDomain
 

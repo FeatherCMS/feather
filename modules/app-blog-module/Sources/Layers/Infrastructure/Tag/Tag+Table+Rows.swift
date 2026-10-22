@@ -11,9 +11,9 @@ extension Tag.Table: DatabaseTableWithInsert {
         let content: String
         let imageAssetId: String?
     }
-    }
+}
 
-    extension Tag.Table: DatabaseTableWithUpdate {
+extension Tag.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let title: String
         let excerpt: String
@@ -24,9 +24,9 @@ extension Tag.Table: DatabaseTableWithInsert {
             values[Tag.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-    }
+}
 
-    extension Tag.Table: DatabaseTableWithDetail {
+extension Tag.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let title: String
@@ -36,9 +36,9 @@ extension Tag.Table: DatabaseTableWithInsert {
         let createdAt: Date
         let updatedAt: Date
     }
-    }
+}
 
-    extension Tag.Table: DatabaseTableWithList {
+extension Tag.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let title: String

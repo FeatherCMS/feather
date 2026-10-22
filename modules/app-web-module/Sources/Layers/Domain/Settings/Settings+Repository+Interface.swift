@@ -8,9 +8,9 @@ public import FeatherDomain
 
 extension Settings {
     public enum Repository {}
-    }
+}
 
-    extension Settings.Repository {
+extension Settings.Repository {
     public protocol Interface: FeatherDomain.Repository {
 
         func get() async throws -> Settings.Model

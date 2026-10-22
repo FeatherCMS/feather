@@ -126,7 +126,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapMedia(
-        _ media: PublicContentMedia?
+        _ media: WebApplication.Public.Page.Detail.Output.Media?
     ) -> Components.Schemas.MediaAssetSchema? {
         guard let media else { return nil }
         return .init(
@@ -143,12 +143,12 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapMetadata(
-        _ metadata: MetadataDetail,
+        _ metadata: Metadata.Detail.Output,
         title: String,
         excerpt: String,
         imageURL: String
     ) -> Components.Schemas.WebMetadataContentSchema {
-        let resolved = ResolvedMetadata(
+        let resolved = Metadata.Detail.Output.Resolved(
             metadata: metadata,
             fallbackTitle: title,
             fallbackExcerpt: excerpt,

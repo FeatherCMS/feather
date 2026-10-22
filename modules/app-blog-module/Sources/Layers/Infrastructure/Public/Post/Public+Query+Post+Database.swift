@@ -27,7 +27,8 @@ extension Post.Table.List {
 }
 
 extension Post.Table.Detail {
-    func asDetail(metadata: MetadataDetail) throws -> Post.Detail.Output {
+    func asDetail(metadata: Metadata.Detail.Output) throws -> Post.Detail.Output
+    {
         .init(
             id: id,
             title: title,

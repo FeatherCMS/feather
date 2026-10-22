@@ -13,7 +13,7 @@ extension Settings.Public.Detail {
 
         public func execute() async throws -> Settings.Detail.Output {
             try await query.run { scope in
-                try await scope.settings.get()
+                try await scope.settings.get().asDetail
             }
         }
     }

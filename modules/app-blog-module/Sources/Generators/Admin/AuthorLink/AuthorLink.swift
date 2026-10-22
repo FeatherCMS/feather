@@ -1,11 +1,3 @@
 enum AuthorLink {
 
-
-
-
-
-
-
-
-
 }

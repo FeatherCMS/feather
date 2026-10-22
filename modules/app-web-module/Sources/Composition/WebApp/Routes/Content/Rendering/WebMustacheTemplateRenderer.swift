@@ -8,7 +8,8 @@ struct WebMustacheTemplateRenderer: TemplateRenderer {
         template: String,
         context: [String: any Sendable]
     ) throws -> String {
-        guard let rendered = library.render(context, withTemplate: template) else {
+        guard let rendered = library.render(context, withTemplate: template)
+        else {
             throw TemplateRendererError.missingTemplate(template)
         }
         return rendered

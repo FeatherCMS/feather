@@ -14,9 +14,9 @@ extension AuthorLink.Table: DatabaseTableWithInsert {
         let permission: String
         let notes: String
     }
-    }
+}
 
-    extension AuthorLink.Table: DatabaseTableWithUpdate {
+extension AuthorLink.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let authorId: String
         let label: String
@@ -30,9 +30,9 @@ extension AuthorLink.Table: DatabaseTableWithInsert {
             values[AuthorLink.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-    }
+}
 
-    extension AuthorLink.Table: DatabaseTableWithDetail {
+extension AuthorLink.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let authorId: String
@@ -45,9 +45,9 @@ extension AuthorLink.Table: DatabaseTableWithInsert {
         let createdAt: Date
         let updatedAt: Date
     }
-    }
+}
 
-    extension AuthorLink.Table: DatabaseTableWithList {
+extension AuthorLink.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let authorId: String

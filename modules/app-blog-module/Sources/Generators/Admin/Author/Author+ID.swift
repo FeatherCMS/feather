@@ -1,4 +1,3 @@
-
 extension Author {
     enum ID {}
 }

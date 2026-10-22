@@ -3,10 +3,6 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 
-
-
-
-
 extension Post.List.Controller {
     protocol Interface: Sendable {
         func get(

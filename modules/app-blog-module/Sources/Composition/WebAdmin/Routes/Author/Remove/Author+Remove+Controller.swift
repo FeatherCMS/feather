@@ -3,10 +3,6 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 
-
-
-
-
 extension Author.Remove.Controller {
     protocol Interface: Sendable {
         func post(

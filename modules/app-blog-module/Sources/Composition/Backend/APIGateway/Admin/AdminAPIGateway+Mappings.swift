@@ -51,7 +51,7 @@ extension AdminAPIGateway {
 
     func mapBlogMetadata(
         _ metadata: WebAdminAPI.Components.Schemas.WebMetadataCreateSchema
-    ) -> PageMetadataInput {
+    ) -> Page.Add.Input.MetadataInput {
         .init(
             slug: metadata.slug,
             publicationDate: metadata.publicationDate.map(
@@ -76,7 +76,7 @@ extension AdminAPIGateway {
     func defaultBlogMetadata(
         title: String,
         excerpt: String
-    ) -> PageMetadataInput {
+    ) -> Page.Add.Input.MetadataInput {
         .init(
             slug: title.slugified,
             publicationDate: nil,
@@ -97,7 +97,7 @@ extension AdminAPIGateway {
     func mergeBlogMetadata(
         _ patch: WebAdminAPI.Components.Schemas.WebMetadataPatchSchema,
         into detail: WebAdminAPI.Components.Schemas.WebMetadataDetailSchema
-    ) -> PageMetadataInput {
+    ) -> Page.Edit.Input.MetadataInput {
         let publicationDate = (patch.publicationDate ?? detail.publicationDate)
             .map(Date.init(timeIntervalSince1970:))
         let expirationDate = (patch.expirationDate ?? detail.expirationDate)
@@ -136,7 +136,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: MetadataDetail
+        _ detail: Metadata.Detail.Output
     ) -> BlogAdminAPI.Components.Schemas.WebMetadataDetailSchema {
         .init(
             id: detail.id,

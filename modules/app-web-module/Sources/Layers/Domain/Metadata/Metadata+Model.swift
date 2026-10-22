@@ -241,9 +241,9 @@ extension Metadata {
             self.updatedAt = updatedAt
         }
     }
-    }
+}
 
-    extension Metadata.Model {
+extension Metadata.Model {
 
     private static func validate(
         slug: String

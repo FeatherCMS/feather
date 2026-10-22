@@ -70,7 +70,7 @@ public struct DefaultThemeRenderer: PublicThemeRenderer {
                 template: layoutTemplate,
                 context: layoutContext
             ))
-                ?? "<!DOCTYPE html><html lang=\"en-US\"><body><p>Theme render failed.</p></body></html>"
+            ?? "<!DOCTYPE html><html lang=\"en-US\"><body><p>Theme render failed.</p></body></html>"
         return .init(content: html)
     }
 

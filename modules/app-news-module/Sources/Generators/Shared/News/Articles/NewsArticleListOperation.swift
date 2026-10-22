@@ -1,6 +1,6 @@
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
-public import FeatherOpenAPI
 
 struct NewsArticleListOperation: NewsArticleOperation {
     var responseMap: ResponseMap {

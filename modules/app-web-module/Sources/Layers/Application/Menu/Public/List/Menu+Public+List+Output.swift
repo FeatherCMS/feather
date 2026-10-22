@@ -1,4 +1,5 @@
 public import FeatherApplication
+public import WebDomain
 
 extension Menu.Public.List {
     public struct Output: DTO {

@@ -36,7 +36,7 @@ extension Settings.Detail {
             }
 
             return try await query.run { scope in
-                try await scope.settings.get()
+                try await scope.settings.get().asDetail
             }
         }
     }

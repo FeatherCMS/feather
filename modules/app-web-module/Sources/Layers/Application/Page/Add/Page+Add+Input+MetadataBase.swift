@@ -1,11 +1,15 @@
 import FeatherModuleKit
-import WebDomain
+import Foundation
+public import WebDomain
 
 extension Page.Add.Input.MetadataInput {
-    func asMetadataBase() -> Metadata.Model.Base {
+    public func asMetadataBase(
+        template: String? = nil,
+        slug: String? = nil
+    ) -> Metadata.Model.Base {
         .init(
-            template: template,
-            slug: slug,
+            template: template ?? self.template,
+            slug: slug ?? self.slug,
             publicationDate: publicationDate ?? .init(),
             expirationDate: expirationDate,
             status: status,

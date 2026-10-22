@@ -8,9 +8,9 @@ public import FeatherDomain
 
 extension Metadata {
     public enum Repository {}
-    }
+}
 
-    extension Metadata.Repository {
+extension Metadata.Repository {
     public protocol Interface: FeatherDomain.Repository {
 
         func find(

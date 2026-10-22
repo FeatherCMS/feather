@@ -6,6 +6,7 @@
 
 public import FeatherApplication
 public import WebApplication
+public import WebDomain
 
 public import struct Foundation.Date
 
@@ -15,7 +16,7 @@ public struct CategoryDetail: DTO {
     public let excerpt: String
     public let content: String
     public let imageAssetId: String?
-    public let metadata: MetadataDetail
+    public let metadata: Metadata.Detail.Output
     public let createdAt: Date
     public let updatedAt: Date
 
@@ -25,7 +26,7 @@ public struct CategoryDetail: DTO {
         excerpt: String,
         content: String,
         imageAssetId: String?,
-        metadata: MetadataDetail,
+        metadata: Metadata.Detail.Output,
         createdAt: Date,
         updatedAt: Date
     ) {

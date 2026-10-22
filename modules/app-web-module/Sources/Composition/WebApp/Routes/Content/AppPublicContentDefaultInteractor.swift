@@ -1,6 +1,6 @@
+import FeatherModuleKit
 import FeatherWebApp
 import FeatherWebShared
-import FeatherModuleKit
 import Hummingbird
 import WebAppAPI
 import WebModule

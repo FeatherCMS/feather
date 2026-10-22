@@ -6,7 +6,7 @@ public import WebApplication
 public import WebDomain
 
 extension Author.Table.Detail {
-    func asDetail(metadata: MetadataDetail) -> Author.Detail.Output {
+    func asDetail(metadata: Metadata.Detail.Output) -> Author.Detail.Output {
         .init(
             id: id,
             name: name,

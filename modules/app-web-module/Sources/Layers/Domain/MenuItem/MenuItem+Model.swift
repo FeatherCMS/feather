@@ -92,9 +92,9 @@ extension MenuItem {
             self.updatedAt = updatedAt
         }
     }
-    }
+}
 
-    extension MenuItem.Model {
+extension MenuItem.Model {
 
     private static func normalizePermission(
         _ permission: String

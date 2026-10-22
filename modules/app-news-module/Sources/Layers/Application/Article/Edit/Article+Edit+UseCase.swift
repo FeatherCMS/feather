@@ -38,7 +38,7 @@ public struct EditArticle: UseCase {
         public let content: String?
         public let imageAssetId: String??
         public let categoryIds: [String]?
-        public let metadata: PageMetadataInput?
+        public let metadata: Page.Edit.Input.MetadataInput?
 
         public init(
             id: String,
@@ -47,7 +47,7 @@ public struct EditArticle: UseCase {
             content: String?,
             imageAssetId: String??,
             categoryIds: [String]?,
-            metadata: PageMetadataInput?
+            metadata: Page.Edit.Input.MetadataInput?
         ) {
             self.id = id
             self.title = title

@@ -33,7 +33,7 @@ public struct AddArticle: UseCase {
         public let content: String
         public let imageAssetId: String?
         public let categoryIds: [String]
-        public let metadata: PageMetadataInput
+        public let metadata: Page.Add.Input.MetadataInput
 
         public init(
             title: String,
@@ -41,7 +41,7 @@ public struct AddArticle: UseCase {
             content: String,
             imageAssetId: String?,
             categoryIds: [String],
-            metadata: PageMetadataInput
+            metadata: Page.Add.Input.MetadataInput
         ) {
             self.title = title
             self.excerpt = excerpt

@@ -4,7 +4,7 @@ import WebApplication
 import WebDomain
 
 extension Components.Schemas.NewsMetadataInputSchema {
-    func pageMetadata(template: String) -> PageMetadataInput {
+    func pageMetadata(template: String) -> Page.Add.Input.MetadataInput {
         .init(
             slug: slug,
             template: template,

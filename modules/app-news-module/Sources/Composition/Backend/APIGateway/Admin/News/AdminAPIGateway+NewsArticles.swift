@@ -37,10 +37,11 @@ extension AdminAPIGateway {
     public func newsArticleSearch(
         _ input: Operations.NewsArticleSearch.Input
     ) async throws -> Operations.NewsArticleSearch.Output {
-        let query: Components.Schemas.NewsArticleListItemSearchRequestQuerySchema =
-            switch input.body {
-            case .json(let value): value
-            }
+        let query:
+            Components.Schemas.NewsArticleListItemSearchRequestQuerySchema =
+                switch input.body {
+                case .json(let value): value
+                }
         let subject = try await CurrentSubject.require()
         let objectQuery = ArticleList.Query(
             page: .init(size: query.page.size, number: query.page.number),

@@ -7,6 +7,7 @@
 public import FeatherApplication
 import Foundation
 public import WebApplication
+public import WebDomain
 
 public enum NewsReadingTime {
     public static func minutes(for content: String) -> Int {
@@ -26,8 +27,8 @@ public struct PublicNewsArticleSummary: DTO {
     public let excerpt: String
     public let imageAssetId: String?
     public let imageURL: String
-    public let media: PublicContentMedia?
-    public let metadata: MetadataDetail
+    public let media: WebApplication.Public.Page.Detail.Output.Media?
+    public let metadata: Metadata.Detail.Output
     public let readingTime: Int
     public let categoryIDs: [String]
 
@@ -37,8 +38,8 @@ public struct PublicNewsArticleSummary: DTO {
         excerpt: String,
         imageAssetId: String?,
         imageURL: String,
-        media: PublicContentMedia?,
-        metadata: MetadataDetail,
+        media: WebApplication.Public.Page.Detail.Output.Media?,
+        metadata: Metadata.Detail.Output,
         readingTime: Int,
         categoryIDs: [String]
     ) {

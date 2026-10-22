@@ -72,9 +72,9 @@ extension Public.Author.Detail {
             }
         }
     }
-    }
+}
 
-    extension Public.Author.Detail.UseCase {
+extension Public.Author.Detail.UseCase {
     fileprivate static func publicPosts(
         matchingAuthorID authorID: String,
         now: Date,

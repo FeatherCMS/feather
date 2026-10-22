@@ -32,14 +32,14 @@ public struct AddCategory: UseCase {
         public let excerpt: String
         public let content: String
         public let imageAssetId: String?
-        public let metadata: PageMetadataInput
+        public let metadata: Page.Add.Input.MetadataInput
 
         public init(
             title: String,
             excerpt: String,
             content: String,
             imageAssetId: String?,
-            metadata: PageMetadataInput
+            metadata: Page.Add.Input.MetadataInput
         ) {
             self.title = title
             self.excerpt = excerpt

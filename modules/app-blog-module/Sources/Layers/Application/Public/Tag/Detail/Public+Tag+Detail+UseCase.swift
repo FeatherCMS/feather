@@ -62,9 +62,9 @@ extension Public.Tag.Detail {
             }
         }
     }
-    }
+}
 
-    extension Public.Tag.Detail.UseCase {
+extension Public.Tag.Detail.UseCase {
     fileprivate static func publicPosts(
         matchingTagID tagID: String,
         now: Date,

@@ -6,6 +6,7 @@
 
 public import FeatherApplication
 public import WebApplication
+public import WebDomain
 
 extension Public.Tag.Detail {
     public struct Output: DTO {
@@ -15,8 +16,8 @@ extension Public.Tag.Detail {
         public let content: String
         public let imageAssetId: String?
         public let imageURL: String
-        public let media: PublicContentMedia?
-        public let metadata: MetadataDetail
+        public let media: WebApplication.Public.Page.Detail.Output.Media?
+        public let metadata: Metadata.Detail.Output
         public let posts: [Public.Post.Summary.Output]
 
         public init(
@@ -26,8 +27,8 @@ extension Public.Tag.Detail {
             content: String,
             imageAssetId: String?,
             imageURL: String,
-            media: PublicContentMedia?,
-            metadata: MetadataDetail,
+            media: WebApplication.Public.Page.Detail.Output.Media?,
+            metadata: Metadata.Detail.Output,
             posts: [Public.Post.Summary.Output]
         ) {
             self.id = id

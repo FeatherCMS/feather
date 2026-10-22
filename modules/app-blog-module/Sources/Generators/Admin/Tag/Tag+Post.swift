@@ -1,4 +1,3 @@
-
 extension Tag {
     enum Post {}
 }

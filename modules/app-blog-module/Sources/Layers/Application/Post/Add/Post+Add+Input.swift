@@ -1,6 +1,7 @@
 public import BlogModule
 public import FeatherApplication
 public import WebApplication
+public import WebDomain
 
 extension Post.Add {
     public struct Input: DTO {
@@ -10,7 +11,7 @@ extension Post.Add {
         public let imageAssetId: String?
         public let authorIds: [String]
         public let tagIds: [String]
-        public let metadata: PageMetadataInput
+        public let metadata: Page.Add.Input.MetadataInput
 
         public init(
             title: String,
@@ -19,7 +20,7 @@ extension Post.Add {
             imageAssetId: String?,
             authorIds: [String],
             tagIds: [String],
-            metadata: PageMetadataInput
+            metadata: Page.Add.Input.MetadataInput
         ) {
             self.title = title
             self.excerpt = excerpt

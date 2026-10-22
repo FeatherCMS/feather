@@ -13,10 +13,6 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-
-
-
-
 extension AuthorLink.Remove.Controller {
     protocol Interface: Sendable {
         func post(

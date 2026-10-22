@@ -22,7 +22,7 @@ struct ResolvedMetadataTestSuite {
             imageURL: "/social-image.png"
         )
 
-        let result = ResolvedMetadata(
+        let result = Metadata.Detail.Output.Resolved(
             metadata: metadata,
             fallbackTitle: "Fallback title",
             fallbackExcerpt: "Fallback excerpt",
@@ -42,7 +42,7 @@ struct ResolvedMetadataTestSuite {
             imageURL: ""
         )
 
-        let result = ResolvedMetadata(
+        let result = Metadata.Detail.Output.Resolved(
             metadata: metadata,
             fallbackTitle: "Fallback title",
             fallbackExcerpt: "Fallback excerpt",
@@ -59,7 +59,7 @@ private func makeMetadataDetail(
     title: String?,
     excerpt: String?,
     imageURL: String?
-) -> MetadataDetail {
+) -> Metadata.Detail.Output {
     let now = Date()
     return .init(
         id: "metadata-1",

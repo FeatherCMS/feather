@@ -6,6 +6,7 @@
 
 public import FeatherApplication
 public import WebApplication
+public import WebDomain
 
 public struct PublicNewsCategorySummary: DTO {
     public let id: String
@@ -13,8 +14,8 @@ public struct PublicNewsCategorySummary: DTO {
     public let excerpt: String
     public let imageAssetId: String?
     public let imageURL: String
-    public let media: PublicContentMedia?
-    public let metadata: MetadataDetail
+    public let media: WebApplication.Public.Page.Detail.Output.Media?
+    public let metadata: Metadata.Detail.Output
 
     public init(
         id: String,
@@ -22,8 +23,8 @@ public struct PublicNewsCategorySummary: DTO {
         excerpt: String,
         imageAssetId: String?,
         imageURL: String,
-        media: PublicContentMedia?,
-        metadata: MetadataDetail
+        media: WebApplication.Public.Page.Detail.Output.Media?,
+        metadata: Metadata.Detail.Output
     ) {
         self.id = id
         self.title = title

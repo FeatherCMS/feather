@@ -1,8 +1,8 @@
-import FeatherModuleKit
 public import FeatherDBAL
 public import FeatherDatabase
 public import FeatherDomain
 public import FeatherInfrastructure
+import FeatherModuleKit
 import MediaDomain
 import MediaInfrastructure
 

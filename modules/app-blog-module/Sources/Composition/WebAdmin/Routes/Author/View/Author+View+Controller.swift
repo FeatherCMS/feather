@@ -13,10 +13,6 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-
-
-
-
 extension Author.View.Controller {
     protocol Interface: Sendable {
         func getBlogAuthor(

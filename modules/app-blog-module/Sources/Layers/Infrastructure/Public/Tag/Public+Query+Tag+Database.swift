@@ -20,7 +20,7 @@ extension Tag.Table.List {
 }
 
 extension Tag.Table.Detail {
-    func asDetail(metadata: MetadataDetail) -> Tag.Detail.Output {
+    func asDetail(metadata: Metadata.Detail.Output) -> Tag.Detail.Output {
         .init(
             id: id,
             title: title,

@@ -12,12 +12,12 @@ extension AppAPIGateway {
     }
 
     func mapPublicMetadata(
-        _ metadata: MetadataDetail,
+        _ metadata: Metadata.Detail.Output,
         title: String,
         excerpt: String,
         imageURL: String
     ) -> BlogAppAPI.Components.Schemas.WebMetadataContentSchema {
-        let resolved = ResolvedMetadata(
+        let resolved = Metadata.Detail.Output.Resolved(
             metadata: metadata,
             fallbackTitle: title,
             fallbackExcerpt: excerpt,
@@ -41,7 +41,7 @@ extension AppAPIGateway {
     }
 
     private func publicTemplate(
-        for metadata: MetadataDetail
+        for metadata: Metadata.Detail.Output
     ) -> String {
         guard metadata.template == "default" else {
             return metadata.template

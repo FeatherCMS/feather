@@ -2,6 +2,7 @@ public import BlogModule
 public import FeatherApplication
 public import FeatherDomain
 public import WebApplication
+public import WebDomain
 
 extension Post.Edit {
     public struct Input: DTO {
@@ -12,7 +13,7 @@ extension Post.Edit {
         public let imageAssetId: OptionalFieldChange<String>
         public let authorIds: FieldChange<[String]>
         public let tagIds: FieldChange<[String]>
-        public let metadata: PageMetadataInput?
+        public let metadata: Page.Edit.Input.MetadataInput?
 
         public init(
             id: String,
@@ -22,7 +23,7 @@ extension Post.Edit {
             imageAssetId: OptionalFieldChange<String>,
             authorIds: FieldChange<[String]>,
             tagIds: FieldChange<[String]>,
-            metadata: PageMetadataInput?
+            metadata: Page.Edit.Input.MetadataInput?
         ) {
             self.id = id
             self.title = title

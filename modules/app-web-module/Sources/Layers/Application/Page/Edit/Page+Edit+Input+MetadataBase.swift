@@ -1,4 +1,5 @@
 import FeatherModuleKit
+import Foundation
 import WebDomain
 
 extension Page.Edit.Input.MetadataInput {
