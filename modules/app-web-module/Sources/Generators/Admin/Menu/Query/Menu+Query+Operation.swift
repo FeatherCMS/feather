@@ -3,10 +3,10 @@ import FeatherOpenAPIGenerator
 
 extension Menu.Query {
     struct Operation: Menu.Operation, BearerProtectedOperation {
-        var operationId: String? { "webMenuQuery" }
+        var operationId: String? { "menuQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: WebMenuQueryItemSchema(),
+                items: MenuQueryItemSchema(),
                 sortFieldKeys: ["id", "key", "name", "createdAt", "updatedAt"],
                 filters: SearchFilterSchema()
             )

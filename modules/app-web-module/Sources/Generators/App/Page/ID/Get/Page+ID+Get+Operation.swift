@@ -4,13 +4,13 @@ import WebSharedOpenAPIGenerator
 
 extension Page.ID.Get {
     struct Operation: Page.Operation {
-        var operationId: String? { "webPageGet" }
+        var operationId: String? { "pageGet" }
         var parameters: [any ParameterRepresentable] {
-            [WebMetadataIdParameter().reference()]
+            [MetadataIdParameter().reference()]
         }
         var responseMap: ResponseMap {
             [
-                200: WebPageDetailResponse().reference(),
+                200: PageDetailResponse().reference(),
                 404: CustomResponse(description: "Web page not found"),
             ]
         }

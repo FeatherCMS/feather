@@ -5,10 +5,10 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMetadataResolve(
-        _ input: Operations.WebMetadataResolve.Input
-    ) async throws -> Operations.WebMetadataResolve.Output {
-        let query: Components.Schemas.WebMetadataResolveRequestSchema
+    public func metadataResolve(
+        _ input: Operations.MetadataResolve.Input
+    ) async throws -> Operations.MetadataResolve.Output {
+        let query: Components.Schemas.MetadataResolveRequestSchema
         switch input.body {
         case .json(let value):
             query = value

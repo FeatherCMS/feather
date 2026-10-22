@@ -4,9 +4,9 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webPageList(
-        _ input: Operations.WebPageList.Input
-    ) async throws -> Operations.WebPageList.Output {
+    public func pageList(
+        _ input: Operations.PageList.Input
+    ) async throws -> Operations.PageList.Output {
         let useCase = useCases.makeListPages()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(

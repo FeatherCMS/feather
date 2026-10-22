@@ -5,11 +5,11 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMenuItemQuery(
-        _ input: Operations.WebMenuItemQuery.Input
-    ) async throws -> Operations.WebMenuItemQuery.Output {
+    public func menuItemQuery(
+        _ input: Operations.MenuItemQuery.Input
+    ) async throws -> Operations.MenuItemQuery.Output {
         let query:
-            Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema
+            Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -21,7 +21,7 @@ extension AdminAPIGateway {
 
         let result = try await useCase.execute(
             subject: subject,
-            input: .init(menuId: input.path.webMenuId, query: objectQuery)
+            input: .init(menuId: input.path.menuId, query: objectQuery)
         )
 
         return .ok(
@@ -36,7 +36,7 @@ extension AdminAPIGateway {
                             sort: objectQuery.sort.map { sort in
                                 let field:
                                     Components.Schemas
-                                        .WebMenuItemQueryItemSearchResponseQuerySchema
+                                        .MenuItemQueryItemSearchResponseQuerySchema
                                         .SortPayloadPayload.FieldPayload
                                 switch sort.field {
                                 case .id: field = .id

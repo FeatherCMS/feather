@@ -13,7 +13,7 @@ public struct DefaultThemeRenderer: PublicThemeRenderer {
         templateLoader: any TemplateLoader,
         templatePath: @escaping @Sendable (String) -> String?
     ) throws {
-        self.fallbackRenderer = WebMustacheTemplateRenderer(
+        self.fallbackRenderer = MustacheTemplateRenderer(
             library: .init(templates: try templateLoader.load())
         )
         self.fallbackTemplateMetadata = try templateLoader.loadMetadata()
@@ -24,12 +24,12 @@ public struct DefaultThemeRenderer: PublicThemeRenderer {
     public func render(
         templateIdentifier: String?,
         context: [String: any Sendable]
-    ) -> WebAppHTMLResponse {
+    ) -> HTMLResponse {
         #if DEBUG
         let renderer: any TemplateRenderer
         let templateMetadata: [String: TemplateMetadata]
         if let templates = try? templateLoader.load() {
-            renderer = WebMustacheTemplateRenderer(
+            renderer = MustacheTemplateRenderer(
                 library: .init(templates: templates)
             )
         }

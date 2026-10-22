@@ -24,7 +24,7 @@ public struct AdminMetadataFieldStateFactory {
             publicationDate: .init(
                 key: "publicationDate",
                 label: "Publication date & time",
-                value: WebMetadataDateDefaults.publicationDate(
+                value: MetadataDateDefaults.publicationDate(
                     metadata?.publicationDate
                 ),
                 error: nil

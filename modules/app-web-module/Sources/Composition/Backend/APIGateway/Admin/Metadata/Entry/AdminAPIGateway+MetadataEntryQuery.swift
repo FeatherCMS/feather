@@ -5,11 +5,11 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMetadataQuery(
-        _ input: Operations.WebMetadataQuery.Input
-    ) async throws -> Operations.WebMetadataQuery.Output {
+    public func metadataQuery(
+        _ input: Operations.MetadataQuery.Input
+    ) async throws -> Operations.MetadataQuery.Output {
         let query:
-            Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema
+            Components.Schemas.MetadataQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -38,7 +38,7 @@ extension AdminAPIGateway {
                             sort: objectQuery.sort.compactMap { sort in
                                 let field:
                                     Components.Schemas
-                                        .WebMetadataQueryItemSearchResponseQuerySchema
+                                        .MetadataQueryItemSearchResponseQuerySchema
                                         .SortPayloadPayload.FieldPayload
                                 switch sort.field {
                                 case .id: field = .id

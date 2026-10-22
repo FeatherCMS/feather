@@ -71,7 +71,7 @@ extension Menu {
 
 extension Menu.View {
     struct Router {
-        let controller: any AdminViewWebMenuController
+        let controller: any AdminViewMenuController
         let routes: Menu.Router.Routes
 
         init(
@@ -81,7 +81,7 @@ extension Menu.View {
         ) {
             self.routes = routes
             controller =
-                AdminViewWebMenu(
+                AdminViewMenu(
                     environment: environment,
                     renderingEngine: renderingEngine
                 )
@@ -89,14 +89,14 @@ extension Menu.View {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.get(routes.details.routerPath, use: controller.getWebMenu)
+            router.get(routes.details.routerPath, use: controller.getMenu)
         }
     }
 }
 
 extension Menu.Add {
     struct Router {
-        let controller: any AdminAddWebMenuController
+        let controller: any AdminAddMenuController
         let routes: Menu.Router.Routes
 
         init(
@@ -106,7 +106,7 @@ extension Menu.Add {
         ) {
             self.routes = routes
             controller =
-                AdminAddWebMenu(
+                AdminAddMenu(
                     environment: environment,
                     renderingEngine: renderingEngine
                 )
@@ -116,11 +116,11 @@ extension Menu.Add {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
                 routes.add.routerPath,
-                use: controller.getAddWebMenu
+                use: controller.getAddMenu
             )
             router.post(
                 routes.add.routerPath,
-                use: controller.postAddWebMenu
+                use: controller.postAddMenu
             )
         }
     }
@@ -128,7 +128,7 @@ extension Menu.Add {
 
 extension Menu.Edit {
     struct Router {
-        let controller: any AdminEditWebMenuController
+        let controller: any AdminEditMenuController
         let routes: Menu.Router.Routes
 
         init(
@@ -138,7 +138,7 @@ extension Menu.Edit {
         ) {
             self.routes = routes
             controller =
-                AdminEditWebMenu(
+                AdminEditMenu(
                     environment: environment,
                     renderingEngine: renderingEngine
                 )
@@ -148,11 +148,11 @@ extension Menu.Edit {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
                 routes.edit.routerPath,
-                use: controller.getEditWebMenu
+                use: controller.getEditMenu
             )
             router.post(
                 routes.edit.routerPath,
-                use: controller.postEditWebMenu
+                use: controller.postEditMenu
             )
         }
     }
@@ -160,7 +160,7 @@ extension Menu.Edit {
 
 extension Menu.Remove {
     struct Router {
-        let controller: any AdminRemoveWebMenuController
+        let controller: any AdminRemoveMenuController
         let routes: Menu.Router.Routes
 
         init(
@@ -170,7 +170,7 @@ extension Menu.Remove {
         ) {
             self.routes = routes
             controller =
-                AdminRemoveWebMenu(
+                AdminRemoveMenu(
                     environment: environment,
                     renderingEngine: renderingEngine
                 )
@@ -180,7 +180,7 @@ extension Menu.Remove {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.post(
                 routes.remove.routerPath,
-                use: controller.postRemoveWebMenu
+                use: controller.postRemoveMenu
             )
         }
     }

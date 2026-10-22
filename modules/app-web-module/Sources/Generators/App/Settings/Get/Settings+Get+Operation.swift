@@ -4,9 +4,9 @@ import WebSharedOpenAPIGenerator
 
 extension Settings.Get {
     struct Operation: Settings.Operation {
-        var operationId: String? { "webSiteSettings" }
+        var operationId: String? { "siteSettings" }
         var responseMap: ResponseMap {
-            [200: WebSiteSettingsResponse().reference()]
+            [200: SiteSettingsResponse().reference()]
         }
     }
 }

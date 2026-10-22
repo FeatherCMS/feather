@@ -7,7 +7,7 @@ import WebDomain
 extension Menu.List.Controller {
     protocol Interface: Sendable {
 
-        func getWebMenus(
+        func getMenus(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse

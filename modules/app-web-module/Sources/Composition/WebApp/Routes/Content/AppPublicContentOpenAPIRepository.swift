@@ -14,9 +14,9 @@ public struct AppPublicContentOpenAPIRepository: AppPublicContentRepository {
 
     public func resolveWebRoute(
         slug: String
-    ) async throws -> WebAppAPI.Components.Schemas.WebMetadataSchema? {
+    ) async throws -> WebAppAPI.Components.Schemas.MetadataSchema? {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.webMetadataGet(
+            let response = try await client.metadataGet(
                 .init(path: .init(slug: slug))
             )
             switch response {
@@ -34,7 +34,7 @@ public struct AppPublicContentOpenAPIRepository: AppPublicContentRepository {
     }
 
     public func publicSiteSettings() async throws
-        -> WebAppAPI.Components.Schemas.WebSiteSettingsSchema
+        -> WebAppAPI.Components.Schemas.SiteSettingsSchema
     {
         try await api.publicSiteSettings()
     }

@@ -4,10 +4,10 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webSettingsUpdate(
-        _ input: Operations.WebSettingsUpdate.Input
-    ) async throws -> Operations.WebSettingsUpdate.Output {
-        let body: Components.Schemas.WebSettingsUpdateSchema
+    public func settingsUpdate(
+        _ input: Operations.SettingsUpdate.Input
+    ) async throws -> Operations.SettingsUpdate.Output {
+        let body: Components.Schemas.SettingsUpdateSchema
         switch input.body {
         case .json(let value):
             body = value

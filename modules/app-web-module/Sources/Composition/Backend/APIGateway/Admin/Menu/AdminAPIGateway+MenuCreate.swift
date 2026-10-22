@@ -4,10 +4,10 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMenuCreate(
-        _ input: Operations.WebMenuCreate.Input
-    ) async throws -> Operations.WebMenuCreate.Output {
-        let body: Components.Schemas.WebMenuCreateSchema
+    public func menuCreate(
+        _ input: Operations.MenuCreate.Input
+    ) async throws -> Operations.MenuCreate.Output {
+        let body: Components.Schemas.MenuCreateSchema
         switch input.body {
         case .json(let value):
             body = value

@@ -1,13 +1,13 @@
 public import FeatherOpenAPI
 
-struct WebMenuQueryItemSchema: ObjectSchemaRepresentable {
+struct MenuQueryItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "id": WebMenuIdField().reference(),
-            "key": WebMenuKeyField().reference(),
-            "name": WebMenuNameField().reference(),
-            "createdAt": WebMenuCreatedAtField().reference(),
-            "updatedAt": WebMenuUpdatedAtField().reference(),
+            "id": MenuIdField().reference(),
+            "key": MenuKeyField().reference(),
+            "name": MenuNameField().reference(),
+            "createdAt": MenuCreatedAtField().reference(),
+            "updatedAt": MenuUpdatedAtField().reference(),
         ]
     }
 }

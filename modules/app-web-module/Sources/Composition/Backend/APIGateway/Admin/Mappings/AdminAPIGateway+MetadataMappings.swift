@@ -13,7 +13,7 @@ extension AdminAPIGateway {
     }
 
     func mapPageMetadata(
-        _ metadata: WebAdminAPI.Components.Schemas.WebMetadataCreateSchema
+        _ metadata: WebAdminAPI.Components.Schemas.MetadataCreateSchema
     ) -> Page.Add.Input.MetadataInput {
         .init(
             slug: metadata.slug,
@@ -60,8 +60,8 @@ extension AdminAPIGateway {
     }
 
     func mergePageMetadata(
-        _ patch: WebAdminAPI.Components.Schemas.WebMetadataPatchSchema,
-        into detail: WebAdminAPI.Components.Schemas.WebMetadataDetailSchema
+        _ patch: WebAdminAPI.Components.Schemas.MetadataPatchSchema,
+        into detail: WebAdminAPI.Components.Schemas.MetadataDetailSchema
     ) -> Page.Edit.Input.MetadataInput {
         .init(
             slug: patch.slug ?? detail.slug,
@@ -88,7 +88,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: WebAdminAPI.Components.Schemas
-            .WebMetadataQueryItemSearchRequestQuerySchema
+            .MetadataQueryItemSearchRequestQuerySchema
     ) -> Metadata.Search.Input.Query {
         .init(
             page: map(query.page),
@@ -110,7 +110,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ detail: Metadata.Detail.Output)
-        -> WebAdminAPI.Components.Schemas.WebMetadataDetailSchema
+        -> WebAdminAPI.Components.Schemas.MetadataDetailSchema
     {
         .init(
             id: detail.id,
@@ -140,7 +140,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ item: Metadata.List.Output.Item)
-        -> WebAdminAPI.Components.Schemas.WebMetadataListItemSchema
+        -> WebAdminAPI.Components.Schemas.MetadataListItemSchema
     {
         .init(
             id: item.id,
@@ -159,7 +159,7 @@ extension AdminAPIGateway {
     }
 
     func mapQuery(_ item: Metadata.Search.Output.Item)
-        -> WebAdminAPI.Components.Schemas.WebMetadataQueryItemSchema
+        -> WebAdminAPI.Components.Schemas.MetadataQueryItemSchema
     {
         .init(
             id: item.id,
@@ -180,7 +180,7 @@ extension AdminAPIGateway {
     func mapResolveMetadata(
         _ item: Metadata.List.Output.Item,
         at date: Date
-    ) -> WebAdminAPI.Components.Schemas.WebMetadataResolveItemSchema {
+    ) -> WebAdminAPI.Components.Schemas.MetadataResolveItemSchema {
         .init(
             referenceId: item.referenceID,
             slug: item.slug,

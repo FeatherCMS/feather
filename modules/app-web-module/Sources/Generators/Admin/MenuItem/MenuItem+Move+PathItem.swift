@@ -2,6 +2,6 @@ public import FeatherOpenAPI
 
 extension MenuItem.Move {
     struct PathItem: PathItemRepresentable {
-        var post: (any OperationRepresentable)? { WebMenuItemMoveOperation() }
+        var post: (any OperationRepresentable)? { MenuItemMoveOperation() }
     }
 }

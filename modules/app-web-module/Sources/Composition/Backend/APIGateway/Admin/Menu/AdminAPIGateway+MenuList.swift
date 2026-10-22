@@ -4,9 +4,9 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMenuList(
-        _ input: Operations.WebMenuList.Input
-    ) async throws -> Operations.WebMenuList.Output {
+    public func menuList(
+        _ input: Operations.MenuList.Input
+    ) async throws -> Operations.MenuList.Output {
         let subject = try await CurrentSubject.require()
         let result = try await useCases.makeListMenus()
             .execute(

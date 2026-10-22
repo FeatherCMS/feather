@@ -3,8 +3,8 @@ import FeatherWebAdmin
 import HTML
 import Hummingbird
 import SGML
-import WebBuilders
-import WebComponents
+import Builders
+import Components
 
 extension Overview {
     struct Content: Component {
@@ -20,19 +20,19 @@ extension Overview {
                 title: "Pages",
                 description:
                     "Manage the web pages published by the application.",
-                href: WebPageRoutes.list.description,
+                href: PageRoutes.list.description,
                 icon: "fileText"
             ),
             Destination(
                 title: "Menus",
                 description: "Manage navigation menus and their items.",
-                href: WebMenuRoutes.list.description,
+                href: MenuRoutes.list.description,
                 icon: "menu"
             ),
             Destination(
                 title: "Settings",
                 description: "Manage the public web settings.",
-                href: WebSettingsRoutes.edit.description,
+                href: SettingsRoutes.edit.description,
                 icon: "settings"
             ),
         ]

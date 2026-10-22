@@ -13,7 +13,7 @@ extension Menu.List.Controller {
                 any Menu.List.Presenter.Interface
             >
 
-        func getWebMenus(
+        func getMenus(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
@@ -34,7 +34,7 @@ extension Menu.List.Controller {
             let error: String?
             if canAccess {
                 do {
-                    model = try await interactor.listWebMenus(
+                    model = try await interactor.listMenus(
                         page: page,
                         search: search
                     )

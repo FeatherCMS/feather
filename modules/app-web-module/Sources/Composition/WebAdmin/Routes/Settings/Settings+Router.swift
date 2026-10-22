@@ -10,14 +10,14 @@ extension Settings {
         let root: WebRoute
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            let controller = AdminEditWebSettings(
+            let controller = AdminEditSettings(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             let path = root.appending(pathComponent: "settings")
-            router.get(path.routerPath, use: controller.getEditWebSettings)
-            router.post(path.routerPath, use: controller.postEditWebSettings)
+            router.get(path.routerPath, use: controller.getEditSettings)
+            router.post(path.routerPath, use: controller.postEditSettings)
         }
     }
 }

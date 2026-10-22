@@ -4,14 +4,14 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMetadataGet(
-        _ input: Operations.WebMetadataGet.Input
-    ) async throws -> Operations.WebMetadataGet.Output {
+    public func metadataGet(
+        _ input: Operations.MetadataGet.Input
+    ) async throws -> Operations.MetadataGet.Output {
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeGetMetadata()
         let result = try await useCase.execute(
             subject: subject,
-            input: .init(id: input.path.webMetadataId)
+            input: .init(id: input.path.metadataId)
         )
 
         return .ok(

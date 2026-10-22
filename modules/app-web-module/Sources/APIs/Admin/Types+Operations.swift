@@ -6,48 +6,48 @@ public import struct Foundation.Date
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
     /// - Remark: HTTP `POST /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(webMenuCreate)`.
-    public enum WebMenuCreate {
-        public static let id: Swift.String = "webMenuCreate"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(menuCreate)`.
+    public enum MenuCreate {
+        public static let id: Swift.String = "menuCreate"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuCreate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuCreate.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuCreate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuCreate.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuCreate.Input.Headers
-            public var body: Components.RequestBodies.WebMenuRequestBody
+            public var headers: Operations.MenuCreate.Input.Headers
+            public var body: Components.RequestBodies.MenuRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMenuCreate.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMenuRequestBody
+                headers: Operations.MenuCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.MenuRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenu response
+            /// Menu response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(webMenuCreate)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(menuCreate)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
-            case created(Components.Responses.WebMenuDetailResponse)
+            case created(Components.Responses.MenuDetailResponse)
             /// The associated value of the enum case if `self` is `.created`.
             ///
             /// - Throws: An error if `self` is not `.created`.
             /// - SeeAlso: `.created`.
-            public var created: Components.Responses.WebMenuDetailResponse {
+            public var created: Components.Responses.MenuDetailResponse {
                 get throws {
                     switch self {
                     case let .created(response):
@@ -79,26 +79,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuCreate.Output.Unauthorized.Body
+                public var body: Operations.MenuCreate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuCreate.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuCreate.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(webMenuCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(menuCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuCreate.Output.Unauthorized)
+            case unauthorized(Operations.MenuCreate.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuCreate.Output.Unauthorized {
+            public var unauthorized: Operations.MenuCreate.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -130,26 +130,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuCreate.Output.Forbidden.Body
+                public var body: Operations.MenuCreate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuCreate.Output.Forbidden.Body) {
+                public init(body: Operations.MenuCreate.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(webMenuCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(menuCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuCreate.Output.Forbidden)
+            case forbidden(Operations.MenuCreate.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuCreate.Output.Forbidden {
+            public var forbidden: Operations.MenuCreate.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -194,22 +194,22 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuRemove)`.
-    public enum WebMenuRemove {
-        public static let id: Swift.String = "webMenuRemove"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(menuRemove)`.
+    public enum MenuRemove {
+        public static let id: Swift.String = "menuRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/DELETE/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuRemove.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuRemove.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuRemove.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuRemove.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuRemove.Input.Headers
+            public var headers: Operations.MenuRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -217,7 +217,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMenuRemove.Input.Headers = .init(),
+                headers: Operations.MenuRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -227,13 +227,13 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(menuRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Components.Responses.NoContentResponse)
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(menuRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -275,26 +275,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuRemove.Output.Unauthorized.Body
+                public var body: Operations.MenuRemove.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuRemove.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuRemove.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(menuRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuRemove.Output.Unauthorized)
+            case unauthorized(Operations.MenuRemove.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuRemove.Output.Unauthorized {
+            public var unauthorized: Operations.MenuRemove.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -326,26 +326,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuRemove.Output.Forbidden.Body
+                public var body: Operations.MenuRemove.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuRemove.Output.Forbidden.Body) {
+                public init(body: Operations.MenuRemove.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(menuRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuRemove.Output.Forbidden)
+            case forbidden(Operations.MenuRemove.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuRemove.Output.Forbidden {
+            public var forbidden: Operations.MenuRemove.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -390,42 +390,42 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)`.
-    public enum WebMenuList {
-        public static let id: Swift.String = "webMenuList"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(menuList)`.
+    public enum MenuList {
+        public static let id: Swift.String = "menuList"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuList.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuList.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuList.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuList.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuList.Input.Headers
+            public var headers: Operations.MenuList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
-            public init(headers: Operations.WebMenuList.Input.Headers = .init()) {
+            public init(headers: Operations.MenuList.Input.Headers = .init()) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenu list response
+            /// Menu list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(menuList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuListResponse)
+            case ok(Components.Responses.MenuListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuListResponse {
+            public var ok: Components.Responses.MenuListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -457,26 +457,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuList.Output.Unauthorized.Body
+                public var body: Operations.MenuList.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuList.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuList.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(menuList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuList.Output.Unauthorized)
+            case unauthorized(Operations.MenuList.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuList.Output.Unauthorized {
+            public var unauthorized: Operations.MenuList.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -508,26 +508,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuList.Output.Forbidden.Body
+                public var body: Operations.MenuList.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuList.Output.Forbidden.Body) {
+                public init(body: Operations.MenuList.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(menuList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuList.Output.Forbidden)
+            case forbidden(Operations.MenuList.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuList.Output.Forbidden {
+            public var forbidden: Operations.MenuList.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -572,36 +572,36 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(webMenuQuery)`.
-    public enum WebMenuQuery {
-        public static let id: Swift.String = "webMenuQuery"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(menuQuery)`.
+    public enum MenuQuery {
+        public static let id: Swift.String = "menuQuery"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/query/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuQuery.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuQuery.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuQuery.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuQuery.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuQuery.Input.Headers
+            public var headers: Operations.MenuQuery.Input.Headers
             /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema)
+                case json(Components.Schemas.MenuQueryItemSearchRequestQuerySchema)
             }
-            public var body: Operations.WebMenuQuery.Input.Body
+            public var body: Operations.MenuQuery.Input.Body
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMenuQuery.Input.Headers = .init(),
-                body: Operations.WebMenuQuery.Input.Body
+                headers: Operations.MenuQuery.Input.Headers = .init(),
+                body: Operations.MenuQuery.Input.Body
             ) {
                 self.headers = headers
                 self.body = body
@@ -610,15 +610,15 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(webMenuQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(menuQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuQueryItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.MenuQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuQueryItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.MenuQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -650,26 +650,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuQuery.Output.Unauthorized.Body
+                public var body: Operations.MenuQuery.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuQuery.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuQuery.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(webMenuQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(menuQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuQuery.Output.Unauthorized)
+            case unauthorized(Operations.MenuQuery.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuQuery.Output.Unauthorized {
+            public var unauthorized: Operations.MenuQuery.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -701,26 +701,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuQuery.Output.Forbidden.Body
+                public var body: Operations.MenuQuery.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuQuery.Output.Forbidden.Body) {
+                public init(body: Operations.MenuQuery.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(webMenuQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(menuQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuQuery.Output.Forbidden)
+            case forbidden(Operations.MenuQuery.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuQuery.Output.Forbidden {
+            public var forbidden: Operations.MenuQuery.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -764,63 +764,63 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/get(webMenuGet)`.
-    public enum WebMenuGet {
-        public static let id: Swift.String = "webMenuGet"
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/get(menuGet)`.
+    public enum MenuGet {
+        public static let id: Swift.String = "menuGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/GET/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/GET/path/menuId`.
+                public var menuId: Components.Parameters.MenuIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                public init(webMenuId: Components.Parameters.WebMenuIdParameter) {
-                    self.webMenuId = webMenuId
+                ///   - menuId: Menu id
+                public init(menuId: Components.Parameters.MenuIdParameter) {
+                    self.menuId = menuId
                 }
             }
-            public var path: Operations.WebMenuGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/GET/header`.
+            public var path: Operations.MenuGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuGet.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuGet.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuGet.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuGet.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuGet.Input.Headers
+            public var headers: Operations.MenuGet.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
             ///   - headers:
             public init(
-                path: Operations.WebMenuGet.Input.Path,
-                headers: Operations.WebMenuGet.Input.Headers = .init()
+                path: Operations.MenuGet.Input.Path,
+                headers: Operations.MenuGet.Input.Headers = .init()
             ) {
                 self.path = path
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenu response
+            /// Menu response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/get(webMenuGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/get(menuGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuDetailResponse)
+            case ok(Components.Responses.MenuDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuDetailResponse {
+            public var ok: Components.Responses.MenuDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -834,9 +834,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/GET/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/GET/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/GET/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/GET/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -852,26 +852,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuGet.Output.NotFound.Body
+                public var body: Operations.MenuGet.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuGet.Output.NotFound.Body) {
+                public init(body: Operations.MenuGet.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebMenu not found
+            /// Menu not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/get(webMenuGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/get(menuGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMenuGet.Output.NotFound)
+            case notFound(Operations.MenuGet.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMenuGet.Output.NotFound {
+            public var notFound: Operations.MenuGet.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -885,9 +885,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -903,26 +903,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuGet.Output.Unauthorized.Body
+                public var body: Operations.MenuGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuGet.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuGet.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/get(webMenuGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/get(menuGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuGet.Output.Unauthorized)
+            case unauthorized(Operations.MenuGet.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuGet.Output.Unauthorized {
+            public var unauthorized: Operations.MenuGet.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -936,9 +936,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -954,26 +954,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuGet.Output.Forbidden.Body
+                public var body: Operations.MenuGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuGet.Output.Forbidden.Body) {
+                public init(body: Operations.MenuGet.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/get(webMenuGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/get(menuGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuGet.Output.Forbidden)
+            case forbidden(Operations.MenuGet.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuGet.Output.Forbidden {
+            public var forbidden: Operations.MenuGet.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -1017,39 +1017,39 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/patch(webMenuPatch)`.
-    public enum WebMenuPatch {
-        public static let id: Swift.String = "webMenuPatch"
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{menuId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/patch(menuPatch)`.
+    public enum MenuPatch {
+        public static let id: Swift.String = "menuPatch"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PATCH/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PATCH/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/path/menuId`.
+                public var menuId: Components.Parameters.MenuIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                public init(webMenuId: Components.Parameters.WebMenuIdParameter) {
-                    self.webMenuId = webMenuId
+                ///   - menuId: Menu id
+                public init(menuId: Components.Parameters.MenuIdParameter) {
+                    self.menuId = menuId
                 }
             }
-            public var path: Operations.WebMenuPatch.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PATCH/header`.
+            public var path: Operations.MenuPatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuPatch.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuPatch.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuPatch.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuPatch.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuPatch.Input.Headers
-            public var body: Components.RequestBodies.WebMenuPatchRequestBody
+            public var headers: Operations.MenuPatch.Input.Headers
+            public var body: Components.RequestBodies.MenuPatchRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -1057,9 +1057,9 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebMenuPatch.Input.Path,
-                headers: Operations.WebMenuPatch.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMenuPatchRequestBody
+                path: Operations.MenuPatch.Input.Path,
+                headers: Operations.MenuPatch.Input.Headers = .init(),
+                body: Components.RequestBodies.MenuPatchRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -1067,17 +1067,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenu response
+            /// Menu response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/patch(webMenuPatch)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/patch(menuPatch)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuDetailResponse)
+            case ok(Components.Responses.MenuDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuDetailResponse {
+            public var ok: Components.Responses.MenuDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -1091,9 +1091,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PATCH/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PATCH/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1109,26 +1109,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuPatch.Output.NotFound.Body
+                public var body: Operations.MenuPatch.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuPatch.Output.NotFound.Body) {
+                public init(body: Operations.MenuPatch.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebMenu not found
+            /// Menu not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/patch(webMenuPatch)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/patch(menuPatch)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMenuPatch.Output.NotFound)
+            case notFound(Operations.MenuPatch.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMenuPatch.Output.NotFound {
+            public var notFound: Operations.MenuPatch.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -1142,9 +1142,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PATCH/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PATCH/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1160,26 +1160,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuPatch.Output.Unauthorized.Body
+                public var body: Operations.MenuPatch.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuPatch.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuPatch.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/patch(webMenuPatch)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/patch(menuPatch)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuPatch.Output.Unauthorized)
+            case unauthorized(Operations.MenuPatch.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuPatch.Output.Unauthorized {
+            public var unauthorized: Operations.MenuPatch.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -1193,9 +1193,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PATCH/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PATCH/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1211,26 +1211,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuPatch.Output.Forbidden.Body
+                public var body: Operations.MenuPatch.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuPatch.Output.Forbidden.Body) {
+                public init(body: Operations.MenuPatch.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/patch(webMenuPatch)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/patch(menuPatch)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuPatch.Output.Forbidden)
+            case forbidden(Operations.MenuPatch.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuPatch.Output.Forbidden {
+            public var forbidden: Operations.MenuPatch.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -1274,39 +1274,39 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/put(webMenuUpdate)`.
-    public enum WebMenuUpdate {
-        public static let id: Swift.String = "webMenuUpdate"
+    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{menuId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/put(menuUpdate)`.
+    public enum MenuUpdate {
+        public static let id: Swift.String = "menuUpdate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PUT/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PUT/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PUT/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PUT/path/menuId`.
+                public var menuId: Components.Parameters.MenuIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                public init(webMenuId: Components.Parameters.WebMenuIdParameter) {
-                    self.webMenuId = webMenuId
+                ///   - menuId: Menu id
+                public init(menuId: Components.Parameters.MenuIdParameter) {
+                    self.menuId = menuId
                 }
             }
-            public var path: Operations.WebMenuUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PUT/header`.
+            public var path: Operations.MenuUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PUT/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuUpdate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuUpdate.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuUpdate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuUpdate.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuUpdate.Input.Headers
-            public var body: Components.RequestBodies.WebMenuUpdateRequestBody
+            public var headers: Operations.MenuUpdate.Input.Headers
+            public var body: Components.RequestBodies.MenuUpdateRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -1314,9 +1314,9 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebMenuUpdate.Input.Path,
-                headers: Operations.WebMenuUpdate.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMenuUpdateRequestBody
+                path: Operations.MenuUpdate.Input.Path,
+                headers: Operations.MenuUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.MenuUpdateRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -1324,17 +1324,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenu response
+            /// Menu response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/put(webMenuUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/put(menuUpdate)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuDetailResponse)
+            case ok(Components.Responses.MenuDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuDetailResponse {
+            public var ok: Components.Responses.MenuDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -1348,9 +1348,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PUT/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PUT/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PUT/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PUT/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1366,26 +1366,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuUpdate.Output.NotFound.Body
+                public var body: Operations.MenuUpdate.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuUpdate.Output.NotFound.Body) {
+                public init(body: Operations.MenuUpdate.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebMenu not found
+            /// Menu not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/put(webMenuUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/put(menuUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMenuUpdate.Output.NotFound)
+            case notFound(Operations.MenuUpdate.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMenuUpdate.Output.NotFound {
+            public var notFound: Operations.MenuUpdate.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -1399,9 +1399,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PUT/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PUT/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PUT/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PUT/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1417,26 +1417,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuUpdate.Output.Unauthorized.Body
+                public var body: Operations.MenuUpdate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuUpdate.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuUpdate.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/put(webMenuUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/put(menuUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuUpdate.Output.Unauthorized)
+            case unauthorized(Operations.MenuUpdate.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuUpdate.Output.Unauthorized {
+            public var unauthorized: Operations.MenuUpdate.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -1450,9 +1450,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PUT/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PUT/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/PUT/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PUT/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1468,26 +1468,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuUpdate.Output.Forbidden.Body
+                public var body: Operations.MenuUpdate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuUpdate.Output.Forbidden.Body) {
+                public init(body: Operations.MenuUpdate.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/put(webMenuUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/put(menuUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuUpdate.Output.Forbidden)
+            case forbidden(Operations.MenuUpdate.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuUpdate.Output.Forbidden {
+            public var forbidden: Operations.MenuUpdate.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -1531,39 +1531,39 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/post(webMenuItemCreate)`.
-    public enum WebMenuItemCreate {
-        public static let id: Swift.String = "webMenuItemCreate"
+    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/post(menuItemCreate)`.
+    public enum MenuItemCreate {
+        public static let id: Swift.String = "menuItemCreate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/POST/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuItemMenuIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/POST/path/menuId`.
+                public var menuId: Components.Parameters.MenuItemMenuIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                public init(webMenuId: Components.Parameters.WebMenuItemMenuIdParameter) {
-                    self.webMenuId = webMenuId
+                ///   - menuId: Menu id
+                public init(menuId: Components.Parameters.MenuItemMenuIdParameter) {
+                    self.menuId = menuId
                 }
             }
-            public var path: Operations.WebMenuItemCreate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/POST/header`.
+            public var path: Operations.MenuItemCreate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemCreate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemCreate.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemCreate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemCreate.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuItemCreate.Input.Headers
-            public var body: Components.RequestBodies.WebMenuItemRequestBody
+            public var headers: Operations.MenuItemCreate.Input.Headers
+            public var body: Components.RequestBodies.MenuItemRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -1571,9 +1571,9 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebMenuItemCreate.Input.Path,
-                headers: Operations.WebMenuItemCreate.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMenuItemRequestBody
+                path: Operations.MenuItemCreate.Input.Path,
+                headers: Operations.MenuItemCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.MenuItemRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -1581,17 +1581,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenuItem response
+            /// MenuItem response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/post(webMenuItemCreate)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/post(menuItemCreate)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
-            case created(Components.Responses.WebMenuItemDetailResponse)
+            case created(Components.Responses.MenuItemDetailResponse)
             /// The associated value of the enum case if `self` is `.created`.
             ///
             /// - Throws: An error if `self` is not `.created`.
             /// - SeeAlso: `.created`.
-            public var created: Components.Responses.WebMenuItemDetailResponse {
+            public var created: Components.Responses.MenuItemDetailResponse {
                 get throws {
                     switch self {
                     case let .created(response):
@@ -1605,9 +1605,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1623,26 +1623,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemCreate.Output.Unauthorized.Body
+                public var body: Operations.MenuItemCreate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemCreate.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuItemCreate.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/post(webMenuItemCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/post(menuItemCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemCreate.Output.Unauthorized)
+            case unauthorized(Operations.MenuItemCreate.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuItemCreate.Output.Unauthorized {
+            public var unauthorized: Operations.MenuItemCreate.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -1656,9 +1656,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1674,26 +1674,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemCreate.Output.Forbidden.Body
+                public var body: Operations.MenuItemCreate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemCreate.Output.Forbidden.Body) {
+                public init(body: Operations.MenuItemCreate.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/post(webMenuItemCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/post(menuItemCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemCreate.Output.Forbidden)
+            case forbidden(Operations.MenuItemCreate.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemCreate.Output.Forbidden {
+            public var forbidden: Operations.MenuItemCreate.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -1737,38 +1737,38 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemRemove)`.
-    public enum WebMenuItemRemove {
-        public static let id: Swift.String = "webMenuItemRemove"
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{menuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/delete(menuItemRemove)`.
+    public enum MenuItemRemove {
+        public static let id: Swift.String = "menuItemRemove"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/DELETE/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuItemMenuIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/DELETE/path/menuId`.
+                public var menuId: Components.Parameters.MenuItemMenuIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                public init(webMenuId: Components.Parameters.WebMenuItemMenuIdParameter) {
-                    self.webMenuId = webMenuId
+                ///   - menuId: Menu id
+                public init(menuId: Components.Parameters.MenuItemMenuIdParameter) {
+                    self.menuId = menuId
                 }
             }
-            public var path: Operations.WebMenuItemRemove.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/header`.
+            public var path: Operations.MenuItemRemove.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/DELETE/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemRemove.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemRemove.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemRemove.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemRemove.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuItemRemove.Input.Headers
+            public var headers: Operations.MenuItemRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -1777,8 +1777,8 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebMenuItemRemove.Input.Path,
-                headers: Operations.WebMenuItemRemove.Input.Headers = .init(),
+                path: Operations.MenuItemRemove.Input.Path,
+                headers: Operations.MenuItemRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.path = path
@@ -1789,13 +1789,13 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/delete(menuItemRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Components.Responses.NoContentResponse)
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/delete(menuItemRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -1819,9 +1819,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/DELETE/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/DELETE/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1837,26 +1837,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemRemove.Output.Unauthorized.Body
+                public var body: Operations.MenuItemRemove.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemRemove.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuItemRemove.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/delete(menuItemRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemRemove.Output.Unauthorized)
+            case unauthorized(Operations.MenuItemRemove.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuItemRemove.Output.Unauthorized {
+            public var unauthorized: Operations.MenuItemRemove.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -1870,9 +1870,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/DELETE/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/DELETE/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/DELETE/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1888,26 +1888,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemRemove.Output.Forbidden.Body
+                public var body: Operations.MenuItemRemove.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemRemove.Output.Forbidden.Body) {
+                public init(body: Operations.MenuItemRemove.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/delete(menuItemRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemRemove.Output.Forbidden)
+            case forbidden(Operations.MenuItemRemove.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemRemove.Output.Forbidden {
+            public var forbidden: Operations.MenuItemRemove.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -1951,63 +1951,63 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)`.
-    public enum WebMenuItemList {
-        public static let id: Swift.String = "webMenuItemList"
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items//get(menuItemList)`.
+    public enum MenuItemList {
+        public static let id: Swift.String = "menuItemList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuItemMenuIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/GET/path/menuId`.
+                public var menuId: Components.Parameters.MenuItemMenuIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                public init(webMenuId: Components.Parameters.WebMenuItemMenuIdParameter) {
-                    self.webMenuId = webMenuId
+                ///   - menuId: Menu id
+                public init(menuId: Components.Parameters.MenuItemMenuIdParameter) {
+                    self.menuId = menuId
                 }
             }
-            public var path: Operations.WebMenuItemList.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/header`.
+            public var path: Operations.MenuItemList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemList.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemList.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemList.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemList.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuItemList.Input.Headers
+            public var headers: Operations.MenuItemList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
             ///   - headers:
             public init(
-                path: Operations.WebMenuItemList.Input.Path,
-                headers: Operations.WebMenuItemList.Input.Headers = .init()
+                path: Operations.MenuItemList.Input.Path,
+                headers: Operations.MenuItemList.Input.Headers = .init()
             ) {
                 self.path = path
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenuItem list response
+            /// MenuItem list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items//get(menuItemList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuItemListResponse)
+            case ok(Components.Responses.MenuItemListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuItemListResponse {
+            public var ok: Components.Responses.MenuItemListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -2021,9 +2021,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2039,26 +2039,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemList.Output.Unauthorized.Body
+                public var body: Operations.MenuItemList.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemList.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuItemList.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items//get(menuItemList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemList.Output.Unauthorized)
+            case unauthorized(Operations.MenuItemList.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuItemList.Output.Unauthorized {
+            public var unauthorized: Operations.MenuItemList.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -2072,9 +2072,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2090,26 +2090,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemList.Output.Forbidden.Body
+                public var body: Operations.MenuItemList.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemList.Output.Forbidden.Body) {
+                public init(body: Operations.MenuItemList.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items//get(menuItemList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemList.Output.Forbidden)
+            case forbidden(Operations.MenuItemList.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemList.Output.Forbidden {
+            public var forbidden: Operations.MenuItemList.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -2153,44 +2153,44 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/query/post(webMenuItemQuery)`.
-    public enum WebMenuItemQuery {
-        public static let id: Swift.String = "webMenuItemQuery"
+    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/query/post(menuItemQuery)`.
+    public enum MenuItemQuery {
+        public static let id: Swift.String = "menuItemQuery"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/query/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/query/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/query/POST/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuItemMenuIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/query/POST/path/menuId`.
+                public var menuId: Components.Parameters.MenuItemMenuIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                public init(webMenuId: Components.Parameters.WebMenuItemMenuIdParameter) {
-                    self.webMenuId = webMenuId
+                ///   - menuId: Menu id
+                public init(menuId: Components.Parameters.MenuItemMenuIdParameter) {
+                    self.menuId = menuId
                 }
             }
-            public var path: Operations.WebMenuItemQuery.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/query/POST/header`.
+            public var path: Operations.MenuItemQuery.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/query/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemQuery.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemQuery.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemQuery.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemQuery.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuItemQuery.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/query/POST/requestBody`.
+            public var headers: Operations.MenuItemQuery.Input.Headers
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema)
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/query/POST/requestBody/content/application\/json`.
+                case json(Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema)
             }
-            public var body: Operations.WebMenuItemQuery.Input.Body
+            public var body: Operations.MenuItemQuery.Input.Body
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -2198,9 +2198,9 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebMenuItemQuery.Input.Path,
-                headers: Operations.WebMenuItemQuery.Input.Headers = .init(),
-                body: Operations.WebMenuItemQuery.Input.Body
+                path: Operations.MenuItemQuery.Input.Path,
+                headers: Operations.MenuItemQuery.Input.Headers = .init(),
+                body: Operations.MenuItemQuery.Input.Body
             ) {
                 self.path = path
                 self.headers = headers
@@ -2210,15 +2210,15 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/query/post(webMenuItemQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/query/post(menuItemQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuItemQueryItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.MenuItemQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuItemQueryItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.MenuItemQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -2232,9 +2232,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/query/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/query/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/query/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/query/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2250,26 +2250,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemQuery.Output.Unauthorized.Body
+                public var body: Operations.MenuItemQuery.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemQuery.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuItemQuery.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/query/post(webMenuItemQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/query/post(menuItemQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemQuery.Output.Unauthorized)
+            case unauthorized(Operations.MenuItemQuery.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuItemQuery.Output.Unauthorized {
+            public var unauthorized: Operations.MenuItemQuery.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -2283,9 +2283,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/query/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/query/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/query/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/query/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2301,26 +2301,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemQuery.Output.Forbidden.Body
+                public var body: Operations.MenuItemQuery.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemQuery.Output.Forbidden.Body) {
+                public init(body: Operations.MenuItemQuery.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/query/post(webMenuItemQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/query/post(menuItemQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemQuery.Output.Forbidden)
+            case forbidden(Operations.MenuItemQuery.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemQuery.Output.Forbidden {
+            public var forbidden: Operations.MenuItemQuery.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -2364,72 +2364,72 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/get(webMenuItemGet)`.
-    public enum WebMenuItemGet {
-        public static let id: Swift.String = "webMenuItemGet"
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items/{menuItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/get(menuItemGet)`.
+    public enum MenuItemGet {
+        public static let id: Swift.String = "menuItemGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuItemMenuIdParameter
-                /// WebMenuItem id
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/path/menuId`.
+                public var menuId: Components.Parameters.MenuItemMenuIdParameter
+                /// MenuItem id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/path/webMenuItemId`.
-                public var webMenuItemId: Components.Parameters.WebMenuItemIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/path/menuItemId`.
+                public var menuItemId: Components.Parameters.MenuItemIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                ///   - webMenuItemId: WebMenuItem id
+                ///   - menuId: Menu id
+                ///   - menuItemId: MenuItem id
                 public init(
-                    webMenuId: Components.Parameters.WebMenuItemMenuIdParameter,
-                    webMenuItemId: Components.Parameters.WebMenuItemIdParameter
+                    menuId: Components.Parameters.MenuItemMenuIdParameter,
+                    menuItemId: Components.Parameters.MenuItemIdParameter
                 ) {
-                    self.webMenuId = webMenuId
-                    self.webMenuItemId = webMenuItemId
+                    self.menuId = menuId
+                    self.menuItemId = menuItemId
                 }
             }
-            public var path: Operations.WebMenuItemGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/header`.
+            public var path: Operations.MenuItemGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemGet.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemGet.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemGet.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemGet.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuItemGet.Input.Headers
+            public var headers: Operations.MenuItemGet.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
             ///   - headers:
             public init(
-                path: Operations.WebMenuItemGet.Input.Path,
-                headers: Operations.WebMenuItemGet.Input.Headers = .init()
+                path: Operations.MenuItemGet.Input.Path,
+                headers: Operations.MenuItemGet.Input.Headers = .init()
             ) {
                 self.path = path
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenuItem response
+            /// MenuItem response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/get(webMenuItemGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/get(menuItemGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuItemDetailResponse)
+            case ok(Components.Responses.MenuItemDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuItemDetailResponse {
+            public var ok: Components.Responses.MenuItemDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -2443,9 +2443,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2461,26 +2461,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemGet.Output.NotFound.Body
+                public var body: Operations.MenuItemGet.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemGet.Output.NotFound.Body) {
+                public init(body: Operations.MenuItemGet.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebMenuItem not found
+            /// MenuItem not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/get(webMenuItemGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/get(menuItemGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMenuItemGet.Output.NotFound)
+            case notFound(Operations.MenuItemGet.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMenuItemGet.Output.NotFound {
+            public var notFound: Operations.MenuItemGet.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -2494,9 +2494,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2512,26 +2512,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemGet.Output.Unauthorized.Body
+                public var body: Operations.MenuItemGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemGet.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuItemGet.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/get(webMenuItemGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/get(menuItemGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemGet.Output.Unauthorized)
+            case unauthorized(Operations.MenuItemGet.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuItemGet.Output.Unauthorized {
+            public var unauthorized: Operations.MenuItemGet.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -2545,9 +2545,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2563,26 +2563,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemGet.Output.Forbidden.Body
+                public var body: Operations.MenuItemGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemGet.Output.Forbidden.Body) {
+                public init(body: Operations.MenuItemGet.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/get(webMenuItemGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/get(menuItemGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemGet.Output.Forbidden)
+            case forbidden(Operations.MenuItemGet.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemGet.Output.Forbidden {
+            public var forbidden: Operations.MenuItemGet.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -2626,48 +2626,48 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/patch(webMenuItemPatch)`.
-    public enum WebMenuItemPatch {
-        public static let id: Swift.String = "webMenuItemPatch"
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{menuId}/items/{menuItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/patch(menuItemPatch)`.
+    public enum MenuItemPatch {
+        public static let id: Swift.String = "menuItemPatch"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuItemMenuIdParameter
-                /// WebMenuItem id
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/path/menuId`.
+                public var menuId: Components.Parameters.MenuItemMenuIdParameter
+                /// MenuItem id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/path/webMenuItemId`.
-                public var webMenuItemId: Components.Parameters.WebMenuItemIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/path/menuItemId`.
+                public var menuItemId: Components.Parameters.MenuItemIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                ///   - webMenuItemId: WebMenuItem id
+                ///   - menuId: Menu id
+                ///   - menuItemId: MenuItem id
                 public init(
-                    webMenuId: Components.Parameters.WebMenuItemMenuIdParameter,
-                    webMenuItemId: Components.Parameters.WebMenuItemIdParameter
+                    menuId: Components.Parameters.MenuItemMenuIdParameter,
+                    menuItemId: Components.Parameters.MenuItemIdParameter
                 ) {
-                    self.webMenuId = webMenuId
-                    self.webMenuItemId = webMenuItemId
+                    self.menuId = menuId
+                    self.menuItemId = menuItemId
                 }
             }
-            public var path: Operations.WebMenuItemPatch.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/header`.
+            public var path: Operations.MenuItemPatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemPatch.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemPatch.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemPatch.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemPatch.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuItemPatch.Input.Headers
-            public var body: Components.RequestBodies.WebMenuItemPatchRequestBody
+            public var headers: Operations.MenuItemPatch.Input.Headers
+            public var body: Components.RequestBodies.MenuItemPatchRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -2675,275 +2675,9 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebMenuItemPatch.Input.Path,
-                headers: Operations.WebMenuItemPatch.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMenuItemPatchRequestBody
-            ) {
-                self.path = path
-                self.headers = headers
-                self.body = body
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// WebMenuItem response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/patch(webMenuItemPatch)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuItemDetailResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuItemDetailResponse {
-                get throws {
-                    switch self {
-                    case let .ok(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/responses/404/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/responses/404/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.WebMenuItemPatch.Output.NotFound.Body
-                /// Creates a new `NotFound`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemPatch.Output.NotFound.Body) {
-                    self.body = body
-                }
-            }
-            /// WebMenuItem not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/patch(webMenuItemPatch)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMenuItemPatch.Output.NotFound)
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMenuItemPatch.Output.NotFound {
-                get throws {
-                    switch self {
-                    case let .notFound(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/responses/401/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/responses/401/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.WebMenuItemPatch.Output.Unauthorized.Body
-                /// Creates a new `Unauthorized`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemPatch.Output.Unauthorized.Body) {
-                    self.body = body
-                }
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/patch(webMenuItemPatch)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemPatch.Output.Unauthorized)
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuItemPatch.Output.Unauthorized {
-                get throws {
-                    switch self {
-                    case let .unauthorized(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/responses/403/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PATCH/responses/403/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.WebMenuItemPatch.Output.Forbidden.Body
-                /// Creates a new `Forbidden`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemPatch.Output.Forbidden.Body) {
-                    self.body = body
-                }
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/patch(webMenuItemPatch)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemPatch.Output.Forbidden)
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemPatch.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case let .forbidden(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case let .other(string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/put(webMenuItemUpdate)`.
-    public enum WebMenuItemUpdate {
-        public static let id: Swift.String = "webMenuItemUpdate"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/path`.
-            public struct Path: Sendable, Hashable {
-                /// WebMenu id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuItemMenuIdParameter
-                /// WebMenuItem id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/path/webMenuItemId`.
-                public var webMenuItemId: Components.Parameters.WebMenuItemIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                ///   - webMenuItemId: WebMenuItem id
-                public init(
-                    webMenuId: Components.Parameters.WebMenuItemMenuIdParameter,
-                    webMenuItemId: Components.Parameters.WebMenuItemIdParameter
-                ) {
-                    self.webMenuId = webMenuId
-                    self.webMenuItemId = webMenuItemId
-                }
-            }
-            public var path: Operations.WebMenuItemUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemUpdate.AcceptableContentType>]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemUpdate.AcceptableContentType>] = .defaultValues()) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.WebMenuItemUpdate.Input.Headers
-            public var body: Components.RequestBodies.WebMenuItemUpdateRequestBody
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            ///   - body:
-            public init(
-                path: Operations.WebMenuItemUpdate.Input.Path,
-                headers: Operations.WebMenuItemUpdate.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMenuItemUpdateRequestBody
+                path: Operations.MenuItemPatch.Input.Path,
+                headers: Operations.MenuItemPatch.Input.Headers = .init(),
+                body: Components.RequestBodies.MenuItemPatchRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -2951,17 +2685,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMenuItem response
+            /// MenuItem response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/put(webMenuItemUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/patch(menuItemPatch)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMenuItemDetailResponse)
+            case ok(Components.Responses.MenuItemDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMenuItemDetailResponse {
+            public var ok: Components.Responses.MenuItemDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -2975,9 +2709,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2993,26 +2727,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemUpdate.Output.NotFound.Body
+                public var body: Operations.MenuItemPatch.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemUpdate.Output.NotFound.Body) {
+                public init(body: Operations.MenuItemPatch.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebMenuItem not found
+            /// MenuItem not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/put(webMenuItemUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/patch(menuItemPatch)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMenuItemUpdate.Output.NotFound)
+            case notFound(Operations.MenuItemPatch.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMenuItemUpdate.Output.NotFound {
+            public var notFound: Operations.MenuItemPatch.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -3026,9 +2760,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3044,26 +2778,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemUpdate.Output.Unauthorized.Body
+                public var body: Operations.MenuItemPatch.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemUpdate.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuItemPatch.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/put(webMenuItemUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/patch(menuItemPatch)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemUpdate.Output.Unauthorized)
+            case unauthorized(Operations.MenuItemPatch.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuItemUpdate.Output.Unauthorized {
+            public var unauthorized: Operations.MenuItemPatch.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -3077,9 +2811,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/PUT/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PATCH/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3095,26 +2829,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemUpdate.Output.Forbidden.Body
+                public var body: Operations.MenuItemPatch.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemUpdate.Output.Forbidden.Body) {
+                public init(body: Operations.MenuItemPatch.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/put(webMenuItemUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/patch(menuItemPatch)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemUpdate.Output.Forbidden)
+            case forbidden(Operations.MenuItemPatch.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemUpdate.Output.Forbidden {
+            public var forbidden: Operations.MenuItemPatch.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -3158,48 +2892,48 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)`.
-    public enum WebMenuItemMove {
-        public static let id: Swift.String = "webMenuItemMove"
+    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{menuId}/items/{menuItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/put(menuItemUpdate)`.
+    public enum MenuItemUpdate {
+        public static let id: Swift.String = "menuItemUpdate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMenu id
+                /// Menu id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/path/webMenuId`.
-                public var webMenuId: Components.Parameters.WebMenuItemMenuIdParameter
-                /// WebMenuItem id
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/path/menuId`.
+                public var menuId: Components.Parameters.MenuItemMenuIdParameter
+                /// MenuItem id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/path/webMenuItemId`.
-                public var webMenuItemId: Components.Parameters.WebMenuItemIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/path/menuItemId`.
+                public var menuItemId: Components.Parameters.MenuItemIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMenuId: WebMenu id
-                ///   - webMenuItemId: WebMenuItem id
+                ///   - menuId: Menu id
+                ///   - menuItemId: MenuItem id
                 public init(
-                    webMenuId: Components.Parameters.WebMenuItemMenuIdParameter,
-                    webMenuItemId: Components.Parameters.WebMenuItemIdParameter
+                    menuId: Components.Parameters.MenuItemMenuIdParameter,
+                    menuItemId: Components.Parameters.MenuItemIdParameter
                 ) {
-                    self.webMenuId = webMenuId
-                    self.webMenuItemId = webMenuItemId
+                    self.menuId = menuId
+                    self.menuItemId = menuItemId
                 }
             }
-            public var path: Operations.WebMenuItemMove.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/header`.
+            public var path: Operations.MenuItemUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemMove.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemUpdate.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMenuItemMove.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemUpdate.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMenuItemMove.Input.Headers
-            public var body: Components.RequestBodies.WebMenuItemMoveRequestBody
+            public var headers: Operations.MenuItemUpdate.Input.Headers
+            public var body: Components.RequestBodies.MenuItemUpdateRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -3207,9 +2941,275 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebMenuItemMove.Input.Path,
-                headers: Operations.WebMenuItemMove.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMenuItemMoveRequestBody
+                path: Operations.MenuItemUpdate.Input.Path,
+                headers: Operations.MenuItemUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.MenuItemUpdateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// MenuItem response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/put(menuItemUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.MenuItemDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.MenuItemDetailResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.MenuItemUpdate.Output.NotFound.Body
+                /// Creates a new `NotFound`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.MenuItemUpdate.Output.NotFound.Body) {
+                    self.body = body
+                }
+            }
+            /// MenuItem not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/put(menuItemUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.MenuItemUpdate.Output.NotFound)
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.MenuItemUpdate.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.MenuItemUpdate.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.MenuItemUpdate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/put(menuItemUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.MenuItemUpdate.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.MenuItemUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/PUT/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.MenuItemUpdate.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.MenuItemUpdate.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/put(menuItemUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.MenuItemUpdate.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.MenuItemUpdate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/post(menuItemMove)`.
+    public enum MenuItemMove {
+        public static let id: Swift.String = "menuItemMove"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/path`.
+            public struct Path: Sendable, Hashable {
+                /// Menu id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/path/menuId`.
+                public var menuId: Components.Parameters.MenuItemMenuIdParameter
+                /// MenuItem id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/path/menuItemId`.
+                public var menuItemId: Components.Parameters.MenuItemIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - menuId: Menu id
+                ///   - menuItemId: MenuItem id
+                public init(
+                    menuId: Components.Parameters.MenuItemMenuIdParameter,
+                    menuItemId: Components.Parameters.MenuItemIdParameter
+                ) {
+                    self.menuId = menuId
+                    self.menuItemId = menuItemId
+                }
+            }
+            public var path: Operations.MenuItemMove.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemMove.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuItemMove.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.MenuItemMove.Input.Headers
+            public var body: Components.RequestBodies.MenuItemMoveRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.MenuItemMove.Input.Path,
+                headers: Operations.MenuItemMove.Input.Headers = .init(),
+                body: Components.RequestBodies.MenuItemMoveRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -3221,15 +3221,15 @@ public enum Operations {
                 /// Creates a new `NoContent`.
                 public init() {}
             }
-            /// WebMenuItem moved
+            /// MenuItem moved
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/post(menuItemMove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
-            case noContent(Operations.WebMenuItemMove.Output.NoContent)
-            /// WebMenuItem moved
+            case noContent(Operations.MenuItemMove.Output.NoContent)
+            /// MenuItem moved
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/post(menuItemMove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -3239,7 +3239,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.noContent`.
             /// - SeeAlso: `.noContent`.
-            public var noContent: Operations.WebMenuItemMove.Output.NoContent {
+            public var noContent: Operations.MenuItemMove.Output.NoContent {
                 get throws {
                     switch self {
                     case let .noContent(response):
@@ -3253,9 +3253,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3271,26 +3271,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemMove.Output.NotFound.Body
+                public var body: Operations.MenuItemMove.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemMove.Output.NotFound.Body) {
+                public init(body: Operations.MenuItemMove.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebMenuItem not found
+            /// MenuItem not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/post(menuItemMove)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMenuItemMove.Output.NotFound)
+            case notFound(Operations.MenuItemMove.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMenuItemMove.Output.NotFound {
+            public var notFound: Operations.MenuItemMove.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -3304,9 +3304,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3322,26 +3322,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemMove.Output.Unauthorized.Body
+                public var body: Operations.MenuItemMove.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemMove.Output.Unauthorized.Body) {
+                public init(body: Operations.MenuItemMove.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/post(menuItemMove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMenuItemMove.Output.Unauthorized)
+            case unauthorized(Operations.MenuItemMove.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMenuItemMove.Output.Unauthorized {
+            public var unauthorized: Operations.MenuItemMove.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -3355,9 +3355,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3373,26 +3373,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMenuItemMove.Output.Forbidden.Body
+                public var body: Operations.MenuItemMove.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMenuItemMove.Output.Forbidden.Body) {
+                public init(body: Operations.MenuItemMove.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/post(menuItemMove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMenuItemMove.Output.Forbidden)
+            case forbidden(Operations.MenuItemMove.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMenuItemMove.Output.Forbidden {
+            public var forbidden: Operations.MenuItemMove.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -3437,48 +3437,48 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(webMetadataCreate)`.
-    public enum WebMetadataCreate {
-        public static let id: Swift.String = "webMetadataCreate"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(metadataCreate)`.
+    public enum MetadataCreate {
+        public static let id: Swift.String = "metadataCreate"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataCreate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataCreate.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataCreate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataCreate.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataCreate.Input.Headers
-            public var body: Components.RequestBodies.WebMetadataRequestBody
+            public var headers: Operations.MetadataCreate.Input.Headers
+            public var body: Components.RequestBodies.MetadataRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMetadataCreate.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMetadataRequestBody
+                headers: Operations.MetadataCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.MetadataRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMetadata response
+            /// Metadata response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(webMetadataCreate)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(metadataCreate)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
-            case created(Components.Responses.WebMetadataDetailResponse)
+            case created(Components.Responses.MetadataDetailResponse)
             /// The associated value of the enum case if `self` is `.created`.
             ///
             /// - Throws: An error if `self` is not `.created`.
             /// - SeeAlso: `.created`.
-            public var created: Components.Responses.WebMetadataDetailResponse {
+            public var created: Components.Responses.MetadataDetailResponse {
                 get throws {
                     switch self {
                     case let .created(response):
@@ -3510,26 +3510,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataCreate.Output.Unauthorized.Body
+                public var body: Operations.MetadataCreate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataCreate.Output.Unauthorized.Body) {
+                public init(body: Operations.MetadataCreate.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(webMetadataCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(metadataCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataCreate.Output.Unauthorized)
+            case unauthorized(Operations.MetadataCreate.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMetadataCreate.Output.Unauthorized {
+            public var unauthorized: Operations.MetadataCreate.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -3561,26 +3561,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataCreate.Output.Forbidden.Body
+                public var body: Operations.MetadataCreate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataCreate.Output.Forbidden.Body) {
+                public init(body: Operations.MetadataCreate.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(webMetadataCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(metadataCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataCreate.Output.Forbidden)
+            case forbidden(Operations.MetadataCreate.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataCreate.Output.Forbidden {
+            public var forbidden: Operations.MetadataCreate.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -3625,22 +3625,22 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataRemove)`.
-    public enum WebMetadataRemove {
-        public static let id: Swift.String = "webMetadataRemove"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(metadataRemove)`.
+    public enum MetadataRemove {
+        public static let id: Swift.String = "metadataRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/DELETE/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataRemove.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataRemove.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataRemove.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataRemove.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataRemove.Input.Headers
+            public var headers: Operations.MetadataRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -3648,7 +3648,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMetadataRemove.Input.Headers = .init(),
+                headers: Operations.MetadataRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -3658,13 +3658,13 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(metadataRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Components.Responses.NoContentResponse)
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(metadataRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -3706,26 +3706,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataRemove.Output.Unauthorized.Body
+                public var body: Operations.MetadataRemove.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataRemove.Output.Unauthorized.Body) {
+                public init(body: Operations.MetadataRemove.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(metadataRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataRemove.Output.Unauthorized)
+            case unauthorized(Operations.MetadataRemove.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMetadataRemove.Output.Unauthorized {
+            public var unauthorized: Operations.MetadataRemove.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -3757,26 +3757,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataRemove.Output.Forbidden.Body
+                public var body: Operations.MetadataRemove.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataRemove.Output.Forbidden.Body) {
+                public init(body: Operations.MetadataRemove.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(metadataRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataRemove.Output.Forbidden)
+            case forbidden(Operations.MetadataRemove.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataRemove.Output.Forbidden {
+            public var forbidden: Operations.MetadataRemove.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -3821,42 +3821,42 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)`.
-    public enum WebMetadataList {
-        public static let id: Swift.String = "webMetadataList"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(metadataList)`.
+    public enum MetadataList {
+        public static let id: Swift.String = "metadataList"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataList.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataList.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataList.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataList.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataList.Input.Headers
+            public var headers: Operations.MetadataList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
-            public init(headers: Operations.WebMetadataList.Input.Headers = .init()) {
+            public init(headers: Operations.MetadataList.Input.Headers = .init()) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMetadata list response
+            /// Metadata list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(metadataList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMetadataListResponse)
+            case ok(Components.Responses.MetadataListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMetadataListResponse {
+            public var ok: Components.Responses.MetadataListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -3888,26 +3888,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataList.Output.Unauthorized.Body
+                public var body: Operations.MetadataList.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataList.Output.Unauthorized.Body) {
+                public init(body: Operations.MetadataList.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(metadataList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataList.Output.Unauthorized)
+            case unauthorized(Operations.MetadataList.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMetadataList.Output.Unauthorized {
+            public var unauthorized: Operations.MetadataList.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -3939,26 +3939,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataList.Output.Forbidden.Body
+                public var body: Operations.MetadataList.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataList.Output.Forbidden.Body) {
+                public init(body: Operations.MetadataList.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(metadataList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataList.Output.Forbidden)
+            case forbidden(Operations.MetadataList.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataList.Output.Forbidden {
+            public var forbidden: Operations.MetadataList.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -4003,36 +4003,36 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(webMetadataQuery)`.
-    public enum WebMetadataQuery {
-        public static let id: Swift.String = "webMetadataQuery"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(metadataQuery)`.
+    public enum MetadataQuery {
+        public static let id: Swift.String = "metadataQuery"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/query/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataQuery.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataQuery.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataQuery.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataQuery.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataQuery.Input.Headers
+            public var headers: Operations.MetadataQuery.Input.Headers
             /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema)
+                case json(Components.Schemas.MetadataQueryItemSearchRequestQuerySchema)
             }
-            public var body: Operations.WebMetadataQuery.Input.Body
+            public var body: Operations.MetadataQuery.Input.Body
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMetadataQuery.Input.Headers = .init(),
-                body: Operations.WebMetadataQuery.Input.Body
+                headers: Operations.MetadataQuery.Input.Headers = .init(),
+                body: Operations.MetadataQuery.Input.Body
             ) {
                 self.headers = headers
                 self.body = body
@@ -4041,15 +4041,15 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(webMetadataQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(metadataQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMetadataQueryItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.MetadataQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMetadataQueryItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.MetadataQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -4081,26 +4081,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataQuery.Output.Unauthorized.Body
+                public var body: Operations.MetadataQuery.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataQuery.Output.Unauthorized.Body) {
+                public init(body: Operations.MetadataQuery.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(webMetadataQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(metadataQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataQuery.Output.Unauthorized)
+            case unauthorized(Operations.MetadataQuery.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMetadataQuery.Output.Unauthorized {
+            public var unauthorized: Operations.MetadataQuery.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -4132,26 +4132,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataQuery.Output.Forbidden.Body
+                public var body: Operations.MetadataQuery.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataQuery.Output.Forbidden.Body) {
+                public init(body: Operations.MetadataQuery.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(webMetadataQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(metadataQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataQuery.Output.Forbidden)
+            case forbidden(Operations.MetadataQuery.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataQuery.Output.Forbidden {
+            public var forbidden: Operations.MetadataQuery.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -4196,48 +4196,48 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/resolve`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)`.
-    public enum WebMetadataResolve {
-        public static let id: Swift.String = "webMetadataResolve"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(metadataResolve)`.
+    public enum MetadataResolve {
+        public static let id: Swift.String = "metadataResolve"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/resolve/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataResolve.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataResolve.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataResolve.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataResolve.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataResolve.Input.Headers
-            public var body: Components.RequestBodies.WebMetadataResolveRequestBody
+            public var headers: Operations.MetadataResolve.Input.Headers
+            public var body: Components.RequestBodies.MetadataResolveRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMetadataResolve.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMetadataResolveRequestBody
+                headers: Operations.MetadataResolve.Input.Headers = .init(),
+                body: Components.RequestBodies.MetadataResolveRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMetadata resolve response
+            /// Metadata resolve response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(metadataResolve)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMetadataResolveResponse)
+            case ok(Components.Responses.MetadataResolveResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMetadataResolveResponse {
+            public var ok: Components.Responses.MetadataResolveResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -4269,26 +4269,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataResolve.Output.Unauthorized.Body
+                public var body: Operations.MetadataResolve.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataResolve.Output.Unauthorized.Body) {
+                public init(body: Operations.MetadataResolve.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(metadataResolve)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataResolve.Output.Unauthorized)
+            case unauthorized(Operations.MetadataResolve.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMetadataResolve.Output.Unauthorized {
+            public var unauthorized: Operations.MetadataResolve.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -4320,26 +4320,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataResolve.Output.Forbidden.Body
+                public var body: Operations.MetadataResolve.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataResolve.Output.Forbidden.Body) {
+                public init(body: Operations.MetadataResolve.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(metadataResolve)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataResolve.Output.Forbidden)
+            case forbidden(Operations.MetadataResolve.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataResolve.Output.Forbidden {
+            public var forbidden: Operations.MetadataResolve.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -4383,63 +4383,63 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)`.
-    public enum WebMetadataGet {
-        public static let id: Swift.String = "webMetadataGet"
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/{metadataId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/get(metadataGet)`.
+    public enum MetadataGet {
+        public static let id: Swift.String = "metadataGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMetadata id
+                /// Metadata id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/GET/path/webMetadataId`.
-                public var webMetadataId: Components.Parameters.WebMetadataIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/GET/path/metadataId`.
+                public var metadataId: Components.Parameters.MetadataIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMetadataId: WebMetadata id
-                public init(webMetadataId: Components.Parameters.WebMetadataIdParameter) {
-                    self.webMetadataId = webMetadataId
+                ///   - metadataId: Metadata id
+                public init(metadataId: Components.Parameters.MetadataIdParameter) {
+                    self.metadataId = metadataId
                 }
             }
-            public var path: Operations.WebMetadataGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/GET/header`.
+            public var path: Operations.MetadataGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataGet.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataGet.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataGet.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataGet.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataGet.Input.Headers
+            public var headers: Operations.MetadataGet.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
             ///   - headers:
             public init(
-                path: Operations.WebMetadataGet.Input.Path,
-                headers: Operations.WebMetadataGet.Input.Headers = .init()
+                path: Operations.MetadataGet.Input.Path,
+                headers: Operations.MetadataGet.Input.Headers = .init()
             ) {
                 self.path = path
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMetadata response
+            /// Metadata response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/get(metadataGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMetadataDetailResponse)
+            case ok(Components.Responses.MetadataDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMetadataDetailResponse {
+            public var ok: Components.Responses.MetadataDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -4453,9 +4453,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/GET/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/GET/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/GET/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/GET/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4471,26 +4471,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataGet.Output.NotFound.Body
+                public var body: Operations.MetadataGet.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataGet.Output.NotFound.Body) {
+                public init(body: Operations.MetadataGet.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebMetadata not found
+            /// Metadata not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/get(metadataGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMetadataGet.Output.NotFound)
+            case notFound(Operations.MetadataGet.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMetadataGet.Output.NotFound {
+            public var notFound: Operations.MetadataGet.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -4504,9 +4504,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4522,26 +4522,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataGet.Output.Unauthorized.Body
+                public var body: Operations.MetadataGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataGet.Output.Unauthorized.Body) {
+                public init(body: Operations.MetadataGet.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/get(metadataGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataGet.Output.Unauthorized)
+            case unauthorized(Operations.MetadataGet.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMetadataGet.Output.Unauthorized {
+            public var unauthorized: Operations.MetadataGet.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -4555,9 +4555,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4573,26 +4573,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataGet.Output.Forbidden.Body
+                public var body: Operations.MetadataGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataGet.Output.Forbidden.Body) {
+                public init(body: Operations.MetadataGet.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/get(metadataGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataGet.Output.Forbidden)
+            case forbidden(Operations.MetadataGet.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataGet.Output.Forbidden {
+            public var forbidden: Operations.MetadataGet.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -4636,296 +4636,39 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/patch(webMetadataPatch)`.
-    public enum WebMetadataPatch {
-        public static let id: Swift.String = "webMetadataPatch"
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/metadata/{metadataId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/patch(metadataPatch)`.
+    public enum MetadataPatch {
+        public static let id: Swift.String = "metadataPatch"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PATCH/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// WebMetadata id
+                /// Metadata id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PATCH/path/webMetadataId`.
-                public var webMetadataId: Components.Parameters.WebMetadataIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PATCH/path/metadataId`.
+                public var metadataId: Components.Parameters.MetadataIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webMetadataId: WebMetadata id
-                public init(webMetadataId: Components.Parameters.WebMetadataIdParameter) {
-                    self.webMetadataId = webMetadataId
+                ///   - metadataId: Metadata id
+                public init(metadataId: Components.Parameters.MetadataIdParameter) {
+                    self.metadataId = metadataId
                 }
             }
-            public var path: Operations.WebMetadataPatch.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PATCH/header`.
+            public var path: Operations.MetadataPatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataPatch.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataPatch.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataPatch.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataPatch.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataPatch.Input.Headers
-            public var body: Components.RequestBodies.WebMetadataPatchRequestBody
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            ///   - body:
-            public init(
-                path: Operations.WebMetadataPatch.Input.Path,
-                headers: Operations.WebMetadataPatch.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMetadataPatchRequestBody
-            ) {
-                self.path = path
-                self.headers = headers
-                self.body = body
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// WebMetadata response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/patch(webMetadataPatch)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMetadataDetailResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMetadataDetailResponse {
-                get throws {
-                    switch self {
-                    case let .ok(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PATCH/responses/404/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PATCH/responses/404/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.WebMetadataPatch.Output.NotFound.Body
-                /// Creates a new `NotFound`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataPatch.Output.NotFound.Body) {
-                    self.body = body
-                }
-            }
-            /// WebMetadata not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/patch(webMetadataPatch)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMetadataPatch.Output.NotFound)
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMetadataPatch.Output.NotFound {
-                get throws {
-                    switch self {
-                    case let .notFound(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PATCH/responses/401/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PATCH/responses/401/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.WebMetadataPatch.Output.Unauthorized.Body
-                /// Creates a new `Unauthorized`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataPatch.Output.Unauthorized.Body) {
-                    self.body = body
-                }
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/patch(webMetadataPatch)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataPatch.Output.Unauthorized)
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMetadataPatch.Output.Unauthorized {
-                get throws {
-                    switch self {
-                    case let .unauthorized(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PATCH/responses/403/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PATCH/responses/403/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.WebMetadataPatch.Output.Forbidden.Body
-                /// Creates a new `Forbidden`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataPatch.Output.Forbidden.Body) {
-                    self.body = body
-                }
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/patch(webMetadataPatch)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataPatch.Output.Forbidden)
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataPatch.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case let .forbidden(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case let .other(string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/put(webMetadataUpdate)`.
-    public enum WebMetadataUpdate {
-        public static let id: Swift.String = "webMetadataUpdate"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PUT/path`.
-            public struct Path: Sendable, Hashable {
-                /// WebMetadata id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PUT/path/webMetadataId`.
-                public var webMetadataId: Components.Parameters.WebMetadataIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - webMetadataId: WebMetadata id
-                public init(webMetadataId: Components.Parameters.WebMetadataIdParameter) {
-                    self.webMetadataId = webMetadataId
-                }
-            }
-            public var path: Operations.WebMetadataUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PUT/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataUpdate.AcceptableContentType>]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebMetadataUpdate.AcceptableContentType>] = .defaultValues()) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.WebMetadataUpdate.Input.Headers
-            public var body: Components.RequestBodies.WebMetadataUpdateRequestBody
+            public var headers: Operations.MetadataPatch.Input.Headers
+            public var body: Components.RequestBodies.MetadataPatchRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -4933,9 +4676,9 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebMetadataUpdate.Input.Path,
-                headers: Operations.WebMetadataUpdate.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMetadataUpdateRequestBody
+                path: Operations.MetadataPatch.Input.Path,
+                headers: Operations.MetadataPatch.Input.Headers = .init(),
+                body: Components.RequestBodies.MetadataPatchRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -4943,17 +4686,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMetadata response
+            /// Metadata response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/put(webMetadataUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/patch(metadataPatch)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMetadataDetailResponse)
+            case ok(Components.Responses.MetadataDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMetadataDetailResponse {
+            public var ok: Components.Responses.MetadataDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -4967,9 +4710,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PUT/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PATCH/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PUT/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PATCH/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4985,26 +4728,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataUpdate.Output.NotFound.Body
+                public var body: Operations.MetadataPatch.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataUpdate.Output.NotFound.Body) {
+                public init(body: Operations.MetadataPatch.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebMetadata not found
+            /// Metadata not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/put(webMetadataUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/patch(metadataPatch)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebMetadataUpdate.Output.NotFound)
+            case notFound(Operations.MetadataPatch.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebMetadataUpdate.Output.NotFound {
+            public var notFound: Operations.MetadataPatch.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -5018,9 +4761,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PUT/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PATCH/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PUT/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PATCH/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -5036,26 +4779,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataUpdate.Output.Unauthorized.Body
+                public var body: Operations.MetadataPatch.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataUpdate.Output.Unauthorized.Body) {
+                public init(body: Operations.MetadataPatch.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/put(webMetadataUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/patch(metadataPatch)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataUpdate.Output.Unauthorized)
+            case unauthorized(Operations.MetadataPatch.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebMetadataUpdate.Output.Unauthorized {
+            public var unauthorized: Operations.MetadataPatch.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -5069,9 +4812,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PUT/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PATCH/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{webMetadataId}/PUT/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PATCH/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -5087,26 +4830,283 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebMetadataUpdate.Output.Forbidden.Body
+                public var body: Operations.MetadataPatch.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebMetadataUpdate.Output.Forbidden.Body) {
+                public init(body: Operations.MetadataPatch.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/put(webMetadataUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/patch(metadataPatch)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataUpdate.Output.Forbidden)
+            case forbidden(Operations.MetadataPatch.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataUpdate.Output.Forbidden {
+            public var forbidden: Operations.MetadataPatch.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/web/metadata/{metadataId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/put(metadataUpdate)`.
+    public enum MetadataUpdate {
+        public static let id: Swift.String = "metadataUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PUT/path`.
+            public struct Path: Sendable, Hashable {
+                /// Metadata id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PUT/path/metadataId`.
+                public var metadataId: Components.Parameters.MetadataIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - metadataId: Metadata id
+                public init(metadataId: Components.Parameters.MetadataIdParameter) {
+                    self.metadataId = metadataId
+                }
+            }
+            public var path: Operations.MetadataUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PUT/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataUpdate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MetadataUpdate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.MetadataUpdate.Input.Headers
+            public var body: Components.RequestBodies.MetadataUpdateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.MetadataUpdate.Input.Path,
+                headers: Operations.MetadataUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.MetadataUpdateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Metadata response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/put(metadataUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.MetadataDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.MetadataDetailResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PUT/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PUT/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.MetadataUpdate.Output.NotFound.Body
+                /// Creates a new `NotFound`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.MetadataUpdate.Output.NotFound.Body) {
+                    self.body = body
+                }
+            }
+            /// Metadata not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/put(metadataUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.MetadataUpdate.Output.NotFound)
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.MetadataUpdate.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PUT/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PUT/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.MetadataUpdate.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.MetadataUpdate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/put(metadataUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.MetadataUpdate.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.MetadataUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PUT/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/{metadataId}/PUT/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.MetadataUpdate.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.MetadataUpdate.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/put(metadataUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.MetadataUpdate.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.MetadataUpdate.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -5151,48 +5151,48 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(webPageCreate)`.
-    public enum WebPageCreate {
-        public static let id: Swift.String = "webPageCreate"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(pageCreate)`.
+    public enum PageCreate {
+        public static let id: Swift.String = "pageCreate"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageCreate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageCreate.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageCreate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageCreate.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebPageCreate.Input.Headers
-            public var body: Components.RequestBodies.WebPageRequestBody
+            public var headers: Operations.PageCreate.Input.Headers
+            public var body: Components.RequestBodies.PageRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebPageCreate.Input.Headers = .init(),
-                body: Components.RequestBodies.WebPageRequestBody
+                headers: Operations.PageCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.PageRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebPage response
+            /// Page response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(webPageCreate)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(pageCreate)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
-            case created(Components.Responses.WebPageDetailResponse)
+            case created(Components.Responses.PageDetailResponse)
             /// The associated value of the enum case if `self` is `.created`.
             ///
             /// - Throws: An error if `self` is not `.created`.
             /// - SeeAlso: `.created`.
-            public var created: Components.Responses.WebPageDetailResponse {
+            public var created: Components.Responses.PageDetailResponse {
                 get throws {
                     switch self {
                     case let .created(response):
@@ -5224,26 +5224,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageCreate.Output.Unauthorized.Body
+                public var body: Operations.PageCreate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageCreate.Output.Unauthorized.Body) {
+                public init(body: Operations.PageCreate.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(webPageCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(pageCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPageCreate.Output.Unauthorized)
+            case unauthorized(Operations.PageCreate.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebPageCreate.Output.Unauthorized {
+            public var unauthorized: Operations.PageCreate.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -5275,26 +5275,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageCreate.Output.Forbidden.Body
+                public var body: Operations.PageCreate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageCreate.Output.Forbidden.Body) {
+                public init(body: Operations.PageCreate.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(webPageCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(pageCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPageCreate.Output.Forbidden)
+            case forbidden(Operations.PageCreate.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPageCreate.Output.Forbidden {
+            public var forbidden: Operations.PageCreate.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -5339,22 +5339,22 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageRemove)`.
-    public enum WebPageRemove {
-        public static let id: Swift.String = "webPageRemove"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(pageRemove)`.
+    public enum PageRemove {
+        public static let id: Swift.String = "pageRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/DELETE/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageRemove.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageRemove.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageRemove.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageRemove.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebPageRemove.Input.Headers
+            public var headers: Operations.PageRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -5362,7 +5362,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebPageRemove.Input.Headers = .init(),
+                headers: Operations.PageRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -5372,13 +5372,13 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(pageRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Components.Responses.NoContentResponse)
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(pageRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -5420,26 +5420,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageRemove.Output.Unauthorized.Body
+                public var body: Operations.PageRemove.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageRemove.Output.Unauthorized.Body) {
+                public init(body: Operations.PageRemove.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(pageRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPageRemove.Output.Unauthorized)
+            case unauthorized(Operations.PageRemove.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebPageRemove.Output.Unauthorized {
+            public var unauthorized: Operations.PageRemove.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -5471,26 +5471,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageRemove.Output.Forbidden.Body
+                public var body: Operations.PageRemove.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageRemove.Output.Forbidden.Body) {
+                public init(body: Operations.PageRemove.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(pageRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPageRemove.Output.Forbidden)
+            case forbidden(Operations.PageRemove.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPageRemove.Output.Forbidden {
+            public var forbidden: Operations.PageRemove.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -5535,42 +5535,42 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)`.
-    public enum WebPageList {
-        public static let id: Swift.String = "webPageList"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(pageList)`.
+    public enum PageList {
+        public static let id: Swift.String = "pageList"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageList.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageList.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageList.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageList.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebPageList.Input.Headers
+            public var headers: Operations.PageList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
-            public init(headers: Operations.WebPageList.Input.Headers = .init()) {
+            public init(headers: Operations.PageList.Input.Headers = .init()) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebPage list response
+            /// Page list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(pageList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebPageListResponse)
+            case ok(Components.Responses.PageListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebPageListResponse {
+            public var ok: Components.Responses.PageListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -5602,26 +5602,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageList.Output.Unauthorized.Body
+                public var body: Operations.PageList.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageList.Output.Unauthorized.Body) {
+                public init(body: Operations.PageList.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(pageList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPageList.Output.Unauthorized)
+            case unauthorized(Operations.PageList.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebPageList.Output.Unauthorized {
+            public var unauthorized: Operations.PageList.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -5653,26 +5653,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageList.Output.Forbidden.Body
+                public var body: Operations.PageList.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageList.Output.Forbidden.Body) {
+                public init(body: Operations.PageList.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(pageList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPageList.Output.Forbidden)
+            case forbidden(Operations.PageList.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPageList.Output.Forbidden {
+            public var forbidden: Operations.PageList.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -5717,36 +5717,36 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(webPageQuery)`.
-    public enum WebPageQuery {
-        public static let id: Swift.String = "webPageQuery"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(pageQuery)`.
+    public enum PageQuery {
+        public static let id: Swift.String = "pageQuery"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/query/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageQuery.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageQuery.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageQuery.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageQuery.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebPageQuery.Input.Headers
+            public var headers: Operations.PageQuery.Input.Headers
             /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.WebPageQueryItemSearchRequestQuerySchema)
+                case json(Components.Schemas.PageQueryItemSearchRequestQuerySchema)
             }
-            public var body: Operations.WebPageQuery.Input.Body
+            public var body: Operations.PageQuery.Input.Body
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebPageQuery.Input.Headers = .init(),
-                body: Operations.WebPageQuery.Input.Body
+                headers: Operations.PageQuery.Input.Headers = .init(),
+                body: Operations.PageQuery.Input.Body
             ) {
                 self.headers = headers
                 self.body = body
@@ -5755,15 +5755,15 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(webPageQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(pageQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebPageQueryItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.PageQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebPageQueryItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.PageQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -5795,26 +5795,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageQuery.Output.Unauthorized.Body
+                public var body: Operations.PageQuery.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageQuery.Output.Unauthorized.Body) {
+                public init(body: Operations.PageQuery.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(webPageQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(pageQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPageQuery.Output.Unauthorized)
+            case unauthorized(Operations.PageQuery.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebPageQuery.Output.Unauthorized {
+            public var unauthorized: Operations.PageQuery.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -5846,26 +5846,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageQuery.Output.Forbidden.Body
+                public var body: Operations.PageQuery.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageQuery.Output.Forbidden.Body) {
+                public init(body: Operations.PageQuery.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(webPageQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(pageQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPageQuery.Output.Forbidden)
+            case forbidden(Operations.PageQuery.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPageQuery.Output.Forbidden {
+            public var forbidden: Operations.PageQuery.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -5909,63 +5909,63 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/get(webPageGet)`.
-    public enum WebPageGet {
-        public static let id: Swift.String = "webPageGet"
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages/{pageId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/get(pageGet)`.
+    public enum PageGet {
+        public static let id: Swift.String = "pageGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// WebPage id
+                /// Page id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/GET/path/webPageId`.
-                public var webPageId: Components.Parameters.WebPageIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/GET/path/pageId`.
+                public var pageId: Components.Parameters.PageIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webPageId: WebPage id
-                public init(webPageId: Components.Parameters.WebPageIdParameter) {
-                    self.webPageId = webPageId
+                ///   - pageId: Page id
+                public init(pageId: Components.Parameters.PageIdParameter) {
+                    self.pageId = pageId
                 }
             }
-            public var path: Operations.WebPageGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/GET/header`.
+            public var path: Operations.PageGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageGet.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageGet.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageGet.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageGet.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebPageGet.Input.Headers
+            public var headers: Operations.PageGet.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
             ///   - headers:
             public init(
-                path: Operations.WebPageGet.Input.Path,
-                headers: Operations.WebPageGet.Input.Headers = .init()
+                path: Operations.PageGet.Input.Path,
+                headers: Operations.PageGet.Input.Headers = .init()
             ) {
                 self.path = path
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebPage response
+            /// Page response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/get(webPageGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/get(pageGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebPageDetailResponse)
+            case ok(Components.Responses.PageDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebPageDetailResponse {
+            public var ok: Components.Responses.PageDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -5979,9 +5979,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/GET/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/GET/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/GET/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/GET/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -5997,26 +5997,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageGet.Output.NotFound.Body
+                public var body: Operations.PageGet.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageGet.Output.NotFound.Body) {
+                public init(body: Operations.PageGet.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebPage not found
+            /// Page not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/get(webPageGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/get(pageGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebPageGet.Output.NotFound)
+            case notFound(Operations.PageGet.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebPageGet.Output.NotFound {
+            public var notFound: Operations.PageGet.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -6030,9 +6030,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -6048,26 +6048,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageGet.Output.Unauthorized.Body
+                public var body: Operations.PageGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageGet.Output.Unauthorized.Body) {
+                public init(body: Operations.PageGet.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/get(webPageGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/get(pageGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPageGet.Output.Unauthorized)
+            case unauthorized(Operations.PageGet.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebPageGet.Output.Unauthorized {
+            public var unauthorized: Operations.PageGet.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -6081,9 +6081,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -6099,26 +6099,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageGet.Output.Forbidden.Body
+                public var body: Operations.PageGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageGet.Output.Forbidden.Body) {
+                public init(body: Operations.PageGet.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/get(webPageGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/get(pageGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPageGet.Output.Forbidden)
+            case forbidden(Operations.PageGet.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPageGet.Output.Forbidden {
+            public var forbidden: Operations.PageGet.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -6162,296 +6162,39 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/patch(webPagePatch)`.
-    public enum WebPagePatch {
-        public static let id: Swift.String = "webPagePatch"
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/pages/{pageId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/patch(pagePatch)`.
+    public enum PagePatch {
+        public static let id: Swift.String = "pagePatch"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PATCH/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// WebPage id
+                /// Page id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PATCH/path/webPageId`.
-                public var webPageId: Components.Parameters.WebPageIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PATCH/path/pageId`.
+                public var pageId: Components.Parameters.PageIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - webPageId: WebPage id
-                public init(webPageId: Components.Parameters.WebPageIdParameter) {
-                    self.webPageId = webPageId
+                ///   - pageId: Page id
+                public init(pageId: Components.Parameters.PageIdParameter) {
+                    self.pageId = pageId
                 }
             }
-            public var path: Operations.WebPagePatch.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PATCH/header`.
+            public var path: Operations.PagePatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPagePatch.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PagePatch.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPagePatch.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PagePatch.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebPagePatch.Input.Headers
-            public var body: Components.RequestBodies.WebPagePatchRequestBody
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            ///   - body:
-            public init(
-                path: Operations.WebPagePatch.Input.Path,
-                headers: Operations.WebPagePatch.Input.Headers = .init(),
-                body: Components.RequestBodies.WebPagePatchRequestBody
-            ) {
-                self.path = path
-                self.headers = headers
-                self.body = body
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// WebPage response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/patch(webPagePatch)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebPageDetailResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebPageDetailResponse {
-                get throws {
-                    switch self {
-                    case let .ok(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PATCH/responses/404/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PATCH/responses/404/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.WebPagePatch.Output.NotFound.Body
-                /// Creates a new `NotFound`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.WebPagePatch.Output.NotFound.Body) {
-                    self.body = body
-                }
-            }
-            /// WebPage not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/patch(webPagePatch)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebPagePatch.Output.NotFound)
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebPagePatch.Output.NotFound {
-                get throws {
-                    switch self {
-                    case let .notFound(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PATCH/responses/401/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PATCH/responses/401/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.WebPagePatch.Output.Unauthorized.Body
-                /// Creates a new `Unauthorized`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.WebPagePatch.Output.Unauthorized.Body) {
-                    self.body = body
-                }
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/patch(webPagePatch)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPagePatch.Output.Unauthorized)
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebPagePatch.Output.Unauthorized {
-                get throws {
-                    switch self {
-                    case let .unauthorized(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PATCH/responses/403/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PATCH/responses/403/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.WebPagePatch.Output.Forbidden.Body
-                /// Creates a new `Forbidden`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.WebPagePatch.Output.Forbidden.Body) {
-                    self.body = body
-                }
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/patch(webPagePatch)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPagePatch.Output.Forbidden)
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPagePatch.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case let .forbidden(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case let .other(string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/put(webPageUpdate)`.
-    public enum WebPageUpdate {
-        public static let id: Swift.String = "webPageUpdate"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PUT/path`.
-            public struct Path: Sendable, Hashable {
-                /// WebPage id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PUT/path/webPageId`.
-                public var webPageId: Components.Parameters.WebPageIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - webPageId: WebPage id
-                public init(webPageId: Components.Parameters.WebPageIdParameter) {
-                    self.webPageId = webPageId
-                }
-            }
-            public var path: Operations.WebPageUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PUT/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageUpdate.AcceptableContentType>]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebPageUpdate.AcceptableContentType>] = .defaultValues()) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.WebPageUpdate.Input.Headers
-            public var body: Components.RequestBodies.WebPageUpdateRequestBody
+            public var headers: Operations.PagePatch.Input.Headers
+            public var body: Components.RequestBodies.PagePatchRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -6459,9 +6202,9 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.WebPageUpdate.Input.Path,
-                headers: Operations.WebPageUpdate.Input.Headers = .init(),
-                body: Components.RequestBodies.WebPageUpdateRequestBody
+                path: Operations.PagePatch.Input.Path,
+                headers: Operations.PagePatch.Input.Headers = .init(),
+                body: Components.RequestBodies.PagePatchRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -6469,17 +6212,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebPage response
+            /// Page response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/put(webPageUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/patch(pagePatch)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebPageDetailResponse)
+            case ok(Components.Responses.PageDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebPageDetailResponse {
+            public var ok: Components.Responses.PageDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -6493,9 +6236,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PUT/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PATCH/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PUT/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PATCH/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -6511,26 +6254,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageUpdate.Output.NotFound.Body
+                public var body: Operations.PagePatch.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageUpdate.Output.NotFound.Body) {
+                public init(body: Operations.PagePatch.Output.NotFound.Body) {
                     self.body = body
                 }
             }
-            /// WebPage not found
+            /// Page not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/put(webPageUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/patch(pagePatch)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.WebPageUpdate.Output.NotFound)
+            case notFound(Operations.PagePatch.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.WebPageUpdate.Output.NotFound {
+            public var notFound: Operations.PagePatch.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -6544,9 +6287,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PUT/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PATCH/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PUT/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PATCH/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -6562,26 +6305,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageUpdate.Output.Unauthorized.Body
+                public var body: Operations.PagePatch.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageUpdate.Output.Unauthorized.Body) {
+                public init(body: Operations.PagePatch.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/put(webPageUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/patch(pagePatch)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebPageUpdate.Output.Unauthorized)
+            case unauthorized(Operations.PagePatch.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebPageUpdate.Output.Unauthorized {
+            public var unauthorized: Operations.PagePatch.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -6595,9 +6338,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PUT/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PATCH/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{webPageId}/PUT/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PATCH/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -6613,26 +6356,283 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebPageUpdate.Output.Forbidden.Body
+                public var body: Operations.PagePatch.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebPageUpdate.Output.Forbidden.Body) {
+                public init(body: Operations.PagePatch.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/put(webPageUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/patch(pagePatch)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebPageUpdate.Output.Forbidden)
+            case forbidden(Operations.PagePatch.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebPageUpdate.Output.Forbidden {
+            public var forbidden: Operations.PagePatch.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/web/pages/{pageId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/put(pageUpdate)`.
+    public enum PageUpdate {
+        public static let id: Swift.String = "pageUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PUT/path`.
+            public struct Path: Sendable, Hashable {
+                /// Page id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PUT/path/pageId`.
+                public var pageId: Components.Parameters.PageIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - pageId: Page id
+                public init(pageId: Components.Parameters.PageIdParameter) {
+                    self.pageId = pageId
+                }
+            }
+            public var path: Operations.PageUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PUT/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageUpdate.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PageUpdate.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.PageUpdate.Input.Headers
+            public var body: Components.RequestBodies.PageUpdateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.PageUpdate.Input.Path,
+                headers: Operations.PageUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.PageUpdateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Page response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/put(pageUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.PageDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.PageDetailResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PUT/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PUT/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.PageUpdate.Output.NotFound.Body
+                /// Creates a new `NotFound`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.PageUpdate.Output.NotFound.Body) {
+                    self.body = body
+                }
+            }
+            /// Page not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/put(pageUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.PageUpdate.Output.NotFound)
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.PageUpdate.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PUT/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PUT/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.PageUpdate.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.PageUpdate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/put(pageUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.PageUpdate.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.PageUpdate.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PUT/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/pages/{pageId}/PUT/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.PageUpdate.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.PageUpdate.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/put(pageUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.PageUpdate.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.PageUpdate.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -6677,42 +6677,42 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(webSettingsGet)`.
-    public enum WebSettingsGet {
-        public static let id: Swift.String = "webSettingsGet"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(settingsGet)`.
+    public enum SettingsGet {
+        public static let id: Swift.String = "settingsGet"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/settings/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebSettingsGet.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.SettingsGet.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebSettingsGet.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.SettingsGet.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebSettingsGet.Input.Headers
+            public var headers: Operations.SettingsGet.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
-            public init(headers: Operations.WebSettingsGet.Input.Headers = .init()) {
+            public init(headers: Operations.SettingsGet.Input.Headers = .init()) {
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebSettings response
+            /// Settings response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(webSettingsGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(settingsGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebSettingsDetailResponse)
+            case ok(Components.Responses.SettingsDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebSettingsDetailResponse {
+            public var ok: Components.Responses.SettingsDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -6744,26 +6744,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebSettingsGet.Output.Unauthorized.Body
+                public var body: Operations.SettingsGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebSettingsGet.Output.Unauthorized.Body) {
+                public init(body: Operations.SettingsGet.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(webSettingsGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(settingsGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebSettingsGet.Output.Unauthorized)
+            case unauthorized(Operations.SettingsGet.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebSettingsGet.Output.Unauthorized {
+            public var unauthorized: Operations.SettingsGet.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -6795,26 +6795,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebSettingsGet.Output.Forbidden.Body
+                public var body: Operations.SettingsGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebSettingsGet.Output.Forbidden.Body) {
+                public init(body: Operations.SettingsGet.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(webSettingsGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(settingsGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebSettingsGet.Output.Forbidden)
+            case forbidden(Operations.SettingsGet.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebSettingsGet.Output.Forbidden {
+            public var forbidden: Operations.SettingsGet.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -6859,48 +6859,48 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `PUT /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(webSettingsUpdate)`.
-    public enum WebSettingsUpdate {
-        public static let id: Swift.String = "webSettingsUpdate"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)`.
+    public enum SettingsUpdate {
+        public static let id: Swift.String = "settingsUpdate"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/settings/PUT/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebSettingsUpdate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.SettingsUpdate.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.WebSettingsUpdate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.SettingsUpdate.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebSettingsUpdate.Input.Headers
-            public var body: Components.RequestBodies.WebSettingsUpdateRequestBody
+            public var headers: Operations.SettingsUpdate.Input.Headers
+            public var body: Components.RequestBodies.SettingsUpdateRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebSettingsUpdate.Input.Headers = .init(),
-                body: Components.RequestBodies.WebSettingsUpdateRequestBody
+                headers: Operations.SettingsUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.SettingsUpdateRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebSettings response
+            /// Settings response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(webSettingsUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebSettingsDetailResponse)
+            case ok(Components.Responses.SettingsDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebSettingsDetailResponse {
+            public var ok: Components.Responses.SettingsDetailResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -6932,26 +6932,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebSettingsUpdate.Output.Unauthorized.Body
+                public var body: Operations.SettingsUpdate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebSettingsUpdate.Output.Unauthorized.Body) {
+                public init(body: Operations.SettingsUpdate.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(webSettingsUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebSettingsUpdate.Output.Unauthorized)
+            case unauthorized(Operations.SettingsUpdate.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.WebSettingsUpdate.Output.Unauthorized {
+            public var unauthorized: Operations.SettingsUpdate.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -6983,26 +6983,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.WebSettingsUpdate.Output.Forbidden.Body
+                public var body: Operations.SettingsUpdate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.WebSettingsUpdate.Output.Forbidden.Body) {
+                public init(body: Operations.SettingsUpdate.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(webSettingsUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebSettingsUpdate.Output.Forbidden)
+            case forbidden(Operations.SettingsUpdate.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebSettingsUpdate.Output.Forbidden {
+            public var forbidden: Operations.SettingsUpdate.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):

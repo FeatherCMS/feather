@@ -8,15 +8,15 @@ extension Components {
     public enum Parameters {
         /// Web menu key
         ///
-        /// - Remark: Generated from `#/components/parameters/WebMenuKeyParameter`.
-        public typealias WebMenuKeyParameter = Components.Schemas.WebMenuKeyField
+        /// - Remark: Generated from `#/components/parameters/MenuKeyParameter`.
+        public typealias MenuKeyParameter = Components.Schemas.MenuKeyField
         /// Web metadata slug
         ///
-        /// - Remark: Generated from `#/components/parameters/WebMetadataSlugParameter`.
-        public typealias WebMetadataSlugParameter = Components.Schemas.WebMetadataSlugField
+        /// - Remark: Generated from `#/components/parameters/MetadataSlugParameter`.
+        public typealias MetadataSlugParameter = Components.Schemas.MetadataSlugField
         /// Web metadata identifier
         ///
-        /// - Remark: Generated from `#/components/parameters/WebMetadataIdParameter`.
-        public typealias WebMetadataIdParameter = Components.Schemas.WebMetadataReferenceIDField
+        /// - Remark: Generated from `#/components/parameters/MetadataIdParameter`.
+        public typealias MetadataIdParameter = Components.Schemas.MetadataReferenceIDField
     }
 }

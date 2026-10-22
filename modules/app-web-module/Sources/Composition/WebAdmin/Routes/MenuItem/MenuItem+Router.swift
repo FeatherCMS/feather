@@ -21,66 +21,66 @@ extension MenuItem {
             let detailsPath = items.appending(parameter: "itemId")
             let editPath = detailsPath.appending(pathComponent: "edit")
             let movePath = detailsPath.appending(pathComponent: "move")
-            let list = AdminListWebMenuItem(
+            let list = AdminListMenuItem(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.get(
                 listPath.routerPath,
-                use: list.getWebMenuItems
+                use: list.getMenuItems
             )
             router.post(
                 movePath.routerPath,
-                use: list.postWebMenuItemMove
+                use: list.postMenuItemMove
             )
 
-            let view = AdminViewWebMenuItem(
+            let view = AdminViewMenuItem(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.get(
                 detailsPath.routerPath,
-                use: view.getWebMenuItem
+                use: view.getMenuItem
             )
 
-            let add = AdminAddWebMenuItem(
+            let add = AdminAddMenuItem(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.get(
                 addPath.routerPath,
-                use: add.getAddWebMenuItem
+                use: add.getAddMenuItem
             )
             router.post(
                 addPath.routerPath,
-                use: add.postAddWebMenuItem
+                use: add.postAddMenuItem
             )
 
-            let edit = AdminEditWebMenuItem(
+            let edit = AdminEditMenuItem(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.get(
                 editPath.routerPath,
-                use: edit.getEditWebMenuItem
+                use: edit.getEditMenuItem
             )
             router.post(
                 editPath.routerPath,
-                use: edit.postEditWebMenuItem
+                use: edit.postEditMenuItem
             )
 
-            let remove = AdminRemoveWebMenuItem(
+            let remove = AdminRemoveMenuItem(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.post(
                 removePath.routerPath,
-                use: remove.postRemoveWebMenuItem
+                use: remove.postRemoveMenuItem
             )
         }
     }

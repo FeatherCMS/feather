@@ -47,26 +47,26 @@ struct AppPublicContentDefaultController: AppPublicContentController {
             in: CharacterSet(charactersIn: "/")
         )
         let content = try await interactor.resolve(slug: slug)
-        let formSubmissionNonce = WebFormSubmissionNonce.resolve(
+        let formSubmissionNonce = FormSubmissionNonce.resolve(
             existingCookieValue: request.cookies[
-                WebFormSubmissionNonce.cookieName
+                FormSubmissionNonce.cookieName
             ]?
             .value
         )
-        let formSubmissionFeedback = WebFormSubmissionFeedback(
+        let formSubmissionFeedback = FormSubmissionFeedback(
             source: request.uri
                 .queryParameters[
-                    Substring(WebFormSubmissionFeedback.sourceQueryKey)
+                    Substring(FormSubmissionFeedback.sourceQueryKey)
                 ]
                 .map(String.init),
             key: request.uri
                 .queryParameters[
-                    Substring(WebFormSubmissionFeedback.keyQueryKey)
+                    Substring(FormSubmissionFeedback.keyQueryKey)
                 ]
                 .map(String.init),
             status: request.uri
                 .queryParameters[
-                    Substring(WebFormSubmissionFeedback.statusQueryKey)
+                    Substring(FormSubmissionFeedback.statusQueryKey)
                 ]
                 .map(String.init)
         )
@@ -79,13 +79,13 @@ struct AppPublicContentDefaultController: AppPublicContentController {
         let cookies =
             hasFormSubmissionNonce
             ? [
-                WebFormSubmissionNonce.cookie(
+                FormSubmissionNonce.cookie(
                     value: formSubmissionNonce,
                     secure: usesSecureCookies
                 )
             ]
             : []
-        let response = WebAppHTMLResponse(
+        let response = HTMLResponse(
             content: rendered.response.content,
             status: content.status,
             cookies: cookies

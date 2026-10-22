@@ -61,7 +61,7 @@ extension AppAPIGateway {
 
     func mapPublicMenu(
         _ menu: Menu.Public.List.Output.Menu
-    ) -> WebAppAPI.Components.Schemas.WebMenuSchema {
+    ) -> WebAppAPI.Components.Schemas.MenuSchema {
         .init(
             id: menu.id,
             key: menu.key,
@@ -83,7 +83,7 @@ extension AppAPIGateway {
         title: String,
         excerpt: String,
         imageURL: String
-    ) -> WebAppAPI.Components.Schemas.WebMetadataContentSchema {
+    ) -> WebAppAPI.Components.Schemas.MetadataContentSchema {
         let resolved = Metadata.Detail.Output.Resolved(
             metadata: metadata,
             fallbackTitle: title,

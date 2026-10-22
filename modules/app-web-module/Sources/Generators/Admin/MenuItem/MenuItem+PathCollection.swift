@@ -5,15 +5,15 @@ extension MenuItem {
     struct PathCollection: PathCollectionRepresentable {
         var pathMap: PathMap {
             [
-                "api/v1/admin/web/menus/{webMenuId}/items":
+                "api/v1/admin/web/menus/{menuId}/items":
                     PathItem(),
-                "api/v1/admin/web/menus/{webMenuId}/items/":
+                "api/v1/admin/web/menus/{menuId}/items/":
                     List.PathItem(),
-                "api/v1/admin/web/menus/{webMenuId}/items/query":
+                "api/v1/admin/web/menus/{menuId}/items/query":
                     Query.PathItem(),
-                "api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}":
+                "api/v1/admin/web/menus/{menuId}/items/{menuItemId}":
                     ID.PathItem(),
-                "api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move":
+                "api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move":
                     Move.PathItem(),
             ]
         }

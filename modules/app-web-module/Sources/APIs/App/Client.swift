@@ -32,11 +32,11 @@ public struct Client: APIProtocol {
         client.converter
     }
     /// - Remark: HTTP `GET /api/v1/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/web/menus/get(webMenuList)`.
-    public func webMenuList(_ input: Operations.WebMenuList.Input) async throws -> Operations.WebMenuList.Output {
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/get(menuList)`.
+    public func menuList(_ input: Operations.MenuList.Input) async throws -> Operations.MenuList.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuList.id,
+            forOperation: Operations.MenuList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/web/menus",
@@ -57,7 +57,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuListResponse.Body
+                    let body: Components.Responses.MenuListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -67,7 +67,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuListSchema.self,
+                            Components.Schemas.MenuListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -90,11 +90,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/menus/{key}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(webMenuGetByKey)`.
-    public func webMenuGetByKey(_ input: Operations.WebMenuGetByKey.Input) async throws -> Operations.WebMenuGetByKey.Output {
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(menuGetByKey)`.
+    public func menuGetByKey(_ input: Operations.MenuGetByKey.Input) async throws -> Operations.MenuGetByKey.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuGetByKey.id,
+            forOperation: Operations.MenuGetByKey.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/web/menus/{}",
@@ -117,7 +117,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuResponse.Body
+                    let body: Components.Responses.MenuResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -127,7 +127,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuSchema.self,
+                            Components.Schemas.MenuSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -139,7 +139,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuGetByKey.Output.NotFound.Body
+                    let body: Operations.MenuGetByKey.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -172,11 +172,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/routes/{slug}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(webMetadataGet)`.
-    public func webMetadataGet(_ input: Operations.WebMetadataGet.Input) async throws -> Operations.WebMetadataGet.Output {
+    /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(metadataGet)`.
+    public func metadataGet(_ input: Operations.MetadataGet.Input) async throws -> Operations.MetadataGet.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataGet.id,
+            forOperation: Operations.MetadataGet.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/web/routes/{}",
@@ -199,7 +199,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMetadataResponse.Body
+                    let body: Components.Responses.MetadataResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -209,7 +209,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataSchema.self,
+                            Components.Schemas.MetadataSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -221,7 +221,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataGet.Output.NotFound.Body
+                    let body: Operations.MetadataGet.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -254,11 +254,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/web/metadata/get(webMetadataList)`.
-    public func webMetadataList(_ input: Operations.WebMetadataList.Input) async throws -> Operations.WebMetadataList.Output {
+    /// - Remark: Generated from `#/paths//api/v1/web/metadata/get(metadataList)`.
+    public func metadataList(_ input: Operations.MetadataList.Input) async throws -> Operations.MetadataList.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataList.id,
+            forOperation: Operations.MetadataList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/web/metadata",
@@ -279,7 +279,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMetadataListResponse.Body
+                    let body: Components.Responses.MetadataListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -289,7 +289,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataSlugListSchema.self,
+                            Components.Schemas.MetadataSlugListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -312,11 +312,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/pages/{id}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/pages/{id}/get(webPageGet)`.
-    public func webPageGet(_ input: Operations.WebPageGet.Input) async throws -> Operations.WebPageGet.Output {
+    /// - Remark: Generated from `#/paths//api/v1/web/pages/{id}/get(pageGet)`.
+    public func pageGet(_ input: Operations.PageGet.Input) async throws -> Operations.PageGet.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageGet.id,
+            forOperation: Operations.PageGet.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/web/pages/{}",
@@ -339,7 +339,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebPageDetailResponse.Body
+                    let body: Components.Responses.PageDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -349,7 +349,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebPageDetailSchema.self,
+                            Components.Schemas.PageDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -361,7 +361,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageGet.Output.NotFound.Body
+                    let body: Operations.PageGet.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -394,11 +394,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/web/settings/get(webSiteSettings)`.
-    public func webSiteSettings(_ input: Operations.WebSiteSettings.Input) async throws -> Operations.WebSiteSettings.Output {
+    /// - Remark: Generated from `#/paths//api/v1/web/settings/get(siteSettings)`.
+    public func siteSettings(_ input: Operations.SiteSettings.Input) async throws -> Operations.SiteSettings.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebSiteSettings.id,
+            forOperation: Operations.SiteSettings.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/web/settings",
@@ -419,7 +419,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebSiteSettingsResponse.Body
+                    let body: Components.Responses.SiteSettingsResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -429,7 +429,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebSiteSettingsSchema.self,
+                            Components.Schemas.SiteSettingsSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

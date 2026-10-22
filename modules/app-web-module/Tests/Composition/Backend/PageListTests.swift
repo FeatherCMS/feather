@@ -30,7 +30,7 @@ struct PageListTests {
                 )
             ]
         )
-        let executor = try WebAPIHTTPTestSupport.makeExecutor(
+        let executor = try APIHTTPTestSupport.makeExecutor(
             connection: connection
         )
         let request = FeatherHTTP.Request(
@@ -38,7 +38,7 @@ struct PageListTests {
             path: "/api/v1/admin/web/pages/"
         )
 
-        let body = try await WebAPIHTTPTestSupport.send(
+        let body = try await APIHTTPTestSupport.send(
             request,
             expectedStatus: 200,
             using: executor

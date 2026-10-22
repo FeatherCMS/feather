@@ -39,7 +39,7 @@ extension Menu.List {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            router.get(routes.list.routerPath, use: controller.getWebMenus)
+            router.get(routes.list.routerPath, use: controller.getMenus)
         }
     }
 }

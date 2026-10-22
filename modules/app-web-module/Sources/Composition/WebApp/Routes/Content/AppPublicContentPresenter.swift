@@ -6,8 +6,8 @@ protocol AppPublicContentPresenter: Sendable {
     func render(
         content: AppPublicContentModel,
         formSubmissionNonce: String,
-        formSubmissionFeedback: WebFormSubmissionFeedback?
-    ) async -> (response: WebAppHTMLResponse, usesFormSubmissionNonce: Bool)
+        formSubmissionFeedback: FormSubmissionFeedback?
+    ) async -> (response: HTMLResponse, usesFormSubmissionNonce: Bool)
 
     func renderRSS(model: AppPublicRSSModel) -> String
 

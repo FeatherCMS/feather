@@ -6,15 +6,15 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/WebMenuCreateSchema`.
-        public struct WebMenuCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuCreateSchema/key`.
+        /// - Remark: Generated from `#/components/schemas/MenuCreateSchema`.
+        public struct MenuCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuCreateSchema/key`.
             public var key: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuCreateSchema/name`.
+            /// - Remark: Generated from `#/components/schemas/MenuCreateSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuCreateSchema/notes`.
-            public var notes: Components.Schemas.WebMenuNotesField?
-            /// Creates a new `WebMenuCreateSchema`.
+            /// - Remark: Generated from `#/components/schemas/MenuCreateSchema/notes`.
+            public var notes: Components.Schemas.MenuNotesField?
+            /// Creates a new `MenuCreateSchema`.
             ///
             /// - Parameters:
             ///   - key:
@@ -23,7 +23,7 @@ extension Components {
             public init(
                 key: Swift.String,
                 name: Swift.String,
-                notes: Components.Schemas.WebMenuNotesField? = nil
+                notes: Components.Schemas.MenuNotesField? = nil
             ) {
                 self.key = key
                 self.name = name
@@ -35,23 +35,23 @@ extension Components {
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuNotesField`.
-        public typealias WebMenuNotesField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuDetailSchema`.
-        public struct WebMenuDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/MenuNotesField`.
+        public typealias MenuNotesField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuDetailSchema`.
+        public struct MenuDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuDetailSchema/key`.
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/key`.
             public var key: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuDetailSchema/name`.
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuDetailSchema/notes`.
-            public var notes: Components.Schemas.WebMenuNotesField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuDetailSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/notes`.
+            public var notes: Components.Schemas.MenuNotesField?
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/WebMenuDetailSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `WebMenuDetailSchema`.
+            /// Creates a new `MenuDetailSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -64,7 +64,7 @@ extension Components {
                 id: Swift.String,
                 key: Swift.String,
                 name: Swift.String,
-                notes: Components.Schemas.WebMenuNotesField? = nil,
+                notes: Components.Schemas.MenuNotesField? = nil,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
@@ -199,21 +199,21 @@ extension Components {
                 case ids
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuListSchema`.
-        public typealias WebMenuListSchema = [Components.Schemas.WebMenuListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema`.
-        public struct WebMenuListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/id`.
-            public var id: Components.Schemas.WebMenuIdField
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/key`.
-            public var key: Components.Schemas.WebMenuKeyField
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/name`.
-            public var name: Components.Schemas.WebMenuNameField
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebMenuCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/WebMenuListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebMenuUpdatedAtField
-            /// Creates a new `WebMenuListItemSchema`.
+        /// - Remark: Generated from `#/components/schemas/MenuListSchema`.
+        public typealias MenuListSchema = [Components.Schemas.MenuListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/MenuListItemSchema`.
+        public struct MenuListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/id`.
+            public var id: Components.Schemas.MenuIdField
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/key`.
+            public var key: Components.Schemas.MenuKeyField
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/name`.
+            public var name: Components.Schemas.MenuNameField
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.MenuCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.MenuUpdatedAtField
+            /// Creates a new `MenuListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -222,11 +222,11 @@ extension Components {
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Components.Schemas.WebMenuIdField,
-                key: Components.Schemas.WebMenuKeyField,
-                name: Components.Schemas.WebMenuNameField,
-                createdAt: Components.Schemas.WebMenuCreatedAtField,
-                updatedAt: Components.Schemas.WebMenuUpdatedAtField
+                id: Components.Schemas.MenuIdField,
+                key: Components.Schemas.MenuKeyField,
+                name: Components.Schemas.MenuNameField,
+                createdAt: Components.Schemas.MenuCreatedAtField,
+                updatedAt: Components.Schemas.MenuUpdatedAtField
             ) {
                 self.id = id
                 self.key = key
@@ -242,23 +242,23 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuIdField`.
-        public typealias WebMenuIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuKeyField`.
-        public typealias WebMenuKeyField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuNameField`.
-        public typealias WebMenuNameField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuCreatedAtField`.
-        public typealias WebMenuCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebMenuUpdatedAtField`.
-        public typealias WebMenuUpdatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema`.
-        public struct WebMenuQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/MenuIdField`.
+        public typealias MenuIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuKeyField`.
+        public typealias MenuKeyField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuNameField`.
+        public typealias MenuNameField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuCreatedAtField`.
+        public typealias MenuCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/MenuUpdatedAtField`.
+        public typealias MenuUpdatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema`.
+        public struct MenuQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case key = "key"
@@ -266,9 +266,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MenuQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -276,7 +276,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MenuQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -287,13 +287,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MenuQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.MenuQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -306,9 +306,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `WebMenuQueryItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.MenuQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `MenuQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -316,8 +316,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.MenuQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MenuQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -367,15 +367,15 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/SearchStringField`.
         public typealias SearchStringField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchSchema`.
-        public struct WebMenuQueryItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchSchema/query`.
-            public var query: Components.Schemas.WebMenuQueryItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchSchema`.
+        public struct MenuQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.MenuQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.WebMenuQueryItemSchema]
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.MenuQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -383,7 +383,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.WebMenuQueryItemSchema],
+                    items: [Components.Schemas.MenuQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -394,16 +394,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchSchema/data`.
-            public var data: Components.Schemas.WebMenuQueryItemSearchSchema.DataPayload
-            /// Creates a new `WebMenuQueryItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.MenuQueryItemSearchSchema.DataPayload
+            /// Creates a new `MenuQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.WebMenuQueryItemSearchResponseQuerySchema,
-                data: Components.Schemas.WebMenuQueryItemSearchSchema.DataPayload
+                query: Components.Schemas.MenuQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.MenuQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -413,13 +413,13 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema`.
-        public struct WebMenuQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema`.
+        public struct MenuQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case key = "key"
@@ -427,9 +427,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.WebMenuQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MenuQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -437,7 +437,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.WebMenuQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MenuQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -448,13 +448,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.WebMenuQueryItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.WebMenuQueryItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MenuQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.MenuQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -467,9 +467,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.WebMenuQueryItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `WebMenuQueryItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.MenuQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `MenuQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -477,8 +477,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.WebMenuQueryItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.WebMenuQueryItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.MenuQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MenuQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -513,19 +513,19 @@ extension Components {
                 case number
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSchema`.
-        public struct WebMenuQueryItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSchema/id`.
-            public var id: Components.Schemas.WebMenuIdField
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSchema/key`.
-            public var key: Components.Schemas.WebMenuKeyField
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSchema/name`.
-            public var name: Components.Schemas.WebMenuNameField
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebMenuCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/WebMenuQueryItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebMenuUpdatedAtField
-            /// Creates a new `WebMenuQueryItemSchema`.
+        /// - Remark: Generated from `#/components/schemas/MenuQueryItemSchema`.
+        public struct MenuQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSchema/id`.
+            public var id: Components.Schemas.MenuIdField
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSchema/key`.
+            public var key: Components.Schemas.MenuKeyField
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSchema/name`.
+            public var name: Components.Schemas.MenuNameField
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.MenuCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/MenuQueryItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.MenuUpdatedAtField
+            /// Creates a new `MenuQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -534,11 +534,11 @@ extension Components {
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Components.Schemas.WebMenuIdField,
-                key: Components.Schemas.WebMenuKeyField,
-                name: Components.Schemas.WebMenuNameField,
-                createdAt: Components.Schemas.WebMenuCreatedAtField,
-                updatedAt: Components.Schemas.WebMenuUpdatedAtField
+                id: Components.Schemas.MenuIdField,
+                key: Components.Schemas.MenuKeyField,
+                name: Components.Schemas.MenuNameField,
+                createdAt: Components.Schemas.MenuCreatedAtField,
+                updatedAt: Components.Schemas.MenuUpdatedAtField
             ) {
                 self.id = id
                 self.key = key
@@ -554,24 +554,24 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuPatchSchema`.
-        public struct WebMenuPatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuPatchSchema/key`.
-            public var key: Components.Schemas.WebMenuKeyField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuPatchSchema/name`.
-            public var name: Components.Schemas.WebMenuNameField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuPatchSchema/notes`.
-            public var notes: Components.Schemas.WebMenuNotesField?
-            /// Creates a new `WebMenuPatchSchema`.
+        /// - Remark: Generated from `#/components/schemas/MenuPatchSchema`.
+        public struct MenuPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuPatchSchema/key`.
+            public var key: Components.Schemas.MenuKeyField?
+            /// - Remark: Generated from `#/components/schemas/MenuPatchSchema/name`.
+            public var name: Components.Schemas.MenuNameField?
+            /// - Remark: Generated from `#/components/schemas/MenuPatchSchema/notes`.
+            public var notes: Components.Schemas.MenuNotesField?
+            /// Creates a new `MenuPatchSchema`.
             ///
             /// - Parameters:
             ///   - key:
             ///   - name:
             ///   - notes:
             public init(
-                key: Components.Schemas.WebMenuKeyField? = nil,
-                name: Components.Schemas.WebMenuNameField? = nil,
-                notes: Components.Schemas.WebMenuNotesField? = nil
+                key: Components.Schemas.MenuKeyField? = nil,
+                name: Components.Schemas.MenuNameField? = nil,
+                notes: Components.Schemas.MenuNotesField? = nil
             ) {
                 self.key = key
                 self.name = name
@@ -583,23 +583,23 @@ extension Components {
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemCreateSchema`.
-        public struct WebMenuItemCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemCreateSchema/label`.
+        /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema`.
+        public struct MenuItemCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/label`.
             public var label: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemCreateSchema/url`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/url`.
             public var url: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemCreateSchema/priority`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/priority`.
             public var priority: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemCreateSchema/isBlank`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/isBlank`.
             public var isBlank: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemCreateSchema/permission`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/permission`.
             public var permission: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemCreateSchema/authentication`.
-            public var authentication: Components.Schemas.WebMenuItemAuthenticationField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemCreateSchema/notes`.
-            public var notes: Components.Schemas.WebMenuItemNotesField?
-            /// Creates a new `WebMenuItemCreateSchema`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/authentication`.
+            public var authentication: Components.Schemas.MenuItemAuthenticationField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/notes`.
+            public var notes: Components.Schemas.MenuItemNotesField?
+            /// Creates a new `MenuItemCreateSchema`.
             ///
             /// - Parameters:
             ///   - label:
@@ -615,8 +615,8 @@ extension Components {
                 priority: Swift.Int,
                 isBlank: Swift.Bool,
                 permission: Swift.String,
-                authentication: Components.Schemas.WebMenuItemAuthenticationField? = nil,
-                notes: Components.Schemas.WebMenuItemNotesField? = nil
+                authentication: Components.Schemas.MenuItemAuthenticationField? = nil,
+                notes: Components.Schemas.MenuItemNotesField? = nil
             ) {
                 self.label = label
                 self.url = url
@@ -636,35 +636,35 @@ extension Components {
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemAuthenticationField`.
-        public typealias WebMenuItemAuthenticationField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemNotesField`.
-        public typealias WebMenuItemNotesField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema`.
-        public struct WebMenuItemDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/MenuItemAuthenticationField`.
+        public typealias MenuItemAuthenticationField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuItemNotesField`.
+        public typealias MenuItemNotesField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema`.
+        public struct MenuItemDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/menuId`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/menuId`.
             public var menuId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/label`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/label`.
             public var label: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/url`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/url`.
             public var url: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/priority`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/priority`.
             public var priority: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/isBlank`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/isBlank`.
             public var isBlank: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/permission`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/permission`.
             public var permission: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/authentication`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/authentication`.
             public var authentication: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/notes`.
-            public var notes: Components.Schemas.WebMenuItemNotesField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/notes`.
+            public var notes: Components.Schemas.MenuItemNotesField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemDetailSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `WebMenuItemDetailSchema`.
+            /// Creates a new `MenuItemDetailSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -687,7 +687,7 @@ extension Components {
                 isBlank: Swift.Bool,
                 permission: Swift.String,
                 authentication: Swift.String,
-                notes: Components.Schemas.WebMenuItemNotesField? = nil,
+                notes: Components.Schemas.MenuItemNotesField? = nil,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
@@ -717,31 +717,31 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemListSchema`.
-        public typealias WebMenuItemListSchema = [Components.Schemas.WebMenuItemListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema`.
-        public struct WebMenuItemListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/id`.
-            public var id: Components.Schemas.WebMenuItemIdField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/menuId`.
-            public var menuId: Components.Schemas.WebMenuIdField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/label`.
-            public var label: Components.Schemas.WebMenuItemLabelField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/url`.
-            public var url: Components.Schemas.WebMenuItemURLField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/priority`.
-            public var priority: Components.Schemas.WebMenuItemPriorityField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/isBlank`.
-            public var isBlank: Components.Schemas.WebMenuItemIsBlankField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/permission`.
-            public var permission: Components.Schemas.WebMenuItemPermissionField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/authentication`.
-            public var authentication: Components.Schemas.WebMenuItemAuthenticationField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebMenuItemCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebMenuItemUpdatedAtField
-            /// Creates a new `WebMenuItemListItemSchema`.
+        /// - Remark: Generated from `#/components/schemas/MenuItemListSchema`.
+        public typealias MenuItemListSchema = [Components.Schemas.MenuItemListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema`.
+        public struct MenuItemListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/id`.
+            public var id: Components.Schemas.MenuItemIdField
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/menuId`.
+            public var menuId: Components.Schemas.MenuIdField
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/label`.
+            public var label: Components.Schemas.MenuItemLabelField
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/url`.
+            public var url: Components.Schemas.MenuItemURLField
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/priority`.
+            public var priority: Components.Schemas.MenuItemPriorityField
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/isBlank`.
+            public var isBlank: Components.Schemas.MenuItemIsBlankField
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/permission`.
+            public var permission: Components.Schemas.MenuItemPermissionField
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/authentication`.
+            public var authentication: Components.Schemas.MenuItemAuthenticationField
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.MenuItemCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.MenuItemUpdatedAtField
+            /// Creates a new `MenuItemListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -755,16 +755,16 @@ extension Components {
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Components.Schemas.WebMenuItemIdField,
-                menuId: Components.Schemas.WebMenuIdField,
-                label: Components.Schemas.WebMenuItemLabelField,
-                url: Components.Schemas.WebMenuItemURLField,
-                priority: Components.Schemas.WebMenuItemPriorityField,
-                isBlank: Components.Schemas.WebMenuItemIsBlankField,
-                permission: Components.Schemas.WebMenuItemPermissionField,
-                authentication: Components.Schemas.WebMenuItemAuthenticationField,
-                createdAt: Components.Schemas.WebMenuItemCreatedAtField,
-                updatedAt: Components.Schemas.WebMenuItemUpdatedAtField
+                id: Components.Schemas.MenuItemIdField,
+                menuId: Components.Schemas.MenuIdField,
+                label: Components.Schemas.MenuItemLabelField,
+                url: Components.Schemas.MenuItemURLField,
+                priority: Components.Schemas.MenuItemPriorityField,
+                isBlank: Components.Schemas.MenuItemIsBlankField,
+                permission: Components.Schemas.MenuItemPermissionField,
+                authentication: Components.Schemas.MenuItemAuthenticationField,
+                createdAt: Components.Schemas.MenuItemCreatedAtField,
+                updatedAt: Components.Schemas.MenuItemUpdatedAtField
             ) {
                 self.id = id
                 self.menuId = menuId
@@ -790,29 +790,29 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemIdField`.
-        public typealias WebMenuItemIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemLabelField`.
-        public typealias WebMenuItemLabelField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemURLField`.
-        public typealias WebMenuItemURLField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemPriorityField`.
-        public typealias WebMenuItemPriorityField = Swift.Int
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemIsBlankField`.
-        public typealias WebMenuItemIsBlankField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemPermissionField`.
-        public typealias WebMenuItemPermissionField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemCreatedAtField`.
-        public typealias WebMenuItemCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemUpdatedAtField`.
-        public typealias WebMenuItemUpdatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema`.
-        public struct WebMenuItemQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/MenuItemIdField`.
+        public typealias MenuItemIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuItemLabelField`.
+        public typealias MenuItemLabelField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuItemURLField`.
+        public typealias MenuItemURLField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuItemPriorityField`.
+        public typealias MenuItemPriorityField = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/MenuItemIsBlankField`.
+        public typealias MenuItemIsBlankField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/MenuItemPermissionField`.
+        public typealias MenuItemPermissionField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuItemCreatedAtField`.
+        public typealias MenuItemCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/MenuItemUpdatedAtField`.
+        public typealias MenuItemUpdatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema`.
+        public struct MenuItemQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case label = "label"
@@ -822,9 +822,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -832,7 +832,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -843,13 +843,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -862,9 +862,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `WebMenuItemQueryItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `MenuItemQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -872,8 +872,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -885,15 +885,15 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchSchema`.
-        public struct WebMenuItemQueryItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchSchema/query`.
-            public var query: Components.Schemas.WebMenuItemQueryItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchSchema`.
+        public struct MenuItemQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.MenuItemQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.WebMenuItemQueryItemSchema]
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.MenuItemQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -901,7 +901,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.WebMenuItemQueryItemSchema],
+                    items: [Components.Schemas.MenuItemQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -912,16 +912,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchSchema/data`.
-            public var data: Components.Schemas.WebMenuItemQueryItemSearchSchema.DataPayload
-            /// Creates a new `WebMenuItemQueryItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.MenuItemQueryItemSearchSchema.DataPayload
+            /// Creates a new `MenuItemQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.WebMenuItemQueryItemSearchResponseQuerySchema,
-                data: Components.Schemas.WebMenuItemQueryItemSearchSchema.DataPayload
+                query: Components.Schemas.MenuItemQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.MenuItemQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -931,13 +931,13 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema`.
-        public struct WebMenuItemQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema`.
+        public struct MenuItemQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case label = "label"
@@ -947,9 +947,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.WebMenuItemQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MenuItemQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -957,7 +957,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.WebMenuItemQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MenuItemQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -968,13 +968,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.WebMenuItemQueryItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.WebMenuItemQueryItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MenuItemQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.MenuItemQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -987,9 +987,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.WebMenuItemQueryItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `WebMenuItemQueryItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.MenuItemQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `MenuItemQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -997,8 +997,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.WebMenuItemQueryItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.WebMenuItemQueryItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.MenuItemQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MenuItemQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1010,29 +1010,29 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema`.
-        public struct WebMenuItemQueryItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/id`.
-            public var id: Components.Schemas.WebMenuItemIdField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/menuId`.
-            public var menuId: Components.Schemas.WebMenuIdField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/label`.
-            public var label: Components.Schemas.WebMenuItemLabelField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/url`.
-            public var url: Components.Schemas.WebMenuItemURLField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/priority`.
-            public var priority: Components.Schemas.WebMenuItemPriorityField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/isBlank`.
-            public var isBlank: Components.Schemas.WebMenuItemIsBlankField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/permission`.
-            public var permission: Components.Schemas.WebMenuItemPermissionField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/authentication`.
-            public var authentication: Components.Schemas.WebMenuItemAuthenticationField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebMenuItemCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemQueryItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebMenuItemUpdatedAtField
-            /// Creates a new `WebMenuItemQueryItemSchema`.
+        /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema`.
+        public struct MenuItemQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/id`.
+            public var id: Components.Schemas.MenuItemIdField
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/menuId`.
+            public var menuId: Components.Schemas.MenuIdField
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/label`.
+            public var label: Components.Schemas.MenuItemLabelField
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/url`.
+            public var url: Components.Schemas.MenuItemURLField
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/priority`.
+            public var priority: Components.Schemas.MenuItemPriorityField
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/isBlank`.
+            public var isBlank: Components.Schemas.MenuItemIsBlankField
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/permission`.
+            public var permission: Components.Schemas.MenuItemPermissionField
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/authentication`.
+            public var authentication: Components.Schemas.MenuItemAuthenticationField
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.MenuItemCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.MenuItemUpdatedAtField
+            /// Creates a new `MenuItemQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1046,16 +1046,16 @@ extension Components {
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Components.Schemas.WebMenuItemIdField,
-                menuId: Components.Schemas.WebMenuIdField,
-                label: Components.Schemas.WebMenuItemLabelField,
-                url: Components.Schemas.WebMenuItemURLField,
-                priority: Components.Schemas.WebMenuItemPriorityField,
-                isBlank: Components.Schemas.WebMenuItemIsBlankField,
-                permission: Components.Schemas.WebMenuItemPermissionField,
-                authentication: Components.Schemas.WebMenuItemAuthenticationField,
-                createdAt: Components.Schemas.WebMenuItemCreatedAtField,
-                updatedAt: Components.Schemas.WebMenuItemUpdatedAtField
+                id: Components.Schemas.MenuItemIdField,
+                menuId: Components.Schemas.MenuIdField,
+                label: Components.Schemas.MenuItemLabelField,
+                url: Components.Schemas.MenuItemURLField,
+                priority: Components.Schemas.MenuItemPriorityField,
+                isBlank: Components.Schemas.MenuItemIsBlankField,
+                permission: Components.Schemas.MenuItemPermissionField,
+                authentication: Components.Schemas.MenuItemAuthenticationField,
+                createdAt: Components.Schemas.MenuItemCreatedAtField,
+                updatedAt: Components.Schemas.MenuItemUpdatedAtField
             ) {
                 self.id = id
                 self.menuId = menuId
@@ -1081,23 +1081,23 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema`.
-        public struct WebMenuItemPatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema/label`.
-            public var label: Components.Schemas.WebMenuItemLabelField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema/url`.
-            public var url: Components.Schemas.WebMenuItemURLField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema/priority`.
-            public var priority: Components.Schemas.WebMenuItemPriorityField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema/isBlank`.
-            public var isBlank: Components.Schemas.WebMenuItemIsBlankField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema/permission`.
-            public var permission: Components.Schemas.WebMenuItemPermissionField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema/authentication`.
-            public var authentication: Components.Schemas.WebMenuItemAuthenticationField?
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemPatchSchema/notes`.
-            public var notes: Components.Schemas.WebMenuItemNotesField?
-            /// Creates a new `WebMenuItemPatchSchema`.
+        /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema`.
+        public struct MenuItemPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/label`.
+            public var label: Components.Schemas.MenuItemLabelField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/url`.
+            public var url: Components.Schemas.MenuItemURLField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/priority`.
+            public var priority: Components.Schemas.MenuItemPriorityField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/isBlank`.
+            public var isBlank: Components.Schemas.MenuItemIsBlankField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/permission`.
+            public var permission: Components.Schemas.MenuItemPermissionField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/authentication`.
+            public var authentication: Components.Schemas.MenuItemAuthenticationField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/notes`.
+            public var notes: Components.Schemas.MenuItemNotesField?
+            /// Creates a new `MenuItemPatchSchema`.
             ///
             /// - Parameters:
             ///   - label:
@@ -1108,13 +1108,13 @@ extension Components {
             ///   - authentication:
             ///   - notes:
             public init(
-                label: Components.Schemas.WebMenuItemLabelField? = nil,
-                url: Components.Schemas.WebMenuItemURLField? = nil,
-                priority: Components.Schemas.WebMenuItemPriorityField? = nil,
-                isBlank: Components.Schemas.WebMenuItemIsBlankField? = nil,
-                permission: Components.Schemas.WebMenuItemPermissionField? = nil,
-                authentication: Components.Schemas.WebMenuItemAuthenticationField? = nil,
-                notes: Components.Schemas.WebMenuItemNotesField? = nil
+                label: Components.Schemas.MenuItemLabelField? = nil,
+                url: Components.Schemas.MenuItemURLField? = nil,
+                priority: Components.Schemas.MenuItemPriorityField? = nil,
+                isBlank: Components.Schemas.MenuItemIsBlankField? = nil,
+                permission: Components.Schemas.MenuItemPermissionField? = nil,
+                authentication: Components.Schemas.MenuItemAuthenticationField? = nil,
+                notes: Components.Schemas.MenuItemNotesField? = nil
             ) {
                 self.label = label
                 self.url = url
@@ -1134,11 +1134,11 @@ extension Components {
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMenuItemMoveSchema`.
-        public struct WebMenuItemMoveSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMenuItemMoveSchema/beforeItemId`.
+        /// - Remark: Generated from `#/components/schemas/MenuItemMoveSchema`.
+        public struct MenuItemMoveSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemMoveSchema/beforeItemId`.
             public var beforeItemId: Swift.String
-            /// Creates a new `WebMenuItemMoveSchema`.
+            /// Creates a new `MenuItemMoveSchema`.
             ///
             /// - Parameters:
             ///   - beforeItemId:
@@ -1149,41 +1149,41 @@ extension Components {
                 case beforeItemId
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema`.
-        public struct WebMetadataCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/slug`.
+        /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema`.
+        public struct MetadataCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/slug`.
             public var slug: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/template`.
-            public var template: Components.Schemas.WebMetadataTemplateField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/referenceType`.
-            public var referenceType: Components.Schemas.WebMetadataReferenceTypeField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/referenceId`.
-            public var referenceId: Components.Schemas.WebMetadataReferenceIDField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/publicationDate`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/template`.
+            public var template: Components.Schemas.MetadataTemplateField?
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/referenceType`.
+            public var referenceType: Components.Schemas.MetadataReferenceTypeField?
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/referenceId`.
+            public var referenceId: Components.Schemas.MetadataReferenceIDField?
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/publicationDate`.
             public var publicationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/expirationDate`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/expirationDate`.
             public var expirationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/status`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/status`.
             public var status: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/title`.
             public var title: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/excerpt`.
             public var excerpt: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/imageUrl`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/imageUrl`.
             public var imageUrl: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/canonicalUrl`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/canonicalUrl`.
             public var canonicalUrl: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/noIndex`.
-            public var noIndex: Components.Schemas.WebMetadataNoIndexField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/primaryKeyword`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/noIndex`.
+            public var noIndex: Components.Schemas.MetadataNoIndexField?
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/primaryKeyword`.
             public var primaryKeyword: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/cssCodeInjection`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/cssCodeInjection`.
             public var cssCodeInjection: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/javascriptCodeInjection`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/javascriptCodeInjection`.
             public var javascriptCodeInjection: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataCreateSchema/structuredDataCodeInjection`.
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/structuredDataCodeInjection`.
             public var structuredDataCodeInjection: Swift.String?
-            /// Creates a new `WebMetadataCreateSchema`.
+            /// Creates a new `MetadataCreateSchema`.
             ///
             /// - Parameters:
             ///   - slug:
@@ -1204,9 +1204,9 @@ extension Components {
             ///   - structuredDataCodeInjection:
             public init(
                 slug: Swift.String,
-                template: Components.Schemas.WebMetadataTemplateField? = nil,
-                referenceType: Components.Schemas.WebMetadataReferenceTypeField? = nil,
-                referenceId: Components.Schemas.WebMetadataReferenceIDField? = nil,
+                template: Components.Schemas.MetadataTemplateField? = nil,
+                referenceType: Components.Schemas.MetadataReferenceTypeField? = nil,
+                referenceId: Components.Schemas.MetadataReferenceIDField? = nil,
                 publicationDate: Swift.Double? = nil,
                 expirationDate: Swift.Double? = nil,
                 status: Swift.String,
@@ -1214,7 +1214,7 @@ extension Components {
                 excerpt: Swift.String? = nil,
                 imageUrl: Swift.String? = nil,
                 canonicalUrl: Swift.String? = nil,
-                noIndex: Components.Schemas.WebMetadataNoIndexField? = nil,
+                noIndex: Components.Schemas.MetadataNoIndexField? = nil,
                 primaryKeyword: Swift.String? = nil,
                 cssCodeInjection: Swift.String? = nil,
                 javascriptCodeInjection: Swift.String? = nil,
@@ -1256,57 +1256,57 @@ extension Components {
                 case structuredDataCodeInjection
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataTemplateField`.
-        public typealias WebMetadataTemplateField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataReferenceTypeField`.
-        public typealias WebMetadataReferenceTypeField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataReferenceIDField`.
-        public typealias WebMetadataReferenceIDField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataNoIndexField`.
-        public typealias WebMetadataNoIndexField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema`.
-        public struct WebMetadataDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/MetadataTemplateField`.
+        public typealias MetadataTemplateField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataReferenceTypeField`.
+        public typealias MetadataReferenceTypeField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataReferenceIDField`.
+        public typealias MetadataReferenceIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataNoIndexField`.
+        public typealias MetadataNoIndexField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema`.
+        public struct MetadataDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/referenceType`.
-            public var referenceType: Components.Schemas.WebMetadataReferenceTypeField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/referenceId`.
-            public var referenceId: Components.Schemas.WebMetadataReferenceIDField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/slug`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/referenceType`.
+            public var referenceType: Components.Schemas.MetadataReferenceTypeField?
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/referenceId`.
+            public var referenceId: Components.Schemas.MetadataReferenceIDField?
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/slug`.
             public var slug: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/template`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/template`.
             public var template: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/publicationDate`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/publicationDate`.
             public var publicationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/expirationDate`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/expirationDate`.
             public var expirationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/status`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/status`.
             public var status: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/availability`.
-            public var availability: Components.Schemas.WebMetadataAvailabilityField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/availability`.
+            public var availability: Components.Schemas.MetadataAvailabilityField
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/title`.
             public var title: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/excerpt`.
             public var excerpt: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/imageUrl`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/imageUrl`.
             public var imageUrl: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/canonicalUrl`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/canonicalUrl`.
             public var canonicalUrl: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/noIndex`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/noIndex`.
             public var noIndex: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/primaryKeyword`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/primaryKeyword`.
             public var primaryKeyword: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/cssCodeInjection`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/cssCodeInjection`.
             public var cssCodeInjection: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/javascriptCodeInjection`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/javascriptCodeInjection`.
             public var javascriptCodeInjection: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/structuredDataCodeInjection`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/structuredDataCodeInjection`.
             public var structuredDataCodeInjection: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `WebMetadataDetailSchema`.
+            /// Creates a new `MetadataDetailSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1331,14 +1331,14 @@ extension Components {
             ///   - updatedAt:
             public init(
                 id: Swift.String,
-                referenceType: Components.Schemas.WebMetadataReferenceTypeField? = nil,
-                referenceId: Components.Schemas.WebMetadataReferenceIDField? = nil,
+                referenceType: Components.Schemas.MetadataReferenceTypeField? = nil,
+                referenceId: Components.Schemas.MetadataReferenceIDField? = nil,
                 slug: Swift.String,
                 template: Swift.String,
                 publicationDate: Swift.Double? = nil,
                 expirationDate: Swift.Double? = nil,
                 status: Swift.String,
-                availability: Components.Schemas.WebMetadataAvailabilityField,
+                availability: Components.Schemas.MetadataAvailabilityField,
                 title: Swift.String? = nil,
                 excerpt: Swift.String? = nil,
                 imageUrl: Swift.String? = nil,
@@ -1395,41 +1395,41 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataAvailabilityField`.
-        @frozen public enum WebMetadataAvailabilityField: String, Codable, Hashable, Sendable, CaseIterable {
+        /// - Remark: Generated from `#/components/schemas/MetadataAvailabilityField`.
+        @frozen public enum MetadataAvailabilityField: String, Codable, Hashable, Sendable, CaseIterable {
             case draft = "draft"
             case scheduled = "scheduled"
             case live = "live"
             case expired = "expired"
             case archived = "archived"
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataListSchema`.
-        public typealias WebMetadataListSchema = [Components.Schemas.WebMetadataListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema`.
-        public struct WebMetadataListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/id`.
-            public var id: Components.Schemas.WebMetadataIdField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/referenceType`.
-            public var referenceType: Components.Schemas.WebMetadataReferenceTypeField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/referenceId`.
-            public var referenceId: Components.Schemas.WebMetadataReferenceIDField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/slug`.
-            public var slug: Components.Schemas.WebMetadataSlugField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/publicationDate`.
+        /// - Remark: Generated from `#/components/schemas/MetadataListSchema`.
+        public typealias MetadataListSchema = [Components.Schemas.MetadataListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema`.
+        public struct MetadataListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/id`.
+            public var id: Components.Schemas.MetadataIdField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/referenceType`.
+            public var referenceType: Components.Schemas.MetadataReferenceTypeField?
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/referenceId`.
+            public var referenceId: Components.Schemas.MetadataReferenceIDField?
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/slug`.
+            public var slug: Components.Schemas.MetadataSlugField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/publicationDate`.
             public var publicationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/expirationDate`.
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/expirationDate`.
             public var expirationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/status`.
-            public var status: Components.Schemas.WebMetadataStatusField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/availability`.
-            public var availability: Components.Schemas.WebMetadataAvailabilityField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/title`.
-            public var title: Components.Schemas.WebMetadataTitleField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebMetadataTimestampField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebMetadataTimestampField
-            /// Creates a new `WebMetadataListItemSchema`.
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/status`.
+            public var status: Components.Schemas.MetadataStatusField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/availability`.
+            public var availability: Components.Schemas.MetadataAvailabilityField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/title`.
+            public var title: Components.Schemas.MetadataTitleField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.MetadataTimestampField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.MetadataTimestampField
+            /// Creates a new `MetadataListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1444,17 +1444,17 @@ extension Components {
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Components.Schemas.WebMetadataIdField,
-                referenceType: Components.Schemas.WebMetadataReferenceTypeField? = nil,
-                referenceId: Components.Schemas.WebMetadataReferenceIDField? = nil,
-                slug: Components.Schemas.WebMetadataSlugField,
+                id: Components.Schemas.MetadataIdField,
+                referenceType: Components.Schemas.MetadataReferenceTypeField? = nil,
+                referenceId: Components.Schemas.MetadataReferenceIDField? = nil,
+                slug: Components.Schemas.MetadataSlugField,
                 publicationDate: Swift.Double? = nil,
                 expirationDate: Swift.Double? = nil,
-                status: Components.Schemas.WebMetadataStatusField,
-                availability: Components.Schemas.WebMetadataAvailabilityField,
-                title: Components.Schemas.WebMetadataTitleField,
-                createdAt: Components.Schemas.WebMetadataTimestampField,
-                updatedAt: Components.Schemas.WebMetadataTimestampField
+                status: Components.Schemas.MetadataStatusField,
+                availability: Components.Schemas.MetadataAvailabilityField,
+                title: Components.Schemas.MetadataTitleField,
+                createdAt: Components.Schemas.MetadataTimestampField,
+                updatedAt: Components.Schemas.MetadataTimestampField
             ) {
                 self.id = id
                 self.referenceType = referenceType
@@ -1482,23 +1482,23 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataIdField`.
-        public typealias WebMetadataIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataSlugField`.
-        public typealias WebMetadataSlugField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataStatusField`.
-        public typealias WebMetadataStatusField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataTitleField`.
-        public typealias WebMetadataTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebMetadataTimestampField`.
-        public typealias WebMetadataTimestampField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema`.
-        public struct WebMetadataQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/MetadataIdField`.
+        public typealias MetadataIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataSlugField`.
+        public typealias MetadataSlugField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataStatusField`.
+        public typealias MetadataStatusField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataTitleField`.
+        public typealias MetadataTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataTimestampField`.
+        public typealias MetadataTimestampField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema`.
+        public struct MetadataQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case slug = "slug"
@@ -1509,9 +1509,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MetadataQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -1519,7 +1519,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MetadataQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -1530,16 +1530,16 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MetadataQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.MetadataQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/filters/referenceType`.
-                public var referenceType: Components.Schemas.WebMetadataReferenceTypeField?
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/filters/referenceType`.
+                public var referenceType: Components.Schemas.MetadataReferenceTypeField?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
@@ -1547,7 +1547,7 @@ extension Components {
                 ///   - referenceType:
                 public init(
                     search: Components.Schemas.SearchStringField? = nil,
-                    referenceType: Components.Schemas.WebMetadataReferenceTypeField? = nil
+                    referenceType: Components.Schemas.MetadataReferenceTypeField? = nil
                 ) {
                     self.search = search
                     self.referenceType = referenceType
@@ -1557,9 +1557,9 @@ extension Components {
                     case referenceType
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `WebMetadataQueryItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.MetadataQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `MetadataQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -1567,8 +1567,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.MetadataQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MetadataQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1580,15 +1580,15 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchSchema`.
-        public struct WebMetadataQueryItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchSchema/query`.
-            public var query: Components.Schemas.WebMetadataQueryItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchSchema`.
+        public struct MetadataQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.MetadataQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.WebMetadataQueryItemSchema]
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.MetadataQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -1596,7 +1596,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.WebMetadataQueryItemSchema],
+                    items: [Components.Schemas.MetadataQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -1607,16 +1607,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchSchema/data`.
-            public var data: Components.Schemas.WebMetadataQueryItemSearchSchema.DataPayload
-            /// Creates a new `WebMetadataQueryItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.MetadataQueryItemSearchSchema.DataPayload
+            /// Creates a new `MetadataQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.WebMetadataQueryItemSearchResponseQuerySchema,
-                data: Components.Schemas.WebMetadataQueryItemSearchSchema.DataPayload
+                query: Components.Schemas.MetadataQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.MetadataQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -1626,13 +1626,13 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema`.
-        public struct WebMetadataQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema`.
+        public struct MetadataQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case slug = "slug"
@@ -1643,9 +1643,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.WebMetadataQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MetadataQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -1653,7 +1653,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.WebMetadataQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MetadataQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -1664,16 +1664,16 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.WebMetadataQueryItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.WebMetadataQueryItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MetadataQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.MetadataQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
-                /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/filters/referenceType`.
-                public var referenceType: Components.Schemas.WebMetadataReferenceTypeField?
+                /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/filters/referenceType`.
+                public var referenceType: Components.Schemas.MetadataReferenceTypeField?
                 /// Creates a new `FiltersPayload`.
                 ///
                 /// - Parameters:
@@ -1681,7 +1681,7 @@ extension Components {
                 ///   - referenceType:
                 public init(
                     search: Components.Schemas.SearchStringField? = nil,
-                    referenceType: Components.Schemas.WebMetadataReferenceTypeField? = nil
+                    referenceType: Components.Schemas.MetadataReferenceTypeField? = nil
                 ) {
                     self.search = search
                     self.referenceType = referenceType
@@ -1691,9 +1691,9 @@ extension Components {
                     case referenceType
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.WebMetadataQueryItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `WebMetadataQueryItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.MetadataQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `MetadataQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -1701,8 +1701,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.WebMetadataQueryItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.WebMetadataQueryItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.MetadataQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MetadataQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1714,31 +1714,31 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema`.
-        public struct WebMetadataQueryItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/id`.
-            public var id: Components.Schemas.WebMetadataIdField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/referenceType`.
-            public var referenceType: Components.Schemas.WebMetadataReferenceTypeField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/referenceId`.
-            public var referenceId: Components.Schemas.WebMetadataReferenceIDField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/slug`.
-            public var slug: Components.Schemas.WebMetadataSlugField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/publicationDate`.
+        /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema`.
+        public struct MetadataQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/id`.
+            public var id: Components.Schemas.MetadataIdField
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/referenceType`.
+            public var referenceType: Components.Schemas.MetadataReferenceTypeField?
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/referenceId`.
+            public var referenceId: Components.Schemas.MetadataReferenceIDField?
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/slug`.
+            public var slug: Components.Schemas.MetadataSlugField
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/publicationDate`.
             public var publicationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/expirationDate`.
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/expirationDate`.
             public var expirationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/status`.
-            public var status: Components.Schemas.WebMetadataStatusField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/availability`.
-            public var availability: Components.Schemas.WebMetadataAvailabilityField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/title`.
-            public var title: Components.Schemas.WebMetadataTitleField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebMetadataTimestampField
-            /// - Remark: Generated from `#/components/schemas/WebMetadataQueryItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebMetadataTimestampField
-            /// Creates a new `WebMetadataQueryItemSchema`.
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/status`.
+            public var status: Components.Schemas.MetadataStatusField
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/availability`.
+            public var availability: Components.Schemas.MetadataAvailabilityField
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/title`.
+            public var title: Components.Schemas.MetadataTitleField
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.MetadataTimestampField
+            /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.MetadataTimestampField
+            /// Creates a new `MetadataQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1753,17 +1753,17 @@ extension Components {
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Components.Schemas.WebMetadataIdField,
-                referenceType: Components.Schemas.WebMetadataReferenceTypeField? = nil,
-                referenceId: Components.Schemas.WebMetadataReferenceIDField? = nil,
-                slug: Components.Schemas.WebMetadataSlugField,
+                id: Components.Schemas.MetadataIdField,
+                referenceType: Components.Schemas.MetadataReferenceTypeField? = nil,
+                referenceId: Components.Schemas.MetadataReferenceIDField? = nil,
+                slug: Components.Schemas.MetadataSlugField,
                 publicationDate: Swift.Double? = nil,
                 expirationDate: Swift.Double? = nil,
-                status: Components.Schemas.WebMetadataStatusField,
-                availability: Components.Schemas.WebMetadataAvailabilityField,
-                title: Components.Schemas.WebMetadataTitleField,
-                createdAt: Components.Schemas.WebMetadataTimestampField,
-                updatedAt: Components.Schemas.WebMetadataTimestampField
+                status: Components.Schemas.MetadataStatusField,
+                availability: Components.Schemas.MetadataAvailabilityField,
+                title: Components.Schemas.MetadataTitleField,
+                createdAt: Components.Schemas.MetadataTimestampField,
+                updatedAt: Components.Schemas.MetadataTimestampField
             ) {
                 self.id = id
                 self.referenceType = referenceType
@@ -1791,13 +1791,13 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataResolveRequestSchema`.
-        public struct WebMetadataResolveRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveRequestSchema/referenceType`.
+        /// - Remark: Generated from `#/components/schemas/MetadataResolveRequestSchema`.
+        public struct MetadataResolveRequestSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataResolveRequestSchema/referenceType`.
             public var referenceType: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveRequestSchema/referenceIds`.
+            /// - Remark: Generated from `#/components/schemas/MetadataResolveRequestSchema/referenceIds`.
             public var referenceIds: [Swift.String]
-            /// Creates a new `WebMetadataResolveRequestSchema`.
+            /// Creates a new `MetadataResolveRequestSchema`.
             ///
             /// - Parameters:
             ///   - referenceType:
@@ -1814,23 +1814,23 @@ extension Components {
                 case referenceIds
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataResolveSchema`.
-        public typealias WebMetadataResolveSchema = [Components.Schemas.WebMetadataResolveItemSchema]
-        /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema`.
-        public struct WebMetadataResolveItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/referenceId`.
+        /// - Remark: Generated from `#/components/schemas/MetadataResolveSchema`.
+        public typealias MetadataResolveSchema = [Components.Schemas.MetadataResolveItemSchema]
+        /// - Remark: Generated from `#/components/schemas/MetadataResolveItemSchema`.
+        public struct MetadataResolveItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataResolveItemSchema/referenceId`.
             public var referenceId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/slug`.
+            /// - Remark: Generated from `#/components/schemas/MetadataResolveItemSchema/slug`.
             public var slug: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/publicationDate`.
+            /// - Remark: Generated from `#/components/schemas/MetadataResolveItemSchema/publicationDate`.
             public var publicationDate: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/expirationDate`.
+            /// - Remark: Generated from `#/components/schemas/MetadataResolveItemSchema/expirationDate`.
             public var expirationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/status`.
+            /// - Remark: Generated from `#/components/schemas/MetadataResolveItemSchema/status`.
             public var status: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/availability`.
-            public var availability: Components.Schemas.WebMetadataAvailabilityField
-            /// Creates a new `WebMetadataResolveItemSchema`.
+            /// - Remark: Generated from `#/components/schemas/MetadataResolveItemSchema/availability`.
+            public var availability: Components.Schemas.MetadataAvailabilityField
+            /// Creates a new `MetadataResolveItemSchema`.
             ///
             /// - Parameters:
             ///   - referenceId:
@@ -1845,7 +1845,7 @@ extension Components {
                 publicationDate: Swift.Double,
                 expirationDate: Swift.Double? = nil,
                 status: Swift.String,
-                availability: Components.Schemas.WebMetadataAvailabilityField
+                availability: Components.Schemas.MetadataAvailabilityField
             ) {
                 self.referenceId = referenceId
                 self.slug = slug
@@ -1863,41 +1863,41 @@ extension Components {
                 case availability
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema`.
-        public struct WebMetadataPatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/slug`.
-            public var slug: Components.Schemas.WebMetadataSlugField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/template`.
-            public var template: Components.Schemas.WebMetadataTemplateField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/referenceType`.
-            public var referenceType: Components.Schemas.WebMetadataReferenceTypeField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/referenceId`.
-            public var referenceId: Components.Schemas.WebMetadataReferenceIDField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/publicationDate`.
+        /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema`.
+        public struct MetadataPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/slug`.
+            public var slug: Components.Schemas.MetadataSlugField?
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/template`.
+            public var template: Components.Schemas.MetadataTemplateField?
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/referenceType`.
+            public var referenceType: Components.Schemas.MetadataReferenceTypeField?
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/referenceId`.
+            public var referenceId: Components.Schemas.MetadataReferenceIDField?
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/publicationDate`.
             public var publicationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/expirationDate`.
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/expirationDate`.
             public var expirationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/status`.
-            public var status: Components.Schemas.WebMetadataStatusField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/status`.
+            public var status: Components.Schemas.MetadataStatusField?
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/title`.
             public var title: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/excerpt`.
             public var excerpt: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/imageUrl`.
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/imageUrl`.
             public var imageUrl: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/canonicalUrl`.
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/canonicalUrl`.
             public var canonicalUrl: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/noIndex`.
-            public var noIndex: Components.Schemas.WebMetadataNoIndexField?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/primaryKeyword`.
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/noIndex`.
+            public var noIndex: Components.Schemas.MetadataNoIndexField?
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/primaryKeyword`.
             public var primaryKeyword: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/cssCodeInjection`.
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/cssCodeInjection`.
             public var cssCodeInjection: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/javascriptCodeInjection`.
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/javascriptCodeInjection`.
             public var javascriptCodeInjection: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema/structuredDataCodeInjection`.
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/structuredDataCodeInjection`.
             public var structuredDataCodeInjection: Swift.String?
-            /// Creates a new `WebMetadataPatchSchema`.
+            /// Creates a new `MetadataPatchSchema`.
             ///
             /// - Parameters:
             ///   - slug:
@@ -1917,18 +1917,18 @@ extension Components {
             ///   - javascriptCodeInjection:
             ///   - structuredDataCodeInjection:
             public init(
-                slug: Components.Schemas.WebMetadataSlugField? = nil,
-                template: Components.Schemas.WebMetadataTemplateField? = nil,
-                referenceType: Components.Schemas.WebMetadataReferenceTypeField? = nil,
-                referenceId: Components.Schemas.WebMetadataReferenceIDField? = nil,
+                slug: Components.Schemas.MetadataSlugField? = nil,
+                template: Components.Schemas.MetadataTemplateField? = nil,
+                referenceType: Components.Schemas.MetadataReferenceTypeField? = nil,
+                referenceId: Components.Schemas.MetadataReferenceIDField? = nil,
                 publicationDate: Swift.Double? = nil,
                 expirationDate: Swift.Double? = nil,
-                status: Components.Schemas.WebMetadataStatusField? = nil,
+                status: Components.Schemas.MetadataStatusField? = nil,
                 title: Swift.String? = nil,
                 excerpt: Swift.String? = nil,
                 imageUrl: Swift.String? = nil,
                 canonicalUrl: Swift.String? = nil,
-                noIndex: Components.Schemas.WebMetadataNoIndexField? = nil,
+                noIndex: Components.Schemas.MetadataNoIndexField? = nil,
                 primaryKeyword: Swift.String? = nil,
                 cssCodeInjection: Swift.String? = nil,
                 javascriptCodeInjection: Swift.String? = nil,
@@ -1970,17 +1970,17 @@ extension Components {
                 case structuredDataCodeInjection
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPageCreateSchema`.
-        public struct WebPageCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebPageCreateSchema/title`.
+        /// - Remark: Generated from `#/components/schemas/PageCreateSchema`.
+        public struct PageCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PageCreateSchema/title`.
             public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebPageCreateSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/PageCreateSchema/excerpt`.
             public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebPageCreateSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/PageCreateSchema/content`.
             public var content: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebPageCreateSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.WebPageImageAssetIdField?
-            /// Creates a new `WebPageCreateSchema`.
+            /// - Remark: Generated from `#/components/schemas/PageCreateSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.PageImageAssetIdField?
+            /// Creates a new `PageCreateSchema`.
             ///
             /// - Parameters:
             ///   - title:
@@ -1991,7 +1991,7 @@ extension Components {
                 title: Swift.String,
                 excerpt: Swift.String,
                 content: Swift.String,
-                imageAssetId: Components.Schemas.WebPageImageAssetIdField? = nil
+                imageAssetId: Components.Schemas.PageImageAssetIdField? = nil
             ) {
                 self.title = title
                 self.excerpt = excerpt
@@ -2005,27 +2005,27 @@ extension Components {
                 case imageAssetId
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPageImageAssetIdField`.
-        public typealias WebPageImageAssetIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebPageDetailSchema`.
-        public struct WebPageDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebPageDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/PageImageAssetIdField`.
+        public typealias PageImageAssetIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/PageDetailSchema`.
+        public struct PageDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PageDetailSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebPageDetailSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/PageDetailSchema/title`.
             public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebPageDetailSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/PageDetailSchema/excerpt`.
             public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebPageDetailSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/PageDetailSchema/content`.
             public var content: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebPageDetailSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.WebPageImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/WebPageDetailSchema/metadata`.
-            public var metadata: Components.Schemas.WebMetadataDetailSchema
-            /// - Remark: Generated from `#/components/schemas/WebPageDetailSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/PageDetailSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.PageImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/PageDetailSchema/metadata`.
+            public var metadata: Components.Schemas.MetadataDetailSchema
+            /// - Remark: Generated from `#/components/schemas/PageDetailSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/WebPageDetailSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/PageDetailSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `WebPageDetailSchema`.
+            /// Creates a new `PageDetailSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -2041,8 +2041,8 @@ extension Components {
                 title: Swift.String,
                 excerpt: Swift.String,
                 content: Swift.String,
-                imageAssetId: Components.Schemas.WebPageImageAssetIdField? = nil,
-                metadata: Components.Schemas.WebMetadataDetailSchema,
+                imageAssetId: Components.Schemas.PageImageAssetIdField? = nil,
+                metadata: Components.Schemas.MetadataDetailSchema,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
@@ -2066,23 +2066,23 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPageListSchema`.
-        public typealias WebPageListSchema = [Components.Schemas.WebPageListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema`.
-        public struct WebPageListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/id`.
-            public var id: Components.Schemas.WebPageIdField
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/title`.
-            public var title: Components.Schemas.WebPageTitleField
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.WebPageExcerptField
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.WebPageImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebPageCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/WebPageListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebPageUpdatedAtField
-            /// Creates a new `WebPageListItemSchema`.
+        /// - Remark: Generated from `#/components/schemas/PageListSchema`.
+        public typealias PageListSchema = [Components.Schemas.PageListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/PageListItemSchema`.
+        public struct PageListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/id`.
+            public var id: Components.Schemas.PageIdField
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/title`.
+            public var title: Components.Schemas.PageTitleField
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.PageExcerptField
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.PageImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.PageCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.PageUpdatedAtField
+            /// Creates a new `PageListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -2092,12 +2092,12 @@ extension Components {
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Components.Schemas.WebPageIdField,
-                title: Components.Schemas.WebPageTitleField,
-                excerpt: Components.Schemas.WebPageExcerptField,
-                imageAssetId: Components.Schemas.WebPageImageAssetIdField? = nil,
-                createdAt: Components.Schemas.WebPageCreatedAtField,
-                updatedAt: Components.Schemas.WebPageUpdatedAtField
+                id: Components.Schemas.PageIdField,
+                title: Components.Schemas.PageTitleField,
+                excerpt: Components.Schemas.PageExcerptField,
+                imageAssetId: Components.Schemas.PageImageAssetIdField? = nil,
+                createdAt: Components.Schemas.PageCreatedAtField,
+                updatedAt: Components.Schemas.PageUpdatedAtField
             ) {
                 self.id = id
                 self.title = title
@@ -2115,32 +2115,32 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPageIdField`.
-        public typealias WebPageIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebPageTitleField`.
-        public typealias WebPageTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebPageExcerptField`.
-        public typealias WebPageExcerptField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebPageCreatedAtField`.
-        public typealias WebPageCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebPageUpdatedAtField`.
-        public typealias WebPageUpdatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema`.
-        public struct WebPageQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/PageIdField`.
+        public typealias PageIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/PageTitleField`.
+        public typealias PageTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/PageExcerptField`.
+        public typealias PageExcerptField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/PageCreatedAtField`.
+        public typealias PageCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/PageUpdatedAtField`.
+        public typealias PageUpdatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema`.
+        public struct PageQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case title = "title"
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.WebPageQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.PageQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -2148,7 +2148,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.WebPageQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.PageQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -2159,13 +2159,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.WebPageQueryItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.WebPageQueryItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.PageQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.PageQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -2178,9 +2178,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.WebPageQueryItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `WebPageQueryItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.PageQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `PageQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -2188,8 +2188,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.WebPageQueryItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.WebPageQueryItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.PageQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.PageQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -2201,15 +2201,15 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchSchema`.
-        public struct WebPageQueryItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchSchema/query`.
-            public var query: Components.Schemas.WebPageQueryItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchSchema`.
+        public struct PageQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.PageQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.WebPageQueryItemSchema]
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.PageQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -2217,7 +2217,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.WebPageQueryItemSchema],
+                    items: [Components.Schemas.PageQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -2228,16 +2228,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchSchema/data`.
-            public var data: Components.Schemas.WebPageQueryItemSearchSchema.DataPayload
-            /// Creates a new `WebPageQueryItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.PageQueryItemSearchSchema.DataPayload
+            /// Creates a new `PageQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.WebPageQueryItemSearchResponseQuerySchema,
-                data: Components.Schemas.WebPageQueryItemSearchSchema.DataPayload
+                query: Components.Schemas.PageQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.PageQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -2247,22 +2247,22 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema`.
-        public struct WebPageQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema`.
+        public struct PageQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case title = "title"
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.WebPageQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.PageQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -2270,7 +2270,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.WebPageQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.PageQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -2281,13 +2281,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.WebPageQueryItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.WebPageQueryItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.PageQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.PageQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -2300,9 +2300,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.WebPageQueryItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `WebPageQueryItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.PageQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `PageQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -2310,8 +2310,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.WebPageQueryItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.WebPageQueryItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.PageQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.PageQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -2323,21 +2323,21 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSchema`.
-        public struct WebPageQueryItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSchema/id`.
-            public var id: Components.Schemas.WebPageIdField
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSchema/title`.
-            public var title: Components.Schemas.WebPageTitleField
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.WebPageExcerptField
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.WebPageImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.WebPageCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/WebPageQueryItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.WebPageUpdatedAtField
-            /// Creates a new `WebPageQueryItemSchema`.
+        /// - Remark: Generated from `#/components/schemas/PageQueryItemSchema`.
+        public struct PageQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSchema/id`.
+            public var id: Components.Schemas.PageIdField
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSchema/title`.
+            public var title: Components.Schemas.PageTitleField
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.PageExcerptField
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.PageImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.PageCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/PageQueryItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.PageUpdatedAtField
+            /// Creates a new `PageQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -2347,12 +2347,12 @@ extension Components {
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Components.Schemas.WebPageIdField,
-                title: Components.Schemas.WebPageTitleField,
-                excerpt: Components.Schemas.WebPageExcerptField,
-                imageAssetId: Components.Schemas.WebPageImageAssetIdField? = nil,
-                createdAt: Components.Schemas.WebPageCreatedAtField,
-                updatedAt: Components.Schemas.WebPageUpdatedAtField
+                id: Components.Schemas.PageIdField,
+                title: Components.Schemas.PageTitleField,
+                excerpt: Components.Schemas.PageExcerptField,
+                imageAssetId: Components.Schemas.PageImageAssetIdField? = nil,
+                createdAt: Components.Schemas.PageCreatedAtField,
+                updatedAt: Components.Schemas.PageUpdatedAtField
             ) {
                 self.id = id
                 self.title = title
@@ -2370,17 +2370,17 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPagePatchSchema`.
-        public struct WebPagePatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebPagePatchSchema/title`.
-            public var title: Components.Schemas.WebPageTitleField?
-            /// - Remark: Generated from `#/components/schemas/WebPagePatchSchema/excerpt`.
-            public var excerpt: Components.Schemas.WebPageExcerptField?
-            /// - Remark: Generated from `#/components/schemas/WebPagePatchSchema/content`.
-            public var content: Components.Schemas.WebPageContentField?
-            /// - Remark: Generated from `#/components/schemas/WebPagePatchSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.WebPageImageAssetIdField?
-            /// Creates a new `WebPagePatchSchema`.
+        /// - Remark: Generated from `#/components/schemas/PagePatchSchema`.
+        public struct PagePatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PagePatchSchema/title`.
+            public var title: Components.Schemas.PageTitleField?
+            /// - Remark: Generated from `#/components/schemas/PagePatchSchema/excerpt`.
+            public var excerpt: Components.Schemas.PageExcerptField?
+            /// - Remark: Generated from `#/components/schemas/PagePatchSchema/content`.
+            public var content: Components.Schemas.PageContentField?
+            /// - Remark: Generated from `#/components/schemas/PagePatchSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.PageImageAssetIdField?
+            /// Creates a new `PagePatchSchema`.
             ///
             /// - Parameters:
             ///   - title:
@@ -2388,10 +2388,10 @@ extension Components {
             ///   - content:
             ///   - imageAssetId:
             public init(
-                title: Components.Schemas.WebPageTitleField? = nil,
-                excerpt: Components.Schemas.WebPageExcerptField? = nil,
-                content: Components.Schemas.WebPageContentField? = nil,
-                imageAssetId: Components.Schemas.WebPageImageAssetIdField? = nil
+                title: Components.Schemas.PageTitleField? = nil,
+                excerpt: Components.Schemas.PageExcerptField? = nil,
+                content: Components.Schemas.PageContentField? = nil,
+                imageAssetId: Components.Schemas.PageImageAssetIdField? = nil
             ) {
                 self.title = title
                 self.excerpt = excerpt
@@ -2405,43 +2405,43 @@ extension Components {
                 case imageAssetId
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebPageContentField`.
-        public typealias WebPageContentField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema`.
-        public struct WebSettingsDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/logo`.
+        /// - Remark: Generated from `#/components/schemas/PageContentField`.
+        public typealias PageContentField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema`.
+        public struct SettingsDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/logo`.
             public var logo: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/logoDark`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/logoDark`.
             public var logoDark: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/metaImage`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/metaImage`.
             public var metaImage: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/primaryColor`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/primaryColor`.
             public var primaryColor: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/secondaryColor`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/secondaryColor`.
             public var secondaryColor: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/tertiaryColor`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/tertiaryColor`.
             public var tertiaryColor: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/primaryFont`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/primaryFont`.
             public var primaryFont: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/secondaryFont`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/secondaryFont`.
             public var secondaryFont: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/homePageId`.
-            public var homePageId: Components.Schemas.WebSettingsHomePageIDField?
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/locale`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/homePageId`.
+            public var homePageId: Components.Schemas.SettingsHomePageIDField?
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/locale`.
             public var locale: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/timezone`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/timezone`.
             public var timezone: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/title`.
             public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/excerpt`.
             public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/noIndex`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/noIndex`.
             public var noIndex: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/css`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/css`.
             public var css: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsDetailSchema/js`.
+            /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/js`.
             public var js: Swift.String
-            /// Creates a new `WebSettingsDetailSchema`.
+            /// Creates a new `SettingsDetailSchema`.
             ///
             /// - Parameters:
             ///   - logo:
@@ -2469,7 +2469,7 @@ extension Components {
                 tertiaryColor: Swift.String,
                 primaryFont: Swift.String,
                 secondaryFont: Swift.String,
-                homePageId: Components.Schemas.WebSettingsHomePageIDField? = nil,
+                homePageId: Components.Schemas.SettingsHomePageIDField? = nil,
                 locale: Swift.String,
                 timezone: Swift.String,
                 title: Swift.String,
@@ -2514,45 +2514,45 @@ extension Components {
                 case js
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebSettingsHomePageIDField`.
-        public typealias WebSettingsHomePageIDField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema`.
-        public struct WebSettingsUpdateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/SettingsHomePageIDField`.
+        public typealias SettingsHomePageIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema`.
+        public struct SettingsUpdateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/logo`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/logo`.
             public var logo: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/logoDark`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/logoDark`.
             public var logoDark: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/metaImage`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/metaImage`.
             public var metaImage: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/primaryColor`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/primaryColor`.
             public var primaryColor: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/secondaryColor`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/secondaryColor`.
             public var secondaryColor: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/tertiaryColor`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/tertiaryColor`.
             public var tertiaryColor: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/primaryFont`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/primaryFont`.
             public var primaryFont: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/secondaryFont`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/secondaryFont`.
             public var secondaryFont: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/homePageId`.
-            public var homePageId: Components.Schemas.WebSettingsHomePageIDField?
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/locale`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/homePageId`.
+            public var homePageId: Components.Schemas.SettingsHomePageIDField?
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/locale`.
             public var locale: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/timezone`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/timezone`.
             public var timezone: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/title`.
             public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/excerpt`.
             public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/noIndex`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/noIndex`.
             public var noIndex: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/css`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/css`.
             public var css: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebSettingsUpdateSchema/js`.
+            /// - Remark: Generated from `#/components/schemas/SettingsUpdateSchema/js`.
             public var js: Swift.String
-            /// Creates a new `WebSettingsUpdateSchema`.
+            /// Creates a new `SettingsUpdateSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -2582,7 +2582,7 @@ extension Components {
                 tertiaryColor: Swift.String,
                 primaryFont: Swift.String,
                 secondaryFont: Swift.String,
-                homePageId: Components.Schemas.WebSettingsHomePageIDField? = nil,
+                homePageId: Components.Schemas.SettingsHomePageIDField? = nil,
                 locale: Swift.String,
                 timezone: Swift.String,
                 title: Swift.String,

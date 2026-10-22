@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebBuilders
-import WebComponents
+import Builders
+import Components
 import WebDomain
 import WebModule
 
@@ -36,11 +36,11 @@ extension WebDomain.Menu.List.Presenter {
                     request: request,
                     context: context,
                     title: "Manage menus",
-                    content: WebMenuError(
+                    content: MenuError(
                         state: .init(
                             info: "Unable to load web menus.",
                             message: error,
-                            breadcrumb: WebMenuRoutes.listBreadcrumb
+                            breadcrumb: MenuRoutes.listBreadcrumb
                         )
                     )
                 )
@@ -50,11 +50,11 @@ extension WebDomain.Menu.List.Presenter {
                     request: request,
                     context: context,
                     title: "Manage menus",
-                    content: WebMenuError(
+                    content: MenuError(
                         state: .init(
                             info: "Forbidden",
                             message: "Your account cannot access web menus.",
-                            breadcrumb: WebMenuRoutes.listBreadcrumb
+                            breadcrumb: MenuRoutes.listBreadcrumb
                         )
                     )
                 )
@@ -63,7 +63,7 @@ extension WebDomain.Menu.List.Presenter {
                 request: request,
                 context: context,
                 title: "Manage menus",
-                content: WebMenuTable(
+                content: MenuTable(
                     state: .init(
                         permissions: actions,
                         menus: model.items,
@@ -73,7 +73,7 @@ extension WebDomain.Menu.List.Presenter {
                             total: model.total
                         ),
                         search: search ?? "",
-                        breadcrumb: WebMenuRoutes.listBreadcrumb
+                        breadcrumb: MenuRoutes.listBreadcrumb
                     )
                 )
             )

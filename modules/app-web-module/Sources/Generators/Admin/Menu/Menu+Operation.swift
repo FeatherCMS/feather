@@ -7,5 +7,5 @@ extension Menu {
 }
 
 extension Menu.Operation {
-    var tags: [any TagRepresentable] { [WebMenuTag()] }
+    var tags: [any TagRepresentable] { [MenuTag()] }
 }

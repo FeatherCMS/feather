@@ -17,6 +17,6 @@ public protocol AdminMetadataDetailSchema {
     var structuredDataCodeInjection: String? { get }
 }
 
-extension Components.Schemas.WebMetadataDetailSchema:
+extension Components.Schemas.MetadataDetailSchema:
     AdminMetadataDetailSchema
 {}

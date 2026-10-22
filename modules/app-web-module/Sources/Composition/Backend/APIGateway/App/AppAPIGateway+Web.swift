@@ -2,9 +2,9 @@ public import WebAppAPI
 import WebApplication
 
 extension AppAPIGateway {
-    public func webPageGet(
-        _ input: Operations.WebPageGet.Input
-    ) async throws -> Operations.WebPageGet.Output {
+    public func pageGet(
+        _ input: Operations.PageGet.Input
+    ) async throws -> Operations.PageGet.Output {
         do {
             let detail = try await useCases.makeGetPublicPageByID()
                 .execute(

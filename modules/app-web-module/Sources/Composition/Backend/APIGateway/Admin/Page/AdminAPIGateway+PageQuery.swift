@@ -5,10 +5,10 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webPageQuery(
-        _ input: Operations.WebPageQuery.Input
-    ) async throws -> Operations.WebPageQuery.Output {
-        let query: Components.Schemas.WebPageQueryItemSearchRequestQuerySchema
+    public func pageQuery(
+        _ input: Operations.PageQuery.Input
+    ) async throws -> Operations.PageQuery.Output {
+        let query: Components.Schemas.PageQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -35,7 +35,7 @@ extension AdminAPIGateway {
                             sort: objectQuery.sort.map { sort in
                                 let field:
                                     Components.Schemas
-                                        .WebPageQueryItemSearchResponseQuerySchema
+                                        .PageQueryItemSearchResponseQuerySchema
                                         .SortPayloadPayload.FieldPayload
                                 switch sort.field {
                                 case .id: field = .id

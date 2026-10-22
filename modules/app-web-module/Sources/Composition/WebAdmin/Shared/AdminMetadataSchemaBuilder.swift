@@ -8,7 +8,7 @@ public import WebAdminAPI
 public struct AdminMetadataSchemaBuilder {
     public static func createSchema(
         input: AdminMetadataFormValue
-    ) -> Components.Schemas.WebMetadataCreateSchema {
+    ) -> Components.Schemas.MetadataCreateSchema {
         .init(
             slug: input.normalizedSlug,
             template: input.normalizedTemplate,

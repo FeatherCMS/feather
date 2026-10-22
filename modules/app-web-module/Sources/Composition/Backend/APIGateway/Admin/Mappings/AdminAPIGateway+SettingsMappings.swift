@@ -9,7 +9,7 @@ import WebDomain
 
 extension AdminAPIGateway {
     func map(_ detail: Settings.Detail.Output)
-        -> WebAdminAPI.Components.Schemas.WebSettingsDetailSchema
+        -> WebAdminAPI.Components.Schemas.SettingsDetailSchema
     {
         .init(
             logo: detail.logo,

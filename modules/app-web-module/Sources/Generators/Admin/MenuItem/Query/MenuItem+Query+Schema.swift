@@ -1,18 +1,18 @@
 public import FeatherOpenAPI
 
-struct WebMenuItemQueryItemSchema: ObjectSchemaRepresentable {
+struct MenuItemQueryItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "id": WebMenuItemIdField().reference(),
-            "menuId": WebMenuIdField().reference(),
-            "label": WebMenuItemLabelField().reference(),
-            "url": WebMenuItemURLField().reference(),
-            "priority": WebMenuItemPriorityField().reference(),
-            "isBlank": WebMenuItemIsBlankField().reference(),
-            "permission": WebMenuItemPermissionField().reference(),
-            "authentication": WebMenuItemAuthenticationField().reference(),
-            "createdAt": WebMenuItemCreatedAtField().reference(),
-            "updatedAt": WebMenuItemUpdatedAtField().reference(),
+            "id": MenuItemIdField().reference(),
+            "menuId": MenuIdField().reference(),
+            "label": MenuItemLabelField().reference(),
+            "url": MenuItemURLField().reference(),
+            "priority": MenuItemPriorityField().reference(),
+            "isBlank": MenuItemIsBlankField().reference(),
+            "permission": MenuItemPermissionField().reference(),
+            "authentication": MenuItemAuthenticationField().reference(),
+            "createdAt": MenuItemCreatedAtField().reference(),
+            "updatedAt": MenuItemUpdatedAtField().reference(),
         ]
     }
 }

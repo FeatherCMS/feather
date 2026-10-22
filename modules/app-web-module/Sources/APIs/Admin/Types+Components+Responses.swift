@@ -6,16 +6,16 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
     public enum Responses {
-        public struct WebMenuDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMenuDetailResponse/content`.
+        public struct MenuDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MenuDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMenuDetailResponse/content/application\/json`.
-                case json(Components.Schemas.WebMenuDetailSchema)
+                /// - Remark: Generated from `#/components/responses/MenuDetailResponse/content/application\/json`.
+                case json(Components.Schemas.MenuDetailSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMenuDetailSchema {
+                public var json: Components.Schemas.MenuDetailSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -25,12 +25,12 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMenuDetailResponse.Body
-            /// Creates a new `WebMenuDetailResponse`.
+            public var body: Components.Responses.MenuDetailResponse.Body
+            /// Creates a new `MenuDetailResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMenuDetailResponse.Body) {
+            public init(body: Components.Responses.MenuDetailResponse.Body) {
                 self.body = body
             }
         }
@@ -38,16 +38,16 @@ extension Components {
             /// Creates a new `NoContentResponse`.
             public init() {}
         }
-        public struct WebMenuListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMenuListResponse/content`.
+        public struct MenuListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MenuListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMenuListResponse/content/application\/json`.
-                case json(Components.Schemas.WebMenuListSchema)
+                /// - Remark: Generated from `#/components/responses/MenuListResponse/content/application\/json`.
+                case json(Components.Schemas.MenuListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMenuListSchema {
+                public var json: Components.Schemas.MenuListSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -57,25 +57,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMenuListResponse.Body
-            /// Creates a new `WebMenuListResponse`.
+            public var body: Components.Responses.MenuListResponse.Body
+            /// Creates a new `MenuListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMenuListResponse.Body) {
+            public init(body: Components.Responses.MenuListResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebMenuQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMenuQueryItemSearchSchemaSearchResponse/content`.
+        public struct MenuQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MenuQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMenuQueryItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.WebMenuQueryItemSearchSchema)
+                /// - Remark: Generated from `#/components/responses/MenuQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.MenuQueryItemSearchSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMenuQueryItemSearchSchema {
+                public var json: Components.Schemas.MenuQueryItemSearchSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -85,25 +85,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMenuQueryItemSearchSchemaSearchResponse.Body
-            /// Creates a new `WebMenuQueryItemSearchSchemaSearchResponse`.
+            public var body: Components.Responses.MenuQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `MenuQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMenuQueryItemSearchSchemaSearchResponse.Body) {
+            public init(body: Components.Responses.MenuQueryItemSearchSchemaSearchResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebMenuItemDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMenuItemDetailResponse/content`.
+        public struct MenuItemDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MenuItemDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMenuItemDetailResponse/content/application\/json`.
-                case json(Components.Schemas.WebMenuItemDetailSchema)
+                /// - Remark: Generated from `#/components/responses/MenuItemDetailResponse/content/application\/json`.
+                case json(Components.Schemas.MenuItemDetailSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMenuItemDetailSchema {
+                public var json: Components.Schemas.MenuItemDetailSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -113,25 +113,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMenuItemDetailResponse.Body
-            /// Creates a new `WebMenuItemDetailResponse`.
+            public var body: Components.Responses.MenuItemDetailResponse.Body
+            /// Creates a new `MenuItemDetailResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMenuItemDetailResponse.Body) {
+            public init(body: Components.Responses.MenuItemDetailResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebMenuItemListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMenuItemListResponse/content`.
+        public struct MenuItemListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MenuItemListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMenuItemListResponse/content/application\/json`.
-                case json(Components.Schemas.WebMenuItemListSchema)
+                /// - Remark: Generated from `#/components/responses/MenuItemListResponse/content/application\/json`.
+                case json(Components.Schemas.MenuItemListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMenuItemListSchema {
+                public var json: Components.Schemas.MenuItemListSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -141,25 +141,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMenuItemListResponse.Body
-            /// Creates a new `WebMenuItemListResponse`.
+            public var body: Components.Responses.MenuItemListResponse.Body
+            /// Creates a new `MenuItemListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMenuItemListResponse.Body) {
+            public init(body: Components.Responses.MenuItemListResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebMenuItemQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMenuItemQueryItemSearchSchemaSearchResponse/content`.
+        public struct MenuItemQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MenuItemQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMenuItemQueryItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.WebMenuItemQueryItemSearchSchema)
+                /// - Remark: Generated from `#/components/responses/MenuItemQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.MenuItemQueryItemSearchSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMenuItemQueryItemSearchSchema {
+                public var json: Components.Schemas.MenuItemQueryItemSearchSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -169,25 +169,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMenuItemQueryItemSearchSchemaSearchResponse.Body
-            /// Creates a new `WebMenuItemQueryItemSearchSchemaSearchResponse`.
+            public var body: Components.Responses.MenuItemQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `MenuItemQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMenuItemQueryItemSearchSchemaSearchResponse.Body) {
+            public init(body: Components.Responses.MenuItemQueryItemSearchSchemaSearchResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebMetadataDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMetadataDetailResponse/content`.
+        public struct MetadataDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MetadataDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMetadataDetailResponse/content/application\/json`.
-                case json(Components.Schemas.WebMetadataDetailSchema)
+                /// - Remark: Generated from `#/components/responses/MetadataDetailResponse/content/application\/json`.
+                case json(Components.Schemas.MetadataDetailSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMetadataDetailSchema {
+                public var json: Components.Schemas.MetadataDetailSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -197,25 +197,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMetadataDetailResponse.Body
-            /// Creates a new `WebMetadataDetailResponse`.
+            public var body: Components.Responses.MetadataDetailResponse.Body
+            /// Creates a new `MetadataDetailResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMetadataDetailResponse.Body) {
+            public init(body: Components.Responses.MetadataDetailResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebMetadataListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMetadataListResponse/content`.
+        public struct MetadataListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MetadataListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMetadataListResponse/content/application\/json`.
-                case json(Components.Schemas.WebMetadataListSchema)
+                /// - Remark: Generated from `#/components/responses/MetadataListResponse/content/application\/json`.
+                case json(Components.Schemas.MetadataListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMetadataListSchema {
+                public var json: Components.Schemas.MetadataListSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -225,25 +225,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMetadataListResponse.Body
-            /// Creates a new `WebMetadataListResponse`.
+            public var body: Components.Responses.MetadataListResponse.Body
+            /// Creates a new `MetadataListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMetadataListResponse.Body) {
+            public init(body: Components.Responses.MetadataListResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebMetadataQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMetadataQueryItemSearchSchemaSearchResponse/content`.
+        public struct MetadataQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MetadataQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMetadataQueryItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.WebMetadataQueryItemSearchSchema)
+                /// - Remark: Generated from `#/components/responses/MetadataQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.MetadataQueryItemSearchSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMetadataQueryItemSearchSchema {
+                public var json: Components.Schemas.MetadataQueryItemSearchSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -253,25 +253,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMetadataQueryItemSearchSchemaSearchResponse.Body
-            /// Creates a new `WebMetadataQueryItemSearchSchemaSearchResponse`.
+            public var body: Components.Responses.MetadataQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `MetadataQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMetadataQueryItemSearchSchemaSearchResponse.Body) {
+            public init(body: Components.Responses.MetadataQueryItemSearchSchemaSearchResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebMetadataResolveResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMetadataResolveResponse/content`.
+        public struct MetadataResolveResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MetadataResolveResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMetadataResolveResponse/content/application\/json`.
-                case json(Components.Schemas.WebMetadataResolveSchema)
+                /// - Remark: Generated from `#/components/responses/MetadataResolveResponse/content/application\/json`.
+                case json(Components.Schemas.MetadataResolveSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMetadataResolveSchema {
+                public var json: Components.Schemas.MetadataResolveSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -281,25 +281,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMetadataResolveResponse.Body
-            /// Creates a new `WebMetadataResolveResponse`.
+            public var body: Components.Responses.MetadataResolveResponse.Body
+            /// Creates a new `MetadataResolveResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebMetadataResolveResponse.Body) {
+            public init(body: Components.Responses.MetadataResolveResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebPageDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebPageDetailResponse/content`.
+        public struct PageDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/PageDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebPageDetailResponse/content/application\/json`.
-                case json(Components.Schemas.WebPageDetailSchema)
+                /// - Remark: Generated from `#/components/responses/PageDetailResponse/content/application\/json`.
+                case json(Components.Schemas.PageDetailSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebPageDetailSchema {
+                public var json: Components.Schemas.PageDetailSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -309,25 +309,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebPageDetailResponse.Body
-            /// Creates a new `WebPageDetailResponse`.
+            public var body: Components.Responses.PageDetailResponse.Body
+            /// Creates a new `PageDetailResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebPageDetailResponse.Body) {
+            public init(body: Components.Responses.PageDetailResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebPageListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebPageListResponse/content`.
+        public struct PageListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/PageListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebPageListResponse/content/application\/json`.
-                case json(Components.Schemas.WebPageListSchema)
+                /// - Remark: Generated from `#/components/responses/PageListResponse/content/application\/json`.
+                case json(Components.Schemas.PageListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebPageListSchema {
+                public var json: Components.Schemas.PageListSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -337,25 +337,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebPageListResponse.Body
-            /// Creates a new `WebPageListResponse`.
+            public var body: Components.Responses.PageListResponse.Body
+            /// Creates a new `PageListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebPageListResponse.Body) {
+            public init(body: Components.Responses.PageListResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebPageQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebPageQueryItemSearchSchemaSearchResponse/content`.
+        public struct PageQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/PageQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebPageQueryItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.WebPageQueryItemSearchSchema)
+                /// - Remark: Generated from `#/components/responses/PageQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.PageQueryItemSearchSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebPageQueryItemSearchSchema {
+                public var json: Components.Schemas.PageQueryItemSearchSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -365,25 +365,25 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebPageQueryItemSearchSchemaSearchResponse.Body
-            /// Creates a new `WebPageQueryItemSearchSchemaSearchResponse`.
+            public var body: Components.Responses.PageQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `PageQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebPageQueryItemSearchSchemaSearchResponse.Body) {
+            public init(body: Components.Responses.PageQueryItemSearchSchemaSearchResponse.Body) {
                 self.body = body
             }
         }
-        public struct WebSettingsDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebSettingsDetailResponse/content`.
+        public struct SettingsDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/SettingsDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebSettingsDetailResponse/content/application\/json`.
-                case json(Components.Schemas.WebSettingsDetailSchema)
+                /// - Remark: Generated from `#/components/responses/SettingsDetailResponse/content/application\/json`.
+                case json(Components.Schemas.SettingsDetailSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebSettingsDetailSchema {
+                public var json: Components.Schemas.SettingsDetailSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -393,12 +393,12 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebSettingsDetailResponse.Body
-            /// Creates a new `WebSettingsDetailResponse`.
+            public var body: Components.Responses.SettingsDetailResponse.Body
+            /// Creates a new `SettingsDetailResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.WebSettingsDetailResponse.Body) {
+            public init(body: Components.Responses.SettingsDetailResponse.Body) {
                 self.body = body
             }
         }

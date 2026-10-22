@@ -10,7 +10,7 @@ import WebDomain
 extension AdminAPIGateway {
     func map(
         _ query: WebAdminAPI.Components.Schemas
-            .WebMenuQueryItemSearchRequestQuerySchema
+            .MenuQueryItemSearchRequestQuerySchema
     ) -> Menu.Search.Input.Query {
         .init(
             page: map(query.page),
@@ -31,7 +31,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ detail: Menu.Detail.Output)
-        -> WebAdminAPI.Components.Schemas.WebMenuDetailSchema
+        -> WebAdminAPI.Components.Schemas.MenuDetailSchema
     {
         .init(
             id: detail.id,
@@ -44,7 +44,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ output: Menu.Edit.Output)
-        -> WebAdminAPI.Components.Schemas.WebMenuDetailSchema
+        -> WebAdminAPI.Components.Schemas.MenuDetailSchema
     {
         .init(
             id: output.id,
@@ -57,7 +57,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ output: Menu.Detail.Output)
-        -> WebAdminAPI.Components.Schemas.WebMenuDetailSchema
+        -> WebAdminAPI.Components.Schemas.MenuDetailSchema
     {
         .init(
             id: output.id,
@@ -70,7 +70,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ output: Menu.Add.Output)
-        -> WebAdminAPI.Components.Schemas.WebMenuDetailSchema
+        -> WebAdminAPI.Components.Schemas.MenuDetailSchema
     {
         .init(
             id: output.id,
@@ -83,7 +83,7 @@ extension AdminAPIGateway {
     }
 
     func mapQuery(_ item: Menu.Search.Output.Item)
-        -> WebAdminAPI.Components.Schemas.WebMenuQueryItemSchema
+        -> WebAdminAPI.Components.Schemas.MenuQueryItemSchema
     {
         .init(
             id: item.id,
@@ -95,7 +95,7 @@ extension AdminAPIGateway {
     }
 
     func mapList(_ item: Menu.List.Output.Item)
-        -> WebAdminAPI.Components.Schemas.WebMenuListItemSchema
+        -> WebAdminAPI.Components.Schemas.MenuListItemSchema
     {
         .init(
             id: item.id,

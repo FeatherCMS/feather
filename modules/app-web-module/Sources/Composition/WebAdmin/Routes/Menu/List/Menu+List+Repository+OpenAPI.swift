@@ -23,14 +23,14 @@ extension Menu.List.Repository {
             self.api = api
         }
 
-        func listWebMenus(
+        func listMenus(
             page: Int,
             search: String?
         ) async throws -> Menu.List.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
-                    .webMenuQuery(
+                    .menuQuery(
                         headers: .init(accept: [.init(contentType: .json)]),
                         body: .json(
                             .init(

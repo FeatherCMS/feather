@@ -5,7 +5,7 @@ import Foundation
 import Hummingbird
 import SystemModule
 
-enum Job {
+extension Job {
 
     struct Router {
         struct Routes {

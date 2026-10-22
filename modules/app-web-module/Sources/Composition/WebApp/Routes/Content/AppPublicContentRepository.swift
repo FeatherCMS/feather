@@ -4,10 +4,10 @@ public protocol AppPublicContentRepository: Sendable {
 
     func resolveWebRoute(
         slug: String
-    ) async throws -> Components.Schemas.WebMetadataSchema?
+    ) async throws -> Components.Schemas.MetadataSchema?
 
     func publicSiteSettings() async throws
-        -> Components.Schemas.WebSiteSettingsSchema
+        -> Components.Schemas.SiteSettingsSchema
 
     func publicMetadataSlugs() async throws -> [String]
 }

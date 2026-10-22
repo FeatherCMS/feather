@@ -32,9 +32,9 @@ extension DatabaseError {
 }
 
 extension AppAPIGateway {
-    public func webMetadataGet(
-        _ input: Operations.WebMetadataGet.Input
-    ) async throws -> Operations.WebMetadataGet.Output {
+    public func metadataGet(
+        _ input: Operations.MetadataGet.Input
+    ) async throws -> Operations.MetadataGet.Output {
         do {
             let route = try await useCases.makeResolveWebRoute()
                 .execute(

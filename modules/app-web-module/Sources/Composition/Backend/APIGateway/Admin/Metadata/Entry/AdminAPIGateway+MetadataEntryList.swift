@@ -4,9 +4,9 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMetadataList(
-        _ input: Operations.WebMetadataList.Input
-    ) async throws -> Operations.WebMetadataList.Output {
+    public func metadataList(
+        _ input: Operations.MetadataList.Input
+    ) async throws -> Operations.MetadataList.Output {
         let subject = try await CurrentSubject.require()
         let result = try await useCases.makeListMetadata()
             .execute(subject: subject)

@@ -4,16 +4,16 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMenuItemGet(
-        _ input: Operations.WebMenuItemGet.Input
-    ) async throws -> Operations.WebMenuItemGet.Output {
+    public func menuItemGet(
+        _ input: Operations.MenuItemGet.Input
+    ) async throws -> Operations.MenuItemGet.Output {
         let useCase = useCases.makeGetMenuItem()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(
-                id: input.path.webMenuItemId,
-                menuId: input.path.webMenuId
+                id: input.path.menuItemId,
+                menuId: input.path.menuId
             )
         )
 

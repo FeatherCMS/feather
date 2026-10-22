@@ -1,6 +1,6 @@
 import Foundation
 
-struct VideoMarkdownBlockRenderer: WebMarkdownBlockRenderer {
+struct VideoMarkdownBlockRenderer: MarkdownBlockRenderer {
     let name = "Video"
 
     private let allowedEmbedHosts = [
@@ -12,7 +12,7 @@ struct VideoMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     ]
 
     func render(
-        request: WebMarkdownBlockRendererRequest
+        request: MarkdownBlockRendererRequest
     ) async -> String? {
         guard
             let source = source(from: request),
@@ -44,7 +44,7 @@ struct VideoMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     }
 
     private func source(
-        from request: WebMarkdownBlockRendererRequest
+        from request: MarkdownBlockRendererRequest
     ) -> String? {
         guard let source = request.arguments["source"], !source.isEmpty else {
             return nil

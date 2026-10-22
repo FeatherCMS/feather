@@ -32,11 +32,11 @@ public struct Client: APIProtocol {
         client.converter
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(webMenuCreate)`.
-    public func webMenuCreate(_ input: Operations.WebMenuCreate.Input) async throws -> Operations.WebMenuCreate.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(menuCreate)`.
+    public func menuCreate(_ input: Operations.MenuCreate.Input) async throws -> Operations.MenuCreate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuCreate.id,
+            forOperation: Operations.MenuCreate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus",
@@ -66,7 +66,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 201:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuDetailResponse.Body
+                    let body: Components.Responses.MenuDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -76,7 +76,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuDetailSchema.self,
+                            Components.Schemas.MenuDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -88,7 +88,7 @@ public struct Client: APIProtocol {
                     return .created(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuCreate.Output.Unauthorized.Body
+                    let body: Operations.MenuCreate.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -110,7 +110,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuCreate.Output.Forbidden.Body
+                    let body: Operations.MenuCreate.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -143,11 +143,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuRemove)`.
-    public func webMenuRemove(_ input: Operations.WebMenuRemove.Input) async throws -> Operations.WebMenuRemove.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(menuRemove)`.
+    public func menuRemove(_ input: Operations.MenuRemove.Input) async throws -> Operations.MenuRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuRemove.id,
+            forOperation: Operations.MenuRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus",
@@ -179,7 +179,7 @@ public struct Client: APIProtocol {
                     return .noContent(.init())
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuRemove.Output.Unauthorized.Body
+                    let body: Operations.MenuRemove.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -201,7 +201,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuRemove.Output.Forbidden.Body
+                    let body: Operations.MenuRemove.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -234,11 +234,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)`.
-    public func webMenuList(_ input: Operations.WebMenuList.Input) async throws -> Operations.WebMenuList.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(menuList)`.
+    public func menuList(_ input: Operations.MenuList.Input) async throws -> Operations.MenuList.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuList.id,
+            forOperation: Operations.MenuList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/",
@@ -259,7 +259,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuListResponse.Body
+                    let body: Components.Responses.MenuListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -269,7 +269,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuListSchema.self,
+                            Components.Schemas.MenuListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -281,7 +281,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuList.Output.Unauthorized.Body
+                    let body: Operations.MenuList.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -303,7 +303,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuList.Output.Forbidden.Body
+                    let body: Operations.MenuList.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -336,11 +336,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(webMenuQuery)`.
-    public func webMenuQuery(_ input: Operations.WebMenuQuery.Input) async throws -> Operations.WebMenuQuery.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(menuQuery)`.
+    public func menuQuery(_ input: Operations.MenuQuery.Input) async throws -> Operations.MenuQuery.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuQuery.id,
+            forOperation: Operations.MenuQuery.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/query",
@@ -370,7 +370,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuQueryItemSearchSchemaSearchResponse.Body
+                    let body: Components.Responses.MenuQueryItemSearchSchemaSearchResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -380,7 +380,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuQueryItemSearchSchema.self,
+                            Components.Schemas.MenuQueryItemSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -392,7 +392,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuQuery.Output.Unauthorized.Body
+                    let body: Operations.MenuQuery.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -414,7 +414,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuQuery.Output.Forbidden.Body
+                    let body: Operations.MenuQuery.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -446,17 +446,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/get(webMenuGet)`.
-    public func webMenuGet(_ input: Operations.WebMenuGet.Input) async throws -> Operations.WebMenuGet.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/get(menuGet)`.
+    public func menuGet(_ input: Operations.MenuGet.Input) async throws -> Operations.MenuGet.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuGet.id,
+            forOperation: Operations.MenuGet.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}",
                     parameters: [
-                        input.path.webMenuId
+                        input.path.menuId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -474,7 +474,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuDetailResponse.Body
+                    let body: Components.Responses.MenuDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -484,7 +484,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuDetailSchema.self,
+                            Components.Schemas.MenuDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -496,7 +496,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuGet.Output.NotFound.Body
+                    let body: Operations.MenuGet.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -518,7 +518,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuGet.Output.Unauthorized.Body
+                    let body: Operations.MenuGet.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -540,7 +540,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuGet.Output.Forbidden.Body
+                    let body: Operations.MenuGet.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -572,17 +572,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/patch(webMenuPatch)`.
-    public func webMenuPatch(_ input: Operations.WebMenuPatch.Input) async throws -> Operations.WebMenuPatch.Output {
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{menuId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/patch(menuPatch)`.
+    public func menuPatch(_ input: Operations.MenuPatch.Input) async throws -> Operations.MenuPatch.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuPatch.id,
+            forOperation: Operations.MenuPatch.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}",
                     parameters: [
-                        input.path.webMenuId
+                        input.path.menuId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -609,7 +609,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuDetailResponse.Body
+                    let body: Components.Responses.MenuDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -619,7 +619,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuDetailSchema.self,
+                            Components.Schemas.MenuDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -631,7 +631,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuPatch.Output.NotFound.Body
+                    let body: Operations.MenuPatch.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -653,7 +653,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuPatch.Output.Unauthorized.Body
+                    let body: Operations.MenuPatch.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -675,7 +675,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuPatch.Output.Forbidden.Body
+                    let body: Operations.MenuPatch.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -707,17 +707,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/put(webMenuUpdate)`.
-    public func webMenuUpdate(_ input: Operations.WebMenuUpdate.Input) async throws -> Operations.WebMenuUpdate.Output {
+    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{menuId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/put(menuUpdate)`.
+    public func menuUpdate(_ input: Operations.MenuUpdate.Input) async throws -> Operations.MenuUpdate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuUpdate.id,
+            forOperation: Operations.MenuUpdate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}",
                     parameters: [
-                        input.path.webMenuId
+                        input.path.menuId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -744,7 +744,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuDetailResponse.Body
+                    let body: Components.Responses.MenuDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -754,7 +754,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuDetailSchema.self,
+                            Components.Schemas.MenuDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -766,7 +766,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuUpdate.Output.NotFound.Body
+                    let body: Operations.MenuUpdate.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -788,7 +788,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuUpdate.Output.Unauthorized.Body
+                    let body: Operations.MenuUpdate.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -810,7 +810,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuUpdate.Output.Forbidden.Body
+                    let body: Operations.MenuUpdate.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -842,17 +842,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/post(webMenuItemCreate)`.
-    public func webMenuItemCreate(_ input: Operations.WebMenuItemCreate.Input) async throws -> Operations.WebMenuItemCreate.Output {
+    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/post(menuItemCreate)`.
+    public func menuItemCreate(_ input: Operations.MenuItemCreate.Input) async throws -> Operations.MenuItemCreate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemCreate.id,
+            forOperation: Operations.MenuItemCreate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items",
                     parameters: [
-                        input.path.webMenuId
+                        input.path.menuId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -879,7 +879,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 201:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuItemDetailResponse.Body
+                    let body: Components.Responses.MenuItemDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -889,7 +889,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuItemDetailSchema.self,
+                            Components.Schemas.MenuItemDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -901,7 +901,7 @@ public struct Client: APIProtocol {
                     return .created(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemCreate.Output.Unauthorized.Body
+                    let body: Operations.MenuItemCreate.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -923,7 +923,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemCreate.Output.Forbidden.Body
+                    let body: Operations.MenuItemCreate.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -955,17 +955,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemRemove)`.
-    public func webMenuItemRemove(_ input: Operations.WebMenuItemRemove.Input) async throws -> Operations.WebMenuItemRemove.Output {
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{menuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/delete(menuItemRemove)`.
+    public func menuItemRemove(_ input: Operations.MenuItemRemove.Input) async throws -> Operations.MenuItemRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemRemove.id,
+            forOperation: Operations.MenuItemRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items",
                     parameters: [
-                        input.path.webMenuId
+                        input.path.menuId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -994,7 +994,7 @@ public struct Client: APIProtocol {
                     return .noContent(.init())
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemRemove.Output.Unauthorized.Body
+                    let body: Operations.MenuItemRemove.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1016,7 +1016,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemRemove.Output.Forbidden.Body
+                    let body: Operations.MenuItemRemove.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1048,17 +1048,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)`.
-    public func webMenuItemList(_ input: Operations.WebMenuItemList.Input) async throws -> Operations.WebMenuItemList.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items//get(menuItemList)`.
+    public func menuItemList(_ input: Operations.MenuItemList.Input) async throws -> Operations.MenuItemList.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemList.id,
+            forOperation: Operations.MenuItemList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items/",
                     parameters: [
-                        input.path.webMenuId
+                        input.path.menuId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1076,7 +1076,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuItemListResponse.Body
+                    let body: Components.Responses.MenuItemListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1086,7 +1086,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuItemListSchema.self,
+                            Components.Schemas.MenuItemListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1098,7 +1098,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemList.Output.Unauthorized.Body
+                    let body: Operations.MenuItemList.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1120,7 +1120,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemList.Output.Forbidden.Body
+                    let body: Operations.MenuItemList.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1152,17 +1152,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/query/post(webMenuItemQuery)`.
-    public func webMenuItemQuery(_ input: Operations.WebMenuItemQuery.Input) async throws -> Operations.WebMenuItemQuery.Output {
+    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/query/post(menuItemQuery)`.
+    public func menuItemQuery(_ input: Operations.MenuItemQuery.Input) async throws -> Operations.MenuItemQuery.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemQuery.id,
+            forOperation: Operations.MenuItemQuery.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items/query",
                     parameters: [
-                        input.path.webMenuId
+                        input.path.menuId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1189,7 +1189,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuItemQueryItemSearchSchemaSearchResponse.Body
+                    let body: Components.Responses.MenuItemQueryItemSearchSchemaSearchResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1199,7 +1199,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuItemQueryItemSearchSchema.self,
+                            Components.Schemas.MenuItemQueryItemSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1211,7 +1211,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemQuery.Output.Unauthorized.Body
+                    let body: Operations.MenuItemQuery.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1233,7 +1233,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemQuery.Output.Forbidden.Body
+                    let body: Operations.MenuItemQuery.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1265,18 +1265,18 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/get(webMenuItemGet)`.
-    public func webMenuItemGet(_ input: Operations.WebMenuItemGet.Input) async throws -> Operations.WebMenuItemGet.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items/{menuItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/get(menuItemGet)`.
+    public func menuItemGet(_ input: Operations.MenuItemGet.Input) async throws -> Operations.MenuItemGet.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemGet.id,
+            forOperation: Operations.MenuItemGet.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items/{}",
                     parameters: [
-                        input.path.webMenuId,
-                        input.path.webMenuItemId
+                        input.path.menuId,
+                        input.path.menuItemId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1294,7 +1294,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuItemDetailResponse.Body
+                    let body: Components.Responses.MenuItemDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1304,7 +1304,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuItemDetailSchema.self,
+                            Components.Schemas.MenuItemDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1316,7 +1316,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemGet.Output.NotFound.Body
+                    let body: Operations.MenuItemGet.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1338,7 +1338,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemGet.Output.Unauthorized.Body
+                    let body: Operations.MenuItemGet.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1360,7 +1360,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemGet.Output.Forbidden.Body
+                    let body: Operations.MenuItemGet.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1392,18 +1392,18 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/patch(webMenuItemPatch)`.
-    public func webMenuItemPatch(_ input: Operations.WebMenuItemPatch.Input) async throws -> Operations.WebMenuItemPatch.Output {
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{menuId}/items/{menuItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/patch(menuItemPatch)`.
+    public func menuItemPatch(_ input: Operations.MenuItemPatch.Input) async throws -> Operations.MenuItemPatch.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemPatch.id,
+            forOperation: Operations.MenuItemPatch.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items/{}",
                     parameters: [
-                        input.path.webMenuId,
-                        input.path.webMenuItemId
+                        input.path.menuId,
+                        input.path.menuItemId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1430,7 +1430,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuItemDetailResponse.Body
+                    let body: Components.Responses.MenuItemDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1440,7 +1440,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuItemDetailSchema.self,
+                            Components.Schemas.MenuItemDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1452,7 +1452,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemPatch.Output.NotFound.Body
+                    let body: Operations.MenuItemPatch.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1474,7 +1474,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemPatch.Output.Unauthorized.Body
+                    let body: Operations.MenuItemPatch.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1496,7 +1496,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemPatch.Output.Forbidden.Body
+                    let body: Operations.MenuItemPatch.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1528,18 +1528,18 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/put(webMenuItemUpdate)`.
-    public func webMenuItemUpdate(_ input: Operations.WebMenuItemUpdate.Input) async throws -> Operations.WebMenuItemUpdate.Output {
+    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{menuId}/items/{menuItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/put(menuItemUpdate)`.
+    public func menuItemUpdate(_ input: Operations.MenuItemUpdate.Input) async throws -> Operations.MenuItemUpdate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemUpdate.id,
+            forOperation: Operations.MenuItemUpdate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items/{}",
                     parameters: [
-                        input.path.webMenuId,
-                        input.path.webMenuItemId
+                        input.path.menuId,
+                        input.path.menuItemId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1566,7 +1566,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMenuItemDetailResponse.Body
+                    let body: Components.Responses.MenuItemDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1576,7 +1576,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMenuItemDetailSchema.self,
+                            Components.Schemas.MenuItemDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1588,7 +1588,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemUpdate.Output.NotFound.Body
+                    let body: Operations.MenuItemUpdate.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1610,7 +1610,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemUpdate.Output.Unauthorized.Body
+                    let body: Operations.MenuItemUpdate.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1632,7 +1632,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemUpdate.Output.Forbidden.Body
+                    let body: Operations.MenuItemUpdate.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1664,18 +1664,18 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)`.
-    public func webMenuItemMove(_ input: Operations.WebMenuItemMove.Input) async throws -> Operations.WebMenuItemMove.Output {
+    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/post(menuItemMove)`.
+    public func menuItemMove(_ input: Operations.MenuItemMove.Input) async throws -> Operations.MenuItemMove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemMove.id,
+            forOperation: Operations.MenuItemMove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items/{}/move",
                     parameters: [
-                        input.path.webMenuId,
-                        input.path.webMenuItemId
+                        input.path.menuId,
+                        input.path.menuItemId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1704,7 +1704,7 @@ public struct Client: APIProtocol {
                     return .noContent(.init())
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemMove.Output.NotFound.Body
+                    let body: Operations.MenuItemMove.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1726,7 +1726,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemMove.Output.Unauthorized.Body
+                    let body: Operations.MenuItemMove.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1748,7 +1748,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMenuItemMove.Output.Forbidden.Body
+                    let body: Operations.MenuItemMove.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1781,11 +1781,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(webMetadataCreate)`.
-    public func webMetadataCreate(_ input: Operations.WebMetadataCreate.Input) async throws -> Operations.WebMetadataCreate.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(metadataCreate)`.
+    public func metadataCreate(_ input: Operations.MetadataCreate.Input) async throws -> Operations.MetadataCreate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataCreate.id,
+            forOperation: Operations.MetadataCreate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata",
@@ -1815,7 +1815,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 201:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMetadataDetailResponse.Body
+                    let body: Components.Responses.MetadataDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1825,7 +1825,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataDetailSchema.self,
+                            Components.Schemas.MetadataDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1837,7 +1837,7 @@ public struct Client: APIProtocol {
                     return .created(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataCreate.Output.Unauthorized.Body
+                    let body: Operations.MetadataCreate.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1859,7 +1859,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataCreate.Output.Forbidden.Body
+                    let body: Operations.MetadataCreate.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1892,11 +1892,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataRemove)`.
-    public func webMetadataRemove(_ input: Operations.WebMetadataRemove.Input) async throws -> Operations.WebMetadataRemove.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(metadataRemove)`.
+    public func metadataRemove(_ input: Operations.MetadataRemove.Input) async throws -> Operations.MetadataRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataRemove.id,
+            forOperation: Operations.MetadataRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata",
@@ -1928,7 +1928,7 @@ public struct Client: APIProtocol {
                     return .noContent(.init())
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataRemove.Output.Unauthorized.Body
+                    let body: Operations.MetadataRemove.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1950,7 +1950,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataRemove.Output.Forbidden.Body
+                    let body: Operations.MetadataRemove.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1983,11 +1983,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)`.
-    public func webMetadataList(_ input: Operations.WebMetadataList.Input) async throws -> Operations.WebMetadataList.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(metadataList)`.
+    public func metadataList(_ input: Operations.MetadataList.Input) async throws -> Operations.MetadataList.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataList.id,
+            forOperation: Operations.MetadataList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata/",
@@ -2008,7 +2008,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMetadataListResponse.Body
+                    let body: Components.Responses.MetadataListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2018,7 +2018,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataListSchema.self,
+                            Components.Schemas.MetadataListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2030,7 +2030,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataList.Output.Unauthorized.Body
+                    let body: Operations.MetadataList.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2052,7 +2052,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataList.Output.Forbidden.Body
+                    let body: Operations.MetadataList.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2085,11 +2085,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(webMetadataQuery)`.
-    public func webMetadataQuery(_ input: Operations.WebMetadataQuery.Input) async throws -> Operations.WebMetadataQuery.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(metadataQuery)`.
+    public func metadataQuery(_ input: Operations.MetadataQuery.Input) async throws -> Operations.MetadataQuery.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataQuery.id,
+            forOperation: Operations.MetadataQuery.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata/query",
@@ -2119,7 +2119,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMetadataQueryItemSearchSchemaSearchResponse.Body
+                    let body: Components.Responses.MetadataQueryItemSearchSchemaSearchResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2129,7 +2129,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataQueryItemSearchSchema.self,
+                            Components.Schemas.MetadataQueryItemSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2141,7 +2141,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataQuery.Output.Unauthorized.Body
+                    let body: Operations.MetadataQuery.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2163,7 +2163,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataQuery.Output.Forbidden.Body
+                    let body: Operations.MetadataQuery.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2196,11 +2196,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/resolve`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)`.
-    public func webMetadataResolve(_ input: Operations.WebMetadataResolve.Input) async throws -> Operations.WebMetadataResolve.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(metadataResolve)`.
+    public func metadataResolve(_ input: Operations.MetadataResolve.Input) async throws -> Operations.MetadataResolve.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataResolve.id,
+            forOperation: Operations.MetadataResolve.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata/resolve",
@@ -2230,7 +2230,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMetadataResolveResponse.Body
+                    let body: Components.Responses.MetadataResolveResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2240,7 +2240,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataResolveSchema.self,
+                            Components.Schemas.MetadataResolveSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2252,7 +2252,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataResolve.Output.Unauthorized.Body
+                    let body: Operations.MetadataResolve.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2274,7 +2274,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataResolve.Output.Forbidden.Body
+                    let body: Operations.MetadataResolve.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2306,17 +2306,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)`.
-    public func webMetadataGet(_ input: Operations.WebMetadataGet.Input) async throws -> Operations.WebMetadataGet.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/{metadataId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/get(metadataGet)`.
+    public func metadataGet(_ input: Operations.MetadataGet.Input) async throws -> Operations.MetadataGet.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataGet.id,
+            forOperation: Operations.MetadataGet.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata/{}",
                     parameters: [
-                        input.path.webMetadataId
+                        input.path.metadataId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -2334,7 +2334,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMetadataDetailResponse.Body
+                    let body: Components.Responses.MetadataDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2344,7 +2344,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataDetailSchema.self,
+                            Components.Schemas.MetadataDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2356,7 +2356,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataGet.Output.NotFound.Body
+                    let body: Operations.MetadataGet.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2378,7 +2378,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataGet.Output.Unauthorized.Body
+                    let body: Operations.MetadataGet.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2400,7 +2400,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataGet.Output.Forbidden.Body
+                    let body: Operations.MetadataGet.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2432,17 +2432,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/patch(webMetadataPatch)`.
-    public func webMetadataPatch(_ input: Operations.WebMetadataPatch.Input) async throws -> Operations.WebMetadataPatch.Output {
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/metadata/{metadataId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/patch(metadataPatch)`.
+    public func metadataPatch(_ input: Operations.MetadataPatch.Input) async throws -> Operations.MetadataPatch.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataPatch.id,
+            forOperation: Operations.MetadataPatch.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata/{}",
                     parameters: [
-                        input.path.webMetadataId
+                        input.path.metadataId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -2469,7 +2469,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMetadataDetailResponse.Body
+                    let body: Components.Responses.MetadataDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2479,7 +2479,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataDetailSchema.self,
+                            Components.Schemas.MetadataDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2491,7 +2491,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataPatch.Output.NotFound.Body
+                    let body: Operations.MetadataPatch.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2513,7 +2513,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataPatch.Output.Unauthorized.Body
+                    let body: Operations.MetadataPatch.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2535,7 +2535,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataPatch.Output.Forbidden.Body
+                    let body: Operations.MetadataPatch.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2567,17 +2567,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/put(webMetadataUpdate)`.
-    public func webMetadataUpdate(_ input: Operations.WebMetadataUpdate.Input) async throws -> Operations.WebMetadataUpdate.Output {
+    /// - Remark: HTTP `PUT /api/v1/admin/web/metadata/{metadataId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/put(metadataUpdate)`.
+    public func metadataUpdate(_ input: Operations.MetadataUpdate.Input) async throws -> Operations.MetadataUpdate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataUpdate.id,
+            forOperation: Operations.MetadataUpdate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata/{}",
                     parameters: [
-                        input.path.webMetadataId
+                        input.path.metadataId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -2604,7 +2604,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebMetadataDetailResponse.Body
+                    let body: Components.Responses.MetadataDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2614,7 +2614,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataDetailSchema.self,
+                            Components.Schemas.MetadataDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2626,7 +2626,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataUpdate.Output.NotFound.Body
+                    let body: Operations.MetadataUpdate.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2648,7 +2648,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataUpdate.Output.Unauthorized.Body
+                    let body: Operations.MetadataUpdate.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2670,7 +2670,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebMetadataUpdate.Output.Forbidden.Body
+                    let body: Operations.MetadataUpdate.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2703,11 +2703,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(webPageCreate)`.
-    public func webPageCreate(_ input: Operations.WebPageCreate.Input) async throws -> Operations.WebPageCreate.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(pageCreate)`.
+    public func pageCreate(_ input: Operations.PageCreate.Input) async throws -> Operations.PageCreate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageCreate.id,
+            forOperation: Operations.PageCreate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/pages",
@@ -2737,7 +2737,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 201:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebPageDetailResponse.Body
+                    let body: Components.Responses.PageDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2747,7 +2747,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebPageDetailSchema.self,
+                            Components.Schemas.PageDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2759,7 +2759,7 @@ public struct Client: APIProtocol {
                     return .created(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageCreate.Output.Unauthorized.Body
+                    let body: Operations.PageCreate.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2781,7 +2781,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageCreate.Output.Forbidden.Body
+                    let body: Operations.PageCreate.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2814,11 +2814,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageRemove)`.
-    public func webPageRemove(_ input: Operations.WebPageRemove.Input) async throws -> Operations.WebPageRemove.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(pageRemove)`.
+    public func pageRemove(_ input: Operations.PageRemove.Input) async throws -> Operations.PageRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageRemove.id,
+            forOperation: Operations.PageRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/pages",
@@ -2850,7 +2850,7 @@ public struct Client: APIProtocol {
                     return .noContent(.init())
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageRemove.Output.Unauthorized.Body
+                    let body: Operations.PageRemove.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2872,7 +2872,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageRemove.Output.Forbidden.Body
+                    let body: Operations.PageRemove.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2905,11 +2905,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)`.
-    public func webPageList(_ input: Operations.WebPageList.Input) async throws -> Operations.WebPageList.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(pageList)`.
+    public func pageList(_ input: Operations.PageList.Input) async throws -> Operations.PageList.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageList.id,
+            forOperation: Operations.PageList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/pages/",
@@ -2930,7 +2930,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebPageListResponse.Body
+                    let body: Components.Responses.PageListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2940,7 +2940,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebPageListSchema.self,
+                            Components.Schemas.PageListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2952,7 +2952,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageList.Output.Unauthorized.Body
+                    let body: Operations.PageList.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2974,7 +2974,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageList.Output.Forbidden.Body
+                    let body: Operations.PageList.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3007,11 +3007,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(webPageQuery)`.
-    public func webPageQuery(_ input: Operations.WebPageQuery.Input) async throws -> Operations.WebPageQuery.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(pageQuery)`.
+    public func pageQuery(_ input: Operations.PageQuery.Input) async throws -> Operations.PageQuery.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageQuery.id,
+            forOperation: Operations.PageQuery.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/pages/query",
@@ -3041,7 +3041,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebPageQueryItemSearchSchemaSearchResponse.Body
+                    let body: Components.Responses.PageQueryItemSearchSchemaSearchResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3051,7 +3051,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebPageQueryItemSearchSchema.self,
+                            Components.Schemas.PageQueryItemSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3063,7 +3063,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageQuery.Output.Unauthorized.Body
+                    let body: Operations.PageQuery.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3085,7 +3085,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageQuery.Output.Forbidden.Body
+                    let body: Operations.PageQuery.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3117,17 +3117,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/get(webPageGet)`.
-    public func webPageGet(_ input: Operations.WebPageGet.Input) async throws -> Operations.WebPageGet.Output {
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages/{pageId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/get(pageGet)`.
+    public func pageGet(_ input: Operations.PageGet.Input) async throws -> Operations.PageGet.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageGet.id,
+            forOperation: Operations.PageGet.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/pages/{}",
                     parameters: [
-                        input.path.webPageId
+                        input.path.pageId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -3145,7 +3145,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebPageDetailResponse.Body
+                    let body: Components.Responses.PageDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3155,7 +3155,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebPageDetailSchema.self,
+                            Components.Schemas.PageDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3167,7 +3167,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageGet.Output.NotFound.Body
+                    let body: Operations.PageGet.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3189,7 +3189,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageGet.Output.Unauthorized.Body
+                    let body: Operations.PageGet.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3211,7 +3211,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageGet.Output.Forbidden.Body
+                    let body: Operations.PageGet.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3243,17 +3243,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/patch(webPagePatch)`.
-    public func webPagePatch(_ input: Operations.WebPagePatch.Input) async throws -> Operations.WebPagePatch.Output {
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/pages/{pageId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/patch(pagePatch)`.
+    public func pagePatch(_ input: Operations.PagePatch.Input) async throws -> Operations.PagePatch.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPagePatch.id,
+            forOperation: Operations.PagePatch.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/pages/{}",
                     parameters: [
-                        input.path.webPageId
+                        input.path.pageId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -3280,7 +3280,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebPageDetailResponse.Body
+                    let body: Components.Responses.PageDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3290,7 +3290,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebPageDetailSchema.self,
+                            Components.Schemas.PageDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3302,7 +3302,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPagePatch.Output.NotFound.Body
+                    let body: Operations.PagePatch.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3324,7 +3324,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPagePatch.Output.Unauthorized.Body
+                    let body: Operations.PagePatch.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3346,7 +3346,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPagePatch.Output.Forbidden.Body
+                    let body: Operations.PagePatch.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3378,17 +3378,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/put(webPageUpdate)`.
-    public func webPageUpdate(_ input: Operations.WebPageUpdate.Input) async throws -> Operations.WebPageUpdate.Output {
+    /// - Remark: HTTP `PUT /api/v1/admin/web/pages/{pageId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/put(pageUpdate)`.
+    public func pageUpdate(_ input: Operations.PageUpdate.Input) async throws -> Operations.PageUpdate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageUpdate.id,
+            forOperation: Operations.PageUpdate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/pages/{}",
                     parameters: [
-                        input.path.webPageId
+                        input.path.pageId
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -3415,7 +3415,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebPageDetailResponse.Body
+                    let body: Components.Responses.PageDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3425,7 +3425,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebPageDetailSchema.self,
+                            Components.Schemas.PageDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3437,7 +3437,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageUpdate.Output.NotFound.Body
+                    let body: Operations.PageUpdate.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3459,7 +3459,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageUpdate.Output.Unauthorized.Body
+                    let body: Operations.PageUpdate.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3481,7 +3481,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebPageUpdate.Output.Forbidden.Body
+                    let body: Operations.PageUpdate.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3514,11 +3514,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(webSettingsGet)`.
-    public func webSettingsGet(_ input: Operations.WebSettingsGet.Input) async throws -> Operations.WebSettingsGet.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(settingsGet)`.
+    public func settingsGet(_ input: Operations.SettingsGet.Input) async throws -> Operations.SettingsGet.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebSettingsGet.id,
+            forOperation: Operations.SettingsGet.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/settings",
@@ -3539,7 +3539,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebSettingsDetailResponse.Body
+                    let body: Components.Responses.SettingsDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3549,7 +3549,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebSettingsDetailSchema.self,
+                            Components.Schemas.SettingsDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3561,7 +3561,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebSettingsGet.Output.Unauthorized.Body
+                    let body: Operations.SettingsGet.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3583,7 +3583,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebSettingsGet.Output.Forbidden.Body
+                    let body: Operations.SettingsGet.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3616,11 +3616,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `PUT /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(webSettingsUpdate)`.
-    public func webSettingsUpdate(_ input: Operations.WebSettingsUpdate.Input) async throws -> Operations.WebSettingsUpdate.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)`.
+    public func settingsUpdate(_ input: Operations.SettingsUpdate.Input) async throws -> Operations.SettingsUpdate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.WebSettingsUpdate.id,
+            forOperation: Operations.SettingsUpdate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/settings",
@@ -3650,7 +3650,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.WebSettingsDetailResponse.Body
+                    let body: Components.Responses.SettingsDetailResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3660,7 +3660,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebSettingsDetailSchema.self,
+                            Components.Schemas.SettingsDetailSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3672,7 +3672,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebSettingsUpdate.Output.Unauthorized.Body
+                    let body: Operations.SettingsUpdate.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3694,7 +3694,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.WebSettingsUpdate.Output.Forbidden.Body
+                    let body: Operations.SettingsUpdate.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [

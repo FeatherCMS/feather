@@ -10,7 +10,7 @@ import WebDomain
 extension AdminAPIGateway {
     func map(
         _ query: WebAdminAPI.Components.Schemas
-            .WebPageQueryItemSearchRequestQuerySchema
+            .PageQueryItemSearchRequestQuerySchema
     ) -> Page.Search.Input.Query {
         .init(
             page: map(query.page),
@@ -31,7 +31,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ detail: Page.Detail.Output)
-        -> WebAdminAPI.Components.Schemas.WebPageDetailSchema
+        -> WebAdminAPI.Components.Schemas.PageDetailSchema
     {
         .init(
             id: detail.id,
@@ -46,7 +46,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ detail: Page.Add.Output)
-        -> WebAdminAPI.Components.Schemas.WebPageDetailSchema
+        -> WebAdminAPI.Components.Schemas.PageDetailSchema
     {
         .init(
             id: detail.id,
@@ -61,7 +61,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ detail: Page.Edit.Output)
-        -> WebAdminAPI.Components.Schemas.WebPageDetailSchema
+        -> WebAdminAPI.Components.Schemas.PageDetailSchema
     {
         .init(
             id: detail.id,
@@ -76,7 +76,7 @@ extension AdminAPIGateway {
     }
 
     func map(_ item: Page.Search.Output.Item)
-        -> WebAdminAPI.Components.Schemas.WebPageListItemSchema
+        -> WebAdminAPI.Components.Schemas.PageListItemSchema
     {
         .init(
             id: item.id,
@@ -89,7 +89,7 @@ extension AdminAPIGateway {
     }
 
     func mapQuery(_ item: Page.Search.Output.Item)
-        -> WebAdminAPI.Components.Schemas.WebPageQueryItemSchema
+        -> WebAdminAPI.Components.Schemas.PageQueryItemSchema
     {
         .init(
             id: item.id,
@@ -102,7 +102,7 @@ extension AdminAPIGateway {
     }
 
     func mapList(_ item: Page.List.Output.Item)
-        -> WebAdminAPI.Components.Schemas.WebPageListItemSchema
+        -> WebAdminAPI.Components.Schemas.PageListItemSchema
     {
         .init(
             id: item.id,

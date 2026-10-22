@@ -3,7 +3,7 @@ import FeatherWebShared
 import Hummingbird
 import SystemModule
 
-enum Variable {
+extension Variable {
     struct Router {
         struct Routes {
             let list: WebRoute

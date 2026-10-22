@@ -1,7 +1,7 @@
 public import CSS
 public import HTML
-import WebBuilders
-public import WebComponents
+import Builders
+public import Components
 
 public struct AppPublicFormCSS: Component {
     public init() {}

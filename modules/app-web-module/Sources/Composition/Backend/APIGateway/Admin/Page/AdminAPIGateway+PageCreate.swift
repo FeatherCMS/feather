@@ -4,10 +4,10 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webPageCreate(
-        _ input: Operations.WebPageCreate.Input
-    ) async throws -> Operations.WebPageCreate.Output {
-        let body: Components.Schemas.WebPageCreateSchema
+    public func pageCreate(
+        _ input: Operations.PageCreate.Input
+    ) async throws -> Operations.PageCreate.Output {
+        let body: Components.Schemas.PageCreateSchema
         switch input.body {
         case .json(let value):
             body = value

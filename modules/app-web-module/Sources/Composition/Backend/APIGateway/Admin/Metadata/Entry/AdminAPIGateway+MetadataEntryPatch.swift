@@ -6,10 +6,10 @@ import WebDomain
 
 extension AdminAPIGateway {
 
-    public func webMetadataPatch(
-        _ input: Operations.WebMetadataPatch.Input
-    ) async throws -> Operations.WebMetadataPatch.Output {
-        let body: Components.Schemas.WebMetadataPatchSchema
+    public func metadataPatch(
+        _ input: Operations.MetadataPatch.Input
+    ) async throws -> Operations.MetadataPatch.Output {
+        let body: Components.Schemas.MetadataPatchSchema
         switch input.body {
         case .json(let value):
             body = value
@@ -20,7 +20,7 @@ extension AdminAPIGateway {
         let result = try await useCase.execute(
             subject: subject,
             input: .init(
-                id: input.path.webMetadataId,
+                id: input.path.metadataId,
                 template: body.template,
                 slug: body.slug,
                 publicationDate: body.publicationDate.map(

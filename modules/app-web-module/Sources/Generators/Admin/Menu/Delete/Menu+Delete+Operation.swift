@@ -3,6 +3,6 @@ import FeatherOpenAPIGenerator
 
 extension Menu.Delete {
     struct Operation: Menu.Operation, DeleteOperation {
-        var operationId: String? { "webMenuRemove" }
+        var operationId: String? { "menuRemove" }
     }
 }

@@ -63,12 +63,12 @@ public struct TableSeedMigration: DatabaseMigration {
             )
             _ = try await pageRepository.insert(page)
         }
-        try await installWebMenuExtensions(
+        try await installMenuExtensions(
             events: events
         )
     }
 
-    private func installWebMenuExtensions(
+    private func installMenuExtensions(
         events: any EventPublisher
     ) async throws {
         let menus =

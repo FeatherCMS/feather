@@ -2,6 +2,6 @@ public import FeatherOpenAPI
 
 extension MenuItem.Query {
     struct PathItem: PathItemRepresentable {
-        var post: (any OperationRepresentable)? { WebMenuItemQueryOperation() }
+        var post: (any OperationRepresentable)? { MenuItemQueryOperation() }
     }
 }

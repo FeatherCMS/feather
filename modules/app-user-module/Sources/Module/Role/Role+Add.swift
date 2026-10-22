@@ -1,4 +1,4 @@
-public import FeatherModuleKit
+import FeatherModuleKit
 
 extension Role {
     enum Add {}

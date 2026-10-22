@@ -36,7 +36,7 @@ struct MenuListTests {
                 )
             ]
         )
-        let executor = try WebAPIHTTPTestSupport.makeExecutor(
+        let executor = try APIHTTPTestSupport.makeExecutor(
             connection: connection
         )
         let request = FeatherHTTP.Request(
@@ -44,7 +44,7 @@ struct MenuListTests {
             path: "/api/v1/admin/web/menus/"
         )
 
-        let body = try await WebAPIHTTPTestSupport.send(
+        let body = try await APIHTTPTestSupport.send(
             request,
             expectedStatus: 200,
             using: executor

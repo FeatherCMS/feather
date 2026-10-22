@@ -6,25 +6,25 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/parameters` section of the OpenAPI document.
     public enum Parameters {
-        /// WebMenu id
+        /// Menu id
         ///
-        /// - Remark: Generated from `#/components/parameters/WebMenuIdParameter`.
-        public typealias WebMenuIdParameter = Components.Schemas.WebMenuIdField
-        /// WebMenu id
+        /// - Remark: Generated from `#/components/parameters/MenuIdParameter`.
+        public typealias MenuIdParameter = Components.Schemas.MenuIdField
+        /// Menu id
         ///
-        /// - Remark: Generated from `#/components/parameters/WebMenuItemMenuIdParameter`.
-        public typealias WebMenuItemMenuIdParameter = Components.Schemas.WebMenuIdField
-        /// WebMenuItem id
+        /// - Remark: Generated from `#/components/parameters/MenuItemMenuIdParameter`.
+        public typealias MenuItemMenuIdParameter = Components.Schemas.MenuIdField
+        /// MenuItem id
         ///
-        /// - Remark: Generated from `#/components/parameters/WebMenuItemIdParameter`.
-        public typealias WebMenuItemIdParameter = Components.Schemas.WebMenuItemIdField
-        /// WebMetadata id
+        /// - Remark: Generated from `#/components/parameters/MenuItemIdParameter`.
+        public typealias MenuItemIdParameter = Components.Schemas.MenuItemIdField
+        /// Metadata id
         ///
-        /// - Remark: Generated from `#/components/parameters/WebMetadataIdParameter`.
-        public typealias WebMetadataIdParameter = Components.Schemas.WebMetadataIdField
-        /// WebPage id
+        /// - Remark: Generated from `#/components/parameters/MetadataIdParameter`.
+        public typealias MetadataIdParameter = Components.Schemas.MetadataIdField
+        /// Page id
         ///
-        /// - Remark: Generated from `#/components/parameters/WebPageIdParameter`.
-        public typealias WebPageIdParameter = Components.Schemas.WebPageIdField
+        /// - Remark: Generated from `#/components/parameters/PageIdParameter`.
+        public typealias PageIdParameter = Components.Schemas.PageIdField
     }
 }

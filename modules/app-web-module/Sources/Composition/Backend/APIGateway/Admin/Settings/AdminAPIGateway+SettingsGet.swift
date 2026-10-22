@@ -4,9 +4,9 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webSettingsGet(
-        _ input: Operations.WebSettingsGet.Input
-    ) async throws -> Operations.WebSettingsGet.Output {
+    public func settingsGet(
+        _ input: Operations.SettingsGet.Input
+    ) async throws -> Operations.SettingsGet.Output {
         let useCase = useCases.makeGetSettings()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(

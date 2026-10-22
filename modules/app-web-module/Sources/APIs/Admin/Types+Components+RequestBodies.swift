@@ -6,85 +6,85 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/requestBodies` section of the OpenAPI document.
     public enum RequestBodies {
-        /// - Remark: Generated from `#/components/requestBodies/WebMenuRequestBody`.
-        @frozen public enum WebMenuRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMenuRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMenuCreateSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MenuRequestBody`.
+        @frozen public enum MenuRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MenuRequestBody/content/application\/json`.
+            case json(Components.Schemas.MenuCreateSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody`.
         @frozen public enum DeleteRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
             case json(Components.Schemas.DeleteRequestSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMenuUpdateRequestBody`.
-        @frozen public enum WebMenuUpdateRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMenuUpdateRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMenuCreateSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MenuUpdateRequestBody`.
+        @frozen public enum MenuUpdateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MenuUpdateRequestBody/content/application\/json`.
+            case json(Components.Schemas.MenuCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMenuPatchRequestBody`.
-        @frozen public enum WebMenuPatchRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMenuPatchRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMenuPatchSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MenuPatchRequestBody`.
+        @frozen public enum MenuPatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MenuPatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.MenuPatchSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMenuItemRequestBody`.
-        @frozen public enum WebMenuItemRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMenuItemRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMenuItemCreateSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MenuItemRequestBody`.
+        @frozen public enum MenuItemRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MenuItemRequestBody/content/application\/json`.
+            case json(Components.Schemas.MenuItemCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMenuItemUpdateRequestBody`.
-        @frozen public enum WebMenuItemUpdateRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMenuItemUpdateRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMenuItemCreateSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MenuItemUpdateRequestBody`.
+        @frozen public enum MenuItemUpdateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MenuItemUpdateRequestBody/content/application\/json`.
+            case json(Components.Schemas.MenuItemCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMenuItemPatchRequestBody`.
-        @frozen public enum WebMenuItemPatchRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMenuItemPatchRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMenuItemPatchSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MenuItemPatchRequestBody`.
+        @frozen public enum MenuItemPatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MenuItemPatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.MenuItemPatchSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMenuItemMoveRequestBody`.
-        @frozen public enum WebMenuItemMoveRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMenuItemMoveRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMenuItemMoveSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MenuItemMoveRequestBody`.
+        @frozen public enum MenuItemMoveRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MenuItemMoveRequestBody/content/application\/json`.
+            case json(Components.Schemas.MenuItemMoveSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMetadataRequestBody`.
-        @frozen public enum WebMetadataRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMetadataRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMetadataCreateSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MetadataRequestBody`.
+        @frozen public enum MetadataRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MetadataRequestBody/content/application\/json`.
+            case json(Components.Schemas.MetadataCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMetadataResolveRequestBody`.
-        @frozen public enum WebMetadataResolveRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMetadataResolveRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMetadataResolveRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MetadataResolveRequestBody`.
+        @frozen public enum MetadataResolveRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MetadataResolveRequestBody/content/application\/json`.
+            case json(Components.Schemas.MetadataResolveRequestSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMetadataUpdateRequestBody`.
-        @frozen public enum WebMetadataUpdateRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMetadataUpdateRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMetadataCreateSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MetadataUpdateRequestBody`.
+        @frozen public enum MetadataUpdateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MetadataUpdateRequestBody/content/application\/json`.
+            case json(Components.Schemas.MetadataCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMetadataPatchRequestBody`.
-        @frozen public enum WebMetadataPatchRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMetadataPatchRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMetadataPatchSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MetadataPatchRequestBody`.
+        @frozen public enum MetadataPatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MetadataPatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.MetadataPatchSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebPageRequestBody`.
-        @frozen public enum WebPageRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebPageRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebPageCreateSchema)
+        /// - Remark: Generated from `#/components/requestBodies/PageRequestBody`.
+        @frozen public enum PageRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/PageRequestBody/content/application\/json`.
+            case json(Components.Schemas.PageCreateSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebPageUpdateRequestBody`.
-        @frozen public enum WebPageUpdateRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebPageUpdateRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebPagePatchSchema)
+        /// - Remark: Generated from `#/components/requestBodies/PageUpdateRequestBody`.
+        @frozen public enum PageUpdateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/PageUpdateRequestBody/content/application\/json`.
+            case json(Components.Schemas.PagePatchSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebPagePatchRequestBody`.
-        @frozen public enum WebPagePatchRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebPagePatchRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebPagePatchSchema)
+        /// - Remark: Generated from `#/components/requestBodies/PagePatchRequestBody`.
+        @frozen public enum PagePatchRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/PagePatchRequestBody/content/application\/json`.
+            case json(Components.Schemas.PagePatchSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebSettingsUpdateRequestBody`.
-        @frozen public enum WebSettingsUpdateRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebSettingsUpdateRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebSettingsUpdateSchema)
+        /// - Remark: Generated from `#/components/requestBodies/SettingsUpdateRequestBody`.
+        @frozen public enum SettingsUpdateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/SettingsUpdateRequestBody/content/application\/json`.
+            case json(Components.Schemas.SettingsUpdateSchema)
         }
     }
 }

@@ -37,38 +37,38 @@ extension Page {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             let routes = Routes(root: root)
-            let list = AdminListWebPage(
+            let list = AdminListPage(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
-            router.get(routes.list.routerPath, use: list.getWebPages)
-            router.post(routes.status.routerPath, use: list.postWebPageStatus)
+            router.get(routes.list.routerPath, use: list.getPages)
+            router.post(routes.status.routerPath, use: list.postPageStatus)
 
-            let view = AdminViewWebPage(
+            let view = AdminViewPage(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
-            router.get(routes.details.routerPath, use: view.getWebPage)
+            router.get(routes.details.routerPath, use: view.getPage)
 
-            let add = AdminAddWebPage(
+            let add = AdminAddPage(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
-            router.get(routes.add.routerPath, use: add.getAddWebPage)
-            router.post(routes.add.routerPath, use: add.postAddWebPage)
+            router.get(routes.add.routerPath, use: add.getAddPage)
+            router.post(routes.add.routerPath, use: add.postAddPage)
 
-            let edit = AdminEditWebPage(
+            let edit = AdminEditPage(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
-            router.get(routes.edit.routerPath, use: edit.getEditWebPage)
-            router.post(routes.edit.routerPath, use: edit.postEditWebPage)
+            router.get(routes.edit.routerPath, use: edit.getEditPage)
+            router.post(routes.edit.routerPath, use: edit.postEditPage)
 
-            let metadata = AdminEditWebPageMetadata(
+            let metadata = AdminEditPageMetadata(
                 environment: environment,
                 renderingEngine: renderingEngine,
                 events: events
@@ -76,19 +76,19 @@ extension Page {
             .controller
             router.get(
                 routes.metadata.routerPath,
-                use: metadata.getEditWebPageMetadata
+                use: metadata.getEditPageMetadata
             )
             router.post(
                 routes.metadata.routerPath,
-                use: metadata.postEditWebPageMetadata
+                use: metadata.postEditPageMetadata
             )
 
-            let remove = AdminRemoveWebPage(
+            let remove = AdminRemovePage(
                 environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
-            router.post(routes.remove.routerPath, use: remove.postRemoveWebPage)
+            router.post(routes.remove.routerPath, use: remove.postRemovePage)
         }
     }
 }

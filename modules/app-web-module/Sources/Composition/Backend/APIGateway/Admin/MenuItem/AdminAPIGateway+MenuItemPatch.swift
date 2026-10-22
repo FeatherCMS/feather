@@ -5,10 +5,10 @@ import WebDomain
 
 extension AdminAPIGateway {
 
-    public func webMenuItemPatch(
-        _ input: Operations.WebMenuItemPatch.Input
-    ) async throws -> Operations.WebMenuItemPatch.Output {
-        let body: Components.Schemas.WebMenuItemPatchSchema
+    public func menuItemPatch(
+        _ input: Operations.MenuItemPatch.Input
+    ) async throws -> Operations.MenuItemPatch.Output {
+        let body: Components.Schemas.MenuItemPatchSchema
         switch input.body {
         case .json(let value):
             body = value
@@ -19,8 +19,8 @@ extension AdminAPIGateway {
         let result = try await useCase.execute(
             subject: subject,
             input: .init(
-                id: input.path.webMenuItemId,
-                menuId: input.path.webMenuId,
+                id: input.path.menuItemId,
+                menuId: input.path.menuId,
                 label: body.label,
                 url: body.url,
                 priority: body.priority,

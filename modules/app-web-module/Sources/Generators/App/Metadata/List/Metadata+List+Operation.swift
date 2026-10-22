@@ -4,9 +4,9 @@ import WebSharedOpenAPIGenerator
 
 extension Metadata.List {
     struct Operation: Metadata.Operation {
-        var operationId: String? { "webMetadataList" }
+        var operationId: String? { "metadataList" }
         var responseMap: ResponseMap {
-            [200: WebMetadataListResponse().reference()]
+            [200: MetadataListResponse().reference()]
         }
     }
 }

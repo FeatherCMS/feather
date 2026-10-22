@@ -4,9 +4,9 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMetadataRemove(
-        _ input: Operations.WebMetadataRemove.Input
-    ) async throws -> Operations.WebMetadataRemove.Output {
+    public func metadataRemove(
+        _ input: Operations.MetadataRemove.Input
+    ) async throws -> Operations.MetadataRemove.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value):

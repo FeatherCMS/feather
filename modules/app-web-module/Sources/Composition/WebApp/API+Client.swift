@@ -29,7 +29,7 @@ extension WebApp.API {
                     )
                 ),
                 middlewares: [
-                    WebAppAPIAuthMiddleware(sessionToken: sessionToken)
+                    APIAuthMiddleware(sessionToken: sessionToken)
                 ]
             )
         }
@@ -37,7 +37,7 @@ extension WebApp.API {
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (WebAppAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            try await WebAPIClientSupport.withOpenAPIRepositoryErrorMapping(
+            try await APIClientSupport.withOpenAPIRepositoryErrorMapping(
                 client,
                 operation: operation
             )
@@ -47,7 +47,7 @@ extension WebApp.API {
             statusCode: Int,
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
-            try await WebAPIClientSupport.failure(
+            try await APIClientSupport.failure(
                 statusCode: statusCode,
                 responseBody: responseBody
             )
@@ -56,7 +56,7 @@ extension WebApp.API {
         public func resolveRouteReferenceID(
             path: String
         ) async throws -> String? {
-            let response = try await client.webMetadataGet(
+            let response = try await client.metadataGet(
                 path: .init(slug: path),
                 headers: .init(accept: [.init(contentType: .json)])
             )
@@ -74,7 +74,7 @@ extension WebApp.API {
         }
 
         public func publicMetadataSlugs() async throws -> [String] {
-            let response = try await client.webMetadataList(
+            let response = try await client.metadataList(
                 .init(headers: .init(accept: [.init(contentType: .json)]))
             )
             switch response {
@@ -89,9 +89,9 @@ extension WebApp.API {
         }
 
         public func publicSiteSettings() async throws
-            -> WebAppAPI.Components.Schemas.WebSiteSettingsSchema
+            -> WebAppAPI.Components.Schemas.SiteSettingsSchema
         {
-            let response = try await client.webSiteSettings(.init())
+            let response = try await client.siteSettings(.init())
             switch response {
             case .ok(let value):
                 return try value.body.json
@@ -104,7 +104,7 @@ extension WebApp.API {
         }
     }
 
-    private struct WebAppAPIAuthMiddleware: ClientMiddleware {
+    private struct APIAuthMiddleware: ClientMiddleware {
         let sessionToken: String?
 
         func intercept(

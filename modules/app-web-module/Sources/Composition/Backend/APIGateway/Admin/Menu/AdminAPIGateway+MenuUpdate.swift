@@ -4,10 +4,10 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMenuUpdate(
-        _ input: Operations.WebMenuUpdate.Input
-    ) async throws -> Operations.WebMenuUpdate.Output {
-        let body: Components.Schemas.WebMenuCreateSchema
+    public func menuUpdate(
+        _ input: Operations.MenuUpdate.Input
+    ) async throws -> Operations.MenuUpdate.Output {
+        let body: Components.Schemas.MenuCreateSchema
         switch input.body {
         case .json(let value):
             body = value
@@ -18,7 +18,7 @@ extension AdminAPIGateway {
         let result = try await useCase.execute(
             subject: subject,
             input: .init(
-                id: input.path.webMenuId,
+                id: input.path.menuId,
                 key: body.key,
                 name: body.name,
                 notes: body.notes

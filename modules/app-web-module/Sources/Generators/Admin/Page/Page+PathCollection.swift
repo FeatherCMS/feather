@@ -8,7 +8,7 @@ extension Page {
                 "api/v1/admin/web/pages": PathItem(),
                 "api/v1/admin/web/pages/": List.PathItem(),
                 "api/v1/admin/web/pages/query": Query.PathItem(),
-                "api/v1/admin/web/pages/{webPageId}": ID.PathItem(),
+                "api/v1/admin/web/pages/{pageId}": ID.PathItem(),
             ]
         }
     }

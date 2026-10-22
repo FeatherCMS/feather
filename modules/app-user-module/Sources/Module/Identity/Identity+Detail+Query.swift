@@ -1,4 +1,4 @@
-public import FeatherModuleKit
+import FeatherModuleKit
 
 extension Identity.Detail {
     enum Query {}

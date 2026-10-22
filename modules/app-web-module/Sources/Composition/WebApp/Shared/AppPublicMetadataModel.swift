@@ -57,7 +57,7 @@ public struct AppPublicMetadataModel: Sendable {
 }
 
 extension AppPublicMetadataModel {
-    public init(schema: Components.Schemas.WebMetadataContentSchema) {
+    public init(schema: Components.Schemas.MetadataContentSchema) {
         self.slug = schema.slug
         self.title = schema.title
         self.excerpt = schema.excerpt
@@ -69,7 +69,7 @@ extension AppPublicMetadataModel {
         self.structuredDataCodeInjection = schema.structuredDataCodeInjection
         if let publicationDate = schema.publicationDate {
             self.publicationDateText =
-                WebAppDateFormatting.formatUnixTimestamp(publicationDate)
+                DateFormatting.formatUnixTimestamp(publicationDate)
         }
         else {
             self.publicationDateText = nil

@@ -1,15 +1,15 @@
 public import FeatherOpenAPI
 
-struct WebPageQueryItemSchema: ObjectSchemaRepresentable {
+struct PageQueryItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "id": WebPageIdField().reference(),
-            "title": WebPageTitleField().reference(),
-            "excerpt": WebPageExcerptField().reference(),
-            "imageAssetId": WebPageImageAssetIdField()
+            "id": PageIdField().reference(),
+            "title": PageTitleField().reference(),
+            "excerpt": PageExcerptField().reference(),
+            "imageAssetId": PageImageAssetIdField()
                 .reference(required: false),
-            "createdAt": WebPageCreatedAtField().reference(),
-            "updatedAt": WebPageUpdatedAtField().reference(),
+            "createdAt": PageCreatedAtField().reference(),
+            "updatedAt": PageUpdatedAtField().reference(),
         ]
     }
 }

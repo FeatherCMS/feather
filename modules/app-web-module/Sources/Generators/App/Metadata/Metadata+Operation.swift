@@ -3,5 +3,5 @@ import FeatherOpenAPIGenerator
 import WebSharedOpenAPIGenerator
 
 extension Metadata {
-    protocol Operation: WebOperation {}
+    protocol Operation: APIOperation {}
 }

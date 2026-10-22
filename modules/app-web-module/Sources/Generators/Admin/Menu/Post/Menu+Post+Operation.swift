@@ -3,12 +3,12 @@ import FeatherOpenAPIGenerator
 
 extension Menu.Post {
     struct Operation: Menu.Operation, BearerProtectedOperation {
-        var operationId: String? { "webMenuCreate" }
+        var operationId: String? { "menuCreate" }
         var requestBody: (any RequestBodyRepresentable)? {
-            WebMenuRequestBody().reference()
+            MenuRequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: WebMenuDetailResponse().reference()]
+            [201: MenuDetailResponse().reference()]
         }
     }
 }

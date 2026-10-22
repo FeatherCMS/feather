@@ -1,0 +1,141 @@
+import CSS
+import FeatherWebAdmin
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import Builders
+import Components
+
+struct MenuItemDetails: Component {
+    struct State {
+        let item: MenuItemDetailsModel
+        let breadcrumb: [AdminBreadcrumb.Link]
+    }
+
+    let state: State
+
+    func selectors() -> [any CSS.Selector] {
+        [
+            Custom(".web-menu-item-details-fields") {
+                Display(.grid)
+                Gap(12.px)
+            },
+            Custom(".web-menu-item-details-field") {
+                Padding(vertical: 12.px)
+            },
+            Custom(".web-menu-item-details-field-label") {
+                Margin(0)
+                Padding(bottom: 8.px)
+                BorderBottom(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                FontWeight(.normal)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Opacity(0.8)
+            },
+            Custom(".web-menu-item-details-field-value") {
+                Margin(top: 6.px)
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+            },
+            Custom(".web-menu-item-details-actions") {
+                Display(.flex)
+                FlexWrap(.wrap)
+                Gap(12.px)
+                Margin(top: 24.px)
+            },
+        ]
+    }
+
+    func html(context: inout BuilderContext) -> Section {
+        Section {
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
+            context.build(
+                AdminPageHeader(
+                    state: .primary(
+                        title: "Edit menu",
+                        description:
+                            "Update the navigation menu configuration."
+                    )
+                )
+            )
+            context.build(
+                AdminMenuTabs(
+                    menuID: state.item.menuId,
+                    active: .items
+                )
+            )
+            context.build(
+                AdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "View item",
+                        description: "Review the navigation menu link."
+                    )
+                ) {
+                    Div {
+                        detailField(label: "Label", value: state.item.label)
+                        detailField(label: "URL", value: state.item.url)
+                        detailField(
+                            label: "Priority",
+                            value: "\(state.item.priority)"
+                        )
+                        detailField(
+                            label: "Blank target",
+                            value: state.item.isBlank ? "Yes" : "No"
+                        )
+                        detailField(
+                            label: "Permission",
+                            value: state.item.permission
+                        )
+                        detailField(
+                            label: "Authentication",
+                            value: state.item.authentication
+                        )
+                        detailField(
+                            label: "Notes",
+                            value: state.item.notes ?? "—"
+                        )
+                    }
+                    .class("web-menu-item-details-fields")
+                    Div {
+                        context.build(
+                            AdminButton(
+                                "Edit item",
+                                href:
+                                    MenuItemRoutes.edit(
+                                        RouterPath(state.item.menuId),
+                                        RouterPath(state.item.id)
+                                    )
+                                    .description,
+                                style: .primary
+                            )
+                        )
+                        context.build(
+                            AdminButton(
+                                "Remove item",
+                                href: MenuItemRoutes.itemRemove(
+                                    RouterPath(state.item.menuId),
+                                    RouterPath(state.item.id),
+                                    origin: .view
+                                ),
+                                style: .destructive
+                            )
+                        )
+                    }
+                    .class("web-menu-item-details-actions")
+                }
+            )
+        }
+        .class("cms-section")
+    }
+
+    private func detailField(label: String, value: String) -> Div {
+        Div {
+            P(label).class("web-menu-item-details-field-label")
+            P(value).class("web-menu-item-details-field-value")
+        }
+        .class("web-menu-item-details-field")
+    }
+}

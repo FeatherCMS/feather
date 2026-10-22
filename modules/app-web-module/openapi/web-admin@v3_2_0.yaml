@@ -3,15 +3,15 @@ info:
   title: Admin API
   version: 0.1.0
 tags:
-- name: WebMenus
+- name: Menus
   description: Manage web menus.
-- name: WebMenuItems
+- name: MenuItems
   description: Manage web menu items.
-- name: WebMetadata
+- name: Metadata
   description: Manage web metadata.
-- name: WebPages
+- name: Pages
   description: Manage web pages.
-- name: WebSettings
+- name: Settings
   description: Manage web settings.
 servers:
 - url: http://127.0.0.1:8080/
@@ -21,13 +21,13 @@ paths:
   /api/v1/admin/web/menus:
     post:
       tags:
-      - WebMenus
-      operationId: webMenuCreate
+      - Menus
+      operationId: menuCreate
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuRequestBody'
+        $ref: '#/components/requestBodies/MenuRequestBody'
       responses:
         201:
-          $ref: '#/components/responses/WebMenuDetailResponse'
+          $ref: '#/components/responses/MenuDetailResponse'
         401:
           description: Unauthorized
           content:
@@ -44,8 +44,8 @@ paths:
       - bearerAuth: []
     delete:
       tags:
-      - WebMenus
-      operationId: webMenuRemove
+      - Menus
+      operationId: menuRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -68,11 +68,11 @@ paths:
   /api/v1/admin/web/menus/:
     get:
       tags:
-      - WebMenus
-      operationId: webMenuList
+      - Menus
+      operationId: menuList
       responses:
         200:
-          $ref: '#/components/responses/WebMenuListResponse'
+          $ref: '#/components/responses/MenuListResponse'
         401:
           description: Unauthorized
           content:
@@ -90,17 +90,17 @@ paths:
   /api/v1/admin/web/menus/query:
     post:
       tags:
-      - WebMenus
-      operationId: webMenuQuery
+      - Menus
+      operationId: menuQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebMenuQueryItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/MenuQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/WebMenuQueryItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MenuQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -115,18 +115,18 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}:
+  /api/v1/admin/web/menus/{menuId}:
     get:
       tags:
-      - WebMenus
-      operationId: webMenuGet
+      - Menus
+      operationId: menuGet
       parameters:
-      - $ref: '#/components/parameters/WebMenuIdParameter'
+      - $ref: '#/components/parameters/MenuIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuDetailResponse'
+          $ref: '#/components/responses/MenuDetailResponse'
         404:
-          description: WebMenu not found
+          description: Menu not found
           content:
             application/json:
               schema:
@@ -147,17 +147,17 @@ paths:
       - bearerAuth: []
     put:
       tags:
-      - WebMenus
-      operationId: webMenuUpdate
+      - Menus
+      operationId: menuUpdate
       parameters:
-      - $ref: '#/components/parameters/WebMenuIdParameter'
+      - $ref: '#/components/parameters/MenuIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuUpdateRequestBody'
+        $ref: '#/components/requestBodies/MenuUpdateRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuDetailResponse'
+          $ref: '#/components/responses/MenuDetailResponse'
         404:
-          description: WebMenu not found
+          description: Menu not found
           content:
             application/json:
               schema:
@@ -178,17 +178,17 @@ paths:
       - bearerAuth: []
     patch:
       tags:
-      - WebMenus
-      operationId: webMenuPatch
+      - Menus
+      operationId: menuPatch
       parameters:
-      - $ref: '#/components/parameters/WebMenuIdParameter'
+      - $ref: '#/components/parameters/MenuIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuPatchRequestBody'
+        $ref: '#/components/requestBodies/MenuPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuDetailResponse'
+          $ref: '#/components/responses/MenuDetailResponse'
         404:
-          description: WebMenu not found
+          description: Menu not found
           content:
             application/json:
               schema:
@@ -207,18 +207,18 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items:
+  /api/v1/admin/web/menus/{menuId}/items:
     post:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemCreate
+      - MenuItems
+      operationId: menuItemCreate
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuItemRequestBody'
+        $ref: '#/components/requestBodies/MenuItemRequestBody'
       responses:
         201:
-          $ref: '#/components/responses/WebMenuItemDetailResponse'
+          $ref: '#/components/responses/MenuItemDetailResponse'
         401:
           description: Unauthorized
           content:
@@ -235,10 +235,10 @@ paths:
       - bearerAuth: []
     delete:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemRemove
+      - MenuItems
+      operationId: menuItemRemove
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -258,16 +258,16 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items/:
+  /api/v1/admin/web/menus/{menuId}/items/:
     get:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemList
+      - MenuItems
+      operationId: menuItemList
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemListResponse'
+          $ref: '#/components/responses/MenuItemListResponse'
         401:
           description: Unauthorized
           content:
@@ -282,22 +282,22 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items/query:
+  /api/v1/admin/web/menus/{menuId}/items/query:
     post:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemQuery
+      - MenuItems
+      operationId: menuItemQuery
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebMenuItemQueryItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemQueryItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MenuItemQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -312,19 +312,19 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}:
+  /api/v1/admin/web/menus/{menuId}/items/{menuItemId}:
     get:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemGet
+      - MenuItems
+      operationId: menuItemGet
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
-      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemDetailResponse'
+          $ref: '#/components/responses/MenuItemDetailResponse'
         404:
-          description: WebMenuItem not found
+          description: MenuItem not found
           content:
             application/json:
               schema:
@@ -345,18 +345,18 @@ paths:
       - bearerAuth: []
     put:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemUpdate
+      - MenuItems
+      operationId: menuItemUpdate
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
-      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuItemUpdateRequestBody'
+        $ref: '#/components/requestBodies/MenuItemUpdateRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemDetailResponse'
+          $ref: '#/components/responses/MenuItemDetailResponse'
         404:
-          description: WebMenuItem not found
+          description: MenuItem not found
           content:
             application/json:
               schema:
@@ -377,18 +377,18 @@ paths:
       - bearerAuth: []
     patch:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemPatch
+      - MenuItems
+      operationId: menuItemPatch
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
-      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuItemPatchRequestBody'
+        $ref: '#/components/requestBodies/MenuItemPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemDetailResponse'
+          $ref: '#/components/responses/MenuItemDetailResponse'
         404:
-          description: WebMenuItem not found
+          description: MenuItem not found
           content:
             application/json:
               schema:
@@ -407,21 +407,21 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move:
+  /api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move:
     post:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemMove
+      - MenuItems
+      operationId: menuItemMove
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
-      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuItemMoveRequestBody'
+        $ref: '#/components/requestBodies/MenuItemMoveRequestBody'
       responses:
         204:
-          description: WebMenuItem moved
+          description: MenuItem moved
         404:
-          description: WebMenuItem not found
+          description: MenuItem not found
           content:
             application/json:
               schema:
@@ -443,13 +443,13 @@ paths:
   /api/v1/admin/web/metadata:
     post:
       tags:
-      - WebMetadata
-      operationId: webMetadataCreate
+      - Metadata
+      operationId: metadataCreate
       requestBody:
-        $ref: '#/components/requestBodies/WebMetadataRequestBody'
+        $ref: '#/components/requestBodies/MetadataRequestBody'
       responses:
         201:
-          $ref: '#/components/responses/WebMetadataDetailResponse'
+          $ref: '#/components/responses/MetadataDetailResponse'
         401:
           description: Unauthorized
           content:
@@ -466,8 +466,8 @@ paths:
       - bearerAuth: []
     delete:
       tags:
-      - WebMetadata
-      operationId: webMetadataRemove
+      - Metadata
+      operationId: metadataRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -490,11 +490,11 @@ paths:
   /api/v1/admin/web/metadata/:
     get:
       tags:
-      - WebMetadata
-      operationId: webMetadataList
+      - Metadata
+      operationId: metadataList
       responses:
         200:
-          $ref: '#/components/responses/WebMetadataListResponse'
+          $ref: '#/components/responses/MetadataListResponse'
         401:
           description: Unauthorized
           content:
@@ -512,17 +512,17 @@ paths:
   /api/v1/admin/web/metadata/query:
     post:
       tags:
-      - WebMetadata
-      operationId: webMetadataQuery
+      - Metadata
+      operationId: metadataQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebMetadataQueryItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/MetadataQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/WebMetadataQueryItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MetadataQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -540,13 +540,13 @@ paths:
   /api/v1/admin/web/metadata/resolve:
     post:
       tags:
-      - WebMetadata
-      operationId: webMetadataResolve
+      - Metadata
+      operationId: metadataResolve
       requestBody:
-        $ref: '#/components/requestBodies/WebMetadataResolveRequestBody'
+        $ref: '#/components/requestBodies/MetadataResolveRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMetadataResolveResponse'
+          $ref: '#/components/responses/MetadataResolveResponse'
         401:
           description: Unauthorized
           content:
@@ -561,18 +561,18 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/metadata/{webMetadataId}:
+  /api/v1/admin/web/metadata/{metadataId}:
     get:
       tags:
-      - WebMetadata
-      operationId: webMetadataGet
+      - Metadata
+      operationId: metadataGet
       parameters:
-      - $ref: '#/components/parameters/WebMetadataIdParameter'
+      - $ref: '#/components/parameters/MetadataIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/WebMetadataDetailResponse'
+          $ref: '#/components/responses/MetadataDetailResponse'
         404:
-          description: WebMetadata not found
+          description: Metadata not found
           content:
             application/json:
               schema:
@@ -593,17 +593,17 @@ paths:
       - bearerAuth: []
     put:
       tags:
-      - WebMetadata
-      operationId: webMetadataUpdate
+      - Metadata
+      operationId: metadataUpdate
       parameters:
-      - $ref: '#/components/parameters/WebMetadataIdParameter'
+      - $ref: '#/components/parameters/MetadataIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMetadataUpdateRequestBody'
+        $ref: '#/components/requestBodies/MetadataUpdateRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMetadataDetailResponse'
+          $ref: '#/components/responses/MetadataDetailResponse'
         404:
-          description: WebMetadata not found
+          description: Metadata not found
           content:
             application/json:
               schema:
@@ -624,17 +624,17 @@ paths:
       - bearerAuth: []
     patch:
       tags:
-      - WebMetadata
-      operationId: webMetadataPatch
+      - Metadata
+      operationId: metadataPatch
       parameters:
-      - $ref: '#/components/parameters/WebMetadataIdParameter'
+      - $ref: '#/components/parameters/MetadataIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMetadataPatchRequestBody'
+        $ref: '#/components/requestBodies/MetadataPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMetadataDetailResponse'
+          $ref: '#/components/responses/MetadataDetailResponse'
         404:
-          description: WebMetadata not found
+          description: Metadata not found
           content:
             application/json:
               schema:
@@ -656,13 +656,13 @@ paths:
   /api/v1/admin/web/pages:
     post:
       tags:
-      - WebPages
-      operationId: webPageCreate
+      - Pages
+      operationId: pageCreate
       requestBody:
-        $ref: '#/components/requestBodies/WebPageRequestBody'
+        $ref: '#/components/requestBodies/PageRequestBody'
       responses:
         201:
-          $ref: '#/components/responses/WebPageDetailResponse'
+          $ref: '#/components/responses/PageDetailResponse'
         401:
           description: Unauthorized
           content:
@@ -679,8 +679,8 @@ paths:
       - bearerAuth: []
     delete:
       tags:
-      - WebPages
-      operationId: webPageRemove
+      - Pages
+      operationId: pageRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -703,11 +703,11 @@ paths:
   /api/v1/admin/web/pages/:
     get:
       tags:
-      - WebPages
-      operationId: webPageList
+      - Pages
+      operationId: pageList
       responses:
         200:
-          $ref: '#/components/responses/WebPageListResponse'
+          $ref: '#/components/responses/PageListResponse'
         401:
           description: Unauthorized
           content:
@@ -725,17 +725,17 @@ paths:
   /api/v1/admin/web/pages/query:
     post:
       tags:
-      - WebPages
-      operationId: webPageQuery
+      - Pages
+      operationId: pageQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebPageQueryItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/PageQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/WebPageQueryItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/PageQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -750,18 +750,18 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/pages/{webPageId}:
+  /api/v1/admin/web/pages/{pageId}:
     get:
       tags:
-      - WebPages
-      operationId: webPageGet
+      - Pages
+      operationId: pageGet
       parameters:
-      - $ref: '#/components/parameters/WebPageIdParameter'
+      - $ref: '#/components/parameters/PageIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/WebPageDetailResponse'
+          $ref: '#/components/responses/PageDetailResponse'
         404:
-          description: WebPage not found
+          description: Page not found
           content:
             application/json:
               schema:
@@ -782,17 +782,17 @@ paths:
       - bearerAuth: []
     put:
       tags:
-      - WebPages
-      operationId: webPageUpdate
+      - Pages
+      operationId: pageUpdate
       parameters:
-      - $ref: '#/components/parameters/WebPageIdParameter'
+      - $ref: '#/components/parameters/PageIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebPageUpdateRequestBody'
+        $ref: '#/components/requestBodies/PageUpdateRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebPageDetailResponse'
+          $ref: '#/components/responses/PageDetailResponse'
         404:
-          description: WebPage not found
+          description: Page not found
           content:
             application/json:
               schema:
@@ -813,17 +813,17 @@ paths:
       - bearerAuth: []
     patch:
       tags:
-      - WebPages
-      operationId: webPagePatch
+      - Pages
+      operationId: pagePatch
       parameters:
-      - $ref: '#/components/parameters/WebPageIdParameter'
+      - $ref: '#/components/parameters/PageIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebPagePatchRequestBody'
+        $ref: '#/components/requestBodies/PagePatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebPageDetailResponse'
+          $ref: '#/components/responses/PageDetailResponse'
         404:
-          description: WebPage not found
+          description: Page not found
           content:
             application/json:
               schema:
@@ -845,11 +845,11 @@ paths:
   /api/v1/admin/web/settings:
     get:
       tags:
-      - WebSettings
-      operationId: webSettingsGet
+      - Settings
+      operationId: settingsGet
       responses:
         200:
-          $ref: '#/components/responses/WebSettingsDetailResponse'
+          $ref: '#/components/responses/SettingsDetailResponse'
         401:
           description: Unauthorized
           content:
@@ -866,13 +866,13 @@ paths:
       - bearerAuth: []
     put:
       tags:
-      - WebSettings
-      operationId: webSettingsUpdate
+      - Settings
+      operationId: settingsUpdate
       requestBody:
-        $ref: '#/components/requestBodies/WebSettingsUpdateRequestBody'
+        $ref: '#/components/requestBodies/SettingsUpdateRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebSettingsDetailResponse'
+          $ref: '#/components/responses/SettingsDetailResponse'
         401:
           description: Unauthorized
           content:
@@ -889,7 +889,7 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    WebMenuCreateSchema:
+    MenuCreateSchema:
       type: object
       properties:
         key:
@@ -901,16 +901,16 @@ components:
           examples:
           - Header menu
         notes:
-          $ref: '#/components/schemas/WebMenuNotesField'
+          $ref: '#/components/schemas/MenuNotesField'
       required:
       - key
       - name
       minProperties: 2
-    WebMenuNotesField:
+    MenuNotesField:
       type: string
       examples:
       - Primary site navigation.
-    WebMenuDetailSchema:
+    MenuDetailSchema:
       type: object
       properties:
         id:
@@ -926,7 +926,7 @@ components:
           examples:
           - Header menu
         notes:
-          $ref: '#/components/schemas/WebMenuNotesField'
+          $ref: '#/components/schemas/MenuNotesField'
         createdAt:
           type: number
           format: double
@@ -1009,25 +1009,25 @@ components:
       required:
       - ids
       minProperties: 1
-    WebMenuListSchema:
+    MenuListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/WebMenuListItemSchema'
+        $ref: '#/components/schemas/MenuListItemSchema'
       minItems: 0
       uniqueItems: false
-    WebMenuListItemSchema:
+    MenuListItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebMenuIdField'
+          $ref: '#/components/schemas/MenuIdField'
         key:
-          $ref: '#/components/schemas/WebMenuKeyField'
+          $ref: '#/components/schemas/MenuKeyField'
         name:
-          $ref: '#/components/schemas/WebMenuNameField'
+          $ref: '#/components/schemas/MenuNameField'
         createdAt:
-          $ref: '#/components/schemas/WebMenuCreatedAtField'
+          $ref: '#/components/schemas/MenuCreatedAtField'
         updatedAt:
-          $ref: '#/components/schemas/WebMenuUpdatedAtField'
+          $ref: '#/components/schemas/MenuUpdatedAtField'
       required:
       - id
       - key
@@ -1035,29 +1035,29 @@ components:
       - createdAt
       - updatedAt
       minProperties: 5
-    WebMenuIdField:
+    MenuIdField:
       type: string
       examples:
       - wm_header
-    WebMenuKeyField:
+    MenuKeyField:
       type: string
       examples:
       - header
-    WebMenuNameField:
+    MenuNameField:
       type: string
       examples:
       - Header menu
-    WebMenuCreatedAtField:
+    MenuCreatedAtField:
       type: number
       format: double
       examples:
       - 1.76e+9
-    WebMenuUpdatedAtField:
+    MenuUpdatedAtField:
       type: number
       format: double
       examples:
       - 1.76e+9
-    WebMenuQueryItemSearchRequestQuerySchema:
+    MenuQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1129,18 +1129,18 @@ components:
       type: string
       examples:
       - foo
-    WebMenuQueryItemSearchSchema:
+    MenuQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebMenuQueryItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/MenuQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/WebMenuQueryItemSchema'
+                $ref: '#/components/schemas/MenuQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -1155,7 +1155,7 @@ components:
       - query
       - data
       minProperties: 2
-    WebMenuQueryItemSearchResponseQuerySchema:
+    MenuQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1206,19 +1206,19 @@ components:
       - size
       - number
       minProperties: 2
-    WebMenuQueryItemSchema:
+    MenuQueryItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebMenuIdField'
+          $ref: '#/components/schemas/MenuIdField'
         key:
-          $ref: '#/components/schemas/WebMenuKeyField'
+          $ref: '#/components/schemas/MenuKeyField'
         name:
-          $ref: '#/components/schemas/WebMenuNameField'
+          $ref: '#/components/schemas/MenuNameField'
         createdAt:
-          $ref: '#/components/schemas/WebMenuCreatedAtField'
+          $ref: '#/components/schemas/MenuCreatedAtField'
         updatedAt:
-          $ref: '#/components/schemas/WebMenuUpdatedAtField'
+          $ref: '#/components/schemas/MenuUpdatedAtField'
       required:
       - id
       - key
@@ -1226,17 +1226,17 @@ components:
       - createdAt
       - updatedAt
       minProperties: 5
-    WebMenuPatchSchema:
+    MenuPatchSchema:
       type: object
       properties:
         key:
-          $ref: '#/components/schemas/WebMenuKeyField'
+          $ref: '#/components/schemas/MenuKeyField'
         name:
-          $ref: '#/components/schemas/WebMenuNameField'
+          $ref: '#/components/schemas/MenuNameField'
         notes:
-          $ref: '#/components/schemas/WebMenuNotesField'
+          $ref: '#/components/schemas/MenuNotesField'
       minProperties: 0
-    WebMenuItemCreateSchema:
+    MenuItemCreateSchema:
       type: object
       properties:
         label:
@@ -1260,9 +1260,9 @@ components:
           examples:
           - ''
         authentication:
-          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
+          $ref: '#/components/schemas/MenuItemAuthenticationField'
         notes:
-          $ref: '#/components/schemas/WebMenuItemNotesField'
+          $ref: '#/components/schemas/MenuItemNotesField'
       required:
       - label
       - url
@@ -1270,15 +1270,15 @@ components:
       - isBlank
       - permission
       minProperties: 5
-    WebMenuItemAuthenticationField:
+    MenuItemAuthenticationField:
       type: string
       examples:
       - any
-    WebMenuItemNotesField:
+    MenuItemNotesField:
       type: string
       examples:
       - Visible for all visitors.
-    WebMenuItemDetailSchema:
+    MenuItemDetailSchema:
       type: object
       properties:
         id:
@@ -1314,7 +1314,7 @@ components:
           examples:
           - any
         notes:
-          $ref: '#/components/schemas/WebMenuItemNotesField'
+          $ref: '#/components/schemas/MenuItemNotesField'
         createdAt:
           type: number
           format: double
@@ -1337,35 +1337,35 @@ components:
       - createdAt
       - updatedAt
       minProperties: 10
-    WebMenuItemListSchema:
+    MenuItemListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/WebMenuItemListItemSchema'
+        $ref: '#/components/schemas/MenuItemListItemSchema'
       minItems: 0
       uniqueItems: false
-    WebMenuItemListItemSchema:
+    MenuItemListItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebMenuItemIdField'
+          $ref: '#/components/schemas/MenuItemIdField'
         menuId:
-          $ref: '#/components/schemas/WebMenuIdField'
+          $ref: '#/components/schemas/MenuIdField'
         label:
-          $ref: '#/components/schemas/WebMenuItemLabelField'
+          $ref: '#/components/schemas/MenuItemLabelField'
         url:
-          $ref: '#/components/schemas/WebMenuItemURLField'
+          $ref: '#/components/schemas/MenuItemURLField'
         priority:
-          $ref: '#/components/schemas/WebMenuItemPriorityField'
+          $ref: '#/components/schemas/MenuItemPriorityField'
         isBlank:
-          $ref: '#/components/schemas/WebMenuItemIsBlankField'
+          $ref: '#/components/schemas/MenuItemIsBlankField'
         permission:
-          $ref: '#/components/schemas/WebMenuItemPermissionField'
+          $ref: '#/components/schemas/MenuItemPermissionField'
         authentication:
-          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
+          $ref: '#/components/schemas/MenuItemAuthenticationField'
         createdAt:
-          $ref: '#/components/schemas/WebMenuItemCreatedAtField'
+          $ref: '#/components/schemas/MenuItemCreatedAtField'
         updatedAt:
-          $ref: '#/components/schemas/WebMenuItemUpdatedAtField'
+          $ref: '#/components/schemas/MenuItemUpdatedAtField'
       required:
       - id
       - menuId
@@ -1378,41 +1378,41 @@ components:
       - createdAt
       - updatedAt
       minProperties: 10
-    WebMenuItemIdField:
+    MenuItemIdField:
       type: string
       examples:
       - wmi_home
-    WebMenuItemLabelField:
+    MenuItemLabelField:
       type: string
       examples:
       - Home
-    WebMenuItemURLField:
+    MenuItemURLField:
       type: string
       examples:
       - /
-    WebMenuItemPriorityField:
+    MenuItemPriorityField:
       type: integer
       examples:
       - 10
-    WebMenuItemIsBlankField:
+    MenuItemIsBlankField:
       type: boolean
       examples:
       - false
-    WebMenuItemPermissionField:
+    MenuItemPermissionField:
       type: string
       examples:
       - ''
-    WebMenuItemCreatedAtField:
+    MenuItemCreatedAtField:
       type: number
       format: double
       examples:
       - 1.76e+9
-    WebMenuItemUpdatedAtField:
+    MenuItemUpdatedAtField:
       type: number
       format: double
       examples:
       - 1.76e+9
-    WebMenuItemQueryItemSearchRequestQuerySchema:
+    MenuItemQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1453,18 +1453,18 @@ components:
       required:
       - filters
       minProperties: 1
-    WebMenuItemQueryItemSearchSchema:
+    MenuItemQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebMenuItemQueryItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/WebMenuItemQueryItemSchema'
+                $ref: '#/components/schemas/MenuItemQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -1479,7 +1479,7 @@ components:
       - query
       - data
       minProperties: 2
-    WebMenuItemQueryItemSearchResponseQuerySchema:
+    MenuItemQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1521,29 +1521,29 @@ components:
       - page
       - filters
       minProperties: 2
-    WebMenuItemQueryItemSchema:
+    MenuItemQueryItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebMenuItemIdField'
+          $ref: '#/components/schemas/MenuItemIdField'
         menuId:
-          $ref: '#/components/schemas/WebMenuIdField'
+          $ref: '#/components/schemas/MenuIdField'
         label:
-          $ref: '#/components/schemas/WebMenuItemLabelField'
+          $ref: '#/components/schemas/MenuItemLabelField'
         url:
-          $ref: '#/components/schemas/WebMenuItemURLField'
+          $ref: '#/components/schemas/MenuItemURLField'
         priority:
-          $ref: '#/components/schemas/WebMenuItemPriorityField'
+          $ref: '#/components/schemas/MenuItemPriorityField'
         isBlank:
-          $ref: '#/components/schemas/WebMenuItemIsBlankField'
+          $ref: '#/components/schemas/MenuItemIsBlankField'
         permission:
-          $ref: '#/components/schemas/WebMenuItemPermissionField'
+          $ref: '#/components/schemas/MenuItemPermissionField'
         authentication:
-          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
+          $ref: '#/components/schemas/MenuItemAuthenticationField'
         createdAt:
-          $ref: '#/components/schemas/WebMenuItemCreatedAtField'
+          $ref: '#/components/schemas/MenuItemCreatedAtField'
         updatedAt:
-          $ref: '#/components/schemas/WebMenuItemUpdatedAtField'
+          $ref: '#/components/schemas/MenuItemUpdatedAtField'
       required:
       - id
       - menuId
@@ -1556,25 +1556,25 @@ components:
       - createdAt
       - updatedAt
       minProperties: 10
-    WebMenuItemPatchSchema:
+    MenuItemPatchSchema:
       type: object
       properties:
         label:
-          $ref: '#/components/schemas/WebMenuItemLabelField'
+          $ref: '#/components/schemas/MenuItemLabelField'
         url:
-          $ref: '#/components/schemas/WebMenuItemURLField'
+          $ref: '#/components/schemas/MenuItemURLField'
         priority:
-          $ref: '#/components/schemas/WebMenuItemPriorityField'
+          $ref: '#/components/schemas/MenuItemPriorityField'
         isBlank:
-          $ref: '#/components/schemas/WebMenuItemIsBlankField'
+          $ref: '#/components/schemas/MenuItemIsBlankField'
         permission:
-          $ref: '#/components/schemas/WebMenuItemPermissionField'
+          $ref: '#/components/schemas/MenuItemPermissionField'
         authentication:
-          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
+          $ref: '#/components/schemas/MenuItemAuthenticationField'
         notes:
-          $ref: '#/components/schemas/WebMenuItemNotesField'
+          $ref: '#/components/schemas/MenuItemNotesField'
       minProperties: 0
-    WebMenuItemMoveSchema:
+    MenuItemMoveSchema:
       type: object
       properties:
         beforeItemId:
@@ -1584,7 +1584,7 @@ components:
       required:
       - beforeItemId
       minProperties: 1
-    WebMetadataCreateSchema:
+    MetadataCreateSchema:
       type: object
       properties:
         slug:
@@ -1592,11 +1592,11 @@ components:
           examples:
           - homepage
         template:
-          $ref: '#/components/schemas/WebMetadataTemplateField'
+          $ref: '#/components/schemas/MetadataTemplateField'
         referenceType:
-          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
         referenceId:
-          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+          $ref: '#/components/schemas/MetadataReferenceIDField'
         publicationDate:
           type:
           - number
@@ -1626,7 +1626,7 @@ components:
           - string
           - 'null'
         noIndex:
-          $ref: '#/components/schemas/WebMetadataNoIndexField'
+          $ref: '#/components/schemas/MetadataNoIndexField'
         primaryKeyword:
           type:
           - string
@@ -1647,23 +1647,23 @@ components:
       - slug
       - status
       minProperties: 2
-    WebMetadataTemplateField:
+    MetadataTemplateField:
       type: string
       examples:
       - default
-    WebMetadataReferenceTypeField:
+    MetadataReferenceTypeField:
       type: string
       examples:
       - web.page
-    WebMetadataReferenceIDField:
+    MetadataReferenceIDField:
       type: string
       examples:
       - wp_home
-    WebMetadataNoIndexField:
+    MetadataNoIndexField:
       type: boolean
       examples:
       - false
-    WebMetadataDetailSchema:
+    MetadataDetailSchema:
       type: object
       properties:
         id:
@@ -1671,9 +1671,9 @@ components:
           examples:
           - metadata_homepage
         referenceType:
-          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
         referenceId:
-          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+          $ref: '#/components/schemas/MetadataReferenceIDField'
         slug:
           type: string
           examples:
@@ -1695,7 +1695,7 @@ components:
           examples:
           - published
         availability:
-          $ref: '#/components/schemas/WebMetadataAvailabilityField'
+          $ref: '#/components/schemas/MetadataAvailabilityField'
         title:
           type:
           - string
@@ -1753,7 +1753,7 @@ components:
       - createdAt
       - updatedAt
       minProperties: 9
-    WebMetadataAvailabilityField:
+    MetadataAvailabilityField:
       type: string
       enum:
       - draft
@@ -1763,23 +1763,23 @@ components:
       - archived
       examples:
       - live
-    WebMetadataListSchema:
+    MetadataListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/WebMetadataListItemSchema'
+        $ref: '#/components/schemas/MetadataListItemSchema'
       minItems: 0
       uniqueItems: false
-    WebMetadataListItemSchema:
+    MetadataListItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebMetadataIdField'
+          $ref: '#/components/schemas/MetadataIdField'
         referenceType:
-          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
         referenceId:
-          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+          $ref: '#/components/schemas/MetadataReferenceIDField'
         slug:
-          $ref: '#/components/schemas/WebMetadataSlugField'
+          $ref: '#/components/schemas/MetadataSlugField'
         publicationDate:
           type:
           - number
@@ -1789,15 +1789,15 @@ components:
           - number
           - 'null'
         status:
-          $ref: '#/components/schemas/WebMetadataStatusField'
+          $ref: '#/components/schemas/MetadataStatusField'
         availability:
-          $ref: '#/components/schemas/WebMetadataAvailabilityField'
+          $ref: '#/components/schemas/MetadataAvailabilityField'
         title:
-          $ref: '#/components/schemas/WebMetadataTitleField'
+          $ref: '#/components/schemas/MetadataTitleField'
         createdAt:
-          $ref: '#/components/schemas/WebMetadataTimestampField'
+          $ref: '#/components/schemas/MetadataTimestampField'
         updatedAt:
-          $ref: '#/components/schemas/WebMetadataTimestampField'
+          $ref: '#/components/schemas/MetadataTimestampField'
       required:
       - id
       - slug
@@ -1807,28 +1807,28 @@ components:
       - createdAt
       - updatedAt
       minProperties: 7
-    WebMetadataIdField:
+    MetadataIdField:
       type: string
       examples:
       - metadata_homepage
-    WebMetadataSlugField:
+    MetadataSlugField:
       type: string
       examples:
       - homepage
-    WebMetadataStatusField:
+    MetadataStatusField:
       type: string
       examples:
       - draft
-    WebMetadataTitleField:
+    MetadataTitleField:
       type: string
       examples:
       - Homepage metadata title
-    WebMetadataTimestampField:
+    MetadataTimestampField:
       type: number
       format: double
       examples:
       - 1.76e+9
-    WebMetadataQueryItemSearchRequestQuerySchema:
+    MetadataQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1867,23 +1867,23 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
             referenceType:
-              $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+              $ref: '#/components/schemas/MetadataReferenceTypeField'
           minProperties: 0
       required:
       - filters
       minProperties: 1
-    WebMetadataQueryItemSearchSchema:
+    MetadataQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebMetadataQueryItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/MetadataQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/WebMetadataQueryItemSchema'
+                $ref: '#/components/schemas/MetadataQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -1898,7 +1898,7 @@ components:
       - query
       - data
       minProperties: 2
-    WebMetadataQueryItemSearchResponseQuerySchema:
+    MetadataQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1937,23 +1937,23 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
             referenceType:
-              $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+              $ref: '#/components/schemas/MetadataReferenceTypeField'
           minProperties: 0
       required:
       - page
       - filters
       minProperties: 2
-    WebMetadataQueryItemSchema:
+    MetadataQueryItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebMetadataIdField'
+          $ref: '#/components/schemas/MetadataIdField'
         referenceType:
-          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
         referenceId:
-          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+          $ref: '#/components/schemas/MetadataReferenceIDField'
         slug:
-          $ref: '#/components/schemas/WebMetadataSlugField'
+          $ref: '#/components/schemas/MetadataSlugField'
         publicationDate:
           type:
           - number
@@ -1963,15 +1963,15 @@ components:
           - number
           - 'null'
         status:
-          $ref: '#/components/schemas/WebMetadataStatusField'
+          $ref: '#/components/schemas/MetadataStatusField'
         availability:
-          $ref: '#/components/schemas/WebMetadataAvailabilityField'
+          $ref: '#/components/schemas/MetadataAvailabilityField'
         title:
-          $ref: '#/components/schemas/WebMetadataTitleField'
+          $ref: '#/components/schemas/MetadataTitleField'
         createdAt:
-          $ref: '#/components/schemas/WebMetadataTimestampField'
+          $ref: '#/components/schemas/MetadataTimestampField'
         updatedAt:
-          $ref: '#/components/schemas/WebMetadataTimestampField'
+          $ref: '#/components/schemas/MetadataTimestampField'
       required:
       - id
       - slug
@@ -1981,7 +1981,7 @@ components:
       - createdAt
       - updatedAt
       minProperties: 7
-    WebMetadataResolveRequestSchema:
+    MetadataResolveRequestSchema:
       type: object
       properties:
         referenceType:
@@ -2000,13 +2000,13 @@ components:
       - referenceType
       - referenceIds
       minProperties: 2
-    WebMetadataResolveSchema:
+    MetadataResolveSchema:
       type: array
       items:
-        $ref: '#/components/schemas/WebMetadataResolveItemSchema'
+        $ref: '#/components/schemas/MetadataResolveItemSchema'
       minItems: 0
       uniqueItems: false
-    WebMetadataResolveItemSchema:
+    MetadataResolveItemSchema:
       type: object
       properties:
         referenceId:
@@ -2031,7 +2031,7 @@ components:
           examples:
           - draft
         availability:
-          $ref: '#/components/schemas/WebMetadataAvailabilityField'
+          $ref: '#/components/schemas/MetadataAvailabilityField'
       required:
       - referenceId
       - slug
@@ -2039,17 +2039,17 @@ components:
       - status
       - availability
       minProperties: 5
-    WebMetadataPatchSchema:
+    MetadataPatchSchema:
       type: object
       properties:
         slug:
-          $ref: '#/components/schemas/WebMetadataSlugField'
+          $ref: '#/components/schemas/MetadataSlugField'
         template:
-          $ref: '#/components/schemas/WebMetadataTemplateField'
+          $ref: '#/components/schemas/MetadataTemplateField'
         referenceType:
-          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
         referenceId:
-          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+          $ref: '#/components/schemas/MetadataReferenceIDField'
         publicationDate:
           type:
           - number
@@ -2059,7 +2059,7 @@ components:
           - number
           - 'null'
         status:
-          $ref: '#/components/schemas/WebMetadataStatusField'
+          $ref: '#/components/schemas/MetadataStatusField'
         title:
           type:
           - string
@@ -2077,7 +2077,7 @@ components:
           - string
           - 'null'
         noIndex:
-          $ref: '#/components/schemas/WebMetadataNoIndexField'
+          $ref: '#/components/schemas/MetadataNoIndexField'
         primaryKeyword:
           type:
           - string
@@ -2095,7 +2095,7 @@ components:
           - string
           - 'null'
       minProperties: 0
-    WebPageCreateSchema:
+    PageCreateSchema:
       type: object
       properties:
         title:
@@ -2111,17 +2111,17 @@ components:
           examples:
           - <h1>Homepage</h1>
         imageAssetId:
-          $ref: '#/components/schemas/WebPageImageAssetIdField'
+          $ref: '#/components/schemas/PageImageAssetIdField'
       required:
       - title
       - excerpt
       - content
       minProperties: 3
-    WebPageImageAssetIdField:
+    PageImageAssetIdField:
       type: string
       examples:
       - media_asset_1
-    WebPageDetailSchema:
+    PageDetailSchema:
       type: object
       properties:
         id:
@@ -2141,9 +2141,9 @@ components:
           examples:
           - <h1>Homepage</h1>
         imageAssetId:
-          $ref: '#/components/schemas/WebPageImageAssetIdField'
+          $ref: '#/components/schemas/PageImageAssetIdField'
         metadata:
-          $ref: '#/components/schemas/WebMetadataDetailSchema'
+          $ref: '#/components/schemas/MetadataDetailSchema'
         createdAt:
           type: number
           format: double
@@ -2163,27 +2163,27 @@ components:
       - createdAt
       - updatedAt
       minProperties: 7
-    WebPageListSchema:
+    PageListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/WebPageListItemSchema'
+        $ref: '#/components/schemas/PageListItemSchema'
       minItems: 0
       uniqueItems: false
-    WebPageListItemSchema:
+    PageListItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebPageIdField'
+          $ref: '#/components/schemas/PageIdField'
         title:
-          $ref: '#/components/schemas/WebPageTitleField'
+          $ref: '#/components/schemas/PageTitleField'
         excerpt:
-          $ref: '#/components/schemas/WebPageExcerptField'
+          $ref: '#/components/schemas/PageExcerptField'
         imageAssetId:
-          $ref: '#/components/schemas/WebPageImageAssetIdField'
+          $ref: '#/components/schemas/PageImageAssetIdField'
         createdAt:
-          $ref: '#/components/schemas/WebPageCreatedAtField'
+          $ref: '#/components/schemas/PageCreatedAtField'
         updatedAt:
-          $ref: '#/components/schemas/WebPageUpdatedAtField'
+          $ref: '#/components/schemas/PageUpdatedAtField'
       required:
       - id
       - title
@@ -2191,29 +2191,29 @@ components:
       - createdAt
       - updatedAt
       minProperties: 5
-    WebPageIdField:
+    PageIdField:
       type: string
       examples:
       - wp_home
-    WebPageTitleField:
+    PageTitleField:
       type: string
       examples:
       - Homepage
-    WebPageExcerptField:
+    PageExcerptField:
       type: string
       examples:
       - Short page summary.
-    WebPageCreatedAtField:
+    PageCreatedAtField:
       type: number
       format: double
       examples:
       - 1.76e+9
-    WebPageUpdatedAtField:
+    PageUpdatedAtField:
       type: number
       format: double
       examples:
       - 1.76e+9
-    WebPageQueryItemSearchRequestQuerySchema:
+    PageQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -2251,18 +2251,18 @@ components:
       required:
       - filters
       minProperties: 1
-    WebPageQueryItemSearchSchema:
+    PageQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebPageQueryItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/PageQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/WebPageQueryItemSchema'
+                $ref: '#/components/schemas/PageQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -2277,7 +2277,7 @@ components:
       - query
       - data
       minProperties: 2
-    WebPageQueryItemSearchResponseQuerySchema:
+    PageQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -2316,21 +2316,21 @@ components:
       - page
       - filters
       minProperties: 2
-    WebPageQueryItemSchema:
+    PageQueryItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebPageIdField'
+          $ref: '#/components/schemas/PageIdField'
         title:
-          $ref: '#/components/schemas/WebPageTitleField'
+          $ref: '#/components/schemas/PageTitleField'
         excerpt:
-          $ref: '#/components/schemas/WebPageExcerptField'
+          $ref: '#/components/schemas/PageExcerptField'
         imageAssetId:
-          $ref: '#/components/schemas/WebPageImageAssetIdField'
+          $ref: '#/components/schemas/PageImageAssetIdField'
         createdAt:
-          $ref: '#/components/schemas/WebPageCreatedAtField'
+          $ref: '#/components/schemas/PageCreatedAtField'
         updatedAt:
-          $ref: '#/components/schemas/WebPageUpdatedAtField'
+          $ref: '#/components/schemas/PageUpdatedAtField'
       required:
       - id
       - title
@@ -2338,23 +2338,23 @@ components:
       - createdAt
       - updatedAt
       minProperties: 5
-    WebPagePatchSchema:
+    PagePatchSchema:
       type: object
       properties:
         title:
-          $ref: '#/components/schemas/WebPageTitleField'
+          $ref: '#/components/schemas/PageTitleField'
         excerpt:
-          $ref: '#/components/schemas/WebPageExcerptField'
+          $ref: '#/components/schemas/PageExcerptField'
         content:
-          $ref: '#/components/schemas/WebPageContentField'
+          $ref: '#/components/schemas/PageContentField'
         imageAssetId:
-          $ref: '#/components/schemas/WebPageImageAssetIdField'
+          $ref: '#/components/schemas/PageImageAssetIdField'
       minProperties: 0
-    WebPageContentField:
+    PageContentField:
       type: string
       examples:
       - <h1>Homepage</h1>
-    WebSettingsDetailSchema:
+    SettingsDetailSchema:
       type: object
       properties:
         logo:
@@ -2390,7 +2390,7 @@ components:
           examples:
           - Merriweather
         homePageId:
-          $ref: '#/components/schemas/WebSettingsHomePageIDField'
+          $ref: '#/components/schemas/SettingsHomePageIDField'
         locale:
           type: string
           examples:
@@ -2436,11 +2436,11 @@ components:
       - css
       - js
       minProperties: 15
-    WebSettingsHomePageIDField:
+    SettingsHomePageIDField:
       type: string
       examples:
       - web_page_1
-    WebSettingsUpdateSchema:
+    SettingsUpdateSchema:
       type: object
       properties:
         id:
@@ -2480,7 +2480,7 @@ components:
           examples:
           - Merriweather
         homePageId:
-          $ref: '#/components/schemas/WebSettingsHomePageIDField'
+          $ref: '#/components/schemas/SettingsHomePageIDField'
         locale:
           type: string
           examples:
@@ -2528,134 +2528,134 @@ components:
       - js
       minProperties: 16
   responses:
-    WebMenuDetailResponse:
-      description: WebMenu response
+    MenuDetailResponse:
+      description: Menu response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuDetailSchema'
+            $ref: '#/components/schemas/MenuDetailSchema'
     NoContentResponse:
       description: Delete succeeded
-    WebMenuListResponse:
-      description: WebMenu list response
+    MenuListResponse:
+      description: Menu list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuListSchema'
-    WebMenuQueryItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/MenuListSchema'
+    MenuQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuQueryItemSearchSchema'
-    WebMenuItemDetailResponse:
-      description: WebMenuItem response
+            $ref: '#/components/schemas/MenuQueryItemSearchSchema'
+    MenuItemDetailResponse:
+      description: MenuItem response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemDetailSchema'
-    WebMenuItemListResponse:
-      description: WebMenuItem list response
+            $ref: '#/components/schemas/MenuItemDetailSchema'
+    MenuItemListResponse:
+      description: MenuItem list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemListSchema'
-    WebMenuItemQueryItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/MenuItemListSchema'
+    MenuItemQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemQueryItemSearchSchema'
-    WebMetadataDetailResponse:
-      description: WebMetadata response
+            $ref: '#/components/schemas/MenuItemQueryItemSearchSchema'
+    MetadataDetailResponse:
+      description: Metadata response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataDetailSchema'
-    WebMetadataListResponse:
-      description: WebMetadata list response
+            $ref: '#/components/schemas/MetadataDetailSchema'
+    MetadataListResponse:
+      description: Metadata list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataListSchema'
-    WebMetadataQueryItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/MetadataListSchema'
+    MetadataQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataQueryItemSearchSchema'
-    WebMetadataResolveResponse:
-      description: WebMetadata resolve response
+            $ref: '#/components/schemas/MetadataQueryItemSearchSchema'
+    MetadataResolveResponse:
+      description: Metadata resolve response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataResolveSchema'
-    WebPageDetailResponse:
-      description: WebPage response
+            $ref: '#/components/schemas/MetadataResolveSchema'
+    PageDetailResponse:
+      description: Page response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPageDetailSchema'
-    WebPageListResponse:
-      description: WebPage list response
+            $ref: '#/components/schemas/PageDetailSchema'
+    PageListResponse:
+      description: Page list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPageListSchema'
-    WebPageQueryItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/PageListSchema'
+    PageQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPageQueryItemSearchSchema'
-    WebSettingsDetailResponse:
-      description: WebSettings response
+            $ref: '#/components/schemas/PageQueryItemSearchSchema'
+    SettingsDetailResponse:
+      description: Settings response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebSettingsDetailSchema'
+            $ref: '#/components/schemas/SettingsDetailSchema'
   parameters:
-    WebMenuIdParameter:
-      name: webMenuId
+    MenuIdParameter:
+      name: menuId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebMenuIdField'
-      description: WebMenu id
-    WebMenuItemMenuIdParameter:
-      name: webMenuId
+        $ref: '#/components/schemas/MenuIdField'
+      description: Menu id
+    MenuItemMenuIdParameter:
+      name: menuId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebMenuIdField'
-      description: WebMenu id
-    WebMenuItemIdParameter:
-      name: webMenuItemId
+        $ref: '#/components/schemas/MenuIdField'
+      description: Menu id
+    MenuItemIdParameter:
+      name: menuItemId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebMenuItemIdField'
-      description: WebMenuItem id
-    WebMetadataIdParameter:
-      name: webMetadataId
+        $ref: '#/components/schemas/MenuItemIdField'
+      description: MenuItem id
+    MetadataIdParameter:
+      name: metadataId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebMetadataIdField'
-      description: WebMetadata id
-    WebPageIdParameter:
-      name: webPageId
+        $ref: '#/components/schemas/MetadataIdField'
+      description: Metadata id
+    PageIdParameter:
+      name: pageId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebPageIdField'
-      description: WebPage id
+        $ref: '#/components/schemas/PageIdField'
+      description: Page id
   requestBodies:
-    WebMenuRequestBody:
+    MenuRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuCreateSchema'
+            $ref: '#/components/schemas/MenuCreateSchema'
       required: true
     DeleteRequestBody:
       content:
@@ -2663,89 +2663,89 @@ components:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
-    WebMenuUpdateRequestBody:
+    MenuUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuCreateSchema'
+            $ref: '#/components/schemas/MenuCreateSchema'
       required: true
-    WebMenuPatchRequestBody:
+    MenuPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuPatchSchema'
+            $ref: '#/components/schemas/MenuPatchSchema'
       required: true
-    WebMenuItemRequestBody:
+    MenuItemRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemCreateSchema'
+            $ref: '#/components/schemas/MenuItemCreateSchema'
       required: true
-    WebMenuItemUpdateRequestBody:
+    MenuItemUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemCreateSchema'
+            $ref: '#/components/schemas/MenuItemCreateSchema'
       required: true
-    WebMenuItemPatchRequestBody:
+    MenuItemPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemPatchSchema'
+            $ref: '#/components/schemas/MenuItemPatchSchema'
       required: true
-    WebMenuItemMoveRequestBody:
+    MenuItemMoveRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemMoveSchema'
+            $ref: '#/components/schemas/MenuItemMoveSchema'
       required: true
-    WebMetadataRequestBody:
+    MetadataRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataCreateSchema'
+            $ref: '#/components/schemas/MetadataCreateSchema'
       required: true
-    WebMetadataResolveRequestBody:
+    MetadataResolveRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataResolveRequestSchema'
+            $ref: '#/components/schemas/MetadataResolveRequestSchema'
       required: true
-    WebMetadataUpdateRequestBody:
+    MetadataUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataCreateSchema'
+            $ref: '#/components/schemas/MetadataCreateSchema'
       required: true
-    WebMetadataPatchRequestBody:
+    MetadataPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataPatchSchema'
+            $ref: '#/components/schemas/MetadataPatchSchema'
       required: true
-    WebPageRequestBody:
+    PageRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPageCreateSchema'
+            $ref: '#/components/schemas/PageCreateSchema'
       required: true
-    WebPageUpdateRequestBody:
+    PageUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPagePatchSchema'
+            $ref: '#/components/schemas/PagePatchSchema'
       required: true
-    WebPagePatchRequestBody:
+    PagePatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPagePatchSchema'
+            $ref: '#/components/schemas/PagePatchSchema'
       required: true
-    WebSettingsUpdateRequestBody:
+    SettingsUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebSettingsUpdateSchema'
+            $ref: '#/components/schemas/SettingsUpdateSchema'
       required: true
   securitySchemes:
     bearerAuth:

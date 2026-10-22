@@ -1,10 +1,10 @@
 import Foundation
 
-struct GridMarkdownBlockRenderer: WebMarkdownBlockRenderer {
+struct GridMarkdownBlockRenderer: MarkdownBlockRenderer {
     let name = "Grid"
 
     func render(
-        request: WebMarkdownBlockRendererRequest
+        request: MarkdownBlockRendererRequest
     ) async -> String? {
         let cells = request.children.filter {
             $0.name.caseInsensitiveCompare("Cell") == .orderedSame
@@ -25,11 +25,11 @@ struct GridMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     }
 }
 
-struct CellMarkdownBlockRenderer: WebMarkdownBlockRenderer {
+struct CellMarkdownBlockRenderer: MarkdownBlockRenderer {
     let name = "Cell"
 
     func render(
-        request: WebMarkdownBlockRendererRequest
+        request: MarkdownBlockRendererRequest
     ) async -> String? {
         request.children.map { $0.html }.joined()
     }

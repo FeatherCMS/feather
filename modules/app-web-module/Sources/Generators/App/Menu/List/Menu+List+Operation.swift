@@ -4,9 +4,9 @@ import WebSharedOpenAPIGenerator
 
 extension Menu.List {
     struct Operation: Menu.Operation {
-        var operationId: String? { "webMenuList" }
+        var operationId: String? { "menuList" }
         var responseMap: ResponseMap {
-            [200: WebMenuListResponse().reference()]
+            [200: MenuListResponse().reference()]
         }
     }
 }

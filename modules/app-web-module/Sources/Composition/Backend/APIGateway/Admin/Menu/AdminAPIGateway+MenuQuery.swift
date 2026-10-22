@@ -5,10 +5,10 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMenuQuery(
-        _ input: Operations.WebMenuQuery.Input
-    ) async throws -> Operations.WebMenuQuery.Output {
-        let query: Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema
+    public func menuQuery(
+        _ input: Operations.MenuQuery.Input
+    ) async throws -> Operations.MenuQuery.Output {
+        let query: Components.Schemas.MenuQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -36,7 +36,7 @@ extension AdminAPIGateway {
                                 .map { sort in
                                     let field:
                                         Components.Schemas
-                                            .WebMenuQueryItemSearchResponseQuerySchema
+                                            .MenuQueryItemSearchResponseQuerySchema
                                             .SortPayloadPayload.FieldPayload
                                     switch sort.field {
                                     case .id: field = .id

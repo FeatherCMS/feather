@@ -4,7 +4,7 @@ import Logging
 import Markdown
 import WebModule
 
-public struct DefaultMarkdownRenderer: WebContentRenderer {
+public struct DefaultMarkdownRenderer: ContentRenderer {
 
     private let events: any EventPublisher
     private let mediaResolver: MediaResolver
@@ -22,14 +22,14 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
     ) async -> String {
         await render(
             markdown: markdown,
-            context: WebMarkdownRenderingContext()
+            context: MarkdownRenderingContext()
         )
         .html
     }
 
     public func render(
         markdown: String,
-        context: WebMarkdownRenderingContext
+        context: MarkdownRenderingContext
     ) async -> (html: String, usesFormSubmissionNonce: Bool) {
         guard !markdown.isEmpty else {
             return (markdown, false)
@@ -37,8 +37,8 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         var source = markdown
         let transformers =
             (try? await events.trigger(
-                event: WebMarkdownSourceTransformerProvider(),
-                using: WebMarkdownSourceTransformerRequest()
+                event: MarkdownSourceTransformerProvider(),
+                using: MarkdownSourceTransformerRequest()
             )
             .compactMap { $0 }
             .sorted { $0.priority < $1.priority }) ?? []
@@ -46,12 +46,12 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
             source = await transformer.transform(source)
         }
         source = mediaResolver.resolveMarkdownImages(in: source)
-        let renderers: [any WebMarkdownBlockRenderer]
+        let renderers: [any MarkdownBlockRenderer]
         do {
             renderers =
                 try await events.trigger(
-                    event: WebMarkdownBlockRendererProvider(),
-                    using: WebMarkdownBlockRendererRequest()
+                    event: MarkdownBlockRendererProvider(),
+                    using: MarkdownBlockRendererRequest()
                 )
                 .compactMap { $0 }
         }
@@ -87,8 +87,8 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
 
     private func renderDocument(
         source: String,
-        renderers: [any WebMarkdownBlockRenderer],
-        context: WebMarkdownRenderingContext
+        renderers: [any MarkdownBlockRenderer],
+        context: MarkdownRenderingContext
     ) async -> (html: String, usesFormSubmissionNonce: Bool) {
         let normalizedSource =
             source
@@ -115,18 +115,18 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
 
     private func render(
         _ markup: any Markup,
-        renderers: [any WebMarkdownBlockRenderer],
-        context: WebMarkdownRenderingContext
+        renderers: [any MarkdownBlockRenderer],
+        context: MarkdownRenderingContext
     ) async -> (
         html: String, usesFormSubmissionNonce: Bool,
-        node: WebMarkdownBlockRendererRequest.Child?
+        node: MarkdownBlockRendererRequest.Child?
     ) {
         guard let directive = markup as? BlockDirective else {
             return (HTMLFormatter.format(markup), false, nil)
         }
 
         let arguments = directiveArguments(from: directive.argumentText)
-        var children: [WebMarkdownBlockRendererRequest.Child] = []
+        var children: [MarkdownBlockRendererRequest.Child] = []
         var childUsesFormSubmissionNonce = false
         for child in directive.children {
             if let childDirective = child as? BlockDirective {
@@ -151,7 +151,7 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
             )
         }
 
-        let request = WebMarkdownBlockRendererRequest(
+        let request = MarkdownBlockRendererRequest(
             arguments: arguments,
             children: children,
             formSubmissionNonce: context.formSubmissionNonce,

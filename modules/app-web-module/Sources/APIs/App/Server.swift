@@ -26,7 +26,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuList(
+                try await server.menuList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -37,7 +37,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuGetByKey(
+                try await server.menuGetByKey(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -48,7 +48,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataGet(
+                try await server.metadataGet(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataList(
+                try await server.metadataList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -70,7 +70,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webPageGet(
+                try await server.pageGet(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -81,7 +81,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webSiteSettings(
+                try await server.siteSettings(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -95,8 +95,8 @@ extension APIProtocol {
 
 fileprivate extension UniversalServer where APIHandler: APIProtocol {
     /// - Remark: HTTP `GET /api/v1/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/web/menus/get(webMenuList)`.
-    func webMenuList(
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/get(menuList)`.
+    func menuList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -105,13 +105,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuList.id,
+            forOperation: Operations.MenuList.id,
             using: {
-                APIHandler.webMenuList($0)
+                APIHandler.menuList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMenuList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMenuList.Input(headers: headers)
+                let headers: Operations.MenuList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MenuList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -140,8 +140,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/menus/{key}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(webMenuGetByKey)`.
-    func webMenuGetByKey(
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(menuGetByKey)`.
+    func menuGetByKey(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -150,18 +150,18 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuGetByKey.id,
+            forOperation: Operations.MenuGetByKey.id,
             using: {
-                APIHandler.webMenuGetByKey($0)
+                APIHandler.menuGetByKey($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuGetByKey.Input.Path = .init(key: try converter.getPathParameterAsURI(
+                let path: Operations.MenuGetByKey.Input.Path = .init(key: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "key",
-                    as: Components.Parameters.WebMenuKeyParameter.self
+                    as: Components.Parameters.MenuKeyParameter.self
                 ))
-                let headers: Operations.WebMenuGetByKey.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMenuGetByKey.Input(
+                let headers: Operations.MenuGetByKey.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MenuGetByKey.Input(
                     path: path,
                     headers: headers
                 )
@@ -211,8 +211,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/routes/{slug}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(webMetadataGet)`.
-    func webMetadataGet(
+    /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(metadataGet)`.
+    func metadataGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -221,18 +221,18 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataGet.id,
+            forOperation: Operations.MetadataGet.id,
             using: {
-                APIHandler.webMetadataGet($0)
+                APIHandler.metadataGet($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMetadataGet.Input.Path = .init(slug: try converter.getPathParameterAsURI(
+                let path: Operations.MetadataGet.Input.Path = .init(slug: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "slug",
-                    as: Components.Parameters.WebMetadataSlugParameter.self
+                    as: Components.Parameters.MetadataSlugParameter.self
                 ))
-                let headers: Operations.WebMetadataGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMetadataGet.Input(
+                let headers: Operations.MetadataGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MetadataGet.Input(
                     path: path,
                     headers: headers
                 )
@@ -282,8 +282,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/web/metadata/get(webMetadataList)`.
-    func webMetadataList(
+    /// - Remark: Generated from `#/paths//api/v1/web/metadata/get(metadataList)`.
+    func metadataList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -292,13 +292,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataList.id,
+            forOperation: Operations.MetadataList.id,
             using: {
-                APIHandler.webMetadataList($0)
+                APIHandler.metadataList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMetadataList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMetadataList.Input(headers: headers)
+                let headers: Operations.MetadataList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MetadataList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -327,8 +327,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/pages/{id}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/pages/{id}/get(webPageGet)`.
-    func webPageGet(
+    /// - Remark: Generated from `#/paths//api/v1/web/pages/{id}/get(pageGet)`.
+    func pageGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -337,18 +337,18 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPageGet.id,
+            forOperation: Operations.PageGet.id,
             using: {
-                APIHandler.webPageGet($0)
+                APIHandler.pageGet($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebPageGet.Input.Path = .init(id: try converter.getPathParameterAsURI(
+                let path: Operations.PageGet.Input.Path = .init(id: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "id",
-                    as: Components.Parameters.WebMetadataIdParameter.self
+                    as: Components.Parameters.MetadataIdParameter.self
                 ))
-                let headers: Operations.WebPageGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebPageGet.Input(
+                let headers: Operations.PageGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.PageGet.Input(
                     path: path,
                     headers: headers
                 )
@@ -398,8 +398,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/web/settings/get(webSiteSettings)`.
-    func webSiteSettings(
+    /// - Remark: Generated from `#/paths//api/v1/web/settings/get(siteSettings)`.
+    func siteSettings(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -408,13 +408,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebSiteSettings.id,
+            forOperation: Operations.SiteSettings.id,
             using: {
-                APIHandler.webSiteSettings($0)
+                APIHandler.siteSettings($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebSiteSettings.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebSiteSettings.Input(headers: headers)
+                let headers: Operations.SiteSettings.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.SiteSettings.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {

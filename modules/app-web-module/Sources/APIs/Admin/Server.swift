@@ -26,7 +26,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuCreate(
+                try await server.menuCreate(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -37,7 +37,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuRemove(
+                try await server.menuRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -48,7 +48,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuList(
+                try await server.menuList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuQuery(
+                try await server.menuQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -70,128 +70,128 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMenuGet(
+                try await server.menuGet(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}")
         )
         try transport.register(
             {
-                try await server.webMenuPatch(
+                try await server.menuPatch(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .patch,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}")
         )
         try transport.register(
             {
-                try await server.webMenuUpdate(
+                try await server.menuUpdate(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .put,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}")
         )
         try transport.register(
             {
-                try await server.webMenuItemCreate(
+                try await server.menuItemCreate(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}/items")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}/items")
         )
         try transport.register(
             {
-                try await server.webMenuItemRemove(
+                try await server.menuItemRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .delete,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}/items")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}/items")
         )
         try transport.register(
             {
-                try await server.webMenuItemList(
+                try await server.menuItemList(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}/items/")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}/items/")
         )
         try transport.register(
             {
-                try await server.webMenuItemQuery(
+                try await server.menuItemQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}/items/query")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}/items/query")
         )
         try transport.register(
             {
-                try await server.webMenuItemGet(
+                try await server.menuItemGet(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}/items/{menuItemId}")
         )
         try transport.register(
             {
-                try await server.webMenuItemPatch(
+                try await server.menuItemPatch(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .patch,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}/items/{menuItemId}")
         )
         try transport.register(
             {
-                try await server.webMenuItemUpdate(
+                try await server.menuItemUpdate(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .put,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}/items/{menuItemId}")
         )
         try transport.register(
             {
-                try await server.webMenuItemMove(
+                try await server.menuItemMove(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move")
         )
         try transport.register(
             {
-                try await server.webMetadataCreate(
+                try await server.metadataCreate(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -202,7 +202,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataRemove(
+                try await server.metadataRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -213,7 +213,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataList(
+                try await server.metadataList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -224,7 +224,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataQuery(
+                try await server.metadataQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -235,7 +235,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataResolve(
+                try await server.metadataResolve(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -246,40 +246,40 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataGet(
+                try await server.metadataGet(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/metadata/{webMetadataId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/metadata/{metadataId}")
         )
         try transport.register(
             {
-                try await server.webMetadataPatch(
+                try await server.metadataPatch(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .patch,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/metadata/{webMetadataId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/metadata/{metadataId}")
         )
         try transport.register(
             {
-                try await server.webMetadataUpdate(
+                try await server.metadataUpdate(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .put,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/metadata/{webMetadataId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/metadata/{metadataId}")
         )
         try transport.register(
             {
-                try await server.webPageCreate(
+                try await server.pageCreate(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -290,7 +290,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webPageRemove(
+                try await server.pageRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -301,7 +301,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webPageList(
+                try await server.pageList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -312,7 +312,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webPageQuery(
+                try await server.pageQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -323,40 +323,40 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webPageGet(
+                try await server.pageGet(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/pages/{webPageId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/pages/{pageId}")
         )
         try transport.register(
             {
-                try await server.webPagePatch(
+                try await server.pagePatch(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .patch,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/pages/{webPageId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/pages/{pageId}")
         )
         try transport.register(
             {
-                try await server.webPageUpdate(
+                try await server.pageUpdate(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .put,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/pages/{webPageId}")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/web/pages/{pageId}")
         )
         try transport.register(
             {
-                try await server.webSettingsGet(
+                try await server.settingsGet(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -367,7 +367,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webSettingsUpdate(
+                try await server.settingsUpdate(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -381,8 +381,8 @@ extension APIProtocol {
 
 fileprivate extension UniversalServer where APIHandler: APIProtocol {
     /// - Remark: HTTP `POST /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(webMenuCreate)`.
-    func webMenuCreate(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(menuCreate)`.
+    func menuCreate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -391,14 +391,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuCreate.id,
+            forOperation: Operations.MenuCreate.id,
             using: {
-                APIHandler.webMenuCreate($0)
+                APIHandler.menuCreate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMenuCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMenuRequestBody
+                let body: Components.RequestBodies.MenuRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -408,7 +408,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMenuCreateSchema.self,
+                        Components.Schemas.MenuCreateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -417,7 +417,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuCreate.Input(
+                return Operations.MenuCreate.Input(
                     headers: headers,
                     body: body
                 )
@@ -485,8 +485,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuRemove)`.
-    func webMenuRemove(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(menuRemove)`.
+    func menuRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -495,12 +495,12 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuRemove.id,
+            forOperation: Operations.MenuRemove.id,
             using: {
-                APIHandler.webMenuRemove($0)
+                APIHandler.menuRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMenuRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -521,7 +521,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuRemove.Input(
+                return Operations.MenuRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -576,8 +576,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(webMenuList)`.
-    func webMenuList(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(menuList)`.
+    func menuList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -586,13 +586,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuList.id,
+            forOperation: Operations.MenuList.id,
             using: {
-                APIHandler.webMenuList($0)
+                APIHandler.menuList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMenuList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMenuList.Input(headers: headers)
+                let headers: Operations.MenuList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MenuList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -657,8 +657,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(webMenuQuery)`.
-    func webMenuQuery(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(menuQuery)`.
+    func menuQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -667,14 +667,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuQuery.id,
+            forOperation: Operations.MenuQuery.id,
             using: {
-                APIHandler.webMenuQuery($0)
+                APIHandler.menuQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMenuQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Operations.WebMenuQuery.Input.Body
+                let body: Operations.MenuQuery.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -684,7 +684,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMenuQueryItemSearchRequestQuerySchema.self,
+                        Components.Schemas.MenuQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -693,7 +693,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuQuery.Input(
+                return Operations.MenuQuery.Input(
                     headers: headers,
                     body: body
                 )
@@ -760,9 +760,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/get(webMenuGet)`.
-    func webMenuGet(
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/get(menuGet)`.
+    func menuGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -771,18 +771,18 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuGet.id,
+            forOperation: Operations.MenuGet.id,
             using: {
-                APIHandler.webMenuGet($0)
+                APIHandler.menuGet($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuGet.Input.Path = .init(webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuGet.Input.Path = .init(menuId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMenuId",
-                    as: Components.Parameters.WebMenuIdParameter.self
+                    name: "menuId",
+                    as: Components.Parameters.MenuIdParameter.self
                 ))
-                let headers: Operations.WebMenuGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMenuGet.Input(
+                let headers: Operations.MenuGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MenuGet.Input(
                     path: path,
                     headers: headers
                 )
@@ -867,9 +867,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/patch(webMenuPatch)`.
-    func webMenuPatch(
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{menuId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/patch(menuPatch)`.
+    func menuPatch(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -878,19 +878,19 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuPatch.id,
+            forOperation: Operations.MenuPatch.id,
             using: {
-                APIHandler.webMenuPatch($0)
+                APIHandler.menuPatch($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuPatch.Input.Path = .init(webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuPatch.Input.Path = .init(menuId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMenuId",
-                    as: Components.Parameters.WebMenuIdParameter.self
+                    name: "menuId",
+                    as: Components.Parameters.MenuIdParameter.self
                 ))
-                let headers: Operations.WebMenuPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMenuPatchRequestBody
+                let body: Components.RequestBodies.MenuPatchRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -900,7 +900,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMenuPatchSchema.self,
+                        Components.Schemas.MenuPatchSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -909,7 +909,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuPatch.Input(
+                return Operations.MenuPatch.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -995,9 +995,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{webMenuId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/put(webMenuUpdate)`.
-    func webMenuUpdate(
+    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{menuId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/put(menuUpdate)`.
+    func menuUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1006,19 +1006,19 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuUpdate.id,
+            forOperation: Operations.MenuUpdate.id,
             using: {
-                APIHandler.webMenuUpdate($0)
+                APIHandler.menuUpdate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuUpdate.Input.Path = .init(webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuUpdate.Input.Path = .init(menuId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMenuId",
-                    as: Components.Parameters.WebMenuIdParameter.self
+                    name: "menuId",
+                    as: Components.Parameters.MenuIdParameter.self
                 ))
-                let headers: Operations.WebMenuUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMenuUpdateRequestBody
+                let body: Components.RequestBodies.MenuUpdateRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1028,7 +1028,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMenuCreateSchema.self,
+                        Components.Schemas.MenuCreateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1037,7 +1037,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuUpdate.Input(
+                return Operations.MenuUpdate.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1123,9 +1123,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/post(webMenuItemCreate)`.
-    func webMenuItemCreate(
+    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/post(menuItemCreate)`.
+    func menuItemCreate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1134,19 +1134,19 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemCreate.id,
+            forOperation: Operations.MenuItemCreate.id,
             using: {
-                APIHandler.webMenuItemCreate($0)
+                APIHandler.menuItemCreate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemCreate.Input.Path = .init(webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuItemCreate.Input.Path = .init(menuId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMenuId",
-                    as: Components.Parameters.WebMenuItemMenuIdParameter.self
+                    name: "menuId",
+                    as: Components.Parameters.MenuItemMenuIdParameter.self
                 ))
-                let headers: Operations.WebMenuItemCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuItemCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMenuItemRequestBody
+                let body: Components.RequestBodies.MenuItemRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1156,7 +1156,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMenuItemCreateSchema.self,
+                        Components.Schemas.MenuItemCreateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1165,7 +1165,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuItemCreate.Input(
+                return Operations.MenuItemCreate.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1233,9 +1233,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemRemove)`.
-    func webMenuItemRemove(
+    /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{menuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/delete(menuItemRemove)`.
+    func menuItemRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1244,17 +1244,17 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemRemove.id,
+            forOperation: Operations.MenuItemRemove.id,
             using: {
-                APIHandler.webMenuItemRemove($0)
+                APIHandler.menuItemRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemRemove.Input.Path = .init(webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuItemRemove.Input.Path = .init(menuId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMenuId",
-                    as: Components.Parameters.WebMenuItemMenuIdParameter.self
+                    name: "menuId",
+                    as: Components.Parameters.MenuItemMenuIdParameter.self
                 ))
-                let headers: Operations.WebMenuItemRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuItemRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -1275,7 +1275,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuItemRemove.Input(
+                return Operations.MenuItemRemove.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1330,9 +1330,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items//get(webMenuItemList)`.
-    func webMenuItemList(
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items/`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items//get(menuItemList)`.
+    func menuItemList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1341,18 +1341,18 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemList.id,
+            forOperation: Operations.MenuItemList.id,
             using: {
-                APIHandler.webMenuItemList($0)
+                APIHandler.menuItemList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemList.Input.Path = .init(webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuItemList.Input.Path = .init(menuId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMenuId",
-                    as: Components.Parameters.WebMenuItemMenuIdParameter.self
+                    name: "menuId",
+                    as: Components.Parameters.MenuItemMenuIdParameter.self
                 ))
-                let headers: Operations.WebMenuItemList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMenuItemList.Input(
+                let headers: Operations.MenuItemList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MenuItemList.Input(
                     path: path,
                     headers: headers
                 )
@@ -1419,9 +1419,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/query/post(webMenuItemQuery)`.
-    func webMenuItemQuery(
+    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/query/post(menuItemQuery)`.
+    func menuItemQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1430,19 +1430,19 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemQuery.id,
+            forOperation: Operations.MenuItemQuery.id,
             using: {
-                APIHandler.webMenuItemQuery($0)
+                APIHandler.menuItemQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemQuery.Input.Path = .init(webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuItemQuery.Input.Path = .init(menuId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMenuId",
-                    as: Components.Parameters.WebMenuItemMenuIdParameter.self
+                    name: "menuId",
+                    as: Components.Parameters.MenuItemMenuIdParameter.self
                 ))
-                let headers: Operations.WebMenuItemQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuItemQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Operations.WebMenuItemQuery.Input.Body
+                let body: Operations.MenuItemQuery.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1452,7 +1452,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMenuItemQueryItemSearchRequestQuerySchema.self,
+                        Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1461,7 +1461,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuItemQuery.Input(
+                return Operations.MenuItemQuery.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1529,9 +1529,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/get(webMenuItemGet)`.
-    func webMenuItemGet(
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items/{menuItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/get(menuItemGet)`.
+    func menuItemGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1540,25 +1540,25 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemGet.id,
+            forOperation: Operations.MenuItemGet.id,
             using: {
-                APIHandler.webMenuItemGet($0)
+                APIHandler.menuItemGet($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemGet.Input.Path = .init(
-                    webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuItemGet.Input.Path = .init(
+                    menuId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "webMenuId",
-                        as: Components.Parameters.WebMenuItemMenuIdParameter.self
+                        name: "menuId",
+                        as: Components.Parameters.MenuItemMenuIdParameter.self
                     ),
-                    webMenuItemId: try converter.getPathParameterAsURI(
+                    menuItemId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "webMenuItemId",
-                        as: Components.Parameters.WebMenuItemIdParameter.self
+                        name: "menuItemId",
+                        as: Components.Parameters.MenuItemIdParameter.self
                     )
                 )
-                let headers: Operations.WebMenuItemGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMenuItemGet.Input(
+                let headers: Operations.MenuItemGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MenuItemGet.Input(
                     path: path,
                     headers: headers
                 )
@@ -1643,9 +1643,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/patch(webMenuItemPatch)`.
-    func webMenuItemPatch(
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/menus/{menuId}/items/{menuItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/patch(menuItemPatch)`.
+    func menuItemPatch(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1654,26 +1654,26 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemPatch.id,
+            forOperation: Operations.MenuItemPatch.id,
             using: {
-                APIHandler.webMenuItemPatch($0)
+                APIHandler.menuItemPatch($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemPatch.Input.Path = .init(
-                    webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuItemPatch.Input.Path = .init(
+                    menuId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "webMenuId",
-                        as: Components.Parameters.WebMenuItemMenuIdParameter.self
+                        name: "menuId",
+                        as: Components.Parameters.MenuItemMenuIdParameter.self
                     ),
-                    webMenuItemId: try converter.getPathParameterAsURI(
+                    menuItemId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "webMenuItemId",
-                        as: Components.Parameters.WebMenuItemIdParameter.self
+                        name: "menuItemId",
+                        as: Components.Parameters.MenuItemIdParameter.self
                     )
                 )
-                let headers: Operations.WebMenuItemPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuItemPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMenuItemPatchRequestBody
+                let body: Components.RequestBodies.MenuItemPatchRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1683,7 +1683,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMenuItemPatchSchema.self,
+                        Components.Schemas.MenuItemPatchSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1692,7 +1692,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuItemPatch.Input(
+                return Operations.MenuItemPatch.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1778,9 +1778,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/put(webMenuItemUpdate)`.
-    func webMenuItemUpdate(
+    /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{menuId}/items/{menuItemId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/put(menuItemUpdate)`.
+    func menuItemUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1789,26 +1789,26 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemUpdate.id,
+            forOperation: Operations.MenuItemUpdate.id,
             using: {
-                APIHandler.webMenuItemUpdate($0)
+                APIHandler.menuItemUpdate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemUpdate.Input.Path = .init(
-                    webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuItemUpdate.Input.Path = .init(
+                    menuId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "webMenuId",
-                        as: Components.Parameters.WebMenuItemMenuIdParameter.self
+                        name: "menuId",
+                        as: Components.Parameters.MenuItemMenuIdParameter.self
                     ),
-                    webMenuItemId: try converter.getPathParameterAsURI(
+                    menuItemId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "webMenuItemId",
-                        as: Components.Parameters.WebMenuItemIdParameter.self
+                        name: "menuItemId",
+                        as: Components.Parameters.MenuItemIdParameter.self
                     )
                 )
-                let headers: Operations.WebMenuItemUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuItemUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMenuItemUpdateRequestBody
+                let body: Components.RequestBodies.MenuItemUpdateRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1818,7 +1818,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMenuItemCreateSchema.self,
+                        Components.Schemas.MenuItemCreateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1827,7 +1827,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuItemUpdate.Input(
+                return Operations.MenuItemUpdate.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1913,9 +1913,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)`.
-    func webMenuItemMove(
+    /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/post(menuItemMove)`.
+    func menuItemMove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1924,26 +1924,26 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMenuItemMove.id,
+            forOperation: Operations.MenuItemMove.id,
             using: {
-                APIHandler.webMenuItemMove($0)
+                APIHandler.menuItemMove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMenuItemMove.Input.Path = .init(
-                    webMenuId: try converter.getPathParameterAsURI(
+                let path: Operations.MenuItemMove.Input.Path = .init(
+                    menuId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "webMenuId",
-                        as: Components.Parameters.WebMenuItemMenuIdParameter.self
+                        name: "menuId",
+                        as: Components.Parameters.MenuItemMenuIdParameter.self
                     ),
-                    webMenuItemId: try converter.getPathParameterAsURI(
+                    menuItemId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "webMenuItemId",
-                        as: Components.Parameters.WebMenuItemIdParameter.self
+                        name: "menuItemId",
+                        as: Components.Parameters.MenuItemIdParameter.self
                     )
                 )
-                let headers: Operations.WebMenuItemMove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MenuItemMove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMenuItemMoveRequestBody
+                let body: Components.RequestBodies.MenuItemMoveRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1953,7 +1953,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMenuItemMoveSchema.self,
+                        Components.Schemas.MenuItemMoveSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1962,7 +1962,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMenuItemMove.Input(
+                return Operations.MenuItemMove.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -2036,8 +2036,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(webMetadataCreate)`.
-    func webMetadataCreate(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(metadataCreate)`.
+    func metadataCreate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2046,14 +2046,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataCreate.id,
+            forOperation: Operations.MetadataCreate.id,
             using: {
-                APIHandler.webMetadataCreate($0)
+                APIHandler.metadataCreate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMetadataCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MetadataCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMetadataRequestBody
+                let body: Components.RequestBodies.MetadataRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2063,7 +2063,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMetadataCreateSchema.self,
+                        Components.Schemas.MetadataCreateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2072,7 +2072,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMetadataCreate.Input(
+                return Operations.MetadataCreate.Input(
                     headers: headers,
                     body: body
                 )
@@ -2140,8 +2140,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataRemove)`.
-    func webMetadataRemove(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(metadataRemove)`.
+    func metadataRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2150,12 +2150,12 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataRemove.id,
+            forOperation: Operations.MetadataRemove.id,
             using: {
-                APIHandler.webMetadataRemove($0)
+                APIHandler.metadataRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMetadataRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MetadataRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -2176,7 +2176,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMetadataRemove.Input(
+                return Operations.MetadataRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -2231,8 +2231,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(webMetadataList)`.
-    func webMetadataList(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(metadataList)`.
+    func metadataList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2241,13 +2241,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataList.id,
+            forOperation: Operations.MetadataList.id,
             using: {
-                APIHandler.webMetadataList($0)
+                APIHandler.metadataList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMetadataList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMetadataList.Input(headers: headers)
+                let headers: Operations.MetadataList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MetadataList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -2312,8 +2312,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(webMetadataQuery)`.
-    func webMetadataQuery(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(metadataQuery)`.
+    func metadataQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2322,14 +2322,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataQuery.id,
+            forOperation: Operations.MetadataQuery.id,
             using: {
-                APIHandler.webMetadataQuery($0)
+                APIHandler.metadataQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMetadataQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MetadataQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Operations.WebMetadataQuery.Input.Body
+                let body: Operations.MetadataQuery.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2339,7 +2339,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMetadataQueryItemSearchRequestQuerySchema.self,
+                        Components.Schemas.MetadataQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2348,7 +2348,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMetadataQuery.Input(
+                return Operations.MetadataQuery.Input(
                     headers: headers,
                     body: body
                 )
@@ -2416,8 +2416,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/resolve`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)`.
-    func webMetadataResolve(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(metadataResolve)`.
+    func metadataResolve(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2426,14 +2426,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataResolve.id,
+            forOperation: Operations.MetadataResolve.id,
             using: {
-                APIHandler.webMetadataResolve($0)
+                APIHandler.metadataResolve($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMetadataResolve.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MetadataResolve.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMetadataResolveRequestBody
+                let body: Components.RequestBodies.MetadataResolveRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2443,7 +2443,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMetadataResolveRequestSchema.self,
+                        Components.Schemas.MetadataResolveRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2452,7 +2452,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMetadataResolve.Input(
+                return Operations.MetadataResolve.Input(
                     headers: headers,
                     body: body
                 )
@@ -2519,9 +2519,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)`.
-    func webMetadataGet(
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/{metadataId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/get(metadataGet)`.
+    func metadataGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2530,18 +2530,18 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataGet.id,
+            forOperation: Operations.MetadataGet.id,
             using: {
-                APIHandler.webMetadataGet($0)
+                APIHandler.metadataGet($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMetadataGet.Input.Path = .init(webMetadataId: try converter.getPathParameterAsURI(
+                let path: Operations.MetadataGet.Input.Path = .init(metadataId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMetadataId",
-                    as: Components.Parameters.WebMetadataIdParameter.self
+                    name: "metadataId",
+                    as: Components.Parameters.MetadataIdParameter.self
                 ))
-                let headers: Operations.WebMetadataGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebMetadataGet.Input(
+                let headers: Operations.MetadataGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MetadataGet.Input(
                     path: path,
                     headers: headers
                 )
@@ -2626,9 +2626,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/patch(webMetadataPatch)`.
-    func webMetadataPatch(
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/metadata/{metadataId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/patch(metadataPatch)`.
+    func metadataPatch(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2637,19 +2637,19 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataPatch.id,
+            forOperation: Operations.MetadataPatch.id,
             using: {
-                APIHandler.webMetadataPatch($0)
+                APIHandler.metadataPatch($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMetadataPatch.Input.Path = .init(webMetadataId: try converter.getPathParameterAsURI(
+                let path: Operations.MetadataPatch.Input.Path = .init(metadataId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMetadataId",
-                    as: Components.Parameters.WebMetadataIdParameter.self
+                    name: "metadataId",
+                    as: Components.Parameters.MetadataIdParameter.self
                 ))
-                let headers: Operations.WebMetadataPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MetadataPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMetadataPatchRequestBody
+                let body: Components.RequestBodies.MetadataPatchRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2659,7 +2659,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMetadataPatchSchema.self,
+                        Components.Schemas.MetadataPatchSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2668,7 +2668,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMetadataPatch.Input(
+                return Operations.MetadataPatch.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -2754,9 +2754,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/metadata/{webMetadataId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/put(webMetadataUpdate)`.
-    func webMetadataUpdate(
+    /// - Remark: HTTP `PUT /api/v1/admin/web/metadata/{metadataId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/put(metadataUpdate)`.
+    func metadataUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2765,19 +2765,19 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataUpdate.id,
+            forOperation: Operations.MetadataUpdate.id,
             using: {
-                APIHandler.webMetadataUpdate($0)
+                APIHandler.metadataUpdate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebMetadataUpdate.Input.Path = .init(webMetadataId: try converter.getPathParameterAsURI(
+                let path: Operations.MetadataUpdate.Input.Path = .init(metadataId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webMetadataId",
-                    as: Components.Parameters.WebMetadataIdParameter.self
+                    name: "metadataId",
+                    as: Components.Parameters.MetadataIdParameter.self
                 ))
-                let headers: Operations.WebMetadataUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.MetadataUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebMetadataUpdateRequestBody
+                let body: Components.RequestBodies.MetadataUpdateRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2787,7 +2787,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMetadataCreateSchema.self,
+                        Components.Schemas.MetadataCreateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2796,7 +2796,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebMetadataUpdate.Input(
+                return Operations.MetadataUpdate.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -2883,8 +2883,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(webPageCreate)`.
-    func webPageCreate(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(pageCreate)`.
+    func pageCreate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2893,14 +2893,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPageCreate.id,
+            forOperation: Operations.PageCreate.id,
             using: {
-                APIHandler.webPageCreate($0)
+                APIHandler.pageCreate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebPageCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.PageCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebPageRequestBody
+                let body: Components.RequestBodies.PageRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2910,7 +2910,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebPageCreateSchema.self,
+                        Components.Schemas.PageCreateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2919,7 +2919,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebPageCreate.Input(
+                return Operations.PageCreate.Input(
                     headers: headers,
                     body: body
                 )
@@ -2987,8 +2987,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageRemove)`.
-    func webPageRemove(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(pageRemove)`.
+    func pageRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2997,12 +2997,12 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPageRemove.id,
+            forOperation: Operations.PageRemove.id,
             using: {
-                APIHandler.webPageRemove($0)
+                APIHandler.pageRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebPageRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.PageRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -3023,7 +3023,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebPageRemove.Input(
+                return Operations.PageRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -3078,8 +3078,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(webPageList)`.
-    func webPageList(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(pageList)`.
+    func pageList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -3088,13 +3088,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPageList.id,
+            forOperation: Operations.PageList.id,
             using: {
-                APIHandler.webPageList($0)
+                APIHandler.pageList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebPageList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebPageList.Input(headers: headers)
+                let headers: Operations.PageList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.PageList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -3159,8 +3159,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(webPageQuery)`.
-    func webPageQuery(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(pageQuery)`.
+    func pageQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -3169,14 +3169,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPageQuery.id,
+            forOperation: Operations.PageQuery.id,
             using: {
-                APIHandler.webPageQuery($0)
+                APIHandler.pageQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebPageQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.PageQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Operations.WebPageQuery.Input.Body
+                let body: Operations.PageQuery.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -3186,7 +3186,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebPageQueryItemSearchRequestQuerySchema.self,
+                        Components.Schemas.PageQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -3195,7 +3195,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebPageQuery.Input(
+                return Operations.PageQuery.Input(
                     headers: headers,
                     body: body
                 )
@@ -3262,9 +3262,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/get(webPageGet)`.
-    func webPageGet(
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages/{pageId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/get(pageGet)`.
+    func pageGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -3273,18 +3273,18 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPageGet.id,
+            forOperation: Operations.PageGet.id,
             using: {
-                APIHandler.webPageGet($0)
+                APIHandler.pageGet($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebPageGet.Input.Path = .init(webPageId: try converter.getPathParameterAsURI(
+                let path: Operations.PageGet.Input.Path = .init(pageId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webPageId",
-                    as: Components.Parameters.WebPageIdParameter.self
+                    name: "pageId",
+                    as: Components.Parameters.PageIdParameter.self
                 ))
-                let headers: Operations.WebPageGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebPageGet.Input(
+                let headers: Operations.PageGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.PageGet.Input(
                     path: path,
                     headers: headers
                 )
@@ -3369,9 +3369,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/patch(webPagePatch)`.
-    func webPagePatch(
+    /// - Remark: HTTP `PATCH /api/v1/admin/web/pages/{pageId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/patch(pagePatch)`.
+    func pagePatch(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -3380,19 +3380,19 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPagePatch.id,
+            forOperation: Operations.PagePatch.id,
             using: {
-                APIHandler.webPagePatch($0)
+                APIHandler.pagePatch($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebPagePatch.Input.Path = .init(webPageId: try converter.getPathParameterAsURI(
+                let path: Operations.PagePatch.Input.Path = .init(pageId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webPageId",
-                    as: Components.Parameters.WebPageIdParameter.self
+                    name: "pageId",
+                    as: Components.Parameters.PageIdParameter.self
                 ))
-                let headers: Operations.WebPagePatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.PagePatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebPagePatchRequestBody
+                let body: Components.RequestBodies.PagePatchRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -3402,7 +3402,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebPagePatchSchema.self,
+                        Components.Schemas.PagePatchSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -3411,7 +3411,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebPagePatch.Input(
+                return Operations.PagePatch.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -3497,9 +3497,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/web/pages/{webPageId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{webPageId}/put(webPageUpdate)`.
-    func webPageUpdate(
+    /// - Remark: HTTP `PUT /api/v1/admin/web/pages/{pageId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/put(pageUpdate)`.
+    func pageUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -3508,19 +3508,19 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebPageUpdate.id,
+            forOperation: Operations.PageUpdate.id,
             using: {
-                APIHandler.webPageUpdate($0)
+                APIHandler.pageUpdate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.WebPageUpdate.Input.Path = .init(webPageId: try converter.getPathParameterAsURI(
+                let path: Operations.PageUpdate.Input.Path = .init(pageId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
-                    name: "webPageId",
-                    as: Components.Parameters.WebPageIdParameter.self
+                    name: "pageId",
+                    as: Components.Parameters.PageIdParameter.self
                 ))
-                let headers: Operations.WebPageUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.PageUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebPageUpdateRequestBody
+                let body: Components.RequestBodies.PageUpdateRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -3530,7 +3530,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebPagePatchSchema.self,
+                        Components.Schemas.PagePatchSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -3539,7 +3539,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebPageUpdate.Input(
+                return Operations.PageUpdate.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -3626,8 +3626,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(webSettingsGet)`.
-    func webSettingsGet(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(settingsGet)`.
+    func settingsGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -3636,13 +3636,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebSettingsGet.id,
+            forOperation: Operations.SettingsGet.id,
             using: {
-                APIHandler.webSettingsGet($0)
+                APIHandler.settingsGet($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebSettingsGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.WebSettingsGet.Input(headers: headers)
+                let headers: Operations.SettingsGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.SettingsGet.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -3707,8 +3707,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `PUT /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(webSettingsUpdate)`.
-    func webSettingsUpdate(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)`.
+    func settingsUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -3717,14 +3717,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebSettingsUpdate.id,
+            forOperation: Operations.SettingsUpdate.id,
             using: {
-                APIHandler.webSettingsUpdate($0)
+                APIHandler.settingsUpdate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebSettingsUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.SettingsUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.WebSettingsUpdateRequestBody
+                let body: Components.RequestBodies.SettingsUpdateRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -3734,7 +3734,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebSettingsUpdateSchema.self,
+                        Components.Schemas.SettingsUpdateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -3743,7 +3743,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.WebSettingsUpdate.Input(
+                return Operations.SettingsUpdate.Input(
                     headers: headers,
                     body: body
                 )

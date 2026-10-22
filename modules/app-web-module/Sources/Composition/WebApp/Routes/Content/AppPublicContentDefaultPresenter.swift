@@ -6,13 +6,13 @@ import WebModule
 
 struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
     let themeRenderer: any PublicThemeRenderer
-    let contentRenderer: any WebContentRenderer
+    let contentRenderer: any ContentRenderer
 
     func render(
         content: AppPublicContentModel,
         formSubmissionNonce: String,
-        formSubmissionFeedback: WebFormSubmissionFeedback?
-    ) async -> (response: WebAppHTMLResponse, usesFormSubmissionNonce: Bool) {
+        formSubmissionFeedback: FormSubmissionFeedback?
+    ) async -> (response: HTMLResponse, usesFormSubmissionNonce: Bool) {
         let results = content.results.compactMap { $0 }
         let usesFormSubmissionNonce = results.contains {
             $0.usesFormSubmissionNonce
@@ -67,7 +67,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
     private func buildPageContext(
         context: [String: any Sendable],
         formSubmissionNonce: String,
-        formSubmissionFeedback: WebFormSubmissionFeedback?,
+        formSubmissionFeedback: FormSubmissionFeedback?,
         usesFormSubmissionNonce: Bool
     ) async -> (
         context: [String: any Sendable],
@@ -93,7 +93,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
     private func renderPageContentsToContext(
         context: [String: any Sendable],
         formSubmissionNonce: String,
-        formSubmissionFeedback: WebFormSubmissionFeedback?
+        formSubmissionFeedback: FormSubmissionFeedback?
     ) async -> (
         context: [String: any Sendable],
         usesFormSubmissionNonce: Bool
@@ -110,7 +110,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
             ?? ["html": markdown]
         let rendered = await contentRenderer.render(
             markdown: markdown,
-            context: WebMarkdownRenderingContext(
+            context: MarkdownRenderingContext(
                 formSubmissionNonce: formSubmissionNonce,
                 formSubmissionFeedback: formSubmissionFeedback
             )

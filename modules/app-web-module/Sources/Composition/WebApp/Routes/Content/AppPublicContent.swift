@@ -12,7 +12,7 @@ public struct AppPublicContent {
     public init(
         events: any EventPublisher,
         themeRenderer: any PublicThemeRenderer,
-        contentRenderer: any WebContentRenderer,
+        contentRenderer: any ContentRenderer,
         apiBaseURL: URL,
         publicOrigins: AppPublicOriginConfiguration,
         mediaResolver: MediaResolver

@@ -6,7 +6,7 @@ import WebDomain
 extension Menu.List {
     enum Interactor {
         protocol Interface: Sendable {
-            func listWebMenus(
+            func listMenus(
                 page: Int,
                 search: String?
             ) async throws -> Menu.List.Model

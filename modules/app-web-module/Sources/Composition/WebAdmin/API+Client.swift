@@ -40,7 +40,7 @@ extension API {
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (WebAdminAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            try await WebAPIClientSupport.withOpenAPIRepositoryErrorMapping(
+            try await APIClientSupport.withOpenAPIRepositoryErrorMapping(
                 client,
                 operation: operation
             )
@@ -50,7 +50,7 @@ extension API {
             statusCode: Int,
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
-            try await WebAPIClientSupport.failure(
+            try await APIClientSupport.failure(
                 statusCode: statusCode,
                 responseBody: responseBody
             )

@@ -12,11 +12,11 @@ extension AdminAPIGateway {
     //     -H 'Accept: application/json' \
     //     -H 'Content-Type: application/json' \
     //     -d '{"slug":"homepage","status":"draft","title":"Homepage","excerpt":"","imageUrl":"","canonicalUrl":"","cssCodeInjection":"","javascriptCodeInjection":""}'
-    public func webMetadataCreate(
-        _ input: Operations.WebMetadataCreate.Input
-    ) async throws -> Operations.WebMetadataCreate.Output {
+    public func metadataCreate(
+        _ input: Operations.MetadataCreate.Input
+    ) async throws -> Operations.MetadataCreate.Output {
 
-        let body: Components.Schemas.WebMetadataCreateSchema
+        let body: Components.Schemas.MetadataCreateSchema
         switch input.body {
         case .json(let value):
             body = value

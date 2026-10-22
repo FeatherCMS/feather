@@ -6,74 +6,74 @@ public import struct Foundation.Date
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `GET /api/v1/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/web/menus/get(webMenuList)`.
-    func webMenuList(_ input: Operations.WebMenuList.Input) async throws -> Operations.WebMenuList.Output
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/get(menuList)`.
+    func menuList(_ input: Operations.MenuList.Input) async throws -> Operations.MenuList.Output
     /// - Remark: HTTP `GET /api/v1/web/menus/{key}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(webMenuGetByKey)`.
-    func webMenuGetByKey(_ input: Operations.WebMenuGetByKey.Input) async throws -> Operations.WebMenuGetByKey.Output
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(menuGetByKey)`.
+    func menuGetByKey(_ input: Operations.MenuGetByKey.Input) async throws -> Operations.MenuGetByKey.Output
     /// - Remark: HTTP `GET /api/v1/web/routes/{slug}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(webMetadataGet)`.
-    func webMetadataGet(_ input: Operations.WebMetadataGet.Input) async throws -> Operations.WebMetadataGet.Output
+    /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(metadataGet)`.
+    func metadataGet(_ input: Operations.MetadataGet.Input) async throws -> Operations.MetadataGet.Output
     /// - Remark: HTTP `GET /api/v1/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/web/metadata/get(webMetadataList)`.
-    func webMetadataList(_ input: Operations.WebMetadataList.Input) async throws -> Operations.WebMetadataList.Output
+    /// - Remark: Generated from `#/paths//api/v1/web/metadata/get(metadataList)`.
+    func metadataList(_ input: Operations.MetadataList.Input) async throws -> Operations.MetadataList.Output
     /// - Remark: HTTP `GET /api/v1/web/pages/{id}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/pages/{id}/get(webPageGet)`.
-    func webPageGet(_ input: Operations.WebPageGet.Input) async throws -> Operations.WebPageGet.Output
+    /// - Remark: Generated from `#/paths//api/v1/web/pages/{id}/get(pageGet)`.
+    func pageGet(_ input: Operations.PageGet.Input) async throws -> Operations.PageGet.Output
     /// - Remark: HTTP `GET /api/v1/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/web/settings/get(webSiteSettings)`.
-    func webSiteSettings(_ input: Operations.WebSiteSettings.Input) async throws -> Operations.WebSiteSettings.Output
+    /// - Remark: Generated from `#/paths//api/v1/web/settings/get(siteSettings)`.
+    func siteSettings(_ input: Operations.SiteSettings.Input) async throws -> Operations.SiteSettings.Output
 }
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
     /// - Remark: HTTP `GET /api/v1/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/web/menus/get(webMenuList)`.
-    public func webMenuList(headers: Operations.WebMenuList.Input.Headers = .init()) async throws -> Operations.WebMenuList.Output {
-        try await webMenuList(Operations.WebMenuList.Input(headers: headers))
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/get(menuList)`.
+    public func menuList(headers: Operations.MenuList.Input.Headers = .init()) async throws -> Operations.MenuList.Output {
+        try await menuList(Operations.MenuList.Input(headers: headers))
     }
     /// - Remark: HTTP `GET /api/v1/web/menus/{key}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(webMenuGetByKey)`.
-    public func webMenuGetByKey(
-        path: Operations.WebMenuGetByKey.Input.Path,
-        headers: Operations.WebMenuGetByKey.Input.Headers = .init()
-    ) async throws -> Operations.WebMenuGetByKey.Output {
-        try await webMenuGetByKey(Operations.WebMenuGetByKey.Input(
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(menuGetByKey)`.
+    public func menuGetByKey(
+        path: Operations.MenuGetByKey.Input.Path,
+        headers: Operations.MenuGetByKey.Input.Headers = .init()
+    ) async throws -> Operations.MenuGetByKey.Output {
+        try await menuGetByKey(Operations.MenuGetByKey.Input(
             path: path,
             headers: headers
         ))
     }
     /// - Remark: HTTP `GET /api/v1/web/routes/{slug}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(webMetadataGet)`.
-    public func webMetadataGet(
-        path: Operations.WebMetadataGet.Input.Path,
-        headers: Operations.WebMetadataGet.Input.Headers = .init()
-    ) async throws -> Operations.WebMetadataGet.Output {
-        try await webMetadataGet(Operations.WebMetadataGet.Input(
+    /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(metadataGet)`.
+    public func metadataGet(
+        path: Operations.MetadataGet.Input.Path,
+        headers: Operations.MetadataGet.Input.Headers = .init()
+    ) async throws -> Operations.MetadataGet.Output {
+        try await metadataGet(Operations.MetadataGet.Input(
             path: path,
             headers: headers
         ))
     }
     /// - Remark: HTTP `GET /api/v1/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/web/metadata/get(webMetadataList)`.
-    public func webMetadataList(headers: Operations.WebMetadataList.Input.Headers = .init()) async throws -> Operations.WebMetadataList.Output {
-        try await webMetadataList(Operations.WebMetadataList.Input(headers: headers))
+    /// - Remark: Generated from `#/paths//api/v1/web/metadata/get(metadataList)`.
+    public func metadataList(headers: Operations.MetadataList.Input.Headers = .init()) async throws -> Operations.MetadataList.Output {
+        try await metadataList(Operations.MetadataList.Input(headers: headers))
     }
     /// - Remark: HTTP `GET /api/v1/web/pages/{id}`.
-    /// - Remark: Generated from `#/paths//api/v1/web/pages/{id}/get(webPageGet)`.
-    public func webPageGet(
-        path: Operations.WebPageGet.Input.Path,
-        headers: Operations.WebPageGet.Input.Headers = .init()
-    ) async throws -> Operations.WebPageGet.Output {
-        try await webPageGet(Operations.WebPageGet.Input(
+    /// - Remark: Generated from `#/paths//api/v1/web/pages/{id}/get(pageGet)`.
+    public func pageGet(
+        path: Operations.PageGet.Input.Path,
+        headers: Operations.PageGet.Input.Headers = .init()
+    ) async throws -> Operations.PageGet.Output {
+        try await pageGet(Operations.PageGet.Input(
             path: path,
             headers: headers
         ))
     }
     /// - Remark: HTTP `GET /api/v1/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/web/settings/get(webSiteSettings)`.
-    public func webSiteSettings(headers: Operations.WebSiteSettings.Input.Headers = .init()) async throws -> Operations.WebSiteSettings.Output {
-        try await webSiteSettings(Operations.WebSiteSettings.Input(headers: headers))
+    /// - Remark: Generated from `#/paths//api/v1/web/settings/get(siteSettings)`.
+    public func siteSettings(headers: Operations.SiteSettings.Input.Headers = .init()) async throws -> Operations.SiteSettings.Output {
+        try await siteSettings(Operations.SiteSettings.Input(headers: headers))
     }
 }
 

@@ -3,7 +3,7 @@ import FeatherWebAdmin
 import SystemModule
 import SystemWebAdmin
 
-public enum WebAdminMenuEventHandlers {
+public enum AdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
             event: SystemWebAdmin.Admin.Menu.Group.Provider.self,
