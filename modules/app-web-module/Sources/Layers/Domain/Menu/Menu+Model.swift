@@ -50,9 +50,9 @@ extension Menu {
             self.updatedAt = updatedAt
         }
     }
-}
+    }
 
-extension Menu.Model {
+    extension Menu.Model {
 
     private static func validate(
         key: String

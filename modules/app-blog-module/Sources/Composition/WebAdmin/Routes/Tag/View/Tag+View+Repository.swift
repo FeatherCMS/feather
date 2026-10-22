@@ -14,9 +14,3 @@ import WebModuleWebAdmin
 extension Tag.View {
     enum Repository {}
 }
-
-extension Tag.View.Repository {
-    protocol Interface: Sendable {
-        func get(id: String) async throws -> Tag.View.Model
-    }
-}

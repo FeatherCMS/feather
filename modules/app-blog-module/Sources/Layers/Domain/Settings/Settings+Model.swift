@@ -37,9 +37,9 @@ extension Settings {
             self.tagPathPrefix = tagPathPrefix
         }
     }
-}
+    }
 
-extension Settings.Model {
+    extension Settings.Model {
     private static func validate(
         postListPath: String,
         authorListPath: String,

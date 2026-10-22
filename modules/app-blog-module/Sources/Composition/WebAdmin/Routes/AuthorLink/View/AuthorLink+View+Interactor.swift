@@ -15,10 +15,3 @@ import WebModuleWebAdmin
 extension AuthorLink.View {
     enum Interactor {}
 }
-
-extension AuthorLink.View.Interactor {
-    protocol Interface: Sendable {
-        func execute(authorID: String, id: String) async throws
-            -> AuthorLink.View.Model
-    }
-}

@@ -13,9 +13,9 @@ extension Invitation.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Invitation.Table: DatabaseTableWithList {
+    extension Invitation.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let userId: String
@@ -26,9 +26,9 @@ extension Invitation.Table: DatabaseTableWithList {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Invitation.Table: DatabaseTableWithInsert {
+    extension Invitation.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let id: String
         let userId: String
@@ -37,9 +37,9 @@ extension Invitation.Table: DatabaseTableWithInsert {
         let roleIds: String
         let expiresAt: Date
     }
-}
+    }
 
-extension Invitation.Table: DatabaseTableWithUpdate {
+    extension Invitation.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let userId: String
         let email: String

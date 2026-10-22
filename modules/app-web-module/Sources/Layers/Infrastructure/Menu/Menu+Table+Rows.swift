@@ -10,9 +10,9 @@ extension Menu.Table: DatabaseTableWithInsert {
         let name: String
         let notes: String?
     }
-}
+    }
 
-extension Menu.Table: DatabaseTableWithUpdate {
+    extension Menu.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let key: String
         let name: String
@@ -22,9 +22,9 @@ extension Menu.Table: DatabaseTableWithUpdate {
             values[Menu.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-}
+    }
 
-extension Menu.Table: DatabaseTableWithDetail {
+    extension Menu.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let key: String
@@ -33,9 +33,9 @@ extension Menu.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Menu.Table: DatabaseTableWithList {
+    extension Menu.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let key: String

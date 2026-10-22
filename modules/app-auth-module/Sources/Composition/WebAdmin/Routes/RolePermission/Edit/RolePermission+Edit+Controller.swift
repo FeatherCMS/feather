@@ -29,9 +29,9 @@ extension RolePermission.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> Response
     }
-}
+    }
 
-extension RolePermission.Edit.Controller.Interface {
+    extension RolePermission.Edit.Controller.Interface {
 
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>,

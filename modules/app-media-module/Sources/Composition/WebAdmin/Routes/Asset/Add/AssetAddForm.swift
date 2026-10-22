@@ -26,9 +26,9 @@ struct MediaHTTPBodySequence: Sendable, AsyncSequence {
     func makeAsyncIterator() -> AsyncIterator {
         .init(iterator: body.makeAsyncIterator())
     }
-}
+    }
 
-struct AssetAddForm: Decodable {
+    struct AssetAddForm: Decodable {
     var parentId: String = ""
     var fileName: String = ""
     var `extension`: String = "bin"
@@ -36,9 +36,9 @@ struct AssetAddForm: Decodable {
     var altText: String = ""
     var data: String = ""
     var view: String = "grid"
-}
+    }
 
-struct AssetAddUpload: Sendable {
+    struct AssetAddUpload: Sendable {
     let parentId: String
     let fileName: String
     let `extension`: String

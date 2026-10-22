@@ -67,9 +67,9 @@ public struct GetPublicCategory {
             )
         }
     }
-}
+    }
 
-extension GetPublicCategory {
+    extension GetPublicCategory {
     fileprivate struct PublicArticlePage: Sendable {
         let items: [PublicNewsArticleSummary]
         let total: Int

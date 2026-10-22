@@ -13,13 +13,9 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension AuthorLink {
-    enum Add {}
-}
 
-extension AuthorLink.Add {
-    enum Controller {}
-}
+
+
 
 extension AuthorLink.Add.Controller {
     protocol Interface: Sendable {

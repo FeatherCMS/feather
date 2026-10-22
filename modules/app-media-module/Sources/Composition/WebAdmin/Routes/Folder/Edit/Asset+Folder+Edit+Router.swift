@@ -10,12 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Asset.Folder.Edit {
-    enum Controller {}
-    enum Interactor {}
-    enum Presenter {}
-    enum Repository {}
-}
 
 extension Asset.Folder.Edit {
     struct Router {

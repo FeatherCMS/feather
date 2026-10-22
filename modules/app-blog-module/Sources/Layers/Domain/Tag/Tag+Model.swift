@@ -58,9 +58,9 @@ extension Tag {
             self.updatedAt = updatedAt
         }
     }
-}
+    }
 
-extension Tag.Model {
+    extension Tag.Model {
 
     private static func validate(
         title: String

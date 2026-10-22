@@ -1,11 +1,8 @@
 import AccountModule
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
 
-extension Invitation.Add.Repository {
-
-    protocol Interface: Sendable {
-
-        func create(
-            payload: Invitation.Form.Payload
-        ) async throws
-    }
+extension Invitation.Add {
+    enum Repository {}
 }

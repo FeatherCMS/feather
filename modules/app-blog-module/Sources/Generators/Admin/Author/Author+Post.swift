@@ -1,0 +1,4 @@
+
+extension Author {
+    enum Post {}
+}

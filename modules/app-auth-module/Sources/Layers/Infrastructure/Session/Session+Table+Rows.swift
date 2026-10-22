@@ -14,9 +14,9 @@ extension Session.Table: DatabaseTableWithDetail {
         let updatedAt: Date
         let expiresAt: Date
     }
-}
+    }
 
-extension Session.Table: DatabaseTableWithList {
+    extension Session.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let token: String
@@ -28,9 +28,9 @@ extension Session.Table: DatabaseTableWithList {
         let updatedAt: Date
         let expiresAt: Date
     }
-}
+    }
 
-extension Session.Table: DatabaseTableWithInsert {
+    extension Session.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let id: String
         let token: String
@@ -40,9 +40,9 @@ extension Session.Table: DatabaseTableWithInsert {
         let isPersistent: Bool
         let expiresAt: Date
     }
-}
+    }
 
-extension Session.Table: DatabaseTableWithUpdate {
+    extension Session.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let token: String
         let identityId: String

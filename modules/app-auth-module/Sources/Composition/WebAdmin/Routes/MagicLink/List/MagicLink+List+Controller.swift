@@ -25,9 +25,9 @@ extension MagicLink.List.Controller {
         ) async throws -> HTMLResponse
 
     }
-}
+    }
 
-extension MagicLink.List.Controller.Interface {
+    extension MagicLink.List.Controller.Interface {
 
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>,

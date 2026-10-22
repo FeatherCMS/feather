@@ -4,10 +4,3 @@ import RedirectModule
 extension Rule.Remove {
     enum Repository {}
 }
-
-extension Rule.Remove.Repository {
-    protocol Interface: Sendable {
-
-        func delete(ids: [String]) async throws
-    }
-}

@@ -6,7 +6,7 @@ import WebBuilders
 import WebComponents
 
 struct ContactFormForm: Component {
-    struct State: FeatherWebAdmin.Object {
+    struct State {
         var key: String
         var name: String
         var successMessage: String
@@ -24,6 +24,11 @@ struct ContactFormForm: Component {
     var submitLabel: String
     var isReadOnly: Bool = false
     var mode: Mode = .details
+
+    enum Mode {
+        case details
+        case fields
+    }
 
     func selectors() -> [any Selector] {
         [
@@ -169,12 +174,12 @@ struct ContactFormForm: Component {
                         isReadOnly: isReadOnly
                     )
                 )
-            }
+            )
             if mode == .fields, !state.availableFields.isEmpty {
                 Section {
                     Div {
                         context.build(
-                            NewAdminFormGroup(
+                            AdminFormGroup(
                                 id: "contact-form-selected-fields-\(state.key)",
                                 title: "Selected fields",
                                 isOpen: true
@@ -195,7 +200,7 @@ struct ContactFormForm: Component {
                             }
                         )
                         context.build(
-                            NewAdminFormGroup(
+                            AdminFormGroup(
                                 id:
                                     "contact-form-available-fields-\(state.key)",
                                 title: "Available fields",

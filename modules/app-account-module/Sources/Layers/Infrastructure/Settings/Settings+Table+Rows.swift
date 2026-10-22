@@ -12,9 +12,9 @@ extension Settings.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Settings.Table: DatabaseTableWithInsert {
+    extension Settings.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let id: String
         let userId: String
@@ -22,9 +22,9 @@ extension Settings.Table: DatabaseTableWithInsert {
         let timezone: String
         let pageSize: Int
     }
-}
+    }
 
-extension Settings.Table: DatabaseTableWithUpdate {
+    extension Settings.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let language: String
         let timezone: String

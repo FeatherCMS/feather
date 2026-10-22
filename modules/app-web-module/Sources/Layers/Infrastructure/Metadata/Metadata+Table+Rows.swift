@@ -23,9 +23,9 @@ extension Metadata.Table: DatabaseTableWithInsert {
         let javascriptCodeInjection: String?
         let structuredDataCodeInjection: String?
     }
-}
+    }
 
-extension Metadata.Table: DatabaseTableWithUpdate {
+    extension Metadata.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let referenceType: String
         let referenceID: String
@@ -48,9 +48,9 @@ extension Metadata.Table: DatabaseTableWithUpdate {
             values[Metadata.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-}
+    }
 
-extension Metadata.Table: DatabaseTableWithDetail {
+    extension Metadata.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let referenceType: String
@@ -72,9 +72,9 @@ extension Metadata.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Metadata.Table: DatabaseTableWithList {
+    extension Metadata.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let referenceType: String

@@ -48,9 +48,9 @@ public enum API {
             )
         }
     }
-}
+    }
 
-private struct APIAuthMiddleware: ClientMiddleware {
+    private struct APIAuthMiddleware: ClientMiddleware {
     let sessionToken: String?
 
     func intercept(

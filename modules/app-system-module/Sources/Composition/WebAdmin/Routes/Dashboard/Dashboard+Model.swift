@@ -48,9 +48,9 @@ extension Dashboard {
             self.regions = regions
         }
     }
-}
+    }
 
-extension Dashboard {
+    extension Dashboard {
     public struct Model: Sendable {
         public struct ContentStat: Sendable {
             public let label: String

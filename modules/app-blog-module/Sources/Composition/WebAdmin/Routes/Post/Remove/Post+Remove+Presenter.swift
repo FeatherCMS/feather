@@ -4,13 +4,3 @@ import FeatherWebAdmin
 extension Post.Remove {
     enum Presenter {}
 }
-
-extension Post.Remove.Presenter {
-    protocol Interface: Sendable {
-        func renderError(
-            id: String,
-            info: String,
-            message: String
-        ) async throws -> HTMLResponse
-    }
-}

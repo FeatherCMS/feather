@@ -1,7 +1,9 @@
-import FeatherDatabase
 import FeatherDBAL
 import FeatherDBALPostgres
+import FeatherDatabase
 import FeatherInfrastructure
+import FeatherSQL
+import FeatherSQLPostgres
 
 import struct Foundation.Date
 
@@ -30,6 +32,7 @@ extension FormTable.Row {
 
 struct FormTable: DatabaseLegacyTable {
     static let name = "contact_form"
+    var sqlBuilder: SQLBuilder { .postgres }
 
     enum Fields {
         static let id = DatabaseTableColumnSchema(name: "id", type: .string)

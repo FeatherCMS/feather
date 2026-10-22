@@ -39,9 +39,9 @@ public struct Campaign: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-}
+    }
 
-extension Campaign {
+    extension Campaign {
 
     private static func validate(
         key: String

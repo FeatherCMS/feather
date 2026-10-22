@@ -1,8 +1,9 @@
 import ContactContracts
 import ContactModule
-import FeatherWebShared
-import FeatherWebAdmin
+import FeatherModuleKit
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird
@@ -25,7 +26,10 @@ struct AdminListContactFieldsDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: ContactModule.Permissions.Fields.list)
+        guard
+            context.isCurrentUserAllowed(
+                to: ContactModule.Permissions.Fields.list
+            )
         else {
             return try await presenter.renderForbiddenPage()
         }

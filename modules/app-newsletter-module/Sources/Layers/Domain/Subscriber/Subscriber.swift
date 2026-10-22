@@ -71,9 +71,9 @@ public struct Subscriber: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-}
+    }
 
-extension Subscriber {
+    extension Subscriber {
 
     private static func validate(
         email: String

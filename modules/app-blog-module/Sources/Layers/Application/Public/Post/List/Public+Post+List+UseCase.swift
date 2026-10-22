@@ -70,9 +70,9 @@ extension Public.Post.List {
         }
     }
 
-}
+    }
 
-extension Public.Post.List.UseCase {
+    extension Public.Post.List.UseCase {
     fileprivate static func publicAuthors(
         _ ids: [String],
         now: Date,

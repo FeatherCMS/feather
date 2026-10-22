@@ -10,9 +10,9 @@ extension Session.List.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
     }
-}
+    }
 
-extension Session.List.Controller.Interface {
+    extension Session.List.Controller.Interface {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>,
         routes: Session.Router.Routes

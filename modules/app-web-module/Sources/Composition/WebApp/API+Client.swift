@@ -10,9 +10,7 @@ public import WebAppAPI
 
 public enum WebApp {}
 
-extension WebApp {
-    public enum API {}
-}
+
 
 extension WebApp.API {
 public struct Client: Sendable {

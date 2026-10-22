@@ -147,9 +147,9 @@ public struct Log: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-}
+    }
 
-extension Log {
+    extension Log {
 
     private static func validate(
         method: String

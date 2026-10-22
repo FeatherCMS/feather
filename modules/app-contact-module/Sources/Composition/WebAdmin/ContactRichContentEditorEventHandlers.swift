@@ -1,5 +1,5 @@
-import FeatherWebAdmin
 public import FeatherModuleKit
+import FeatherWebAdmin
 import SystemModule
 import SystemWebAdmin
 
@@ -62,7 +62,7 @@ public enum ContactRichContentEditorEventHandlers {
         ] {
             registry.register(
                 event: AdminRichContentEditorBlockProvider.self,
-                context: AdminEventContext.self
+                context: SystemWebAdmin.Admin.Menu.Context.self
             ) { _, _ in definition }
         }
     }

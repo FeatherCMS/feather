@@ -7,9 +7,9 @@ extension RolePermission.Table: DatabaseTableWithInsert {
         let roleId: String
         let permissionId: String
     }
-}
+    }
 
-extension RolePermission.Table: DatabaseTableWithUpdate {
+    extension RolePermission.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let permissionId: String
 
@@ -17,9 +17,9 @@ extension RolePermission.Table: DatabaseTableWithUpdate {
             values[RolePermission.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-}
+    }
 
-extension RolePermission.Table: DatabaseTableWithDetail {
+    extension RolePermission.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let roleId: String
         let permissionId: String

@@ -10,12 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Overview.View.Controller {
-    protocol Interface: Sendable {
-
-        func getOverview(
-            request: Request,
-            context: AuthenticatedRequestContext
-        ) async throws -> HTMLResponse
-    }
+extension Overview.View {
+    enum Controller {}
 }

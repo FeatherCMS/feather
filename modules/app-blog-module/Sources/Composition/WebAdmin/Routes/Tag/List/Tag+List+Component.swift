@@ -61,9 +61,9 @@ extension Tag.List {
             .class("cms-section")
         }
     }
-}
+    }
 
-extension Tag.List {
+    extension Tag.List {
     fileprivate struct TableContent: WebComponents.Component {
         let state: Component.State
         func html(context: inout BuilderContext) -> Div {

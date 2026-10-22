@@ -1,0 +1,4 @@
+
+extension Metadata {
+    enum Resolve {}
+}

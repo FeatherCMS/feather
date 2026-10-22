@@ -1,6 +1,6 @@
 import AnalyticsFrontend
 import BlogWebAdmin
-import ContactFrontend
+import ContactWebShared
 import FeatherWebAdmin
 import FeatherWebShared
 import MediaWebAdmin

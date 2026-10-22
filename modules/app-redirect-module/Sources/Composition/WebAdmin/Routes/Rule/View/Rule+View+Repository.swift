@@ -4,12 +4,3 @@ import RedirectModule
 extension Rule.View {
     enum Repository {}
 }
-
-extension Rule.View.Repository {
-    protocol Interface: Sendable {
-
-        func load(
-            id: String
-        ) async throws -> RedirectRuleDetailsModel
-    }
-}

@@ -1,14 +1,8 @@
 import FeatherWebAdmin
-import MediaAdminAPI
+import FeatherWebShared
+import Hummingbird
 import MediaModule
 
-extension Variant.List.Interactor {
-    protocol Interface: Sendable {
-        func listMediaVariants(
-            page: Int,
-            search: String?
-        ) async throws -> AdminListModel<
-            MediaAdminAPI.Components.Schemas.MediaVariantQueryItemSchema
-        >
-    }
+extension Variant.List {
+    enum Interactor {}
 }

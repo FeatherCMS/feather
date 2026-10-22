@@ -1,3 +1,1 @@
-extension ContactModule {
-    public enum Event {}
-}
+public enum Event {}

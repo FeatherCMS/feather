@@ -93,9 +93,9 @@ extension Profile.Repository {
             .delete(where: \.userId, equals: userId)
         }
     }
-}
+    }
 
-extension Profile.Table.Detail {
+    extension Profile.Table.Detail {
     fileprivate var asDomain: Profile.Model {
         .init(
             userId: userId,

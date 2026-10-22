@@ -59,9 +59,9 @@ extension Credential.Form {
             )
         }
     }
-}
+    }
 
-extension Credential.Form.Input {
+    extension Credential.Form.Input {
     func validate(
         requiredPassword: Bool,
         validateUserId: Bool = true

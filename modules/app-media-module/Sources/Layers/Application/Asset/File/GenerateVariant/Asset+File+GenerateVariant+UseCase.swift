@@ -206,9 +206,9 @@ extension Asset.File.GenerateVariant {
             )
         }
     }
-}
+    }
 
-extension Asset.File.GenerateVariant.UseCase {
+    extension Asset.File.GenerateVariant.UseCase {
     private func prepare(assetID: String) async throws -> Prepared {
         try await transaction.run { scope in
             guard let asset = try await scope.assets.find(id: assetID) else {

@@ -35,9 +35,9 @@ extension Login.Form {
             )
         }
     }
-}
+    }
 
-extension Login.Form.Input {
+    extension Login.Form.Input {
 
     private var validator: GroupValidator {
         GroupValidator {

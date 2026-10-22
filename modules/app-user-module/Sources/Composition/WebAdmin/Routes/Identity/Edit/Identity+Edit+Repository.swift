@@ -1,8 +1,6 @@
 import UserModule
 
-extension Identity.Edit {
-    enum Repository {}
-}
+
 
 extension Identity.Edit.Repository {
     protocol Interface: Sendable {

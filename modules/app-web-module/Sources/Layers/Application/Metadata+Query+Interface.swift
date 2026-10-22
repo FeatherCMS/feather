@@ -9,9 +9,9 @@ public import WebDomain
 
 extension Metadata {
     public enum Query {}
-}
+    }
 
-extension Metadata.Query {
+    extension Metadata.Query {
     public protocol Interface: Sendable {
 
         func find(

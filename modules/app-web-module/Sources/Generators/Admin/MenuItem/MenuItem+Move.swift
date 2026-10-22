@@ -1,0 +1,4 @@
+
+extension MenuItem {
+    enum Move {}
+}

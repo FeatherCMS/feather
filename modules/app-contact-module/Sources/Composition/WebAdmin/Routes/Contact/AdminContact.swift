@@ -1,4 +1,4 @@
-import ContactWebShared
+public import ContactWebShared
 public import FeatherWebAdmin
 import FeatherWebShared
 public import Hummingbird

@@ -22,7 +22,8 @@ struct ContactFieldAddPage: Component {
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
-        Section {
+        let fieldForm = fieldForm(context: &context)
+        return Section {
             context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 AdminPageHeader(
@@ -41,21 +42,106 @@ struct ContactFieldAddPage: Component {
                     AdminContactFormTabs(formId: formKey, active: .fields)
                 )
                 context.build(
-                    NewAdminRelationshipGroup(
+                    AdminRelationshipGroup(
                         pageHeader: .secondary(
                             title: "Contact form field",
                             description:
                                 "Configure the field being added to this form."
                         )
                     ) {
-                        context.build(fieldForm)
+                        fieldForm
                     }
                 )
             }
             else {
-                context.build(fieldForm)
+                fieldForm
             }
         }
         .class("cms-section")
+    }
+
+    private func fieldForm(context: inout BuilderContext) -> Form {
+        let action = AdminLocation.url(
+            path: ContactAdminRoutes.fieldAdd.description,
+            queryItems: state.formKey.map { [("form", $0)] } ?? []
+        )
+        let form = AdminForm(action: action) {
+            context.build(
+                AdminFormFieldInput(
+                    state: .init(
+                        name: "key",
+                        label: "Key",
+                        value: state.key,
+                        error: state.fieldErrors["key"],
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                AdminFormFieldSelect(
+                    state: .init(
+                        name: "type",
+                        label: "Type",
+                        value: state.type,
+                        options: [
+                            .init(label: "Text", value: "text"),
+                            .init(label: "Textarea", value: "textarea"),
+                            .init(label: "Select", value: "select"),
+                            .init(label: "Radio", value: "radio"),
+                            .init(label: "Toggle", value: "toggle"),
+                            .init(label: "Hidden", value: "hidden"),
+                        ],
+                        error: state.fieldErrors["type"],
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                AdminFormFieldInput(
+                    state: .init(
+                        name: "label",
+                        label: "Label",
+                        value: state.label,
+                        error: state.fieldErrors["label"],
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                AdminFormFieldMultiInput(
+                    state: .init(
+                        name: "allowedValues[]",
+                        label: "Allowed values",
+                        values: state.allowedValues,
+                        error: state.fieldErrors["allowedValues"]
+                    )
+                )
+            )
+            context.build(
+                AdminFormFieldCheckbox(
+                    state: .init(
+                        name: "isRequired",
+                        label: "Field validation",
+                        checkboxLabel: "Require this field",
+                        isChecked: state.isRequired
+                    )
+                )
+            )
+            context.build(
+                AdminFormFieldInput(
+                    state: .init(
+                        name: "position",
+                        label: "Position",
+                        value: state.position
+                    )
+                )
+            )
+            if let error = state.error {
+                P(error).class("admin-form__error")
+            }
+            Div { context.build(AdminSubmitButton("Create field")) }
+                .class("admin-form__actions")
+        }
+        return context.build(form)
     }
 }

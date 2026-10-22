@@ -10,12 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Asset.File.Remove.Controller {
-    protocol Interface: Sendable {
-
-        func remove(
-            request: Request,
-            context: AuthenticatedRequestContext
-        ) async throws -> Response
-    }
+extension Asset.File.Remove {
+    enum Controller {}
 }

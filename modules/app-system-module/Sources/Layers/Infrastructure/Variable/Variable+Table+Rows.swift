@@ -9,9 +9,9 @@ extension Variable.Table: DatabaseTableWithInsert {
         let name: String?
         let notes: String?
     }
-}
+    }
 
-extension Variable.Table: DatabaseTableWithUpdate {
+    extension Variable.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let key: String
         let value: String
@@ -22,9 +22,9 @@ extension Variable.Table: DatabaseTableWithUpdate {
             values[Variable.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-}
+    }
 
-extension Variable.Table: DatabaseTableWithDetail {
+    extension Variable.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let key: String
@@ -32,9 +32,9 @@ extension Variable.Table: DatabaseTableWithDetail {
         let name: String?
         let notes: String?
     }
-}
+    }
 
-extension Variable.Table: DatabaseTableWithList {
+    extension Variable.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let key: String

@@ -110,9 +110,9 @@ extension Asset.File.List.Controller {
             }
         }
     }
-}
+    }
 
-extension Asset.File.List.Controller.Default {
+    extension Asset.File.List.Controller.Default {
     fileprivate func redirectLocation(
         request: Request
     ) -> String {

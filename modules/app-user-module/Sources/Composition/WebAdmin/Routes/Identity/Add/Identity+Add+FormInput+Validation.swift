@@ -29,9 +29,9 @@ extension Identity.Add {
             )
         }
     }
-}
+    }
 
-extension Identity.Add.FormInput {
+    extension Identity.Add.FormInput {
 
     private var validator: GroupValidator {
         GroupValidator {

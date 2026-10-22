@@ -1,8 +1,9 @@
 import AccountModule
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+import MediaWebAdmin
 
-extension Profile.Detail.Repository {
-
-    protocol Interface: Sendable {
-        func get() async throws -> Profile.Model
-    }
+extension Profile.Detail {
+    enum Repository {}
 }

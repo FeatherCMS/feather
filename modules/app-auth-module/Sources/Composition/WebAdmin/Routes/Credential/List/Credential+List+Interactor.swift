@@ -18,19 +18,3 @@ import WebComponents
 extension Credential.List {
     enum Interactor {}
 }
-
-extension Credential.List.Interactor {
-    protocol Interface: Sendable {
-        func execute(
-            page: Int,
-            size: Int,
-            search: String?
-        ) async throws -> (
-            items: [AuthAdminAPI.Components.Schemas
-                .AuthCredentialQueryItemSchema],
-            total: Int,
-            page: Int,
-            size: Int
-        )
-    }
-}

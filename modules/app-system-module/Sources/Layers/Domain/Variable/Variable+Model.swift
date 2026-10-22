@@ -46,9 +46,9 @@ extension Variable {
             self.notes = notes
         }
     }
-}
+    }
 
-extension Variable.Model {
+    extension Variable.Model {
 
     private static func validate(
         key: String

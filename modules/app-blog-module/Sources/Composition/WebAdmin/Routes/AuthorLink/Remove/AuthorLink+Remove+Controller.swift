@@ -13,13 +13,9 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension AuthorLink {
-    enum Remove {}
-}
 
-extension AuthorLink.Remove {
-    enum Controller {}
-}
+
+
 
 extension AuthorLink.Remove.Controller {
     protocol Interface: Sendable {

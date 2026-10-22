@@ -15,9 +15,7 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
-extension Email.Edit {
-    enum Repository {}
-}
+
 
 extension Email.Edit.Repository {
     protocol Interface: Sendable {

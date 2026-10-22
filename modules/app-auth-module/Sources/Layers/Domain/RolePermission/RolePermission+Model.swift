@@ -43,9 +43,9 @@ extension RolePermission {
         }
     }
 
-}
+    }
 
-extension RolePermission.Model {
+    extension RolePermission.Model {
 
     private static func validate(
         roleId: String

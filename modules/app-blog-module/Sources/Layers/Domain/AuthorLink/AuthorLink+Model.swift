@@ -66,9 +66,9 @@ extension AuthorLink {
             self.updatedAt = updatedAt
         }
     }
-}
+    }
 
-extension AuthorLink.Model {
+    extension AuthorLink.Model {
 
     private static func validate(
         label: String

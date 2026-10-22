@@ -47,9 +47,9 @@ public struct Form: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-}
+    }
 
-extension Form {
+    extension Form {
 
     private static func validate(
         key: String

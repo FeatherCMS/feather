@@ -179,9 +179,9 @@ extension Identity.Edit.Presenter {
             )
         }
     }
-}
+    }
 
-extension HTMLResponse {
+    extension HTMLResponse {
     fileprivate func withStatus(_ status: HTTPResponse.Status) -> HTMLResponse {
         HTMLResponse(content: content, status: status)
     }

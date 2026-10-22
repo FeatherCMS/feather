@@ -1,0 +1,4 @@
+
+extension Credential {
+    enum Post {}
+}

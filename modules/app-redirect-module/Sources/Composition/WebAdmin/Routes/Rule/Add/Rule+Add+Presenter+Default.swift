@@ -150,9 +150,9 @@ extension RedirectModule.Rule.Add.Presenter {
             return HTMLResponse(content: page.content, status: status)
         }
     }
-}
+    }
 
-extension HTMLResponse {
+    extension HTMLResponse {
     fileprivate func withStatus(_ status: HTTPResponse.Status) -> HTMLResponse {
         HTMLResponse(content: content, status: status)
     }

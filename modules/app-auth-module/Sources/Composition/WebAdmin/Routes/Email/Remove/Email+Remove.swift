@@ -16,9 +16,7 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
-extension Email {
-    enum Remove {}
-}
+
 
 extension Email.Remove {
     struct Router {

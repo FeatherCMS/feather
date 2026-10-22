@@ -19,17 +19,3 @@ import WebComponents
 extension Email.List {
     enum Presenter {}
 }
-
-extension Email.List.Presenter {
-    protocol Interface: Sendable {
-
-        func renderPage(
-            state: Email.List.ListTable.State
-        ) async throws -> HTMLResponse
-
-        func renderError(
-            error: OpenAPIRepositoryError
-        ) async throws -> HTMLResponse
-        func renderInvalidNoncePage() async throws -> HTMLResponse
-    }
-}

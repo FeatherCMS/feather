@@ -1,7 +1,7 @@
-import ContactWebShared
 import ContactAdminAPI
+import ContactWebShared
+import FeatherWebAdmin
 import FeatherWebShared
-import FeatherAdmin
 import Foundation
 import Hummingbird
 import NIOCore
@@ -27,9 +27,10 @@ struct AdminContactFormFieldsData {
         case .ok(let response):
             let form = try response.body.json
             let payload = FormFieldsPayload(
-                items: (form.items ?? []).map {
-                    .init(key: $0.key, label: $0.label)
-                }
+                items: (form.items ?? [])
+                    .map {
+                        .init(key: $0.key, label: $0.label)
+                    }
             )
             let data = try JSONEncoder().encode(payload)
             var buffer = ByteBufferAllocator().buffer(capacity: data.count)

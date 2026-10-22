@@ -3,12 +3,6 @@ import FeatherWebShared
 import Hummingbird
 import MediaModule
 
-extension Variant.Add {
-    enum Controller {}
-    enum Interactor {}
-    enum Presenter {}
-    enum Repository {}
-}
 
 extension Variant.Add {
     struct Router {

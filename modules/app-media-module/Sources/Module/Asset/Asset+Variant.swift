@@ -1,0 +1,4 @@
+
+extension Asset {
+    enum Variant {}
+}

@@ -3,9 +3,7 @@ import FeatherWebShared
 import Hummingbird
 import SystemModule
 
-extension Job {
-    enum View {}
-}
+
 
 extension Job.View {
     struct Router {

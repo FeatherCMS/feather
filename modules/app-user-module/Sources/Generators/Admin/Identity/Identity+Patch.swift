@@ -1,0 +1,4 @@
+
+extension Identity {
+    enum Patch {}
+}

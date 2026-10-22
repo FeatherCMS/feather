@@ -69,9 +69,9 @@ extension Role.Add {
             )
         }
     }
-}
+    }
 
-extension Role.Add.FormInput {
+    extension Role.Add.FormInput {
 
     private var validator: GroupValidator {
         GroupValidator {

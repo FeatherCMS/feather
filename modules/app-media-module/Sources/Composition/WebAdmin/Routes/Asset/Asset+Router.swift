@@ -76,9 +76,9 @@ extension Asset {
                 .route(on: router)
         }
     }
-}
+    }
 
-extension Asset.File {
+    extension Asset.File {
     struct Router {
         struct Routes: Sendable {
             let list: WebRoute
@@ -119,9 +119,9 @@ extension Asset.File {
             }
         }
     }
-}
+    }
 
-extension Asset.Folder {
+    extension Asset.Folder {
     struct Router {
         struct Routes: Sendable {
             let add: WebRoute

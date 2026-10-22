@@ -10,13 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Asset.File.List.Controller {
-    protocol Interface: Sendable {
-
-        func getListMediaAssets(
-            request: Request,
-            context: AuthenticatedRequestContext
-        ) async throws -> HTMLResponse
-
-    }
+extension Asset.File.List {
+    enum Controller {}
 }

@@ -3,13 +3,9 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 
-extension Tag {
-    enum Add {}
-}
 
-extension Tag.Add {
-    enum Controller {}
-}
+
+
 
 extension Tag.Add.Controller {
     protocol Interface: Sendable {

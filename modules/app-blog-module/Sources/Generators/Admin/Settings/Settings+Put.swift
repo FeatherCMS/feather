@@ -1,0 +1,4 @@
+
+extension Settings {
+    enum Put {}
+}

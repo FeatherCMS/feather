@@ -19,12 +19,3 @@ import WebComponents
 extension Credential.Remove {
     enum Controller {}
 }
-
-extension Credential.Remove.Controller {
-    protocol Interface: Sendable {
-        func postRemoveCredential(
-            request: Request,
-            context: AuthenticatedRequestContext
-        ) async throws -> Response
-    }
-}

@@ -4,18 +4,8 @@ import FeatherWebShared
 import Hummingbird
 
 extension Session {
-    enum List {
-        enum Controller {}
-        enum Interactor {}
-        enum Presenter {}
-        enum Repository {}
-    }
-    enum Remove {
-        enum Controller {}
-        enum Interactor {}
-        enum Presenter {}
-        enum Repository {}
-    }
+
+
 
     struct Router {
         struct Routes {

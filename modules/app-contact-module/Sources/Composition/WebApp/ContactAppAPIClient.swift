@@ -1,10 +1,13 @@
-import ContactWebShared
 import AsyncHTTPClient
 public import ContactAppAPI
-import FeatherWebShared
+public import ContactWebShared
+public import FeatherWebShared
 public import Foundation
+import HTTPTypes
+import NIOCore
 import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
+
 public struct ContactAppAPIClient: Sendable {
     public let client: ContactAppAPI.Client
 
@@ -14,7 +17,9 @@ public struct ContactAppAPIClient: Sendable {
             transport: AsyncHTTPClientTransport(
                 configuration: .init(client: .shared, timeout: .seconds(3))
             ),
-            middlewares: [ClientAPIAuthMiddleware(sessionToken: sessionToken)]
+            middlewares: [
+                ContactAppClientAuthMiddleware(sessionToken: sessionToken)
+            ]
         )
     }
 
@@ -37,6 +42,27 @@ public struct ContactAppAPIClient: Sendable {
             statusCode: statusCode,
             responseBody: try await responseBody?.collectString()
         )
+    }
+}
+
+private struct ContactAppClientAuthMiddleware: ClientMiddleware {
+    let sessionToken: String?
+
+    func intercept(
+        _ request: HTTPRequest,
+        body: HTTPBody?,
+        baseURL: URL,
+        operationID: String,
+        next:
+            @concurrent @Sendable (HTTPRequest, HTTPBody?, URL) async throws
+            -> (HTTPResponse, HTTPBody?)
+    ) async throws -> (HTTPResponse, HTTPBody?) {
+        var authenticatedRequest = request
+        if let sessionToken {
+            authenticatedRequest.headerFields[.authorization] =
+                "Bearer \(sessionToken)"
+        }
+        return try await next(authenticatedRequest, body, baseURL)
     }
 }
 

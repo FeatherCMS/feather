@@ -1,0 +1,4 @@
+
+extension RolePermission {
+    enum Delete {}
+}

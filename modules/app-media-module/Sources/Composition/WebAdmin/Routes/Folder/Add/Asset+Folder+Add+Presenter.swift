@@ -1,5 +1,6 @@
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -9,10 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Asset.Folder.Add.Presenter {
-    protocol Interface: Sendable {
-        func renderPage(
-            model: Asset.Folder.Add.Model
-        ) async throws -> HTMLResponse
-    }
+extension Asset.Folder.Add {
+    enum Presenter {}
 }

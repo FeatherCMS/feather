@@ -114,8 +114,8 @@ extension Variant.Repository {
             throw MockError.unexpectedCall
         }
     }
-}
+    }
 
-private enum MockError: Error {
+    private enum MockError: Error {
     case unexpectedCall
 }

@@ -3,11 +3,6 @@ import FeatherWebShared
 import Hummingbird
 import MediaModule
 
-extension Variant.List.Controller {
-    protocol Interface: Sendable {
-        func getMediaVariants(
-            request: Request,
-            context: AuthenticatedRequestContext
-        ) async throws -> HTMLResponse
-    }
+extension Variant.List {
+    enum Controller {}
 }

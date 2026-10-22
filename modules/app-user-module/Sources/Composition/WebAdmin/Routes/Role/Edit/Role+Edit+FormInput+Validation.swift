@@ -33,9 +33,9 @@ extension Role.Edit {
             )
         }
     }
-}
+    }
 
-extension Role.Edit.FormInput {
+    extension Role.Edit.FormInput {
 
     private var validator: GroupValidator {
         GroupValidator {

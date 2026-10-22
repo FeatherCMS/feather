@@ -14,9 +14,3 @@ import WebModuleWebAdmin
 extension Tag.View {
     enum Interactor {}
 }
-
-extension Tag.View.Interactor {
-    protocol Interface: Sendable {
-        func execute(id: String) async throws -> Tag.View.Model
-    }
-}

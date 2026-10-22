@@ -18,16 +18,3 @@ import WebComponents
 extension Email.Remove {
     enum Repository {}
 }
-
-extension Email.Remove.Repository {
-    protocol Interface: Sendable {
-
-        func get(
-            id: String
-        ) async throws -> Email.View.Detail
-
-        func delete(
-            id: String
-        ) async throws
-    }
-}

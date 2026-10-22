@@ -244,9 +244,9 @@ extension Asset.File {
             }
         }
     }
-}
+    }
 
-private let mediaAssetNodeFileSelectPrefix = #"""
+    private let mediaAssetNodeFileSelectPrefix = #"""
     SELECT
         n.id,
         n.parent_id AS folder_id,
@@ -268,7 +268,7 @@ private let mediaAssetNodeFileSelectPrefix = #"""
     JOIN media_storage_object o ON o.id = f.storage_object_id AND o.key = 'original'
     """#
 
-private func mediaAssetNodeFileSQLValues(_ values: [String]) -> String {
+    private func mediaAssetNodeFileSQLValues(_ values: [String]) -> String {
     values.map { value in
         let escaped = value.replacingOccurrences(of: "'", with: "''")
         return "'\(escaped)'"

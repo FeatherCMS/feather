@@ -1,7 +1,3 @@
-import Hummingbird
-
-extension Logout.Presenter {
-    protocol Interface: Sendable {
-        func expiredSessionCookie() -> Cookie
-    }
+extension Logout {
+    enum Presenter {}
 }

@@ -8,9 +8,9 @@ extension Credential.Table: DatabaseTableWithInsert {
         let authEmailId: String
         let passwordHash: String
     }
-}
+    }
 
-extension Credential.Table: DatabaseTableWithUpdate {
+    extension Credential.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let authEmailId: String
         let passwordHash: String
@@ -19,9 +19,9 @@ extension Credential.Table: DatabaseTableWithUpdate {
             values[Credential.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-}
+    }
 
-extension Credential.Table: DatabaseTableWithDetail {
+    extension Credential.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let authEmailId: String

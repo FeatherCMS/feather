@@ -1,7 +1,6 @@
-extension Overview.Interactor {
+import FeatherWebAdmin
+import Hummingbird
 
-    protocol Interface: Sendable {
-
-        func getOverview() async throws -> Overview.Model
-    }
+extension Overview {
+    enum Interactor {}
 }

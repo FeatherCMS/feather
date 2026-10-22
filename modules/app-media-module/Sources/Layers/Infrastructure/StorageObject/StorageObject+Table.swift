@@ -100,8 +100,8 @@ extension StorageObject {
             }
         }
     }
-}
+    }
 
-private func sql(_ value: String) -> String {
+    private func sql(_ value: String) -> String {
     "'\(value.replacingOccurrences(of: "'", with: "''"))'"
 }

@@ -3,13 +3,9 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 
-extension Tag {
-    enum Remove {}
-}
 
-extension Tag.Remove {
-    enum Controller {}
-}
+
+
 
 extension Tag.Remove.Controller {
     protocol Interface: Sendable {

@@ -3,13 +3,9 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 
-extension Author {
-    enum Edit {}
-}
 
-extension Author.Edit {
-    enum Controller {}
-}
+
+
 
 extension Author.Edit.Controller {
     protocol Interface: Sendable {

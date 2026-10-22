@@ -36,10 +36,10 @@ private enum QueryKeys {
         case search
         case count
     }
-}
+    }
 
-@Suite
-struct InfrastructureDatabaseTests {
+    @Suite
+    struct InfrastructureDatabaseTests {
 
     @Test
     func mockConnectionRecordsMultipleQueriesForTheSameKey() async throws {
@@ -423,11 +423,11 @@ struct InfrastructureDatabaseTests {
         #expect(select.bindings.contains(where: { $0.binding == .int(3) }))
         #expect(queries[.count]?.first?.sql.contains("COUNT(*)") == true)
     }
-}
+    }
 
-private func hasCurrentTimestampDefault(
+    private func hasCurrentTimestampDefault(
     _ constraints: [DatabaseTableColumnConstraintSchema]
-) -> Bool {
+    ) -> Bool {
     constraints.contains { constraint in
         guard case .default(let value) = constraint else { return false }
         if case .currentTimestamp = value.storage { return true }

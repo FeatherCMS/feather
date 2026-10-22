@@ -15,13 +15,3 @@ import WebModuleWebAdmin
 extension AuthorLink.Remove {
     enum Presenter {}
 }
-
-extension AuthorLink.Remove.Presenter {
-    protocol Interface: Sendable {
-        func renderError(
-            authorID: String,
-            info: String,
-            message: String
-        ) async throws -> HTMLResponse
-    }
-}

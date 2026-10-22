@@ -158,9 +158,9 @@ extension Asset.File.List.Repository {
         }
 
     }
-}
+    }
 
-extension Asset.File.List.Repository.OpenAPI {
+    extension Asset.File.List.Repository.OpenAPI {
 
     fileprivate func searchAssets(
         page: Int,

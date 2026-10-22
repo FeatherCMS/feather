@@ -1,0 +1,12 @@
+import FeatherWebAdmin
+import Hummingbird
+import SystemModule
+
+extension Permission.Add.Repository {
+    protocol Interface: Sendable {
+
+        func create(
+            entity: Permission.Add.Model
+        ) async throws
+    }
+}

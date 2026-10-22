@@ -79,9 +79,9 @@ public struct FormField: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-}
+    }
 
-extension FormField {
+    extension FormField {
 
     private static func validate(
         key: String,

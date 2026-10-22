@@ -1,5 +1,6 @@
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -9,9 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Asset.File.Remove.Interactor {
-    protocol Interface: Sendable {
-
-        func remove(ids: [String]) async throws
-    }
+extension Asset.File.Remove {
+    enum Interactor {}
 }

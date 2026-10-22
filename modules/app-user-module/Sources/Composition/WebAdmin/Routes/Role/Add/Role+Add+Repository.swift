@@ -1,9 +1,7 @@
 import FeatherWebAdmin
 import UserModule
 
-extension Role.Add {
-    enum Repository {}
-}
+
 
 extension Role.Add.Repository {
     protocol Interface: Sendable {

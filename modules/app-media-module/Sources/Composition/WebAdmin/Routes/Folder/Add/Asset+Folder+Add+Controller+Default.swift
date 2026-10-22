@@ -83,9 +83,9 @@ extension Asset.Folder.Add.Controller {
                 .response(from: request, context: context)
         }
     }
-}
+    }
 
-extension Asset.Folder.Add.Controller.Default {
+    extension Asset.Folder.Add.Controller.Default {
     fileprivate func redirectLocation(
         parentId: String?,
         view: String

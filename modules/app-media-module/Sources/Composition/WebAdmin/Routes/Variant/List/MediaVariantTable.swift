@@ -45,9 +45,9 @@ struct MediaVariantTable: Component {
         }
         .class("cms-section")
     }
-}
+    }
 
-struct MediaVariantTableContent: Component {
+    struct MediaVariantTableContent: Component {
     let variants: [MediaAdminAPI.Components.Schemas.MediaVariantQueryItemSchema]
     let permissions: AdminListActions
     let pageState: AdminListPageState
@@ -222,9 +222,9 @@ struct MediaVariantTableContent: Component {
             )
         )
     }
-}
+    }
 
-struct MediaVariantRow: Component {
+    struct MediaVariantRow: Component {
     let variant: MediaAdminAPI.Components.Schemas.MediaVariantQueryItemSchema
     let permissions: AdminListActions
     let returnTo: String

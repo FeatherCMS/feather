@@ -7,13 +7,3 @@ import RedirectModule
 extension Rule.View {
     enum Controller {}
 }
-
-extension Rule.View.Controller {
-    protocol Interface: Sendable {
-
-        func getRedirectRule(
-            request: Request,
-            context: AuthenticatedRequestContext
-        ) async throws -> HTMLResponse
-    }
-}

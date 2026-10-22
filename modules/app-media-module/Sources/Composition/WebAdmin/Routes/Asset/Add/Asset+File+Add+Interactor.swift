@@ -1,5 +1,6 @@
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -9,16 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Asset.File.Add.Interactor {
-    protocol Interface: Sendable {
-
-        func folderID(forPath path: String) async throws -> String?
-
-        func getAddMediaAsset() async throws -> Asset.File.Add.Model
-
-        func postAddMediaAsset(
-            payload: AssetAddUpload,
-            variants: [String]?
-        ) async throws -> Asset.File.Add.Model
-    }
+extension Asset.File.Add {
+    enum Interactor {}
 }

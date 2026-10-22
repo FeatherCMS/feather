@@ -1,5 +1,6 @@
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -9,9 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Overview.View.Interactor {
-    protocol Interface: Sendable {
-
-        func getOverview() async throws -> Overview.View.Model
-    }
+extension Overview.View {
+    enum Interactor {}
 }

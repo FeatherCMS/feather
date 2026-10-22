@@ -56,9 +56,9 @@ public struct Category: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-}
+    }
 
-extension Category {
+    extension Category {
 
     private static func validate(
         title: String

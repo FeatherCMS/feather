@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import SGML
@@ -11,16 +11,16 @@ struct ContactFormFieldsPage: Component {
         let isReadOnly: Bool
         let canAddField: Bool
         let form: ContactFormForm.State
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Contact form fields",
                         description:
@@ -32,7 +32,7 @@ struct ContactFormFieldsPage: Component {
                 AdminContactFormTabs(formId: state.key, active: .fields)
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Fields",
                         description:
@@ -41,11 +41,11 @@ struct ContactFormFieldsPage: Component {
                 ) {
                     if state.canAddField {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add field",
-                                        href: NewAdminLocation.url(
+                                        href: AdminLocation.url(
                                             path: ContactAdminRoutes.fieldAdd
                                                 .description,
                                             queryItems: [("form", state.key)]

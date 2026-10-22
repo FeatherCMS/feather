@@ -1,0 +1,4 @@
+
+extension Page {
+    enum Query {}
+}

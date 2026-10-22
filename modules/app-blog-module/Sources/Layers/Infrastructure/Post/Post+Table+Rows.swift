@@ -13,9 +13,9 @@ extension Post.Table: DatabaseTableWithInsert {
         let authorIds: String
         let tagIds: String
     }
-}
+    }
 
-extension Post.Table: DatabaseTableWithUpdate {
+    extension Post.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let title: String
         let excerpt: String
@@ -28,9 +28,9 @@ extension Post.Table: DatabaseTableWithUpdate {
             values[Post.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-}
+    }
 
-extension Post.Table: DatabaseTableWithDetail {
+    extension Post.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let title: String
@@ -42,9 +42,9 @@ extension Post.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Post.Table: DatabaseTableWithList {
+    extension Post.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let title: String

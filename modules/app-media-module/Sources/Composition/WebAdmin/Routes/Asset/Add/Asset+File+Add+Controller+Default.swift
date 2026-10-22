@@ -249,9 +249,9 @@ extension Asset.File.Add.Controller {
                 .response(from: request, context: context)
         }
     }
-}
+    }
 
-extension Asset.File.Add.Controller.Default {
+    extension Asset.File.Add.Controller.Default {
     fileprivate func defaultTitle(for fileName: String) -> String {
         URL(fileURLWithPath: fileName)
             .deletingPathExtension()

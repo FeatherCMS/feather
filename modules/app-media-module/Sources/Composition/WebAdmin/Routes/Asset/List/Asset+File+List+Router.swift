@@ -10,14 +10,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Asset.File {
-    enum List {
-        enum Controller {}
-        enum Interactor {}
-        enum Presenter {}
-        enum Repository {}
-    }
-}
+
 
 extension Asset.File.List {
     struct Router {

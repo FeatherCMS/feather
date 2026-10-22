@@ -4,7 +4,7 @@ import FeatherWebShared
 import Hummingbird
 
 extension Email {
-    enum Form {}
+
     struct Router {
         let routes: Routes
         private let environment: AppEnvironment

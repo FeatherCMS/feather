@@ -18,14 +18,3 @@ import WebComponents
 extension Email.Add {
     enum Interactor {}
 }
-
-extension Email.Add.Interactor {
-    protocol Interface: Sendable {
-
-        func listIdentities() async throws -> [Credential.Form.IdentityOption]
-
-        func execute(
-            entity: Email.Add.Model
-        ) async throws
-    }
-}

@@ -15,9 +15,7 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
-extension Credential.Edit {
-    enum Repository {}
-}
+
 
 extension Credential.Edit.Repository {
     protocol Interface: Sendable {

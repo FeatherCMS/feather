@@ -11,9 +11,9 @@ extension Role.Table: DatabaseTableWithDetail {
         public let createdAt: Date
         public let updatedAt: Date
     }
-}
+    }
 
-extension Role.Table: DatabaseTableWithList {
+    extension Role.Table: DatabaseTableWithList {
     public struct List: DatabaseTableRowDecodable {
         public let id: String
         public let key: String
@@ -22,18 +22,18 @@ extension Role.Table: DatabaseTableWithList {
         public let createdAt: Date
         public let updatedAt: Date
     }
-}
+    }
 
-extension Role.Table: DatabaseTableWithInsert {
+    extension Role.Table: DatabaseTableWithInsert {
     public struct Insert: DatabaseTableRowEncodable {
         public let id: String
         public let key: String
         public let name: String?
         public let notes: String?
     }
-}
+    }
 
-extension Role.Table: DatabaseTableWithUpdate {
+    extension Role.Table: DatabaseTableWithUpdate {
     public struct Update: DatabaseTableRowEncodable {
         public let key: String
         public let name: String?

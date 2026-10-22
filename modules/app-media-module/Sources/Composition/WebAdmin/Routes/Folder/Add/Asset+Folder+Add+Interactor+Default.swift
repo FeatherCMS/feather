@@ -64,9 +64,9 @@ extension Asset.Folder.Add.Interactor {
             )
         }
     }
-}
+    }
 
-extension OpenAPIRepositoryError.BackendError.Trace {
+    extension OpenAPIRepositoryError.BackendError.Trace {
     fileprivate var containsDuplicatePath: Bool {
         if id == "MediaApplication.Asset.Folder.Add.Error",
             message == "duplicatePath"

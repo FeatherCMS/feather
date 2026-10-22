@@ -19,18 +19,3 @@ import WebComponents
 extension Credential.Add {
     enum Controller {}
 }
-
-extension Credential.Add.Controller {
-    protocol Interface: Sendable {
-        func getAddCredential(
-            request: Request,
-            context: AuthenticatedRequestContext
-        )
-            async throws -> HTMLResponse
-        func postAddCredential(
-            request: Request,
-            context: AuthenticatedRequestContext
-        )
-            async throws -> Response
-    }
-}

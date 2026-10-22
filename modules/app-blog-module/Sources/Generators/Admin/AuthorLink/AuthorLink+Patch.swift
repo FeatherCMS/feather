@@ -1,0 +1,4 @@
+
+extension AuthorLink {
+    enum Patch {}
+}

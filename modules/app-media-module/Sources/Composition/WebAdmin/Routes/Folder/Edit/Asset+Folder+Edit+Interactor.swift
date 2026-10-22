@@ -1,5 +1,6 @@
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -9,15 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Asset.Folder.Edit.Interactor {
-    protocol Interface: Sendable {
-        func load(
-            id: String
-        ) async throws -> Asset.Folder.Edit.Model
-        func update(
-            id: String,
-            input: MediaFolderEditForm
-        ) async throws
-            -> Asset.Folder.Edit.Model
-    }
+extension Asset.Folder.Edit {
+    enum Interactor {}
 }

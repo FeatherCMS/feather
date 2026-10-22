@@ -1,0 +1,4 @@
+
+extension Tag {
+    enum Put {}
+}

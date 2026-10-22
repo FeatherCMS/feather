@@ -10,17 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Asset.Folder.Edit.Controller {
-    protocol Interface: Sendable {
-
-        func getEditMediaFolder(
-            request: Request,
-            context: AuthenticatedRequestContext
-        ) async throws -> HTMLResponse
-
-        func postEditMediaFolder(
-            request: Request,
-            context: AuthenticatedRequestContext
-        ) async throws -> Response
-    }
+extension Asset.Folder.Edit {
+    enum Controller {}
 }

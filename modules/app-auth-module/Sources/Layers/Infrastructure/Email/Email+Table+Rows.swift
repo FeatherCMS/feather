@@ -10,9 +10,9 @@ extension Email.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Email.Table: DatabaseTableWithList {
+    extension Email.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let identityId: String
@@ -20,17 +20,17 @@ extension Email.Table: DatabaseTableWithList {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Email.Table: DatabaseTableWithInsert {
+    extension Email.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let id: String
         let identityId: String
         let email: String
     }
-}
+    }
 
-extension Email.Table: DatabaseTableWithUpdate {
+    extension Email.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let identityId: String
         let email: String

@@ -1,5 +1,5 @@
 import AccountWebApp
-import ContactFrontend
+import ContactWebApp
 import FeatherApplication
 import FeatherModuleKit
 import FeatherWebApp

@@ -4,7 +4,7 @@ import FeatherModuleKit
 import WebApplication
 import BlogWebAdmin
 import MediaWebAdmin
-import ContactFrontend
+import ContactWebAdmin
 import NewsletterFrontend
 import WebModuleWebAdmin
 import WebModuleWebApp

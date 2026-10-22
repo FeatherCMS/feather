@@ -1,0 +1,4 @@
+
+extension Variant {
+    enum Add {}
+}

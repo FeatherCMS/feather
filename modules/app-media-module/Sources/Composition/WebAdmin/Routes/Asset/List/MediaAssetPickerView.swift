@@ -307,9 +307,9 @@ struct MediaAssetPickerView: Component {
             state.picker.resetSelection ? "true" : "false"
         )
     }
-}
+    }
 
-extension MediaAssetPickerView {
+    extension MediaAssetPickerView {
     fileprivate var hasAnyResults: Bool {
         !state.entries.isEmpty || state.currentFolder != nil
     }
@@ -909,9 +909,9 @@ extension MediaAssetPickerView {
     ) -> String {
         item._extension.isEmpty ? item.name : "\(item.name).\(item._extension)"
     }
-}
+    }
 
-private struct MediaAssetPickerSelectButton: Component {
+    private struct MediaAssetPickerSelectButton: Component {
     let item: Components.Schemas.MediaAssetQueryItemFileSchema
     let field: String
     let preview: Components.Schemas.MediaAssetResolveVariantSchema?

@@ -62,9 +62,9 @@ public struct Issue: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-}
+    }
 
-extension Issue {
+    extension Issue {
 
     private static func validate(
         subject: String,

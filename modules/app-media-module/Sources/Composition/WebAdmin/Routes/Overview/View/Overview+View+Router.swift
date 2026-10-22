@@ -10,14 +10,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Overview {
-    enum View {
-        enum Controller {}
-        enum Interactor {}
-        enum Presenter {}
-        enum Repository {}
-    }
-}
+
 
 extension Overview.View {
     struct Router {

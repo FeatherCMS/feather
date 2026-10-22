@@ -9,9 +9,9 @@ extension Asset.File {
             self.nodeId = nodeId
         }
     }
-}
+    }
 
-extension Asset.File.Repository {
+    extension Asset.File.Repository {
     public protocol Interface: FeatherDomain.Repository {
         func prepareStorageIdentity() -> Asset.File.StorageIdentity
         func insert(

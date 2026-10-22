@@ -47,9 +47,9 @@ public struct Submission: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
-}
+    }
 
-extension Submission {
+    extension Submission {
     public static func create(
         formId: String,
         valuesJSON: String,

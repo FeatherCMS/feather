@@ -1,0 +1,4 @@
+
+extension Invitation {
+    enum Detail {}
+}

@@ -16,9 +16,7 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
-extension Credential {
-    enum Remove {}
-}
+
 
 extension Credential.Remove {
     struct Router {

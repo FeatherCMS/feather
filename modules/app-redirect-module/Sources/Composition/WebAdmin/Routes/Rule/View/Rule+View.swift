@@ -4,9 +4,7 @@ import Hummingbird
 import RedirectApplication
 import RedirectModule
 
-extension Rule {
-    enum View {}
-}
+
 
 extension Rule.View {
     struct Router {

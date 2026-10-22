@@ -4,17 +4,17 @@ import UserOpenAPIGeneratorSupport
 
 extension RolePermission {
     public protocol Operation: BearerProtectedOperation {}
-}
+    }
 
-extension RolePermission.Operation {
+    extension RolePermission.Operation {
     public var tags: [any TagRepresentable] { [RolePermission.Tag()] }
-}
+    }
 
-extension RolePermission {
+    extension RolePermission {
     public protocol IdentifiableOperation: RolePermission.Operation {}
-}
+    }
 
-extension RolePermission.IdentifiableOperation {
+    extension RolePermission.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
         [
             RolePermission.Parameters.RoleID()

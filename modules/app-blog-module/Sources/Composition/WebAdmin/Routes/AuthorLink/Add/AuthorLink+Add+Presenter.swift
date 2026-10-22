@@ -13,14 +13,3 @@ import WebModuleWebAdmin
 extension AuthorLink.Add {
     enum Presenter {}
 }
-
-extension AuthorLink.Add.Presenter {
-    protocol Interface: Sendable {
-        func render(
-            authorID: String,
-            state: AuthorLink.Form.State,
-            permissions: Set<String>
-        ) async throws -> HTMLResponse
-
-    }
-}

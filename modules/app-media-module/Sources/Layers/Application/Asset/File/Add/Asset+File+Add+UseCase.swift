@@ -132,9 +132,9 @@ extension Asset.File.Add {
             }
         }
     }
-}
+    }
 
-extension Asset.File.Add.UseCase {
+    extension Asset.File.Add.UseCase {
     fileprivate struct NormalizedFile {
         let name: String
         let slug: String

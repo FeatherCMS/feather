@@ -19,15 +19,3 @@ import WebComponents
 extension Credential.List {
     enum Presenter {}
 }
-
-extension Credential.List.Presenter {
-    protocol Interface: Sendable {
-        func renderPage(
-            state: Credential.List.ListTable.State
-        ) async throws -> HTMLResponse
-
-        func renderError(
-            error: OpenAPIRepositoryError
-        ) async throws -> HTMLResponse
-    }
-}

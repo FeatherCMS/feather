@@ -30,9 +30,9 @@ private struct MediaStorageSequence: Sendable, AsyncSequence {
     func makeAsyncIterator() -> AsyncIterator {
         .init(iterator: body.makeAsyncIterator())
     }
-}
+    }
 
-extension AdminAPIGateway {
+    extension AdminAPIGateway {
     public func mediaAssetPost(
         _ input: Operations.MediaAssetPost.Input
     ) async throws -> Operations.MediaAssetPost.Output {

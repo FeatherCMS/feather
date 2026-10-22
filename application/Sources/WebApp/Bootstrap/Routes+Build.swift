@@ -7,7 +7,8 @@ import BlogWebAdmin
 import BlogWebApp
 import NewsFrontend
 import MediaWebAdmin
-import ContactFrontend
+import ContactWebAdmin
+import ContactWebApp
 import NewsletterFrontend
 import WebModuleWebAdmin
 import WebModule

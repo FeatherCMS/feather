@@ -3,9 +3,7 @@ import FeatherWebShared
 import Hummingbird
 import SystemModule
 
-extension Permission {
-    enum Remove {}
-}
+
 
 extension Permission.Remove {
     struct Router {

@@ -12,13 +12,9 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Tag {
-    enum View {}
-}
 
-extension Tag.View {
-    enum Controller {}
-}
+
+
 
 extension Tag.View.Controller {
     protocol Interface: Sendable {

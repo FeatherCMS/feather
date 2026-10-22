@@ -1,6 +1,6 @@
 import ContactContracts
-import FeatherWebAdmin
 import FeatherModuleKit
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import SGML
@@ -10,6 +10,8 @@ import WebComponents
 struct ContactFieldsTable: Component {
     struct State {
         let fields: [AdminContactFieldRow]
+        let forms: [AdminContactFormFilterOption]
+        let formKey: String?
         let pageState: AdminListPageState
         let search: String
         let error: String?

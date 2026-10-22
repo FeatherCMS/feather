@@ -1,11 +1,13 @@
-import ContactWebShared
 import AsyncHTTPClient
 public import ContactAdminAPI
-import FeatherWebAdmin
-import FeatherWebShared
+public import ContactWebShared
+public import FeatherWebAdmin
+public import FeatherWebShared
 public import Foundation
+import NIOCore
 import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
+
 public struct ContactAdminAPIClient: Sendable {
     public let client: ContactAdminAPI.Client
 

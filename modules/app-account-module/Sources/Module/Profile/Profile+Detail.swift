@@ -1,0 +1,4 @@
+
+extension Profile {
+    enum Detail {}
+}

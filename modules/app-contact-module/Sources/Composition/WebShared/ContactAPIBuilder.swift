@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 public struct ContactAPIBuilder: Sendable {
     public let apiBaseURL: URL

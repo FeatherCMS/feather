@@ -48,9 +48,9 @@ public enum AuthAPIClientSupport {
             responseBody: buffer.getString(at: 0, length: buffer.readableBytes)
         )
     }
-}
+    }
 
-public struct AuthAPIClientAuthMiddleware: ClientMiddleware {
+    public struct AuthAPIClientAuthMiddleware: ClientMiddleware {
     public let sessionToken: String?
 
     public init(sessionToken: String?) {

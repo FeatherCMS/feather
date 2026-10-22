@@ -16,9 +16,7 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
-extension Credential {
-    enum List {}
-}
+
 
 extension Credential.List {
     struct Router {

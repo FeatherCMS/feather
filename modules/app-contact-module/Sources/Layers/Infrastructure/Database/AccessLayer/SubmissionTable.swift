@@ -1,7 +1,9 @@
-import FeatherDatabase
 import FeatherDBAL
 import FeatherDBALPostgres
+import FeatherDatabase
 import FeatherInfrastructure
+import FeatherSQL
+import FeatherSQLPostgres
 
 import struct Foundation.Date
 
@@ -24,6 +26,7 @@ extension SubmissionTable.Row {
 
 struct SubmissionTable: DatabaseLegacyTable {
     static let name = "contact_form_submission"
+    var sqlBuilder: SQLBuilder { .postgres }
     struct Row {
         struct Create {
             let id: String

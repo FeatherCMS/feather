@@ -269,9 +269,9 @@ struct AssetListView: Component {
         }
         .class("cms-section")
     }
-}
+    }
 
-extension AssetListView {
+    extension AssetListView {
     fileprivate var hasAnyResults: Bool {
         !state.entries.isEmpty || state.currentFolder != nil
     }

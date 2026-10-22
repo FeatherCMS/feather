@@ -1,15 +1,9 @@
 import AccountModule
 import FeatherWebAdmin
 import FeatherWebShared
+import Hummingbird
+import MediaWebAdmin
 
-extension Profile.Detail.Interactor {
-
-    protocol Interface: Sendable {
-        func getProfile() async throws -> Profile.Model
-
-        func getProfile(
-            account: AccountModel,
-            profile: Profile.Model
-        ) async throws -> Profile.Detail.Model
-    }
+extension Profile.Detail {
+    enum Interactor {}
 }

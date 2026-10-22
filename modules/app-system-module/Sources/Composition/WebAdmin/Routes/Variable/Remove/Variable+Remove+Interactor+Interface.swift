@@ -1,0 +1,11 @@
+import FeatherWebAdmin
+import SystemModule
+
+extension Variable.Remove.Interactor {
+    protocol Interface: Sendable {
+
+        func delete(
+            ids: [String]
+        ) async throws
+    }
+}

@@ -8,9 +8,9 @@ public import FeatherDomain
 
 extension Menu {
     public enum Repository {}
-}
+    }
 
-extension Menu.Repository {
+    extension Menu.Repository {
     public protocol Interface: FeatherDomain.Repository {
 
         func find(

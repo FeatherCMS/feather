@@ -35,9 +35,9 @@ extension Identity.Edit {
             )
         }
     }
-}
+    }
 
-extension Identity.Edit.FormInput {
+    extension Identity.Edit.FormInput {
 
     private var validator: GroupValidator {
         GroupValidator {

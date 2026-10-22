@@ -92,9 +92,9 @@ extension Asset.File.Remove {
             return .init()
         }
     }
-}
+    }
 
-extension Asset.File.Remove.UseCase {
+    extension Asset.File.Remove.UseCase {
     fileprivate struct Snapshot: Sendable {
         struct StoredObject: Sendable {
             let assetId: String

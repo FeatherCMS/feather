@@ -63,9 +63,9 @@ extension API {
             )
         }
     }
-}
+    }
 
-extension SystemAdminAPI.Client {
+    extension SystemAdminAPI.Client {
     private func defaultSearchPage()
         -> SystemAdminAPI.Components.Schemas.SearchPageSchema
     {

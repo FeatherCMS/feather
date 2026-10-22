@@ -254,9 +254,9 @@ extension Asset.Node {
             }
         }
     }
-}
+    }
 
-private func mediaAssetNodeSQLValues(_ values: [String]) -> String {
+    private func mediaAssetNodeSQLValues(_ values: [String]) -> String {
     values.map { value in
         let escaped = value.replacingOccurrences(of: "'", with: "''")
         return "'\(escaped)'"

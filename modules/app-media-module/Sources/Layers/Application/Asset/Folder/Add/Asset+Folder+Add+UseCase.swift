@@ -59,9 +59,9 @@ extension Asset.Folder.Add {
             }
         }
     }
-}
+    }
 
-private func normalizedSlug(_ value: String) -> String {
+    private func normalizedSlug(_ value: String) -> String {
     value.lowercased()
         .replacingOccurrences(
             of: "[^a-z0-9]+",

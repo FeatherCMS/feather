@@ -16,11 +16,7 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
-extension Email {
-    enum Add {
-        enum Form {}
-    }
-}
+
 
 extension Email.Add {
     struct Router {

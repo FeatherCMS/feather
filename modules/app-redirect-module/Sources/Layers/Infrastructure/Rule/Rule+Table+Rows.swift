@@ -10,9 +10,9 @@ extension Rule.Table: DatabaseTableWithInsert {
         let statusCode: Int
         let notes: String?
     }
-}
+    }
 
-extension Rule.Table: DatabaseTableWithUpdate {
+    extension Rule.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let source: String
         let destination: String
@@ -23,9 +23,9 @@ extension Rule.Table: DatabaseTableWithUpdate {
             values[Rule.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-}
+    }
 
-extension Rule.Table: DatabaseTableWithDetail {
+    extension Rule.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let source: String
@@ -35,9 +35,9 @@ extension Rule.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Rule.Table: DatabaseTableWithList {
+    extension Rule.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let source: String

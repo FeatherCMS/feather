@@ -54,9 +54,9 @@ extension API {
             )
         }
     }
-}
+    }
 
-private struct ClientAPIAuthMiddleware: OpenAPIRuntime.ClientMiddleware {
+    private struct ClientAPIAuthMiddleware: OpenAPIRuntime.ClientMiddleware {
     let sessionToken: String?
 
     func intercept(
@@ -75,9 +75,9 @@ private struct ClientAPIAuthMiddleware: OpenAPIRuntime.ClientMiddleware {
         }
         return try await next(authenticatedRequest, body, baseURL)
     }
-}
+    }
 
-extension HTTPBody {
+    extension HTTPBody {
     fileprivate func collectString() async throws -> String? {
         var buffer = ByteBuffer()
         try await collect(upTo: .max, into: &buffer)

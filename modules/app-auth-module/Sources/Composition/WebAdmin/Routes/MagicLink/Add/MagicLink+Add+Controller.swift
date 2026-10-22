@@ -29,9 +29,9 @@ extension MagicLink.Add.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> Response
     }
-}
+    }
 
-extension MagicLink.Add.Controller.Interface {
+    extension MagicLink.Add.Controller.Interface {
 
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>,

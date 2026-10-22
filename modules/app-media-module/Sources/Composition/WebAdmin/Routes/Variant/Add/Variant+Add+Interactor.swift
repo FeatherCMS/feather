@@ -1,7 +1,8 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
 import MediaModule
 
-extension Variant.Add.Interactor {
-    protocol Interface: Sendable {
-        func add(input: MediaVariantFormInput) async throws
-    }
+extension Variant.Add {
+    enum Interactor {}
 }

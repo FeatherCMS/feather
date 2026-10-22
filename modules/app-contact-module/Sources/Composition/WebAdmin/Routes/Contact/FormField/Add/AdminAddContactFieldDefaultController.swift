@@ -1,8 +1,9 @@
 import ContactContracts
 import ContactModule
-import FeatherWebShared
-import FeatherWebAdmin
+import FeatherModuleKit
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -25,7 +26,10 @@ struct AdminAddContactFieldDefaultController:
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: ContactModule.Permissions.Fields.create)
+        guard
+            context.isCurrentUserAllowed(
+                to: ContactModule.Permissions.Fields.create
+            )
         else {
             return try await presenter.renderForbiddenPage()
         }
@@ -50,7 +54,10 @@ struct AdminAddContactFieldDefaultController:
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: ContactModule.Permissions.Fields.create)
+        guard
+            context.isCurrentUserAllowed(
+                to: ContactModule.Permissions.Fields.create
+            )
         else {
             return
                 try await presenter

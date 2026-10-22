@@ -1,0 +1,4 @@
+
+extension Post {
+    enum Patch {}
+}

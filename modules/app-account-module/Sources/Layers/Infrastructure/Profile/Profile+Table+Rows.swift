@@ -12,9 +12,9 @@ extension Profile.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-}
+    }
 
-extension Profile.Table: DatabaseTableWithInsert {
+    extension Profile.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let id: String
         let userId: String
@@ -22,9 +22,9 @@ extension Profile.Table: DatabaseTableWithInsert {
         let lastName: String?
         let profileImageAssetId: String?
     }
-}
+    }
 
-extension Profile.Table: DatabaseTableWithUpdate {
+    extension Profile.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let firstName: String?
         let lastName: String?

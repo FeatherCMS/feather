@@ -78,9 +78,9 @@ extension Session {
         }
     }
 
-}
+    }
 
-extension Session.Model {
+    extension Session.Model {
 
     private static func validate(
         token: String

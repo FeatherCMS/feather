@@ -1,7 +1,7 @@
 import ContactContracts
 import ContactModule
-import FeatherWebAdmin
 import FeatherModuleKit
+import FeatherWebAdmin
 import Foundation
 import HTML
 import Hummingbird
@@ -11,6 +11,8 @@ import WebComponents
 
 struct ContactFieldsTableContent: Component {
     let fields: [AdminContactFieldRow]
+    let forms: [AdminContactFormFilterOption]
+    let formKey: String?
     let pageState: AdminListPageState
     let search: String
     let permissions: AdminListActions
@@ -59,7 +61,8 @@ struct ContactFieldsTableContent: Component {
                                 action: {
                                     if search.isEmpty && formKey == nil {
                                         if permissions.allows(
-                                            ContactModule.Permissions.Fields.create
+                                            ContactModule.Permissions.Fields
+                                                .create
                                         ) {
                                             context.build(
                                                 AdminButton(
@@ -194,10 +197,11 @@ struct ContactFieldsTableContent: Component {
                                                                                 .secondary
                                                                             ),
                                                                         permission:
-                                                                            ContactModule.Permissions
+                                                                            ContactModule
+                                                                            .Permissions
                                                                             .Fields
                                                                             .update
-                                                                    ),
+                                                                    )
                                                                 ],
                                                                 permissions:
                                                                     permissions
@@ -224,7 +228,7 @@ struct ContactFieldsTableContent: Component {
                                 action: ContactAdminRoutes.fields.description,
                                 placeholder: "Quick search contact fields",
                                 search: search,
-                                resetPath: NewAdminLocation.url(
+                                resetPath: AdminLocation.url(
                                     path: ContactAdminRoutes.fields.description,
                                     queryItems: formKey.map { [("form", $0)] }
                                         ?? []
@@ -238,9 +242,12 @@ struct ContactFieldsTableContent: Component {
                                                 $0.selected()
                                             }
                                         Option("No form assigned")
-                                            .value(FormFieldListFilter.unassigned)
+                                            .value(
+                                                FormFieldListFilter.unassigned
+                                            )
                                             .if(
-                                                formKey == FormFieldListFilter
+                                                formKey
+                                                    == FormFieldListFilter
                                                     .unassigned
                                             ) {
                                                 $0.selected()
@@ -251,8 +258,8 @@ struct ContactFieldsTableContent: Component {
                                                 .if(form.key == formKey) {
                                                     $0.selected()
                                                 }
-                                            }
                                         }
+                                    }
                                     .name("form")
                                     .ariaLabel("Filter fields by form")
                                     .onChange("this.form.requestSubmit()")
@@ -263,7 +270,9 @@ struct ContactFieldsTableContent: Component {
                     )
                 },
                 toolbar: {
-                    if permissions.allows(ContactModule.Permissions.Fields.create) {
+                    if permissions.allows(
+                        ContactModule.Permissions.Fields.create
+                    ) {
                         context.build(
                             AdminListToolbar {
                                 context.build(

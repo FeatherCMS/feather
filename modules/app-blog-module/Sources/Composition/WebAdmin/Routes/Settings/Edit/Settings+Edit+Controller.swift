@@ -13,13 +13,9 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Settings {
-    enum Edit {}
-}
 
-extension Settings.Edit {
-    enum Controller {}
-}
+
+
 
 extension Settings.Edit.Controller {
     protocol Interface: Sendable {

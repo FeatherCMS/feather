@@ -16,9 +16,3 @@ import WebModuleWebAdmin
 extension Post.Add {
     enum OptionRepository {}
 }
-
-extension Post.Add.OptionRepository {
-    protocol Interface: Sendable {
-        func loadOptions() async throws -> Post.Association.Options
-    }
-}

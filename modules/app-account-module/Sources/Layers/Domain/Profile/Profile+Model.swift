@@ -47,9 +47,9 @@ extension Profile {
             self.updatedAt = updatedAt
         }
     }
-}
+    }
 
-extension Profile.Model {
+    extension Profile.Model {
 
     private static func normalizeProfileImageAssetId(
         _ profileImageAssetId: String?

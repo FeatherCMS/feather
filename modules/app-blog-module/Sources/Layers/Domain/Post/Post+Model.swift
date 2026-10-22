@@ -66,9 +66,9 @@ extension Post {
             self.updatedAt = updatedAt
         }
     }
-}
+    }
 
-extension Post.Model {
+    extension Post.Model {
 
     private static func validate(
         title: String

@@ -4,7 +4,7 @@ import FeatherWebShared
 import Hummingbird
 
 extension Credential {
-    enum Form {}
+
     struct Router {
         struct Routes {
             let list: WebRoute

@@ -3,39 +3,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 
-extension MagicLink {
-    enum Add {
-        enum Controller {}
-        enum Interactor {}
-        enum Presenter {}
-        enum Repository {}
-    }
-    enum Edit {
-        enum Controller {}
-        enum Interactor {}
-        enum Presenter {}
-        enum Repository {}
-        enum Form {}
-    }
-    enum List {
-        enum Controller {}
-        enum Interactor {}
-        enum Presenter {}
-        enum Repository {}
-    }
-    enum Remove {
-        enum Controller {}
-        enum Interactor {}
-        enum Presenter {}
-        enum Repository {}
-    }
-    enum View {
-        enum Controller {}
-        enum Interactor {}
-        enum Presenter {}
-        enum Repository {}
-    }
-}
+
 
 extension MagicLink {
     struct Router {

@@ -19,14 +19,3 @@ import WebComponents
 extension Email.List {
     enum Controller {}
 }
-
-extension Email.List.Controller {
-    protocol Interface: Sendable {
-
-        func getAuthEmails(
-            request: Request,
-            context: AuthenticatedRequestContext
-        ) async throws -> HTMLResponse
-
-    }
-}

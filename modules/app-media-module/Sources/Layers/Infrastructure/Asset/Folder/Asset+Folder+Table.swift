@@ -219,9 +219,9 @@ extension Asset.Folder {
             }
         }
     }
-}
+    }
 
-private func mediaFolderSQLValues(_ values: [String]) -> String {
+    private func mediaFolderSQLValues(_ values: [String]) -> String {
     values.map { value in
         let escaped = value.replacingOccurrences(of: "'", with: "''")
         return "'\(escaped)'"

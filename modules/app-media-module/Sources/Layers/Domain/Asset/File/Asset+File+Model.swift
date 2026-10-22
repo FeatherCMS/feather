@@ -76,9 +76,9 @@ extension Asset.File {
             self.deletedAt = deletedAt
         }
     }
-}
+    }
 
-extension Asset.File.Model {
+    extension Asset.File.Model {
     public static func create(
         folderId: String?,
         name: String,

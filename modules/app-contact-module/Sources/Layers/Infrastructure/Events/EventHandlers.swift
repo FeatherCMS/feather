@@ -1,7 +1,7 @@
-import ContactModule
+public import ContactModule
+public import FeatherModuleKit
 import SystemApplication
 import SystemModule
-public import FeatherModuleKit
 
 extension ContactModule.Event {
     public enum Handlers {
@@ -18,9 +18,9 @@ extension ContactModule.Event {
             }
         }
     }
-}
+    }
 
-public enum EventHandlers {
+    public enum EventHandlers {
     public static func register(
         in registry: inout EventRegistry
     ) {

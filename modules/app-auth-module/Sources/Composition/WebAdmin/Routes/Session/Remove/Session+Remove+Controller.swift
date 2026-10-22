@@ -11,9 +11,9 @@ extension Session.Remove.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> Response
     }
-}
+    }
 
-extension Session.Remove.Controller.Interface {
+    extension Session.Remove.Controller.Interface {
 
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>,

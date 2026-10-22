@@ -242,9 +242,9 @@ struct FormFieldTable {
                 }
         }
     }
-}
+    }
 
-extension FormFieldTable.Row {
+    extension FormFieldTable.Row {
     func allowedValues() throws -> [FormField.Option] {
         try JSONDecoder()
             .decode(
@@ -252,9 +252,9 @@ extension FormFieldTable.Row {
                 from: Data(allowedValuesJSON.utf8)
             )
     }
-}
+    }
 
-extension FormField.Option {
+    extension FormField.Option {
     static func jsonString(
         _ values: [Self]
     ) throws -> String {

@@ -18,12 +18,3 @@ import WebComponents
 extension Email.View {
     enum Interactor {}
 }
-
-extension Email.View.Interactor {
-    protocol Interface: Sendable {
-
-        func execute(
-            entity: Email.View.Model
-        ) async throws -> Email.View.Detail
-    }
-}
