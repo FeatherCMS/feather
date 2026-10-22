@@ -6,17 +6,17 @@ import FeatherApplication
 extension AdminAPIGateway {
     func responseQuery(
         from query: BlogAdminAPI.Components.Schemas
-            .BlogTagQueryItemSearchRequestQuerySchema
+            .TagQueryItemSearchRequestQuerySchema
     )
         -> BlogAdminAPI.Components.Schemas
-        .BlogTagQueryItemSearchResponseQuerySchema
+        .TagQueryItemSearchResponseQuerySchema
     {
         let page = map(query.page)
         let sort = query.sort?
             .map { item in
                 let field:
                     BlogAdminAPI.Components.Schemas
-                        .BlogTagQueryItemSearchResponseQuerySchema
+                        .TagQueryItemSearchResponseQuerySchema
                         .SortPayloadPayload.FieldPayload
                 switch item.field {
                 case .id: field = .id
@@ -25,7 +25,7 @@ extension AdminAPIGateway {
                 case .updatedAt: field = .updatedAt
                 }
                 return BlogAdminAPI.Components.Schemas
-                    .BlogTagQueryItemSearchResponseQuerySchema
+                    .TagQueryItemSearchResponseQuerySchema
                     .SortPayloadPayload(field: field, direction: item.direction)
             }
         return .init(
@@ -37,7 +37,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogTagQueryItemSearchRequestQuerySchema
+            .TagQueryItemSearchRequestQuerySchema
     ) -> Tag.Search.Input.Query {
         let sort = (query.sort ?? [])
             .map { item in
@@ -66,7 +66,7 @@ extension AdminAPIGateway {
 
     func map(
         _ detail: Tag.Detail.Output
-    ) -> BlogAdminAPI.Components.Schemas.BlogTagDetailSchema {
+    ) -> BlogAdminAPI.Components.Schemas.TagGetSchema {
         .init(
             id: detail.id,
             title: detail.title,
@@ -81,7 +81,7 @@ extension AdminAPIGateway {
 
     func map(
         _ output: Tag.Add.Output
-    ) -> BlogAdminAPI.Components.Schemas.BlogTagDetailSchema {
+    ) -> BlogAdminAPI.Components.Schemas.TagGetSchema {
         map(
             Tag.Detail.Output(
                 id: output.id,
@@ -98,7 +98,7 @@ extension AdminAPIGateway {
 
     func map(
         _ output: Tag.Edit.Output
-    ) -> BlogAdminAPI.Components.Schemas.BlogTagDetailSchema {
+    ) -> BlogAdminAPI.Components.Schemas.TagGetSchema {
         map(
             Tag.Detail.Output(
                 id: output.id,
@@ -115,7 +115,7 @@ extension AdminAPIGateway {
 
     func map(
         _ item: Tag.List.Output.Item
-    ) -> BlogAdminAPI.Components.Schemas.BlogTagListItemSchema {
+    ) -> BlogAdminAPI.Components.Schemas.TagListItemSchema {
         .init(
             id: item.id,
             title: item.title,
@@ -128,7 +128,7 @@ extension AdminAPIGateway {
 
     func mapQuery(
         _ item: Tag.Search.Output.Item
-    ) -> BlogAdminAPI.Components.Schemas.BlogTagQueryItemSchema {
+    ) -> BlogAdminAPI.Components.Schemas.TagQueryItemSchema {
         .init(
             id: item.id,
             title: item.title,

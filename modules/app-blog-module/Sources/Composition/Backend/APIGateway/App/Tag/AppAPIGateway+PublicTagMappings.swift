@@ -1,9 +1,10 @@
 import BlogAppAPI
 import BlogApplication
+import WebApplication
 
 extension AppAPIGateway {
     func mapPublicTagSummary(
-        _ summary: Public.Tag.Summary.Output
+        _ summary: BlogApplication.Public.Tag.Summary.Output
     ) async -> BlogAppAPI.Components.Schemas.BlogTagSummarySchema {
         let media = await publicMedia(assetId: summary.imageAssetId)
         return .init(

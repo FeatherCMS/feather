@@ -58,7 +58,7 @@ extension Author.List.Repository {
         }
 
         private func loadItems(
-            _ items: [BlogAdminAPI.Components.Schemas.BlogAuthorQueryItemSchema]
+            _ items: [BlogAdminAPI.Components.Schemas.AuthorQueryItemSchema]
         ) async throws -> [Author.List.Item] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 try await withThrowingTaskGroup(

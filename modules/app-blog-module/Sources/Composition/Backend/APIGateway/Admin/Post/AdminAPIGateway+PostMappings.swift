@@ -7,17 +7,17 @@ import Foundation
 extension AdminAPIGateway {
     func responseQuery(
         from query: BlogAdminAPI.Components.Schemas
-            .BlogPostQueryItemSearchRequestQuerySchema
+            .PostQueryItemSearchRequestQuerySchema
     )
         -> BlogAdminAPI.Components.Schemas
-        .BlogPostQueryItemSearchResponseQuerySchema
+        .PostQueryItemSearchResponseQuerySchema
     {
         let page = map(query.page)
         let sort = query.sort?
             .map { item in
                 let field:
                     BlogAdminAPI.Components.Schemas
-                        .BlogPostQueryItemSearchResponseQuerySchema
+                        .PostQueryItemSearchResponseQuerySchema
                         .SortPayloadPayload.FieldPayload
                 switch item.field {
                 case .id: field = .id
@@ -26,7 +26,7 @@ extension AdminAPIGateway {
                 case .updatedAt: field = .updatedAt
                 }
                 return BlogAdminAPI.Components.Schemas
-                    .BlogPostQueryItemSearchResponseQuerySchema
+                    .PostQueryItemSearchResponseQuerySchema
                     .SortPayloadPayload(field: field, direction: item.direction)
             }
         return .init(
@@ -38,7 +38,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogPostQueryItemSearchRequestQuerySchema
+            .PostQueryItemSearchRequestQuerySchema
     ) -> Post.Search.Input.Query {
         let sort = (query.sort ?? [])
             .map { item in
@@ -67,7 +67,7 @@ extension AdminAPIGateway {
 
     func map(
         _ detail: Post.Detail.Output
-    ) -> BlogAdminAPI.Components.Schemas.BlogPostDetailSchema {
+    ) -> BlogAdminAPI.Components.Schemas.PostGetSchema {
         .init(
             id: detail.id,
             title: detail.title,
@@ -84,7 +84,7 @@ extension AdminAPIGateway {
 
     func map(
         _ output: Post.Add.Output
-    ) -> BlogAdminAPI.Components.Schemas.BlogPostDetailSchema {
+    ) -> BlogAdminAPI.Components.Schemas.PostGetSchema {
         map(
             Post.Detail.Output(
                 id: output.id,
@@ -103,7 +103,7 @@ extension AdminAPIGateway {
 
     func map(
         _ output: Post.Edit.Output
-    ) -> BlogAdminAPI.Components.Schemas.BlogPostDetailSchema {
+    ) -> BlogAdminAPI.Components.Schemas.PostGetSchema {
         map(
             Post.Detail.Output(
                 id: output.id,
@@ -122,7 +122,7 @@ extension AdminAPIGateway {
 
     func map(
         _ item: Post.List.Output.Item
-    ) -> BlogAdminAPI.Components.Schemas.BlogPostListItemSchema {
+    ) -> BlogAdminAPI.Components.Schemas.PostListItemSchema {
         .init(
             id: item.id,
             title: item.title,
@@ -135,7 +135,7 @@ extension AdminAPIGateway {
 
     func mapQuery(
         _ item: Post.Search.Output.Item
-    ) -> BlogAdminAPI.Components.Schemas.BlogPostQueryItemSchema {
+    ) -> BlogAdminAPI.Components.Schemas.PostQueryItemSchema {
         .init(
             id: item.id,
             title: item.title,

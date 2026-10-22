@@ -6,17 +6,17 @@ import FeatherApplication
 extension AdminAPIGateway {
     func responseQuery(
         from query: BlogAdminAPI.Components.Schemas
-            .BlogAuthorLinkQueryItemSearchRequestQuerySchema
+            .AuthorLinkQueryItemSearchRequestQuerySchema
     )
         -> BlogAdminAPI.Components.Schemas
-        .BlogAuthorLinkQueryItemSearchResponseQuerySchema
+        .AuthorLinkQueryItemSearchResponseQuerySchema
     {
         let page = map(query.page)
         let sort = query.sort?
             .map { item in
                 let field:
                     BlogAdminAPI.Components.Schemas
-                        .BlogAuthorLinkQueryItemSearchResponseQuerySchema
+                        .AuthorLinkQueryItemSearchResponseQuerySchema
                         .SortPayloadPayload.FieldPayload
                 switch item.field {
                 case .id: field = .id
@@ -28,7 +28,7 @@ extension AdminAPIGateway {
                 case .updatedAt: field = .updatedAt
                 }
                 return BlogAdminAPI.Components.Schemas
-                    .BlogAuthorLinkQueryItemSearchResponseQuerySchema
+                    .AuthorLinkQueryItemSearchResponseQuerySchema
                     .SortPayloadPayload(field: field, direction: item.direction)
             }
         return .init(
@@ -40,7 +40,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogAuthorLinkQueryItemSearchRequestQuerySchema
+            .AuthorLinkQueryItemSearchRequestQuerySchema
     ) -> AuthorLink.Search.Input.Query {
         let sort = (query.sort ?? [])
             .map { item in
@@ -75,7 +75,7 @@ extension AdminAPIGateway {
 
     func map(
         _ detail: AuthorLink.Detail.Output
-    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkDetailSchema {
+    ) -> BlogAdminAPI.Components.Schemas.AuthorLinkGetSchema {
         .init(
             id: detail.id,
             menuId: detail.authorId,
@@ -92,7 +92,7 @@ extension AdminAPIGateway {
 
     func map(
         _ output: AuthorLink.Add.Output
-    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkDetailSchema {
+    ) -> BlogAdminAPI.Components.Schemas.AuthorLinkGetSchema {
         map(
             AuthorLink.Detail.Output(
                 id: output.id,
@@ -111,7 +111,7 @@ extension AdminAPIGateway {
 
     func map(
         _ output: AuthorLink.Edit.Output
-    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkDetailSchema {
+    ) -> BlogAdminAPI.Components.Schemas.AuthorLinkGetSchema {
         map(
             AuthorLink.Detail.Output(
                 id: output.id,
@@ -130,7 +130,7 @@ extension AdminAPIGateway {
 
     func map(
         _ item: AuthorLink.List.Output.Item
-    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkListItemSchema {
+    ) -> BlogAdminAPI.Components.Schemas.AuthorLinkListItemSchema {
         .init(
             id: item.id,
             menuId: item.authorId,
@@ -146,7 +146,7 @@ extension AdminAPIGateway {
 
     func mapQuery(
         _ item: AuthorLink.Search.Output.Item
-    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkQueryItemSchema {
+    ) -> BlogAdminAPI.Components.Schemas.AuthorLinkQueryItemSchema {
         .init(
             id: item.id,
             menuId: item.authorId,

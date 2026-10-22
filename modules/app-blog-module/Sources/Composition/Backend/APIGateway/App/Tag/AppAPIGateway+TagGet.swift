@@ -1,5 +1,6 @@
 public import BlogAppAPI
 import BlogApplication
+import WebApplication
 
 extension AppAPIGateway {
     public func blogTagGet(
@@ -35,7 +36,7 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is Public.Tag.Detail.UseCase.Error {
+        catch is BlogApplication.Public.Tag.Detail.UseCase.Error {
             return .notFound(
                 .init(
                     body: .json(

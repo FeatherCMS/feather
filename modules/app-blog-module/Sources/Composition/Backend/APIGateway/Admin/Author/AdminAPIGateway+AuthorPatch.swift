@@ -16,7 +16,7 @@ extension AdminAPIGateway {
     public func blogAuthorPatch(
         _ input: Operations.BlogAuthorPatch.Input
     ) async throws -> Operations.BlogAuthorPatch.Output {
-        let body: Components.Schemas.BlogAuthorPatchSchema
+        let body: Components.Schemas.AuthorPatchSchema
         switch input.body {
         case .json(let value):
             body = value

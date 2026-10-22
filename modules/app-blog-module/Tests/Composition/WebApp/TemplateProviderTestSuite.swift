@@ -8,7 +8,7 @@ import WebModule
 struct TemplateProviderTestSuite {
     @Test
     func registersBlogTemplatesAndBundledResources() {
-        let provider = BlogWebTemplateProvider()
+        let provider = Templates.Provider()
 
         #expect(
             provider.templates.map(\.id) == [

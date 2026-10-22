@@ -1,5 +1,6 @@
 public import BlogAppAPI
 import BlogApplication
+import WebApplication
 
 extension AppAPIGateway {
     public func blogAuthorGet(
@@ -37,7 +38,7 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is Public.Author.Detail.UseCase.Error {
+        catch is BlogApplication.Public.Author.Detail.UseCase.Error {
             return .notFound(
                 .init(
                     body: .json(

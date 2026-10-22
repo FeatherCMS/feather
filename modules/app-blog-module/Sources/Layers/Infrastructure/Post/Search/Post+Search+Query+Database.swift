@@ -20,7 +20,7 @@ extension Post.Search.Query {
         public func search(
             query: Post.Search.Input.Query
         ) async throws -> Post.Search.Output {
-            let database = Public.Query.PostContent.Database(
+            let database = BlogApplication.Public.Query.PostContent.Database(
                 context: context,
                 metadata: metadata
             )

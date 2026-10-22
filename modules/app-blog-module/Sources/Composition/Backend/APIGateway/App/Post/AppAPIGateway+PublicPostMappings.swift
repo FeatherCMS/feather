@@ -1,9 +1,10 @@
 import BlogAppAPI
 import BlogApplication
+import WebApplication
 
 extension AppAPIGateway {
     func mapPublicPostSummary(
-        _ summary: Public.Post.Summary.Output
+        _ summary: BlogApplication.Public.Post.Summary.Output
     ) async -> BlogAppAPI.Components.Schemas.BlogPostSummarySchema {
         let media = await publicMedia(assetId: summary.imageAssetId)
         var authors: [BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema] =

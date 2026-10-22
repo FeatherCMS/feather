@@ -13,7 +13,7 @@ extension AuthorLink.List.Query {
         public func list(authorId: String) async throws
             -> AuthorLink.List.Output
         {
-            try await Public.Query.AuthorLinkContent.Database(context: context)
+            try await BlogApplication.Public.Query.AuthorLinkContent.Database(context: context)
                 .list(authorId: authorId, query: .init())
         }
     }

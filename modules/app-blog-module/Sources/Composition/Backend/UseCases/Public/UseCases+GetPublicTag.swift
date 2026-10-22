@@ -11,13 +11,13 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Public.Tag.Detail.Scope(
-                    post: Public.Query.PostContent.Database(
+                    tag: Public.Query.TagContent.Database(
                         context: context,
                         metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    tag: Public.Query.TagContent.Database(
+                    post: Public.Query.PostContent.Database(
                         context: context,
                         metadata: Metadata.Query.Database(
                             context: context

@@ -18,7 +18,7 @@ extension Post.Detail.Query {
         }
 
         public func find(id: String) async throws -> Post.Detail.Output {
-            try await Public.Query.PostContent
+            try await BlogApplication.Public.Query.PostContent
                 .Database(
                     context: context,
                     metadata: metadata

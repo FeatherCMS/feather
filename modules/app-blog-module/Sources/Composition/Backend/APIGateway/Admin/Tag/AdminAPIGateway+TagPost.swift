@@ -7,7 +7,7 @@ extension AdminAPIGateway {
     public func blogTagPost(
         _ input: Operations.BlogTagPost.Input
     ) async throws -> Operations.BlogTagPost.Output {
-        let body: Components.Schemas.BlogTagCreateSchema
+        let body: Components.Schemas.TagPostSchema
         switch input.body {
         case .json(let value):
             body = value

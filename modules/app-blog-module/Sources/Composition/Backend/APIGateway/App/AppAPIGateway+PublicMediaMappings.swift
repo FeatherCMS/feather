@@ -1,5 +1,6 @@
 import BlogAppAPI
 import BlogApplication
+import FeatherModuleKit
 import MediaApplication
 import MediaBackend
 import WebApplication

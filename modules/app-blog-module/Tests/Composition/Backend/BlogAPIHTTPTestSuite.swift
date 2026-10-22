@@ -69,7 +69,7 @@ struct BlogAPIHTTPTestSuite {
             method: .post,
             path: "/api/v1/admin/blog/authors/query",
             body: Components.Schemas
-                .BlogAuthorQueryItemSearchRequestQuerySchema(
+                .AuthorQueryItemSearchRequestQuerySchema(
                     filters: .init(search: nil)
                 )
         )
@@ -130,7 +130,7 @@ struct BlogAPIHTTPTestSuite {
             method: .patch,
             path:
                 "/api/v1/admin/blog/authors/author-1?updateMask=unknown",
-            body: Components.Schemas.BlogAuthorPatchSchema()
+            body: Components.Schemas.AuthorPatchSchema()
         )
 
         try await CurrentSubject.set(subject: Subject(id: "admin-1")) {
@@ -155,7 +155,7 @@ struct BlogAPIHTTPTestSuite {
         let request = JSONRequest(
             method: .patch,
             path: "/api/v1/admin/blog/authors/author-1?updateMask=name",
-            body: Components.Schemas.BlogAuthorPatchSchema()
+            body: Components.Schemas.AuthorPatchSchema()
         )
 
         try await CurrentSubject.set(subject: Subject(id: "admin-1")) {

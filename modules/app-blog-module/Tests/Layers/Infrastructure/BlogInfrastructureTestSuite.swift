@@ -5,15 +5,18 @@
 //  Created by Binary Birds on 2026. 07. 16.
 
 import BlogModule
+import BlogApplication
 import FeatherDBAL
 import FeatherDBALTesting
 import FeatherDatabase
 import FeatherDatabaseTesting
+import FeatherInfrastructure
 import FeatherTesting
 import Foundation
 import Testing
 
 @testable import BlogInfrastructure
+@testable import FeatherDBAL
 
 private enum QueryKey: DatabaseQueryKey {
     case migration

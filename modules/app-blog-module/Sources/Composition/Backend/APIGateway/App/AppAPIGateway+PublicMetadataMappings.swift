@@ -2,6 +2,7 @@ import BlogAppAPI
 import BlogApplication
 import Foundation
 import WebApplication
+import WebDomain
 
 extension AppAPIGateway {
     func publicTimestamp(

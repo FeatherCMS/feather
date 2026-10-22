@@ -43,7 +43,7 @@ extension Post.Table.Detail {
     }
 }
 
-extension Public.Query.PostContent {
+extension BlogApplication.Public.Query.PostContent {
     public struct Database: Interface {
         public let context: DatabaseQueryContext
         public let metadata: any Metadata.Query.Interface

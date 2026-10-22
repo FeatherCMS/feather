@@ -18,7 +18,7 @@ extension Tag.List.Query {
         }
 
         public func list() async throws -> Tag.List.Output {
-            try await Public.Query.TagContent
+            try await BlogApplication.Public.Query.TagContent
                 .Database(
                     context: context,
                     metadata: metadata

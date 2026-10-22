@@ -1,5 +1,4 @@
 public import FeatherModuleKit
-public import FeatherWebShared
 public import HTML
 public import Hummingbird
 import WebBuilders

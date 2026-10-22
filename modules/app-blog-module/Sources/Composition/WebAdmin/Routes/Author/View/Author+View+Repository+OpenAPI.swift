@@ -43,7 +43,7 @@ extension Author.View.Repository {
                     let author = try okResponse.body.json
                     let items:
                         [BlogAdminAPI.Components.Schemas
-                            .BlogAuthorLinkQueryItemSchema]
+                            .AuthorLinkQueryItemSchema]
                     switch try await linksResponse {
                     case .ok(let linksOk):
                         items = try linksOk.body.json.data.items

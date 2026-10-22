@@ -34,7 +34,7 @@ extension Tag.Table.Detail {
     }
 }
 
-extension Public.Query.TagContent {
+extension BlogApplication.Public.Query.TagContent {
     public struct Database: Interface {
         public let context: DatabaseQueryContext
         public let metadata: any Metadata.Query.Interface

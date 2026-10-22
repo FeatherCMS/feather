@@ -11,12 +11,6 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Public.Author.Detail.Scope(
-                    post: Public.Query.PostContent.Database(
-                        context: context,
-                        metadata: Metadata.Query.Database(
-                            context: context
-                        )
-                    ),
                     author: Public.Query.AuthorContent.Database(
                         context: context,
                         metadata: Metadata.Query.Database(
@@ -25,6 +19,12 @@ extension UseCases {
                     ),
                     authorLink: Public.Query.AuthorLinkContent.Database(
                         context: context
+                    ),
+                    post: Public.Query.PostContent.Database(
+                        context: context,
+                        metadata: Metadata.Query.Database(
+                            context: context
+                        )
                     ),
                     metadata: Metadata.Query.Database(
                         context: context

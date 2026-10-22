@@ -8,7 +8,7 @@ extension AdminAPIGateway {
     public func blogAuthorLinkPut(
         _ input: Operations.BlogAuthorLinkPut.Input
     ) async throws -> Operations.BlogAuthorLinkPut.Output {
-        let body: Components.Schemas.BlogAuthorLinkUpdateSchema
+        let body: Components.Schemas.AuthorLinkPutSchema
         switch input.body {
         case .json(let value):
             body = value

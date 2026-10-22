@@ -162,6 +162,7 @@ let package = Package(
                     name: "FeatherInfrastructure",
                     package: "feather-core"
                 ),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "MediaDomain", package: "app-media-module"),
@@ -273,6 +274,7 @@ let package = Package(
                 .product(name: "MediaBackend", package: "app-media-module"),
 
                 .product(name: "WebAdminAPI", package: "app-web-module"),
+                .product(name: "WebApplication", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
                 .product(
                     name: "WebInfrastructure",
@@ -390,7 +392,12 @@ let package = Package(
                 ),
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherTesting", package: "feather-core"),
+                .target(name: "BlogApplication"),
                 .target(name: "BlogInfrastructure"),
                 .target(name: "BlogModule"),
             ],

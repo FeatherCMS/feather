@@ -5,7 +5,7 @@ public import FeatherInfrastructure
 public import WebApplication
 public import WebDomain
 
-extension Public.Query.AuthorContent {
+extension BlogApplication.Public.Query.AuthorContent {
     public struct Database: Interface {
         public let context: DatabaseQueryContext
         public let metadata: any Metadata.Query.Interface

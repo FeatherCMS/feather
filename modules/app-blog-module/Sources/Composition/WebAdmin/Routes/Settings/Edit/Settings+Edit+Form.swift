@@ -37,7 +37,7 @@ extension Settings.Edit {
         var state: State
         var action: String
 
-        func html(context: inout BuilderContext) -> Form {
+        func html(context: inout BuilderContext) -> HTML.Form {
             let form = AdminForm(action: action) {
                 if let error = state.error {
                     P(error).class("admin-form__error")

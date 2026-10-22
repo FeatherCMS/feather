@@ -1,9 +1,10 @@
 import BlogAppAPI
 import BlogApplication
+import WebApplication
 
 extension AppAPIGateway {
     func mapPublicAuthorSummary(
-        _ summary: Public.Author.Summary.Output
+        _ summary: BlogApplication.Public.Author.Summary.Output
     ) async -> BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema {
         let media = await publicMedia(assetId: summary.imageAssetId)
         return .init(
@@ -23,7 +24,7 @@ extension AppAPIGateway {
     }
 
     func mapPublicAuthorLink(
-        _ link: Public.Author.Link
+        _ link: BlogApplication.Public.Author.Link
     ) -> BlogAppAPI.Components.Schemas.BlogAuthorLinkSchema {
         .init(
             label: link.label,

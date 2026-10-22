@@ -15,7 +15,7 @@ extension AuthorLink.List {
             let canAccess: Bool
             let canAdd: Bool
             let items:
-                [BlogAdminAPI.Components.Schemas.BlogAuthorLinkQueryItemSchema]
+                [BlogAdminAPI.Components.Schemas.AuthorLinkQueryItemSchema]
             let pageState: AdminListPageState
             let search: String
             let permissions: AdminListActions
@@ -77,7 +77,7 @@ extension AuthorLink.List {
             let authorID: String
             let canAdd: Bool
             let items:
-                [BlogAdminAPI.Components.Schemas.BlogAuthorLinkQueryItemSchema]
+                [BlogAdminAPI.Components.Schemas.AuthorLinkQueryItemSchema]
             let pageState: AdminListPageState
             let search: String
             let permissions: AdminListActions

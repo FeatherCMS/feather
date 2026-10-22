@@ -1,4 +1,4 @@
-import BlogAppAPI
+public import BlogAppAPI
 import OpenAPIRuntime
 
 extension PublicContent.Repository {

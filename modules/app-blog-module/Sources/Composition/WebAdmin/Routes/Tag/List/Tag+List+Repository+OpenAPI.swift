@@ -54,7 +54,7 @@ extension Tag.List.Repository {
         }
 
         private func loadItems(
-            _ items: [BlogAdminAPI.Components.Schemas.BlogTagQueryItemSchema]
+            _ items: [BlogAdminAPI.Components.Schemas.TagQueryItemSchema]
         ) async throws -> [Tag.List.Item] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 try await withThrowingTaskGroup(

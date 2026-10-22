@@ -1,5 +1,6 @@
 public import BlogAppAPI
 import BlogApplication
+import BlogDomain
 import FeatherInfrastructure
 
 extension AppAPIGateway {

@@ -44,7 +44,7 @@ extension Post.List.Repository {
         }
 
         private func loadItems(
-            _ items: [BlogAdminAPI.Components.Schemas.BlogPostQueryItemSchema]
+            _ items: [BlogAdminAPI.Components.Schemas.PostQueryItemSchema]
         ) async throws -> [Post.List.Item] {
             try await withThrowingTaskGroup(of: (Int, Post.List.Item).self) {
                 group in

@@ -13,7 +13,8 @@ WebAdmin/WebApp composition, and tests.
 - `AccountModule` is the Swift target namespace, not a declared enum. Keep
   module-level `Event` and `Permissions` beside the entity namespaces, matching
   the User and System modules.
-- Account entities are `Profile`, `Invitation`, and `Settings`. Keep
+- Account creation is exposed through the `Account.Create` use-case namespace.
+  The other Account entities are `Profile`, `Invitation`, and `Settings`; keep
   their models, contracts, operations, permissions, table definitions, and
   adapters grouped by entity. Module-wide event registration extends
   `AccountModule.Event` in infrastructure.
