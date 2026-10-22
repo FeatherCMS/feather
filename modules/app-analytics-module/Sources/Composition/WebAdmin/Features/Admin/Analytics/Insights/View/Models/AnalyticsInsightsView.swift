@@ -386,7 +386,7 @@ struct AnalyticsInsightsView: Component {
         )
     }
 
-    private var trafficTypeBreakdown: NewAdminChartCard<NewAdminBarChart> {
+    private var trafficTypeBreakdown: AdminChartCard<AdminBarChart> {
         let kpis = page.overview.kpis
         let trackedRequests = max(0, kpis.totalRequests)
         let humans = min(max(0, kpis.humanRequests), trackedRequests)
@@ -405,9 +405,9 @@ struct AnalyticsInsightsView: Component {
             ? Double(ai) / Double(trackedRequests)
             : 0
 
-        return NewAdminChartCard(
+        return AdminChartCard(
             title: "Traffic by type (estimated from User-Agent)",
-            chart: NewAdminBarChart(
+            chart: AdminBarChart(
                 items: [
                     .init(
                         label: "Human / unrecognized",

@@ -1,4 +1,5 @@
 import FeatherModuleKit
+public import AnalyticsDomain
 import Foundation
 
 public enum AnalyticsLogRequestMetadata {

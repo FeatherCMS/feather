@@ -1,6 +1,6 @@
 import AnalyticsAdminAPI
-import FeatherWebShared
-public import FeatherWebAdmin
+public import FeatherWebShared
+import FeatherWebAdmin
 public import FeatherModuleKit
 import OpenAPIRuntime
 import SystemModule

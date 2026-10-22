@@ -1,6 +1,7 @@
 import AnalyticsAppAPI
-import FeatherWebShared
-public import FeatherWebAdmin
+public import AnalyticsContracts
+public import FeatherWebShared
+import FeatherWebAdmin
 public import Foundation
 import HTTPTypes
 public import Hummingbird

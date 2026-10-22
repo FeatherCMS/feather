@@ -1,4 +1,5 @@
 import AnalyticsApplication
+import AnalyticsDomain
 import AnalyticsInfrastructure
 import FeatherInfrastructure
 

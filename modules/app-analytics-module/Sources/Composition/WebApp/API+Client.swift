@@ -5,7 +5,7 @@ public import FeatherWebShared
 public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-public import OpenAPIRuntime
+import OpenAPIRuntime
 
 public struct AnalyticsAppAPIClient: Sendable {
     public let client: AnalyticsAppAPI.Client

@@ -33,7 +33,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: query,
+                        query: mapResponseQuery(query),
                         data: .init(items: items, total: total)
                     )
                 )

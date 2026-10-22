@@ -111,6 +111,7 @@ let package = Package(
                 .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "AnalyticsApplication"),
+                .target(name: "AnalyticsDomain"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: swiftSettings
@@ -170,6 +171,7 @@ let package = Package(
                 .target(name: "AnalyticsInfrastructure"),
                 .target(name: "AnalyticsAdminAPI"),
                 .target(name: "AnalyticsAppAPI"),
+                .target(name: "AnalyticsDomain"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: swiftSettings
@@ -198,6 +200,7 @@ let package = Package(
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .target(name: "AnalyticsContracts"),
                 .target(name: "AnalyticsAppAPI"),
             ],
             path: "Sources/Composition/WebApp",

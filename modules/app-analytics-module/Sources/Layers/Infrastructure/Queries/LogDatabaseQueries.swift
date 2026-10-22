@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import AnalyticsApplication
+public import AnalyticsDomain
 import FeatherApplication
 import FeatherDBAL
 import FeatherDatabase

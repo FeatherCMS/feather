@@ -1,5 +1,6 @@
 import AnalyticsAdminAPI
 import AnalyticsApplication
+import AnalyticsDomain
 import FeatherApplication
 import FeatherModuleKit
 
@@ -17,9 +18,32 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ page: Components.Schemas.SearchPageSchema
+        _ page: Components.Schemas.SearchPageSchema?
     ) -> Search.Page {
-        .init(size: page.size, number: page.number)
+        .init(size: page?.size ?? 20, number: page?.number ?? 1)
+    }
+
+    func mapResponseQuery(
+        _ query: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema
+    ) -> Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema {
+        let page = map(query.page).normalized()
+        return .init(
+            page: .init(size: page.size, number: page.number),
+            sort: query.sort?.map { item in
+                .init(
+                    field: .init(rawValue: item.field.rawValue) ?? .id,
+                    direction: item.direction
+                )
+            },
+            filters: .init(
+                search: query.filters.search,
+                source: query.filters.source,
+                method: query.filters.method,
+                responseCode: query.filters.responseCode,
+                from: query.filters.from,
+                to: query.filters.to
+            )
+        )
     }
 
     func map(
