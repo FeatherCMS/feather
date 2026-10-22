@@ -33,7 +33,7 @@ extension Tag.Remove.Controller {
 
             let ids = nonceRequest.input.normalizedSelectedIds
             let location = AdminLocation.url(
-                path: routes.tags.description + "/",
+                path: routes.tags.path,
                 page: nonceRequest.input.normalizedPage,
                 search: nonceRequest.input.normalizedSearch
             )

@@ -46,7 +46,7 @@ extension AuthorLink.List.Presenter {
                             Set(permissions.map(PermissionKey.init))
                         ),
                         breadcrumb: routes.authorLinksBreadcrumb(
-                            RouterPath(authorID)
+                            authorID
                         ),
                         routes: routes,
                         error: error

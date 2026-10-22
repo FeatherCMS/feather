@@ -90,12 +90,8 @@ extension Post.List {
                                             id: statusFormID(item.id),
                                             action:
                                                 state.routes
-                                                .postStatus(
-                                                    RouterPath(item.id)
-                                                )
-                                                .description,
-                                            returnTo: state.routes.posts
-                                                .description
+                                                .postStatus(item.id),
+                                            returnTo: state.routes.posts.path
                                         )
                                     )
                                 }
@@ -103,8 +99,7 @@ extension Post.List {
                             context.build(
                                 AdminListSelectionForm(
                                     state: .init(
-                                        action: state.routes.postRemove()
-                                            .description,
+                                        action: state.routes.postRemove(),
                                         pageState: state.pageState,
                                         search: state.search,
                                         button: .init(
@@ -156,12 +151,9 @@ extension Post.List {
                                                                         state
                                                                             .routes
                                                                             .post(
-                                                                                RouterPath(
-                                                                                    item
-                                                                                        .id
-                                                                                )
+                                                                                item
+                                                                                    .id
                                                                             )
-                                                                            .description
                                                                     )
                                                             }
                                                             .data(
@@ -238,12 +230,9 @@ extension Post.List {
                                                                                 state
                                                                                 .routes
                                                                                 .post(
-                                                                                    RouterPath(
-                                                                                        item
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
+                                                                                    item
+                                                                                        .id
+                                                                                ),
                                                                             style:
                                                                                 .ghost(
                                                                                     .primary
@@ -259,12 +248,9 @@ extension Post.List {
                                                                                 state
                                                                                 .routes
                                                                                 .postEdit(
-                                                                                    RouterPath(
-                                                                                        item
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
+                                                                                    item
+                                                                                        .id
+                                                                                ),
                                                                             style:
                                                                                 .ghost(
                                                                                     .secondary
@@ -282,8 +268,7 @@ extension Post.List {
                                                                                     path:
                                                                                         state
                                                                                         .routes
-                                                                                        .postRemove()
-                                                                                        .description,
+                                                                                        .postRemove(),
                                                                                     ids: [
                                                                                         item
                                                                                             .id
@@ -292,7 +277,7 @@ extension Post.List {
                                                                                         state
                                                                                         .routes
                                                                                         .posts
-                                                                                        .description
+                                                                                        .path
                                                                                 ),
                                                                             style:
                                                                                 .destructive,
@@ -325,8 +310,7 @@ extension Post.List {
                         context.build(
                             AdminListSearch(
                                 state: .init(
-                                    action: state.routes.posts
-                                        .description,
+                                    action: state.routes.posts.path,
                                     placeholder: "Search blog posts",
                                     search: state.search
                                 )
@@ -341,7 +325,6 @@ extension Post.List {
                                         AdminButton(
                                             "Add post",
                                             href: state.routes.postAdd()
-                                                .description
                                         )
                                     )
                                 }
@@ -352,7 +335,7 @@ extension Post.List {
                         context.build(
                             AdminListPagination(
                                 state: .init(
-                                    path: state.routes.posts.description,
+                                    path: state.routes.posts.path,
                                     pageState: state.pageState,
                                     search: state.search
                                 )

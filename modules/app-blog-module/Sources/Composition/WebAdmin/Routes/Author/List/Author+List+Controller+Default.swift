@@ -104,7 +104,7 @@ extension Author.List.Controller {
             )
             let toast = statusToastContent(for: targetStatus)
             return AdminNotificationFlash.redirect(
-                to: payload.normalizedReturnTo ?? routes.authors.description
+                to: payload.normalizedReturnTo ?? routes.authors.path
                     + "/",
                 notification: .init(title: toast.title, message: toast.message)
             )

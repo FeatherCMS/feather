@@ -99,8 +99,7 @@ extension Tag.List.Controller {
             )
             let toast = statusToastContent(for: targetStatus)
             return AdminNotificationFlash.redirect(
-                to: payload.normalizedReturnTo ?? routes.tags
-                    .description
+                to: payload.normalizedReturnTo ?? routes.tags.path
                     + "/",
                 notification: .init(title: toast.title, message: toast.message)
             )

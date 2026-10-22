@@ -36,7 +36,7 @@ extension AuthorLink.Edit.Presenter {
                         id: id,
                         form: state,
                         breadcrumb: routes.authorLinksBreadcrumb(
-                            RouterPath(authorID)
+                            authorID
                         ),
                         routes: routes
                     )
@@ -60,7 +60,7 @@ extension AuthorLink.Edit.Presenter {
                         info: info,
                         message: message,
                         breadcrumb: routes.authorLinksBreadcrumb(
-                            RouterPath(authorID)
+                            authorID
                         )
                     )
                 )

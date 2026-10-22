@@ -32,7 +32,7 @@ extension Author.Add {
                 context.build(
                     Author.Form(
                         state: state.form,
-                        action: state.routes.authorAdd().description,
+                        action: state.routes.authorAdd(),
                         submitLabel: "Add author"
                     )
                 )

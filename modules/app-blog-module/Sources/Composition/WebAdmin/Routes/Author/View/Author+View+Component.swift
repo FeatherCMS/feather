@@ -66,18 +66,10 @@ extension Author.View {
                         context.build(
                             AdminStatusSelectFormDefinition(
                                 id: formID,
-                                action:
-                                    state.routes
-                                    .authorStatus(
-                                        RouterPath(state.author.id)
-                                    )
-                                    .description,
-                                returnTo:
-                                    state.routes
-                                    .author(
-                                        RouterPath(state.author.id)
-                                    )
-                                    .description
+                                action: state.routes.authorStatus(
+                                    state.author.id
+                                ),
+                                returnTo: state.routes.author(state.author.id)
                             )
                         )
                         context.build(
@@ -106,10 +98,7 @@ extension Author.View {
                             "Add link",
                             href:
                                 state.authorLinkRoutes
-                                .authorLinkAdd(
-                                    RouterPath(state.author.id)
-                                )
-                                .description
+                                .authorLinkAdd(state.author.id)
                         )
                     )
                 }
@@ -147,10 +136,7 @@ extension Author.View {
                 result.append(
                     .init(
                         label: "Edit author",
-                        href:
-                            state.routes
-                            .authorEdit(RouterPath(state.author.id))
-                            .description,
+                        href: state.routes.authorEdit(state.author.id),
                         style: .primary
                     )
                 )
@@ -161,12 +147,7 @@ extension Author.View {
                 result.append(
                     .init(
                         label: "Remove author",
-                        href:
-                            state.routes
-                            .authorRemove(
-                                RouterPath(state.author.id)
-                            )
-                            .description,
+                        href: state.routes.authorRemove(state.author.id),
                         style: .destructive
                     )
                 )

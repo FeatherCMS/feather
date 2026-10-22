@@ -44,7 +44,7 @@ extension Post.Status.Controller {
 
             let toast = statusToastContent(for: targetStatus)
             return AdminNotificationFlash.redirect(
-                to: payload.normalizedReturnTo ?? routes.posts.description
+                to: payload.normalizedReturnTo ?? routes.posts.path
                     + "/",
                 notification: .init(title: toast.title, message: toast.message)
             )

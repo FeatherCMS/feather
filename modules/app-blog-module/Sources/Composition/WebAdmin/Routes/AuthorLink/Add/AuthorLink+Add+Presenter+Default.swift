@@ -34,7 +34,7 @@ extension AuthorLink.Add.Presenter {
                         authorID: authorID,
                         form: state,
                         breadcrumb: routes.authorLinksBreadcrumb(
-                            RouterPath(authorID)
+                            authorID
                         ),
                         routes: routes
                     )

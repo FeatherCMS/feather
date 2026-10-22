@@ -37,7 +37,7 @@ extension Post.Add {
                 context.build(
                     Post.Form(
                         state: state.form,
-                        action: state.routes.postAdd().description,
+                        action: state.routes.postAdd(),
                         submitLabel: "Add post"
                     )
                 )

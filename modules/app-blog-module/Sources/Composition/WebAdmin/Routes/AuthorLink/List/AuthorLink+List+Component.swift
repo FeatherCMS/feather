@@ -90,7 +90,7 @@ extension AuthorLink.List {
                 AuthorLink.Permissions.delete
             )
             let links = state.routes.authorLinks(
-                RouterPath(state.authorID)
+                state.authorID
             )
             return context.build(
                 AdminList(
@@ -111,9 +111,8 @@ extension AuthorLink.List {
                                         action:
                                             state.routes
                                             .authorLinkRemove(
-                                                RouterPath(state.authorID)
-                                            )
-                                            .description,
+                                                state.authorID
+                                            ),
                                         pageState: state.pageState,
                                         search: state.search,
                                         button: .init(
@@ -209,16 +208,11 @@ extension AuthorLink.List {
                                                                                 state
                                                                                 .routes
                                                                                 .authorLink(
-                                                                                    RouterPath(
-                                                                                        state
-                                                                                            .authorID
-                                                                                    ),
-                                                                                    RouterPath(
-                                                                                        item
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
+                                                                                    state
+                                                                                        .authorID,
+                                                                                    item
+                                                                                        .id
+                                                                                ),
                                                                             permission:
                                                                                 AuthorLink
                                                                                 .Permissions
@@ -230,16 +224,11 @@ extension AuthorLink.List {
                                                                                 state
                                                                                 .routes
                                                                                 .authorLinkEdit(
-                                                                                    RouterPath(
-                                                                                        state
-                                                                                            .authorID
-                                                                                    ),
-                                                                                    RouterPath(
-                                                                                        item
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
+                                                                                    state
+                                                                                        .authorID,
+                                                                                    item
+                                                                                        .id
+                                                                                ),
                                                                             style:
                                                                                 .ghost(
                                                                                     .secondary
@@ -273,7 +262,7 @@ extension AuthorLink.List {
                         context.build(
                             AdminListSearch(
                                 state: .init(
-                                    action: links.description,
+                                    action: links,
                                     placeholder: "Search author links",
                                     search: state.search
                                 )
@@ -290,9 +279,8 @@ extension AuthorLink.List {
                                             href:
                                                 state.routes
                                                 .authorLinkAdd(
-                                                    RouterPath(state.authorID)
+                                                    state.authorID
                                                 )
-                                                .description
                                         )
                                     )
                                 }
@@ -303,7 +291,7 @@ extension AuthorLink.List {
                         context.build(
                             AdminListPagination(
                                 state: .init(
-                                    path: links.description,
+                                    path: links,
                                     pageState: state.pageState,
                                     search: state.search
                                 )

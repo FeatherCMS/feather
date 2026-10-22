@@ -40,16 +40,13 @@ extension Post.Edit {
                         state: state.form,
                         metadataHref: state.routes
                             .postEditMetadata(
-                                RouterPath(state.id),
-                                RouterPath(state.id)
-                            )
-                            .description,
-                        action: state.routes.postEdit(RouterPath(state.id))
-                            .description,
+                                state.id,
+                                state.id
+                            ),
+                        action: state.routes.postEdit(state.id),
                         submitLabel: "Edit post",
                         removeHref: state.routes
-                            .postRemove(RouterPath(state.id))
-                            .description,
+                            .postRemove(state.id),
                         removeLabel: "Remove post"
                     )
                 )

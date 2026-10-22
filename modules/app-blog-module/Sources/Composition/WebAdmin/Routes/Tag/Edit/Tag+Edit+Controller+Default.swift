@@ -70,7 +70,7 @@ extension Tag.Edit.Controller {
                 try await runtime.interactor.update(id: id, input: decoded)
 
                 return AdminNotificationFlash.redirect(
-                    to: routes.tagEdit(RouterPath(id)).description,
+                    to: routes.tagEdit(id),
                     notification: .init(
                         title: "Saved",
                         message: "Tag edited successfully."

@@ -59,8 +59,7 @@ extension Tag {
                     .path(parameter: "id", value: id)
             }
 
-            func tagEditMetadata(_ id: String, _ metadataID: String) -> String
-            {
+            func tagEditMetadata(_ id: String, _ metadataID: String) -> String {
                 resolved(
                     tags.appending(parameter: "id")
                         .appending(pathComponent: "edit")

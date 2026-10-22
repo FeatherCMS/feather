@@ -54,7 +54,7 @@ extension Author.Add.Controller {
                 try await decoded.validate()
                 try await runtime.interactor.execute(input: decoded)
                 return AdminNotificationFlash.redirect(
-                    to: routes.authors.description + "/",
+                    to: routes.authors.path,
                     notification: .init(
                         title: "Added",
                         message: "Blog author added successfully."

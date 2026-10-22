@@ -35,16 +35,13 @@ extension Tag.Edit {
                         state: state.form,
                         metadataHref: state.routes
                             .tagEditMetadata(
-                                RouterPath(state.id),
-                                RouterPath(state.id)
-                            )
-                            .description,
-                        action: state.routes.tagEdit(RouterPath(state.id))
-                            .description,
+                                state.id,
+                                state.id
+                            ),
+                        action: state.routes.tagEdit(state.id),
                         submitLabel: "Edit tag",
                         removeHref: state.routes
-                            .tagRemove(RouterPath(state.id))
-                            .description,
+                            .tagRemove(state.id),
                         removeLabel: "Remove tag"
                     )
                 )

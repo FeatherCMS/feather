@@ -53,7 +53,7 @@ extension Tag.Add.Controller {
                 try await runtime.interactor.execute(input: payload)
 
                 return AdminNotificationFlash.redirect(
-                    to: routes.tags.description + "/",
+                    to: routes.tags.path,
                     notification: .init(
                         title: "Added",
                         message: "Blog tag added successfully."

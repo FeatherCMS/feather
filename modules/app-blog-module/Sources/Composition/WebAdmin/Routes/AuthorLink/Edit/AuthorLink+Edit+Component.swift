@@ -44,17 +44,15 @@ extension AuthorLink.Edit {
                             action:
                                 state.routes
                                 .authorLinkEdit(
-                                    RouterPath(state.authorID),
-                                    RouterPath(state.id)
-                                )
-                                .description,
+                                    state.authorID,
+                                    state.id
+                                ),
                             submitLabel: "Edit link",
                             removeHref:
                                 state.routes
                                 .authorLinkRemove(
-                                    RouterPath(state.authorID)
-                                )
-                                .description,
+                                    state.authorID
+                                ),
                             removeLabel: "Remove link"
                         )
                     )

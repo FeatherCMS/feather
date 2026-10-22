@@ -57,7 +57,7 @@ extension Post.Add.Controller {
                 try await runtime.interactor.execute(input: payload)
 
                 return AdminNotificationFlash.redirect(
-                    to: routes.posts.description + "/",
+                    to: routes.posts.path,
                     notification: .init(
                         title: "Added",
                         message: "Blog post added successfully."

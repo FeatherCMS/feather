@@ -107,10 +107,9 @@ extension AuthorLink.Edit.Controller {
                 return AdminNotificationFlash.redirect(
                     to:
                         routes.authorLinkEdit(
-                            RouterPath(authorID),
-                            RouterPath(id)
-                        )
-                        .description,
+                            authorID,
+                            id
+                        ),
                     notification: .init(
                         title: "Saved",
                         message: "Blog author link updated successfully."

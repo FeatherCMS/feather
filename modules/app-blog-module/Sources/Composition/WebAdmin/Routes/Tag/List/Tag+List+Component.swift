@@ -90,12 +90,8 @@ extension Tag.List {
                                             id: statusFormID(item.id),
                                             action:
                                                 state.routes
-                                                .tagStatus(
-                                                    RouterPath(item.id)
-                                                )
-                                                .description,
-                                            returnTo: state.routes.tags
-                                                .description
+                                                .tagStatus(item.id),
+                                            returnTo: state.routes.tags.path
                                         )
                                     )
                                 }
@@ -103,8 +99,7 @@ extension Tag.List {
                             context.build(
                                 AdminListSelectionForm(
                                     state: .init(
-                                        action: state.routes.tagRemove()
-                                            .description,
+                                        action: state.routes.tagRemove(),
                                         pageState: state.pageState,
                                         search: state.search,
                                         button: .init(
@@ -156,12 +151,9 @@ extension Tag.List {
                                                                         state
                                                                             .routes
                                                                             .tag(
-                                                                                RouterPath(
-                                                                                    item
-                                                                                        .id
-                                                                                )
+                                                                                item
+                                                                                    .id
                                                                             )
-                                                                            .description
                                                                     )
                                                             }
                                                             .data(
@@ -238,12 +230,9 @@ extension Tag.List {
                                                                                 state
                                                                                 .routes
                                                                                 .tag(
-                                                                                    RouterPath(
-                                                                                        item
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
+                                                                                    item
+                                                                                        .id
+                                                                                ),
                                                                             style:
                                                                                 .ghost(
                                                                                     .primary
@@ -259,12 +248,9 @@ extension Tag.List {
                                                                                 state
                                                                                 .routes
                                                                                 .tagEdit(
-                                                                                    RouterPath(
-                                                                                        item
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
+                                                                                    item
+                                                                                        .id
+                                                                                ),
                                                                             style:
                                                                                 .ghost(
                                                                                     .secondary
@@ -282,8 +268,7 @@ extension Tag.List {
                                                                                     path:
                                                                                         state
                                                                                         .routes
-                                                                                        .tagRemove()
-                                                                                        .description,
+                                                                                        .tagRemove(),
                                                                                     ids: [
                                                                                         item
                                                                                             .id
@@ -292,7 +277,7 @@ extension Tag.List {
                                                                                         state
                                                                                         .routes
                                                                                         .tags
-                                                                                        .description
+                                                                                        .path
                                                                                 ),
                                                                             style:
                                                                                 .destructive,
@@ -325,7 +310,7 @@ extension Tag.List {
                         context.build(
                             AdminListSearch(
                                 state: .init(
-                                    action: state.routes.tags.description,
+                                    action: state.routes.tags.path,
                                     placeholder: "Search blog tags",
                                     search: state.search
                                 )
@@ -340,7 +325,6 @@ extension Tag.List {
                                         AdminButton(
                                             "Add tag",
                                             href: state.routes.tagAdd()
-                                                .description
                                         )
                                     )
                                 }
@@ -351,7 +335,7 @@ extension Tag.List {
                         context.build(
                             AdminListPagination(
                                 state: .init(
-                                    path: state.routes.tags.description,
+                                    path: state.routes.tags.path,
                                     pageState: state.pageState,
                                     search: state.search
                                 )

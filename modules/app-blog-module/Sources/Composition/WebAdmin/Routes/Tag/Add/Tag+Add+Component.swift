@@ -34,7 +34,7 @@ extension Tag.Add {
                     context.build(
                         Tag.Form(
                             state: state.form,
-                            action: state.routes.tagAdd().description,
+                            action: state.routes.tagAdd(),
                             submitLabel: "Add tag"
                         )
                     )

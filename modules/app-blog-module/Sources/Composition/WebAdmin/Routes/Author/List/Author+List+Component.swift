@@ -91,12 +91,8 @@ extension Author.List {
                                             id: statusFormID(item.id),
                                             action:
                                                 state.routes
-                                                .authorStatus(
-                                                    RouterPath(item.id)
-                                                )
-                                                .description,
-                                            returnTo: state.routes.authors
-                                                .description
+                                                .authorStatus(item.id),
+                                            returnTo: state.routes.authors.path
                                         )
                                     )
                                 }
@@ -105,8 +101,7 @@ extension Author.List {
                                 AdminListSelectionForm(
                                     state: .init(
                                         action: state.routes
-                                            .authorRemove()
-                                            .description,
+                                            .authorRemove(),
                                         pageState: state.pageState,
                                         search: state.search,
                                         button: .init(
@@ -184,12 +179,9 @@ extension Author.List {
                                                                         state
                                                                             .routes
                                                                             .author(
-                                                                                RouterPath(
-                                                                                    item
-                                                                                        .id
-                                                                                )
+                                                                                item
+                                                                                    .id
                                                                             )
-                                                                            .description
                                                                     )
                                                             }
                                                             .data(
@@ -266,12 +258,9 @@ extension Author.List {
                                                                                 state
                                                                                 .routes
                                                                                 .author(
-                                                                                    RouterPath(
-                                                                                        item
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
+                                                                                    item
+                                                                                        .id
+                                                                                ),
                                                                             style:
                                                                                 .ghost(
                                                                                     .primary
@@ -287,12 +276,9 @@ extension Author.List {
                                                                                 state
                                                                                 .routes
                                                                                 .authorEdit(
-                                                                                    RouterPath(
-                                                                                        item
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
+                                                                                    item
+                                                                                        .id
+                                                                                ),
                                                                             style:
                                                                                 .ghost(
                                                                                     .secondary
@@ -310,8 +296,7 @@ extension Author.List {
                                                                                     path:
                                                                                         state
                                                                                         .routes
-                                                                                        .authorRemove()
-                                                                                        .description,
+                                                                                        .authorRemove(),
                                                                                     ids: [
                                                                                         item
                                                                                             .id
@@ -320,7 +305,7 @@ extension Author.List {
                                                                                         state
                                                                                         .routes
                                                                                         .authors
-                                                                                        .description
+                                                                                        .path
                                                                                 ),
                                                                             style:
                                                                                 .destructive,
@@ -353,8 +338,7 @@ extension Author.List {
                         context.build(
                             AdminListSearch(
                                 state: .init(
-                                    action: state.routes.authors
-                                        .description,
+                                    action: state.routes.authors.path,
                                     placeholder: "Search blog authors",
                                     search: state.search
                                 )
@@ -369,7 +353,6 @@ extension Author.List {
                                         AdminButton(
                                             "Add author",
                                             href: state.routes.authorAdd()
-                                                .description
                                         )
                                     )
                                 }
@@ -380,8 +363,7 @@ extension Author.List {
                         context.build(
                             AdminListPagination(
                                 state: .init(
-                                    path: state.routes.authors
-                                        .description,
+                                    path: state.routes.authors.path,
                                     pageState: state.pageState,
                                     search: state.search
                                 )

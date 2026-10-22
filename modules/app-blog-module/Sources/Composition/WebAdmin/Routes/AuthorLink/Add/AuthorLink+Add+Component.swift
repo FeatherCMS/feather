@@ -38,9 +38,7 @@ extension AuthorLink.Add {
                     context.build(
                         AuthorLink.Form(
                             state: state.form,
-                            action: state.routes
-                                .authorLinkAdd(RouterPath(state.authorID))
-                                .description,
+                            action: state.routes.authorLinkAdd(state.authorID),
                             submitLabel: "Add link"
                         )
                     )
