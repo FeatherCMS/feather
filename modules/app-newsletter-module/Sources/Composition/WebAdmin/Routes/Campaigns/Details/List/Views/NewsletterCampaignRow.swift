@@ -12,7 +12,7 @@ struct NewsletterCampaignRow: Component {
     let isPicker: Bool
 
     func html(context: inout BuilderContext) -> Tr {
-        let canDelete = actions.allows(Permissions.Campaigns.delete)
+        let canDelete = actions.allows(Campaign.Permissions.delete)
 
         return Tr {
             if canDelete {
@@ -45,7 +45,7 @@ struct NewsletterCampaignRow: Component {
                                 )
                                 .description,
                             style: .ghost(.primary),
-                            permission: Permissions.Campaigns.read
+                            permission: Campaign.Permissions.read
                         ),
                         .init(
                             "Edit",
@@ -55,7 +55,7 @@ struct NewsletterCampaignRow: Component {
                                 )
                                 .description,
                             style: .ghost(.secondary),
-                            permission: Permissions.Campaigns.update
+                            permission: Campaign.Permissions.update
                         ),
                     ],
                     permissions: actions
@@ -68,7 +68,7 @@ struct NewsletterCampaignRow: Component {
         Td {
             Span {
                 Span(item.id)
-                if actions.allows(Permissions.Campaigns.read) {
+                if actions.allows(Campaign.Permissions.read) {
                     Button {
                         FeatherIcons.clipboard()
                     }

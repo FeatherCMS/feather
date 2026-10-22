@@ -1,12 +1,13 @@
-public import FeatherInfrastructure
 import FeatherDBAL
+public import FeatherInfrastructure
 public import NewsletterDomain
+public import NewsletterModule
 
 extension SubscriberTable.Row {
-    var asDomain: Subscriber {
+    var asDomain: Subscriber.Model {
         get throws {
             guard
-                let status = Subscriber.Status(
+                let status = Subscriber.Model.Status(
                     rawValue: status
                 )
             else {
@@ -32,7 +33,7 @@ extension SubscriberTable.Row {
 }
 
 public struct SubscriberDatabaseRepository:
-    SubscriberRepository
+    Subscriber.Repository.Interface
 {
 
     public let context: DatabaseTransactionContext
@@ -43,15 +44,15 @@ public struct SubscriberDatabaseRepository:
 
     public func list(
         newsletterId: String
-    ) async throws -> [Subscriber] {
+    ) async throws -> [Subscriber.Model] {
         let table = SubscriberTable(connection: context.connection)
         return try await table.list(newsletterId: newsletterId)
             .map { try $0.asDomain }
     }
 
     public func insert(
-        _ model: Subscriber.New
-    ) async throws -> Subscriber {
+        _ model: Subscriber.Model.New
+    ) async throws -> Subscriber.Model {
         let table = SubscriberTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
@@ -74,7 +75,7 @@ public struct SubscriberDatabaseRepository:
     public func findBy(
         newsletterId: String,
         email: String
-    ) async throws -> Subscriber? {
+    ) async throws -> Subscriber.Model? {
         let table = SubscriberTable(connection: context.connection)
         return try await table.find(
             newsletterId: newsletterId,
@@ -84,8 +85,8 @@ public struct SubscriberDatabaseRepository:
     }
 
     public func update(
-        _ model: Subscriber
-    ) async throws -> Subscriber {
+        _ model: Subscriber.Model
+    ) async throws -> Subscriber.Model {
         let table = SubscriberTable(connection: context.connection)
         let updated = try await table.update(
             newsletterId: model.newsletterId,

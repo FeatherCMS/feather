@@ -1,6 +1,7 @@
 import NewsletterDomain
+import NewsletterModule
 
-extension Issue {
+extension Issue.Model {
     var asDetail: IssueDetail {
         .init(
             id: id,

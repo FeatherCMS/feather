@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import NewsletterDomain
+public import NewsletterModule
 
 public import struct Foundation.Date
 
@@ -9,7 +10,7 @@ public struct IssueDetail: DTO {
     public let subject: String
     public let previewText: String
     public let content: String
-    public let status: Issue.Status
+    public let status: Issue.Model.Status
     public let scheduledDate: Date?
     public let sentDate: Date?
     public let createdAt: Date
@@ -21,7 +22,7 @@ public struct IssueDetail: DTO {
         subject: String,
         previewText: String,
         content: String,
-        status: Issue.Status,
+        status: Issue.Model.Status,
         scheduledDate: Date?,
         sentDate: Date?,
         createdAt: Date,

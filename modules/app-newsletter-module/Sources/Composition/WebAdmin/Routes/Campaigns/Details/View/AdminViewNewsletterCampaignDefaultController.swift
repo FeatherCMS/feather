@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import HTML
 import Hummingbird
 import NewsletterModule
@@ -23,7 +23,7 @@ struct AdminViewNewsletterCampaignDefaultController:
     {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredParameter("newsletterId")
-        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.read)
+        guard context.isCurrentUserAllowed(to: Campaign.Permissions.read)
         else {
             return try await presenter.render(
                 item: .init(id: id, name: "", fromEmail: ""),

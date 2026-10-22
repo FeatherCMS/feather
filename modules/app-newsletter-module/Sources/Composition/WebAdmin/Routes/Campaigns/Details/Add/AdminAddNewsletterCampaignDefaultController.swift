@@ -19,7 +19,7 @@ struct AdminAddNewsletterCampaignDefaultController:
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.create)
+        guard context.isCurrentUserAllowed(to: Campaign.Permissions.create)
         else {
             return try await presenter.renderPage(
                 model: .init(
@@ -44,7 +44,7 @@ struct AdminAddNewsletterCampaignDefaultController:
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.create)
+        guard context.isCurrentUserAllowed(to: Campaign.Permissions.create)
         else {
             return
                 try await presenter.renderPage(

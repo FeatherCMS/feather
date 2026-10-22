@@ -1,10 +1,10 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterModule
 import NewsletterDomain
+import NewsletterModule
 
 public struct CreateIssue: UseCase {
-    struct Action: PermissionAction { let key = Permissions.Issues.create }
+    struct Action: PermissionAction { let key = Issue.Permissions.create }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<Write>
 
@@ -49,7 +49,7 @@ public struct CreateIssue: UseCase {
                     key: input.campaignKey
                 )
             else { throw Error.campaignNotFound }
-            let model = try Issue.create(
+            let model = try Issue.Model.create(
                 newsletterId: campaign.id,
                 subject: input.subject,
                 previewText: input.previewText,

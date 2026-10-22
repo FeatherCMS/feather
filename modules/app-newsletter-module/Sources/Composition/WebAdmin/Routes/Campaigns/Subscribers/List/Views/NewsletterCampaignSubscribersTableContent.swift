@@ -25,8 +25,8 @@ struct NewsletterCampaignSubscribersTableContent: Component {
     }
 
     func html(context: inout BuilderContext) -> Div {
-        let canDelete = permissions.allows(Permissions.Subscribers.delete)
-        let canCreate = permissions.allows(Permissions.Subscribers.create)
+        let canDelete = permissions.allows(Subscriber.Permissions.delete)
+        let canCreate = permissions.allows(Subscriber.Permissions.create)
         let hasActiveQuery = !searchValue.isEmpty
 
         return context.build(

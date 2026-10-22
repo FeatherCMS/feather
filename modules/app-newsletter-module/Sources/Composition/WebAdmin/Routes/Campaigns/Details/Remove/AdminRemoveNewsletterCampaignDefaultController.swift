@@ -12,14 +12,12 @@ struct AdminRemoveNewsletterCampaignDefaultController:
             any AdminRemoveNewsletterCampaignPresenter
         >
 
-
-
     func remove(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
+        guard context.isCurrentUserAllowed(to: Campaign.Permissions.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
             as: NonceRequest<AdminListRemoveFormInput>.self,
@@ -47,7 +45,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         async throws -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
+        guard context.isCurrentUserAllowed(to: Campaign.Permissions.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
             as: NonceRequest<AdminListRemoveFormInput>.self,

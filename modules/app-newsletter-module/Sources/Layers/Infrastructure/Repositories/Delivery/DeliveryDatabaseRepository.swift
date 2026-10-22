@@ -1,12 +1,13 @@
-public import FeatherInfrastructure
 import FeatherDBAL
+public import FeatherInfrastructure
 public import NewsletterDomain
+public import NewsletterModule
 
 extension DeliveryTable.Row {
-    var asDomain: Delivery {
+    var asDomain: Delivery.Model {
         get throws {
             guard
-                let status = Delivery.Status(rawValue: status)
+                let status = Delivery.Model.Status(rawValue: status)
             else {
                 throw RepositoryError.invalidEnumValue(status)
             }
@@ -25,7 +26,7 @@ extension DeliveryTable.Row {
 }
 
 public struct DeliveryDatabaseRepository:
-    DeliveryRepository
+    Delivery.Repository.Interface
 {
 
     public let context: DatabaseTransactionContext
@@ -36,15 +37,15 @@ public struct DeliveryDatabaseRepository:
 
     public func list(
         issueId: String
-    ) async throws -> [Delivery] {
+    ) async throws -> [Delivery.Model] {
         try await DeliveryTable(connection: context.connection)
             .list(issueId: issueId)
             .map { try $0.asDomain }
     }
 
     public func insert(
-        _ model: Delivery.New
-    ) async throws -> Delivery {
+        _ model: Delivery.Model.New
+    ) async throws -> Delivery.Model {
         let table = DeliveryTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
@@ -62,7 +63,7 @@ public struct DeliveryDatabaseRepository:
     public func findBy(
         issueId: String,
         subscriberEmail: String
-    ) async throws -> Delivery? {
+    ) async throws -> Delivery.Model? {
         let table = DeliveryTable(connection: context.connection)
         return
             try await table.find(
@@ -73,8 +74,8 @@ public struct DeliveryDatabaseRepository:
     }
 
     public func update(
-        _ model: Delivery
-    ) async throws -> Delivery {
+        _ model: Delivery.Model
+    ) async throws -> Delivery.Model {
         let table = DeliveryTable(connection: context.connection)
         let updated = try await table.update(
             issueId: model.issueId,

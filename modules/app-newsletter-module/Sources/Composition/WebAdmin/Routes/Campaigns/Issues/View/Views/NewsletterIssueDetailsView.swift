@@ -1,5 +1,5 @@
-import FeatherWebAdmin
 import FeatherModuleKit
+import FeatherWebAdmin
 import Foundation
 import HTML
 import Hummingbird
@@ -16,7 +16,7 @@ struct NewsletterIssueDetailsView: Component {
 
     func html(context: inout BuilderContext) -> Section {
         var actions: [AdminDetailView.Action] = []
-        if permissions.allows(Permissions.Issues.update) {
+        if permissions.allows(Issue.Permissions.update) {
             actions.append(
                 .init(
                     label: "Edit",
@@ -30,7 +30,7 @@ struct NewsletterIssueDetailsView: Component {
                 )
             )
         }
-        if permissions.allows(Permissions.Issues.delete) {
+        if permissions.allows(Issue.Permissions.delete) {
             actions.append(
                 .init(
                     label: "Remove",

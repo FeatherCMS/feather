@@ -1,17 +1,17 @@
 public import FeatherApplication
-public import FeatherModuleKit
 import FeatherMail
+public import FeatherModuleKit
 public import Foundation
-import NewsletterModule
 import NewsletterDomain
+import NewsletterModule
 
 public struct SendIssueEmails: UseCase {
     struct CampaignReadAction: PermissionAction {
-        let key = Permissions.Campaigns.read
+        let key = Campaign.Permissions.read
     }
 
     struct SubscriberListAction: PermissionAction {
-        let key = Permissions.Subscribers.list
+        let key = Subscriber.Permissions.list
     }
 
     let authorizer: any Authorizer

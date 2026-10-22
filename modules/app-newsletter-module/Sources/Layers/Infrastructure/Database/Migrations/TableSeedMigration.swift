@@ -1,7 +1,8 @@
-public import FeatherDatabase
 import FeatherDBAL
+public import FeatherDatabase
 public import FeatherInfrastructure
 import NewsletterDomain
+import NewsletterModule
 
 public struct TableSeedMigration: DatabaseMigration {
     public let context: DatabaseTransactionContext
@@ -24,7 +25,7 @@ public struct TableSeedMigration: DatabaseMigration {
             return
         }
         _ = try await repository.insert(
-            try Campaign.create(
+            try Campaign.Model.create(
                 key: "website",
                 name: "Website"
             )

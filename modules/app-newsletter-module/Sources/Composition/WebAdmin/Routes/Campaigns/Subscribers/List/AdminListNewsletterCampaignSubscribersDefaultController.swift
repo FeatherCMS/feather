@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import HTML
 import Hummingbird
 import NewsletterModule
@@ -25,7 +25,7 @@ struct AdminListNewsletterCampaignSubscribersDefaultController:
         let newsletterId = try context.requiredParameter("newsletterId")
         let search = request.querySearch()
         let permissions = context.currentUserAdminListActions
-        guard permissions.allows(Permissions.Subscribers.list) else {
+        guard permissions.allows(Subscriber.Permissions.list) else {
             return try await presenter.render(
                 newsletterId: newsletterId,
                 model: .init(

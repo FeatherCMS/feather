@@ -1,10 +1,11 @@
-import FeatherDomain
 import FeatherDBAL
+import FeatherDomain
 public import FeatherInfrastructure
 public import NewsletterDomain
+public import NewsletterModule
 
 extension CampaignTable.Row {
-    var asDomain: Campaign {
+    var asDomain: Campaign.Model {
         .init(
             id: id,
             key: key,
@@ -16,21 +17,21 @@ extension CampaignTable.Row {
     }
 }
 
-public struct CampaignDatabaseRepository: CampaignRepository {
+public struct CampaignDatabaseRepository: Campaign.Repository.Interface {
 
     public let context: DatabaseTransactionContext
     public init(context: DatabaseTransactionContext) {
         self.context = context
     }
 
-    public func list() async throws -> [Campaign] {
+    public func list() async throws -> [Campaign.Model] {
         try await CampaignTable(connection: context.connection).list()
             .map(\.asDomain)
     }
 
     public func insert(
-        _ model: Campaign.New
-    ) async throws -> Campaign {
+        _ model: Campaign.Model.New
+    ) async throws -> Campaign.Model {
         let table = CampaignTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
@@ -45,21 +46,21 @@ public struct CampaignDatabaseRepository: CampaignRepository {
 
     public func findBy(
         id: String
-    ) async throws -> Campaign? {
+    ) async throws -> Campaign.Model? {
         let table = CampaignTable(connection: context.connection)
         return try await table.find(id: id)?.asDomain
     }
 
     public func findBy(
         key: String
-    ) async throws -> Campaign? {
+    ) async throws -> Campaign.Model? {
         let table = CampaignTable(connection: context.connection)
         return try await table.find(key: key)?.asDomain
     }
 
     public func update(
-        _ model: Campaign
-    ) async throws -> Campaign {
+        _ model: Campaign.Model
+    ) async throws -> Campaign.Model {
         let table = CampaignTable(connection: context.connection)
         let updated = try await table.update(
             id: model.id,
@@ -73,7 +74,8 @@ public struct CampaignDatabaseRepository: CampaignRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        try await DatabaseAccessLayer<CampaignTable>(context: context).delete(where: \.id, in: ids)
+        try await DatabaseAccessLayer<CampaignTable>(context: context)
+            .delete(where: \.id, in: ids)
         return ids
     }
 }

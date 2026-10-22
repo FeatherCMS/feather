@@ -1,11 +1,11 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterModule
 import NewsletterDomain
+import NewsletterModule
 
 public struct GetSubscriber: UseCase {
     struct Error: UseCaseError { let message: String }
-    struct Action: PermissionAction { let key = Permissions.Subscribers.read }
+    struct Action: PermissionAction { let key = Subscriber.Permissions.read }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<Write>
 

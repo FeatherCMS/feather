@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import NewsletterDomain
+public import NewsletterModule
 
 public import struct Foundation.Date
 
@@ -7,13 +8,13 @@ public struct DeliveryDetail: DTO {
     public let issueId: String
     public let newsletterId: String
     public let subscriberEmail: String
-    public let status: Delivery.Status
+    public let status: Delivery.Model.Status
     public let sentDate: Date?
     public let failureReason: String?
     public let createdAt: Date
     public let updatedAt: Date
 
-    package init(_ value: Delivery) {
+    package init(_ value: Delivery.Model) {
         issueId = value.issueId
         newsletterId = value.newsletterId
         subscriberEmail = value.subscriberEmail

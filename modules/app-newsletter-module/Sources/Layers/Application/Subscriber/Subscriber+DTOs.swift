@@ -1,6 +1,7 @@
 import NewsletterDomain
+import NewsletterModule
 
-extension Subscriber {
+extension Subscriber.Model {
     var asDetail: SubscriberDetail {
         .init(
             newsletterId: newsletterId,

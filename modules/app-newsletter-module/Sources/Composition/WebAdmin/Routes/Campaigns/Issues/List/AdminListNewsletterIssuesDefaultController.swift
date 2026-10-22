@@ -19,7 +19,7 @@ struct AdminListNewsletterIssuesDefaultController:
         let (interactor, presenter) = buildRuntime((request, context))
         let newsletterId = try context.requiredParameter("newsletterId")
         let permissions = context.currentUserAdminListActions
-        guard permissions.allows(Permissions.Issues.list) else {
+        guard permissions.allows(Issue.Permissions.list) else {
             return try await presenter.render(
                 newsletterId: newsletterId,
                 model: .init(

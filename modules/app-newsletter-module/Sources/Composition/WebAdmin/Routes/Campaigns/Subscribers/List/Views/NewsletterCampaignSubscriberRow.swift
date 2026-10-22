@@ -13,7 +13,7 @@ struct NewsletterCampaignSubscriberRow: Component {
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
-            if permissions.allows(Permissions.Subscribers.delete) {
+            if permissions.allows(Subscriber.Permissions.delete) {
                 context.build(AdminListRowCheckbox(id: item.id))
             }
             Td(item.email)
@@ -34,8 +34,8 @@ struct NewsletterCampaignSubscriberRow: Component {
                                 )
                                 .description,
                             style: .ghost(.secondary),
-                            permission: Permissions.Subscribers.update
-                        ),
+                            permission: Subscriber.Permissions.update
+                        )
                     ],
                     permissions: permissions
                 )

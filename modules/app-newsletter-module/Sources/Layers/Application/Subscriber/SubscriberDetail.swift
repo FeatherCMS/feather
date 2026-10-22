@@ -1,12 +1,13 @@
 public import FeatherApplication
 public import NewsletterDomain
+public import NewsletterModule
 
 public import struct Foundation.Date
 
 public struct SubscriberDetail: DTO {
     public let newsletterId: String
     public let email: String
-    public let status: Subscriber.Status
+    public let status: Subscriber.Model.Status
     public let subscriptionDate: Date
     public let unsubscriptionDate: Date?
     public let firstName: String
@@ -20,7 +21,7 @@ public struct SubscriberDetail: DTO {
     package init(
         newsletterId: String,
         email: String,
-        status: Subscriber.Status,
+        status: Subscriber.Model.Status,
         subscriptionDate: Date,
         unsubscriptionDate: Date?,
         firstName: String,

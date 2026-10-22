@@ -20,7 +20,7 @@ struct NewsletterIssuesTableContent: Component {
     private var searchValue: String { search ?? "" }
 
     func html(context: inout BuilderContext) -> Div {
-        let canCreate = permissions.allows(Permissions.Issues.create)
+        let canCreate = permissions.allows(Issue.Permissions.create)
         let hasActiveQuery = !searchValue.isEmpty
 
         return context.build(

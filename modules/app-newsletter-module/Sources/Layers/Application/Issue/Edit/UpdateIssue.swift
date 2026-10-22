@@ -1,11 +1,11 @@
 public import FeatherApplication
 public import FeatherModuleKit
 public import Foundation
-import NewsletterModule
 import NewsletterDomain
+import NewsletterModule
 
 public struct UpdateIssue: UseCase {
-    struct Action: PermissionAction { let key = Permissions.Issues.update }
+    struct Action: PermissionAction { let key = Issue.Permissions.update }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<Write>
 
@@ -62,13 +62,13 @@ public struct UpdateIssue: UseCase {
                 throw Error.notFound
             }
             guard !input.subject.isEmpty else {
-                throw Issue.Error.subjectTooShort
+                throw Issue.Model.Error.subjectTooShort
             }
             guard input.subject.count < 255 else {
-                throw Issue.Error.subjectTooLong
+                throw Issue.Model.Error.subjectTooLong
             }
             guard !input.content.isEmpty else {
-                throw Issue.Error.contentTooShort
+                throw Issue.Model.Error.contentTooShort
             }
             issue.subject = input.subject
             issue.content = input.content

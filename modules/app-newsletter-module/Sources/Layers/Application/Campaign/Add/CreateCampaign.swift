@@ -1,10 +1,10 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterModule
 import NewsletterDomain
+import NewsletterModule
 
 public struct CreateCampaign: UseCase {
-    struct Action: PermissionAction { let key = Permissions.Campaigns.create }
+    struct Action: PermissionAction { let key = Campaign.Permissions.create }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<Write>
 
@@ -41,7 +41,7 @@ public struct CreateCampaign: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            let model = try Campaign.create(
+            let model = try Campaign.Model.create(
                 key: input.key,
                 name: input.name,
                 fromEmail: input.fromEmail

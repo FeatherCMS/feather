@@ -1,7 +1,7 @@
-import FeatherWebAdmin
-import FeatherWebShared
 import FeatherModuleKit
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import NewsletterModule
@@ -19,13 +19,12 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
             any AdminRemoveNewsletterSubscribersPresenter
         >
 
-
     func remove(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: Permissions.Subscribers.delete)
+        guard context.isCurrentUserAllowed(to: Subscriber.Permissions.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
             as: NonceRequest<AdminListRemoveFormInput>.self,

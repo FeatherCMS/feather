@@ -66,7 +66,7 @@ struct NewsletterCampaignEditPage: Component {
                         .style("display:grid;gap:12px;")
                         Div {
                             if state.permissions.allows(
-                                Permissions.Campaigns.update
+                                Campaign.Permissions.update
                             ) {
                                 context.build(
                                     AdminButton(
@@ -77,7 +77,7 @@ struct NewsletterCampaignEditPage: Component {
                                 )
                             }
                             if state.permissions.allows(
-                                Permissions.Campaigns.delete
+                                Campaign.Permissions.delete
                             ) {
                                 context.build(
                                     AdminButton(

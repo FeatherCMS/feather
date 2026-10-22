@@ -1,10 +1,10 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterModule
 import NewsletterDomain
+import NewsletterModule
 
 public struct GetCampaign: UseCase {
-    struct Action: PermissionAction { let key = Permissions.Campaigns.read }
+    struct Action: PermissionAction { let key = Campaign.Permissions.read }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<Write>
     public init(
@@ -33,7 +33,7 @@ public struct GetCampaign: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            let value: Campaign?
+            let value: Campaign.Model?
             switch input.identifier {
             case .id(let id):
                 value = try await scope.newsletter.findBy(id: id)

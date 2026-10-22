@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import HTML
 import Hummingbird
 import NewsletterAdminAPI
@@ -19,7 +19,7 @@ struct AdminTestNewsletterIssueEmailDefaultController:
         async throws
         -> Response
     {
-        guard context.isCurrentUserAllowed(to: Permissions.Issues.update)
+        guard context.isCurrentUserAllowed(to: Issue.Permissions.update)
         else { return Response(status: .forbidden) }
         let newsletterKey = try context.requiredParameter("newsletterId")
         let issueId = context.parameters.get("issueId", as: String.self)

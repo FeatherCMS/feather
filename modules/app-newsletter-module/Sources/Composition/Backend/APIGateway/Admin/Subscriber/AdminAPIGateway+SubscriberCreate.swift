@@ -2,6 +2,7 @@ import FeatherModuleKit
 public import NewsletterAdminAPI
 import NewsletterApplication
 import NewsletterDomain
+import NewsletterModule
 
 extension AdminAPIGateway {
     public func newsletterSubscriberCreate(
@@ -13,7 +14,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let status =
-            Subscriber.Status(
+            Subscriber.Model.Status(
                 rawValue: body.status ?? "subscribed"
             ) ?? .subscribed
         let result =

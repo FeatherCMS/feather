@@ -1,12 +1,12 @@
 public import FeatherApplication
-public import FeatherModuleKit
 import FeatherMail
-import NewsletterModule
+public import FeatherModuleKit
 import NewsletterDomain
+import NewsletterModule
 
 public struct SendTestEmail: UseCase {
     struct Action: PermissionAction {
-        let key = Permissions.Issues.update
+        let key = Issue.Permissions.update
     }
 
     let authorizer: any Authorizer

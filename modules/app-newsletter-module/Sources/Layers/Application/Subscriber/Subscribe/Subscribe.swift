@@ -1,6 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
+import NewsletterModule
 
 import struct Foundation.Date
 
@@ -58,7 +59,7 @@ public struct Subscribe: UseCase {
                 return (try await scope.subscriber.update(model)).asDetail
             }
 
-            let newModel = try Subscriber.create(
+            let newModel = try Subscriber.Model.create(
                 newsletterId: campaign.id,
                 email: input.email,
                 subscriptionDate: now,

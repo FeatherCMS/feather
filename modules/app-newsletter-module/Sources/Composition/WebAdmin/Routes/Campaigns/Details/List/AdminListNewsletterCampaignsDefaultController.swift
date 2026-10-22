@@ -18,7 +18,7 @@ struct AdminListNewsletterCampaignsDefaultController:
     {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserAdminListActions
-        guard permissions.allows(Permissions.Campaigns.list) else {
+        guard permissions.allows(Campaign.Permissions.list) else {
             return try await presenter.render(
                 model: .init(
                     items: [],

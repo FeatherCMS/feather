@@ -1,17 +1,18 @@
 public import FeatherModuleKit
 public import NewsletterDomain
+public import NewsletterModule
 
 public struct Write: Scope {
-    public let newsletter: any CampaignRepository
-    public let subscriber: any SubscriberRepository
-    public let issue: any IssueRepository
-    public let delivery: any DeliveryRepository
+    public let newsletter: any Campaign.Repository.Interface
+    public let subscriber: any Subscriber.Repository.Interface
+    public let issue: any Issue.Repository.Interface
+    public let delivery: any Delivery.Repository.Interface
 
     public init(
-        newsletter: any CampaignRepository,
-        subscriber: any SubscriberRepository,
-        issue: any IssueRepository,
-        delivery: any DeliveryRepository
+        newsletter: any Campaign.Repository.Interface,
+        subscriber: any Subscriber.Repository.Interface,
+        issue: any Issue.Repository.Interface,
+        delivery: any Delivery.Repository.Interface
     ) {
         self.newsletter = newsletter
         self.subscriber = subscriber

@@ -21,7 +21,7 @@ struct NewsletterSubscriberRow: Component {
                     )
                     .description,
                 style: .ghost(.primary),
-                permission: Permissions.Subscribers.read
+                permission: Subscriber.Permissions.read
             )
         ]
         if let campaign = item.newsletters.first {
@@ -35,12 +35,12 @@ struct NewsletterSubscriberRow: Component {
                         )
                         .description,
                     style: .ghost(.secondary),
-                    permission: Permissions.Subscribers.update
+                    permission: Subscriber.Permissions.update
                 )
             )
         }
         return Tr {
-            if permissions.allows(Permissions.Subscribers.delete) {
+            if permissions.allows(Subscriber.Permissions.delete) {
                 context.build(AdminListRowCheckbox(id: item.id))
             }
             Td(item.email)

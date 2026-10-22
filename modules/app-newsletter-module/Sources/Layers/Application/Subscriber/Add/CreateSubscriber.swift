@@ -1,12 +1,12 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterModule
 public import NewsletterDomain
+public import NewsletterModule
 
 import struct Foundation.Date
 
 public struct CreateSubscriber: UseCase {
-    struct Action: PermissionAction { let key = Permissions.Subscribers.create }
+    struct Action: PermissionAction { let key = Subscriber.Permissions.create }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<Write>
 
@@ -23,13 +23,13 @@ public struct CreateSubscriber: UseCase {
         public let email: String
         public let firstName: String
         public let lastName: String
-        public let status: Subscriber.Status
+        public let status: Subscriber.Model.Status
         public init(
             campaignKey: String,
             email: String,
             firstName: String = "",
             lastName: String = "",
-            status: Subscriber.Status = .subscribed
+            status: Subscriber.Model.Status = .subscribed
         ) {
             self.campaignKey = campaignKey
             self.email = email
@@ -54,7 +54,7 @@ public struct CreateSubscriber: UseCase {
                     key: input.campaignKey
                 )
             else { throw Error.campaignNotFound }
-            let value = try Subscriber.create(
+            let value = try Subscriber.Model.create(
                 newsletterId: campaign.id,
                 email: input.email,
                 subscriptionDate: now,

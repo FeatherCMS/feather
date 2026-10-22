@@ -30,7 +30,7 @@ struct NewsletterIssueRow: Component {
                                 )
                                 .description,
                             style: .ghost(.primary),
-                            permission: Permissions.Issues.read
+                            permission: Issue.Permissions.read
                         ),
                         .init(
                             "Edit",
@@ -41,7 +41,7 @@ struct NewsletterIssueRow: Component {
                                 )
                                 .description,
                             style: .ghost(.secondary),
-                            permission: Permissions.Issues.update
+                            permission: Issue.Permissions.update
                         ),
                     ],
                     permissions: permissions

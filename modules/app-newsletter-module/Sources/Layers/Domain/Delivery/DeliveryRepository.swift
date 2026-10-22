@@ -1,25 +1,30 @@
 public import FeatherDomain
+public import NewsletterModule
 
-public protocol DeliveryRepository: Repository {
+extension Delivery {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
-    func list(
-        issueId: String
-    ) async throws -> [Delivery]
+            func list(
+                issueId: String
+            ) async throws -> [Model]
 
-    func findBy(
-        issueId: String,
-        subscriberEmail: String
-    ) async throws -> Delivery?
+            func findBy(
+                issueId: String,
+                subscriberEmail: String
+            ) async throws -> Model?
 
-    func insert(
-        _ model: Delivery.New
-    ) async throws -> Delivery
+            func insert(
+                _ model: Model.New
+            ) async throws -> Model
 
-    func update(
-        _ model: Delivery
-    ) async throws -> Delivery
+            func update(
+                _ model: Model
+            ) async throws -> Model
 
-    func delete(
-        issueId: String
-    ) async throws
+            func delete(
+                issueId: String
+            ) async throws
+        }
+    }
 }

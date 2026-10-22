@@ -1,12 +1,13 @@
-import FeatherDomain
 import FeatherDBAL
+import FeatherDomain
 public import FeatherInfrastructure
 public import NewsletterDomain
+public import NewsletterModule
 
 extension IssueTable.Row {
-    var asDomain: Issue {
+    var asDomain: Issue.Model {
         get throws {
-            guard let status = Issue.Status(rawValue: status)
+            guard let status = Issue.Model.Status(rawValue: status)
             else {
                 throw RepositoryError.invalidEnumValue(status)
             }
@@ -27,7 +28,7 @@ extension IssueTable.Row {
 }
 
 public struct IssueDatabaseRepository:
-    IssueRepository
+    Issue.Repository.Interface
 {
 
     public let context: DatabaseTransactionContext
@@ -37,15 +38,15 @@ public struct IssueDatabaseRepository:
 
     public func list(
         newsletterId: String
-    ) async throws -> [Issue] {
+    ) async throws -> [Issue.Model] {
         let table = IssueTable(connection: context.connection)
         return try await table.list(newsletterId: newsletterId)
             .map { try $0.asDomain }
     }
 
     public func insert(
-        _ model: Issue.New
-    ) async throws -> Issue {
+        _ model: Issue.Model.New
+    ) async throws -> Issue.Model {
         let table = IssueTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
@@ -63,14 +64,14 @@ public struct IssueDatabaseRepository:
 
     public func findBy(
         id: String
-    ) async throws -> Issue? {
+    ) async throws -> Issue.Model? {
         let table = IssueTable(connection: context.connection)
         return try await table.find(id: id).map { try $0.asDomain }
     }
 
     public func update(
-        _ model: Issue
-    ) async throws -> Issue {
+        _ model: Issue.Model
+    ) async throws -> Issue.Model {
         let table = IssueTable(connection: context.connection)
         let updated = try await table.update(
             id: model.id,
@@ -93,7 +94,8 @@ public struct IssueDatabaseRepository:
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        try await DatabaseAccessLayer<IssueTable>(context: context).delete(where: \.id, in: ids)
+        try await DatabaseAccessLayer<IssueTable>(context: context)
+            .delete(where: \.id, in: ids)
         return ids
     }
 }

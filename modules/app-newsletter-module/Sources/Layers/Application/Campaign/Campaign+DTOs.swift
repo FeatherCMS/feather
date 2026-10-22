@@ -1,6 +1,7 @@
 import NewsletterDomain
+import NewsletterModule
 
-extension Campaign {
+extension Campaign.Model {
     var asDetail: CampaignDetail {
         .init(
             id: id,

@@ -1,12 +1,12 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterModule
 import NewsletterDomain
+import NewsletterModule
 
 public import struct Foundation.Date
 
 public struct ScheduleIssue: UseCase {
-    struct Action: PermissionAction { let key = Permissions.Issues.update }
+    struct Action: PermissionAction { let key = Issue.Permissions.update }
     struct Error: UseCaseError {
         let message: String
     }

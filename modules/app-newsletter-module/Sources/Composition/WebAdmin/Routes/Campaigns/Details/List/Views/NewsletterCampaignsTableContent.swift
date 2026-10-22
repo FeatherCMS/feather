@@ -24,7 +24,7 @@ struct NewsletterCampaignsTableContent: Component {
     }
 
     func html(context: inout BuilderContext) -> Div {
-        let canDelete = actions.allows(Permissions.Campaigns.delete)
+        let canDelete = actions.allows(Campaign.Permissions.delete)
         let hasActiveQuery = !searchValue.isEmpty
 
         return context.build(
@@ -65,7 +65,7 @@ struct NewsletterCampaignsTableContent: Component {
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         if actions.allows(
-                                            Permissions.Campaigns.create
+                                            Campaign.Permissions.create
                                         ) && !isPicker {
                                             context.build(
                                                 AdminButton(
@@ -158,7 +158,7 @@ struct NewsletterCampaignsTableContent: Component {
                     )
                 },
                 toolbar: {
-                    if actions.allows(Permissions.Campaigns.create) && !isPicker
+                    if actions.allows(Campaign.Permissions.create) && !isPicker
                     {
                         context.build(
                             AdminListToolbar {

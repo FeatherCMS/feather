@@ -1,10 +1,10 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterModule
 import NewsletterDomain
+import NewsletterModule
 
 public struct ListIssues: UseCase {
-    struct Action: PermissionAction { let key = Permissions.Issues.list }
+    struct Action: PermissionAction { let key = Issue.Permissions.list }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<Write>
 

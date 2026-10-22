@@ -1,26 +1,31 @@
 public import FeatherDomain
+public import NewsletterModule
 
-public protocol CampaignRepository: Repository {
+extension Campaign {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
-    func list() async throws -> [Campaign]
+            func list() async throws -> [Model]
 
-    func findBy(
-        id: String
-    ) async throws -> Campaign?
+            func findBy(
+                id: String
+            ) async throws -> Model?
 
-    func findBy(
-        key: String
-    ) async throws -> Campaign?
+            func findBy(
+                key: String
+            ) async throws -> Model?
 
-    func insert(
-        _ model: Campaign.New
-    ) async throws -> Campaign
+            func insert(
+                _ model: Model.New
+            ) async throws -> Model
 
-    func update(
-        _ model: Campaign
-    ) async throws -> Campaign
+            func update(
+                _ model: Model
+            ) async throws -> Model
 
-    func delete(
-        ids: [String]
-    ) async throws -> [String]
+            func delete(
+                ids: [String]
+            ) async throws -> [String]
+        }
+    }
 }

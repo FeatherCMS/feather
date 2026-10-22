@@ -1,13 +1,13 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterModule
 public import NewsletterDomain
+public import NewsletterModule
 
 import struct Foundation.Date
 
 public struct UpdateSubscriber: UseCase {
     struct Error: UseCaseError { let message: String }
-    struct Action: PermissionAction { let key = Permissions.Subscribers.update }
+    struct Action: PermissionAction { let key = Subscriber.Permissions.update }
     let transaction: any TransactionExecutor<Write>
     let authorizer: any Authorizer
 
@@ -24,13 +24,13 @@ public struct UpdateSubscriber: UseCase {
         public let email: String
         public let firstName: String
         public let lastName: String
-        public let status: Subscriber.Status
+        public let status: Subscriber.Model.Status
         public init(
             campaignKey: String,
             email: String,
             firstName: String,
             lastName: String,
-            status: Subscriber.Status
+            status: Subscriber.Model.Status
         ) {
             self.campaignKey = campaignKey
             self.email = email

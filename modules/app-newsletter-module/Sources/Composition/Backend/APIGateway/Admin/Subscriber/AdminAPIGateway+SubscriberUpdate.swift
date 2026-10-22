@@ -2,6 +2,7 @@ import FeatherModuleKit
 public import NewsletterAdminAPI
 import NewsletterApplication
 import NewsletterDomain
+import NewsletterModule
 
 extension AdminAPIGateway {
     public func newsletterSubscriberUpdate(
@@ -22,7 +23,7 @@ extension AdminAPIGateway {
                     email: input.path.email,
                     firstName: body.firstName ?? "",
                     lastName: body.lastName ?? "",
-                    status: Subscriber.Status(
+                    status: Subscriber.Model.Status(
                         rawValue: body.status
                     ) ?? .subscribed
                 )

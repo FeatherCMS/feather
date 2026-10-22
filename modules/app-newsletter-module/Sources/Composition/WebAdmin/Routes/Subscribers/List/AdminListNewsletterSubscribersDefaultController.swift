@@ -1,6 +1,6 @@
+import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherModuleKit
 import Hummingbird
 import NewsletterModule
 
@@ -21,7 +21,7 @@ struct AdminListNewsletterSubscribersDefaultController:
         let campaignId = request.queryString("campaignId")?
             .whitespaceTrimmed
         let permissions = context.currentUserAdminListActions
-        guard permissions.allows(Permissions.Subscribers.list) else {
+        guard permissions.allows(Subscriber.Permissions.list) else {
             return try await presenter.render(
                 model: .init(
                     items: [],
@@ -69,7 +69,7 @@ struct AdminListNewsletterSubscribersDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: Permissions.Subscribers.read)
+        guard context.isCurrentUserAllowed(to: Subscriber.Permissions.read)
         else {
             return try await presenter.renderDetailsErrorPage(
                 message: "Your account cannot view newsletter subscribers.",

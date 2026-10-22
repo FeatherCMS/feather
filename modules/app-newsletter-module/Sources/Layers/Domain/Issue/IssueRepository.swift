@@ -1,24 +1,29 @@
 public import FeatherDomain
+public import NewsletterModule
 
-public protocol IssueRepository: Repository {
+extension Issue {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
-    func list(
-        newsletterId: String
-    ) async throws -> [Issue]
+            func list(
+                newsletterId: String
+            ) async throws -> [Model]
 
-    func findBy(
-        id: String
-    ) async throws -> Issue?
+            func findBy(
+                id: String
+            ) async throws -> Model?
 
-    func insert(
-        _ model: Issue.New
-    ) async throws -> Issue
+            func insert(
+                _ model: Model.New
+            ) async throws -> Model
 
-    func update(
-        _ model: Issue
-    ) async throws -> Issue
+            func update(
+                _ model: Model
+            ) async throws -> Model
 
-    func delete(
-        ids: [String]
-    ) async throws -> [String]
+            func delete(
+                ids: [String]
+            ) async throws -> [String]
+        }
+    }
 }
