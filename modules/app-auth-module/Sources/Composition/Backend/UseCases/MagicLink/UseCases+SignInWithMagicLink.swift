@@ -7,11 +7,11 @@ import UserModule
 
 extension UseCases {
 
-    func makeSignInWithMagicLink() -> AuthModule.Auth.SignIn.MagicLink.UseCase {
+    func makeSignInWithMagicLink() -> AuthModule.Authorization.SignIn.MagicLink.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                AuthModule.Auth.SignIn.MagicLink.Scope(
+                AuthModule.Authorization.SignIn.MagicLink.Scope(
                     identity: Identity.Repository.Database(context: context),
                     authorization: AuthModule.Authorization.Query.Database(
                         context: context
@@ -24,7 +24,7 @@ extension UseCases {
                 )
             }
         )
-        return AuthModule.Auth.SignIn.MagicLink.UseCase(
+        return AuthModule.Authorization.SignIn.MagicLink.UseCase(
             transaction: transaction
         )
     }

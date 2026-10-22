@@ -34,8 +34,7 @@ extension AuthorLink.List {
 
             return try await query.run { scope in
                 try await scope.authorLink.list(
-                    authorId: input.authorId,
-                    query: .init()
+                    authorId: input.authorId
                 )
             }
         }

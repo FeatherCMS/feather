@@ -13,7 +13,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Tag.Search.Scope(
-                    tag: Tag.Query.Database(
+                    tag: Tag.Search.Query.Database(
                         context: context,
                         metadata: Metadata.Query.Database(context: context)
                     )

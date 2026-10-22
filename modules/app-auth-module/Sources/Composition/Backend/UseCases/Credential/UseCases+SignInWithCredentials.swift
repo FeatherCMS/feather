@@ -8,12 +8,12 @@ import UserModule
 extension UseCases {
 
     func makeSignInWithCredentials()
-        -> AuthModule.Auth.SignIn.Credentials.UseCase
+        -> AuthModule.Authorization.SignIn.Credentials.UseCase
     {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                AuthModule.Auth.SignIn.Credentials.Scope(
+                AuthModule.Authorization.SignIn.Credentials.Scope(
                     identity: Identity.Repository.Database(context: context),
                     authorization: AuthModule.Authorization.Query.Database(
                         context: context
@@ -28,7 +28,7 @@ extension UseCases {
                 )
             }
         )
-        return AuthModule.Auth.SignIn.Credentials.UseCase(
+        return AuthModule.Authorization.SignIn.Credentials.UseCase(
             transaction: transaction,
             passwordHasher: BCryptPasswordHasher()
         )

@@ -195,7 +195,7 @@ struct AuthApplicationTestSuite {
         )
         let sessionRepository = MockAuthSessionRepository()
         let transaction = MockTransactionExecutor(
-            context: AuthModule.Auth.SignIn.MagicLink.Scope(
+            context: AuthModule.Authorization.SignIn.MagicLink.Scope(
                 identity: MockAuthIdentityRepository(identity: identity),
                 authorization: DummyAuthorizationQueries(),
                 authEmail: MockAuthEmailRepository(
@@ -205,7 +205,7 @@ struct AuthApplicationTestSuite {
                 session: sessionRepository
             )
         )
-        let useCase = AuthModule.Auth.SignIn.MagicLink.UseCase(
+        let useCase = AuthModule.Authorization.SignIn.MagicLink.UseCase(
             transaction: transaction
         )
 
@@ -231,7 +231,7 @@ struct AuthApplicationTestSuite {
             consumeError: .alreadyUsed
         )
         let transaction = MockTransactionExecutor(
-            context: AuthModule.Auth.SignIn.MagicLink.Scope(
+            context: AuthModule.Authorization.SignIn.MagicLink.Scope(
                 identity: MockAuthIdentityRepository(),
                 authorization: DummyAuthorizationQueries(),
                 authEmail: MockAuthEmailRepository(
@@ -241,7 +241,7 @@ struct AuthApplicationTestSuite {
                 session: MockAuthSessionRepository()
             )
         )
-        let useCase = AuthModule.Auth.SignIn.MagicLink.UseCase(
+        let useCase = AuthModule.Authorization.SignIn.MagicLink.UseCase(
             transaction: transaction
         )
 

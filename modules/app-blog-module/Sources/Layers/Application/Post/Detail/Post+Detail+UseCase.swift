@@ -1,7 +1,6 @@
 public import BlogModule
 public import FeatherApplication
 public import FeatherModuleKit
-import WebApplication
 
 //
 //  GetPost.swift
@@ -11,10 +10,6 @@ import WebApplication
 
 extension Post.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Error: UseCaseError {
-            let message: String
-        }
-
         let authorizer: any Authorizer
         let query: any QueryExecutor<Post.Detail.Scope>
 
@@ -40,27 +35,7 @@ extension Post.Detail {
             let id = input.id
 
             return try await query.run { scope in
-                let post = try await scope.post.find(id: id)
-                guard
-                    let metadata = try await scope.metadata.find(
-                        referenceType: "blog.post",
-                        referenceID: id
-                    )
-                else {
-                    throw Error(message: "Post metadata not found")
-                }
-                return .init(
-                    id: post.id,
-                    title: post.title,
-                    excerpt: post.excerpt,
-                    content: post.content,
-                    imageAssetId: post.imageAssetId,
-                    authorIds: post.authorIds,
-                    tagIds: post.tagIds,
-                    metadata: metadata,
-                    createdAt: post.createdAt,
-                    updatedAt: post.updatedAt
-                )
+                try await scope.post.find(id: id)
             }
         }
     }

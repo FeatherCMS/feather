@@ -10,7 +10,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 AuthorLink.List.Scope(
-                    authorLink: AuthorLink.Query.Database(
+                    authorLink: AuthorLink.List.Query.Database(
                         context: context
                     )
                 )

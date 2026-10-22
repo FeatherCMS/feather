@@ -7,11 +7,11 @@ import UserModule
 
 extension UseCases {
 
-    public func makeTokenAuth() -> AuthModule.Auth.TokenAuth.UseCase {
+    public func makeTokenAuth() -> AuthModule.Authorization.TokenAuth.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                AuthModule.Auth.TokenAuth.Scope(
+                AuthModule.Authorization.TokenAuth.Scope(
                     identity: Identity.Repository.Database(context: context),
                     authorization: AuthModule.Authorization.Query.Database(
                         context: context
@@ -20,7 +20,7 @@ extension UseCases {
                 )
             }
         )
-        return AuthModule.Auth.TokenAuth.UseCase(
+        return AuthModule.Authorization.TokenAuth.UseCase(
             transaction: transaction
         )
     }

@@ -15,7 +15,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Post.Search.Scope(
-                    post: Post.Query.Database(
+                    post: Post.Search.Query.Database(
                         context: context,
                         metadata: Metadata.Query.Database(context: context)
                     )

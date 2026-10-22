@@ -20,10 +20,9 @@ struct BlogApplicationTestSuite {
 
     @Test
     func getPostChecksAuthorizationBeforeQuerying() async throws {
-        let queries = PostQueriesMock()
-        let metadata = MetadataQueryMock()
+        let query = PostDetailQueryMock()
         let executor = FeatherTesting.QueryExecutor.Mock(
-            context: Post.Detail.Scope(post: queries, metadata: metadata)
+            context: Post.Detail.Scope(post: query)
         )
         let authorizer = FeatherTesting.Authorizer.Mock(result: false)
         let useCase = Post.Detail.UseCase(
@@ -67,9 +66,9 @@ struct BlogApplicationTestSuite {
 
     @Test
     func searchPostsReturnsRowsAndTotalFromTheQuery() async throws {
-        let queries = PostQueriesMock()
+        let query = PostSearchQueryMock()
         let executor = FeatherTesting.QueryExecutor.Mock(
-            context: Post.Search.Scope(post: queries)
+            context: Post.Search.Scope(post: query)
         )
         let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Post.Search.UseCase(
@@ -87,6 +86,68 @@ struct BlogApplicationTestSuite {
         #expect(await authorizer.canCallCount == 1)
         #expect(await executor.runCallCount == 1)
     }
+
+    @Test
+    func listPostsReturnsQueryResults() async throws {
+        let query = PostListQueryMock()
+        let executor = FeatherTesting.QueryExecutor.Mock(
+            context: Post.List.Scope(post: query)
+        )
+        let useCase = Post.List.UseCase(
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
+            query: executor
+        )
+
+        let output = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init()
+        )
+
+        #expect(output.items.isEmpty)
+        #expect(await executor.runCallCount == 1)
+    }
+
+    @Test
+    func searchAuthorsReturnsRowsAndTotalFromTheQuery() async throws {
+        let executor = FeatherTesting.QueryExecutor.Mock(
+            context: Author.Search.Scope(author: AuthorSearchQueryMock())
+        )
+        let useCase = Author.Search.UseCase(
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
+            query: executor
+        )
+
+        let output = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(query: .init(search: "writer"))
+        )
+
+        #expect(output.items.isEmpty)
+        #expect(output.total == 2)
+        #expect(await executor.runCallCount == 1)
+    }
+
+    @Test
+    func searchAuthorLinksReturnsRowsAndTotalFromTheQuery() async throws {
+        let executor = FeatherTesting.QueryExecutor.Mock(
+            context: AuthorLink.Search.Scope(
+                authorLink: AuthorLinkSearchQueryMock()
+            )
+        )
+        let useCase = AuthorLink.Search.UseCase(
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
+            query: executor
+        )
+
+        let output = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(authorId: "author-1", query: .init(search: "site"))
+        )
+
+        #expect(output.items.isEmpty)
+        #expect(output.total == 1)
+        #expect(await executor.runCallCount == 1)
+    }
 }
 
 private struct AuthorListQueryMock: Author.List.Query.Interface {
@@ -95,64 +156,40 @@ private struct AuthorListQueryMock: Author.List.Query.Interface {
     }
 }
 
-private struct PostQueriesMock: Post.Query.Interface {
+private struct PostDetailQueryMock: Post.Detail.Query.Interface {
     func find(id: String) async throws -> Post.Detail.Output {
         throw TestError.unexpectedCall
     }
+}
 
-    func list(query: Post.Search.Input.Query) async throws -> Post.List.Output {
-        .init(items: [])
-    }
-
-    func count(query: Post.Search.Input.Query) async throws -> Int {
-        0
+private struct PostSearchQueryMock: Post.Search.Query.Interface {
+    func search(query: Post.Search.Input.Query) async throws
+        -> Post.Search.Output
+    {
+        .init(items: [], total: 0)
     }
 }
 
-private struct MetadataQueryMock: Metadata.Query.Interface {
-    func find(id: String) async throws -> MetadataDetail {
-        throw TestError.unexpectedCall
+private struct PostListQueryMock: Post.List.Query.Interface {
+    func list() async throws -> Post.List.Output {
+        .init(items: [])
     }
+}
 
-    func find(referenceType: String, referenceID: String) async throws
-        -> MetadataDetail?
+private struct AuthorSearchQueryMock: Author.Search.Query.Interface {
+    func search(query: Author.Search.Input.Query) async throws
+        -> Author.Search.Output
     {
-        throw TestError.unexpectedCall
+        .init(items: [], total: 2)
     }
+}
 
-    func find(referenceType: String, slug: String) async throws
-        -> MetadataDetail?
-    {
-        throw TestError.unexpectedCall
-    }
-
-    func resolve(slug: String) async throws -> MetadataDetail? {
-        throw TestError.unexpectedCall
-    }
-
-    func listPublic() async throws -> [MetadataList.Item] {
-        throw TestError.unexpectedCall
-    }
-
-    func list(query: MetadataList.Query) async throws -> MetadataList {
-        throw TestError.unexpectedCall
-    }
-
-    func resolve(referenceType: String, referenceIDs: [String]) async throws
-        -> [MetadataList.Item]
-    {
-        throw TestError.unexpectedCall
-    }
-
-    func resolveDetails(referenceType: String, referenceIDs: [String])
-        async throws
-        -> [MetadataDetail]
-    {
-        throw TestError.unexpectedCall
-    }
-
-    func count(query: MetadataList.Query) async throws -> Int {
-        throw TestError.unexpectedCall
+private struct AuthorLinkSearchQueryMock: AuthorLink.Search.Query.Interface {
+    func search(
+        authorId: String,
+        query: AuthorLink.Search.Input.Query
+    ) async throws -> AuthorLink.Search.Output {
+        .init(items: [], total: 1)
     }
 }
 

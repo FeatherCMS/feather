@@ -15,17 +15,17 @@ extension Public {
 
 extension Public.Query {
     public struct Scope: FeatherModuleKit.Scope {
-        public let post: any Post.Query.Interface
-        public let author: any Author.Query.Interface
-        public let tag: any Tag.Query.Interface
-        public let authorLink: any AuthorLink.Query.Interface
+        public let post: any Public.Query.PostContent.Interface
+        public let author: any Public.Query.AuthorContent.Interface
+        public let tag: any Public.Query.TagContent.Interface
+        public let authorLink: any Public.Query.AuthorLinkContent.Interface
         public let metadata: any Metadata.Query.Interface
 
         public init(
-            post: any Post.Query.Interface,
-            author: any Author.Query.Interface,
-            tag: any Tag.Query.Interface,
-            authorLink: any AuthorLink.Query.Interface,
+            post: any Public.Query.PostContent.Interface,
+            author: any Public.Query.AuthorContent.Interface,
+            tag: any Public.Query.TagContent.Interface,
+            authorLink: any Public.Query.AuthorLinkContent.Interface,
             metadata: any Metadata.Query.Interface
         ) {
             self.post = post

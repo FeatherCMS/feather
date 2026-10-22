@@ -1,7 +1,6 @@
 public import BlogModule
 public import FeatherApplication
 public import FeatherModuleKit
-import WebApplication
 
 //
 //  GetTag.swift
@@ -11,10 +10,6 @@ import WebApplication
 
 extension Tag.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Error: UseCaseError {
-            let message: String
-        }
-
         let authorizer: any Authorizer
         let query: any QueryExecutor<Tag.Detail.Scope>
 
@@ -40,25 +35,7 @@ extension Tag.Detail {
             let id = input.id
 
             return try await query.run { scope in
-                let tag = try await scope.tag.find(id: id)
-                guard
-                    let metadata = try await scope.metadata.find(
-                        referenceType: "blog.tag",
-                        referenceID: id
-                    )
-                else {
-                    throw Error(message: "Tag metadata not found")
-                }
-                return .init(
-                    id: tag.id,
-                    title: tag.title,
-                    excerpt: tag.excerpt,
-                    content: tag.content,
-                    imageAssetId: tag.imageAssetId,
-                    metadata: metadata,
-                    createdAt: tag.createdAt,
-                    updatedAt: tag.updatedAt
-                )
+                try await scope.tag.find(id: id)
             }
         }
     }

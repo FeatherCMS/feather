@@ -33,22 +33,7 @@ extension Tag.List {
             }
 
             return try await query.run { scope in
-                let tags = try await scope.tag.list(query: .init())
-                var items: [Tag.List.Output.Item] = []
-                items.reserveCapacity(tags.items.count)
-                for item in tags.items {
-                    items.append(
-                        .init(
-                            id: item.id,
-                            title: item.title,
-                            excerpt: item.excerpt,
-                            imageAssetId: item.imageAssetId,
-                            createdAt: item.createdAt,
-                            updatedAt: item.updatedAt
-                        )
-                    )
-                }
-                return .init(items: items)
+                try await scope.tag.list()
             }
         }
 

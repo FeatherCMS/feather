@@ -65,7 +65,7 @@ extension MagicLink.Request {
                         return nil
                     }
 
-                    let token = AuthModule.Auth.TokenAuth.generateToken()
+                    let token = AuthModule.Authorization.TokenAuth.generateToken()
 
                     _ = try await scope.magicLink.insert(
                         MagicLink.Model.create(

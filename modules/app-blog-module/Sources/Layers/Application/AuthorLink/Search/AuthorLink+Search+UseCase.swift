@@ -24,31 +24,12 @@ extension AuthorLink.Search {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            let (list, total) = try await query.run { scope in
-                async let list = scope.authorLink.list(
+            return try await query.run { scope in
+                try await scope.authorLink.search(
                     authorId: input.authorId,
                     query: input.query
                 )
-                async let total = scope.authorLink.count(
-                    authorId: input.authorId,
-                    query: input.query
-                )
-                return try await (list, total)
             }
-            let items = list.items.map {
-                Output.Item(
-                    id: $0.id,
-                    authorId: $0.authorId,
-                    label: $0.label,
-                    url: $0.url,
-                    priority: $0.priority,
-                    isBlank: $0.isBlank,
-                    permission: $0.permission,
-                    createdAt: $0.createdAt,
-                    updatedAt: $0.updatedAt
-                )
-            }
-            return .init(items: items, total: total)
         }
     }
 }

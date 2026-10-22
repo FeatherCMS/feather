@@ -57,10 +57,6 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/apple/swift-log",
-            from: "1.0.0"
-        ),
-        .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "7.0.0"
         ),
@@ -77,6 +73,10 @@ let package = Package(
             from: "2.26.0"
         ),
         .package(
+            url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            from: "2.0.1"
+        ),
+        .package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
@@ -89,8 +89,12 @@ let package = Package(
             exact: "1.0.0-beta.4"
         ),
         .package(
-            url: "https://github.com/apple/swift-nio-ssl",
-            from: "2.34.0"
+            url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http",
+            exact: "1.0.0-beta.1"
         ),
         .package(path: "../../feather-core"),
         .package(
@@ -332,6 +336,47 @@ let package = Package(
                 .target(name: "BlogModule"),
             ],
             path: "Tests/Layers/Infrastructure",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "BlogBackendTests",
+            dependencies: [
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherStorage", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(
+                    name: "HummingbirdTesting",
+                    package: "hummingbird"
+                ),
+                .product(name: "MediaApplication", package: "app-media-module"),
+                .product(name: "MediaBackend", package: "app-media-module"),
+                .product(name: "MediaModule", package: "app-media-module"),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
+                .target(name: "BlogAdminAPI"),
+                .target(name: "BlogBackend"),
+            ],
+            path: "Tests/Composition/Backend",
             swiftSettings: swiftSettings
         ),
         .testTarget(

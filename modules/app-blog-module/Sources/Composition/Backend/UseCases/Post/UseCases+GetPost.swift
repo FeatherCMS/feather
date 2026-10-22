@@ -12,14 +12,11 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Post.Detail.Scope(
-                    post: Post.Query.Database(
+                    post: Post.Detail.Query.Database(
                         context: context,
                         metadata: Metadata.Query.Database(
                             context: context
                         )
-                    ),
-                    metadata: Metadata.Query.Database(
-                        context: context
                     )
                 )
             }

@@ -24,22 +24,9 @@ extension Tag.Search {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            let (list, total) = try await query.run { scope in
-                async let list = scope.tag.list(query: input.query)
-                async let total = scope.tag.count(query: input.query)
-                return try await (list, total)
+            return try await query.run { scope in
+                try await scope.tag.search(query: input.query)
             }
-            let items = list.items.map {
-                Output.Item(
-                    id: $0.id,
-                    title: $0.title,
-                    excerpt: $0.excerpt,
-                    imageAssetId: $0.imageAssetId,
-                    createdAt: $0.createdAt,
-                    updatedAt: $0.updatedAt
-                )
-            }
-            return .init(items: items, total: total)
         }
     }
 }

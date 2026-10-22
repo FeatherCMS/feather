@@ -33,22 +33,7 @@ extension Post.List {
             }
 
             return try await query.run { scope in
-                let posts = try await scope.post.list(query: .init())
-                var items: [Post.List.Output.Item] = []
-                items.reserveCapacity(posts.items.count)
-                for item in posts.items {
-                    items.append(
-                        .init(
-                            id: item.id,
-                            title: item.title,
-                            excerpt: item.excerpt,
-                            imageAssetId: item.imageAssetId,
-                            createdAt: item.createdAt,
-                            updatedAt: item.updatedAt
-                        )
-                    )
-                }
-                return .init(items: items)
+                try await scope.post.list()
             }
         }
     }
