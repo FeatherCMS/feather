@@ -11,12 +11,3 @@ protocol AdminRemoveWebPageController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 }
-
-extension AdminRemoveWebPageController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.post("/admin/web/pages/remove/", use: postRemoveWebPage)
-    }
-}

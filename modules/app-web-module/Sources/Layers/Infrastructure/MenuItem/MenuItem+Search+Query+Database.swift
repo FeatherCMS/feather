@@ -16,10 +16,14 @@ extension MenuItem.Search.Query {
             menuId: String,
             query: MenuItem.Search.Input.Query
         ) async throws -> MenuItem.Search.Output {
-            let accessLayer = DatabaseAccessLayer<MenuItem.Table>(context: context)
+            let accessLayer = DatabaseAccessLayer<MenuItem.Table>(
+                context: context
+            )
             let page = query.page.normalized()
             let pageIndex = page.number - 1
-            let offset = pageIndex > Int.max / page.size ? Int.max : pageIndex * page.size
+            let offset =
+                pageIndex > Int.max / page.size
+                ? Int.max : pageIndex * page.size
             let items = try await accessLayer.select { initial in
                 var result = initial.where(\.menuId, equals: menuId)
                 if let search = query.search {
@@ -29,7 +33,9 @@ extension MenuItem.Search.Query {
                             DatabaseQueryTextColumn<MenuItem.Table>(\.id),
                             DatabaseQueryTextColumn<MenuItem.Table>(\.label),
                             DatabaseQueryTextColumn<MenuItem.Table>(\.url),
-                            DatabaseQueryTextColumn<MenuItem.Table>(\.permission),
+                            DatabaseQueryTextColumn<MenuItem.Table>(
+                                \.permission
+                            ),
                         ]
                     )
                 }
@@ -37,16 +43,39 @@ extension MenuItem.Search.Query {
                     let direction: DatabaseQueryDirection =
                         sort.direction == .asc ? .ascending : .descending
                     return switch sort.field {
-                    case .id: DatabaseQueryOrder<MenuItem.Table>(by: \.id, direction)
-                    case .label: DatabaseQueryOrder<MenuItem.Table>(by: \.label, direction)
-                    case .url: DatabaseQueryOrder<MenuItem.Table>(by: \.url, direction)
-                    case .priority: DatabaseQueryOrder<MenuItem.Table>(by: \.priority, direction)
-                    case .permission: DatabaseQueryOrder<MenuItem.Table>(by: \.permission, direction)
-                    case .createdAt: DatabaseQueryOrder<MenuItem.Table>(by: \.createdAt, direction)
-                    case .updatedAt: DatabaseQueryOrder<MenuItem.Table>(by: \.updatedAt, direction)
+                    case .id:
+                        DatabaseQueryOrder<MenuItem.Table>(by: \.id, direction)
+                    case .label:
+                        DatabaseQueryOrder<MenuItem.Table>(
+                            by: \.label,
+                            direction
+                        )
+                    case .url:
+                        DatabaseQueryOrder<MenuItem.Table>(by: \.url, direction)
+                    case .priority:
+                        DatabaseQueryOrder<MenuItem.Table>(
+                            by: \.priority,
+                            direction
+                        )
+                    case .permission:
+                        DatabaseQueryOrder<MenuItem.Table>(
+                            by: \.permission,
+                            direction
+                        )
+                    case .createdAt:
+                        DatabaseQueryOrder<MenuItem.Table>(
+                            by: \.createdAt,
+                            direction
+                        )
+                    case .updatedAt:
+                        DatabaseQueryOrder<MenuItem.Table>(
+                            by: \.updatedAt,
+                            direction
+                        )
                     }
                 }
-                return result
+                return
+                    result
                     .order(by: orders + [.init(by: \.id, .ascending)])
                     .limit(page.size)
                     .offset(offset)
@@ -60,7 +89,9 @@ extension MenuItem.Search.Query {
                             DatabaseQueryTextColumn<MenuItem.Table>(\.id),
                             DatabaseQueryTextColumn<MenuItem.Table>(\.label),
                             DatabaseQueryTextColumn<MenuItem.Table>(\.url),
-                            DatabaseQueryTextColumn<MenuItem.Table>(\.permission),
+                            DatabaseQueryTextColumn<MenuItem.Table>(
+                                \.permission
+                            ),
                         ]
                     )
                 }
@@ -76,7 +107,9 @@ extension MenuItem.Search.Query {
                         priority: $0.priority,
                         isBlank: $0.isBlank,
                         permission: $0.permission,
-                        authentication: MenuItem.Authentication(rawValue: $0.authentication) ?? .any,
+                        authentication: MenuItem.Authentication(
+                            rawValue: $0.authentication
+                        ) ?? .any,
                         createdAt: $0.createdAt,
                         updatedAt: $0.updatedAt
                     )

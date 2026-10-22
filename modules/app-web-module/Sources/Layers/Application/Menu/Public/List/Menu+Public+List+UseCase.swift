@@ -27,11 +27,11 @@ extension Menu.Public.List {
 
         public func execute(
             subject: Subject?
-        ) async throws -> [PublicMenu] {
+        ) async throws -> Output {
             try await query.run { scope in
                 let menus = try await scope.menuList.list()
 
-                var result: [PublicMenu] = []
+                var result: [Output.Menu] = []
 
                 for menu in menus.items {
                     let publicMenu = try await makePublicMenu(
@@ -45,14 +45,14 @@ extension Menu.Public.List {
                     result.append(publicMenu)
                 }
 
-                return result
+                return .init(menus: result)
             }
         }
 
         public func execute(
             key: String,
             subject: Subject?
-        ) async throws -> PublicMenu? {
+        ) async throws -> Output.Menu? {
             try await query.run { scope in
                 guard let menu = try await scope.menuDetail.find(key: key)
                 else {
@@ -74,7 +74,7 @@ extension Menu.Public.List {
             name: String,
             menuItems: any MenuItem.List.Query.Interface,
             subject: Subject?
-        ) async throws -> PublicMenu {
+        ) async throws -> Output.Menu {
             let menuItems = try await menuItems.list(menuId: id)
             let items = try await filterItems(menuItems.items, subject: subject)
             return .init(id: id, key: key, name: name, items: items)
@@ -83,8 +83,8 @@ extension Menu.Public.List {
         private func filterItems(
             _ items: [MenuItem.List.Output.Item],
             subject: Subject?
-        ) async throws -> [PublicMenuItem] {
-            var result: [PublicMenuItem] = []
+        ) async throws -> [Output.Menu.Item] {
+            var result: [Output.Menu.Item] = []
 
             for item in items
             where try await isAvailable(item: item, subject: subject) {

@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import SystemWebAdmin
@@ -7,7 +8,7 @@ struct AdminAddWebMenuItem {
     let controller: any AdminAddWebMenuItemController
 
     init(
-        apiBuilder: API.Builder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminAddWebMenuItemDefaultController(
@@ -15,11 +16,17 @@ struct AdminAddWebMenuItem {
                 (
                     interactor: AdminAddWebMenuItemDefaultInteractor(
                         repository: AdminAddWebMenuItemOpenAPIRepository(
-                            api: apiBuilder.makeWebAdmin(context)
+                            api: API.Client(
+                                environment: environment,
+                                requestContext: context
+                            )
                         ),
                         permissionRepository:
                             AdminSystemPermissionOpenAPIRepository(
-                                api: apiBuilder.makeSystemAdmin(context)
+                                api: SystemWebAdmin.API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
+                                )
                             )
                     ),
                     presenter: AdminAddWebMenuItemDefaultPresenter(

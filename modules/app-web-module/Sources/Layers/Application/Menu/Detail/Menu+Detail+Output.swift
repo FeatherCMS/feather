@@ -28,15 +28,5 @@ extension Menu.Detail {
             self.updatedAt = updatedAt
         }
 
-        init(detail: MenuDetail) {
-            self.init(
-                id: detail.id,
-                key: detail.key,
-                name: detail.name,
-                notes: detail.notes,
-                createdAt: detail.createdAt,
-                updatedAt: detail.updatedAt
-            )
-        }
     }
 }

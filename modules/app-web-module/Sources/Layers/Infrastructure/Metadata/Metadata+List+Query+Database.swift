@@ -1,7 +1,7 @@
-public import WebApplication
-public import WebDomain
 import FeatherDBAL
 public import FeatherInfrastructure
+public import WebApplication
+public import WebDomain
 
 extension Metadata.Table.List {
     var asListItem: Metadata.List.Output.Item {

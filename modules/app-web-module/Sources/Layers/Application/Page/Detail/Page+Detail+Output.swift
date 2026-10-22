@@ -10,7 +10,7 @@ extension Page.Detail {
         public let excerpt: String
         public let content: String
         public let imageAssetId: String?
-        public let metadata: MetadataDetail
+        public let metadata: Metadata.Detail.Output
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -20,7 +20,7 @@ extension Page.Detail {
             excerpt: String,
             content: String,
             imageAssetId: String?,
-            metadata: MetadataDetail,
+            metadata: Metadata.Detail.Output,
             createdAt: Date,
             updatedAt: Date
         ) {

@@ -65,7 +65,7 @@ struct AdminEditWebPageDefaultController:
             try await runtime.interactor.update(id: id, input: payload)
 
             return AdminNotificationFlash.redirect(
-                to: "/admin/web/pages/\(id)/edit/",
+                to: WebPageRoutes.edit(RouterPath(id)).description,
                 notification: .init(
                     title: "Saved",
                     message: "Page edited successfully."

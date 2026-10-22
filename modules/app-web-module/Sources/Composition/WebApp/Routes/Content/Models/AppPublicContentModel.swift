@@ -4,12 +4,12 @@ import WebModule
 
 struct AppPublicContentModel: Sendable {
     let metadata: PublicContent.Metadata.Base
-    let results: [WebPublicContentProvider.Output]
+    let results: [PublicContentProvider.Output]
     let status: HTTPResponse.Status
 
     init(
         metadata: PublicContent.Metadata.Base,
-        results: [WebPublicContentProvider.Output],
+        results: [PublicContentProvider.Output],
         status: HTTPResponse.Status = .ok
     ) {
         self.metadata = metadata

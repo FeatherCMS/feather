@@ -62,7 +62,7 @@ struct AdminEditWebMenuDefaultController:
             try await runtime.interactor.update(id: id, input: payload)
 
             return AdminNotificationFlash.redirect(
-                to: "/admin/web/menus/\(id)/edit/",
+                to: WebMenuRoutes.edit(RouterPath(id)).description,
                 notification: .init(
                     title: "Saved",
                     message: "Menu edited successfully."

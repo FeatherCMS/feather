@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 
@@ -6,7 +7,7 @@ struct AdminAddWebPage {
     let controller: any AdminAddWebPageController
 
     init(
-        apiBuilder: API.Builder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminAddWebPageDefaultController(
@@ -14,7 +15,10 @@ struct AdminAddWebPage {
                 (
                     interactor: AdminAddWebPageDefaultInteractor(
                         repository: AdminAddWebPageOpenAPIRepository(
-                            api: apiBuilder.makeWebAdmin(context)
+                            api: API.Client(
+                                environment: environment,
+                                requestContext: context
+                            )
                         )
                     ),
                     presenter: AdminAddWebPageDefaultPresenter(

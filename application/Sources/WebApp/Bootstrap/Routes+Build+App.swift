@@ -37,7 +37,7 @@ func buildAppRoutes(
             events: publicContentEvents,
             mediaResolver: mediaResolver
         ),
-        apiBaseURL: apiBuilder.web.baseURL,
+        apiBaseURL: environment.apiBaseURL,
         publicOrigins: publicOrigins,
         mediaResolver: mediaResolver
     )

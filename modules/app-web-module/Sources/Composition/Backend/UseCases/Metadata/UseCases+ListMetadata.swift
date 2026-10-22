@@ -6,8 +6,8 @@ import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
-import WebDomain
 import WebApplication
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {

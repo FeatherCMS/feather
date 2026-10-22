@@ -69,7 +69,7 @@ func buildAdminRoutes(
     .route(on: router)
 
     Router(
-        apiBuilder: apiBuilder.web,
+        environment: environment,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents
     )

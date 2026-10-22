@@ -4,7 +4,7 @@ import WebModule
 
 protocol AdminEditWebMetadataInteractor: Sendable {
 
-    func getTemplateOptions() async throws -> [WebPageTemplateOption]
+    func getTemplateOptions() async throws -> [PageTemplateOption]
 
     func load(
         id: String

@@ -16,19 +16,3 @@ protocol AdminEditWebPageController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 }
-
-extension AdminEditWebPageController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.get(
-            "/admin/web/pages/{id}/edit/",
-            use: getEditWebPage
-        )
-        router.post(
-            "/admin/web/pages/{id}/edit/",
-            use: postEditWebPage
-        )
-    }
-}

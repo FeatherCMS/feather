@@ -172,7 +172,12 @@ struct AdminEditWebMenuItemDefaultController:
             )
 
             return AdminNotificationFlash.redirect(
-                to: "/admin/web/menus/\(menuId)/items/\(id)/edit/",
+                to:
+                    WebMenuItemRoutes.edit(
+                        RouterPath(menuId),
+                        RouterPath(id)
+                    )
+                    .description,
                 notification: .init(
                     title: "Saved",
                     message: "Item edited successfully."

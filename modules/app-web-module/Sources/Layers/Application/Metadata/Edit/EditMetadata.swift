@@ -87,7 +87,7 @@ public struct EditMetadata: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> MetadataDetail {
+    ) async throws -> Metadata.Detail.Output {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {

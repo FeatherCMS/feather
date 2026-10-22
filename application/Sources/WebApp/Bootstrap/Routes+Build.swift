@@ -30,8 +30,8 @@ import Logging
 
 func buildRouter(
     environment: AppEnvironment,
-    templateOptions: [WebPageTemplateOption],
-    templateDefinitions: [WebTemplateDefinition],
+    templateOptions: [PageTemplateOption],
+    templateDefinitions: [TemplateDefinition],
     templatePaths: [URL]
 ) async throws -> Hummingbird.Router<DefaultRequestContext> {
 

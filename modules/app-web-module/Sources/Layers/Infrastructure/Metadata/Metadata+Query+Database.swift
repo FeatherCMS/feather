@@ -7,7 +7,7 @@ public import WebDomain
 import struct Foundation.Date
 
 extension Metadata.Table.Detail {
-    var asDetail: MetadataDetail {
+    var asDetail: Metadata.Detail.Output {
         .init(
             id: id,
             referenceType: referenceType,
@@ -43,7 +43,7 @@ extension Metadata.Query {
             self.context = context
         }
 
-        public func find(id: String) async throws -> MetadataDetail {
+        public func find(id: String) async throws -> Metadata.Detail.Output {
             guard
                 let row = try await accessLayer.selectFirst(
                     by: \.id,
@@ -58,7 +58,7 @@ extension Metadata.Query {
         public func find(
             referenceType: String,
             referenceID: String
-        ) async throws -> MetadataDetail? {
+        ) async throws -> Metadata.Detail.Output? {
             try await accessLayer.selectFirst(as: Metadata.Table.Detail.self) {
                 $0.where(\.referenceType, equals: referenceType)
                     .where(\.referenceID, equals: referenceID)
@@ -70,7 +70,7 @@ extension Metadata.Query {
         public func find(
             referenceType: String,
             slug: String
-        ) async throws -> MetadataDetail? {
+        ) async throws -> Metadata.Detail.Output? {
             try await accessLayer.selectFirst(as: Metadata.Table.Detail.self) {
                 $0.where(\.referenceType, equals: referenceType)
                     .where(\.slug, equals: slug)
@@ -79,7 +79,9 @@ extension Metadata.Query {
             .map { $0.asDetail }
         }
 
-        public func resolve(slug: String) async throws -> MetadataDetail? {
+        public func resolve(slug: String) async throws -> Metadata.Detail
+            .Output?
+        {
             try await accessLayer.selectFirst(by: \.slug, equals: slug)
                 .map { $0.asDetail }
         }
@@ -102,7 +104,7 @@ extension Metadata.Query {
         public func resolveDetails(
             referenceType: String,
             referenceIDs: [String]
-        ) async throws -> [MetadataDetail] {
+        ) async throws -> [Metadata.Detail.Output] {
             guard !referenceIDs.isEmpty else { return [] }
             let rows = try await accessLayer.select(
                 as: Metadata.Table.Detail.self

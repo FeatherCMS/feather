@@ -375,6 +375,15 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .testTarget(
+            name: "WebModuleWebAdminTests",
+            dependencies: [
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .target(name: "WebModuleWebAdmin"),
+            ],
+            path: "Tests/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
             name: "WebBackendTests",
             dependencies: [
                 .product(name: "FeatherHTTP", package: "feather-http"),

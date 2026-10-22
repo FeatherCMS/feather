@@ -3,9 +3,9 @@ public import WebDomain
 
 extension Settings.Edit {
     public struct Output: DTO {
-        public let settings: SettingsDetail
+        public let settings: Settings.Detail.Output
 
-        package init(settings: SettingsDetail) {
+        package init(settings: Settings.Detail.Output) {
             self.settings = settings
         }
     }

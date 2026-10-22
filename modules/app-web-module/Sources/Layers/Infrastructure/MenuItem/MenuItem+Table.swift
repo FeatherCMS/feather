@@ -16,7 +16,9 @@ extension MenuItem {
             let priority = DatabaseTableColumn<Int>(name: "priority")
             let isBlank = DatabaseTableColumn<Bool>(name: "is_blank")
             let permission = DatabaseTableColumn<String>(name: "permission")
-            let authentication = DatabaseTableColumn<String>(name: "authentication")
+            let authentication = DatabaseTableColumn<String>(
+                name: "authentication"
+            )
             let notes = DatabaseTableColumn<String?>(name: "notes")
             let createdAt = DatabaseTableColumn<Date>(name: "created_at")
             let updatedAt = DatabaseTableColumn<Date>(name: "updated_at")

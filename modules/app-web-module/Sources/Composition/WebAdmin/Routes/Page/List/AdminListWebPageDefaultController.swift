@@ -7,7 +7,7 @@ import WebModule
 struct AdminListWebPageDefaultController:
     AdminListWebPageController
 {
-    let apiBuilder: API.Builder
+    let environment: AppEnvironment
     let buildRuntime:
         AuthenticatedRuntimeBuilder<
             any AdminListWebPageInteractor,
@@ -67,7 +67,7 @@ struct AdminListWebPageDefaultController:
             context: context
         )
         let repository = AdminListWebPageFormOpenAPIRepository(
-            api: apiBuilder.makeWebAdmin(context)
+            api: API.Client(environment: environment, requestContext: context)
         )
         let metadata = try await repository.load(id: id)
         let targetStatus = resolvedStatus(
@@ -75,7 +75,7 @@ struct AdminListWebPageDefaultController:
             current: metadata
         )
         try await AdminWebMetadataStatusUpdater(
-            api: apiBuilder.makeWebAdmin(context)
+            api: API.Client(environment: environment, requestContext: context)
         )
         .update(
             referenceType: "web.page",
@@ -83,7 +83,7 @@ struct AdminListWebPageDefaultController:
             status: targetStatus
         )
         return AdminNotificationFlash.redirect(
-            to: payload.normalizedReturnTo ?? "/admin/web/pages/",
+            to: payload.normalizedReturnTo ?? WebPageRoutes.list.description,
             notification: statusNotification(for: targetStatus)
         )
     }

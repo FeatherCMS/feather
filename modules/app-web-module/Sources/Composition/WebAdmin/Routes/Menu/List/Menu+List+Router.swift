@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
@@ -6,17 +7,23 @@ import WebDomain
 extension Menu.List {
     struct Router {
         let controller: any Controller.Interface
+        let routes: Menu.Router.Routes
 
         init(
-            apiBuilder: API.Builder,
-            renderingEngine: any RenderingEngine
+            environment: AppEnvironment,
+            renderingEngine: any RenderingEngine,
+            routes: Menu.Router.Routes
         ) {
+            self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     (
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
-                                api: apiBuilder.makeWebAdmin(context)
+                                api: API.Client(
+                                    environment: environment,
+                                    requestContext: context
+                                )
                             )
                         ),
                         presenter: Presenter.Default(
@@ -32,10 +39,7 @@ extension Menu.List {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            router.get(
-                "/admin/web/menus",
-                use: controller.getWebMenus
-            )
+            router.get(routes.list.routerPath, use: controller.getWebMenus)
         }
     }
 }

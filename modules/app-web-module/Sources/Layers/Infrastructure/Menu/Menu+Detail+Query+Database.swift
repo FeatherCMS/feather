@@ -3,19 +3,6 @@ public import FeatherInfrastructure
 public import WebApplication
 public import WebDomain
 
-extension Menu.Table.Detail {
-    var asDetail: MenuDetail {
-        .init(
-            id: id,
-            key: key,
-            name: name,
-            notes: notes,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}
-
 extension Menu.Detail.Query {
     public struct Database: Interface {
         public let context: DatabaseQueryContext
@@ -33,14 +20,13 @@ extension Menu.Detail.Query {
             else {
                 throw RepositoryError.notFound
             }
-            let detail = row.asDetail
             return .init(
-                id: detail.id,
-                key: detail.key,
-                name: detail.name,
-                notes: detail.notes,
-                createdAt: detail.createdAt,
-                updatedAt: detail.updatedAt
+                id: row.id,
+                key: row.key,
+                name: row.name,
+                notes: row.notes,
+                createdAt: row.createdAt,
+                updatedAt: row.updatedAt
             )
         }
 
@@ -48,14 +34,13 @@ extension Menu.Detail.Query {
             try await DatabaseAccessLayer<Menu.Table>(context: context)
                 .selectFirst(by: \.key, equals: key)
                 .map { row in
-                    let detail = row.asDetail
-                    return .init(
-                        id: detail.id,
-                        key: detail.key,
-                        name: detail.name,
-                        notes: detail.notes,
-                        createdAt: detail.createdAt,
-                        updatedAt: detail.updatedAt
+                    .init(
+                        id: row.id,
+                        key: row.key,
+                        name: row.name,
+                        notes: row.notes,
+                        createdAt: row.createdAt,
+                        updatedAt: row.updatedAt
                     )
                 }
         }

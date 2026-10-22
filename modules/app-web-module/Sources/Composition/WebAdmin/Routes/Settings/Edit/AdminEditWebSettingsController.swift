@@ -14,18 +14,3 @@ protocol AdminEditWebSettingsController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 }
-
-extension AdminEditWebSettingsController {
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.get(
-            "/admin/web/settings/",
-            use: getEditWebSettings
-        )
-        router.post(
-            "/admin/web/settings/",
-            use: postEditWebSettings
-        )
-    }
-}

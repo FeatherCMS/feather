@@ -9,13 +9,13 @@ import WebModule
 struct AdminEditWebPageMetadataDefaultController:
     AdminEditWebPageMetadataController
 {
-    let apiBuilder: API.Builder
+    let environment: AppEnvironment
     let renderingEngine: any RenderingEngine
     let adminEvents: any EventPublisher
 
     private func makeHandler() -> AdminWebMetadataEditHandler {
         AdminWebMetadataEditHandler(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine,
             adminEvents: adminEvents
         )

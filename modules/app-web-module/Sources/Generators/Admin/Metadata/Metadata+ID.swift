@@ -1,4 +1,3 @@
-
 extension Metadata {
     enum ID {}
 }

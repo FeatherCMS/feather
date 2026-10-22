@@ -7,7 +7,8 @@ import WebApplication
 import WebDomain
 
 extension AppAPIGateway {
-    func publicMedia(assetId: String?) async -> PublicContentMedia? {
+    func publicMedia(assetId: String?) async -> Public.Page.Detail.Output.Media?
+    {
         guard let assetId, !assetId.isEmpty else { return nil }
         guard
             let asset =
@@ -22,7 +23,7 @@ extension AppAPIGateway {
         let originalURL =
             mediaResolver.resolve(imagePath: asset.url) ?? asset.url
         let variants = asset.variants.map {
-            PublicContentMediaVariant(
+            MediaURLVariant(
                 key: $0.key,
                 url: mediaResolver.resolve(imagePath: $0.url) ?? $0.url
             )
@@ -42,7 +43,7 @@ extension AppAPIGateway {
     }
 
     func mapPublicMedia(
-        _ media: PublicContentMedia?
+        _ media: Public.Page.Detail.Output.Media?
     ) -> WebAppAPI.Components.Schemas.MediaAssetSchema? {
         guard let media else { return nil }
         return .init(
@@ -59,7 +60,7 @@ extension AppAPIGateway {
     }
 
     func mapPublicMenu(
-        _ menu: PublicMenu
+        _ menu: Menu.Public.List.Output.Menu
     ) -> WebAppAPI.Components.Schemas.WebMenuSchema {
         .init(
             id: menu.id,
@@ -78,35 +79,52 @@ extension AppAPIGateway {
     }
 
     func mapPublicMetadata(
-        _ metadata: MetadataDetail,
+        _ metadata: Metadata.Detail.Output,
         title: String,
         excerpt: String,
         imageURL: String
     ) -> WebAppAPI.Components.Schemas.WebMetadataContentSchema {
-        let resolved = ResolvedMetadata(
-            metadata: metadata,
-            fallbackTitle: title,
-            fallbackExcerpt: excerpt,
-            fallbackImageURL: imageURL
+        let resolvedTitle = resolvedMetadata(metadata.title, fallback: title)
+        let resolvedExcerpt = resolvedMetadata(
+            metadata.excerpt,
+            fallback: excerpt
+        )
+        let resolvedImageURL = resolvedMetadata(
+            metadata.imageURL,
+            fallback: imageURL
         )
         return .init(
             slug: metadata.slug,
             template: metadata.template,
-            publicationDate: WebBackendDateMapping.timestamp(
-                metadata.publicationDate
-            ),
-            expirationDate: WebBackendDateMapping.timestamp(
-                metadata.expirationDate
-            ),
+            publicationDate: metadata.publicationDate.timeIntervalSince1970,
+            expirationDate: metadata.expirationDate?.timeIntervalSince1970,
             status: metadata.status.rawValue,
-            title: resolved.title,
-            excerpt: resolved.excerpt,
-            imageURL: resolved.imageURL ?? "",
+            title: resolvedTitle,
+            excerpt: resolvedExcerpt,
+            imageURL: resolvedImageURL ?? "",
             canonicalURL: metadata.canonicalURL,
             noIndex: metadata.noIndex,
             cssCodeInjection: metadata.cssCodeInjection,
             javascriptCodeInjection: metadata.javascriptCodeInjection,
             structuredDataCodeInjection: metadata.structuredDataCodeInjection
         )
+    }
+
+    private func resolvedMetadata(_ value: String?, fallback: String) -> String
+    {
+        let value = value?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let fallback = fallback.trimmingCharacters(in: .whitespacesAndNewlines)
+        return value.flatMap { $0.isEmpty ? nil : $0 }
+            ?? fallback.flatMap { $0.isEmpty ? nil : $0 }
+            ?? ""
+    }
+
+    private func resolvedMetadata(_ value: String?, fallback: String?)
+        -> String?
+    {
+        let value = value?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let fallback = fallback?.trimmingCharacters(in: .whitespacesAndNewlines)
+        return value.flatMap { $0.isEmpty ? nil : $0 }
+            ?? fallback.flatMap { $0.isEmpty ? nil : $0 }
     }
 }

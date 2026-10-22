@@ -4,7 +4,7 @@ import WebModule
 public enum NewsEventHandlers {
     public static func register(in registry: inout EventRegistry) {
         registry.register(
-            event: WebTemplateProviderEvent.self,
+            event: TemplateProviderEvent.self,
             context: WebModule.Event.Context.self
         ) { _, _ in
             NewsWebTemplateProvider()

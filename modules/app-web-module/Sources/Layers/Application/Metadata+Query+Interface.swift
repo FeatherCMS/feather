@@ -9,28 +9,28 @@ public import WebDomain
 
 extension Metadata {
     public enum Query {}
-    }
+}
 
-    extension Metadata.Query {
+extension Metadata.Query {
     public protocol Interface: Sendable {
 
         func find(
             id: String
-        ) async throws -> MetadataDetail
+        ) async throws -> Metadata.Detail.Output
 
         func find(
             referenceType: String,
             referenceID: String
-        ) async throws -> MetadataDetail?
+        ) async throws -> Metadata.Detail.Output?
 
         func find(
             referenceType: String,
             slug: String
-        ) async throws -> MetadataDetail?
+        ) async throws -> Metadata.Detail.Output?
 
         func resolve(
             slug: String
-        ) async throws -> MetadataDetail?
+        ) async throws -> Metadata.Detail.Output?
 
         func resolve(
             referenceType: String,
@@ -40,7 +40,7 @@ extension Metadata {
         func resolveDetails(
             referenceType: String,
             referenceIDs: [String]
-        ) async throws -> [MetadataDetail]
+        ) async throws -> [Metadata.Detail.Output]
 
     }
 }

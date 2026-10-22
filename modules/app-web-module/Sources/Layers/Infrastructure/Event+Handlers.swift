@@ -12,7 +12,7 @@ extension WebModule.Event {
             publicBaseURL: String
         ) {
             registry.register(
-                event: WebMenuProvider.self,
+                event: MenuProvider.self,
                 context: WebModule.Event.Context.self
             ) { _, _ in
                 [
@@ -42,7 +42,7 @@ extension WebModule.Event {
             }
 
             registry.register(
-                event: WebPageProvider.self,
+                event: PageProvider.self,
                 context: WebModule.Event.Context.self
             ) { _, _ in
                 [

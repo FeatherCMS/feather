@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import WebDomain
 
@@ -9,33 +10,59 @@ extension Menu {
     enum View {}
 
     struct Router {
-        let apiBuilder: API.Builder
+        struct Routes: Sendable {
+            let list: WebRoute
+            let add: WebRoute
+            let remove: WebRoute
+            let details: WebRoute
+            let edit: WebRoute
+            let items: WebRoute
+
+            init(root: WebRoute) {
+                let root = root.appending(pathComponent: "menus")
+                self.list = root
+                self.add = root.appending(pathComponent: "add")
+                self.remove = root.appending(pathComponent: "remove")
+                self.details = root.appending(parameter: "id")
+                self.edit = details.appending(pathComponent: "edit")
+                self.items = details.appending(pathComponent: "items")
+            }
+        }
+
+        let environment: AppEnvironment
         let renderingEngine: any RenderingEngine
+        let root: WebRoute
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+            let routes = Routes(root: root)
             List.Router(
-                apiBuilder: apiBuilder,
-                renderingEngine: renderingEngine
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .route(on: router)
             View.Router(
-                apiBuilder: apiBuilder,
-                renderingEngine: renderingEngine
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .route(on: router)
             Add.Router(
-                apiBuilder: apiBuilder,
-                renderingEngine: renderingEngine
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .route(on: router)
             Edit.Router(
-                apiBuilder: apiBuilder,
-                renderingEngine: renderingEngine
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .route(on: router)
             Remove.Router(
-                apiBuilder: apiBuilder,
-                renderingEngine: renderingEngine
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .route(on: router)
         }
@@ -45,18 +72,24 @@ extension Menu {
 extension Menu.View {
     struct Router {
         let controller: any AdminViewWebMenuController
+        let routes: Menu.Router.Routes
 
-        init(apiBuilder: API.Builder, renderingEngine: any RenderingEngine) {
+        init(
+            environment: AppEnvironment,
+            renderingEngine: any RenderingEngine,
+            routes: Menu.Router.Routes
+        ) {
+            self.routes = routes
             controller =
                 AdminViewWebMenu(
-                    apiBuilder: apiBuilder,
+                    environment: environment,
                     renderingEngine: renderingEngine
                 )
                 .controller
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.get("/admin/web/menus/{id}/", use: controller.getWebMenu)
+            router.get(routes.details.routerPath, use: controller.getWebMenu)
         }
     }
 }
@@ -64,11 +97,17 @@ extension Menu.View {
 extension Menu.Add {
     struct Router {
         let controller: any AdminAddWebMenuController
+        let routes: Menu.Router.Routes
 
-        init(apiBuilder: API.Builder, renderingEngine: any RenderingEngine) {
+        init(
+            environment: AppEnvironment,
+            renderingEngine: any RenderingEngine,
+            routes: Menu.Router.Routes
+        ) {
+            self.routes = routes
             controller =
                 AdminAddWebMenu(
-                    apiBuilder: apiBuilder,
+                    environment: environment,
                     renderingEngine: renderingEngine
                 )
                 .controller
@@ -76,11 +115,11 @@ extension Menu.Add {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
-                "/admin/web/menus/add/",
+                routes.add.routerPath,
                 use: controller.getAddWebMenu
             )
             router.post(
-                "/admin/web/menus/add/",
+                routes.add.routerPath,
                 use: controller.postAddWebMenu
             )
         }
@@ -90,11 +129,17 @@ extension Menu.Add {
 extension Menu.Edit {
     struct Router {
         let controller: any AdminEditWebMenuController
+        let routes: Menu.Router.Routes
 
-        init(apiBuilder: API.Builder, renderingEngine: any RenderingEngine) {
+        init(
+            environment: AppEnvironment,
+            renderingEngine: any RenderingEngine,
+            routes: Menu.Router.Routes
+        ) {
+            self.routes = routes
             controller =
                 AdminEditWebMenu(
-                    apiBuilder: apiBuilder,
+                    environment: environment,
                     renderingEngine: renderingEngine
                 )
                 .controller
@@ -102,11 +147,11 @@ extension Menu.Edit {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
-                "/admin/web/menus/{id}/edit/",
+                routes.edit.routerPath,
                 use: controller.getEditWebMenu
             )
             router.post(
-                "/admin/web/menus/{id}/edit/",
+                routes.edit.routerPath,
                 use: controller.postEditWebMenu
             )
         }
@@ -116,11 +161,17 @@ extension Menu.Edit {
 extension Menu.Remove {
     struct Router {
         let controller: any AdminRemoveWebMenuController
+        let routes: Menu.Router.Routes
 
-        init(apiBuilder: API.Builder, renderingEngine: any RenderingEngine) {
+        init(
+            environment: AppEnvironment,
+            renderingEngine: any RenderingEngine,
+            routes: Menu.Router.Routes
+        ) {
+            self.routes = routes
             controller =
                 AdminRemoveWebMenu(
-                    apiBuilder: apiBuilder,
+                    environment: environment,
                     renderingEngine: renderingEngine
                 )
                 .controller
@@ -128,7 +179,7 @@ extension Menu.Remove {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.post(
-                "/admin/web/menus/remove/",
+                routes.remove.routerPath,
                 use: controller.postRemoveWebMenu
             )
         }

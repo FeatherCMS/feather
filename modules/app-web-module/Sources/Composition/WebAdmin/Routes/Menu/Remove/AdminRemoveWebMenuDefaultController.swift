@@ -30,7 +30,7 @@ struct AdminRemoveWebMenuDefaultController:
         else { return Response(status: .badRequest) }
         let ids = nonceRequest.input.normalizedIds
         let location = AdminLocation.url(
-            path: "/admin/web/menus/",
+            path: WebMenuRoutes.list.description,
             page: nonceRequest.input.normalizedPage,
             search: nonceRequest.input.normalizedSearch
         )

@@ -9,8 +9,8 @@ import WebModule
 import WebModuleWebApp
 
 func buildWebMetadataExtensions() async throws -> (
-    templates: [WebPageTemplateOption],
-    templateDefinitions: [WebTemplateDefinition],
+    templates: [PageTemplateOption],
+    templateDefinitions: [TemplateDefinition],
     templatePaths: [URL]
 ) {
     var events = EventRegistry()
@@ -19,7 +19,7 @@ func buildWebMetadataExtensions() async throws -> (
     NewsFrontend.NewsEventHandlers.register(in: &events)
 
     let templateProviders = try await events.trigger(
-        event: WebTemplateProviderEvent(),
+        event: TemplateProviderEvent(),
         using: WebModule.Event.Context()
     )
     let templateDefinitions = templateProviders.flatMap(\.templates)

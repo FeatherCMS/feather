@@ -1,5 +1,6 @@
 import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 
@@ -7,12 +8,12 @@ struct AdminEditWebPageMetadata {
     let controller: any AdminEditWebPageMetadataController
 
     init(
-        apiBuilder: API.Builder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine,
         events: any EventPublisher
     ) {
         self.controller = AdminEditWebPageMetadataDefaultController(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine,
             adminEvents: events
         )

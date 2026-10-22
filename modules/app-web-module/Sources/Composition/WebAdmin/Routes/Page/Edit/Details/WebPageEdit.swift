@@ -37,10 +37,16 @@ struct WebPageEdit: Component {
                 WebPageForm(
                     state: state.form,
                     metadataHref:
-                        "/admin/web/pages/\(state.id)/edit/metadata/\(state.id)/",
-                    action: "/admin/web/pages/\(state.id)/edit/",
+                        WebPageRoutes.metadata(
+                            RouterPath(state.id),
+                            RouterPath(state.id)
+                        )
+                        .description,
+                    action: WebPageRoutes.edit(RouterPath(state.id))
+                        .description,
                     submitLabel: "Edit page",
-                    removeHref: "/admin/web/pages/\(state.id)/remove/",
+                    removeHref: WebPageRoutes.details(RouterPath(state.id))
+                        .appendingPath(RouterPath("remove")).description,
                     removeLabel: "Remove page"
                 )
             )

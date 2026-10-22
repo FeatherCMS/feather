@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import MediaWebAdmin
 import OpenAPIRuntime
@@ -7,7 +8,7 @@ struct AdminViewWebPage {
     let controller: any AdminViewWebPageController
 
     init(
-        apiBuilder: API.Builder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminViewWebPageDefaultController(
@@ -15,9 +16,12 @@ struct AdminViewWebPage {
                 (
                     interactor: AdminViewWebPageDefaultInteractor(
                         repository: AdminViewWebPageOpenAPIRepository(
-                            api: apiBuilder.makeWebAdmin(context),
+                            api: API.Client(
+                                environment: environment,
+                                requestContext: context
+                            ),
                             mediaAPI: MediaAdminAPIClient(
-                                environment: apiBuilder.environment,
+                                environment: environment.environment,
                                 requestContext: context
                             )
                         )

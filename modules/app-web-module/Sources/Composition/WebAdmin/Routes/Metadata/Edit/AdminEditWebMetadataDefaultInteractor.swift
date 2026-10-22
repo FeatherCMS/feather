@@ -9,9 +9,9 @@ struct AdminEditWebMetadataDefaultInteractor:
     let repository: any AdminEditWebMetadataRepository
     let events: any EventPublisher
 
-    func getTemplateOptions() async throws -> [WebPageTemplateOption] {
+    func getTemplateOptions() async throws -> [PageTemplateOption] {
         let providers = try await events.trigger(
-            event: WebTemplateProviderEvent(),
+            event: TemplateProviderEvent(),
             using: WebModule.Event.Context()
         )
         return

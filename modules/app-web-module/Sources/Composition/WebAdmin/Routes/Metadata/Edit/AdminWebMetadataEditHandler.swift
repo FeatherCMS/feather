@@ -8,7 +8,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
     private let controller: AdminEditWebMetadataDefaultController
 
     public init(
-        apiBuilder: API.Builder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine,
         adminEvents: any EventPublisher
     ) {
@@ -17,7 +17,10 @@ public struct AdminWebMetadataEditHandler: Sendable {
                 (
                     interactor: AdminEditWebMetadataDefaultInteractor(
                         repository: AdminEditWebMetadataOpenAPIRepository(
-                            api: apiBuilder.makeWebAdmin(context)
+                            api: API.Client(
+                                environment: environment,
+                                requestContext: context
+                            )
                         ),
                         events: adminEvents
                     ),

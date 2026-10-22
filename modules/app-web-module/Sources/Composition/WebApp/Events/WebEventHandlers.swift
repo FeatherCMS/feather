@@ -5,7 +5,7 @@ import WebModule
 public enum WebEventHandlers {
     public static func register(in registry: inout EventRegistry) {
         registry.register(
-            event: WebTemplateProviderEvent.self,
+            event: TemplateProviderEvent.self,
             context: WebModule.Event.Context.self
         ) { _, _ in
             DefaultWebTemplateProvider()
@@ -14,8 +14,8 @@ public enum WebEventHandlers {
     }
 }
 
-private struct DefaultWebTemplateProvider: WebTemplateProvider {
-    let templates: [WebTemplateDefinition] = [
+private struct DefaultWebTemplateProvider: TemplateProvider {
+    let templates: [TemplateDefinition] = [
         .init(id: "default", title: "Default", path: "pages/default"),
         .init(id: "home", title: "Home", path: "pages/home"),
         .init(id: "not-found", title: "Not found", path: "pages/not-found"),

@@ -15,19 +15,3 @@ protocol AdminListWebPageController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 }
-
-extension AdminListWebPageController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.get(
-            "/admin/web/pages",
-            use: getWebPages
-        )
-        router.post(
-            "/admin/web/pages/{id}/status/",
-            use: postWebPageStatus
-        )
-    }
-}

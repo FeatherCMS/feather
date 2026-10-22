@@ -108,9 +108,9 @@ extension Page.Repository {
             return ids
         }
     }
-    }
+}
 
-    extension Page.Table.Detail {
+extension Page.Table.Detail {
     fileprivate func asDomain(
         metadata: Metadata.Model
     ) -> Page.Model {

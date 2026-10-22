@@ -12,15 +12,15 @@ public enum NewsWebPublicContentEventHandlers {
         in registry: inout EventRegistry
     ) {
         registry.register(
-            event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext<PublicContentRuntimeContext>
+            event: PublicContentProvider.self,
+            context: PublicContentEventContext<PublicContentRuntimeContext>
                 .self
         ) { _, context in
             try await resolve(context)
         }
         registry.register(
-            event: WebRSSContentProvider.self,
-            context: WebRSSContentEventContext<PublicContentRuntimeContext>
+            event: RSSContentProvider.self,
+            context: RSSContentEventContext<PublicContentRuntimeContext>
                 .self
         ) { _, context in
             try await resolveRSS(context)
@@ -28,8 +28,8 @@ public enum NewsWebPublicContentEventHandlers {
     }
 
     private static func resolveRSS(
-        _ context: WebRSSContentEventContext<PublicContentRuntimeContext>
-    ) async throws -> [WebRSSItem] {
+        _ context: RSSContentEventContext<PublicContentRuntimeContext>
+    ) async throws -> [RSSItem] {
         let client = NewsAppAPI.Client(
             serverURL: context.runtime.apiBaseURL,
             transport: AsyncHTTPClientTransport(
@@ -51,7 +51,7 @@ public enum NewsWebPublicContentEventHandlers {
                 slug: article.metadata.canonicalURL?.emptyToNil
                     ?? article.metadata.slug
             )
-            return WebRSSItem(
+            return RSSItem(
                 title: article.metadata.title,
                 description: article.metadata.excerpt,
                 url: url,
@@ -63,8 +63,8 @@ public enum NewsWebPublicContentEventHandlers {
     }
 
     private static func resolve(
-        _ context: WebPublicContentEventContext<PublicContentRuntimeContext>
-    ) async throws -> WebPublicContentResult? {
+        _ context: PublicContentEventContext<PublicContentRuntimeContext>
+    ) async throws -> PublicContentResult? {
         let mediaResolver = context.runtime.mediaResolver
         // TODO: fix this
         let client = NewsAppAPI.Client(
@@ -126,10 +126,10 @@ public enum NewsWebPublicContentEventHandlers {
     }
 
     private static func resolveArticle(
-        context: WebPublicContentEventContext<PublicContentRuntimeContext>,
+        context: PublicContentEventContext<PublicContentRuntimeContext>,
         client: NewsAppAPI.Client,
         mediaResolver: MediaResolver
-    ) async throws -> WebPublicContentResult? {
+    ) async throws -> PublicContentResult? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
         let referenceID = context.baseMetadata.referenceId
         let response = try await client.newsArticleGet(
@@ -147,10 +147,10 @@ public enum NewsWebPublicContentEventHandlers {
     }
 
     private static func resolveCategory(
-        context: WebPublicContentEventContext<PublicContentRuntimeContext>,
+        context: PublicContentEventContext<PublicContentRuntimeContext>,
         client: NewsAppAPI.Client,
         mediaResolver: MediaResolver
-    ) async throws -> WebPublicContentResult? {
+    ) async throws -> PublicContentResult? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
         let referenceID = context.baseMetadata.referenceId
         let response = try await client.newsCategoryGet(

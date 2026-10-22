@@ -28,9 +28,9 @@ The event registry is typed by both event and context. A handler registered for
 | `AdminMenuItemProvider` | `AdminEventContext` | `frontend` | `feather-core` | `[AdminMenuItemDefinition]` | Contributes items to one admin menu. The event contains the target `menuKey`. | Triggered while building the admin menu catalog/sidebar. Registered by the same admin modules as `AdminMenuProvider`, with module-specific filtering by `menuKey`. |
 | `AdminHomeOverviewProvider` | `AdminDashboardEventContext` | `frontend` | `app-system-module` | `[AdminHomeOverviewDefinition]` | Supplies dashboard overview cards/widgets for the admin home page. | Triggered by the dashboard interactor. Registered by `app-analytics-module`, `app-blog-module`, `app-redirect-module`, and `app-web-module`. |
 | `AdminRichContentEditorBlockProvider` | `AdminEventContext` | `frontend` | `feather-core` | `AdminRichContentEditorBlockDefinition?` | Extends the rich content editor toolbar and parser with module-owned blocks. | Triggered during application startup to build the editor catalog. Registered by `app-contact-module` and `app-newsletter-module`. |
-| `WebTemplateProviderEvent` | `WebModule.Event.Context` | `frontend` | `app-web-module` | `any WebTemplateProvider` | Provides public template metadata and bundled template paths to the web application. | Triggered while building web metadata/template definitions. Registered by `app-web-module`, `app-blog-module`, and `app-news-module`. |
-| `WebPublicContentProvider` | `WebPublicContentEventContext<PublicContentRuntimeContext>` | `frontend` | `app-web-module` | `WebPublicContentResult?` | Adds site, page, feature, and template-specific context while rendering a public route. Multiple providers contribute independent payload fragments. | Triggered by `AppPublicContentDefaultInteractor`; also used by custom public routes that need the shared site context. Registered by `app-web-module`, `app-blog-module`, and `app-news-module`. |
-| `WebRSSContentProvider` | `WebRSSContentEventContext<PublicContentRuntimeContext>` | `frontend` | `app-web-module` | `[WebRSSItem]` | Supplies items for the public RSS feed. | Triggered by the public RSS interactor. Registered by `app-news-module`. |
+| `TemplateProviderEvent` | `WebModule.Event.Context` | `frontend` | `app-web-module` | `any TemplateProvider` | Provides public template metadata and bundled template paths to the web application. | Triggered while building web metadata/template definitions. Registered by `app-web-module`, `app-blog-module`, and `app-news-module`. |
+| `PublicContentProvider` | `PublicContentEventContext<PublicContentRuntimeContext>` | `frontend` | `app-web-module` | `PublicContentResult?` | Adds site, page, feature, and template-specific context while rendering a public route. Multiple providers contribute independent payload fragments. | Triggered by `AppPublicContentDefaultInteractor`; also used by custom public routes that need the shared site context. Registered by `app-web-module`, `app-blog-module`, and `app-news-module`. |
+| `RSSContentProvider` | `RSSContentEventContext<PublicContentRuntimeContext>` | `frontend` | `app-web-module` | `[RSSItem]` | Supplies items for the public RSS feed. | Triggered by the public RSS interactor. Registered by `app-news-module`. |
 | `WebMarkdownBlockRendererProvider` | `WebMarkdownBlockRendererRequest` | `frontend` | `app-web-module` | `WebMarkdownBlockRenderer?` | Resolves a renderer for a named Markdown block/directive, such as `Grid`, `Cell`, `Video`, `ContactForm`, or `NewsletterCampaign`. | Triggered by `DefaultMarkdownRenderer` for each block. Core web renderers are registered by `app-web-module`; Contact and Newsletter renderers are registered by their respective modules. |
 | `WebMarkdownSourceTransformerProvider` | `WebMarkdownSourceTransformerRequest` | `frontend` | `app-web-module` | `WebMarkdownSourceTransformer?` | Provides a pre-render Markdown transformation stage for normalizing or extending source content before parsing. | Triggered by `DefaultMarkdownRenderer`. No production handler registration was found in the audited source; this is currently an available extension point. |
 
@@ -46,9 +46,9 @@ The event registry is typed by both event and context. A handler registered for
 | `UserIdentitySeedProvider` | `UserEventContext` | `backend` | `app-user-module` | `[UserIdentitySeedDefinition]` | Supplies initial user identities, including generated IDs, status, root status, and role keys. | Triggered by `UserInfrastructure.TableSeedMigration`. Registered by `app-user-module`; the context provides the shared `IDGenerator`. |
 | `UserIdentityDidInsert` | `DatabaseTransactionContext` | `backend` | `app-user-module` | `Void` | Notifies backend modules that a user identity was inserted. The event carries the new `identityID` and runs inside the active database transaction. | Triggered by identity creation, account creation/invitation, and identity seeding. Registered by `app-account-module`, which creates the related account settings/profile records using the same transaction context. |
 | `AccountSeedProvider` | `EventContext` | `backend` | `app-account-module` | `[AccountSeedDefinition]` | Supplies initial accounts with email, password, and role keys for clean-install seeding. | Triggered by `AccountInfrastructure.TableSeedMigration`. No production provider registration was found in the audited Feather source; an application must register one if it wants seeded accounts. |
-| `WebMenuProvider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[WebMenuDefinition]` | Contributes public menu definitions, including menu keys, names, and notes. | Triggered by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module`; application modules can add additional menu providers. |
-| `WebMenuItemProvider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[WebMenuItemDefinition]` | Contributes items to a named public menu during seeding. Items can carry priority, authentication, permission, external-link, and notes metadata. | Triggered once per seeded menu by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module` and `app-blog-module` in Feather. |
-| `WebPageProvider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[WebPageDefinition]` | Contributes initial public pages and their content/metadata for database seeding. | Triggered by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module` and `app-blog-module`. |
+| `MenuProvider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[MenuDefinition]` | Contributes public menu definitions, including menu keys, names, and notes. | Triggered by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module`; application modules can add additional menu providers. |
+| `MenuItemProvider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[MenuItemDefinition]` | Contributes items to a named public menu during seeding. Items can carry priority, authentication, permission, external-link, and notes metadata. | Triggered once per seeded menu by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module` and `app-blog-module` in Feather. |
+| `PageProvider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[PageDefinition]` | Contributes initial public pages and their content/metadata for database seeding. | Triggered by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module` and `app-blog-module`. |
 
 ## Context catalogue
 
@@ -64,8 +64,8 @@ parameterless initializer:
 | --- | --- | --- | --- |
 | `AccessControlContext` | `feather-core` | `AccessControlProvider` | Marker context for access-control providers. |
 | `EventContext` | `app-system-module` | Permission, variable, and mail-from seed providers | General-purpose backend context. |
-| `WebModule.Event.Context` | `app-web-module` | `WebTemplateProviderEvent` | Marker context for web-composition events. |
-| `WebSeedEventContext` | `app-web-module` | `WebMenuProvider`, `WebMenuItemProvider`, `WebPageProvider` | Marker context for backend web-seeding providers. |
+| `WebModule.Event.Context` | `app-web-module` | `TemplateProviderEvent` | Marker context for web-composition events. |
+| `WebSeedEventContext` | `app-web-module` | `MenuProvider`, `MenuItemProvider`, `PageProvider` | Marker context for backend web-seeding providers. |
 | `WebMarkdownSourceTransformerRequest` | `app-web-module` | `WebMarkdownSourceTransformerProvider` | Empty request context for source-transformer extensions. |
 
 `ExecutionContext` itself is also a marker protocol with no members, but it is
@@ -82,8 +82,8 @@ not a concrete context and is therefore not included in the list above.
 | `DatabaseQueryContext` | `feather-core` | Active database `connection`. | Query-scoped contextual execution; no current event registration was found that uses it directly. |
 | `WebSeedEventContext` | `app-web-module` | No fields; backend web-seeding context. | Public menu, menu-item, and page seed providers. |
 | `WebModule.Event.Context` | `app-web-module` | No fields; web-composition context. | Web template providers. |
-| `WebPublicContentEventContext<T>` | `app-web-module` | Base route metadata plus a generic runtime value. In the application, `T` is `PublicContentRuntimeContext`, containing request, request context, API base URL, public origins, and media resolver. | Public content providers. |
-| `WebRSSContentEventContext<T>` | `app-web-module` | Generic runtime value; in the application this is `PublicContentRuntimeContext`. | RSS content providers. |
+| `PublicContentEventContext<T>` | `app-web-module` | Base route metadata plus a generic runtime value. In the application, `T` is `PublicContentRuntimeContext`, containing request, request context, API base URL, public origins, and media resolver. | Public content providers. |
+| `RSSContentEventContext<T>` | `app-web-module` | Generic runtime value; in the application this is `PublicContentRuntimeContext`. | RSS content providers. |
 | `WebMarkdownBlockRendererRequest` | `app-web-module` | Parsed directive arguments, child blocks, optional form-submission nonce, and form feedback. | Markdown block renderer providers. |
 | `WebMarkdownSourceTransformerRequest` | `app-web-module` | No fields. | Markdown source transformer providers. |
 
@@ -94,10 +94,10 @@ and context type:
 
 ```swift
 registry.register(
-    event: WebMenuItemProvider.self,
+    event: MenuItemProvider.self,
     context: WebSeedEventContext.self
 ) { event, context in
-    // return [WebMenuItemDefinition]
+    // return [MenuItemDefinition]
 }
 ```
 
@@ -105,7 +105,7 @@ The event is triggered through the `EventPublisher` abstraction:
 
 ```swift
 let results = try await events.trigger(
-    event: WebMenuItemProvider(menuKey: "main"),
+    event: MenuItemProvider(menuKey: "main"),
     using: WebSeedEventContext()
 )
 ```

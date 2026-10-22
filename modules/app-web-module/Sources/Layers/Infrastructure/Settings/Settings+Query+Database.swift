@@ -18,7 +18,7 @@ extension Settings.Query {
             self.context = context
         }
 
-        public func get() async throws -> SettingsDetail {
+        public func get() async throws -> Settings.Detail.Output {
             let pairs = try await context.connection.run(
                 query: #"""
                     SELECT key, value

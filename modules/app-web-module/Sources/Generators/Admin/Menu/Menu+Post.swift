@@ -1,4 +1,3 @@
-
 extension Menu {
     enum Post {}
 }

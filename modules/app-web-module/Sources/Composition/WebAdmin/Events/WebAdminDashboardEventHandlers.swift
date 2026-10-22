@@ -11,12 +11,14 @@ public enum WebAdminDashboardEventHandlers {
         in events: inout EventRegistry,
         environment: AppEnvironment
     ) {
-        let apiBuilder = API.Builder(environment: environment)
         events.register(
             event: SystemWebAdmin.Dashboard.Event.Provider.self,
             context: SystemWebAdmin.Dashboard.Event.Context.self
         ) { _, context in
-            let api = apiBuilder.makeWebAdmin(context.requestContext)
+            let api = API.Client(
+                environment: environment,
+                requestContext: context.requestContext
+            )
             var contentStats:
                 [SystemWebAdmin.Dashboard.Model
                     .ContentStat] = []

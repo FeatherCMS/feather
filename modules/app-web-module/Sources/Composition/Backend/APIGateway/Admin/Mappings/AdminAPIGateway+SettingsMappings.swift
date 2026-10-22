@@ -8,7 +8,7 @@ import WebApplication
 import WebDomain
 
 extension AdminAPIGateway {
-    func map(_ detail: SettingsDetail)
+    func map(_ detail: Settings.Detail.Output)
         -> WebAdminAPI.Components.Schemas.WebSettingsDetailSchema
     {
         .init(

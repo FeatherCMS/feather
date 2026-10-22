@@ -244,7 +244,7 @@ struct AdminEditWebMetadataDefaultController:
         expirationDate: String = "",
         status: String = "draft",
         template: String = "default",
-        templateOptions: [WebPageTemplateOption] = [],
+        templateOptions: [PageTemplateOption] = [],
         title: String = "",
         excerpt: String = "",
         imageUrl: String = "",

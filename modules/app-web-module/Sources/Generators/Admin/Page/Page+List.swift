@@ -1,4 +1,3 @@
-
 extension Page {
     enum List {}
 }

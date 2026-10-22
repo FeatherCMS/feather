@@ -4,10 +4,6 @@ import Hummingbird
 import OpenAPIRuntime
 import WebDomain
 
-
-
-
-
 extension Menu.List.Controller {
     protocol Interface: Sendable {
 

@@ -2,11 +2,10 @@ import FeatherWebAdmin
 import Hummingbird
 
 enum WebAdminRoutes {
-    static let admin = RouterPath("admin")
-    static let web = admin.appendingPath(RouterPath("web"))
+    static let admin = Router.Routes.standard.admin.routerPath
+    static let web = Router.Routes.standard.root.routerPath
 
-    static let breadcrumb: [AdminBreadcrumb.Link] = [
-        .init(label: "Admin", link: "/admin/"),
-        .init(label: "Web", link: "/admin/web/"),
-    ]
+    static var breadcrumb: [AdminBreadcrumb.Link] {
+        Router.Routes.standard.breadcrumb
+    }
 }

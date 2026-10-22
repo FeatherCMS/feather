@@ -13,7 +13,7 @@ extension AppAPIGateway {
 
         return .ok(
             .init(
-                body: .json(result.map(mapPublicMenu))
+                body: .json(result.menus.map(mapPublicMenu))
             )
         )
     }

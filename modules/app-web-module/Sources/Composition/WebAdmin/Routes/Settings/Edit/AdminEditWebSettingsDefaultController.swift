@@ -159,7 +159,7 @@ struct AdminEditWebSettingsDefaultController:
                 .response(from: request, context: context)
         }
         return AdminNotificationFlash.redirect(
-            to: "/admin/web/settings/",
+            to: WebSettingsRoutes.edit.description,
             notification: .init(
                 title: "Saved",
                 message: "Settings edited successfully."

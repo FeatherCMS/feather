@@ -13,6 +13,6 @@ extension Settings {
 extension Settings.Query {
     public protocol Interface: Sendable {
 
-        func get() async throws -> SettingsDetail
+        func get() async throws -> Settings.Detail.Output
     }
 }

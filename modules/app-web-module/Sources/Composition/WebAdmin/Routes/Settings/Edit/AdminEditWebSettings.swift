@@ -1,11 +1,12 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import OpenAPIRuntime
 
 struct AdminEditWebSettings {
     let controller: any AdminEditWebSettingsController
 
     init(
-        apiBuilder: API.Builder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminEditWebSettingsDefaultController(
@@ -13,7 +14,10 @@ struct AdminEditWebSettings {
                 (
                     interactor: AdminEditWebSettingsDefaultInteractor(
                         repository: AdminEditWebSettingsOpenAPIRepository(
-                            api: apiBuilder.makeWebAdmin(context)
+                            api: API.Client(
+                                environment: environment,
+                                requestContext: context
+                            )
                         )
                     ),
                     presenter: AdminEditWebSettingsDefaultPresenter(

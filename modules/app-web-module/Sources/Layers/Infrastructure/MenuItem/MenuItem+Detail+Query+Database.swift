@@ -12,7 +12,10 @@ extension MenuItem.Detail.Query {
         }
 
         public func find(id: String) async throws -> MenuItem.Detail.Output {
-            guard let row = try await DatabaseAccessLayer<MenuItem.Table>(context: context)
+            guard
+                let row = try await DatabaseAccessLayer<MenuItem.Table>(
+                    context: context
+                )
                 .selectFirst(by: \.id, equals: id)
             else {
                 throw RepositoryError.notFound
@@ -25,7 +28,9 @@ extension MenuItem.Detail.Query {
                 priority: row.priority,
                 isBlank: row.isBlank,
                 permission: row.permission,
-                authentication: MenuItem.Authentication(rawValue: row.authentication) ?? .any,
+                authentication: MenuItem.Authentication(
+                    rawValue: row.authentication
+                ) ?? .any,
                 notes: row.notes,
                 createdAt: row.createdAt,
                 updatedAt: row.updatedAt

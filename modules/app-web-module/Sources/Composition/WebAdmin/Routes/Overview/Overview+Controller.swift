@@ -11,10 +11,4 @@ extension Overview {
             ) async throws -> HTMLResponse
         }
     }
-    }
-
-    extension Overview.Controller.Interface {
-    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-        router.get("/admin/web/", use: getOverview)
-    }
 }

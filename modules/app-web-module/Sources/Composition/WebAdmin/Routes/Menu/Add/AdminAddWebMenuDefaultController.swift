@@ -41,7 +41,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
             try await runtime.interactor.execute(input: payload)
 
             return AdminNotificationFlash.redirect(
-                to: "/admin/web/menus/",
+                to: WebMenuRoutes.list.description,
                 notification: .init(
                     title: "Added",
                     message: "Menu added successfully."

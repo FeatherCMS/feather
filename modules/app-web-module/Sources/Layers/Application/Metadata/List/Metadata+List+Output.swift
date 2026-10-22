@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import WebDomain
+
 public import struct Foundation.Date
 
 extension Metadata.List {
@@ -10,9 +11,9 @@ extension Metadata.List {
             self.items = items
         }
     }
-    }
+}
 
-    extension Metadata.List.Output {
+extension Metadata.List.Output {
     public struct Item: Sendable {
         public let id: String
         public let referenceType: String

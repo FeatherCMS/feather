@@ -4,9 +4,10 @@ import Hummingbird
 extension Overview {
     struct Router {
         let renderingEngine: any RenderingEngine
+        let path: WebRoute
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            Controller.Default(
+            let controller = Controller.Default(
                 buildRuntime: { request, context in
                     (
                         interactor: Interactor.Default(),
@@ -18,7 +19,7 @@ extension Overview {
                     )
                 }
             )
-            .route(on: router)
+            router.get(path.routerPath, use: controller.getOverview)
         }
     }
 }

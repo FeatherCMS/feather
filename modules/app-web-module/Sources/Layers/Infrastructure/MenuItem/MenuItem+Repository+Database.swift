@@ -13,7 +13,8 @@ extension MenuItem.Table.Detail {
             priority: priority,
             isBlank: isBlank,
             permission: permission,
-            authentication: MenuItem.Authentication(rawValue: authentication) ?? .any,
+            authentication: MenuItem.Authentication(rawValue: authentication)
+                ?? .any,
             notes: notes,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -32,7 +33,9 @@ extension MenuItem.Repository {
         public func insert(
             _ model: MenuItem.Model.New
         ) async throws -> MenuItem.Model {
-            let accessLayer = DatabaseAccessLayer<MenuItem.Table>(context: context)
+            let accessLayer = DatabaseAccessLayer<MenuItem.Table>(
+                context: context
+            )
             let id = context.idGenerator.generate()
             try await accessLayer.insert(
                 MenuItem.Table.Insert(
@@ -47,7 +50,12 @@ extension MenuItem.Repository {
                     notes: model.notes
                 )
             )
-            guard let detail = try await accessLayer.selectFirst(by: \.id, equals: id) else {
+            guard
+                let detail = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: id
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return detail.asDomain
@@ -59,8 +67,12 @@ extension MenuItem.Repository {
                 .map { $0.asDomain }
         }
 
-        public func update(_ model: MenuItem.Model) async throws -> MenuItem.Model {
-            let accessLayer = DatabaseAccessLayer<MenuItem.Table>(context: context)
+        public func update(_ model: MenuItem.Model) async throws
+            -> MenuItem.Model
+        {
+            let accessLayer = DatabaseAccessLayer<MenuItem.Table>(
+                context: context
+            )
             try await accessLayer.update(
                 MenuItem.Table.Update(
                     menuId: model.menuId,
@@ -75,7 +87,12 @@ extension MenuItem.Repository {
                 where: \.id,
                 equals: model.id
             )
-            guard let detail = try await accessLayer.selectFirst(by: \.id, equals: model.id) else {
+            guard
+                let detail = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: model.id
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return detail.asDomain
@@ -86,7 +103,9 @@ extension MenuItem.Repository {
             menuId: String,
             beforeItemId: String?
         ) async throws {
-            let accessLayer = DatabaseAccessLayer<MenuItem.Table>(context: context)
+            let accessLayer = DatabaseAccessLayer<MenuItem.Table>(
+                context: context
+            )
             var items = try await accessLayer.select { initial in
                 initial
                     .where(\.menuId, equals: menuId)
@@ -95,16 +114,19 @@ extension MenuItem.Repository {
                         .init(by: \.id, .ascending),
                     ])
             }
-            guard let sourceIndex = items.firstIndex(where: { $0.id == id }) else {
+            guard let sourceIndex = items.firstIndex(where: { $0.id == id })
+            else {
                 throw RepositoryError.notFound
             }
             let source = items.remove(at: sourceIndex)
-            let destinationIndex = beforeItemId.flatMap { targetId in
-                items.firstIndex(where: { $0.id == targetId })
-            } ?? items.endIndex
+            let destinationIndex =
+                beforeItemId.flatMap { targetId in
+                    items.firstIndex(where: { $0.id == targetId })
+                } ?? items.endIndex
             items.insert(source, at: destinationIndex)
 
-            for (priority, item) in items.enumerated() where item.priority != priority {
+            for (priority, item) in items.enumerated()
+            where item.priority != priority {
                 try await accessLayer.update(
                     MenuItem.Table.Update(
                         menuId: item.menuId,

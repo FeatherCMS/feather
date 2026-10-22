@@ -12,16 +12,18 @@ extension MenuItem.List.Query {
         }
 
         public func list(menuId: String) async throws -> MenuItem.List.Output {
-            let items = try await DatabaseAccessLayer<MenuItem.Table>(context: context)
-                .select { initial in
-                    initial
-                        .where(\.menuId, equals: menuId)
-                        .order(by: [
-                            .init(by: \.priority, .ascending),
-                            .init(by: \.label, .ascending),
-                            .init(by: \.id, .ascending),
-                        ])
-                }
+            let items = try await DatabaseAccessLayer<MenuItem.Table>(
+                context: context
+            )
+            .select { initial in
+                initial
+                    .where(\.menuId, equals: menuId)
+                    .order(by: [
+                        .init(by: \.priority, .ascending),
+                        .init(by: \.label, .ascending),
+                        .init(by: \.id, .ascending),
+                    ])
+            }
             return .init(
                 items: items.map {
                     .init(
@@ -32,7 +34,9 @@ extension MenuItem.List.Query {
                         priority: $0.priority,
                         isBlank: $0.isBlank,
                         permission: $0.permission,
-                        authentication: MenuItem.Authentication(rawValue: $0.authentication) ?? .any,
+                        authentication: MenuItem.Authentication(
+                            rawValue: $0.authentication
+                        ) ?? .any,
                         createdAt: $0.createdAt,
                         updatedAt: $0.updatedAt
                     )

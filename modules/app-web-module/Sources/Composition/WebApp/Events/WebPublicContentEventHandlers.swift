@@ -12,8 +12,8 @@ public enum WebPublicContentEventHandlers {
         in registry: inout EventRegistry
     ) {
         registry.register(
-            event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext<PublicContentRuntimeContext>
+            event: PublicContentProvider.self,
+            context: PublicContentEventContext<PublicContentRuntimeContext>
                 .self
         ) { _, context in
             try await resolve(context)
@@ -21,8 +21,8 @@ public enum WebPublicContentEventHandlers {
     }
 
     private static func resolve(
-        _ context: WebPublicContentEventContext<PublicContentRuntimeContext>
-    ) async throws -> WebPublicContentResult? {
+        _ context: PublicContentEventContext<PublicContentRuntimeContext>
+    ) async throws -> PublicContentResult? {
         let api = WebApp.API.Client(
             apiBaseURL: context.runtime.apiBaseURL,
             sessionToken: context.runtime.context.sessionToken

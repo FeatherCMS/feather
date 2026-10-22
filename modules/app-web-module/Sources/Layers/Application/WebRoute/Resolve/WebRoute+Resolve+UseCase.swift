@@ -29,7 +29,7 @@ extension WebRoute.Resolve {
 
         public func execute(
             slug: String
-        ) async throws -> WebRouteDetail {
+        ) async throws -> Output {
             let now = Date()
             return try await query.run { scope in
                 guard

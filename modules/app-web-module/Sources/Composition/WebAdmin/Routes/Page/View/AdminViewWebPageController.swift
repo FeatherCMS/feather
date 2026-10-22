@@ -10,15 +10,3 @@ protocol AdminViewWebPageController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
-
-extension AdminViewWebPageController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.get(
-            "/admin/web/pages/{id}/",
-            use: getWebPage
-        )
-    }
-}

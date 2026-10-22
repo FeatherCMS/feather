@@ -28,7 +28,7 @@ struct WebMetadataForm: Component {
         var referenceId: FieldState?
         var slug: FieldState
         var template: FieldState
-        var templateOptions: [WebPageTemplateOption]
+        var templateOptions: [PageTemplateOption]
         var publicationDate: FieldState
         var expirationDate: FieldState
         var status: FieldState

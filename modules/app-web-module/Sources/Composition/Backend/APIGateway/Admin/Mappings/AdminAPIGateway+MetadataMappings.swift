@@ -14,7 +14,7 @@ extension AdminAPIGateway {
 
     func mapPageMetadata(
         _ metadata: WebAdminAPI.Components.Schemas.WebMetadataCreateSchema
-    ) -> PageMetadataInput {
+    ) -> Page.Add.Input.MetadataInput {
         .init(
             slug: metadata.slug,
             template: metadata.template ?? "default",
@@ -40,7 +40,7 @@ extension AdminAPIGateway {
     func defaultPageMetadata(
         title: String,
         excerpt: String
-    ) -> PageMetadataInput {
+    ) -> Page.Add.Input.MetadataInput {
         .init(
             slug: title.slugified,
             template: "default",
@@ -62,7 +62,7 @@ extension AdminAPIGateway {
     func mergePageMetadata(
         _ patch: WebAdminAPI.Components.Schemas.WebMetadataPatchSchema,
         into detail: WebAdminAPI.Components.Schemas.WebMetadataDetailSchema
-    ) -> PageMetadataInput {
+    ) -> Page.Edit.Input.MetadataInput {
         .init(
             slug: patch.slug ?? detail.slug,
             template: patch.template ?? detail.template,
@@ -109,7 +109,7 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ detail: MetadataDetail)
+    func map(_ detail: Metadata.Detail.Output)
         -> WebAdminAPI.Components.Schemas.WebMetadataDetailSchema
     {
         .init(
@@ -118,12 +118,8 @@ extension AdminAPIGateway {
             referenceId: detail.referenceID,
             slug: detail.slug,
             template: detail.template,
-            publicationDate: WebBackendDateMapping.timestamp(
-                detail.publicationDate
-            ),
-            expirationDate: WebBackendDateMapping.timestamp(
-                detail.expirationDate
-            ),
+            publicationDate: detail.publicationDate.timeIntervalSince1970,
+            expirationDate: detail.expirationDate?.timeIntervalSince1970,
             status: detail.status.rawValue,
             availability: .init(
                 rawValue: detail.availability(at: .now).rawValue
@@ -151,12 +147,8 @@ extension AdminAPIGateway {
             referenceType: item.referenceType,
             referenceId: item.referenceID,
             slug: item.slug,
-            publicationDate: WebBackendDateMapping.timestamp(
-                item.publicationDate
-            ),
-            expirationDate: WebBackendDateMapping.timestamp(
-                item.expirationDate
-            ),
+            publicationDate: item.publicationDate.timeIntervalSince1970,
+            expirationDate: item.expirationDate?.timeIntervalSince1970,
             status: item.status.rawValue,
             availability: .init(rawValue: item.availability(at: .now).rawValue)
                 ?? .draft,
@@ -174,12 +166,8 @@ extension AdminAPIGateway {
             referenceType: item.referenceType,
             referenceId: item.referenceID,
             slug: item.slug,
-            publicationDate: WebBackendDateMapping.timestamp(
-                item.publicationDate
-            ),
-            expirationDate: WebBackendDateMapping.timestamp(
-                item.expirationDate
-            ),
+            publicationDate: item.publicationDate.timeIntervalSince1970,
+            expirationDate: item.expirationDate?.timeIntervalSince1970,
             status: item.status.rawValue,
             availability: .init(rawValue: item.availability(at: .now).rawValue)
                 ?? .draft,
@@ -197,9 +185,7 @@ extension AdminAPIGateway {
             referenceId: item.referenceID,
             slug: item.slug,
             publicationDate: item.publicationDate.timeIntervalSince1970,
-            expirationDate: WebBackendDateMapping.timestamp(
-                item.expirationDate
-            ),
+            expirationDate: item.expirationDate?.timeIntervalSince1970,
             status: item.status.rawValue,
             availability: .init(rawValue: item.availability(at: date).rawValue)
                 ?? .draft

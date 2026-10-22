@@ -16,19 +16,3 @@ protocol AdminAddWebPageController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 }
-
-extension AdminAddWebPageController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.get(
-            "/admin/web/pages/add/",
-            use: getAddWebPage
-        )
-        router.post(
-            "/admin/web/pages/add/",
-            use: postAddWebPage
-        )
-    }
-}

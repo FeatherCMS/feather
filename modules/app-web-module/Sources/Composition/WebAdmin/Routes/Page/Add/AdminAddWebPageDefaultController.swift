@@ -41,7 +41,7 @@ struct AdminAddWebPageDefaultController: AdminAddWebPageController {
             try await runtime.interactor.execute(input: payload)
 
             return AdminNotificationFlash.redirect(
-                to: "/admin/web/pages/",
+                to: WebPageRoutes.list.description,
                 notification: .init(
                     title: "Added",
                     message: "Web page added successfully."

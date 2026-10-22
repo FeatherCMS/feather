@@ -30,7 +30,7 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ detail: MenuDetail)
+    func map(_ detail: Menu.Detail.Output)
         -> WebAdminAPI.Components.Schemas.WebMenuDetailSchema
     {
         .init(

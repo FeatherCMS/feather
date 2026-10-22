@@ -44,10 +44,11 @@ current System, User, and Redirect module structure.
 
 ## Web composition
 
-- Keep WebApp and WebAdmin clients/builders separate. Build clients from
+- Keep WebApp and WebAdmin clients separate. Build clients from
   `AppEnvironment` and, for authenticated admin requests,
-  `AuthenticatedRequestContext` at the request boundary. Do not pass a bare
-  extracted URL through the route tree or share request credentials globally.
+  `AuthenticatedRequestContext` at the request boundary. Pass the environment
+  through the router tree; do not pass a client builder, a bare extracted URL,
+  or request credentials globally.
 - Put admin route feature code under
   `Sources/Composition/WebAdmin/Routes/<Entity>/<Operation>/`. Extend the
   entity/operation namespace with `Controller`, `Interactor`, `Presenter`,

@@ -1,72 +1,85 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import WebDomain
 
 extension MenuItem {
     struct Router {
-        let apiBuilder: API.Builder
+        let environment: AppEnvironment
         let renderingEngine: any RenderingEngine
+        let root: WebRoute
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+            let items =
+                root
+                .appending(pathComponent: "menus")
+                .appending(parameter: "id")
+                .appending(pathComponent: "items")
+            let listPath = items
+            let addPath = items.appending(pathComponent: "add")
+            let removePath = items.appending(pathComponent: "remove")
+            let detailsPath = items.appending(parameter: "itemId")
+            let editPath = detailsPath.appending(pathComponent: "edit")
+            let movePath = detailsPath.appending(pathComponent: "move")
             let list = AdminListWebMenuItem(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.get(
-                "/admin/web/menus/{id}/items/",
+                listPath.routerPath,
                 use: list.getWebMenuItems
             )
             router.post(
-                "/admin/web/menus/{id}/items/{itemId}/move/",
+                movePath.routerPath,
                 use: list.postWebMenuItemMove
             )
 
             let view = AdminViewWebMenuItem(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.get(
-                "/admin/web/menus/{id}/items/{itemId}/",
+                detailsPath.routerPath,
                 use: view.getWebMenuItem
             )
 
             let add = AdminAddWebMenuItem(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.get(
-                "/admin/web/menus/{id}/items/add/",
+                addPath.routerPath,
                 use: add.getAddWebMenuItem
             )
             router.post(
-                "/admin/web/menus/{id}/items/add/",
+                addPath.routerPath,
                 use: add.postAddWebMenuItem
             )
 
             let edit = AdminEditWebMenuItem(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.get(
-                "/admin/web/menus/{id}/items/{itemId}/edit/",
+                editPath.routerPath,
                 use: edit.getEditWebMenuItem
             )
             router.post(
-                "/admin/web/menus/{id}/items/{itemId}/edit/",
+                editPath.routerPath,
                 use: edit.postEditWebMenuItem
             )
 
             let remove = AdminRemoveWebMenuItem(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine
             )
             .controller
             router.post(
-                "/admin/web/menus/{id}/items/remove/",
+                removePath.routerPath,
                 use: remove.postRemoveWebMenuItem
             )
         }

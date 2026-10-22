@@ -11,9 +11,9 @@ extension Settings.Public.Detail {
             self.query = query
         }
 
-        public func execute() async throws -> SettingsDetail {
+        public func execute() async throws -> Settings.Detail.Output {
             try await query.run { scope in
-                try await scope.settings.get().asDetail
+                try await scope.settings.get()
             }
         }
     }

@@ -4,7 +4,7 @@ public import WebApplication
 public import WebDomain
 
 extension Page.Table.Detail {
-    func asDetail(metadata: MetadataDetail) -> Page.Detail.Output {
+    func asDetail(metadata: Metadata.Detail.Output) -> Page.Detail.Output {
         .init(
             id: id,
             title: title,

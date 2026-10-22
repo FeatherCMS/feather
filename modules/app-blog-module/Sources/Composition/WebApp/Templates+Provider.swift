@@ -2,8 +2,8 @@ public import Foundation
 public import WebModule
 
 extension Templates {
-    public struct Provider: WebTemplateProvider {
-        public let templates: [WebTemplateDefinition] = [
+    public struct Provider: TemplateProvider {
+        public let templates: [TemplateDefinition] = [
             .init(
                 id: "blog.post",
                 title: "Blog post",

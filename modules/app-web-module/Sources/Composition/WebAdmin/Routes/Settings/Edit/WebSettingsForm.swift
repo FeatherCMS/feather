@@ -74,7 +74,7 @@ struct WebSettingsForm: Component {
     }
 
     var state: State
-    var action: String = "/admin/web/settings/"
+    var action: String = WebSettingsRoutes.edit.description
     var submitLabel: String = "Save settings"
 
     func html(context: inout BuilderContext) -> Form {
