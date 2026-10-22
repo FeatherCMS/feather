@@ -13,7 +13,7 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        let current = try await self.useCases.makeGetNewsletterIssue()
+        let current = try await self.useCases.makeDetailNewsletterIssue()
             .execute(
                 subject: subject,
                 input: .init(
@@ -21,7 +21,7 @@ extension AdminAPIGateway {
                     id: input.path.newsletterIssueId
                 )
             )
-        let result = try await self.useCases.makeUpdateNewsletterIssue()
+        let result = try await self.useCases.makeEditNewsletterIssue()
             .execute(
                 subject: subject,
                 input: .init(

@@ -160,6 +160,14 @@ Within a route feature, keep its files together under
 - Put permission keys below the owning entity (`Identity.Permissions`), and
   aggregate module registration through the module namespace, e.g.
   `UserModule.Permissions`. Avoid parallel flat permission types per entity.
+- Do not create namespace-shell declarations that bundle empty operation enums
+  or feature-specific constants into an entity file, such as
+  `FormField { enum Add {}; enum List { enum Filter {} } }`. Define each
+  namespace extension in its own file in the target that owns the behavior,
+  and keep operation-specific values with their consumer. For example, a
+  WebAdmin table filter belongs in a WebAdmin file, not in the module/domain
+  namespace. Keep the entity declaration itself minimal when extensions define
+  its operations in their owning targets.
 - Put repository/query abstractions below the entity, with implementations
   under the same abstraction: `Identity.Repository.Interface` and
   `Identity.Repository.Database`; query contracts belong to the operation

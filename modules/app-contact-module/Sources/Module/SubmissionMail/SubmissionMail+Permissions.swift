@@ -1,5 +1,6 @@
 public import FeatherModuleKit
 
+
 extension SubmissionMail {
     public enum Permissions: PermissionProvider {
         public static let create = PermissionKey("contact:form-mails:create")

@@ -1,5 +1,6 @@
 public import FeatherModuleKit
 
+
 extension Form {
     public enum Permissions: PermissionProvider {
         public static let create = PermissionKey("contact:forms:create")

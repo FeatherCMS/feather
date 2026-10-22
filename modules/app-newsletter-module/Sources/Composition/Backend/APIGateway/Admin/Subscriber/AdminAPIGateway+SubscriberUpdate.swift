@@ -15,7 +15,7 @@ extension AdminAPIGateway {
         }
         let result =
             try await useCases
-            .makeUpdateNewsletterSubscriber()
+            .makeEditNewsletterSubscriber()
             .execute(
                 subject: subject,
                 input: .init(

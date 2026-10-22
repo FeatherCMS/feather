@@ -6,16 +6,16 @@ import NewsletterModule
 
 extension UseCases {
 
-    func makeUpdateNewsletterCampaign() -> Campaign.Edit.UseCase {
+    func makeAddNewsletterCampaign() -> Campaign.Add.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Campaign.Edit.Scope(
+                Campaign.Add.Scope(
                     campaign: CampaignDatabaseRepository(context: context)
                 )
             }
         )
-        return Campaign.Edit.UseCase(
+        return Campaign.Add.UseCase(
             authorizer: authorizer,
             transaction: transaction
         )

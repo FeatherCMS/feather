@@ -11,7 +11,7 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        _ = try await self.useCases.makeGetNewsletterIssue()
+        _ = try await self.useCases.makeDetailNewsletterIssue()
             .execute(
                 subject: subject,
                 input: .init(

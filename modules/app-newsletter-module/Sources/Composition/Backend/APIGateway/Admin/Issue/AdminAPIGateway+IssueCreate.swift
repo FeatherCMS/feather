@@ -13,7 +13,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
 
-        let created = try await self.useCases.makeCreateNewsletterIssue()
+        let created = try await self.useCases.makeAddNewsletterIssue()
             .execute(
                 subject: subject,
                 input: .init(

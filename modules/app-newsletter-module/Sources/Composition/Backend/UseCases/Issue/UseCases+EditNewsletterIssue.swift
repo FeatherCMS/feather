@@ -5,19 +5,16 @@ import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeUpdateNewsletterSubscriber() -> Subscriber.Edit.UseCase {
+    func makeEditNewsletterIssue() -> Issue.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Subscriber.Edit.Scope(
+                Issue.Edit.Scope(
                     newsletter: CampaignDatabaseRepository(context: context),
-                    subscriber: SubscriberDatabaseRepository(context: context)
+                    issue: IssueDatabaseRepository(context: context)
                 )
             }
         )
-        return Subscriber.Edit.UseCase(
-            authorizer: authorizer,
-            transaction: transaction
-        )
+        return Issue.Edit.UseCase(authorizer: authorizer, transaction: transaction)
     }
 }

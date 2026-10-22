@@ -12,7 +12,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
 
-        let result = try await self.useCases.makeCreateNewsletterCampaign()
+        let result = try await self.useCases.makeAddNewsletterCampaign()
             .execute(
                 subject: subject,
                 input: .init(

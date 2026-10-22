@@ -11,12 +11,12 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        let current = try await self.useCases.makeGetNewsletterCampaign()
+        let current = try await self.useCases.makeDetailNewsletterCampaign()
             .execute(
                 subject: subject,
                 input: .init(key: input.path.newsletterCampaignKey)
             )
-        let result = try await self.useCases.makeUpdateNewsletterCampaign()
+        let result = try await self.useCases.makeEditNewsletterCampaign()
             .execute(
                 subject: subject,
                 input: .init(
