@@ -1,6 +1,7 @@
 import AccountAppAPI
 import CSS
 import FeatherWebShared
+import FeatherWebApp
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -162,7 +163,7 @@ struct AppAcceptAccountInvitation {
         }
     }
 
-    let renderingEngine: any PublicPageRendering
+    let pageRenderer: any PublicPageRenderer
 
     func get(
         request: Request,
@@ -324,7 +325,7 @@ struct AppAcceptAccountInvitation {
         error: String?,
         success: String?
     ) -> Response {
-        renderingEngine.renderPublicPage(
+        pageRenderer.render(
             request: request,
             title: success == nil ? "Create account" : "Account created",
             description: success == nil

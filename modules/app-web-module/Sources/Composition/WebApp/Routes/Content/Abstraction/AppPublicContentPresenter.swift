@@ -1,3 +1,4 @@
+import FeatherWebApp
 import Hummingbird
 
 protocol AppPublicContentPresenter: Sendable {

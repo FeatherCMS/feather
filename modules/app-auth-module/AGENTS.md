@@ -11,7 +11,9 @@ forward legacy layouts merely because they still compile.
 - Auth's web targets are `AuthWebShared`, `AuthWebApp`, and `AuthWebAdmin`,
   backed by `Composition/WebShared`, `WebApp`, and `WebAdmin`. Shared code must
   be surface-neutral; app and admin request contexts and API clients stay in
-  their respective targets.
+  their respective targets. `AuthWebApp` must not depend on `FeatherWebAdmin`;
+  render App pages through the injectable `FeatherWebApp.TemplateRenderer`
+  contract and keep Auth Mustache templates in the App target's resources.
 - Keep the dependency direction `AuthModule <- AuthDomain <- AuthApplication
   <- AuthInfrastructure`, with Backend and the web targets depending only on
   the layers they compose. Do not add imports as direct dependencies unless

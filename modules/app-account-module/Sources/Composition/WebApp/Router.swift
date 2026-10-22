@@ -1,16 +1,17 @@
 public import FeatherWebShared
+import FeatherWebApp
 public import Hummingbird
 
 public struct Router {
     private let environment: AppEnvironment
-    private let renderingEngine: any PublicPageRendering
+    private let pageRenderer: any PublicPageRenderer
 
     public init(
         environment: AppEnvironment,
-        renderingEngine: any PublicPageRendering
+        pageRenderer: any PublicPageRenderer
     ) {
         self.environment = environment
-        self.renderingEngine = renderingEngine
+        self.pageRenderer = pageRenderer
     }
 
     public func route(
@@ -18,7 +19,7 @@ public struct Router {
     ) {
         AppAcceptAccountInvitation(
             environment: environment,
-            renderingEngine: renderingEngine
+            pageRenderer: pageRenderer
         )
         .route(on: router)
     }

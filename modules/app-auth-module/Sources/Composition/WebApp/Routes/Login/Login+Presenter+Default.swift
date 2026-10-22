@@ -1,30 +1,42 @@
-import FeatherWebAdmin
 import FeatherWebApp
-import HTML
-import WebComponents
+import Foundation
 
 extension Login.Presenter {
     struct Default: Interface {
+        let templateRenderer: any TemplateRenderer
+
         func renderPage(
-            form: Login.Form.Component.State,
+            form: Login.Form.State,
             message: String?
-        ) -> HTMLResponse {
-            var buildContext = BuilderContext()
-            let component = AdminHTML(
-                title: "Login",
-                body: .init(
-                    content: Login.Page(
-                        state: .init(
-                            form: form,
-                            message: message
-                        )
-                    ),
-                    showsFooter: false,
-                    allowsPasswordManagerAutofill: true
-                ),
-                stylesheetPath: nil
+        ) throws -> WebAppHTMLResponse {
+            var components = URLComponents()
+            components.path = "/login/"
+            if form.redirectPath != "/" {
+                components.queryItems = [
+                    URLQueryItem(name: "redirect", value: form.redirectPath)
+                ]
+            }
+            let action = components.string ?? "/login/"
+            return WebAppHTMLResponse(
+                content: try templateRenderer.render(
+                    template: "pages/login",
+                    context: [
+                        "action": action,
+                        "email": form.email,
+                        "emailError": form.emailError ?? "",
+                        "hasEmailError": form.emailError?.isEmpty == false,
+                        "hasMessage": message?.isEmpty == false,
+                        "hasPasswordError": form.passwordError?.isEmpty == false,
+                        "hasTurnstile": form.turnstileSiteKey?.isEmpty == false,
+                        "isPersistent": form.isPersistent,
+                        "message": message ?? "",
+                        "password": form.password,
+                        "passwordError": form.passwordError ?? "",
+                        "redirectPath": form.redirectPath,
+                        "turnstileSiteKey": form.turnstileSiteKey ?? "",
+                    ]
+                )
             )
-            return .init(buildContext.build(component))
         }
 
         func formState(
@@ -33,30 +45,13 @@ extension Login.Presenter {
             isPersistent: Bool = true,
             redirectPath: String = "/",
             turnstileSiteKey: String? = nil
-        ) -> Login.Form.Component.State {
+        ) -> Login.Form.State {
             .init(
-                email: .init(
-                    name: "email",
-                    label: "Email address",
-                    value: email,
-                    error: nil,
-                    type: .email,
-                    isRequired: true
-                ),
-                password: .init(
-                    name: "password",
-                    label: "Password",
-                    value: password,
-                    error: nil,
-                    type: .password,
-                    isRequired: true
-                ),
-                isPersistent: .init(
-                    name: "is_persistent",
-                    label: "Session",
-                    checkboxLabel: "Keep me signed in",
-                    isChecked: isPersistent
-                ),
+                email: email,
+                password: password,
+                emailError: nil,
+                passwordError: nil,
+                isPersistent: isPersistent,
                 redirectPath: redirectPath,
                 turnstileSiteKey: turnstileSiteKey
             )

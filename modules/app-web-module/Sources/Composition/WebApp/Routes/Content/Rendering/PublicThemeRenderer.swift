@@ -1,4 +1,6 @@
 
+import FeatherWebApp
+
 public protocol PublicThemeRenderer: Sendable {
     func render(
         templateIdentifier: String?,

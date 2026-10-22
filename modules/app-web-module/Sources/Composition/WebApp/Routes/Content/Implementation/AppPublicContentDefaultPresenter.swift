@@ -1,4 +1,5 @@
 import FeatherModuleKit
+import FeatherWebApp
 import Foundation
 import Hummingbird
 import WebModule

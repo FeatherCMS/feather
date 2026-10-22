@@ -1,5 +1,5 @@
 import AuthModule
-import FeatherWebAdmin
+import FeatherWebApp
 import FeatherWebShared
 import Hummingbird
 
@@ -25,6 +25,7 @@ extension MagicLink.App {
 
         init(
             environment: AppEnvironment,
+            templateRenderer: any TemplateRenderer,
             usesSecureCookies: Bool,
             turnstileVerifier: (any AuthTurnstileVerifier)? = nil,
             routes: Routes = .init()
@@ -38,7 +39,9 @@ extension MagicLink.App {
                 buildRuntime: { _, _ in
                     (
                         interactor: Interactor.Default(repository: repository),
-                        presenter: Presenter.Default()
+                        presenter: Presenter.Default(
+                            templateRenderer: templateRenderer
+                        )
                     )
                 }
             )

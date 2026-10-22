@@ -32,6 +32,7 @@ let package = Package(
         .visionOS(.v2),
     ],
     products: [
+        .library(name: "ContactModule", targets: ["ContactModule"]),
         .library(name: "ContactDomain", targets: ["ContactDomain"]),
         .library(name: "ContactContracts", targets: ["ContactContracts"]),
         .library(name: "ContactApplication", targets: ["ContactApplication"]),
@@ -40,6 +41,9 @@ let package = Package(
         .library(name: "ContactAppAPI", targets: ["ContactAppAPI"]),
         .library(name: "ContactBackend", targets: ["ContactBackend"]),
         .library(name: "ContactFrontend", targets: ["ContactFrontend"]),
+        .library(name: "ContactWebShared", targets: ["ContactWebShared"]),
+        .library(name: "ContactWebApp", targets: ["ContactWebApp"]),
+        .library(name: "ContactWebAdmin", targets: ["ContactWebAdmin"]),
         .executable(name: "ContactAdminOpenAPIGenerator", targets: ["ContactAdminOpenAPIGenerator"]),
         .executable(name: "ContactAppOpenAPIGenerator", targets: ["ContactAppOpenAPIGenerator"]),
     ],
@@ -49,6 +53,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.13.2"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.27.0"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.0.0"),
+        .package(url: "https://github.com/swift-server/swift-openapi-async-http-client", from: "1.0.0"),
         .package(path: "../../feather-core"),
         .package(
             url: "https://github.com/feather-framework/feather-dbal",
@@ -67,9 +72,18 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ContactContracts",
+            name: "ContactModule",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-core")
+            ],
+            path: "Sources/Module",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "ContactContracts",
+            dependencies: [
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .target(name: "ContactModule"),
             ],
             path: "Sources/Contracts",
             swiftSettings: swiftSettings
@@ -79,6 +93,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
 
+                .target(name: "ContactModule"),
                 .target(name: "ContactContracts"),
             ],
             path: "Sources/Layers/Domain",
@@ -92,6 +107,7 @@ let package = Package(
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
 
+                .target(name: "ContactModule"),
                 .target(name: "ContactDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -105,6 +121,7 @@ let package = Package(
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
 
+                .target(name: "ContactModule"),
                 .target(name: "ContactApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -151,6 +168,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
 
+                .target(name: "ContactModule"),
                 .target(name: "ContactInfrastructure"),
                 .target(name: "ContactAdminAPI"),
                 .target(name: "ContactAppAPI"),
@@ -160,18 +178,60 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "ContactFrontend",
+            name: "ContactWebShared",
+            dependencies: [],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "ContactWebApp",
             dependencies: [
+                .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
 
+                .target(name: "ContactModule"),
+                .target(name: "ContactContracts"),
+                .target(name: "ContactAppAPI"),
+                .target(name: "ContactWebShared"),
+            ],
+            path: "Sources/Composition/WebApp",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "ContactWebAdmin",
+            dependencies: [
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
+                .product(name: "WebModuleWebApp", package: "app-web-module"),
+                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
+
+                .target(name: "ContactModule"),
                 .target(name: "ContactContracts"),
                 .target(name: "ContactAdminAPI"),
-                .target(name: "ContactAppAPI"),
+                .target(name: "ContactWebShared"),
+            ],
+            path: "Sources/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "ContactFrontend",
+            dependencies: [
+                .target(name: "ContactWebApp"),
+                .target(name: "ContactWebAdmin"),
+                .target(name: "ContactWebShared"),
             ],
             path: "Sources/Composition/Frontend",
             swiftSettings: swiftSettings
@@ -179,8 +239,10 @@ let package = Package(
         .testTarget(
             name: "ContactDomainTests",
             dependencies: [
+                .target(name: "ContactModule"),
                 .target(name: "ContactDomain"),
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
@@ -188,6 +250,7 @@ let package = Package(
             dependencies: [
                 .target(name: "ContactApplication"),
             ],
+            path: "Tests/Layers/Application",
             swiftSettings: swiftSettings
         ),
         .testTarget(
@@ -195,6 +258,7 @@ let package = Package(
             dependencies: [
                 .target(name: "ContactInfrastructure"),
             ],
+            path: "Tests/Layers/Infrastructure",
             swiftSettings: swiftSettings
         ),
     ]

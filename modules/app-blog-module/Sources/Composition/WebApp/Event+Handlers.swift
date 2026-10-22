@@ -9,7 +9,7 @@ public enum Event {
                 event: WebTemplateProviderEvent.self,
                 context: WebModule.Event.Context.self
             ) { _, _ in
-                BlogWebTemplateProvider()
+                Templates.Provider()
             }
         }
     }

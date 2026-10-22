@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in with a magic link</title>
+    {{> partials/auth-styles}}
+</head>
+<body>
+    <main class="auth-page">
+        <section class="auth-card" aria-labelledby="page-title">
+            <header class="auth-header">
+                <h1 id="page-title">Sign in with a magic link</h1>
+                <p>Enter your email to receive a sign-in link.</p>
+            </header>
+            {{#hasMessage}}
+            <p class="auth-message auth-message--success" role="status">{{message}}</p>
+            {{/hasMessage}}
+            {{#hasError}}
+            <p class="auth-message auth-message--error" role="alert">{{error}}</p>
+            {{/hasError}}
+            <form class="auth-form" action="{{requestPath}}" method="post">
+                <label>
+                    <span>Email address</span>
+                    <input name="email" type="email" value="{{email}}" required autocomplete="email">
+                </label>
+                <label class="auth-checkbox">
+                    <input name="is_persistent" type="checkbox" value="on"{{#isPersistent}} checked{{/isPersistent}}>
+                    <span>Permanent link</span>
+                </label>
+                {{#hasTurnstile}}
+                <div class="cf-turnstile" data-sitekey="{{turnstileSiteKey}}"></div>
+                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                {{/hasTurnstile}}
+                <button type="submit">Send magic link</button>
+            </form>
+            <nav class="auth-links" aria-label="Other sign-in options">
+                <a href="{{loginPath}}">Sign in with credentials</a>
+                <a href="{{homePath}}">Home</a>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>

@@ -2,7 +2,7 @@ import AuthAppAPI
 import CSS
 import FeatherValidation
 import FeatherValidationFoundation
-import FeatherWebAdmin
+import FeatherWebApp
 import FeatherWebApp
 import FeatherWebShared
 import HTML
@@ -18,7 +18,7 @@ extension Login.Controller {
         func getLogin(
             request: Request,
             context: DefaultRequestContext
-        ) async throws -> HTMLResponse
+        ) async throws -> WebAppHTMLResponse
 
         func postLogin(
             request: Request,

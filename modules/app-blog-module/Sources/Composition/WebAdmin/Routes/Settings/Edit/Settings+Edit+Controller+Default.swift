@@ -163,7 +163,7 @@ extension Settings.Edit.Controller {
         private func makeFormState(
             from settings: Settings.Edit.Model,
             canEdit: Bool
-        ) -> BlogSettingsForm.State {
+        ) -> Settings.Edit.Form.State {
             makeFormState(
                 postListPath: settings.postListPath,
                 authorListPath: settings.authorListPath,
@@ -185,41 +185,41 @@ extension Settings.Edit.Controller {
             tagPathPrefix: String,
             canEdit: Bool,
             error: String?
-        ) -> BlogSettingsForm.State {
+        ) -> Settings.Edit.Form.State {
             .init(
                 postListPath: .init(
-                    key: BlogSettingsVariableKey.postListPath.fieldKey,
-                    label: BlogSettingsVariableKey.postListPath.label,
+                    key: Settings.Edit.VariableKey.postListPath.fieldKey,
+                    label: Settings.Edit.VariableKey.postListPath.label,
                     value: postListPath,
                     error: nil
                 ),
                 authorListPath: .init(
-                    key: BlogSettingsVariableKey.authorListPath.fieldKey,
-                    label: BlogSettingsVariableKey.authorListPath.label,
+                    key: Settings.Edit.VariableKey.authorListPath.fieldKey,
+                    label: Settings.Edit.VariableKey.authorListPath.label,
                     value: authorListPath,
                     error: nil
                 ),
                 tagListPath: .init(
-                    key: BlogSettingsVariableKey.tagListPath.fieldKey,
-                    label: BlogSettingsVariableKey.tagListPath.label,
+                    key: Settings.Edit.VariableKey.tagListPath.fieldKey,
+                    label: Settings.Edit.VariableKey.tagListPath.label,
                     value: tagListPath,
                     error: nil
                 ),
                 postPathPrefix: .init(
-                    key: BlogSettingsVariableKey.postPathPrefix.fieldKey,
-                    label: BlogSettingsVariableKey.postPathPrefix.label,
+                    key: Settings.Edit.VariableKey.postPathPrefix.fieldKey,
+                    label: Settings.Edit.VariableKey.postPathPrefix.label,
                     value: postPathPrefix,
                     error: nil
                 ),
                 authorPathPrefix: .init(
-                    key: BlogSettingsVariableKey.authorPathPrefix.fieldKey,
-                    label: BlogSettingsVariableKey.authorPathPrefix.label,
+                    key: Settings.Edit.VariableKey.authorPathPrefix.fieldKey,
+                    label: Settings.Edit.VariableKey.authorPathPrefix.label,
                     value: authorPathPrefix,
                     error: nil
                 ),
                 tagPathPrefix: .init(
-                    key: BlogSettingsVariableKey.tagPathPrefix.fieldKey,
-                    label: BlogSettingsVariableKey.tagPathPrefix.label,
+                    key: Settings.Edit.VariableKey.tagPathPrefix.fieldKey,
+                    label: Settings.Edit.VariableKey.tagPathPrefix.label,
                     value: tagPathPrefix,
                     error: nil
                 ),
@@ -231,7 +231,7 @@ extension Settings.Edit.Controller {
         private func makeFormState(
             canEdit: Bool,
             error: String?
-        ) -> BlogSettingsForm.State {
+        ) -> Settings.Edit.Form.State {
             makeFormState(
                 postListPath: "",
                 authorListPath: "",

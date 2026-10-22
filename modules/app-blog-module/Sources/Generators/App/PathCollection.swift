@@ -6,13 +6,13 @@ struct PathCollection: PathCollectionRepresentable {
 
     var pathMap: PathMap {
         var paths: PathMap = [:]
-        paths.merge(BlogAuthor.PathCollection().pathMap) { current, _ in current
+        paths.merge(Author.PathCollection().pathMap) { current, _ in current
         }
-        paths.merge(BlogPost.PathCollection().pathMap) { current, _ in current }
-        paths.merge(BlogSettings.PathCollection().pathMap) { current, _ in
+        paths.merge(Post.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Settings.PathCollection().pathMap) { current, _ in
             current
         }
-        paths.merge(BlogTag.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Tag.PathCollection().pathMap) { current, _ in current }
         return paths
     }
 }

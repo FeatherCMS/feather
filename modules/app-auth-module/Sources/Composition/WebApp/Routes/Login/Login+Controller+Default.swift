@@ -1,5 +1,4 @@
 import FeatherValidation
-import FeatherWebAdmin
 import FeatherWebApp
 import FeatherWebShared
 import Foundation
@@ -18,10 +17,10 @@ extension Login.Controller {
         func getLogin(
             request: Request,
             context: DefaultRequestContext
-        ) async throws -> HTMLResponse {
+        ) async throws -> WebAppHTMLResponse {
             let (_, presenter) = buildRuntime((request, context))
             let redirectPath = request.queryString("redirect") ?? "/"
-            return presenter.renderPage(
+            return try presenter.renderPage(
                 form: presenter.formState(
                     email: "",
                     password: "",
@@ -157,7 +156,7 @@ extension Login.Controller {
             request: Request,
             context: DefaultRequestContext,
             presenter: any Login.Presenter.Interface,
-            state: Login.Form.Component.State
+            state: Login.Form.State
         ) throws -> Response {
             try presenter.renderPage(
                 form: state,
@@ -170,7 +169,7 @@ extension Login.Controller {
             request: Request,
             context: DefaultRequestContext,
             presenter: any Login.Presenter.Interface,
-            state: Login.Form.Component.State,
+            state: Login.Form.State,
             message: String
         ) throws -> Response {
             try presenter.renderPage(

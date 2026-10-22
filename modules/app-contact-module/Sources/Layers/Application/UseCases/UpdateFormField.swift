@@ -1,4 +1,5 @@
 import ContactContracts
+import ContactModule
 public import ContactDomain
 public import FeatherApplication
 public import FeatherModuleKit
@@ -6,7 +7,7 @@ public import FeatherModuleKit
 public struct UpdateFormField: UseCase {
     struct Error: UseCaseError { let message: String }
     struct Action: PermissionAction {
-        let key = ContactPermissions.Fields.update
+        let key = ContactModule.Permissions.Fields.update
     }
 
     let authorizer: any Authorizer

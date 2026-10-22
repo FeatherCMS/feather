@@ -161,7 +161,7 @@ extension Post.Edit.Controller {
             metadata: AdminMetadataFormValue? = nil,
             selectedAuthorIds: [String] = [],
             selectedTagIds: [String] = [],
-            options: BlogPostAssociationOptionsModel
+            options: Post.Association.Options
         ) -> Post.Form.State {
             .init(
                 title: .init(
@@ -209,7 +209,7 @@ extension Post.Edit.Controller {
         private func optionStates(
             key: String,
             selectedIDs: [String],
-            options: [BlogPostAssociationOptionModel]
+            options: [Post.Association.Option]
         ) -> [Post.Form.OptionState] {
             let selectedSet = Set(selectedIDs)
             let normalizedOptions = mergeMissingSelections(
@@ -228,13 +228,13 @@ extension Post.Edit.Controller {
 
         private func mergeMissingSelections(
             selectedIDs: [String],
-            into options: [BlogPostAssociationOptionModel]
-        ) -> [BlogPostAssociationOptionModel] {
+            into options: [Post.Association.Option]
+        ) -> [Post.Association.Option] {
             let knownIDs = Set(options.map(\.id))
             let missing =
                 selectedIDs
                 .filter { !knownIDs.contains($0) }
-                .map { BlogPostAssociationOptionModel(id: $0, label: $0) }
+                .map { Post.Association.Option(id: $0, label: $0) }
             return options + missing
         }
     }

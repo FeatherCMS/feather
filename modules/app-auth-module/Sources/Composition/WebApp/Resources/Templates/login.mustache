@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in</title>
+    {{> partials/auth-styles}}
+</head>
+<body>
+    <main class="auth-page">
+        <section class="auth-card" aria-labelledby="page-title">
+            <header class="auth-header">
+                <h1 id="page-title">Sign in</h1>
+                <p>Use your user account to continue.</p>
+            </header>
+            {{#hasMessage}}
+            <p class="auth-message auth-message--error" role="alert">{{message}}</p>
+            {{/hasMessage}}
+            <form class="auth-form" action="{{action}}" method="post">
+                <input type="hidden" name="redirect" value="{{redirectPath}}">
+                <label>
+                    <span>Email address</span>
+                    <input name="email" type="email" value="{{email}}" required autocomplete="username">
+                    {{#hasEmailError}}<span class="auth-field-error">{{emailError}}</span>{{/hasEmailError}}
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input name="password" type="password" value="{{password}}" required autocomplete="current-password">
+                    {{#hasPasswordError}}<span class="auth-field-error">{{passwordError}}</span>{{/hasPasswordError}}
+                </label>
+                <label class="auth-checkbox">
+                    <input name="is_persistent" type="checkbox" value="on"{{#isPersistent}} checked{{/isPersistent}}>
+                    <span>Keep me signed in</span>
+                </label>
+                {{#hasTurnstile}}
+                <div class="cf-turnstile" data-sitekey="{{turnstileSiteKey}}"></div>
+                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+                {{/hasTurnstile}}
+                <button type="submit">Sign in</button>
+            </form>
+            <nav class="auth-links" aria-label="Other sign-in options">
+                <a href="/magic-link/">Sign in with a magic link</a>
+                <a href="/">Home</a>
+            </nav>
+        </section>
+    </main>
+</body>
+</html>

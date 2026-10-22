@@ -319,6 +319,7 @@ let package = Package(
                 .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebBuilders", package: "swift-web-standards"),
+                .target(name: "BlogModule"),
                 .target(name: "BlogWebShared"),
                 .target(name: "BlogApplication"),
                 .target(name: "BlogAppAPI"),

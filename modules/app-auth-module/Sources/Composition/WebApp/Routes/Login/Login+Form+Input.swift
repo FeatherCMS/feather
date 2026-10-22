@@ -16,12 +16,12 @@ extension Login.Form {
 
         public let email: String
         public let password: String
-        public let isPersistent: Login.Form.CheckboxInput
+        public let isPersistent: AuthFormCheckboxInput
 
         public init(
             email: String,
             password: String,
-            isPersistent: Login.Form.CheckboxInput
+            isPersistent: AuthFormCheckboxInput
         ) {
             self.email = email
             self.password = password
@@ -34,7 +34,7 @@ extension Login.Form {
             password = try container.decode(String.self, forKey: .password)
             isPersistent =
                 try container.decodeIfPresent(
-                    Login.Form.CheckboxInput.self,
+                    AuthFormCheckboxInput.self,
                     forKey: .isPersistent
                 ) ?? .init(value: false)
         }

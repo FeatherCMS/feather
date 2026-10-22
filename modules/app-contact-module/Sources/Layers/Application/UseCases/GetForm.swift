@@ -1,14 +1,15 @@
 import ContactContracts
+import ContactModule
 import ContactDomain
 public import FeatherApplication
 public import FeatherModuleKit
 
 public struct GetForm: UseCase {
     struct Action: PermissionAction {
-        let key = ContactPermissions.Forms.read
+        let key = ContactModule.Permissions.Forms.read
     }
     struct MailListAction: PermissionAction {
-        let key = ContactPermissions.Mails.list
+        let key = ContactModule.Permissions.Mails.list
     }
 
     let authorizer: any Authorizer

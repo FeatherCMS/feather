@@ -173,16 +173,17 @@ extension Tag.Add.Controller {
 
         private func slugPrefix(
             context: AuthenticatedRequestContext,
-            keyPath: KeyPath<PublicRouteSettings, String>
+            keyPath: KeyPath<Settings.PublicRoutes, String>
         ) async throws -> String {
-            let schema = try await AppPublicContentOpenAPIRepository(
-                api: PublicAPI.Client(
-                    environment: environment,
-                    requestContext: context
+            let schema = try await PublicContent.Repository
+                .OpenAPI(
+                    api: AppAPI.Client(
+                        environment: environment,
+                        requestContext: context
+                    )
                 )
-            )
-            .getRouteSettings()
-            let settings = PublicRouteSettings(schema: schema)
+                .getRouteSettings()
+            let settings = Settings.PublicRoutes(schema: schema)
             let prefix = settings[keyPath: keyPath]
             return prefix.isEmpty ? "/" : "/\(prefix)/"
         }

@@ -240,7 +240,13 @@ let package = Package(
         .target(
             name: "FeatherWebApp",
             dependencies: [
+                .product(name: "CSS", package: "swift-web-standards"),
+                .product(name: "HTML", package: "swift-web-standards"),
                 .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(name: "SGML", package: "swift-web-standards"),
+                .product(name: "WebBuilders", package: "swift-web-standards"),
+                .product(name: "WebComponents", package: "swift-web-standards"),
                 .target(name: "FeatherModuleKit"),
                 .target(name: "FeatherWebShared"),
             ],

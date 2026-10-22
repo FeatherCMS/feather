@@ -2,13 +2,13 @@ import BlogSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
-extension BlogTag {
+extension Tag {
     struct PathCollection: PathCollectionRepresentable {
         var pathMap: PathMap {
             [
-                "api/v1/admin/blog/tags": BlogTag.PathItem(),
-                "api/v1/admin/blog/tags/query": BlogTag.Query.PathItem(),
-                "api/v1/admin/blog/tags/{blogTagId}": BlogTag.ID.PathItem(),
+                "api/v1/admin/blog/tags": PathItem(),
+                "api/v1/admin/blog/tags/query": Query.PathItem(),
+                "api/v1/admin/blog/tags/{blogTagId}": ID.PathItem(),
             ]
         }
     }

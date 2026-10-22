@@ -18,6 +18,7 @@ import RedirectWebApp
 import UserWebAdmin
 import SystemWebAdmin
 import FeatherWebAdmin
+import FeatherWebApp
 import Hummingbird
 import HummingbirdAuth
 import AuthWebAdmin
@@ -107,7 +108,6 @@ func buildRouter(
         )
         .compactMap { $0 }) ?? []
     let renderingEngine = DefaultRenderingEngine(
-        publicOrigins: environment.publicOrigins,
         adminEvents: adminEvents,
         richContentEditorBlocks: richContentEditorBlocks,
         adminPageRenderContextProvider: DefaultAdminPageRenderContextProvider(
@@ -157,10 +157,10 @@ func buildRouter(
     )
     buildAppRoutes(
         router: router,
-        authRouter: authRouter,
         environment: environment,
-        environment: environment,
-        renderingEngine: renderingEngine,
+        publicPageRenderer: DefaultPublicPageRenderer(
+            publicOrigins: environment.publicOrigins
+        ),
         themeRenderer: themeRenderer,
         publicContentEvents: publicContentEvents,
         apiBuilder: apiBuilder,
@@ -169,7 +169,7 @@ func buildRouter(
     )
 
     AuthWebApp.Router(
-        renderingEngine: renderingEngine,
+        templateRenderer: try AuthWebApp.MustacheTemplateRenderer(),
         environment: environment,
         usesSecureCookies: environment.publicOrigins.usesSecureCookies
     )

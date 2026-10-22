@@ -1,11 +1,12 @@
 import ContactContracts
+import ContactModule
 import ContactDomain
 public import FeatherApplication
 public import FeatherModuleKit
 
 public struct RemoveForm: UseCase {
     struct Action: PermissionAction {
-        let key = ContactPermissions.Forms.delete
+        let key = ContactModule.Permissions.Forms.delete
     }
 
     let authorizer: any Authorizer

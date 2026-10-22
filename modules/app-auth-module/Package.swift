@@ -80,6 +80,10 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
+            url: "https://github.com/hummingbird-project/swift-mustache",
+            from: "2.1.1"
+        ),
+        .package(
             url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
         ),
@@ -248,14 +252,17 @@ let package = Package(
             name: "AuthWebApp",
             dependencies: [
                 .product(name: "FeatherWebApp", package: "feather-core"),
-                .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "Mustache", package: "swift-mustache"),
 
                 .target(name: "AuthModule"),
                 .target(name: "AuthAppAPI"),
                 .target(name: "AuthWebShared"),
             ],
             path: "Sources/Composition/WebApp",
+            resources: [
+                .copy("Resources/Templates")
+            ],
             swiftSettings: swiftSettings
         ),
         .target(

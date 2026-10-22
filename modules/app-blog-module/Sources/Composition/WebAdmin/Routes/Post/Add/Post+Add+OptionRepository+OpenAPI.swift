@@ -17,7 +17,7 @@ extension Post.Add.OptionRepository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func loadOptions() async throws -> BlogPostAssociationOptionsModel {
+        func loadOptions() async throws -> Post.Association.Options {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 async let authors = loadAuthors()
                 async let tags = loadTags()
@@ -29,7 +29,7 @@ extension Post.Add.OptionRepository {
         }
 
         private func loadAuthors() async throws
-            -> [BlogPostAssociationOptionModel]
+            -> [Post.Association.Option]
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogAuthorQuery(
@@ -60,8 +60,7 @@ extension Post.Add.OptionRepository {
             }
         }
 
-        private func loadTags() async throws -> [BlogPostAssociationOptionModel]
-        {
+        private func loadTags() async throws -> [Post.Association.Option] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogTagQuery(
                     headers: .init(accept: [.init(contentType: .json)]),

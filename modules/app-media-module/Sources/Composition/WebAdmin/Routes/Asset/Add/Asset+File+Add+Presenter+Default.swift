@@ -64,11 +64,8 @@ extension Asset.File.Add.Presenter {
                 )
             }
             if model.isPicker {
-                return renderEngine.renderPublicPage(
-                    request: request,
+                return renderEngine.renderAdminStandalonePage(
                     title: "Upload media asset",
-                    description: "Upload media asset",
-                    imagePath: "images/logos/logo.png",
                     content: content
                 )
             }

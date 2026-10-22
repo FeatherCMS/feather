@@ -23,7 +23,7 @@ extension Post.Edit.Interactor {
             try await repository.load(id: id)
         }
 
-        func loadOptions() async throws -> BlogPostAssociationOptionsModel {
+        func loadOptions() async throws -> Post.Association.Options {
             try await optionRepository.loadOptions()
         }
 

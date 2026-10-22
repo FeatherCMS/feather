@@ -1,30 +1,22 @@
 import AuthAppAPI
 import AuthModule
-import CSS
-import FeatherValidation
-import FeatherValidationFoundation
-public import FeatherWebAdmin
+public import FeatherWebApp
 public import FeatherWebShared
-import HTML
 public import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 public struct Router {
-    private let renderingEngine: any RenderingEngine
+    private let templateRenderer: any TemplateRenderer
     private let environment: AppEnvironment
     private let usesSecureCookies: Bool
     private let turnstileVerifier: (any AuthTurnstileVerifier)?
 
     public init(
-        renderingEngine: any RenderingEngine,
+        templateRenderer: any TemplateRenderer,
         environment: AppEnvironment,
         usesSecureCookies: Bool,
         turnstileVerifier: (any AuthTurnstileVerifier)? = nil
     ) {
-        self.renderingEngine = renderingEngine
+        self.templateRenderer = templateRenderer
         self.environment = environment
         self.usesSecureCookies = usesSecureCookies
         self.turnstileVerifier = turnstileVerifier
@@ -35,6 +27,7 @@ public struct Router {
             repository: Login.Repository.OpenAPI(
                 appClient: API.Client(environment: environment)
             ),
+            templateRenderer: templateRenderer,
             usesSecureCookies: usesSecureCookies,
             turnstileVerifier: turnstileVerifier
         )
@@ -51,6 +44,7 @@ public struct Router {
         MagicLink.App
             .Router(
                 environment: environment,
+                templateRenderer: templateRenderer,
                 usesSecureCookies: usesSecureCookies,
                 turnstileVerifier: turnstileVerifier
             )

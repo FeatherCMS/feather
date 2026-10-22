@@ -17,7 +17,7 @@ extension Post.Add.Interactor {
         let repository: any Post.Add.Repository.Interface
         let optionRepository: any Post.Add.OptionRepository.Interface
 
-        func loadOptions() async throws -> BlogPostAssociationOptionsModel {
+        func loadOptions() async throws -> Post.Association.Options {
             try await optionRepository.loadOptions()
         }
 

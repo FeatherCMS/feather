@@ -1,49 +1,54 @@
+import ContactModule
 public import FeatherModuleKit
 
 public enum ContactPermissions: PermissionProvider {
     public enum Forms: PermissionProvider {
-        public static let create = PermissionKey("contact:forms:create")
-        public static let read = PermissionKey("contact:forms:read")
-        public static let update = PermissionKey("contact:forms:update")
-        public static let list = PermissionKey("contact:forms:list")
-        public static let delete = PermissionKey("contact:forms:delete")
+        public static let create = ContactModule.Permissions.Forms.create
+        public static let read = ContactModule.Permissions.Forms.read
+        public static let update = ContactModule.Permissions.Forms.update
+        public static let list = ContactModule.Permissions.Forms.list
+        public static let delete = ContactModule.Permissions.Forms.delete
+
         public static func allPermissions() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }
+
     public enum Fields: PermissionProvider {
-        public static let create = PermissionKey("contact:form-fields:create")
-        public static let read = PermissionKey("contact:form-fields:read")
-        public static let update = PermissionKey("contact:form-fields:update")
-        public static let list = PermissionKey("contact:form-fields:list")
-        public static let delete = PermissionKey("contact:form-fields:delete")
+        public static let create = ContactModule.Permissions.Fields.create
+        public static let read = ContactModule.Permissions.Fields.read
+        public static let update = ContactModule.Permissions.Fields.update
+        public static let list = ContactModule.Permissions.Fields.list
+        public static let delete = ContactModule.Permissions.Fields.delete
+
         public static func allPermissions() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }
+
     public enum Submissions: PermissionProvider {
-        public static let read = PermissionKey("contact:form-submissions:read")
-        public static let update = PermissionKey(
-            "contact:form-submissions:update"
-        )
-        public static let list = PermissionKey("contact:form-submissions:list")
-        public static let delete = PermissionKey(
-            "contact:form-submissions:delete"
-        )
+        public static let read = ContactModule.Permissions.Submissions.read
+        public static let update = ContactModule.Permissions.Submissions.update
+        public static let list = ContactModule.Permissions.Submissions.list
+        public static let delete = ContactModule.Permissions.Submissions.delete
+
         public static func allPermissions() -> Set<PermissionKey> {
             [read, update, list, delete]
         }
     }
+
     public enum Mails: PermissionProvider {
-        public static let create = PermissionKey("contact:form-mails:create")
-        public static let read = PermissionKey("contact:form-mails:read")
-        public static let update = PermissionKey("contact:form-mails:update")
-        public static let list = PermissionKey("contact:form-mails:list")
-        public static let delete = PermissionKey("contact:form-mails:delete")
+        public static let create = ContactModule.Permissions.Mails.create
+        public static let read = ContactModule.Permissions.Mails.read
+        public static let update = ContactModule.Permissions.Mails.update
+        public static let list = ContactModule.Permissions.Mails.list
+        public static let delete = ContactModule.Permissions.Mails.delete
+
         public static func allPermissions() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }
+
     public static func allPermissions() -> Set<PermissionKey> {
         Forms.allPermissions().union(Fields.allPermissions())
             .union(Submissions.allPermissions())

@@ -1,5 +1,5 @@
 import AuthModule
-import FeatherWebAdmin
+import FeatherWebApp
 import FeatherWebApp
 import FeatherWebShared
 import Hummingbird
@@ -9,7 +9,7 @@ extension MagicLink.App.Controller {
         func getRequest(
             request: Request,
             context: DefaultRequestContext
-        ) async throws -> HTMLResponse
+        ) async throws -> WebAppHTMLResponse
 
         func postRequest(
             request: Request,

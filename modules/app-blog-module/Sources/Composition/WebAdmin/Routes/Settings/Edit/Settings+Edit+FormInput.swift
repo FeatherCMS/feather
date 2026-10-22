@@ -51,38 +51,38 @@ extension Settings.Edit {
             var result: [String: String] = [:]
             validate(
                 normalizedPostListPath,
-                key: BlogSettingsVariableKey.postListPath.fieldKey,
-                label: BlogSettingsVariableKey.postListPath.label,
+                key: Settings.Edit.VariableKey.postListPath.fieldKey,
+                label: Settings.Edit.VariableKey.postListPath.label,
                 errors: &result
             )
             validate(
                 normalizedAuthorListPath,
-                key: BlogSettingsVariableKey.authorListPath.fieldKey,
-                label: BlogSettingsVariableKey.authorListPath.label,
+                key: Settings.Edit.VariableKey.authorListPath.fieldKey,
+                label: Settings.Edit.VariableKey.authorListPath.label,
                 errors: &result
             )
             validate(
                 normalizedTagListPath,
-                key: BlogSettingsVariableKey.tagListPath.fieldKey,
-                label: BlogSettingsVariableKey.tagListPath.label,
+                key: Settings.Edit.VariableKey.tagListPath.fieldKey,
+                label: Settings.Edit.VariableKey.tagListPath.label,
                 errors: &result
             )
             validate(
                 normalizedPostPathPrefix,
-                key: BlogSettingsVariableKey.postPathPrefix.fieldKey,
-                label: BlogSettingsVariableKey.postPathPrefix.label,
+                key: Settings.Edit.VariableKey.postPathPrefix.fieldKey,
+                label: Settings.Edit.VariableKey.postPathPrefix.label,
                 errors: &result
             )
             validate(
                 normalizedAuthorPathPrefix,
-                key: BlogSettingsVariableKey.authorPathPrefix.fieldKey,
-                label: BlogSettingsVariableKey.authorPathPrefix.label,
+                key: Settings.Edit.VariableKey.authorPathPrefix.fieldKey,
+                label: Settings.Edit.VariableKey.authorPathPrefix.label,
                 errors: &result
             )
             validate(
                 normalizedTagPathPrefix,
-                key: BlogSettingsVariableKey.tagPathPrefix.fieldKey,
-                label: BlogSettingsVariableKey.tagPathPrefix.label,
+                key: Settings.Edit.VariableKey.tagPathPrefix.fieldKey,
+                label: Settings.Edit.VariableKey.tagPathPrefix.label,
                 errors: &result
             )
             return result

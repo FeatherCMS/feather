@@ -1,8 +1,6 @@
 import AuthModule
-import FeatherWebAdmin
 import FeatherWebApp
 import FeatherWebShared
-import WebComponents
 
 extension MagicLink.App.Presenter {
     protocol Interface: Sendable {
@@ -13,6 +11,6 @@ extension MagicLink.App.Presenter {
             message: String?,
             turnstileSiteKey: String?,
             routes: MagicLink.App.Router.Routes
-        ) -> HTMLResponse
+        ) throws -> WebAppHTMLResponse
     }
 }

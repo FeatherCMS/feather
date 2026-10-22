@@ -1,5 +1,4 @@
 import AuthModule
-import FeatherWebAdmin
 import FeatherWebApp
 import FeatherWebShared
 import Foundation
@@ -19,9 +18,9 @@ extension MagicLink.App.Controller {
         func getRequest(
             request: Request,
             context: DefaultRequestContext
-        ) async throws -> HTMLResponse {
+        ) async throws -> WebAppHTMLResponse {
             let (_, presenter) = buildRuntime((request, context))
-            return presenter.render(
+            return try presenter.render(
                 email: "",
                 isPersistent: true,
                 error: nil,

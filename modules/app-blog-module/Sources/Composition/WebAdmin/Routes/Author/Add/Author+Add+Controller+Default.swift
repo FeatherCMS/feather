@@ -177,14 +177,15 @@ extension Author.Add.Controller {
         private func slugPrefix(
             context: AuthenticatedRequestContext
         ) async throws -> String {
-            let schema = try await AppPublicContentOpenAPIRepository(
-                api: PublicAPI.Client(
-                    environment: environment,
-                    requestContext: context
+            let schema = try await PublicContent.Repository
+                .OpenAPI(
+                    api: AppAPI.Client(
+                        environment: environment,
+                        requestContext: context
+                    )
                 )
-            )
-            .getRouteSettings()
-            let prefix = PublicRouteSettings(schema: schema).authorPathPrefix
+                .getRouteSettings()
+            let prefix = Settings.PublicRoutes(schema: schema).authorPathPrefix
             return prefix.isEmpty ? "/" : "/\(prefix)/"
         }
     }

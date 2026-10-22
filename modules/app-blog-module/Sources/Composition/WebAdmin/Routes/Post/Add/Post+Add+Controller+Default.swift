@@ -144,7 +144,7 @@ extension Post.Add.Controller {
             metadata: AdminMetadataFormValue? = nil,
             selectedAuthorIds: [String] = [],
             selectedTagIds: [String] = [],
-            options: BlogPostAssociationOptionsModel,
+            options: Post.Association.Options,
             slugPrefix: String? = nil
         ) -> Post.Form.State {
             .init(
@@ -196,7 +196,7 @@ extension Post.Add.Controller {
         private func optionStates(
             key: String,
             selectedIDs: [String],
-            options: [BlogPostAssociationOptionModel]
+            options: [Post.Association.Option]
         ) -> [Post.Form.OptionState] {
             let selectedSet = Set(selectedIDs)
             let normalizedOptions = mergeMissingSelections(
@@ -215,13 +215,13 @@ extension Post.Add.Controller {
 
         private func mergeMissingSelections(
             selectedIDs: [String],
-            into options: [BlogPostAssociationOptionModel]
-        ) -> [BlogPostAssociationOptionModel] {
+            into options: [Post.Association.Option]
+        ) -> [Post.Association.Option] {
             let knownIDs = Set(options.map(\.id))
             let missing =
                 selectedIDs
                 .filter { !knownIDs.contains($0) }
-                .map { BlogPostAssociationOptionModel(id: $0, label: $0) }
+                .map { Post.Association.Option(id: $0, label: $0) }
             return options + missing
         }
 
@@ -236,16 +236,17 @@ extension Post.Add.Controller {
 
         private func slugPrefix(
             context: AuthenticatedRequestContext,
-            keyPath: KeyPath<PublicRouteSettings, String>
+            keyPath: KeyPath<Settings.PublicRoutes, String>
         ) async throws -> String {
-            let schema = try await AppPublicContentOpenAPIRepository(
-                api: PublicAPI.Client(
-                    environment: environment,
-                    requestContext: context
+            let schema = try await PublicContent.Repository
+                .OpenAPI(
+                    api: AppAPI.Client(
+                        environment: environment,
+                        requestContext: context
+                    )
                 )
-            )
-            .getRouteSettings()
-            let settings = PublicRouteSettings(schema: schema)
+                .getRouteSettings()
+            let settings = Settings.PublicRoutes(schema: schema)
             let prefix = settings[keyPath: keyPath]
             return prefix.isEmpty ? "/" : "/\(prefix)/"
         }

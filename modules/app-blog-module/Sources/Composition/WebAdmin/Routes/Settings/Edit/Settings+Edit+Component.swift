@@ -10,7 +10,7 @@ extension Settings.Edit {
     struct Component: WebComponents.Component {
         struct State {
             let canEdit: Bool
-            let form: BlogSettingsForm.State
+            let form: Settings.Edit.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
         }
         let state: State
@@ -41,7 +41,7 @@ extension Settings.Edit {
                     )
                 }
                 context.build(
-                    BlogSettingsForm(
+                    Settings.Edit.Form(
                         state: state.form,
                         action: routes.settings.path
                     )
