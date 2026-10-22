@@ -15,7 +15,8 @@ extension Post.Post {
                 "content": BlogPostContentField(),
                 "imageAssetId": BlogPostImageAssetIdField()
                     .reference(required: false),
-                "authorIds": BlogPostAuthorIdsField().reference(required: false),
+                "authorIds": BlogPostAuthorIdsField()
+                    .reference(required: false),
                 "tagIds": BlogPostTagIdsField().reference(required: false),
             ]
         }

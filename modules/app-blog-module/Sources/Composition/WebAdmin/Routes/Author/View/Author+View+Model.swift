@@ -21,7 +21,6 @@ extension Author.View {
         let profileImageAssetId: String?
         let profileImage: AdminMediaAsset?
         let metadata: AdminMetadataFormValue
-        let items:
-            [BlogAdminAPI.Components.Schemas.AuthorLinkQueryItemSchema]
+        let items: [BlogAdminAPI.Components.Schemas.AuthorLinkQueryItemSchema]
     }
 }

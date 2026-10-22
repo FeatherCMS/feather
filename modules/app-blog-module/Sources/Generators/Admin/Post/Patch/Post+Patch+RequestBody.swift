@@ -16,7 +16,8 @@ extension Post.Patch {
                 "content": BlogPostContentField().reference(required: false),
                 "imageAssetId": BlogPostImageAssetIdField()
                     .nullable().reference(required: false),
-                "authorIds": BlogPostAuthorIdsField().reference(required: false),
+                "authorIds": BlogPostAuthorIdsField()
+                    .reference(required: false),
                 "tagIds": BlogPostTagIdsField().reference(required: false),
             ]
         }

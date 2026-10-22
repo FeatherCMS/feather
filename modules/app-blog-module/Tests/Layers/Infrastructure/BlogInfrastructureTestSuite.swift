@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-import BlogModule
 import BlogApplication
+import BlogModule
 import FeatherDBAL
 import FeatherDBALTesting
 import FeatherDatabase
@@ -62,9 +62,15 @@ struct BlogInfrastructureTestSuite {
             for name in ["created_at", "updated_at"] {
                 let column = schema.columns.first(where: { $0.name == name })
                 #expect(
-                    column?.constraints.contains {
-                        if case .notNull = $0 { true } else { false }
-                    } == true
+                    column?.constraints
+                        .contains {
+                            if case .notNull = $0 {
+                                true
+                            }
+                            else {
+                                false
+                            }
+                        } == true
                 )
                 #expect(
                     column.map { hasCurrentTimestampDefault($0.constraints) }
@@ -74,45 +80,53 @@ struct BlogInfrastructureTestSuite {
         }
 
         #expect(
-            post.columns.first(where: { $0.name == "author_ids" }).map {
-                hasStringDefault($0.constraints, value: "[]")
-            } == true
+            post.columns.first(where: { $0.name == "author_ids" })
+                .map {
+                    hasStringDefault($0.constraints, value: "[]")
+                } == true
         )
         #expect(
-            post.columns.first(where: { $0.name == "tag_ids" }).map {
-                hasStringDefault($0.constraints, value: "[]")
-            } == true
+            post.columns.first(where: { $0.name == "tag_ids" })
+                .map {
+                    hasStringDefault($0.constraints, value: "[]")
+                } == true
         )
         #expect(
-            author.columns.first(where: { $0.name == "excerpt" }).map {
-                hasStringDefault($0.constraints, value: "")
-            } == true
+            author.columns.first(where: { $0.name == "excerpt" })
+                .map {
+                    hasStringDefault($0.constraints, value: "")
+                } == true
         )
         #expect(
-            author.columns.first(where: { $0.name == "content" }).map {
-                hasStringDefault($0.constraints, value: "")
-            } == true
+            author.columns.first(where: { $0.name == "content" })
+                .map {
+                    hasStringDefault($0.constraints, value: "")
+                } == true
         )
         #expect(
-            post.columns.first(where: { $0.name == "excerpt" }).map {
-                hasStringDefault($0.constraints, value: "")
-            } == true
+            post.columns.first(where: { $0.name == "excerpt" })
+                .map {
+                    hasStringDefault($0.constraints, value: "")
+                } == true
         )
         #expect(
-            tag.columns.first(where: { $0.name == "excerpt" }).map {
-                hasStringDefault($0.constraints, value: "")
-            } == true
+            tag.columns.first(where: { $0.name == "excerpt" })
+                .map {
+                    hasStringDefault($0.constraints, value: "")
+                } == true
         )
         #expect(
-            authorLink.columns.first(where: { $0.name == "is_blank" }).map {
-                hasBooleanDefault($0.constraints, value: false)
-            } == true
+            authorLink.columns.first(where: { $0.name == "is_blank" })
+                .map {
+                    hasBooleanDefault($0.constraints, value: false)
+                } == true
         )
 
         for schema in [post, tag, author, authorLink] {
             #expect(
                 schema.columns.first(where: { $0.name == "id" })?
-                    .constraints.contains {
+                    .constraints
+                    .contains {
                         if case .primaryKey = $0 {
                             true
                         }

@@ -7,7 +7,7 @@ import WebBuilders
 import WebComponents
 
 extension Settings.Edit {
-    struct Form: Component {
+    struct Form: WebComponents.Component {
         struct FieldState: Codable, Sendable, Equatable, Hashable {
             var key: String
             var label: String

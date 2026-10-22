@@ -7,8 +7,7 @@ extension AdminAPIGateway {
     public func blogAuthorQuery(
         _ input: Operations.BlogAuthorQuery.Input
     ) async throws -> Operations.BlogAuthorQuery.Output {
-        let query:
-            Components.Schemas.AuthorQueryItemSearchRequestQuerySchema
+        let query: Components.Schemas.AuthorQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
