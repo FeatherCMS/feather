@@ -28,7 +28,7 @@ extension Public.Author.List {
                         sort: [.init(field: .createdAt, direction: .desc)]
                     )
                 )
-                var result: [Public.Author.Summary.Output] = []
+                var result: [Public.Author.Summary.Item] = []
                 for item in authors.items {
                     guard
                         let metadata = try await scope.metadata.find(

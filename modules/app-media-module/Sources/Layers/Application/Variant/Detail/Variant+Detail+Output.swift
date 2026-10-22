@@ -5,12 +5,37 @@ public import struct Foundation.Date
 
 extension Variant.Detail {
     public struct Output: DTO {
+        public struct Processor: Sendable {
+            public let id: String
+            public let variantId: String
+            public let name: String
+            public let matchExtensions: String
+            public let commandTemplate: String
+            public let isActive: Bool
+
+            public init(
+                id: String,
+                variantId: String,
+                name: String,
+                matchExtensions: String,
+                commandTemplate: String,
+                isActive: Bool
+            ) {
+                self.id = id
+                self.variantId = variantId
+                self.name = name
+                self.matchExtensions = matchExtensions
+                self.commandTemplate = commandTemplate
+                self.isActive = isActive
+            }
+        }
+
         public let id: String
         public let key: String
         public let name: String
         public let isRequired: Bool
         public let isActive: Bool
-        public let processors: [Variant.Processor.Search.Output.Item]
+        public let processors: [Processor]
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -20,7 +45,7 @@ extension Variant.Detail {
             name: String,
             isRequired: Bool,
             isActive: Bool,
-            processors: [Variant.Processor.Search.Output.Item],
+            processors: [Processor],
             createdAt: Date,
             updatedAt: Date
         ) {

@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 import struct Foundation.Date
 
@@ -41,7 +41,7 @@ public struct Subscribe: UseCase {
 
     public func execute(
         _ input: Input
-    ) async throws -> SubscriberDetail {
+    ) async throws -> Subscriber.Subscribe.Output {
         let now = Date()
         return try await transaction.run { scope in
             guard
@@ -56,7 +56,7 @@ public struct Subscribe: UseCase {
                 model.subscribe(at: now)
                 model.firstName = input.firstName
                 model.lastName = input.lastName
-                return (try await scope.subscriber.update(model)).asDetail
+                return .init(model: try await scope.subscriber.update(model))
             }
 
             let newModel = try Subscriber.Model.create(
@@ -68,7 +68,7 @@ public struct Subscribe: UseCase {
                 unsubscribeToken: input.unsubscribeToken,
                 source: input.source
             )
-            return (try await scope.subscriber.insert(newModel)).asDetail
+            return .init(model: try await scope.subscriber.insert(newModel))
         }
     }
 

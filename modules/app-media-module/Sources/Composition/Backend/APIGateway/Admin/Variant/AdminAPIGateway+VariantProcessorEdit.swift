@@ -62,7 +62,7 @@ extension AdminAPIGateway {
                         isActive: isActive
                     )
                 )
-            return .ok(.init(body: .json(map(result.detail))))
+            return .ok(.init(body: .json(map(result))))
         }
         catch Variant.Processor.Edit.Error.notFound {
             return .notFound(

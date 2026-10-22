@@ -2,10 +2,6 @@ import ContactDomain
 public import ContactModule
 public import FeatherApplication
 
-extension SubmissionMail {
-    public enum Add {}
-}
-
 extension SubmissionMail.Add {
     public struct Input: DTO {
         public let mailFrom: String

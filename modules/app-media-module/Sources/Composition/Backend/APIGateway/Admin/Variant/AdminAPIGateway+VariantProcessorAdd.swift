@@ -24,7 +24,7 @@ extension AdminAPIGateway {
                         isActive: body.isActive
                     )
                 )
-            return .created(.init(body: .json(map(result.detail))))
+            return .created(.init(body: .json(map(result))))
         }
         catch Variant.Processor.Add.Error.variantNotFound {
             return .notFound(

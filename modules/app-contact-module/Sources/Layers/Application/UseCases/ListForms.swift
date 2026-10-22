@@ -21,13 +21,22 @@ public struct ListForms: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> [Form.Detail.Output] {
+    ) async throws -> Form.List.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.form.list().map(\.asDetail)
+            let forms = try await scope.form.list()
+            var items: [Form.List.Output.Item] = []
+            for form in forms {
+                let fields = try await scope.field.listBy(formId: form.id)
+                    .map(\.asFormField)
+                let mails = try await scope.mail.listBy(formId: form.id)
+                    .map(\.asFormMail)
+                items.append(.init(model: form, fields: fields, mails: mails))
+            }
+            return .init(items: items)
         }
     }
 }

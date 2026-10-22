@@ -10,14 +10,14 @@ extension Author.Add {
         public let excerpt: String
         public let content: String
         public let profileImageAssetId: String?
-        public let metadata: Page.Add.Input.MetadataInput
+        public let metadata: Metadata.Input
 
         public init(
             name: String,
             excerpt: String,
             content: String,
             profileImageAssetId: String?,
-            metadata: Page.Add.Input.MetadataInput
+            metadata: Metadata.Input
         ) {
             self.name = name
             self.excerpt = excerpt

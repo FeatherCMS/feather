@@ -28,7 +28,7 @@ extension Public.Tag.List {
                         sort: [.init(field: .createdAt, direction: .desc)]
                     )
                 )
-                var result: [Public.Tag.Summary.Output] = []
+                var result: [Public.Tag.Summary.Item] = []
                 for item in tags.items {
                     guard
                         let metadata = try await scope.metadata.find(

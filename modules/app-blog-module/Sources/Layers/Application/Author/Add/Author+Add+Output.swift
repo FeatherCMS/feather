@@ -14,7 +14,7 @@ extension Author.Add {
         public let excerpt: String
         public let content: String
         public let profileImageAssetId: String?
-        public let metadata: WebModule.Metadata.Detail.Output
+        public let metadata: WebModule.Metadata.Snapshot
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -24,7 +24,7 @@ extension Author.Add {
             excerpt: String,
             content: String,
             profileImageAssetId: String?,
-            metadata: WebModule.Metadata.Detail.Output,
+            metadata: WebModule.Metadata.Snapshot,
             createdAt: Date,
             updatedAt: Date
         ) {

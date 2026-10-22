@@ -19,7 +19,7 @@ extension Article.Detail {
         public let content: String
         public let imageAssetId: String?
         public let categoryIds: [String]
-        public let metadata: WebModule.Metadata.Detail.Output
+        public let metadata: WebModule.Metadata.Snapshot
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -30,7 +30,7 @@ extension Article.Detail {
             content: String,
             imageAssetId: String?,
             categoryIds: [String],
-            metadata: WebModule.Metadata.Detail.Output,
+            metadata: WebModule.Metadata.Snapshot,
             createdAt: Date,
             updatedAt: Date
         ) {

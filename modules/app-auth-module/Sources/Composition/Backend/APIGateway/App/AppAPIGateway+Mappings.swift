@@ -227,13 +227,57 @@ extension AdminAPIGateway {
     public func map(
         _ detail: MagicLink.Detail.Output
     ) -> AuthAdminAPI.Components.Schemas.AuthMagicLinkDetailSchema {
-        .init(
+        mapMagicLinkDetail(
             id: detail.id,
-            credentialId: detail.authEmailId,
+            authEmailId: detail.authEmailId,
             token: detail.token,
-            expiresAt: detail.expiresAt.timeIntervalSince1970,
+            expiresAt: detail.expiresAt,
             isPersistent: detail.isPersistent,
             isUsed: detail.isUsed
+        )
+    }
+
+    public func map(
+        _ detail: MagicLink.Add.Output
+    ) -> AuthAdminAPI.Components.Schemas.AuthMagicLinkDetailSchema {
+        mapMagicLinkDetail(
+            id: detail.id,
+            authEmailId: detail.authEmailId,
+            token: detail.token,
+            expiresAt: detail.expiresAt,
+            isPersistent: detail.isPersistent,
+            isUsed: detail.isUsed
+        )
+    }
+
+    public func map(
+        _ detail: MagicLink.Edit.Output
+    ) -> AuthAdminAPI.Components.Schemas.AuthMagicLinkDetailSchema {
+        mapMagicLinkDetail(
+            id: detail.id,
+            authEmailId: detail.authEmailId,
+            token: detail.token,
+            expiresAt: detail.expiresAt,
+            isPersistent: detail.isPersistent,
+            isUsed: detail.isUsed
+        )
+    }
+
+    private func mapMagicLinkDetail(
+        id: String,
+        authEmailId: String,
+        token: String,
+        expiresAt: Date,
+        isPersistent: Bool,
+        isUsed: Bool
+    ) -> AuthAdminAPI.Components.Schemas.AuthMagicLinkDetailSchema {
+        .init(
+            id: id,
+            credentialId: authEmailId,
+            token: token,
+            expiresAt: expiresAt.timeIntervalSince1970,
+            isPersistent: isPersistent,
+            isUsed: isUsed
         )
     }
 
@@ -326,10 +370,42 @@ extension AdminAPIGateway {
     public func map(
         _ detail: Credential.Detail.Output
     ) -> AuthAdminAPI.Components.Schemas.AuthCredentialDetailSchema {
-        .init(
+        mapCredentialDetail(
             id: detail.id,
             userId: detail.userId,
             email: detail.email
+        )
+    }
+
+    public func map(
+        _ detail: Credential.Add.Output
+    ) -> AuthAdminAPI.Components.Schemas.AuthCredentialDetailSchema {
+        mapCredentialDetail(
+            id: detail.id,
+            userId: detail.userId,
+            email: detail.email
+        )
+    }
+
+    public func map(
+        _ detail: Credential.Edit.Output
+    ) -> AuthAdminAPI.Components.Schemas.AuthCredentialDetailSchema {
+        mapCredentialDetail(
+            id: detail.id,
+            userId: detail.userId,
+            email: detail.email
+        )
+    }
+
+    private func mapCredentialDetail(
+        id: String,
+        userId: String,
+        email: String
+    ) -> AuthAdminAPI.Components.Schemas.AuthCredentialDetailSchema {
+        .init(
+            id: id,
+            userId: userId,
+            email: email
         )
     }
 

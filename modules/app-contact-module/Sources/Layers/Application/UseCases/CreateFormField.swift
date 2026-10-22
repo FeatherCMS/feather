@@ -1,5 +1,5 @@
-public import ContactModule
 public import ContactDomain
+public import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
@@ -49,7 +49,7 @@ public struct CreateFormField: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> FormField.Detail.Output {
+    ) async throws -> FormField.Add.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -72,7 +72,7 @@ public struct CreateFormField: UseCase {
                     position: input.position
                 )
             }
-            return field.asDetail
+            return .init(model: field)
         }
     }
 }

@@ -87,7 +87,7 @@ extension Post.Edit {
                     imageAssetId: savedModel.imageAssetId,
                     authorIds: savedModel.authorIds,
                     tagIds: savedModel.tagIds,
-                    metadata: savedMetadata.asDetail,
+                    metadata: savedMetadata.asSnapshot,
                     createdAt: savedModel.createdAt,
                     updatedAt: savedModel.updatedAt
                 )

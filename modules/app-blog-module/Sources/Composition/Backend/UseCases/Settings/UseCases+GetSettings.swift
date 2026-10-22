@@ -13,12 +13,14 @@ import WebModule
 
 extension UseCases {
 
-    public func makeGetSettings() -> Settings.Detail.UseCase {
+    public func makeGetSettings() -> BlogModule.Settings.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Settings.Detail.Scope(
-                    settings: Settings.Repository.Database(context: context)
+                BlogModule.Settings.Detail.Scope(
+                    settings: BlogModule.Settings.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )

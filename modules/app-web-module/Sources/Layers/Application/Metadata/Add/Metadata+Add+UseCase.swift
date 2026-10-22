@@ -26,7 +26,7 @@ extension Metadata.Add {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Metadata.Detail.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -60,7 +60,7 @@ extension Metadata.Add {
                     )
                 )
             }
-            return model.asDetail
+            return model.asAddOutput
         }
     }
 }

@@ -12,32 +12,192 @@ extension AdminAPIGateway {
     public func map(
         _ value: Form.Detail.Output
     ) -> Components.Schemas.ContactFormSchema {
-        .init(
+        mapForm(
             key: value.key,
             name: value.name,
             successMessage: value.successMessage,
             failureMessage: value.failureMessage,
             redirectUrl: value.redirectUrl,
-            items: value.fields.map(map),
-            mails: value.mails.map(map),
-            createdAt: timestamp(value.createdAt),
-            updatedAt: timestamp(value.updatedAt)
+            fields: value.fields,
+            mails: value.mails,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt
+        )
+    }
+
+    public func map(
+        _ value: Form.Add.Output
+    ) -> Components.Schemas.ContactFormSchema {
+        mapForm(
+            key: value.key,
+            name: value.name,
+            successMessage: value.successMessage,
+            failureMessage: value.failureMessage,
+            redirectUrl: value.redirectUrl,
+            fields: value.fields,
+            mails: value.mails,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt
+        )
+    }
+
+    public func map(
+        _ value: Form.Edit.Output
+    ) -> Components.Schemas.ContactFormSchema {
+        mapForm(
+            key: value.key,
+            name: value.name,
+            successMessage: value.successMessage,
+            failureMessage: value.failureMessage,
+            redirectUrl: value.redirectUrl,
+            fields: value.fields,
+            mails: value.mails,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt
+        )
+    }
+
+    public func map(
+        _ value: Form.List.Output.Item
+    ) -> Components.Schemas.ContactFormSchema {
+        mapForm(
+            key: value.key,
+            name: value.name,
+            successMessage: value.successMessage,
+            failureMessage: value.failureMessage,
+            redirectUrl: value.redirectUrl,
+            fields: value.fields,
+            mails: value.mails,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt
+        )
+    }
+
+    private func mapForm(
+        key: String,
+        name: String,
+        successMessage: String,
+        failureMessage: String,
+        redirectUrl: String?,
+        fields: [Form.Field],
+        mails: [Form.Mail],
+        createdAt: Date,
+        updatedAt: Date
+    ) -> Components.Schemas.ContactFormSchema {
+        .init(
+            key: key,
+            name: name,
+            successMessage: successMessage,
+            failureMessage: failureMessage,
+            redirectUrl: redirectUrl,
+            items: fields.map(map),
+            mails: mails.map(map),
+            createdAt: timestamp(createdAt),
+            updatedAt: timestamp(updatedAt)
         )
     }
 
     public func map(
         _ value: FormField.Detail.Output
     ) -> Components.Schemas.FormFieldSchema {
-        .init(
+        mapFormField(
             id: value.id,
             key: value.key,
-            _type: value.type.rawValue,
+            type: value.type,
             label: value.label,
-            allowedValues: value.allowedValues.map(\.value),
+            allowedValues: value.allowedValues,
             isRequired: value.isRequired,
             position: value.position,
-            createdAt: timestamp(value.createdAt),
-            updatedAt: timestamp(value.updatedAt)
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt
+        )
+    }
+
+    private func map(
+        _ value: Form.Field
+    ) -> Components.Schemas.FormFieldSchema {
+        mapFormField(
+            id: value.id,
+            key: value.key,
+            type: value.type,
+            label: value.label,
+            allowedValues: value.allowedValues,
+            isRequired: value.isRequired,
+            position: value.position,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt
+        )
+    }
+
+    public func map(
+        _ value: FormField.Add.Output
+    ) -> Components.Schemas.FormFieldSchema {
+        mapFormField(
+            id: value.id,
+            key: value.key,
+            type: value.type,
+            label: value.label,
+            allowedValues: value.allowedValues,
+            isRequired: value.isRequired,
+            position: value.position,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt
+        )
+    }
+
+    public func map(
+        _ value: FormField.Edit.Output
+    ) -> Components.Schemas.FormFieldSchema {
+        mapFormField(
+            id: value.id,
+            key: value.key,
+            type: value.type,
+            label: value.label,
+            allowedValues: value.allowedValues,
+            isRequired: value.isRequired,
+            position: value.position,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt
+        )
+    }
+
+    public func map(
+        _ value: FormField.List.Output.Item
+    ) -> Components.Schemas.FormFieldSchema {
+        mapFormField(
+            id: value.id,
+            key: value.key,
+            type: value.type,
+            label: value.label,
+            allowedValues: value.allowedValues,
+            isRequired: value.isRequired,
+            position: value.position,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt
+        )
+    }
+
+    private func mapFormField(
+        id: String,
+        key: String,
+        type: FormField.Model.ItemType,
+        label: String,
+        allowedValues: [FormField.Model.Option],
+        isRequired: Bool,
+        position: Int,
+        createdAt: Date,
+        updatedAt: Date
+    ) -> Components.Schemas.FormFieldSchema {
+        .init(
+            id: id,
+            key: key,
+            _type: type.rawValue,
+            label: label,
+            allowedValues: allowedValues.map(\.value),
+            isRequired: isRequired,
+            position: position,
+            createdAt: timestamp(createdAt),
+            updatedAt: timestamp(updatedAt)
         )
     }
 
@@ -56,25 +216,94 @@ extension AdminAPIGateway {
         )
     }
 
+    private func map(
+        _ value: Form.Mail
+    ) -> Components.Schemas.SubmissionMailSchema {
+        .init(
+            id: value.id,
+            mailFrom: value.mailFrom,
+            mailTo: value.mailTo,
+            subject: value.subject,
+            additionalHeaders: value.additionalHeaders,
+            messageBody: value.messageBody,
+            createdAt: timestamp(value.createdAt),
+            updatedAt: timestamp(value.updatedAt)
+        )
+    }
+
     public func map(
         _ value: Submission.Detail.Output,
         formKey: String
     ) -> Components.Schemas.ContactFormSubmissionSchema {
-        .init(
+        mapSubmission(
             id: value.id,
+            valuesJSON: value.valuesJSON,
+            itemsSnapshotJSON: value.itemsSnapshotJSON,
+            metadataJSON: value.metadataJSON,
+            status: value.status,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt,
+            formKey: formKey
+        )
+    }
+
+    public func map(
+        _ value: Submission.Edit.Output,
+        formKey: String
+    ) -> Components.Schemas.ContactFormSubmissionSchema {
+        mapSubmission(
+            id: value.id,
+            valuesJSON: value.valuesJSON,
+            itemsSnapshotJSON: value.itemsSnapshotJSON,
+            metadataJSON: value.metadataJSON,
+            status: value.status,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt,
+            formKey: formKey
+        )
+    }
+
+    public func map(
+        _ value: Submission.List.Output.Item,
+        formKey: String
+    ) -> Components.Schemas.ContactFormSubmissionSchema {
+        mapSubmission(
+            id: value.id,
+            valuesJSON: value.valuesJSON,
+            itemsSnapshotJSON: value.itemsSnapshotJSON,
+            metadataJSON: value.metadataJSON,
+            status: value.status,
+            createdAt: value.createdAt,
+            updatedAt: value.updatedAt,
+            formKey: formKey
+        )
+    }
+
+    private func mapSubmission(
+        id: String,
+        valuesJSON: String,
+        itemsSnapshotJSON: String,
+        metadataJSON: String?,
+        status: Submission.Model.Status,
+        createdAt: Date,
+        updatedAt: Date,
+        formKey: String
+    ) -> Components.Schemas.ContactFormSubmissionSchema {
+        .init(
+            id: id,
             formKey: formKey,
             values: .init(
-                additionalProperties: jsonProperties(value.valuesJSON)
+                additionalProperties: jsonProperties(valuesJSON)
             ),
             itemsSnapshot: .init(
-                additionalProperties: jsonProperties(value.itemsSnapshotJSON)
+                additionalProperties: jsonProperties(itemsSnapshotJSON)
             ),
             metadata: .init(
-                additionalProperties: jsonProperties(value.metadataJSON ?? "{}")
+                additionalProperties: jsonProperties(metadataJSON ?? "{}")
             ),
-            status: value.status.rawValue,
-            createdAt: timestamp(value.createdAt),
-            updatedAt: timestamp(value.updatedAt)
+            status: status.rawValue,
+            createdAt: timestamp(createdAt),
+            updatedAt: timestamp(updatedAt)
         )
     }
 

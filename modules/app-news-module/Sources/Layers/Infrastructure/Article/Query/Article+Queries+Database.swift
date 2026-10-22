@@ -28,7 +28,7 @@ extension ArticleTable.Row {
     }
 
     func asDetail(
-        metadata: WebModule.Metadata.Detail.Output,
+        metadata: WebModule.Metadata.Snapshot,
         categoryIds: [String]
     ) -> Article.Detail.Output {
         .init(

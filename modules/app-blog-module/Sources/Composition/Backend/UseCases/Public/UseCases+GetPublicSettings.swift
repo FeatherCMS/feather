@@ -7,13 +7,15 @@ import WebModule
 extension UseCases {
 
     public func makeGetPublicSettings() -> DatabaseQueryExecutor<
-        Settings.Detail.Scope
+        BlogModule.Settings.Detail.Scope
     > {
         DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Settings.Detail.Scope(
-                    settings: Settings.Repository.Database(context: context)
+                BlogModule.Settings.Detail.Scope(
+                    settings: BlogModule.Settings.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )

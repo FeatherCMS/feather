@@ -91,7 +91,7 @@ extension AdminAPIGateway {
     }
 
     private func jobSearchItemSchema(
-        from job: Job.Detail.Output
+        from job: Job.Search.Output.Item
     ) -> Components.Schemas.SystemJobQueryItemSchema {
         .init(
             id: job.id,

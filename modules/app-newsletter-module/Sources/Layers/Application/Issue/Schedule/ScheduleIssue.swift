@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 public import struct Foundation.Date
 
@@ -38,7 +38,7 @@ public struct ScheduleIssue: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> IssueDetail {
+    ) async throws -> Issue.Schedule.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -51,7 +51,7 @@ public struct ScheduleIssue: UseCase {
             }
 
             try model.schedule(at: input.scheduledDate, now: now)
-            return (try await scope.issue.update(model)).asDetail
+            return .init(model: try await scope.issue.update(model))
         }
     }
 }

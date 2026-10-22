@@ -83,7 +83,7 @@ extension Tag.Edit {
                     excerpt: savedModel.excerpt,
                     content: savedModel.content,
                     imageAssetId: savedModel.imageAssetId,
-                    metadata: savedMetadata.asDetail,
+                    metadata: savedMetadata.asSnapshot,
                     createdAt: savedModel.createdAt,
                     updatedAt: savedModel.updatedAt
                 )

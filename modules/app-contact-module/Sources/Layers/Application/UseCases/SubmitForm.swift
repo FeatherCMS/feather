@@ -1,5 +1,5 @@
 import ContactDomain
-public import ContactModule
+import ContactModule
 public import FeatherApplication
 import FeatherMail
 public import FeatherModuleKit
@@ -8,10 +8,17 @@ import Foundation
 import struct Foundation.Date
 
 public struct SubmitForm: UseCase {
+    private struct MailTemplate: Sendable {
+        let mailFrom: String
+        let mailTo: String
+        let subject: String
+        let additionalHeaders: [String]
+        let messageBody: String
+    }
+
     private struct ExecutionResult: Sendable {
-        let submission: Submission.Detail.Output
         let redirectUrl: String?
-        let mails: [SubmissionMail.Detail.Output]
+        let mails: [MailTemplate]
         let mailTemplateValues: [String: String]
     }
 
@@ -49,14 +56,9 @@ public struct SubmitForm: UseCase {
     }
 
     public struct Output: DTO {
-        public let submission: Submission.Detail.Output
         public let redirectUrl: String?
 
-        package init(
-            submission: Submission.Detail.Output,
-            redirectUrl: String?
-        ) {
-            self.submission = submission
+        package init(redirectUrl: String?) {
             self.redirectUrl = redirectUrl
         }
     }
@@ -71,7 +73,15 @@ public struct SubmitForm: UseCase {
             }
             let fields = try await scope.field.listBy(formId: form.id)
             let mails = try await scope.mail.listBy(formId: form.id)
-                .map(\.asDetail)
+                .map {
+                    MailTemplate(
+                        mailFrom: $0.mailFrom,
+                        mailTo: $0.mailTo,
+                        subject: $0.subject,
+                        additionalHeaders: $0.additionalHeaders,
+                        messageBody: $0.messageBody
+                    )
+                }
             try validate(
                 valuesJSON: input.valuesJSON,
                 against: fields
@@ -90,8 +100,9 @@ public struct SubmitForm: UseCase {
                 context: context
             )
 
+            _ = try await scope.submission.insert(model)
+
             return ExecutionResult(
-                submission: (try await scope.submission.insert(model)).asDetail,
                 redirectUrl: form.redirectUrl,
                 mails: mails,
                 mailTemplateValues: mailTemplateValues
@@ -104,15 +115,12 @@ public struct SubmitForm: UseCase {
             templateValues: result.mailTemplateValues
         )
 
-        return .init(
-            submission: result.submission,
-            redirectUrl: result.redirectUrl
-        )
+        return .init(redirectUrl: result.redirectUrl)
     }
 
     private func loadMailTemplateValues(
         formKey: String,
-        mails: [SubmissionMail.Detail.Output],
+        mails: [MailTemplate],
         context: (any TransactionContext)
     ) async throws -> [String: String] {
         guard !mails.isEmpty else { return [:] }
@@ -133,7 +141,7 @@ public struct SubmitForm: UseCase {
     }
 
     private func enqueueMailTasks(
-        mails: [SubmissionMail.Detail.Output],
+        mails: [MailTemplate],
         valuesJSON: String,
         templateValues: [String: String]
     ) async throws {

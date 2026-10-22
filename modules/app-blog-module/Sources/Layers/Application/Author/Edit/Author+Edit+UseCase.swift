@@ -83,7 +83,7 @@ extension Author.Edit {
                     excerpt: savedModel.excerpt,
                     content: savedModel.content,
                     profileImageAssetId: savedModel.profileImageAssetId,
-                    metadata: savedMetadata.asDetail,
+                    metadata: savedMetadata.asSnapshot,
                     createdAt: savedModel.createdAt,
                     updatedAt: savedModel.updatedAt
                 )

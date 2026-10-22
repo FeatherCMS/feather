@@ -9,6 +9,29 @@ import WebDomain
 import WebModule
 
 extension AdminAPIGateway {
+    func map(_ detail: Settings.Edit.Output)
+        -> WebAdminAPI.Components.Schemas.SettingsDetailSchema
+    {
+        .init(
+            logo: detail.logo,
+            logoDark: detail.logoDark,
+            metaImage: detail.metaImage,
+            primaryColor: detail.primaryColor,
+            secondaryColor: detail.secondaryColor,
+            tertiaryColor: detail.tertiaryColor,
+            primaryFont: detail.primaryFont,
+            secondaryFont: detail.secondaryFont,
+            homePageId: detail.homePageId,
+            locale: detail.locale,
+            timezone: detail.timezone,
+            title: detail.title,
+            excerpt: detail.excerpt,
+            noIndex: detail.noIndex,
+            css: detail.css,
+            js: detail.js
+        )
+    }
+
     func map(_ detail: Settings.Detail.Output)
         -> WebAdminAPI.Components.Schemas.SettingsDetailSchema
     {

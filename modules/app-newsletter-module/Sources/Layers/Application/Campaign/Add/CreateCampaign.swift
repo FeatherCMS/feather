@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 public struct CreateCampaign: UseCase {
     struct Action: PermissionAction { let key = Campaign.Permissions.create }
@@ -35,7 +35,7 @@ public struct CreateCampaign: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> CampaignDetail {
+    ) async throws -> Campaign.Add.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -46,7 +46,15 @@ public struct CreateCampaign: UseCase {
                 name: input.name,
                 fromEmail: input.fromEmail
             )
-            return try await scope.newsletter.insert(model).asDetail
+            let saved = try await scope.newsletter.insert(model)
+            return .init(
+                id: saved.id,
+                key: saved.key,
+                name: saved.name,
+                fromEmail: saved.fromEmail,
+                createdAt: saved.createdAt,
+                updatedAt: saved.updatedAt
+            )
         }
     }
 }

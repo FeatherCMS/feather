@@ -15,6 +15,6 @@ extension AdminAPIGateway {
                     formKey: input.query.form
                 )
             )
-        return .ok(.init(body: .json(result.map(map))))
+        return .ok(.init(body: .json(result.items.map(map))))
     }
 }

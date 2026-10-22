@@ -7,7 +7,7 @@ import WebDomain
 public import WebModule
 
 extension Author.Table.Detail {
-    func asDetail(metadata: WebModule.Metadata.Detail.Output)
+    func asDetail(metadata: WebModule.Metadata.Snapshot)
         -> Author.Detail.Output
     {
         .init(

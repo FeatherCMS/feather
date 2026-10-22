@@ -43,7 +43,7 @@ public struct UpdateSubscriber: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> SubscriberDetail {
+    ) async throws -> Subscriber.Edit.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -69,7 +69,7 @@ public struct UpdateSubscriber: UseCase {
             if input.status == .unsubscribed && model.status != .unsubscribed {
                 model.unsubscribe(at: now)
             }
-            return try await scope.subscriber.update(model).asDetail
+            return .init(model: try await scope.subscriber.update(model))
         }
     }
 }

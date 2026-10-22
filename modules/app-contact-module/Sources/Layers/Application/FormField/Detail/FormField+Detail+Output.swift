@@ -4,10 +4,6 @@ public import FeatherApplication
 
 public import struct Foundation.Date
 
-extension FormField {
-    public enum Detail {}
-}
-
 extension FormField.Detail {
     public struct Output: DTO {
         public let id: String
@@ -44,5 +40,22 @@ extension FormField.Detail {
             self.createdAt = createdAt
             self.updatedAt = updatedAt
         }
+    }
+}
+
+extension FormField.Model {
+    var asDetail: FormField.Detail.Output {
+        .init(
+            id: id,
+            formId: formId,
+            key: key,
+            type: type,
+            label: label,
+            allowedValues: allowedValues,
+            isRequired: isRequired,
+            position: position,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
     }
 }

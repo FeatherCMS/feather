@@ -4,10 +4,6 @@ public import FeatherApplication
 
 public import struct Foundation.Date
 
-extension Form {
-    public enum Detail {}
-}
-
 extension Form.Detail {
     public struct Output: DTO {
         public let id: String
@@ -16,8 +12,8 @@ extension Form.Detail {
         public let successMessage: String
         public let failureMessage: String
         public let redirectUrl: String?
-        public let fields: [FormField.Detail.Output]
-        public let mails: [SubmissionMail.Detail.Output]
+        public let fields: [Form.Field]
+        public let mails: [Form.Mail]
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -28,8 +24,8 @@ extension Form.Detail {
             successMessage: String,
             failureMessage: String,
             redirectUrl: String?,
-            fields: [FormField.Detail.Output],
-            mails: [SubmissionMail.Detail.Output],
+            fields: [Form.Field],
+            mails: [Form.Mail],
             createdAt: Date,
             updatedAt: Date
         ) {
@@ -44,5 +40,29 @@ extension Form.Detail {
             self.createdAt = createdAt
             self.updatedAt = updatedAt
         }
+    }
+}
+
+extension Form.Model {
+    var asDetail: Form.Detail.Output {
+        asDetail(fields: [], mails: [])
+    }
+
+    func asDetail(
+        fields: [Form.Field] = [],
+        mails: [Form.Mail] = []
+    ) -> Form.Detail.Output {
+        .init(
+            id: id,
+            key: key,
+            name: name,
+            successMessage: successMessage,
+            failureMessage: failureMessage,
+            redirectUrl: redirectUrl,
+            fields: fields,
+            mails: mails,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
     }
 }

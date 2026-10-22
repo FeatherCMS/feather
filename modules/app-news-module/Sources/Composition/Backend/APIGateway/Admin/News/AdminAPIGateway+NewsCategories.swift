@@ -143,6 +143,36 @@ extension Components.Schemas.NewsCategoryCreateSchema {
 }
 
 extension AdminAPIGateway {
+    fileprivate func map(
+        _ item: NewsModule.Category.Add.Output
+    ) -> Components.Schemas.NewsCategoryDetailSchema {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            content: item.content,
+            imageAssetId: item.imageAssetId,
+            metadata: map(item.metadata),
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    fileprivate func map(
+        _ item: NewsModule.Category.Edit.Output
+    ) -> Components.Schemas.NewsCategoryDetailSchema {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            content: item.content,
+            imageAssetId: item.imageAssetId,
+            metadata: map(item.metadata),
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
     fileprivate func mapSearch(
         _ item: NewsModule.Category.Search.Output.Item
     ) -> Components.Schemas.NewsCategoryListItemSchema {

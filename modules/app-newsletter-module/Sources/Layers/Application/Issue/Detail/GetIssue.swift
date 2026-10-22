@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 public struct GetIssue: UseCase {
     struct Action: PermissionAction { let key = Issue.Permissions.read }
@@ -32,7 +32,7 @@ public struct GetIssue: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> IssueDetail {
+    ) async throws -> Issue.Detail.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)

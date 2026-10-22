@@ -27,7 +27,7 @@ extension CategoryTable.Row {
     }
 
     func asDetail(
-        metadata: WebModule.Metadata.Detail.Output
+        metadata: WebModule.Metadata.Snapshot
     ) -> Category.Detail.Output {
         .init(
             id: id,

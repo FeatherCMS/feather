@@ -1,5 +1,6 @@
 public import BlogApplication
 import BlogInfrastructure
+import BlogModule
 import FeatherInfrastructure
 import WebDomain
 import WebInfrastructure
@@ -18,10 +19,16 @@ extension UseCases {
                             context: context
                         )
                     ),
-                    authorLink: Public.AuthorLink.Database(
+                    authorLink: AuthorLink.List.Query.Database(
                         context: context
                     ),
-                    post: Public.Post.Database(
+                    postDetail: Public.Post.Database(
+                        context: context,
+                        metadata: WebModule.Metadata.Query.Database(
+                            context: context
+                        )
+                    ),
+                    postList: Public.Post.Database(
                         context: context,
                         metadata: WebModule.Metadata.Query.Database(
                             context: context

@@ -49,9 +49,9 @@ public struct GetForm: UseCase {
                 throw Error.formNotFound
             }
             let fields = try await scope.field.listBy(formId: value.id)
-                .map(\.asDetail)
+                .map(\.asFormField)
             let mails = try await scope.mail.listBy(formId: value.id)
-                .map(\.asDetail)
+                .map(\.asFormMail)
             return value.asDetail(fields: fields, mails: mails)
         }
     }

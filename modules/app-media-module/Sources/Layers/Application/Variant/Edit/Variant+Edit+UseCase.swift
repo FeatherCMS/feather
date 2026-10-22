@@ -43,25 +43,23 @@ extension Variant.Edit {
                     variantId: saved.id
                 )
                 return .init(
-                    detail: .init(
-                        id: saved.id,
-                        key: saved.key,
-                        name: saved.name,
-                        isRequired: saved.isRequired,
-                        isActive: saved.isActive,
-                        processors: processors.map {
-                            Variant.Processor.Search.Output.Item(
-                                id: $0.id,
-                                variantId: $0.variantId,
-                                name: $0.name,
-                                matchExtensions: $0.matchExtensions,
-                                commandTemplate: $0.commandTemplate,
-                                isActive: $0.isActive
-                            )
-                        },
-                        createdAt: saved.createdAt,
-                        updatedAt: saved.updatedAt
-                    )
+                    id: saved.id,
+                    key: saved.key,
+                    name: saved.name,
+                    isRequired: saved.isRequired,
+                    isActive: saved.isActive,
+                    processors: processors.map {
+                        Output.Processor(
+                            id: $0.id,
+                            variantId: $0.variantId,
+                            name: $0.name,
+                            matchExtensions: $0.matchExtensions,
+                            commandTemplate: $0.commandTemplate,
+                            isActive: $0.isActive
+                        )
+                    },
+                    createdAt: saved.createdAt,
+                    updatedAt: saved.updatedAt
                 )
             }
         }

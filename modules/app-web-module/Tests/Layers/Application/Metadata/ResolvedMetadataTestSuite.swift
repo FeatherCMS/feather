@@ -22,8 +22,8 @@ struct ResolvedMetadataTestSuite {
             imageURL: "/social-image.png"
         )
 
-        let result = Metadata.Detail.Output.Resolved(
-            metadata: metadata,
+        let result = Metadata.Snapshot.Resolved(
+            metadata: metadata.asSnapshot,
             fallbackTitle: "Fallback title",
             fallbackExcerpt: "Fallback excerpt",
             fallbackImageURL: "/fallback-image.png"
@@ -42,8 +42,8 @@ struct ResolvedMetadataTestSuite {
             imageURL: ""
         )
 
-        let result = Metadata.Detail.Output.Resolved(
-            metadata: metadata,
+        let result = Metadata.Snapshot.Resolved(
+            metadata: metadata.asSnapshot,
             fallbackTitle: "Fallback title",
             fallbackExcerpt: "Fallback excerpt",
             fallbackImageURL: "/fallback-image.png"

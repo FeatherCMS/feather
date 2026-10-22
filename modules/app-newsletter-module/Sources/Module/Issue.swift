@@ -1,6 +1,15 @@
 public import FeatherModuleKit
 
 public enum Issue {
+    public enum Add {}
+    public enum Detail {}
+    public enum Edit {}
+    public enum List {}
+    public enum Remove {}
+    public enum Schedule {}
+    public enum Send {}
+    public enum TestEmail {}
+
     public enum Permissions: PermissionProvider {
         public static let create = PermissionKey("newsletter:issues:create")
         public static let read = PermissionKey("newsletter:issues:read")

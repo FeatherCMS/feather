@@ -60,7 +60,7 @@ extension Tag.Add {
                 excerpt: model.excerpt,
                 content: model.content,
                 imageAssetId: model.imageAssetId,
-                metadata: model.metadata.asDetail,
+                metadata: model.metadata.asSnapshot,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

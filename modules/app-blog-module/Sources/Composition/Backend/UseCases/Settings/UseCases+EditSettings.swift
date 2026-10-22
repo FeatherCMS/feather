@@ -13,12 +13,14 @@ import WebModule
 
 extension UseCases {
 
-    public func makeEditSettings() -> Settings.Edit.UseCase {
+    public func makeEditSettings() -> BlogModule.Settings.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Settings.Edit.Scope(
-                    settings: Settings.Repository.Database(context: context)
+                BlogModule.Settings.Edit.Scope(
+                    settings: BlogModule.Settings.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )

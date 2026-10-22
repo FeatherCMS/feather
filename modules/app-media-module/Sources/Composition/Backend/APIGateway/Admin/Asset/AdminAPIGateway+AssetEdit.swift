@@ -45,6 +45,6 @@ extension AdminAPIGateway {
                 )
             )
 
-        return .ok(.init(body: .json(map(result.detail))))
+        return .ok(.init(body: .json(map(result))))
     }
 }

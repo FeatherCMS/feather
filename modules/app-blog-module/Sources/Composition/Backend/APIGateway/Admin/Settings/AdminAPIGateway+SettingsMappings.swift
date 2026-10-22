@@ -5,7 +5,7 @@ import WebModule
 
 extension AdminAPIGateway {
     func mapGetSettings(
-        _ output: Settings.Detail.Output
+        _ output: BlogModule.Settings.Detail.Output
     ) -> BlogAdminAPI.Components.Schemas.SettingsGetSchema {
         .init(
             postListPath: output.postListPath,
@@ -18,7 +18,7 @@ extension AdminAPIGateway {
     }
 
     func mapEditSettings(
-        _ output: Settings.Edit.Output
+        _ output: BlogModule.Settings.Edit.Output
     ) -> BlogAdminAPI.Components.Schemas.SettingsGetSchema {
         .init(
             postListPath: output.postListPath,

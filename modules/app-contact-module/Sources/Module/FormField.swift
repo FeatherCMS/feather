@@ -1,6 +1,16 @@
 public import FeatherModuleKit
 
 public enum FormField {
+    public enum Add {}
+    public enum Edit {}
+    public enum Detail {}
+    public enum List {
+        public enum Filter {
+            public static let unassigned = "__unassigned__"
+        }
+    }
+    public enum Remove {}
+
     public enum Permissions: PermissionProvider {
         public static let create = PermissionKey("contact:form-fields:create")
         public static let read = PermissionKey("contact:form-fields:read")
@@ -13,9 +23,4 @@ public enum FormField {
         }
     }
 
-    public enum List {
-        public enum Filter {
-            public static let unassigned = "__unassigned__"
-        }
-    }
 }

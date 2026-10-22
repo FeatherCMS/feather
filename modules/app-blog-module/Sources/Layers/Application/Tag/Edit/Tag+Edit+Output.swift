@@ -13,7 +13,7 @@ extension Tag.Edit {
         public let excerpt: String
         public let content: String
         public let imageAssetId: String?
-        public let metadata: WebModule.Metadata.Detail.Output
+        public let metadata: WebModule.Metadata.Snapshot
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -23,7 +23,7 @@ extension Tag.Edit {
             excerpt: String,
             content: String,
             imageAssetId: String?,
-            metadata: WebModule.Metadata.Detail.Output,
+            metadata: WebModule.Metadata.Snapshot,
             createdAt: Date,
             updatedAt: Date
         ) {

@@ -1,0 +1,45 @@
+public import FeatherApplication
+import NewsletterDomain
+public import NewsletterModule
+
+public import struct Foundation.Date
+
+extension Campaign.Detail {
+    public struct Output: DTO {
+        public let id: String
+        public let key: String
+        public let name: String
+        public let fromEmail: String
+        public let createdAt: Date
+        public let updatedAt: Date
+
+        public init(
+            id: String,
+            key: String,
+            name: String,
+            fromEmail: String,
+            createdAt: Date,
+            updatedAt: Date
+        ) {
+            self.id = id
+            self.key = key
+            self.name = name
+            self.fromEmail = fromEmail
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
+        }
+    }
+}
+
+extension Campaign.Model {
+    var asDetail: Campaign.Detail.Output {
+        .init(
+            id: id,
+            key: key,
+            name: name,
+            fromEmail: fromEmail,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
+    }
+}

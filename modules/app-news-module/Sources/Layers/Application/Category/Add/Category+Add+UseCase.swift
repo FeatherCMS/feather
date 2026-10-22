@@ -27,7 +27,7 @@ extension Category.Add {
         public func execute(
             subject: Subject,
             input: Category.Add.Input
-        ) async throws -> Category.Detail.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -60,7 +60,7 @@ extension Category.Add {
                 excerpt: model.excerpt,
                 content: model.content,
                 imageAssetId: model.imageAssetId,
-                metadata: model.metadata.asDetail,
+                metadata: model.metadata.asSnapshot,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

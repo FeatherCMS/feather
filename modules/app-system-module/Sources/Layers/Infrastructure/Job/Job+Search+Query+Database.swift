@@ -42,7 +42,8 @@ extension SystemModule.Job.Search.Query {
                     orderDirection: orderDirection
                 )
             ) { sequence in
-                try await sequence.collect().map { try JobRow(from: $0).detail }
+                try await sequence.collect()
+                    .map { try JobRow(from: $0).searchItem }
             }
             let total = try await context.connection.run(
                 query: countQuery(searchPattern: searchPattern, status: status)

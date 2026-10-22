@@ -66,40 +66,38 @@ extension UseCases {
                     idGenerator: databaseContext.idGenerator
                 )
             )
-            guard let asset = try await repo.find(id: result.detail.id) else {
+            guard let asset = try await repo.find(id: result.id) else {
                 return result
             }
             var value = asset
             value.status = matchingProcessors.isEmpty ? .ready : .processing
             let updatedAsset = try await repo.update(value)
             return .init(
-                detail: .init(
+                id: updatedAsset.id,
+                folderId: updatedAsset.folderId,
+                name: updatedAsset.name,
+                slug: updatedAsset.slug,
+                slugPath: updatedAsset.slugPath,
+                url: try mediaAssetPublicURL(
                     id: updatedAsset.id,
-                    folderId: updatedAsset.folderId,
-                    name: updatedAsset.name,
-                    slug: updatedAsset.slug,
                     slugPath: updatedAsset.slugPath,
-                    url: try mediaAssetPublicURL(
-                        id: updatedAsset.id,
-                        slugPath: updatedAsset.slugPath,
-                        filename: updatedAsset.name,
-                        extension: updatedAsset.extension,
-                        objectKeyGenerator: storageContext.objectKeyGenerator
-                    ),
+                    filename: updatedAsset.name,
                     extension: updatedAsset.extension,
-                    contentType: updatedAsset.contentType,
-                    sizeBytes: updatedAsset.sizeBytes,
-                    status: updatedAsset.status.rawValue,
-                    title: updatedAsset.title,
-                    altText: updatedAsset.altText,
-                    createdAt: updatedAsset.createdAt,
-                    updatedAt: updatedAsset.updatedAt
-                )
+                    objectKeyGenerator: storageContext.objectKeyGenerator
+                ),
+                extension: updatedAsset.extension,
+                contentType: updatedAsset.contentType,
+                sizeBytes: updatedAsset.sizeBytes,
+                status: updatedAsset.status.rawValue,
+                title: updatedAsset.title,
+                altText: updatedAsset.altText,
+                createdAt: updatedAsset.createdAt,
+                updatedAt: updatedAsset.updatedAt
             )
         }
         if !matchingProcessors.isEmpty {
             try await enqueueVariantGeneration(
-                assetId: result.detail.id,
+                assetId: result.id,
                 processors: matchingProcessors
             )
         }

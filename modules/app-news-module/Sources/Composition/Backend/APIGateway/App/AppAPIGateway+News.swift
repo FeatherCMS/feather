@@ -76,7 +76,7 @@ private func notFoundErrorEnvelope(
 
 extension AppAPIGateway {
     fileprivate func mapArticleSummary(
-        _ item: PublicNewsArticleSummary
+        _ item: PublicNewsArticle.Summary.Item
     ) -> Components.Schemas.NewsArticleSummarySchema {
         .init(
             id: item.id,
@@ -94,7 +94,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapArticleDetail(
-        _ item: PublicNewsArticleDetail
+        _ item: PublicNewsArticle.Detail.Output
     ) -> Components.Schemas.NewsArticleDetailSchema {
         .init(
             id: item.id,
@@ -114,7 +114,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapCategorySummary(
-        _ item: PublicNewsCategorySummary
+        _ item: PublicNewsCategory.Summary.Item
     ) -> Components.Schemas.NewsCategorySummarySchema {
         .init(
             id: item.id,
@@ -132,7 +132,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapCategoryDetail(
-        _ item: PublicNewsCategoryDetail
+        _ item: PublicNewsCategory.Detail.Output
     ) -> Components.Schemas.NewsCategoryDetailSchema {
         .init(
             id: item.id,
@@ -152,7 +152,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapMedia(
-        _ media: WebApplication.Public.Page.Detail.Output.Media?
+        _ media: WebApplication.Public.Media?
     ) -> Components.Schemas.MediaAssetSchema? {
         guard let media else { return nil }
         return .init(
@@ -169,12 +169,12 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapMetadata(
-        _ metadata: WebModule.Metadata.Detail.Output,
+        _ metadata: WebModule.Metadata.Snapshot,
         title: String,
         excerpt: String,
         imageURL: String
     ) -> Components.Schemas.WebMetadataContentSchema {
-        let resolved = WebModule.Metadata.Detail.Output.Resolved(
+        let resolved = WebModule.Metadata.Snapshot.Resolved(
             metadata: metadata,
             fallbackTitle: title,
             fallbackExcerpt: excerpt,

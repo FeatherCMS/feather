@@ -21,7 +21,7 @@ public struct GetPublicArticle {
 
     public func execute(
         id: String
-    ) async throws -> PublicNewsArticleDetail {
+    ) async throws -> PublicNewsArticle.Detail.Output {
         let now = Date()
         return try await query.run { scope in
             let article = try await scope.article.find(id: id)
@@ -32,7 +32,7 @@ public struct GetPublicArticle {
                 .findCategories(ids: article.categoryIds)
                 .filter { $0.metadata.isPublic(at: now) }
                 .map {
-                    PublicNewsCategorySummary(
+                    PublicNewsCategory.Summary.Item(
                         id: $0.id,
                         title: $0.title,
                         excerpt: $0.excerpt,

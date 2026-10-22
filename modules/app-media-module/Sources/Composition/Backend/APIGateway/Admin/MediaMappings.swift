@@ -200,21 +200,97 @@ extension AdminAPIGateway {
     func map(_ detail: Asset.File.Detail.Output)
         -> MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema
     {
-        .init(
+        mapAssetFile(
             id: detail.id,
             folderId: detail.folderId,
             name: detail.name,
             slug: detail.slug,
             slugPath: detail.slugPath,
-            url: mediaResolver.resolve(imagePath: detail.url) ?? detail.url,
-            _extension: detail.extension,
+            url: detail.url,
+            extension: detail.extension,
             contentType: detail.contentType,
             sizeBytes: detail.sizeBytes,
             status: detail.status,
             title: detail.title,
             altText: detail.altText,
-            createdAt: detail.createdAt.timeIntervalSince1970,
-            updatedAt: detail.updatedAt.timeIntervalSince1970
+            createdAt: detail.createdAt,
+            updatedAt: detail.updatedAt
+        )
+    }
+
+    func map(_ output: Asset.File.Add.Output)
+        -> MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema
+    {
+        mapAssetFile(
+            id: output.id,
+            folderId: output.folderId,
+            name: output.name,
+            slug: output.slug,
+            slugPath: output.slugPath,
+            url: output.url,
+            extension: output.extension,
+            contentType: output.contentType,
+            sizeBytes: output.sizeBytes,
+            status: output.status,
+            title: output.title,
+            altText: output.altText,
+            createdAt: output.createdAt,
+            updatedAt: output.updatedAt
+        )
+    }
+
+    func map(_ output: Asset.File.Edit.Output)
+        -> MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema
+    {
+        mapAssetFile(
+            id: output.id,
+            folderId: output.folderId,
+            name: output.name,
+            slug: output.slug,
+            slugPath: output.slugPath,
+            url: output.url,
+            extension: output.extension,
+            contentType: output.contentType,
+            sizeBytes: output.sizeBytes,
+            status: output.status,
+            title: output.title,
+            altText: output.altText,
+            createdAt: output.createdAt,
+            updatedAt: output.updatedAt
+        )
+    }
+
+    private func mapAssetFile(
+        id: String,
+        folderId: String?,
+        name: String,
+        slug: String,
+        slugPath: String,
+        url: String,
+        extension fileExtension: String,
+        contentType: String,
+        sizeBytes: Int64,
+        status: String,
+        title: String?,
+        altText: String?,
+        createdAt: Date,
+        updatedAt: Date
+    ) -> MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema {
+        .init(
+            id: id,
+            folderId: folderId,
+            name: name,
+            slug: slug,
+            slugPath: slugPath,
+            url: mediaResolver.resolve(imagePath: url) ?? url,
+            _extension: fileExtension,
+            contentType: contentType,
+            sizeBytes: sizeBytes,
+            status: status,
+            title: title,
+            altText: altText,
+            createdAt: createdAt.timeIntervalSince1970,
+            updatedAt: updatedAt.timeIntervalSince1970
         )
     }
 
@@ -283,7 +359,7 @@ extension AdminAPIGateway {
     func map(_ detail: Asset.Folder.Detail.Output)
         -> MediaAdminAPI.Components.Schemas.MediaFolderDetailSchema
     {
-        .init(
+        mapMediaFolder(
             id: detail.id,
             parentId: detail.parentId,
             name: detail.name,
@@ -291,8 +367,64 @@ extension AdminAPIGateway {
             slugPath: detail.slugPath,
             assetCount: detail.assetCount,
             totalSizeBytes: detail.totalSizeBytes,
-            createdAt: detail.createdAt.timeIntervalSince1970,
-            updatedAt: detail.updatedAt.timeIntervalSince1970
+            createdAt: detail.createdAt,
+            updatedAt: detail.updatedAt
+        )
+    }
+
+    func map(_ output: Asset.Folder.Add.Output)
+        -> MediaAdminAPI.Components.Schemas.MediaFolderDetailSchema
+    {
+        mapMediaFolder(
+            id: output.id,
+            parentId: output.parentId,
+            name: output.name,
+            slug: output.slug,
+            slugPath: output.slugPath,
+            assetCount: output.assetCount,
+            totalSizeBytes: output.totalSizeBytes,
+            createdAt: output.createdAt,
+            updatedAt: output.updatedAt
+        )
+    }
+
+    func map(_ output: Asset.Folder.Edit.Output)
+        -> MediaAdminAPI.Components.Schemas.MediaFolderDetailSchema
+    {
+        mapMediaFolder(
+            id: output.id,
+            parentId: output.parentId,
+            name: output.name,
+            slug: output.slug,
+            slugPath: output.slugPath,
+            assetCount: output.assetCount,
+            totalSizeBytes: output.totalSizeBytes,
+            createdAt: output.createdAt,
+            updatedAt: output.updatedAt
+        )
+    }
+
+    private func mapMediaFolder(
+        id: String,
+        parentId: String?,
+        name: String,
+        slug: String,
+        slugPath: String,
+        assetCount: Int,
+        totalSizeBytes: Int64,
+        createdAt: Date,
+        updatedAt: Date
+    ) -> MediaAdminAPI.Components.Schemas.MediaFolderDetailSchema {
+        .init(
+            id: id,
+            parentId: parentId,
+            name: name,
+            slug: slug,
+            slugPath: slugPath,
+            assetCount: assetCount,
+            totalSizeBytes: totalSizeBytes,
+            createdAt: createdAt.timeIntervalSince1970,
+            updatedAt: updatedAt.timeIntervalSince1970
         )
     }
 
@@ -312,7 +444,7 @@ extension AdminAPIGateway {
         )
     }
 
-    func mapAssetFolder(_ item: Asset.Folder.List.Output.Item)
+    func mapAssetFolder(_ item: Asset.File.Search.Output.FolderItem)
         -> MediaAdminAPI.Components.Schemas.MediaAssetQueryItemFolderSchema
     {
         .init(
@@ -331,15 +463,68 @@ extension AdminAPIGateway {
     func map(_ detail: Variant.Detail.Output)
         -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
     {
-        .init(
+        mapVariantDetail(
             id: detail.id,
             key: detail.key,
             name: detail.name,
             isRequired: detail.isRequired,
             isActive: detail.isActive,
             processors: detail.processors.map(mapVariantProcessorListItem),
-            createdAt: detail.createdAt.timeIntervalSince1970,
-            updatedAt: detail.updatedAt.timeIntervalSince1970
+            createdAt: detail.createdAt,
+            updatedAt: detail.updatedAt
+        )
+    }
+
+    func map(_ output: Variant.Add.Output)
+        -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
+    {
+        mapVariantDetail(
+            id: output.id,
+            key: output.key,
+            name: output.name,
+            isRequired: output.isRequired,
+            isActive: output.isActive,
+            processors: output.processors.map(mapVariantProcessorListItem),
+            createdAt: output.createdAt,
+            updatedAt: output.updatedAt
+        )
+    }
+
+    func map(_ output: Variant.Edit.Output)
+        -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
+    {
+        mapVariantDetail(
+            id: output.id,
+            key: output.key,
+            name: output.name,
+            isRequired: output.isRequired,
+            isActive: output.isActive,
+            processors: output.processors.map(mapVariantProcessorListItem),
+            createdAt: output.createdAt,
+            updatedAt: output.updatedAt
+        )
+    }
+
+    private func mapVariantDetail(
+        id: String,
+        key: String,
+        name: String,
+        isRequired: Bool,
+        isActive: Bool,
+        processors: [MediaAdminAPI.Components.Schemas
+            .MediaVariantProcessorListItemSchema],
+        createdAt: Date,
+        updatedAt: Date
+    ) -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema {
+        .init(
+            id: id,
+            key: key,
+            name: name,
+            isRequired: isRequired,
+            isActive: isActive,
+            processors: processors,
+            createdAt: createdAt.timeIntervalSince1970,
+            updatedAt: updatedAt.timeIntervalSince1970
         )
     }
 
@@ -372,7 +557,7 @@ extension AdminAPIGateway {
     )
         -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
     {
-        .init(
+        mapVariantProcessorListItem(
             id: item.id,
             name: item.name,
             matchExtensions: item.matchExtensions,
@@ -381,18 +566,128 @@ extension AdminAPIGateway {
         )
     }
 
+    func mapVariantProcessorListItem(
+        _ item: Variant.Detail.Output.Processor
+    )
+        -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
+    {
+        mapVariantProcessorListItem(
+            id: item.id,
+            name: item.name,
+            matchExtensions: item.matchExtensions,
+            commandTemplate: item.commandTemplate,
+            isActive: item.isActive
+        )
+    }
+
+    func mapVariantProcessorListItem(
+        _ item: Variant.Add.Output.Processor
+    )
+        -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
+    {
+        mapVariantProcessorListItem(
+            id: item.id,
+            name: item.name,
+            matchExtensions: item.matchExtensions,
+            commandTemplate: item.commandTemplate,
+            isActive: item.isActive
+        )
+    }
+
+    func mapVariantProcessorListItem(
+        _ item: Variant.Edit.Output.Processor
+    )
+        -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
+    {
+        mapVariantProcessorListItem(
+            id: item.id,
+            name: item.name,
+            matchExtensions: item.matchExtensions,
+            commandTemplate: item.commandTemplate,
+            isActive: item.isActive
+        )
+    }
+
+    private func mapVariantProcessorListItem(
+        id: String,
+        name: String,
+        matchExtensions: String,
+        commandTemplate: String,
+        isActive: Bool
+    ) -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema {
+        .init(
+            id: id,
+            name: name,
+            matchExtensions: matchExtensions,
+            commandTemplate: commandTemplate,
+            isActive: isActive
+        )
+    }
+
     func map(_ processor: Variant.Processor.Detail.Output)
         -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema
     {
-        .init(
+        mapVariantProcessorDetail(
             id: processor.id,
             variantId: processor.variantId,
             name: processor.name,
             matchExtensions: processor.matchExtensions,
             commandTemplate: processor.commandTemplate,
             isActive: processor.isActive,
-            createdAt: processor.createdAt.timeIntervalSince1970,
-            updatedAt: processor.updatedAt.timeIntervalSince1970
+            createdAt: processor.createdAt,
+            updatedAt: processor.updatedAt
+        )
+    }
+
+    func map(_ processor: Variant.Processor.Add.Output)
+        -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema
+    {
+        mapVariantProcessorDetail(
+            id: processor.id,
+            variantId: processor.variantId,
+            name: processor.name,
+            matchExtensions: processor.matchExtensions,
+            commandTemplate: processor.commandTemplate,
+            isActive: processor.isActive,
+            createdAt: processor.createdAt,
+            updatedAt: processor.updatedAt
+        )
+    }
+
+    func map(_ processor: Variant.Processor.Edit.Output)
+        -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema
+    {
+        mapVariantProcessorDetail(
+            id: processor.id,
+            variantId: processor.variantId,
+            name: processor.name,
+            matchExtensions: processor.matchExtensions,
+            commandTemplate: processor.commandTemplate,
+            isActive: processor.isActive,
+            createdAt: processor.createdAt,
+            updatedAt: processor.updatedAt
+        )
+    }
+
+    private func mapVariantProcessorDetail(
+        id: String,
+        variantId: String,
+        name: String,
+        matchExtensions: String,
+        commandTemplate: String,
+        isActive: Bool,
+        createdAt: Date,
+        updatedAt: Date
+    ) -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema {
+        .init(
+            id: id,
+            variantId: variantId,
+            name: name,
+            matchExtensions: matchExtensions,
+            commandTemplate: commandTemplate,
+            isActive: isActive,
+            createdAt: createdAt.timeIntervalSince1970,
+            updatedAt: updatedAt.timeIntervalSince1970
         )
     }
 

@@ -14,7 +14,7 @@ extension Post.Edit {
         public let imageAssetId: OptionalFieldChange<String>
         public let authorIds: FieldChange<[String]>
         public let tagIds: FieldChange<[String]>
-        public let metadata: Page.Edit.Input.MetadataInput?
+        public let metadata: Metadata.Input?
 
         public init(
             id: String,
@@ -24,7 +24,7 @@ extension Post.Edit {
             imageAssetId: OptionalFieldChange<String>,
             authorIds: FieldChange<[String]>,
             tagIds: FieldChange<[String]>,
-            metadata: Page.Edit.Input.MetadataInput?
+            metadata: Metadata.Input?
         ) {
             self.id = id
             self.title = title

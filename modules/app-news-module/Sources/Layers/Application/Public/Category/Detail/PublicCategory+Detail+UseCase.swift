@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import FeatherModuleKit
 import FeatherApplication
+public import FeatherModuleKit
 import Foundation
 import NewsDomain
 import NewsModule
@@ -25,7 +25,7 @@ public struct GetPublicCategory {
         id: String,
         pageNumber: Int = 1,
         pageSize: Int = 10000
-    ) async throws -> PublicNewsCategoryDetail {
+    ) async throws -> PublicNewsCategory.Detail.Output {
         let now = Date()
         return try await query.run { scope in
             let category = try await scope.category.find(id: id)
@@ -59,7 +59,7 @@ public struct GetPublicCategory {
 
 extension GetPublicCategory {
     fileprivate struct PublicArticlePage: Sendable {
-        let items: [PublicNewsArticleSummary]
+        let items: [PublicNewsArticle.Summary.Item]
         let total: Int
         let page: Int
         let pageSize: Int
@@ -128,7 +128,7 @@ extension GetPublicCategory {
         let metadataByArticleID = Dictionary(
             uniqueKeysWithValues: metadata.map { ($0.referenceID, $0) }
         )
-        var result: [PublicNewsArticleSummary] = []
+        var result: [PublicNewsArticle.Summary.Item] = []
         for item in articles.items {
             guard
                 let metadata = metadataByArticleID[item.id],

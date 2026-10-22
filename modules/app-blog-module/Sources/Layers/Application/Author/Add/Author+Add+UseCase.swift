@@ -59,7 +59,7 @@ extension Author.Add {
                 excerpt: model.excerpt,
                 content: model.content,
                 profileImageAssetId: model.profileImageAssetId,
-                metadata: model.metadata.asDetail,
+                metadata: model.metadata.asSnapshot,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

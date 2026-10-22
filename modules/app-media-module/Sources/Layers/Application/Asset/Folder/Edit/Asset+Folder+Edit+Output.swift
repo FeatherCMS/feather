@@ -1,12 +1,40 @@
 public import FeatherApplication
 public import MediaModule
 
+public import struct Foundation.Date
+
 extension Asset.Folder.Edit {
     public struct Output: DTO {
-        public let detail: Asset.Folder.Detail.Output
+        public let id: String
+        public let parentId: String?
+        public let name: String
+        public let slug: String
+        public let slugPath: String
+        public let assetCount: Int
+        public let totalSizeBytes: Int64
+        public let createdAt: Date
+        public let updatedAt: Date
 
-        public init(detail: Asset.Folder.Detail.Output) {
-            self.detail = detail
+        public init(
+            id: String,
+            parentId: String?,
+            name: String,
+            slug: String,
+            slugPath: String,
+            assetCount: Int,
+            totalSizeBytes: Int64,
+            createdAt: Date,
+            updatedAt: Date
+        ) {
+            self.id = id
+            self.parentId = parentId
+            self.name = name
+            self.slug = slug
+            self.slugPath = slugPath
+            self.assetCount = assetCount
+            self.totalSizeBytes = totalSizeBytes
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
         }
     }
 }

@@ -4,13 +4,11 @@ import FeatherModuleKit
 import MediaApplication
 import MediaBackend
 import WebApplication
-public import WebDomain
-public import WebModule
 
 extension AppAPIGateway {
     func publicMedia(
         assetId: String?
-    ) async -> WebApplication.Public.Page.Detail.Output.Media? {
+    ) async -> WebApplication.Public.Media? {
         guard let assetId, !assetId.isEmpty else {
             return nil
         }
@@ -25,7 +23,7 @@ extension AppAPIGateway {
                 assetId: assetId
             )) ?? [])
             .map {
-                PublicContentMediaVariant(
+                MediaURLVariant(
                     key: $0.key,
                     url: resolver.resolve(imagePath: $0.url) ?? $0.url
                 )
@@ -39,12 +37,14 @@ extension AppAPIGateway {
             assetId: asset.id,
             originalURL: originalURL,
             defaultURL: defaultURL,
-            variants: variants
+            variants: variants.map {
+                .init(key: $0.key, url: $0.url)
+            }
         )
     }
 
     func mapPublicMedia(
-        _ media: WebApplication.Public.Page.Detail.Output.Media?
+        _ media: WebApplication.Public.Media?
     ) -> BlogAppAPI.Components.Schemas.MediaAssetSchema? {
         guard let media else {
             return nil

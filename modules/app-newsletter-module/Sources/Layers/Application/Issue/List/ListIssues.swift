@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 public struct ListIssues: UseCase {
     struct Action: PermissionAction { let key = Issue.Permissions.list }
@@ -27,7 +27,7 @@ public struct ListIssues: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> [IssueDetail] {
+    ) async throws -> [Issue.List.Output] {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -39,7 +39,7 @@ public struct ListIssues: UseCase {
                 )
             else { throw Error.campaignNotFound }
             return try await scope.issue.list(newsletterId: campaign.id)
-                .map(\.asDetail)
+                .map(Issue.List.Output.init(model:))
         }
     }
 

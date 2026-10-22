@@ -1,5 +1,5 @@
-public import FeatherModuleKit
 public import FeatherApplication
+public import FeatherModuleKit
 import WebDomain
 public import WebModule
 
@@ -13,9 +13,9 @@ extension Settings.Public.Detail {
             self.query = query
         }
 
-        public func execute() async throws -> Settings.Detail.Output {
+        public func execute() async throws -> Output {
             try await query.run { scope in
-                try await scope.settings.get().asDetail
+                try await scope.settings.get().asPublicDetail
             }
         }
     }

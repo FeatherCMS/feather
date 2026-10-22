@@ -19,7 +19,7 @@ extension Profile.Edit {
         public func execute(
             subject: Subject,
             input: Profile.Edit.Input
-        ) async throws -> Profile.Detail.Output {
+        ) async throws -> Output {
             let userId = input.userId ?? subject.id
             let action = Action(userID: userId)
             guard try await authorizer.can(subject: subject, perform: action)

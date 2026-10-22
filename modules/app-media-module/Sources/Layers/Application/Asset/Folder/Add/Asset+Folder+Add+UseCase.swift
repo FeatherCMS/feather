@@ -56,24 +56,22 @@ extension Asset.Folder.Add {
                         )
                     )
                 return .init(
-                    detail: .init(
-                        id: folder.id,
-                        parentId: folder.parentId,
-                        name: folder.name,
-                        slug: folder.slug,
-                        slugPath: folder.slugPath,
-                        assetCount: folder.assetCount,
-                        totalSizeBytes: folder.totalSizeBytes,
-                        createdAt: folder.createdAt,
-                        updatedAt: folder.updatedAt
-                    )
+                    id: folder.id,
+                    parentId: folder.parentId,
+                    name: folder.name,
+                    slug: folder.slug,
+                    slugPath: folder.slugPath,
+                    assetCount: folder.assetCount,
+                    totalSizeBytes: folder.totalSizeBytes,
+                    createdAt: folder.createdAt,
+                    updatedAt: folder.updatedAt
                 )
             }
         }
     }
-    }
+}
 
-    private func normalizedSlug(_ value: String) -> String {
+private func normalizedSlug(_ value: String) -> String {
     value.lowercased()
         .replacingOccurrences(
             of: "[^a-z0-9]+",

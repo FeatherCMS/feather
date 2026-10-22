@@ -24,7 +24,7 @@ public struct ListSubmissions: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> [Submission.Detail.Output] {
+    ) async throws -> Submission.List.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -34,8 +34,12 @@ public struct ListSubmissions: UseCase {
             else {
                 throw Error.formNotFound
             }
-            return try await scope.submission.listBy(formId: form.id)
-                .map(\.asDetail)
+            return .init(
+                items: try await scope.submission.listBy(formId: form.id)
+                    .map {
+                        Submission.List.Output.Item(model: $0)
+                    }
+            )
         }
     }
 

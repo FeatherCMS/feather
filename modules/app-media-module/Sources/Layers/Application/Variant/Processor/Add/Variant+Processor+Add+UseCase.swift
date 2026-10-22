@@ -40,16 +40,14 @@ extension Variant.Processor.Add {
                     )
                 )
                 return .init(
-                    detail: .init(
-                        id: processor.id,
-                        variantId: processor.variantId,
-                        name: processor.name,
-                        matchExtensions: processor.matchExtensions,
-                        commandTemplate: processor.commandTemplate,
-                        isActive: processor.isActive,
-                        createdAt: processor.createdAt,
-                        updatedAt: processor.updatedAt
-                    )
+                    id: processor.id,
+                    variantId: processor.variantId,
+                    name: processor.name,
+                    matchExtensions: processor.matchExtensions,
+                    commandTemplate: processor.commandTemplate,
+                    isActive: processor.isActive,
+                    createdAt: processor.createdAt,
+                    updatedAt: processor.updatedAt
                 )
             }
         }

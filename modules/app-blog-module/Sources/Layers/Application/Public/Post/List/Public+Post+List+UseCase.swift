@@ -28,7 +28,7 @@ extension Public.Post.List {
                         sort: [.init(field: .createdAt, direction: .desc)]
                     )
                 )
-                var result: [Public.Post.Summary.Output] = []
+                var result: [Public.Post.Summary.Item] = []
                 for item in posts.items {
                     guard
                         let metadata = try await scope.metadata.find(
@@ -77,8 +77,8 @@ extension Public.Post.List.UseCase {
         _ ids: [String],
         now: Date,
         context: Public.Post.List.Scope
-    ) async throws -> [Public.Author.Summary.Output] {
-        var result: [Public.Author.Summary.Output] = []
+    ) async throws -> [Public.Author.Summary.Item] {
+        var result: [Public.Author.Summary.Item] = []
         for id in ids {
             guard
                 let metadata = try await context.metadata.find(
@@ -108,8 +108,8 @@ extension Public.Post.List.UseCase {
         _ ids: [String],
         now: Date,
         context: Public.Post.List.Scope
-    ) async throws -> [Public.Tag.Summary.Output] {
-        var result: [Public.Tag.Summary.Output] = []
+    ) async throws -> [Public.Tag.Summary.Item] {
+        var result: [Public.Tag.Summary.Item] = []
         for id in ids {
             guard
                 let metadata = try await context.metadata.find(

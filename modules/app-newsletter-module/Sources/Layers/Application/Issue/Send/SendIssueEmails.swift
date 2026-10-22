@@ -35,12 +35,18 @@ public struct SendIssueEmails: UseCase {
         public let content: String
         public let scheduledDate: Date?
 
-        public init(issue: IssueDetail) {
-            self.issueId = issue.id
-            self.newsletterId = issue.newsletterId
-            self.subject = issue.subject
-            self.content = issue.content
-            self.scheduledDate = issue.scheduledDate
+        public init(
+            issueId: String,
+            newsletterId: String,
+            subject: String,
+            content: String,
+            scheduledDate: Date?
+        ) {
+            self.issueId = issueId
+            self.newsletterId = newsletterId
+            self.subject = subject
+            self.content = content
+            self.scheduledDate = scheduledDate
         }
     }
 

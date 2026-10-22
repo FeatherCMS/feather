@@ -1,6 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
+public import NewsletterModule
 
 import struct Foundation.Date
 
@@ -32,7 +33,7 @@ public struct Unsubscribe: UseCase {
 
     public func execute(
         _ input: Input
-    ) async throws -> SubscriberDetail {
+    ) async throws -> Subscriber.Unsubscribe.Output {
         let now = Date()
         return try await transaction.run { scope in
             guard
@@ -52,7 +53,7 @@ public struct Unsubscribe: UseCase {
             }
 
             model.unsubscribe(at: now)
-            return (try await scope.subscriber.update(model)).asDetail
+            return .init(model: try await scope.subscriber.update(model))
         }
     }
 }

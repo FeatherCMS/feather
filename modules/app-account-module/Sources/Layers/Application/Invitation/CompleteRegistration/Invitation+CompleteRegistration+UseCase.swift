@@ -4,9 +4,9 @@ import AuthDomain
 public import FeatherApplication
 import FeatherDomain
 public import FeatherModuleKit
-public import UserApplication
+import UserApplication
 import UserDomain
-public import UserModule
+import UserModule
 
 //
 //  Invitation+CompleteRegistration+UseCase.swift
@@ -30,7 +30,7 @@ extension Invitation.CompleteRegistration {
 
         public func execute(
             input: Invitation.CompleteRegistration.Input
-        ) async throws -> Identity.Detail.Output {
+        ) async throws -> Output {
             try await transaction.run { scope, context in
                 guard
                     var invitation = try await scope.invitation.findBy(

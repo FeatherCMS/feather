@@ -31,6 +31,30 @@ extension Metadata.Table.Detail {
             updatedAt: updatedAt
         )
     }
+
+    var asSnapshot: Metadata.Snapshot {
+        .init(
+            id: id,
+            referenceType: referenceType,
+            referenceID: referenceID,
+            template: template,
+            slug: slug,
+            publicationDate: publicationDate,
+            expirationDate: expirationDate,
+            status: .init(rawValue: status) ?? .draft,
+            title: titleOverride,
+            excerpt: excerptOverride,
+            imageURL: imageURLOverride,
+            canonicalURL: canonicalURL,
+            noIndex: noIndex,
+            primaryKeyword: primaryKeyword,
+            cssCodeInjection: cssCodeInjection,
+            javascriptCodeInjection: javascriptCodeInjection,
+            structuredDataCodeInjection: structuredDataCodeInjection,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
+    }
 }
 
 extension Metadata {
@@ -68,20 +92,18 @@ extension Metadata.Query {
         public func find(
             referenceType: String,
             referenceID: String
-        ) async throws -> Metadata.Detail.Output? {
+        ) async throws -> Metadata.Snapshot? {
             try await accessLayer.selectFirst(as: Metadata.Table.Detail.self) {
                 $0.where(\.referenceType, equals: referenceType)
                     .where(\.referenceID, equals: referenceID)
                     .limit(1)
             }
-            .map { $0.asDetail }
+            .map { $0.asSnapshot }
         }
 
-        public func resolve(slug: String) async throws -> Metadata.Detail
-            .Output?
-        {
+        public func resolve(slug: String) async throws -> Metadata.Snapshot? {
             try await accessLayer.selectFirst(by: \.slug, equals: slug)
-                .map { $0.asDetail }
+                .map { $0.asSnapshot }
         }
 
         public func resolve(
@@ -102,7 +124,7 @@ extension Metadata.Query {
         public func resolveDetails(
             referenceType: String,
             referenceIDs: [String]
-        ) async throws -> [Metadata.Detail.Output] {
+        ) async throws -> [Metadata.Snapshot] {
             guard !referenceIDs.isEmpty else { return [] }
             let rows = try await accessLayer.select(
                 as: Metadata.Table.Detail.self
@@ -111,7 +133,7 @@ extension Metadata.Query {
                     .where(\.referenceID, in: referenceIDs)
                     .order(by: \.referenceID, .ascending)
             }
-            return rows.map(\.asDetail)
+            return rows.map(\.asSnapshot)
         }
 
     }

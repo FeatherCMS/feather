@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 public struct GetCampaign: UseCase {
     struct Action: PermissionAction { let key = Campaign.Permissions.read }
@@ -26,7 +26,7 @@ public struct GetCampaign: UseCase {
         public init(id: String) { self.identifier = .id(id) }
     }
     public func execute(subject: Subject, input: Input) async throws
-        -> CampaignDetail
+        -> Campaign.Detail.Output
     {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {

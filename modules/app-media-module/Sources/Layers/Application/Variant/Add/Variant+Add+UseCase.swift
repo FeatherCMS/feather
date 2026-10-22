@@ -36,16 +36,14 @@ extension Variant.Add {
                 )
             }
             return .init(
-                detail: .init(
-                    id: variant.id,
-                    key: variant.key,
-                    name: variant.name,
-                    isRequired: variant.isRequired,
-                    isActive: variant.isActive,
-                    processors: [],
-                    createdAt: variant.createdAt,
-                    updatedAt: variant.updatedAt
-                )
+                id: variant.id,
+                key: variant.key,
+                name: variant.name,
+                isRequired: variant.isRequired,
+                isActive: variant.isActive,
+                processors: [],
+                createdAt: variant.createdAt,
+                updatedAt: variant.updatedAt
             )
         }
     }

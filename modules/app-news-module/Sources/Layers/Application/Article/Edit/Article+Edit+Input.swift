@@ -17,7 +17,7 @@ extension Article.Edit {
         public let content: String?
         public let imageAssetId: String??
         public let categoryIds: [String]?
-        public let metadata: Page.Edit.Input.MetadataInput?
+        public let metadata: Metadata.Input?
 
         public init(
             id: String,
@@ -26,7 +26,7 @@ extension Article.Edit {
             content: String?,
             imageAssetId: String??,
             categoryIds: [String]?,
-            metadata: Page.Edit.Input.MetadataInput?
+            metadata: Metadata.Input?
         ) {
             self.id = id
             self.title = title

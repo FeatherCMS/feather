@@ -42,7 +42,7 @@ public struct CreateSubscriber: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> SubscriberDetail {
+    ) async throws -> Subscriber.Add.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -64,9 +64,9 @@ public struct CreateSubscriber: UseCase {
             if input.status == .unsubscribed {
                 var model = try await scope.subscriber.insert(value)
                 model.unsubscribe(at: now)
-                return try await scope.subscriber.update(model).asDetail
+                return .init(model: try await scope.subscriber.update(model))
             }
-            return try await scope.subscriber.insert(value).asDetail
+            return .init(model: try await scope.subscriber.insert(value))
         }
     }
 

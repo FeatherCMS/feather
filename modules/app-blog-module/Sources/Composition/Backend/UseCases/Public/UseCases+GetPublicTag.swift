@@ -18,7 +18,13 @@ extension UseCases {
                             context: context
                         )
                     ),
-                    post: Public.Post.Database(
+                    postDetail: Public.Post.Database(
+                        context: context,
+                        metadata: WebModule.Metadata.Query.Database(
+                            context: context
+                        )
+                    ),
+                    postList: Public.Post.Database(
                         context: context,
                         metadata: WebModule.Metadata.Query.Database(
                             context: context

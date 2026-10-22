@@ -47,7 +47,7 @@ extension Settings.Edit {
                 )
                 return try await scope.settings.update(model)
             }
-            return .init(settings: model.asDetail)
+            return .init(model: model)
         }
     }
 }

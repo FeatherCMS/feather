@@ -48,28 +48,26 @@ extension Asset.File.Edit {
 
                 let updated = try await scope.assets.update(asset)
                 return .init(
-                    detail: try .init(
+                    id: updated.id,
+                    folderId: updated.folderId,
+                    name: updated.name,
+                    slug: updated.slug,
+                    slugPath: updated.slugPath,
+                    url: try mediaAssetPublicURL(
                         id: updated.id,
-                        folderId: updated.folderId,
-                        name: updated.name,
-                        slug: updated.slug,
                         slugPath: updated.slugPath,
-                        url: mediaAssetPublicURL(
-                            id: updated.id,
-                            slugPath: updated.slugPath,
-                            filename: updated.name,
-                            extension: updated.extension,
-                            objectKeyGenerator: objectKeyGenerator
-                        ),
+                        filename: updated.name,
                         extension: updated.extension,
-                        contentType: updated.contentType,
-                        sizeBytes: updated.sizeBytes,
-                        status: updated.status.rawValue,
-                        title: updated.title,
-                        altText: updated.altText,
-                        createdAt: updated.createdAt,
-                        updatedAt: updated.updatedAt
-                    )
+                        objectKeyGenerator: objectKeyGenerator
+                    ),
+                    extension: updated.extension,
+                    contentType: updated.contentType,
+                    sizeBytes: updated.sizeBytes,
+                    status: updated.status.rawValue,
+                    title: updated.title,
+                    altText: updated.altText,
+                    createdAt: updated.createdAt,
+                    updatedAt: updated.updatedAt
                 )
             }
         }

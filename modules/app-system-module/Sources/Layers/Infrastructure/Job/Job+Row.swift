@@ -30,4 +30,15 @@ struct JobRow {
             payload: payload
         )
     }
+
+    var searchItem: SystemModule.Job.Search.Output.Item {
+        .init(
+            id: id,
+            queueName: queueName,
+            status: status,
+            workerId: workerId,
+            lastModified: lastModified,
+            payload: payload
+        )
+    }
 }

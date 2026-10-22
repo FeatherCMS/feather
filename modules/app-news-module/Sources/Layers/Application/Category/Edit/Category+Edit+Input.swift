@@ -16,7 +16,7 @@ extension Category.Edit {
         public let excerpt: String?
         public let content: String?
         public let imageAssetId: String??
-        public let metadata: Page.Edit.Input.MetadataInput?
+        public let metadata: Metadata.Input?
 
         public init(
             id: String,
@@ -24,7 +24,7 @@ extension Category.Edit {
             excerpt: String?,
             content: String?,
             imageAssetId: String??,
-            metadata: Page.Edit.Input.MetadataInput?
+            metadata: Metadata.Input?
         ) {
             self.id = id
             self.title = title

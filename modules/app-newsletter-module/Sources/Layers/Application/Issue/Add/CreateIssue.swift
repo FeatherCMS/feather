@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 public struct CreateIssue: UseCase {
     struct Action: PermissionAction { let key = Issue.Permissions.create }
@@ -38,7 +38,7 @@ public struct CreateIssue: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> IssueDetail {
+    ) async throws -> Issue.Add.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -55,7 +55,7 @@ public struct CreateIssue: UseCase {
                 previewText: input.previewText,
                 content: input.content
             )
-            return (try await scope.issue.insert(model)).asDetail
+            return .init(model: try await scope.issue.insert(model))
         }
     }
 

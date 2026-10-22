@@ -2,7 +2,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 public import Foundation
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 public struct UpdateIssue: UseCase {
     struct Action: PermissionAction { let key = Issue.Permissions.update }
@@ -42,7 +42,7 @@ public struct UpdateIssue: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> IssueDetail {
+    ) async throws -> Issue.Edit.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -74,7 +74,7 @@ public struct UpdateIssue: UseCase {
             issue.content = input.content
             issue.scheduledDate = input.scheduledDate
             issue.status = input.scheduledDate == nil ? .draft : .scheduled
-            return (try await scope.issue.update(issue)).asDetail
+            return .init(model: try await scope.issue.update(issue))
         }
     }
 

@@ -121,28 +121,26 @@ extension Asset.File.Add {
                     return asset
                 }
                 return .init(
-                    detail: try .init(
+                    id: asset.id,
+                    folderId: asset.folderId,
+                    name: asset.name,
+                    slug: asset.slug,
+                    slugPath: asset.slugPath,
+                    url: try mediaAssetPublicURL(
                         id: asset.id,
-                        folderId: asset.folderId,
-                        name: asset.name,
-                        slug: asset.slug,
                         slugPath: asset.slugPath,
-                        url: mediaAssetPublicURL(
-                            id: asset.id,
-                            slugPath: asset.slugPath,
-                            filename: asset.name,
-                            extension: asset.extension,
-                            objectKeyGenerator: storageContext.objectKeyGenerator
-                        ),
+                        filename: asset.name,
                         extension: asset.extension,
-                        contentType: asset.contentType,
-                        sizeBytes: asset.sizeBytes,
-                        status: asset.status.rawValue,
-                        title: asset.title,
-                        altText: asset.altText,
-                        createdAt: asset.createdAt,
-                        updatedAt: asset.updatedAt
-                    )
+                        objectKeyGenerator: storageContext.objectKeyGenerator
+                    ),
+                    extension: asset.extension,
+                    contentType: asset.contentType,
+                    sizeBytes: asset.sizeBytes,
+                    status: asset.status.rawValue,
+                    title: asset.title,
+                    altText: asset.altText,
+                    createdAt: asset.createdAt,
+                    updatedAt: asset.updatedAt
                 )
             }
             catch {
@@ -151,9 +149,9 @@ extension Asset.File.Add {
             }
         }
     }
-    }
+}
 
-    extension Asset.File.Add.UseCase {
+extension Asset.File.Add.UseCase {
     fileprivate struct NormalizedFile {
         let name: String
         let slug: String

@@ -22,7 +22,7 @@ public struct ListPublicArticles {
 
     public func execute(
         limit: Int? = nil
-    ) async throws -> [PublicNewsArticleSummary] {
+    ) async throws -> [PublicNewsArticle.Summary.Item] {
         let result = try await executePage(
             pageSize: limit ?? 10000
         )
@@ -30,7 +30,7 @@ public struct ListPublicArticles {
     }
 
     public func execute(ids: [String]) async throws
-        -> [PublicNewsArticleSummary]
+        -> [PublicNewsArticle.Summary.Item]
     {
         var seenIDs = Set<String>()
         let ids = ids.filter { seenIDs.insert($0).inserted }
@@ -77,7 +77,7 @@ public struct ListPublicArticles {
         categoryIDs: [String],
         excludingArticleID: String,
         limit: Int = 6
-    ) async throws -> [PublicNewsArticleSummary] {
+    ) async throws -> [PublicNewsArticle.Summary.Item] {
         let categoryIDs = Array(Set(categoryIDs)).filter { !$0.isEmpty }
         guard !categoryIDs.isEmpty, limit > 0 else { return [] }
         let now = Date()
@@ -102,7 +102,7 @@ public struct ListPublicArticles {
                 )
             return articles.items.compactMap { item in
                 guard let metadata = metadataByID[item.id] else { return nil }
-                return PublicNewsArticleSummary(
+                return PublicNewsArticle.Summary.Item(
                     id: item.id,
                     title: item.title,
                     excerpt: item.excerpt,
@@ -121,7 +121,7 @@ public struct ListPublicArticles {
         search: String? = nil,
         pageNumber: Int = 1,
         pageSize: Int = 12
-    ) async throws -> PublicNewsArticlePage {
+    ) async throws -> PublicNewsArticle.List.Output {
         let now = Date()
         return try await query.run { scope in
             let normalizedSearch: String?

@@ -17,10 +17,10 @@ extension Public.Author.Detail {
         public let content: String
         public let imageAssetId: String?
         public let imageURL: String
-        public let media: WebApplication.Public.Page.Detail.Output.Media?
-        public let metadata: WebModule.Metadata.Detail.Output
+        public let media: WebApplication.Public.Media?
+        public let metadata: WebModule.Metadata.Snapshot
         public let links: [Public.Author.Link]
-        public let posts: [Public.Post.Summary.Output]
+        public let posts: [Public.Post.Summary.Item]
 
         public init(
             id: String,
@@ -29,10 +29,10 @@ extension Public.Author.Detail {
             content: String,
             imageAssetId: String?,
             imageURL: String,
-            media: WebApplication.Public.Page.Detail.Output.Media?,
-            metadata: WebModule.Metadata.Detail.Output,
+            media: WebApplication.Public.Media?,
+            metadata: WebModule.Metadata.Snapshot,
             links: [Public.Author.Link],
-            posts: [Public.Post.Summary.Output]
+            posts: [Public.Post.Summary.Item]
         ) {
             self.id = id
             self.name = name

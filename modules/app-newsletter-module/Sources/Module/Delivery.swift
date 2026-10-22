@@ -1,1 +1,3 @@
-public enum Delivery {}
+public enum Delivery {
+    public enum List {}
+}

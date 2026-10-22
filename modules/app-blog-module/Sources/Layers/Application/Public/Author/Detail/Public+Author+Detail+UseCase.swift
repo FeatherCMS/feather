@@ -35,13 +35,7 @@ extension Public.Author.Detail {
 
                 let authorID = id
                 let author = try await scope.author.find(id: authorID)
-                let links = try await scope.authorLink.list(
-                    authorId: authorID,
-                    query: .init(
-                        page: .init(size: 10_000, number: 1),
-                        sort: [.init(field: .priority, direction: .asc)]
-                    )
-                )
+                let links = try await scope.authorLink.list(authorId: authorID)
                 let posts = try await Self.publicPosts(
                     matchingAuthorID: authorID,
                     now: now,
@@ -71,16 +65,16 @@ extension Public.Author.Detail.UseCase {
         matchingAuthorID authorID: String,
         now: Date,
         context: Public.Author.Detail.Scope
-    ) async throws -> [Public.Post.Summary.Output] {
-        let posts = try await context.post.list(
+    ) async throws -> [Public.Post.Summary.Item] {
+        let posts = try await context.postList.list(
             query: .init(
                 page: .init(size: 10_000, number: 1),
                 sort: [.init(field: .createdAt, direction: .desc)]
             )
         )
-        var result: [Public.Post.Summary.Output] = []
+        var result: [Public.Post.Summary.Item] = []
         for item in posts.items {
-            let post = try await context.post.find(id: item.id)
+            let post = try await context.postDetail.find(id: item.id)
             guard post.authorIds.contains(authorID) else {
                 continue
             }

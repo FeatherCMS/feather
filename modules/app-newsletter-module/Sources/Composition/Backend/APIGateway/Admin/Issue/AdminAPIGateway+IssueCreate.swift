@@ -13,7 +13,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
 
-        var result = try await self.useCases.makeCreateNewsletterIssue()
+        let created = try await self.useCases.makeCreateNewsletterIssue()
             .execute(
                 subject: subject,
                 input: .init(
@@ -23,28 +23,54 @@ extension AdminAPIGateway {
                 )
             )
 
+        let issueSchema: Components.Schemas.NewsletterIssueSchema
         if let scheduledAt = body.scheduledAt {
-            result = try await self.useCases.makeScheduleNewsletterIssue()
+            let scheduled = try await self.useCases
+                .makeScheduleNewsletterIssue()
                 .execute(
                     subject: subject,
                     input: .init(
-                        id: result.id,
+                        id: created.id,
                         scheduledDate: .init(timeIntervalSince1970: scheduledAt)
                     )
                 )
-        }
-
-        try await useCases.makeSendNewsletterIssueEmails()
-            .execute(
-                subject: subject,
-                input: .init(issue: result)
+            try await useCases.makeSendNewsletterIssueEmails()
+                .execute(
+                    subject: subject,
+                    input: .init(
+                        issueId: scheduled.id,
+                        newsletterId: scheduled.newsletterId,
+                        subject: scheduled.subject,
+                        content: scheduled.content,
+                        scheduledDate: scheduled.scheduledDate
+                    )
+                )
+            issueSchema = map(
+                scheduled,
+                campaignKey: input.path.newsletterCampaignKey
             )
+        }
+        else {
+            try await useCases.makeSendNewsletterIssueEmails()
+                .execute(
+                    subject: subject,
+                    input: .init(
+                        issueId: created.id,
+                        newsletterId: created.newsletterId,
+                        subject: created.subject,
+                        content: created.content,
+                        scheduledDate: created.scheduledDate
+                    )
+                )
+            issueSchema = map(
+                created,
+                campaignKey: input.path.newsletterCampaignKey
+            )
+        }
 
         return .created(
             .init(
-                body: .json(
-                    map(result, campaignKey: input.path.newsletterCampaignKey)
-                )
+                body: .json(issueSchema)
             )
         )
     }

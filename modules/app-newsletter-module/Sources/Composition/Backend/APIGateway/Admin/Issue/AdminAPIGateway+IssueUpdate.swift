@@ -38,7 +38,13 @@ extension AdminAPIGateway {
             try await useCases.makeSendNewsletterIssueEmails()
                 .execute(
                     subject: subject,
-                    input: .init(issue: result)
+                    input: .init(
+                        issueId: result.id,
+                        newsletterId: result.newsletterId,
+                        subject: result.subject,
+                        content: result.content,
+                        scheduledDate: result.scheduledDate
+                    )
                 )
         }
         return .ok(

@@ -23,7 +23,7 @@ extension Credential.Add {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Credential.Detail.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

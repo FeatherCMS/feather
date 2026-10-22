@@ -10,14 +10,14 @@ extension Tag.Add {
         public let excerpt: String
         public let content: String
         public let imageAssetId: String?
-        public let metadata: Page.Add.Input.MetadataInput
+        public let metadata: Metadata.Input
 
         public init(
             title: String,
             excerpt: String,
             content: String,
             imageAssetId: String?,
-            metadata: Page.Add.Input.MetadataInput
+            metadata: Metadata.Input
         ) {
             self.title = title
             self.excerpt = excerpt

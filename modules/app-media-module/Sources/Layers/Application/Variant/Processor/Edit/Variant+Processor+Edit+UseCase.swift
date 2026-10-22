@@ -45,16 +45,14 @@ extension Variant.Processor.Edit {
                     processor
                 )
                 return .init(
-                    detail: .init(
-                        id: updated.id,
-                        variantId: updated.variantId,
-                        name: updated.name,
-                        matchExtensions: updated.matchExtensions,
-                        commandTemplate: updated.commandTemplate,
-                        isActive: updated.isActive,
-                        createdAt: updated.createdAt,
-                        updatedAt: updated.updatedAt
-                    )
+                    id: updated.id,
+                    variantId: updated.variantId,
+                    name: updated.name,
+                    matchExtensions: updated.matchExtensions,
+                    commandTemplate: updated.commandTemplate,
+                    isActive: updated.isActive,
+                    createdAt: updated.createdAt,
+                    updatedAt: updated.updatedAt
                 )
             }
         }

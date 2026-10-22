@@ -15,7 +15,7 @@ extension AdminAPIGateway {
 
     func mapPageMetadata(
         _ metadata: WebAdminAPI.Components.Schemas.MetadataCreateSchema
-    ) -> Page.Add.Input.MetadataInput {
+    ) -> Metadata.Input {
         .init(
             slug: metadata.slug,
             template: metadata.template ?? "default",
@@ -41,7 +41,7 @@ extension AdminAPIGateway {
     func defaultPageMetadata(
         title: String,
         excerpt: String
-    ) -> Page.Add.Input.MetadataInput {
+    ) -> Metadata.Input {
         .init(
             slug: title.slugified,
             template: "default",
@@ -63,7 +63,7 @@ extension AdminAPIGateway {
     func mergePageMetadata(
         _ patch: WebAdminAPI.Components.Schemas.MetadataPatchSchema,
         into detail: WebAdminAPI.Components.Schemas.MetadataDetailSchema
-    ) -> Page.Edit.Input.MetadataInput {
+    ) -> Metadata.Input {
         .init(
             slug: patch.slug ?? detail.slug,
             template: patch.template ?? detail.template,
@@ -113,30 +113,146 @@ extension AdminAPIGateway {
     func map(_ detail: Metadata.Detail.Output)
         -> WebAdminAPI.Components.Schemas.MetadataDetailSchema
     {
-        .init(
+        map(detail.asSnapshot)
+    }
+
+    func map(_ detail: Metadata.Snapshot)
+        -> WebAdminAPI.Components.Schemas.MetadataDetailSchema
+    {
+        mapMetadata(
             id: detail.id,
             referenceType: detail.referenceType,
-            referenceId: detail.referenceID,
+            referenceID: detail.referenceID,
             slug: detail.slug,
             template: detail.template,
-            publicationDate: detail.publicationDate.timeIntervalSince1970,
-            expirationDate: detail.expirationDate?.timeIntervalSince1970,
-            status: detail.status.rawValue,
-            availability: .init(
-                rawValue: detail.availability(at: .now).rawValue
-            )
-                ?? .draft,
+            publicationDate: detail.publicationDate,
+            expirationDate: detail.expirationDate,
+            status: detail.status,
+            availability: detail.availability(at: .now),
             title: detail.title,
             excerpt: detail.excerpt,
-            imageUrl: detail.imageURL,
-            canonicalUrl: detail.canonicalURL,
+            imageURL: detail.imageURL,
+            canonicalURL: detail.canonicalURL,
             noIndex: detail.noIndex,
-            primaryKeyword: detail.primaryKeyword ?? "",
+            primaryKeyword: detail.primaryKeyword,
             cssCodeInjection: detail.cssCodeInjection,
             javascriptCodeInjection: detail.javascriptCodeInjection,
             structuredDataCodeInjection: detail.structuredDataCodeInjection,
-            createdAt: detail.createdAt.timeIntervalSince1970,
-            updatedAt: detail.updatedAt.timeIntervalSince1970
+            createdAt: detail.createdAt,
+            updatedAt: detail.updatedAt
+        )
+    }
+
+    func map(_ output: Metadata.Add.Output)
+        -> WebAdminAPI.Components.Schemas.MetadataDetailSchema
+    {
+        mapMetadata(
+            id: output.id,
+            referenceType: output.referenceType,
+            referenceID: output.referenceID,
+            slug: output.slug,
+            template: output.template,
+            publicationDate: output.publicationDate,
+            expirationDate: output.expirationDate,
+            status: output.status,
+            availability: .init(
+                status: output.status,
+                publicationDate: output.publicationDate,
+                expirationDate: output.expirationDate,
+                at: .now
+            ),
+            title: output.title,
+            excerpt: output.excerpt,
+            imageURL: output.imageURL,
+            canonicalURL: output.canonicalURL,
+            noIndex: output.noIndex,
+            primaryKeyword: output.primaryKeyword,
+            cssCodeInjection: output.cssCodeInjection,
+            javascriptCodeInjection: output.javascriptCodeInjection,
+            structuredDataCodeInjection: output.structuredDataCodeInjection,
+            createdAt: output.createdAt,
+            updatedAt: output.updatedAt
+        )
+    }
+
+    func map(_ output: Metadata.Edit.Output)
+        -> WebAdminAPI.Components.Schemas.MetadataDetailSchema
+    {
+        mapMetadata(
+            id: output.id,
+            referenceType: output.referenceType,
+            referenceID: output.referenceID,
+            slug: output.slug,
+            template: output.template,
+            publicationDate: output.publicationDate,
+            expirationDate: output.expirationDate,
+            status: output.status,
+            availability: .init(
+                status: output.status,
+                publicationDate: output.publicationDate,
+                expirationDate: output.expirationDate,
+                at: .now
+            ),
+            title: output.title,
+            excerpt: output.excerpt,
+            imageURL: output.imageURL,
+            canonicalURL: output.canonicalURL,
+            noIndex: output.noIndex,
+            primaryKeyword: output.primaryKeyword,
+            cssCodeInjection: output.cssCodeInjection,
+            javascriptCodeInjection: output.javascriptCodeInjection,
+            structuredDataCodeInjection: output.structuredDataCodeInjection,
+            createdAt: output.createdAt,
+            updatedAt: output.updatedAt
+        )
+    }
+
+    private func mapMetadata(
+        id: String,
+        referenceType: String,
+        referenceID: String,
+        slug: String,
+        template: String,
+        publicationDate: Date,
+        expirationDate: Date?,
+        status: Metadata.Model.Status,
+        availability: Metadata.Model.Availability,
+        title: String?,
+        excerpt: String?,
+        imageURL: String?,
+        canonicalURL: String?,
+        noIndex: Bool,
+        primaryKeyword: String?,
+        cssCodeInjection: String?,
+        javascriptCodeInjection: String?,
+        structuredDataCodeInjection: String?,
+        createdAt: Date,
+        updatedAt: Date
+    ) -> WebAdminAPI.Components.Schemas.MetadataDetailSchema {
+        .init(
+            id: id,
+            referenceType: referenceType,
+            referenceId: referenceID,
+            slug: slug,
+            template: template,
+            publicationDate: publicationDate.timeIntervalSince1970,
+            expirationDate: expirationDate?.timeIntervalSince1970,
+            status: status.rawValue,
+            availability: .init(
+                rawValue: availability.rawValue
+            )
+                ?? .draft,
+            title: title,
+            excerpt: excerpt,
+            imageUrl: imageURL,
+            canonicalUrl: canonicalURL,
+            noIndex: noIndex,
+            primaryKeyword: primaryKeyword ?? "",
+            cssCodeInjection: cssCodeInjection,
+            javascriptCodeInjection: javascriptCodeInjection,
+            structuredDataCodeInjection: structuredDataCodeInjection,
+            createdAt: createdAt.timeIntervalSince1970,
+            updatedAt: updatedAt.timeIntervalSince1970
         )
     }
 

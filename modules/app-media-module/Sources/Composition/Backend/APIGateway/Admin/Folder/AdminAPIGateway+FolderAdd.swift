@@ -23,7 +23,7 @@ extension AdminAPIGateway {
                         name: body.name
                     )
                 )
-            return .created(.init(body: .json(map(result.detail))))
+            return .created(.init(body: .json(map(result))))
         }
         catch let error as Asset.Folder.Add.Error {
             switch error {

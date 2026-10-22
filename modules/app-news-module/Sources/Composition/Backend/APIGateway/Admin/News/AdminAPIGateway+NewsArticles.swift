@@ -161,6 +161,38 @@ extension Components.Schemas.NewsArticleListItemSearchRequestQuerySchema {
 }
 
 extension AdminAPIGateway {
+    fileprivate func map(
+        _ item: Article.Add.Output
+    ) -> Components.Schemas.NewsArticleDetailSchema {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            content: item.content,
+            imageAssetId: item.imageAssetId,
+            categoryIds: item.categoryIds,
+            metadata: map(item.metadata),
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    fileprivate func map(
+        _ item: Article.Edit.Output
+    ) -> Components.Schemas.NewsArticleDetailSchema {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            content: item.content,
+            imageAssetId: item.imageAssetId,
+            categoryIds: item.categoryIds,
+            metadata: map(item.metadata),
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
     fileprivate func mapSearch(
         _ item: Article.Search.Output.Item
     ) -> Components.Schemas.NewsArticleListItemSchema {

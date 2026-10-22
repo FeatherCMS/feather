@@ -1,6 +1,9 @@
 public import FeatherModuleKit
 
 public enum SubmissionMail {
+    public enum Add {}
+    public enum Detail {}
+
     public enum Permissions: PermissionProvider {
         public static let create = PermissionKey("contact:form-mails:create")
         public static let read = PermissionKey("contact:form-mails:read")

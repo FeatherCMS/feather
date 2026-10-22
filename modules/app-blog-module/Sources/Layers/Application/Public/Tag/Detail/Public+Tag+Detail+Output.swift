@@ -17,9 +17,9 @@ extension Public.Tag.Detail {
         public let content: String
         public let imageAssetId: String?
         public let imageURL: String
-        public let media: WebApplication.Public.Page.Detail.Output.Media?
-        public let metadata: WebModule.Metadata.Detail.Output
-        public let posts: [Public.Post.Summary.Output]
+        public let media: WebApplication.Public.Media?
+        public let metadata: WebModule.Metadata.Snapshot
+        public let posts: [Public.Post.Summary.Item]
 
         public init(
             id: String,
@@ -28,9 +28,9 @@ extension Public.Tag.Detail {
             content: String,
             imageAssetId: String?,
             imageURL: String,
-            media: WebApplication.Public.Page.Detail.Output.Media?,
-            metadata: WebModule.Metadata.Detail.Output,
-            posts: [Public.Post.Summary.Output]
+            media: WebApplication.Public.Media?,
+            metadata: WebModule.Metadata.Snapshot,
+            posts: [Public.Post.Summary.Item]
         ) {
             self.id = id
             self.title = title

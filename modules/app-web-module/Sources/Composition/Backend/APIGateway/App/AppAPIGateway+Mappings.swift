@@ -8,8 +8,7 @@ import WebDomain
 import WebModule
 
 extension AppAPIGateway {
-    func publicMedia(assetId: String?) async -> Public.Page.Detail.Output.Media?
-    {
+    func publicMedia(assetId: String?) async -> Public.Media? {
         guard let assetId, !assetId.isEmpty else { return nil }
         guard
             let asset =
@@ -39,12 +38,14 @@ extension AppAPIGateway {
             assetId: asset.id,
             originalURL: originalURL,
             defaultURL: defaultURL,
-            variants: variants
+            variants: variants.map {
+                .init(key: $0.key, url: $0.url)
+            }
         )
     }
 
     func mapPublicMedia(
-        _ media: Public.Page.Detail.Output.Media?
+        _ media: Public.Media?
     ) -> WebAppAPI.Components.Schemas.MediaAssetSchema? {
         guard let media else { return nil }
         return .init(
@@ -80,12 +81,12 @@ extension AppAPIGateway {
     }
 
     func mapPublicMetadata(
-        _ metadata: Metadata.Detail.Output,
+        _ metadata: Metadata.Snapshot,
         title: String,
         excerpt: String,
         imageURL: String
     ) -> WebAppAPI.Components.Schemas.MetadataContentSchema {
-        let resolved = Metadata.Detail.Output.Resolved(
+        let resolved = Metadata.Snapshot.Resolved(
             metadata: metadata,
             fallbackTitle: title,
             fallbackExcerpt: excerpt,

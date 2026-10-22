@@ -5,7 +5,7 @@ import WebDomain
 import WebModule
 
 extension Components.Schemas.NewsMetadataInputSchema {
-    func pageAddMetadata(template: String) -> Page.Add.Input.MetadataInput {
+    func pageAddMetadata(template: String) -> Metadata.Input {
         .init(
             slug: slug,
             template: template,
@@ -28,7 +28,7 @@ extension Components.Schemas.NewsMetadataInputSchema {
         )
     }
 
-    func pageEditMetadata(template: String) -> Page.Edit.Input.MetadataInput {
+    func pageEditMetadata(template: String) -> Metadata.Input {
         .init(
             slug: slug,
             template: template,

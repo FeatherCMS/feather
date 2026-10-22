@@ -1,6 +1,14 @@
 public import FeatherModuleKit
 
 public enum Subscriber {
+    public enum Add {}
+    public enum Detail {}
+    public enum Edit {}
+    public enum List {}
+    public enum Remove {}
+    public enum Subscribe {}
+    public enum Unsubscribe {}
+
     public enum Permissions: PermissionProvider {
         public static let create = PermissionKey(
             "newsletter:subscribers:create"

@@ -7,8 +7,7 @@ public import UserModule
 extension AuthModule.Authorization.CurrentUser {
     public struct UseCase: FeatherApplication.UseCase {
         let detailQuery: any QueryExecutor<Identity.Detail.Scope>
-        let authorizationQuery:
-            any QueryExecutor<Scope>
+        let authorizationQuery: any QueryExecutor<Scope>
 
         public init(
             detailQuery: any QueryExecutor<Identity.Detail.Scope>,
@@ -43,7 +42,14 @@ extension AuthModule.Authorization.CurrentUser {
                 )
             }
             return try await Output(
-                user: identity,
+                user: .init(
+                    id: identity.id,
+                    name: identity.name,
+                    roleIds: identity.roleIds,
+                    status: identity.status,
+                    createdAt: identity.createdAt,
+                    updatedAt: identity.updatedAt
+                ),
                 roles: roles,
                 permissions: permissions
             )

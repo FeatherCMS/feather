@@ -27,7 +27,7 @@ extension Article.Add {
         public func execute(
             subject: Subject,
             input: Article.Add.Input
-        ) async throws -> Article.Detail.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -62,7 +62,7 @@ extension Article.Add {
                 content: model.content,
                 imageAssetId: model.imageAssetId,
                 categoryIds: model.categoryIds,
-                metadata: model.metadata.asDetail,
+                metadata: model.metadata.asSnapshot,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

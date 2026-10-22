@@ -64,7 +64,7 @@ extension Post.Add {
                 imageAssetId: model.imageAssetId,
                 authorIds: model.authorIds,
                 tagIds: model.tagIds,
-                metadata: model.metadata.asDetail,
+                metadata: model.metadata.asSnapshot,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

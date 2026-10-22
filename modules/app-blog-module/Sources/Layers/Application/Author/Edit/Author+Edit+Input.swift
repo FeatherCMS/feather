@@ -12,7 +12,7 @@ extension Author.Edit {
         public let excerpt: FieldChange<String>
         public let content: FieldChange<String>
         public let profileImageAssetId: OptionalFieldChange<String>
-        public let metadata: Page.Edit.Input.MetadataInput?
+        public let metadata: Metadata.Input?
 
         public init(
             id: String,
@@ -20,7 +20,7 @@ extension Author.Edit {
             excerpt: FieldChange<String>,
             content: FieldChange<String>,
             profileImageAssetId: OptionalFieldChange<String>,
-            metadata: Page.Edit.Input.MetadataInput?
+            metadata: Metadata.Input?
         ) {
             self.id = id
             self.name = name

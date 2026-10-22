@@ -51,10 +51,11 @@ extension AdminAPIGateway {
     }
 
     func mapBlogMetadata(
-        _ metadata: WebAdminAPI.Components.Schemas.WebMetadataCreateSchema
-    ) -> Page.Add.Input.MetadataInput {
+        _ metadata: WebAdminAPI.Components.Schemas.MetadataCreateSchema
+    ) -> Metadata.Input {
         .init(
             slug: metadata.slug,
+            template: metadata.template ?? "default",
             publicationDate: metadata.publicationDate.map(
                 Date.init(timeIntervalSince1970:)
             ),
@@ -77,7 +78,7 @@ extension AdminAPIGateway {
     func defaultBlogMetadata(
         title: String,
         excerpt: String
-    ) -> Page.Add.Input.MetadataInput {
+    ) -> Metadata.Input {
         .init(
             slug: title.slugified,
             publicationDate: nil,
@@ -96,9 +97,9 @@ extension AdminAPIGateway {
     }
 
     func mergeBlogMetadata(
-        _ patch: WebAdminAPI.Components.Schemas.WebMetadataPatchSchema,
-        into detail: WebAdminAPI.Components.Schemas.WebMetadataDetailSchema
-    ) -> Page.Edit.Input.MetadataInput {
+        _ patch: WebAdminAPI.Components.Schemas.MetadataPatchSchema,
+        into detail: WebAdminAPI.Components.Schemas.MetadataDetailSchema
+    ) -> Metadata.Input {
         let publicationDate = (patch.publicationDate ?? detail.publicationDate)
             .map(Date.init(timeIntervalSince1970:))
         let expirationDate = (patch.expirationDate ?? detail.expirationDate)
@@ -121,6 +122,7 @@ extension AdminAPIGateway {
             ?? detail.structuredDataCodeInjection
         return .init(
             slug: patch.slug ?? detail.slug,
+            template: patch.template ?? detail.template,
             publicationDate: publicationDate,
             expirationDate: expirationDate,
             status: status,
@@ -137,7 +139,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: WebModule.Metadata.Detail.Output
+        _ detail: WebModule.Metadata.Snapshot
     ) -> BlogAdminAPI.Components.Schemas.WebMetadataDetailSchema {
         .init(
             id: detail.id,

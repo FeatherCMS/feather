@@ -18,7 +18,7 @@ public struct ListPublicCategories {
         self.query = query
     }
 
-    public func execute() async throws -> [PublicNewsCategorySummary] {
+    public func execute() async throws -> [PublicNewsCategory.Summary.Item] {
         let now = Date()
         return try await query.run { scope in
             let categories = try await scope.category.list(

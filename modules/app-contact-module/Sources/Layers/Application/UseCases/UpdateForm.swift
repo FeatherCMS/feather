@@ -1,5 +1,5 @@
-public import ContactModule
 import ContactDomain
+public import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
@@ -27,6 +27,28 @@ public struct UpdateForm: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
+        public struct Mail: DTO {
+            public let mailFrom: String
+            public let mailTo: String
+            public let subject: String
+            public let additionalHeaders: [String]
+            public let messageBody: String
+
+            public init(
+                mailFrom: String,
+                mailTo: String,
+                subject: String,
+                additionalHeaders: [String] = [],
+                messageBody: String
+            ) {
+                self.mailFrom = mailFrom
+                self.mailTo = mailTo
+                self.subject = subject
+                self.additionalHeaders = additionalHeaders
+                self.messageBody = messageBody
+            }
+        }
+
         public let key: String
         public let newKey: String
         public let name: String
@@ -34,7 +56,7 @@ public struct UpdateForm: UseCase {
         public let failureMessage: String
         public let redirectUrl: String?
         public let fieldIds: [String]
-        public let mails: [SubmissionMail.Add.Input]
+        public let mails: [Mail]
 
         public init(
             key: String,
@@ -44,7 +66,7 @@ public struct UpdateForm: UseCase {
             failureMessage: String = "",
             redirectUrl: String? = nil,
             fieldIds: [String] = [],
-            mails: [SubmissionMail.Add.Input] = []
+            mails: [Mail] = []
         ) {
             self.key = key
             self.newKey = newKey
@@ -59,7 +81,7 @@ public struct UpdateForm: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Form.Detail.Output {
+    ) async throws -> Form.Edit.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -142,10 +164,21 @@ public struct UpdateForm: UseCase {
             }
             let saved = try await scope.form.update(value)
             let fields = try await scope.field.listBy(formId: value.id)
-                .map(\.asDetail)
+                .map(\.asFormField)
             let mails = try await scope.mail.listBy(formId: value.id)
-                .map(\.asDetail)
-            return saved.asDetail(fields: fields, mails: mails)
+                .map(\.asFormMail)
+            return .init(
+                id: saved.id,
+                key: saved.key,
+                name: saved.name,
+                successMessage: saved.successMessage,
+                failureMessage: saved.failureMessage,
+                redirectUrl: saved.redirectUrl,
+                fields: fields,
+                mails: mails,
+                createdAt: saved.createdAt,
+                updatedAt: saved.updatedAt
+            )
         }
     }
     public enum Error: UseCaseError { case formNotFound }

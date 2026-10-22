@@ -26,7 +26,7 @@ extension Settings.Edit {
         public func execute(
             subject: Subject,
             input: Settings.Edit.Input
-        ) async throws -> Settings.Detail.Output {
+        ) async throws -> Output {
             let userId = input.userId ?? subject.id
             let action = Action(userID: userId)
             guard try await authorizer.can(subject: subject, perform: action)

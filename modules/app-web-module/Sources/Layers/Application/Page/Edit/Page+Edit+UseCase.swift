@@ -74,7 +74,7 @@ extension Page.Edit {
                 excerpt: model.excerpt,
                 content: model.content,
                 imageAssetId: model.imageAssetId,
-                metadata: metadata.asDetail,
+                metadata: metadata.asSnapshot,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

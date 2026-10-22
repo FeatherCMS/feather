@@ -35,7 +35,7 @@ extension Public.Post.Detail {
 
                 let postID = id
                 let post = try await scope.post.find(id: postID)
-                var authors: [Public.Author.Summary.Output] = []
+                var authors: [Public.Author.Summary.Item] = []
                 for authorID in post.authorIds {
                     guard
                         let authorMetadata = try await scope.metadata.find(
@@ -61,7 +61,7 @@ extension Public.Post.Detail {
                     )
                 }
 
-                var tags: [Public.Tag.Summary.Output] = []
+                var tags: [Public.Tag.Summary.Item] = []
                 for tagID in post.tagIds {
                     guard
                         let tagMetadata = try await scope.metadata.find(
@@ -119,14 +119,14 @@ extension Public.Post.Detail.UseCase {
         excluding postID: String,
         now: Date,
         context: Public.Post.Detail.Scope
-    ) async throws -> [Public.Post.Summary.Output] {
-        let posts = try await context.post.list(
+    ) async throws -> [Public.Post.Summary.Item] {
+        let posts = try await context.postList.list(
             query: .init(
                 page: .init(size: 10_000, number: 1),
                 sort: [.init(field: .createdAt, direction: .desc)]
             )
         )
-        var result: [Public.Post.Summary.Output] = []
+        var result: [Public.Post.Summary.Item] = []
         for item in posts.items where item.id != postID {
             let candidate = try await context.post.find(id: item.id)
             guard

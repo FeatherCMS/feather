@@ -61,16 +61,16 @@ extension Public.Tag.Detail.UseCase {
         matchingTagID tagID: String,
         now: Date,
         context: Public.Tag.Detail.Scope
-    ) async throws -> [Public.Post.Summary.Output] {
-        let posts = try await context.post.list(
+    ) async throws -> [Public.Post.Summary.Item] {
+        let posts = try await context.postList.list(
             query: .init(
                 page: .init(size: 10_000, number: 1),
                 sort: [.init(field: .createdAt, direction: .desc)]
             )
         )
-        var result: [Public.Post.Summary.Output] = []
+        var result: [Public.Post.Summary.Item] = []
         for item in posts.items {
-            let post = try await context.post.find(id: item.id)
+            let post = try await context.postDetail.find(id: item.id)
             guard post.tagIds.contains(tagID) else {
                 continue
             }

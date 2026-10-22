@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 public struct ListDeliveries: UseCase {
     struct Action: PermissionAction { let key = Issue.Permissions.read }
@@ -32,7 +32,7 @@ public struct ListDeliveries: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> [DeliveryDetail] {
+    ) async throws -> [Delivery.List.Output] {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -46,7 +46,7 @@ public struct ListDeliveries: UseCase {
                 issue.newsletterId == campaign.id
             else { throw Error.notFound }
             return try await scope.delivery.list(issueId: input.issueId)
-                .map(DeliveryDetail.init)
+                .map(Delivery.List.Output.init(model:))
         }
     }
 

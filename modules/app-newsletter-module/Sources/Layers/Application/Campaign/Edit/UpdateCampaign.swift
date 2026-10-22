@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 public struct UpdateCampaign: UseCase {
     struct Action: PermissionAction { let key = Campaign.Permissions.update }
@@ -33,7 +33,7 @@ public struct UpdateCampaign: UseCase {
         }
     }
     public func execute(subject: Subject, input: Input) async throws
-        -> CampaignDetail
+        -> Campaign.Edit.Output
     {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
@@ -47,7 +47,15 @@ public struct UpdateCampaign: UseCase {
                 name: input.name,
                 fromEmail: input.fromEmail
             )
-            return (try await scope.newsletter.update(value)).asDetail
+            let saved = try await scope.newsletter.update(value)
+            return .init(
+                id: saved.id,
+                key: saved.key,
+                name: saved.name,
+                fromEmail: saved.fromEmail,
+                createdAt: saved.createdAt,
+                updatedAt: saved.updatedAt
+            )
         }
     }
     public enum Error: UseCaseError { case notFound }

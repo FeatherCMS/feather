@@ -17,11 +17,11 @@ extension Public.Post.Detail {
         public let content: String
         public let imageAssetId: String?
         public let imageURL: String
-        public let media: WebApplication.Public.Page.Detail.Output.Media?
-        public let metadata: WebModule.Metadata.Detail.Output
-        public let authors: [Public.Author.Summary.Output]
-        public let tags: [Public.Tag.Summary.Output]
-        public let relatedPosts: [Public.Post.Summary.Output]
+        public let media: WebApplication.Public.Media?
+        public let metadata: WebModule.Metadata.Snapshot
+        public let authors: [Public.Author.Summary.Item]
+        public let tags: [Public.Tag.Summary.Item]
+        public let relatedPosts: [Public.Post.Summary.Item]
 
         public init(
             id: String,
@@ -30,11 +30,11 @@ extension Public.Post.Detail {
             content: String,
             imageAssetId: String?,
             imageURL: String,
-            media: WebApplication.Public.Page.Detail.Output.Media?,
-            metadata: WebModule.Metadata.Detail.Output,
-            authors: [Public.Author.Summary.Output],
-            tags: [Public.Tag.Summary.Output],
-            relatedPosts: [Public.Post.Summary.Output] = []
+            media: WebApplication.Public.Media?,
+            metadata: WebModule.Metadata.Snapshot,
+            authors: [Public.Author.Summary.Item],
+            tags: [Public.Tag.Summary.Item],
+            relatedPosts: [Public.Post.Summary.Item] = []
         ) {
             self.id = id
             self.title = title

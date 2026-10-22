@@ -1,5 +1,5 @@
-public import ContactModule
 public import ContactDomain
+public import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
@@ -34,7 +34,7 @@ public struct UpdateSubmission: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Submission.Detail.Output {
+    ) async throws -> Submission.Edit.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -47,7 +47,7 @@ public struct UpdateSubmission: UseCase {
                 value.formId == form.id
             else { throw Error.submissionNotFound }
             value.status = input.status
-            return try await scope.submission.update(value).asDetail
+            return .init(model: try await scope.submission.update(value))
         }
     }
 

@@ -43,7 +43,7 @@ extension AdminAPIGateway {
                         name: name
                     )
                 )
-            return .ok(.init(body: .json(map(result.detail))))
+            return .ok(.init(body: .json(map(result))))
         }
         catch let error as Asset.Folder.Edit.Error {
             switch error {

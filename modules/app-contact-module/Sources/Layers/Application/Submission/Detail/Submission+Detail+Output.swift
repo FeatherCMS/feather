@@ -4,10 +4,6 @@ public import FeatherApplication
 
 public import struct Foundation.Date
 
-extension Submission {
-    public enum Detail {}
-}
-
 extension Submission.Detail {
     public struct Output: DTO {
         public let id: String
@@ -38,5 +34,20 @@ extension Submission.Detail {
             self.createdAt = createdAt
             self.updatedAt = updatedAt
         }
+    }
+}
+
+extension Submission.Model {
+    var asDetail: Submission.Detail.Output {
+        .init(
+            id: id,
+            formId: formId,
+            valuesJSON: valuesJSON,
+            itemsSnapshotJSON: itemsSnapshotJSON,
+            metadataJSON: metadataJSON,
+            status: status,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
     }
 }

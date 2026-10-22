@@ -6,7 +6,7 @@ import WebModule
 
 extension AdminAPIGateway {
     func map(
-        _ item: WebModule.Metadata.Detail.Output
+        _ item: WebModule.Metadata.Snapshot
     ) -> Components.Schemas.NewsMetadataDetailSchema {
         .init(
             id: item.id,

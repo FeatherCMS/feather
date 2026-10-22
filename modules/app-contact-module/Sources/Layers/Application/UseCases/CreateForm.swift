@@ -25,13 +25,35 @@ public struct CreateForm: UseCase {
     }
 
     public struct Input: DTO {
+        public struct Mail: DTO {
+            public let mailFrom: String
+            public let mailTo: String
+            public let subject: String
+            public let additionalHeaders: [String]
+            public let messageBody: String
+
+            public init(
+                mailFrom: String,
+                mailTo: String,
+                subject: String,
+                additionalHeaders: [String] = [],
+                messageBody: String
+            ) {
+                self.mailFrom = mailFrom
+                self.mailTo = mailTo
+                self.subject = subject
+                self.additionalHeaders = additionalHeaders
+                self.messageBody = messageBody
+            }
+        }
+
         public let key: String
         public let name: String
         public let successMessage: String
         public let failureMessage: String
         public let redirectUrl: String?
         public let fieldIds: [String]
-        public let mails: [SubmissionMail.Add.Input]
+        public let mails: [Mail]
 
         public init(
             key: String,
@@ -40,7 +62,7 @@ public struct CreateForm: UseCase {
             failureMessage: String = "",
             redirectUrl: String? = nil,
             fieldIds: [String] = [],
-            mails: [SubmissionMail.Add.Input] = []
+            mails: [Mail] = []
         ) {
             self.key = key
             self.name = name
@@ -55,7 +77,7 @@ public struct CreateForm: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> Form.Detail.Output {
+    ) async throws -> Form.Add.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -103,7 +125,7 @@ public struct CreateForm: UseCase {
                 )
             }
             let fields = try await scope.field.listBy(formId: saved.id)
-                .map(\.asDetail)
+                .map(\.asFormField)
             for mail in input.mails {
                 _ = try await scope.mail.insert(
                     .init(
@@ -120,8 +142,19 @@ public struct CreateForm: UseCase {
                 input.mails.isEmpty
                 ? []
                 : try await scope.mail.listBy(formId: saved.id)
-                    .map(\.asDetail)
-            return saved.asDetail(fields: fields, mails: mails)
+                    .map(\.asFormMail)
+            return .init(
+                id: saved.id,
+                key: saved.key,
+                name: saved.name,
+                successMessage: saved.successMessage,
+                failureMessage: saved.failureMessage,
+                redirectUrl: saved.redirectUrl,
+                fields: fields,
+                mails: mails,
+                createdAt: saved.createdAt,
+                updatedAt: saved.updatedAt
+            )
         }
     }
 }

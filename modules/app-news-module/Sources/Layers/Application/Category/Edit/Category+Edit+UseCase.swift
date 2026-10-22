@@ -27,7 +27,7 @@ extension Category.Edit {
         public func execute(
             subject: Subject,
             input: Category.Edit.Input
-        ) async throws -> Category.Detail.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -75,7 +75,7 @@ extension Category.Edit {
                 excerpt: model.excerpt,
                 content: model.content,
                 imageAssetId: model.imageAssetId,
-                metadata: model.metadata.asDetail,
+                metadata: model.metadata.asSnapshot,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

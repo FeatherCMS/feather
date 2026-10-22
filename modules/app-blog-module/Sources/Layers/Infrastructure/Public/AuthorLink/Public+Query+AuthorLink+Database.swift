@@ -38,7 +38,7 @@ extension AuthorLink.Table.Detail {
 }
 
 extension BlogApplication.Public.AuthorLink {
-    public struct Database: List.Query.Interface {
+    public struct Database: Query.Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {

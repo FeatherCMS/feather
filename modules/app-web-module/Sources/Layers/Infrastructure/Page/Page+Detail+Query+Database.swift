@@ -5,7 +5,7 @@ import WebDomain
 public import WebModule
 
 extension Page.Table.Detail {
-    func asDetail(metadata: Metadata.Detail.Output) -> Page.Detail.Output {
+    func asDetail(metadata: Metadata.Snapshot) -> Page.Detail.Output {
         .init(
             id: id,
             title: title,

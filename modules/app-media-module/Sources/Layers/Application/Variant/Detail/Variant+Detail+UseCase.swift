@@ -41,7 +41,7 @@ extension Variant.Detail {
                     isRequired: variant.isRequired,
                     isActive: variant.isActive,
                     processors: processors.map {
-                        Variant.Processor.Search.Output.Item(
+                        Output.Processor(
                             id: $0.id,
                             variantId: $0.variantId,
                             name: $0.name,
