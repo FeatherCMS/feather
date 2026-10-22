@@ -41,11 +41,11 @@ extension Tag.Add.Controller {
         ) async throws -> Response {
             let runtime = buildRuntime((request, context))
             let permissions = context.currentUserPermissions
-            var lastPayload: BlogTagFormInput?
+            var lastPayload: Tag.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: BlogTagFormInput.self,
+                    as: Tag.Form.Input.self,
                     context: context
                 )
                 lastPayload = payload
@@ -127,7 +127,7 @@ extension Tag.Add.Controller {
             imageAssetId: String? = nil,
             metadata: AdminMetadataFormValue? = nil,
             slugPrefix: String? = nil
-        ) -> BlogTagForm.State {
+        ) -> Tag.Form.State {
             .init(
                 title: .init(
                     key: "title",

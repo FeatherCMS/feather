@@ -1,7 +1,7 @@
 public import FeatherModuleKit
 public import RedirectModule
 
-extension RedirectModule.Rule.Detail {
+extension Rule.Detail {
     public struct Scope: FeatherModuleKit.Scope {
         public let query: any Query.Interface
 

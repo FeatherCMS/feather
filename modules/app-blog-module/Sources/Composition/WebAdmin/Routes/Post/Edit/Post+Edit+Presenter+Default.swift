@@ -22,7 +22,7 @@ extension Post.Edit.Presenter {
 
         func render(
             id: String,
-            state: BlogPostForm.State,
+            state: Post.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
@@ -50,7 +50,7 @@ extension Post.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit post",
-                content: BlogPostError(
+                content: Post.Error(
                     state: .init(
                         info: info,
                         message: message,

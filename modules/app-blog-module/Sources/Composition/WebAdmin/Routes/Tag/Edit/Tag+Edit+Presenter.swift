@@ -10,7 +10,7 @@ extension Tag.Edit.Presenter {
     protocol Interface: Sendable {
         func render(
             id: String,
-            state: BlogTagForm.State,
+            state: Tag.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

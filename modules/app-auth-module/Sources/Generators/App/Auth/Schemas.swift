@@ -27,8 +27,8 @@ extension Auth.Schemas {
     struct UserIdentity: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "id": UserIdentityIDField().reference(),
-                "status": UserIdentityStatusField().reference(),
+                "id": IdentityIDField().reference(),
+                "status": IdentityStatusField().reference(),
             ]
         }
     }
@@ -37,8 +37,8 @@ extension Auth.Schemas {
         var propertyMap: SchemaMap {
             [
                 "user": UserIdentity().reference(),
-                "roles": UserIdentityRoleIDListSchema(),
-                "permissions": UserIdentityPermissionIDListSchema(),
+                "roles": IdentityRoleIDListSchema(),
+                "permissions": IdentityPermissionIDListSchema(),
                 "token": TokenField().reference(),
             ]
         }

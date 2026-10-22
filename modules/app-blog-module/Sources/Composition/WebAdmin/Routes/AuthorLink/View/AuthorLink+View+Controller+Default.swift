@@ -31,7 +31,8 @@ extension AuthorLink.View.Controller {
             let permissions = context.currentUserPermissions
             do {
                 let model = try await runtime.interactor.execute(
-                    .init(authorID: authorID, id: id)
+                    authorID: authorID,
+                    id: id
                 )
                 return try await runtime.presenter.renderDetailsPage(
                     model: model,

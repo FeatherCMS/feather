@@ -6,6 +6,6 @@ extension Author.Add {
 
 extension Author.Add.Interactor {
     protocol Interface: Sendable {
-        func execute(input: BlogAuthorFormInput) async throws
+        func execute(input: Author.Form.Input) async throws
     }
 }

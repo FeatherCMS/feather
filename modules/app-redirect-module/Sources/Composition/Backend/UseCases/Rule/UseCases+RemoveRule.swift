@@ -5,12 +5,12 @@ import RedirectModule
 
 extension UseCases {
 
-    func makeRemoveRule() -> RedirectModule.Rule.Remove.UseCase {
+    func makeRemoveRule() -> Rule.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                RedirectModule.Rule.Remove.Scope(
-                    repository: RedirectModule.Rule.Repository.Database(context: context)
+                Rule.Remove.Scope(
+                    repository: Rule.Repository.Database(context: context)
                 )
             }
         )

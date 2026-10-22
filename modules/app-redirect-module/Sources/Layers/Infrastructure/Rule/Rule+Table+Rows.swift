@@ -2,7 +2,7 @@ import FeatherDBAL
 import Foundation
 import RedirectModule
 
-extension RedirectModule.Rule.Table: DatabaseTableWithInsert {
+extension Rule.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let id: String
         let source: String
@@ -12,7 +12,7 @@ extension RedirectModule.Rule.Table: DatabaseTableWithInsert {
     }
 }
 
-extension RedirectModule.Rule.Table: DatabaseTableWithUpdate {
+extension Rule.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let source: String
         let destination: String
@@ -20,12 +20,12 @@ extension RedirectModule.Rule.Table: DatabaseTableWithUpdate {
         let notes: String?
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
-            values[RedirectModule.Rule.Table.columns.updatedAt] = .currentTimestamp
+            values[Rule.Table.columns.updatedAt] = .currentTimestamp
         }
     }
 }
 
-extension RedirectModule.Rule.Table: DatabaseTableWithDetail {
+extension Rule.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let source: String
@@ -37,7 +37,7 @@ extension RedirectModule.Rule.Table: DatabaseTableWithDetail {
     }
 }
 
-extension RedirectModule.Rule.Table: DatabaseTableWithList {
+extension Rule.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let source: String
@@ -49,4 +49,4 @@ extension RedirectModule.Rule.Table: DatabaseTableWithList {
     }
 }
 
-extension RedirectModule.Rule.Table: DatabaseTableWithDelete {}
+extension Rule.Table: DatabaseTableWithDelete {}

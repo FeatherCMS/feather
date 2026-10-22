@@ -1,7 +1,7 @@
 import FeatherDBAL
 import RedirectModule
 
-extension RedirectModule.Rule.Table {
+extension Rule.Table {
     static var tableCreationSchema: DatabaseTableSchema {
         .init(
             name: Self.name,

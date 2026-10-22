@@ -20,7 +20,7 @@ public struct WebRSSItem: Sendable {
     }
 }
 
-public struct WebRSSContentProvider: Event {
+public struct WebRSSContentProvider: FeatherModuleKit.Event {
     public typealias Output = [WebRSSItem]
 
     public init() {}

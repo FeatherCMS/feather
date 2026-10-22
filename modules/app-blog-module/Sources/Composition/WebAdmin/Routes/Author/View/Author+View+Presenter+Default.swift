@@ -22,7 +22,7 @@ extension Author.View.Presenter {
         let authorLinkRoutes: AuthorLink.Router.Routes
 
         func renderDetailsPage(
-            rule: Author.Detail.Model,
+            model: Author.View.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
@@ -31,7 +31,7 @@ extension Author.View.Presenter {
                 title: "Blog author details",
                 content: Author.View.Component(
                     state: .init(
-                        author: rule,
+                        author: model,
                         breadcrumb: routes.authorsBreadcrumb,
                         permissions: permissions,
                         routes: routes,
@@ -50,7 +50,7 @@ extension Author.View.Presenter {
                 request: request,
                 context: context,
                 title: "Blog author details",
-                content: BlogAuthorError(
+                content: Author.Error(
                     state: .init(
                         info: info,
                         message: message,

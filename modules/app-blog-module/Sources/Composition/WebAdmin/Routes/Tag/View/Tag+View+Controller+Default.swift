@@ -28,9 +28,7 @@ extension Tag.View.Controller {
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             do {
-                let model = try await runtime.interactor.execute(
-                    .init(id: id)
-                )
+                let model = try await runtime.interactor.execute(id: id)
                 return try await runtime.presenter.renderDetailsPage(
                     model: model,
                     permissions: permissions

@@ -1,13 +1,14 @@
-import RedirectModule
 import RedirectApplication
-extension RedirectModule.Rule.Add {
+import RedirectModule
+
+extension Rule.Add {
     enum Interactor {}
 }
 
-extension RedirectModule.Rule.Add.Interactor {
+extension Rule.Add.Interactor {
     protocol Interface: Sendable {
-    func add(
-        input: RedirectRuleAddFormInput
-    ) async throws
+        func add(
+            input: RedirectRuleAddFormInput
+        ) async throws
     }
 }

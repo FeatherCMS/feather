@@ -60,11 +60,11 @@ extension Author.Edit.Controller {
             let runtime = buildRuntime((request, context))
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
-            var payload: BlogAuthorFormInput?
+            var payload: Author.Form.Input?
 
             do {
                 let decoded = try await request.decode(
-                    as: BlogAuthorFormInput.self,
+                    as: Author.Form.Input.self,
                     context: context
                 )
                 payload = decoded
@@ -143,7 +143,7 @@ extension Author.Edit.Controller {
             metadata: AdminMetadataFormValue? = nil,
             selectedProfileImage: AdminMediaAsset? = nil,
             permissions: Set<String>
-        ) -> BlogAuthorForm.State {
+        ) -> Author.Form.State {
             .init(
                 name: .init(
                     key: "name",

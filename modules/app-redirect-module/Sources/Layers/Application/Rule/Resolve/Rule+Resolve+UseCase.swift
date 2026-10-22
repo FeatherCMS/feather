@@ -2,7 +2,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 public import RedirectModule
 
-extension RedirectModule.Rule.Resolve {
+extension Rule.Resolve {
     public struct UseCase {
         public enum Error: UseCaseError {
             case notFound
@@ -16,7 +16,11 @@ extension RedirectModule.Rule.Resolve {
 
         public func execute(input: Input) async throws -> Output {
             try await query.run { scope in
-                guard let output = try await scope.query.resolve(source: input.source) else {
+                guard
+                    let output = try await scope.query.resolve(
+                        source: input.source
+                    )
+                else {
                     throw Error.notFound
                 }
                 return output

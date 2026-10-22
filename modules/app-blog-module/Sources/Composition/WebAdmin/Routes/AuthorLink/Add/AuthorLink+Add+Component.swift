@@ -16,7 +16,7 @@ extension AuthorLink.Add {
     struct Component: WebComponents.Component {
         struct State {
             let authorID: String
-            let form: BlogAuthorLinkForm.State
+            let form: AuthorLink.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: AuthorLink.Router.Routes
         }
@@ -36,7 +36,7 @@ extension AuthorLink.Add {
                 )
                 Div {
                     context.build(
-                        BlogAuthorLinkForm(
+                        AuthorLink.Form(
                             state: state.form,
                             action: state.routes
                                 .authorLinkAdd(RouterPath(state.authorID))

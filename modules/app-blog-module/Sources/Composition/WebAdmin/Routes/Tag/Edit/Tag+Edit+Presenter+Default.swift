@@ -20,7 +20,7 @@ extension Tag.Edit.Presenter {
 
         func render(
             id: String,
-            state: BlogTagForm.State,
+            state: Tag.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
@@ -47,7 +47,7 @@ extension Tag.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit tag",
-                content: BlogTagError(
+                content: Tag.Error(
                     state: .init(
                         info: info,
                         message: message,

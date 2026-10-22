@@ -1,8 +1,8 @@
 public import FeatherModuleKit
 import RedirectModule
 
-extension RedirectModule.Rule.Detail {
+extension Rule.Detail {
     struct Action: PermissionAction {
-        let key = RedirectModule.Rule.Permissions.read
+        let key = Rule.Permissions.read
     }
 }

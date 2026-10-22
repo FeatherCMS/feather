@@ -16,7 +16,7 @@ extension Author.Edit.Presenter {
 
         func render(
             id: String,
-            state: BlogAuthorForm.State,
+            state: Author.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
@@ -43,7 +43,7 @@ extension Author.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit author",
-                content: BlogAuthorError(
+                content: Author.Error(
                     state: .init(
                         info: info,
                         message: message,

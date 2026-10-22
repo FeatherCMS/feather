@@ -1,10 +1,11 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
-struct RedirectRuleListOperation: RedirectRuleOperation {
-    var operationId: String? { "redirectRuleList" }
-
-    var responseMap: ResponseMap {
-        [200: RedirectRuleListResponse().reference()]
+extension Rule.List {
+    struct Operation: Rule.Operation {
+        var operationId: String? { "redirectRuleList" }
+        var responseMap: ResponseMap {
+            [200: Response().reference()]
+        }
     }
 }

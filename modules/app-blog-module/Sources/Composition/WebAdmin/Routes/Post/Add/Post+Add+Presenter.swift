@@ -8,7 +8,7 @@ extension Post.Add {
 extension Post.Add.Presenter {
     protocol Interface: Sendable {
         func render(
-            state: BlogPostForm.State,
+            state: Post.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
     }

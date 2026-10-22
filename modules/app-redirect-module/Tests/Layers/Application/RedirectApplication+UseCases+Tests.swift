@@ -12,18 +12,19 @@ import struct Foundation.Date
 @Suite
 struct RedirectApplicationUseCasesTests {
     @Test
-    func protectedUseCasesRejectForbiddenSubjectsBeforeExecution() async throws {
+    func protectedUseCasesRejectForbiddenSubjectsBeforeExecution() async throws
+    {
         let authorizer = FeatherTesting.Authorizer.Mock(result: false)
-        let repository = RedirectModule.Rule.Repository.Mock(
+        let repository = Rule.Repository.Mock(
             result: .success(makeRule(id: "r-forbidden")),
             findResult: makeRule(id: "r-forbidden"),
             deleteResult: true
         )
 
         let addTransaction = FeatherTesting.TransactionExecutor.Mock(
-            context: RedirectModule.Rule.Add.Scope(repository: repository)
+            context: Rule.Add.Scope(repository: repository)
         )
-        let add = RedirectModule.Rule.Add.UseCase(
+        let add = Rule.Add.UseCase(
             authorizer: authorizer,
             transaction: addTransaction
         )
@@ -40,8 +41,8 @@ struct RedirectApplicationUseCasesTests {
         }
 
         let detailExecutor = FeatherTesting.QueryExecutor.Mock(
-            context: RedirectModule.Rule.Detail.Scope(
-                query: RedirectModule.Rule.Detail.Query.Mock(
+            context: Rule.Detail.Scope(
+                query: Rule.Detail.Query.Mock(
                     result: .init(
                         id: "r-2",
                         source: "/old",
@@ -54,7 +55,7 @@ struct RedirectApplicationUseCasesTests {
                 )
             )
         )
-        let detail = RedirectModule.Rule.Detail.UseCase(
+        let detail = Rule.Detail.UseCase(
             authorizer: authorizer,
             query: detailExecutor
         )
@@ -66,8 +67,8 @@ struct RedirectApplicationUseCasesTests {
         }
 
         let listExecutor = FeatherTesting.QueryExecutor.Mock(
-            context: RedirectModule.Rule.List.Scope(
-                query: RedirectModule.Rule.List.Query.Mock(
+            context: Rule.List.Scope(
+                query: Rule.List.Query.Mock(
                     result: .init(
                         items: [
                             .init(
@@ -81,7 +82,7 @@ struct RedirectApplicationUseCasesTests {
                 )
             )
         )
-        let list = RedirectModule.Rule.List.UseCase(
+        let list = Rule.List.UseCase(
             authorizer: authorizer,
             query: listExecutor
         )
@@ -93,8 +94,8 @@ struct RedirectApplicationUseCasesTests {
         }
 
         let searchExecutor = FeatherTesting.QueryExecutor.Mock(
-            context: RedirectModule.Rule.Search.Scope(
-                query: RedirectModule.Rule.Search.Query.Mock(
+            context: Rule.Search.Scope(
+                query: Rule.Search.Query.Mock(
                     result: .init(
                         items: [
                             .init(
@@ -112,7 +113,7 @@ struct RedirectApplicationUseCasesTests {
                 )
             )
         )
-        let search = RedirectModule.Rule.Search.UseCase(
+        let search = Rule.Search.UseCase(
             authorizer: authorizer,
             query: searchExecutor
         )
@@ -124,9 +125,9 @@ struct RedirectApplicationUseCasesTests {
         }
 
         let editTransaction = FeatherTesting.TransactionExecutor.Mock(
-            context: RedirectModule.Rule.Edit.Scope(repository: repository)
+            context: Rule.Edit.Scope(repository: repository)
         )
-        let edit = RedirectModule.Rule.Edit.UseCase(
+        let edit = Rule.Edit.UseCase(
             authorizer: authorizer,
             transaction: editTransaction
         )
@@ -138,9 +139,9 @@ struct RedirectApplicationUseCasesTests {
         }
 
         let removeTransaction = FeatherTesting.TransactionExecutor.Mock(
-            context: RedirectModule.Rule.Remove.Scope(repository: repository)
+            context: Rule.Remove.Scope(repository: repository)
         )
-        let remove = RedirectModule.Rule.Remove.UseCase(
+        let remove = Rule.Remove.UseCase(
             authorizer: authorizer,
             transaction: removeTransaction
         )
@@ -166,13 +167,13 @@ struct RedirectApplicationUseCasesTests {
 
     @Test
     func addRuleSuccess() async throws {
-        let repository = RedirectModule.Rule.Repository.Mock(
+        let repository = Rule.Repository.Mock(
             result: .success(makeRule(id: "r-1"))
         )
         let transaction = FeatherTesting.TransactionExecutor.Mock(
-            context: RedirectModule.Rule.Add.Scope(repository: repository)
+            context: Rule.Add.Scope(repository: repository)
         )
-        let useCase = RedirectModule.Rule.Add.UseCase(
+        let useCase = Rule.Add.UseCase(
             authorizer: FeatherTesting.Authorizer.Mock(result: true),
             transaction: transaction
         )
@@ -193,7 +194,7 @@ struct RedirectApplicationUseCasesTests {
 
     @Test
     func detailAndListUseSeparateQueries() async throws {
-        let detailQuery = RedirectModule.Rule.Detail.Query.Mock(
+        let detailQuery = Rule.Detail.Query.Mock(
             result: .init(
                 id: "r-2",
                 source: "/old",
@@ -205,9 +206,9 @@ struct RedirectApplicationUseCasesTests {
             )
         )
         let detailExecutor = FeatherTesting.QueryExecutor.Mock(
-            context: RedirectModule.Rule.Detail.Scope(query: detailQuery)
+            context: Rule.Detail.Scope(query: detailQuery)
         )
-        let detail = RedirectModule.Rule.Detail.UseCase(
+        let detail = Rule.Detail.UseCase(
             authorizer: FeatherTesting.Authorizer.Mock(result: true),
             query: detailExecutor
         )
@@ -216,7 +217,7 @@ struct RedirectApplicationUseCasesTests {
             input: .init(id: "r-2")
         )
 
-        let listQuery = RedirectModule.Rule.List.Query.Mock(
+        let listQuery = Rule.List.Query.Mock(
             result: .init(
                 items: [
                     .init(
@@ -229,9 +230,9 @@ struct RedirectApplicationUseCasesTests {
             )
         )
         let listExecutor = FeatherTesting.QueryExecutor.Mock(
-            context: RedirectModule.Rule.List.Scope(query: listQuery)
+            context: Rule.List.Scope(query: listQuery)
         )
-        let list = RedirectModule.Rule.List.UseCase(
+        let list = Rule.List.UseCase(
             authorizer: FeatherTesting.Authorizer.Mock(result: true),
             query: listExecutor
         )
@@ -249,7 +250,7 @@ struct RedirectApplicationUseCasesTests {
 
     @Test
     func searchAndResolveUseSeparateQueries() async throws {
-        let searchQuery = RedirectModule.Rule.Search.Query.Mock(
+        let searchQuery = Rule.Search.Query.Mock(
             result: .init(
                 items: [
                     .init(
@@ -266,9 +267,9 @@ struct RedirectApplicationUseCasesTests {
             )
         )
         let searchExecutor = FeatherTesting.QueryExecutor.Mock(
-            context: RedirectModule.Rule.Search.Scope(query: searchQuery)
+            context: Rule.Search.Scope(query: searchQuery)
         )
-        let search = RedirectModule.Rule.Search.UseCase(
+        let search = Rule.Search.UseCase(
             authorizer: FeatherTesting.Authorizer.Mock(result: true),
             query: searchExecutor
         )
@@ -277,7 +278,7 @@ struct RedirectApplicationUseCasesTests {
             input: .init(query: .init(search: "old"))
         )
 
-        let resolveQuery = RedirectModule.Rule.Resolve.Query.Mock(
+        let resolveQuery = Rule.Resolve.Query.Mock(
             result: .init(
                 source: "/old",
                 destination: "/new",
@@ -285,9 +286,9 @@ struct RedirectApplicationUseCasesTests {
             )
         )
         let resolveExecutor = FeatherTesting.QueryExecutor.Mock(
-            context: RedirectModule.Rule.Resolve.Scope(query: resolveQuery)
+            context: Rule.Resolve.Scope(query: resolveQuery)
         )
-        let resolve = RedirectModule.Rule.Resolve.UseCase(query: resolveExecutor)
+        let resolve = Rule.Resolve.UseCase(query: resolveExecutor)
         let resolved = try await resolve.execute(input: .init(source: "/old"))
 
         #expect(searchOutput.total == 1)
@@ -301,15 +302,15 @@ struct RedirectApplicationUseCasesTests {
     @Test
     func editAndRemoveUseOperationScopes() async throws {
         let rule = makeRule(id: "r-3")
-        let repository = RedirectModule.Rule.Repository.Mock(
+        let repository = Rule.Repository.Mock(
             result: .success(rule),
             findResult: rule,
             deleteResult: true
         )
-        let edit = RedirectModule.Rule.Edit.UseCase(
+        let edit = Rule.Edit.UseCase(
             authorizer: FeatherTesting.Authorizer.Mock(result: true),
             transaction: FeatherTesting.TransactionExecutor.Mock(
-                context: RedirectModule.Rule.Edit.Scope(repository: repository)
+                context: Rule.Edit.Scope(repository: repository)
             )
         )
         let edited = try await edit.execute(
@@ -317,10 +318,10 @@ struct RedirectApplicationUseCasesTests {
             input: .init(id: "r-3", destination: .set("/changed"))
         )
 
-        let remove = RedirectModule.Rule.Remove.UseCase(
+        let remove = Rule.Remove.UseCase(
             authorizer: FeatherTesting.Authorizer.Mock(result: true),
             transaction: FeatherTesting.TransactionExecutor.Mock(
-                context: RedirectModule.Rule.Remove.Scope(repository: repository)
+                context: Rule.Remove.Scope(repository: repository)
             )
         )
         let removed = try await remove.execute(
@@ -335,7 +336,7 @@ struct RedirectApplicationUseCasesTests {
     }
 }
 
-private func makeRule(id: String) -> RedirectModule.Rule.Model {
+private func makeRule(id: String) -> Rule.Model {
     .init(
         id: id,
         source: "/source-\(id)",

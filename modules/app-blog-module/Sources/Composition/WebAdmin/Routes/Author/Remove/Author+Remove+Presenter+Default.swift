@@ -22,7 +22,7 @@ extension Author.Remove.Presenter {
                 request: request,
                 context: context,
                 title: "Remove author",
-                content: BlogAuthorError(
+                content: Author.Error(
                     state: .init(
                         info: info,
                         message: message,

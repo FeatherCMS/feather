@@ -12,7 +12,7 @@ extension Tag.Edit {
     struct Component: WebComponents.Component {
         struct State {
             let id: String
-            let form: BlogTagForm.State
+            let form: Tag.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Tag.Router.Routes
         }
@@ -31,7 +31,7 @@ extension Tag.Edit {
                     )
                 )
                 context.build(
-                    BlogTagForm(
+                    Tag.Form(
                         state: state.form,
                         metadataHref: state.routes
                             .tagEditMetadata(

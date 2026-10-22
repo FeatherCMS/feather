@@ -6,7 +6,7 @@ extension Role.Query {
         var operationId: String? { "userRoleQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: Role.Query.ItemSchema(),
+                items: Role.Query.Schemas.Item(),
                 sortFieldKeys: ["id", "name", "notes"],
                 filters: SearchFilterSchema()
             )

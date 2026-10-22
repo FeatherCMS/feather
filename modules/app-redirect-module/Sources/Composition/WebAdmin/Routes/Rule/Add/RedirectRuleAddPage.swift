@@ -8,7 +8,7 @@ import WebComponents
 struct RedirectRuleAddPage: Component {
     let form: RedirectRuleAddForm.State
     let nonceToken: String
-    let routes: RedirectModule.Rule.Router.Routes
+    let routes: Rule.Router.Routes
 
     func html(context: inout BuilderContext) -> Section {
         Section {

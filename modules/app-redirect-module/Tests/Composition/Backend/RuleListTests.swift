@@ -34,7 +34,8 @@ struct RuleListTests {
             using: executor
         )
         let values = try #require(
-            JSONSerialization.jsonObject(with: Data(body.utf8)) as? [[String: Any]]
+            JSONSerialization.jsonObject(with: Data(body.utf8))
+                as? [[String: Any]]
         )
 
         #expect(values.count == 1)

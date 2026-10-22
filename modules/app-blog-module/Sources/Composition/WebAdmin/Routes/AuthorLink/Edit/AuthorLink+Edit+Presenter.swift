@@ -21,7 +21,7 @@ extension AuthorLink.Edit.Presenter {
         func renderEditPage(
             authorID: String,
             id: String,
-            state: BlogAuthorLinkForm.State,
+            state: AuthorLink.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

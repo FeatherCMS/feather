@@ -9,7 +9,7 @@ extension Author.Add {
 extension Author.Add.Presenter {
     protocol Interface: Sendable {
         func render(
-            state: BlogAuthorForm.State,
+            state: Author.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
     }

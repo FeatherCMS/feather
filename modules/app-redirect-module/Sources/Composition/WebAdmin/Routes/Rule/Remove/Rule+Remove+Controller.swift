@@ -4,22 +4,21 @@ import Hummingbird
 import RedirectApplication
 import RedirectModule
 
-extension RedirectModule.Rule.Remove {
+extension Rule.Remove {
     enum Controller {}
 }
 
-extension RedirectModule.Rule.Remove.Controller {
+extension Rule.Remove.Controller {
     protocol Interface: Sendable {
 
-    func postRemoveRedirectRule(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
+        func postRemoveRedirectRule(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
 
-    func postRemoveRedirectRules(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
+        func postRemoveRedirectRules(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
     }
 }
-

@@ -2,7 +2,7 @@ import FeatherDBAL
 import Foundation
 import RedirectModule
 
-extension RedirectModule.Rule {
+extension Rule {
     struct Table: DatabaseTable {
         static let name = "redirect_rule"
         static let columns = Columns()

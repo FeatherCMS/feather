@@ -1,19 +1,19 @@
 public import FeatherApplication
 public import RedirectModule
 
-extension RedirectModule.Rule.Edit {
+extension Rule.Edit {
     public struct Output: DTO {
         public let id: String
         public let source: String
         public let destination: String
-        public let statusCode: RedirectModule.Rule.StatusCode
+        public let statusCode: Rule.StatusCode
         public let notes: String?
 
         package init(
             id: String,
             source: String,
             destination: String,
-            statusCode: RedirectModule.Rule.StatusCode,
+            statusCode: Rule.StatusCode,
             notes: String?
         ) {
             self.id = id

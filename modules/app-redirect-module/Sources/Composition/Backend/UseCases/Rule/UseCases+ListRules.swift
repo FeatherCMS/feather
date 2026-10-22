@@ -5,12 +5,12 @@ import RedirectModule
 
 extension UseCases {
 
-    func makeListRules() -> RedirectModule.Rule.List.UseCase {
+    func makeListRules() -> Rule.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                RedirectModule.Rule.List.Scope(
-                    query: RedirectModule.Rule.List.Query.Database(
+                Rule.List.Scope(
+                    query: Rule.List.Query.Database(
                         context: context
                     )
                 )

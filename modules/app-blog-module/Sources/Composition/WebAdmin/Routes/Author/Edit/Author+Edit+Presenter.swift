@@ -10,7 +10,7 @@ extension Author.Edit.Presenter {
     protocol Interface: Sendable {
         func render(
             id: String,
-            state: BlogAuthorForm.State,
+            state: Author.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

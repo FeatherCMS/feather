@@ -1,14 +1,12 @@
 //
-//  WebModule.Permissions.swift
+//  Permissions.swift
 //  app-web-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherModuleKit
 
-extension WebModule {
-    public enum Permissions: PermissionProvider {
-
+public enum Permissions: PermissionProvider {
     public enum Pages: PermissionProvider {
         public static let create = PermissionKey("web:pages:create")
         public static let read = PermissionKey("web:pages:read")
@@ -54,11 +52,10 @@ extension WebModule {
         }
     }
 
-        public static func allPermissions() -> Set<PermissionKey> {
-            Pages.allPermissions()
-                .union(Menus.allPermissions())
-                .union(MenuItems.allPermissions())
-                .union(Settings.allPermissions())
-        }
+    public static func allPermissions() -> Set<PermissionKey> {
+        Pages.allPermissions()
+            .union(Menus.allPermissions())
+            .union(MenuItems.allPermissions())
+            .union(Settings.allPermissions())
     }
 }

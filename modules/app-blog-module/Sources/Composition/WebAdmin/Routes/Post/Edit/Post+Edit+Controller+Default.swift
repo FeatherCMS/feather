@@ -67,11 +67,11 @@ extension Post.Edit.Controller {
             let runtime = buildRuntime((request, context))
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
-            var lastPayload: BlogPostFormInput?
+            var lastPayload: Post.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: BlogPostFormInput.self,
+                    as: Post.Form.Input.self,
                     context: context
                 )
                 lastPayload = payload
@@ -162,7 +162,7 @@ extension Post.Edit.Controller {
             selectedAuthorIds: [String] = [],
             selectedTagIds: [String] = [],
             options: BlogPostAssociationOptionsModel
-        ) -> BlogPostForm.State {
+        ) -> Post.Form.State {
             .init(
                 title: .init(
                     key: "title",
@@ -210,7 +210,7 @@ extension Post.Edit.Controller {
             key: String,
             selectedIDs: [String],
             options: [BlogPostAssociationOptionModel]
-        ) -> [BlogPostForm.OptionState] {
+        ) -> [Post.Form.OptionState] {
             let selectedSet = Set(selectedIDs)
             let normalizedOptions = mergeMissingSelections(
                 selectedIDs: selectedIDs,

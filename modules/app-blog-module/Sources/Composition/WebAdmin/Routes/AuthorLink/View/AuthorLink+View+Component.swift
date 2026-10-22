@@ -10,7 +10,7 @@ import WebComponents
 extension AuthorLink.View {
     struct Component: WebComponents.Component {
         struct State {
-            let model: AuthorLink.Detail.Model
+            let model: AuthorLink.View.Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
             let routes: AuthorLink.Router.Routes

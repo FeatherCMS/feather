@@ -18,7 +18,7 @@ extension Post.Add.Repository {
         let api: API.Client
 
         func create(
-            input: BlogPostFormInput
+            input: Post.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogPostPost(

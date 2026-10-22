@@ -20,7 +20,9 @@ enum RedirectAPIHTTPTestSupport {
         connection: MockDatabaseConnection<Key>
     ) throws -> HummingbirdTestingHTTPExecutor {
         let databaseContext = DatabaseClientContext(
-            database: FeatherTesting.DatabaseClient.Mock(connection: connection),
+            database: FeatherTesting.DatabaseClient.Mock(
+                connection: connection
+            ),
             idGenerator: FeatherTesting.IDGenerator.Mock(id: "redirect-1"),
             platform: MockDatabasePlatform()
         )
@@ -42,7 +44,9 @@ enum RedirectAPIHTTPTestSupport {
         connection: MockDatabaseConnection<Key>
     ) throws -> HummingbirdTestingHTTPExecutor {
         let databaseContext = DatabaseClientContext(
-            database: FeatherTesting.DatabaseClient.Mock(connection: connection),
+            database: FeatherTesting.DatabaseClient.Mock(
+                connection: connection
+            ),
             idGenerator: FeatherTesting.IDGenerator.Mock(id: "redirect-1"),
             platform: MockDatabasePlatform()
         )

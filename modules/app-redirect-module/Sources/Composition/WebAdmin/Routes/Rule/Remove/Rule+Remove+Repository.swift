@@ -1,12 +1,13 @@
 import RedirectApplication
 import RedirectModule
-extension RedirectModule.Rule.Remove {
+
+extension Rule.Remove {
     enum Repository {}
 }
 
-extension RedirectModule.Rule.Remove.Repository {
+extension Rule.Remove.Repository {
     protocol Interface: Sendable {
 
-    func delete(ids: [String]) async throws
+        func delete(ids: [String]) async throws
     }
 }

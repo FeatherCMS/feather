@@ -14,7 +14,13 @@ import WebModuleWebAdmin
 
 extension AuthorLink.View {
     struct Model: Sendable {
-        let authorID: String
         let id: String
+        let authorID: String
+        let label: String
+        let url: String
+        let priority: Int
+        let isBlank: Bool
+        let permission: String
+        let notes: String
     }
 }

@@ -16,10 +16,8 @@ extension Post.View.Interactor {
     struct Default: Interface {
         let repository: any Post.View.Repository.Interface
 
-        func execute(entity: Post.View.Model) async throws
-            -> Post.View.Detail.Model
-        {
-            try await repository.get(id: entity.id)
+        func execute(id: String) async throws -> Post.View.Model {
+            try await repository.get(id: id)
         }
     }
 }

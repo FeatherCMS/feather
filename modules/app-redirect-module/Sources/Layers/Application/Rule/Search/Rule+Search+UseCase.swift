@@ -2,7 +2,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 public import RedirectModule
 
-extension RedirectModule.Rule.Search {
+extension Rule.Search {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
         let query: any QueryExecutor<Scope>

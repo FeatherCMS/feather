@@ -23,7 +23,7 @@ extension Post.Remove.Presenter {
                 request: request,
                 context: context,
                 title: "Remove post",
-                content: BlogPostError(
+                content: Post.Error(
                     state: .init(
                         info: info,
                         message: message,

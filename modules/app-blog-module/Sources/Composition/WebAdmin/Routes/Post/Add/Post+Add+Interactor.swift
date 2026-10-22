@@ -8,6 +8,6 @@ extension Post.Add {
 extension Post.Add.Interactor {
     protocol Interface: Sendable {
         func loadOptions() async throws -> BlogPostAssociationOptionsModel
-        func execute(input: BlogPostFormInput) async throws
+        func execute(input: Post.Form.Input) async throws
     }
 }

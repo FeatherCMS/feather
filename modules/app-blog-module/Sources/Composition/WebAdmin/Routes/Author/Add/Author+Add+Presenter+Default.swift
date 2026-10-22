@@ -15,7 +15,7 @@ extension Author.Add.Presenter {
         let routes: Author.Router.Routes
 
         func render(
-            state: BlogAuthorForm.State,
+            state: Author.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(

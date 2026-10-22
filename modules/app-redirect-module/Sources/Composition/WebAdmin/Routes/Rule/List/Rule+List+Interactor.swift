@@ -3,20 +3,20 @@ import RedirectAdminAPI
 import RedirectApplication
 import RedirectModule
 
-extension RedirectModule.Rule.List {
+extension Rule.List {
     enum Interactor {}
 }
 
-extension RedirectModule.Rule.List.Interactor {
+extension Rule.List.Interactor {
     protocol Interface: Sendable {
 
-    func listRedirectRules(
-        page: Int,
-        search: String?,
-        statusCode: RedirectModule.Rule.StatusCode?
-    ) async throws -> AdminListModel<
-        Components.Schemas.RedirectRuleQueryItemSchema
-    >
+        func listRedirectRules(
+            page: Int,
+            search: String?,
+            statusCode: Rule.StatusCode?
+        ) async throws -> AdminListModel<
+            Components.Schemas.RedirectRuleQueryItemSchema
+        >
 
     }
 }

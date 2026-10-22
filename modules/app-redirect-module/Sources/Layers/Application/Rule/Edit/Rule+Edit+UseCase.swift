@@ -4,7 +4,7 @@ public import FeatherModuleKit
 import RedirectDomain
 public import RedirectModule
 
-extension RedirectModule.Rule.Edit {
+extension Rule.Edit {
     public struct UseCase: FeatherApplication.UseCase {
         struct Error: UseCaseError {
             let message: String
@@ -26,12 +26,14 @@ extension RedirectModule.Rule.Edit {
             input: Input
         ) async throws -> Output {
             let action = Action()
-            guard try await authorizer.can(subject: subject, perform: action) else {
+            guard try await authorizer.can(subject: subject, perform: action)
+            else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
 
             let model = try await transaction.run { scope in
-                guard var model = try await scope.repository.find(id: input.id) else {
+                guard var model = try await scope.repository.find(id: input.id)
+                else {
                     throw Error(message: "Rule not found")
                 }
                 try model.update(

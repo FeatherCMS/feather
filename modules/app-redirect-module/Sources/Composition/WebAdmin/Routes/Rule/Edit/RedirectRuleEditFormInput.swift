@@ -26,8 +26,8 @@ public struct RedirectRuleEditFormInput: Decodable, Sendable, Equatable,
         notes.whitespaceTrimmed
     }
 
-    var parsedStatusCode: RedirectModule.Rule.StatusCode? {
+    var parsedStatusCode: Rule.StatusCode? {
         guard let value = Int(normalizedStatusCode) else { return nil }
-        return RedirectModule.Rule.StatusCode(rawValue: value)
+        return Rule.StatusCode(rawValue: value)
     }
 }

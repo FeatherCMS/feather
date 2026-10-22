@@ -21,7 +21,7 @@ extension Author.View {
                 buildRuntime: { request, context in
                     (
                         interactor: Interactor.Default(
-                            repository: Author.Detail.Repository.OpenAPI(
+                            repository: Author.View.Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context

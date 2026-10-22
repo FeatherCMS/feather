@@ -6,7 +6,7 @@ extension Identity.Session.List {
     struct UserIdentitySessionListResponse: JSONResponseRepresentable {
         var openAPIIdentifier: String { "UserIdentitySessionListResponse" }
         var description: String = "UserIdentity session list response"
-        var schema = Identity.Session.Schemas.UserAuthSessionListSchema()
+        var schema = Identity.Session.List.Schema()
             .reference()
     }
 }

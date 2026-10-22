@@ -1,5 +1,7 @@
 import FeatherOpenAPI
 
-struct RedirectRuleQueryPathItems: PathItemRepresentable {
-    var post: (any OperationRepresentable)? { RedirectRuleQueryOperation() }
+extension Rule.Query {
+    struct PathItem: PathItemRepresentable {
+        var post: (any OperationRepresentable)? { Operation() }
+    }
 }

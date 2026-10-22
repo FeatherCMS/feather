@@ -23,7 +23,7 @@ extension AdminAPIGateway {
     }
 
     private func map(
-        _ detail: RedirectModule.Rule.Detail.Output
+        _ detail: Rule.Detail.Output
     ) -> Components.Schemas.RedirectRuleDetailSchema {
         .init(
             id: detail.id,

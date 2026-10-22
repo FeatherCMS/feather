@@ -1,20 +1,20 @@
-import RedirectModule
 import FeatherWebAdmin
 import RedirectApplication
+import RedirectModule
 
-extension RedirectModule.Rule.View {
+extension Rule.View {
     enum Presenter {}
 }
 
-extension RedirectModule.Rule.View.Presenter {
+extension Rule.View.Presenter {
     protocol Interface: Sendable {
 
-    func renderDetailsPage(
-        rule: RedirectRuleDetailsModel,
-        permissions: AdminListActions
-    ) async throws -> HTMLResponse
+        func renderDetailsPage(
+            rule: RedirectRuleDetailsModel,
+            permissions: AdminListActions
+        ) async throws -> HTMLResponse
 
-    func renderErrorPage(error: RedirectModule.Rule.View.Error) async throws
-        -> HTMLResponse
+        func renderErrorPage(error: Rule.View.Error) async throws
+            -> HTMLResponse
     }
 }

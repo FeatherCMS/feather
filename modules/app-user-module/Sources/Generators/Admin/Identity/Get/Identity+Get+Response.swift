@@ -5,6 +5,6 @@ extension Identity.Get {
     struct Response: JSONResponseRepresentable {
         var openAPIIdentifier: String { "UserIdentityDetailResponse" }
         var description: String = "UserIdentity response"
-        var schema = UserIdentityDetailSchema().reference()
+        var schema = IdentityDetailSchema().reference()
     }
 }

@@ -4,12 +4,12 @@ import RedirectInfrastructure
 import RedirectModule
 
 extension UseCases {
-    func makeSearchRules() -> RedirectModule.Rule.Search.UseCase {
+    func makeSearchRules() -> Rule.Search.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                RedirectModule.Rule.Search.Scope(
-                    query: RedirectModule.Rule.Search.Query.Database(
+                Rule.Search.Scope(
+                    query: Rule.Search.Query.Database(
                         context: context
                     )
                 )

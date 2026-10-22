@@ -18,7 +18,7 @@ extension AuthorLink.View {
 
 extension AuthorLink.View.Interactor {
     protocol Interface: Sendable {
-        func execute(_ input: AuthorLink.View.Model) async throws
-            -> AuthorLink.Detail.Model
+        func execute(authorID: String, id: String) async throws
+            -> AuthorLink.View.Model
     }
 }

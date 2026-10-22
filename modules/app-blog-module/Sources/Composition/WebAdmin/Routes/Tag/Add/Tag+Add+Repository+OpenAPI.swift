@@ -16,7 +16,7 @@ extension Tag.Add.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func create(input: BlogTagFormInput) async throws {
+        func create(input: Tag.Form.Input) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogTagPost(
                     headers: .init(accept: [.init(contentType: .json)]),

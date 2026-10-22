@@ -12,7 +12,7 @@ extension Author.Edit {
     struct Component: WebComponents.Component {
         struct State {
             let id: String
-            let form: BlogAuthorForm.State
+            let form: Author.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Author.Router.Routes
         }
@@ -31,7 +31,7 @@ extension Author.Edit {
                     )
                 )
                 context.build(
-                    BlogAuthorForm(
+                    Author.Form(
                         state: state.form,
                         metadataHref: state.routes
                             .authorEditMetadata(

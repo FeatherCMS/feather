@@ -1,19 +1,20 @@
 import RedirectApplication
 import RedirectModule
-extension RedirectModule.Rule.Edit {
+
+extension Rule.Edit {
     enum Interactor {}
 }
 
-extension RedirectModule.Rule.Edit.Interactor {
+extension Rule.Edit.Interactor {
     protocol Interface: Sendable {
 
-    func load(
-        id: String
-    ) async throws -> RedirectRuleEditModel
+        func load(
+            id: String
+        ) async throws -> RedirectRuleEditModel
 
-    func update(
-        id: String,
-        input: RedirectRuleEditFormInput
-    ) async throws
+        func update(
+            id: String,
+            input: RedirectRuleEditFormInput
+        ) async throws
     }
 }

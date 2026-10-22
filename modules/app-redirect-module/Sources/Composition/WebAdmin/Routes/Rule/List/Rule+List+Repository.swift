@@ -2,20 +2,20 @@ import RedirectAdminAPI
 import RedirectApplication
 import RedirectModule
 
-extension RedirectModule.Rule.List {
+extension Rule.List {
     enum Repository {}
 }
 
-extension RedirectModule.Rule.List.Repository {
+extension Rule.List.Repository {
     protocol Interface: Sendable {
 
-    func listRedirectRules(
-        page: Int,
-        search: String?,
-        statusCode: RedirectModule.Rule.StatusCode?
-    ) async throws
-        -> RedirectAdminAPI.Components.Responses
-        .RedirectRuleQueryItemSearchSchemaSearchResponse
+        func listRedirectRules(
+            page: Int,
+            search: String?,
+            statusCode: Rule.StatusCode?
+        ) async throws
+            -> RedirectAdminAPI.Components.Responses
+            .RedirectRuleQueryItemSearchSchemaSearchResponse
 
     }
 }

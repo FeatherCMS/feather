@@ -2,7 +2,7 @@ public import FeatherDomain
 public import Foundation
 public import RedirectModule
 
-extension RedirectModule.Rule {
+extension Rule {
     public struct Model: FeatherDomain.Model {
         public enum Error: DomainError {
             case sourceTooShort
@@ -67,7 +67,8 @@ extension RedirectModule.Rule {
             notes: String?
         ) throws(Error) -> New {
             try validate(source: source)
-            let normalizedSource = source.hasPrefix("/")
+            let normalizedSource =
+                source.hasPrefix("/")
                 ? source
                 : "/\(source)"
             try validate(source: normalizedSource)
@@ -89,7 +90,8 @@ extension RedirectModule.Rule {
         ) throws(Error) {
             let sourceValue = source.apply(to: self.source)
             try Self.validate(source: sourceValue)
-            let newSource = sourceValue.hasPrefix("/")
+            let newSource =
+                sourceValue.hasPrefix("/")
                 ? sourceValue
                 : "/\(sourceValue)"
             let newDestination = destination.apply(to: self.destination)

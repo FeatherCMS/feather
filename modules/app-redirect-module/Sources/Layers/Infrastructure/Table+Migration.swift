@@ -19,7 +19,7 @@ public struct TableMigration: DatabaseMigration {
         on connection: any DatabaseConnection
     ) async throws {
         let queryBuilder = DatabaseQueryCreate(
-            schema: RedirectModule.Rule.Table.tableCreationSchema,
+            schema: Rule.Table.tableCreationSchema,
             using: platform
         )
         for query in queryBuilder.build() {

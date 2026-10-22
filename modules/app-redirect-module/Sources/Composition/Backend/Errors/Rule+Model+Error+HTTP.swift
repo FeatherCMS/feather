@@ -3,7 +3,7 @@ public import NIOHTTP1
 public import RedirectDomain
 public import RedirectModule
 
-extension RedirectModule.Rule.Model.Error: ErrorTraceRepresentable,
+extension Rule.Model.Error: ErrorTraceRepresentable,
     HTTPErrorRepresentable
 {
     public var underlyingErrors: [any Error] { [] }

@@ -1,7 +1,7 @@
 public import FeatherDomain
 public import RedirectModule
 
-extension RedirectModule.Rule {
+extension Rule {
     public enum Repository {
         public protocol Interface: FeatherDomain.Repository {
             func insert(_ model: Model.New) async throws -> Model

@@ -2,7 +2,9 @@ public enum Identity {
     public enum Post {}
     public enum Delete {}
     public enum List {}
-    public enum Query {}
+    public enum Query {
+        public enum Schemas {}
+    }
     public enum Get {}
     public enum Put {}
     public enum Patch {}

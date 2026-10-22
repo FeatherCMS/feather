@@ -1,9 +1,9 @@
-import FeatherModuleKit
 import FeatherDomain
+import FeatherModuleKit
 public import RedirectAdminAPI
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension AdminAPIGateway {
 
@@ -18,8 +18,8 @@ extension AdminAPIGateway {
 
         let useCase = self.useCases.makeEditRule()
         let subject = try await CurrentSubject.require()
-        guard let statusCode = RedirectModule.Rule.StatusCode(rawValue: body.statusCode) else {
-            throw RedirectModule.Rule.Model.Error.invalidStatusCode
+        guard let statusCode = Rule.StatusCode(rawValue: body.statusCode) else {
+            throw Rule.Model.Error.invalidStatusCode
         }
         let result = try await useCase.execute(
             subject: subject,
@@ -40,7 +40,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ output: RedirectModule.Rule.Edit.Output
+        _ output: Rule.Edit.Output
     ) -> Components.Schemas.RedirectRuleDetailSchema {
         .init(
             id: output.id,

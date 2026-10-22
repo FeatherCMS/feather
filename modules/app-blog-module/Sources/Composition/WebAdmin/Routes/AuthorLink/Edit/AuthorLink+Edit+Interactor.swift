@@ -21,12 +21,12 @@ extension AuthorLink.Edit.Interactor {
         func load(
             authorID: String,
             id: String
-        ) async throws -> AuthorLink.Detail.Model
+        ) async throws -> AuthorLink.View.Model
 
         func update(
             authorID: String,
             id: String,
-            input: BlogAuthorLinkFormInput
+            input: AuthorLink.Form.Input
         ) async throws
     }
 }

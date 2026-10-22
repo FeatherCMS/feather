@@ -9,7 +9,7 @@ extension Tag.Add {
 extension Tag.Add.Presenter {
     protocol Interface: Sendable {
         func renderAddPage(
-            state: BlogTagForm.State,
+            state: Tag.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
     }

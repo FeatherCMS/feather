@@ -58,11 +58,11 @@ extension Tag.Edit.Controller {
             let runtime = buildRuntime((request, context))
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
-            var payload: BlogTagFormInput?
+            var payload: Tag.Form.Input?
 
             do {
                 let decoded = try await request.decode(
-                    as: BlogTagFormInput.self,
+                    as: Tag.Form.Input.self,
                     context: context
                 )
                 payload = decoded
@@ -138,7 +138,7 @@ extension Tag.Edit.Controller {
             imageAssetId: String? = nil,
             imageAsset: AdminMediaAsset? = nil,
             metadata: AdminMetadataFormValue? = nil
-        ) -> BlogTagForm.State {
+        ) -> Tag.Form.State {
             .init(
                 title: .init(
                     key: "title",

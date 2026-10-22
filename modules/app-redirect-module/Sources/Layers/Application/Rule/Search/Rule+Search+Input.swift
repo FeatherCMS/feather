@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import RedirectModule
 
-extension RedirectModule.Rule.Search {
+extension Rule.Search {
     public struct Input: DTO {
         public struct Query: Sendable {
             public struct Sort: Sendable {
@@ -24,13 +24,13 @@ extension RedirectModule.Rule.Search {
             public let page: FeatherApplication.Search.Page
             public let sort: [Sort]
             public let search: String?
-            public let statusCode: RedirectModule.Rule.StatusCode?
+            public let statusCode: Rule.StatusCode?
 
             public init(
                 page: FeatherApplication.Search.Page = .init(),
                 sort: [Sort] = [],
                 search: String? = nil,
-                statusCode: RedirectModule.Rule.StatusCode? = nil
+                statusCode: Rule.StatusCode? = nil
             ) {
                 self.page = page
                 self.sort = sort

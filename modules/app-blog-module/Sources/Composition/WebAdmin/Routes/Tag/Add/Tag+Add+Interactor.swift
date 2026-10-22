@@ -7,6 +7,6 @@ extension Tag.Add {
 
 extension Tag.Add.Interactor {
     protocol Interface: Sendable {
-        func execute(input: BlogTagFormInput) async throws
+        func execute(input: Tag.Form.Input) async throws
     }
 }

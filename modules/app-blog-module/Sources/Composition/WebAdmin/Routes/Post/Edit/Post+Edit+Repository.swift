@@ -7,7 +7,7 @@ extension Post.Edit {
 
 extension Post.Edit.Repository {
     protocol Interface: Sendable {
-        func load(id: String) async throws -> Post.View.Detail.Model
-        func update(id: String, input: BlogPostFormInput) async throws
+        func load(id: String) async throws -> Post.View.Model
+        func update(id: String, input: Post.Form.Input) async throws
     }
 }

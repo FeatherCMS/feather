@@ -4,15 +4,15 @@ import Hummingbird
 import RedirectApplication
 import RedirectModule
 
-extension RedirectModule.Rule.Edit {
+extension Rule.Edit {
     struct Router {
         let controller: any Controller.Interface
-        let routes: RedirectModule.Rule.Router.Routes
+        let routes: Rule.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: RedirectModule.Rule.Router.Routes
+            routes: Rule.Router.Routes
         ) {
             self.routes = routes
             self.controller = Controller.Default(
@@ -40,8 +40,14 @@ extension RedirectModule.Rule.Edit {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            router.get(routes.edit.routerPath, use: controller.getEditRedirectRule)
-            router.post(routes.edit.routerPath, use: controller.postEditRedirectRule)
+            router.get(
+                routes.edit.routerPath,
+                use: controller.getEditRedirectRule
+            )
+            router.post(
+                routes.edit.routerPath,
+                use: controller.postEditRedirectRule
+            )
         }
     }
 }

@@ -6,8 +6,8 @@ extension Identity.Post {
         var openAPIIdentifier: String { "UserIdentityCreateSchema" }
         var propertyMap: SchemaMap {
             [
-                "name": UserIdentityNameField().reference(),
-                "status": UserIdentityStatusField().reference(required: false),
+                "name": IdentityNameField().reference(),
+                "status": IdentityStatusField().reference(required: false),
                 "roleIds": Identity.Schemas.RoleIDs()
                     .reference(
                         required: false

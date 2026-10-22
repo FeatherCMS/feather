@@ -7,7 +7,7 @@ extension Identity.Patch {
         var operationId: String? { "userIdentityPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                UserIdentityIdParameter().reference(),
+                IdentityIdParameter().reference(),
                 Identity.Parameters.UpdateMask().reference(),
             ]
         }
@@ -38,10 +38,10 @@ extension Identity.Patch {
         var openAPIIdentifier: String { "UserIdentityPatchSchema" }
         var propertyMap: SchemaMap {
             [
-                "name": UserIdentityNameField().reference(required: false),
+                "name": IdentityNameField().reference(required: false),
                 "roleIds": Identity.Schemas.RoleIDs()
                     .reference(required: false),
-                "status": UserIdentityStatusField().reference(required: false),
+                "status": IdentityStatusField().reference(required: false),
             ]
         }
     }

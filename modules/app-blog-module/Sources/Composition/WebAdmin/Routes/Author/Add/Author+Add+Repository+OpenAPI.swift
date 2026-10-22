@@ -7,7 +7,7 @@ extension Author.Add.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func create(input: BlogAuthorFormInput) async throws {
+        func create(input: Author.Form.Input) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogAuthorPost(
                     headers: .init(accept: [.init(contentType: .json)]),

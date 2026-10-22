@@ -1,14 +1,15 @@
-import RedirectModule
 import RedirectApplication
-extension RedirectModule.Rule.View {
+import RedirectModule
+
+extension Rule.View {
     enum Repository {}
 }
 
-extension RedirectModule.Rule.View.Repository {
+extension Rule.View.Repository {
     protocol Interface: Sendable {
 
-    func load(
-        id: String
-    ) async throws -> RedirectRuleDetailsModel
+        func load(
+            id: String
+        ) async throws -> RedirectRuleDetailsModel
     }
 }

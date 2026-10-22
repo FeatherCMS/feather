@@ -1,6 +1,6 @@
 public import FeatherModuleKit
 
-public struct WebMenuItemProvider: Event {
+public struct WebMenuItemProvider: FeatherModuleKit.Event {
     public typealias Output = [WebMenuItemDefinition]
 
     public let menuKey: String

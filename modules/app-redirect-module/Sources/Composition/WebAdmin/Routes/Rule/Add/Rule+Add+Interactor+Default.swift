@@ -1,26 +1,26 @@
-import RedirectModule
-import FeatherWebShared
 import FeatherWebAdmin
+import FeatherWebShared
 import RedirectApplication
+import RedirectModule
 
-extension RedirectModule.Rule.Add.Interactor {
+extension Rule.Add.Interactor {
     struct Default: Interface {
-    let repository: any RedirectModule.Rule.Add.Repository.Interface
+        let repository: any Rule.Add.Repository.Interface
 
-    func add(
-        input: RedirectRuleAddFormInput
-    ) async throws {
-        do { try await repository.create(input: input) }
-        catch let error as OpenAPIRepositoryError {
-            switch error {
-            case .unauthorized: throw RedirectModule.Rule.Add.Error.unauthorized
-            case .forbidden: throw RedirectModule.Rule.Add.Error.forbidden
-            case .failure(let failure) where failure.statusCode == 409:
-                throw RedirectModule.Rule.Add.Error.conflict
-            case .conflict: throw RedirectModule.Rule.Add.Error.conflict
-            default: throw RedirectModule.Rule.Add.Error.unavailable
+        func add(
+            input: RedirectRuleAddFormInput
+        ) async throws {
+            do { try await repository.create(input: input) }
+            catch let error as OpenAPIRepositoryError {
+                switch error {
+                case .unauthorized: throw Rule.Add.Error.unauthorized
+                case .forbidden: throw Rule.Add.Error.forbidden
+                case .failure(let failure) where failure.statusCode == 409:
+                    throw Rule.Add.Error.conflict
+                case .conflict: throw Rule.Add.Error.conflict
+                default: throw Rule.Add.Error.unavailable
+                }
             }
         }
-    }
     }
 }

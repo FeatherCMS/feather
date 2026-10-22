@@ -7,9 +7,11 @@
   `RedirectAppAPI`, `RedirectAdminOpenAPIGenerator`,
   `RedirectAppOpenAPIGenerator`, `RedirectWebAdmin`, and `RedirectWebApp` in
   their separate package targets.
-- Use `RedirectModule.Rule` as the domain namespace. Keep rule models,
+- Use the top-level `Rule` namespace as the domain namespace. Keep rule models,
   application operations, queries, tables, and persistence adapters grouped
   under their owning entity/operation namespaces.
+- Keep module-wide events under `Event`, the module permission aggregate under
+  `Permissions`, and rule-specific permission keys under `Rule.Permissions`.
 - Preserve the existing permission key strings when reorganizing their
   declarations.
 - Redirect rules are resolved by the app-facing API. Keep the Admin API for
@@ -24,7 +26,7 @@
 - `List` is for lightweight lookup results; `Search` handles structured
   criteria and paginated table results. Keep their schemas and result models
   distinct.
-- Persist redirect rules through `RedirectModule.Rule.Table` and Feather DBAL.
+- Persist redirect rules through `Rule.Table` and Feather DBAL.
   Keep table columns, row models, indexes, and migrations consistent.
 - Ordinary tests use the shared mock database/platform and must not require
   PostgreSQL, certificates, or persistent volumes. Cover application behavior
@@ -67,6 +69,10 @@
   `scripts/generate-openapi.sh`; do not edit generated YAML or API Swift files
   directly. Serve the generated OAS 3.2 documents with the pinned
   `swaggerapi/swagger-ui` Compose services.
+- Keep Admin generator declarations nested under `Rule` and its HTTP operation
+  namespaces, with operation schemas, request bodies, and responses in their
+  corresponding operation directories. Preserve component identifiers when
+  reorganizing generator source files.
 - Do not mirror every Swift import with a direct package dependency. Rely on
   transitive module availability when SwiftPM/the compiler permits it; add a
   direct product dependency only when required to build. Remove unused direct

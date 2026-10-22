@@ -15,7 +15,7 @@ extension Tag.Add.Interactor {
     struct Default: Interface {
         let repository: any Tag.Add.Repository.Interface
 
-        func execute(input: BlogTagFormInput) async throws {
+        func execute(input: Tag.Form.Input) async throws {
             try await repository.create(input: input)
         }
     }

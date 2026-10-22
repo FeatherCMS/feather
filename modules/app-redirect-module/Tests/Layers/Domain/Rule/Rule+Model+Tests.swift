@@ -4,10 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
+import FeatherDomain
 import RedirectModule
 import Testing
 
-import FeatherDomain
 import struct Foundation.Date
 
 @testable import RedirectDomain
@@ -17,7 +17,7 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleNewSucceedsWithValidInput() throws {
-        let create = try RedirectModule.Rule.Model.create(
+        let create = try Rule.Model.create(
             source: "/from",
             destination: "/to",
             statusCode: .movedPermanently,
@@ -32,13 +32,13 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleSourceUsesLeadingSlashAndKeepsTrailingSlashAndRoot() throws {
-        let nested = try RedirectModule.Rule.Model.create(
+        let nested = try Rule.Model.create(
             source: "from/",
             destination: "/to",
             statusCode: .movedPermanently,
             notes: nil
         )
-        let root = try RedirectModule.Rule.Model.create(
+        let root = try Rule.Model.create(
             source: "/",
             destination: "/home",
             statusCode: .movedPermanently,
@@ -51,8 +51,8 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleNewThrowsSourceTooShort() throws {
-        #expect(throws: RedirectModule.Rule.Model.Error.sourceTooShort) {
-            _ = try RedirectModule.Rule.Model.create(
+        #expect(throws: Rule.Model.Error.sourceTooShort) {
+            _ = try Rule.Model.create(
                 source: "",
                 destination: "/to",
                 statusCode: .movedPermanently,
@@ -63,8 +63,8 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleNewThrowsSourceTooLong() throws {
-        #expect(throws: RedirectModule.Rule.Model.Error.sourceTooLong) {
-            _ = try RedirectModule.Rule.Model.create(
+        #expect(throws: Rule.Model.Error.sourceTooLong) {
+            _ = try Rule.Model.create(
                 source: String(repeating: "a", count: 255),
                 destination: "/to",
                 statusCode: .movedPermanently,
@@ -75,8 +75,8 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleNewThrowsDestinationTooShort() throws {
-        #expect(throws: RedirectModule.Rule.Model.Error.destinationTooShort) {
-            _ = try RedirectModule.Rule.Model.create(
+        #expect(throws: Rule.Model.Error.destinationTooShort) {
+            _ = try Rule.Model.create(
                 source: "/from",
                 destination: "",
                 statusCode: .movedPermanently,
@@ -87,8 +87,8 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleNewThrowsDestinationTooLong() throws {
-        #expect(throws: RedirectModule.Rule.Model.Error.destinationTooLong) {
-            _ = try RedirectModule.Rule.Model.create(
+        #expect(throws: Rule.Model.Error.destinationTooLong) {
+            _ = try Rule.Model.create(
                 source: "/from",
                 destination: String(repeating: "a", count: 255),
                 statusCode: .movedPermanently,
@@ -99,8 +99,8 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleNewThrowsNotesTooLong() throws {
-        #expect(throws: RedirectModule.Rule.Model.Error.notesTooLong) {
-            _ = try RedirectModule.Rule.Model.create(
+        #expect(throws: Rule.Model.Error.notesTooLong) {
+            _ = try Rule.Model.create(
                 source: "/from",
                 destination: "/to",
                 statusCode: .movedPermanently,
@@ -111,7 +111,7 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleUpdateSucceedsWithProvidedValues() throws {
-        var model = RedirectModule.Rule.Model(
+        var model = Rule.Model(
             id: "rule-1",
             source: "/from-a",
             destination: "/to-a",
@@ -136,7 +136,7 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleUpdateNormalizesSourceWithoutRemovingTrailingSlash() throws {
-        var model = RedirectModule.Rule.Model(
+        var model = Rule.Model(
             id: "rule-1",
             source: "/from",
             destination: "/to",
@@ -153,7 +153,7 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleUpdateKeepsValuesWhenArgumentsAreNil() throws {
-        var model = RedirectModule.Rule.Model(
+        var model = Rule.Model(
             id: "rule-1",
             source: "/from-a",
             destination: "/to-a",
@@ -173,7 +173,7 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleUpdateThrowsSourceTooShort() throws {
-        var model = RedirectModule.Rule.Model(
+        var model = Rule.Model(
             id: "rule-1",
             source: "/from-a",
             destination: "/to-a",
@@ -183,14 +183,14 @@ struct RuleModelTestSuite {
             updatedAt: .distantFuture
         )
 
-        #expect(throws: RedirectModule.Rule.Model.Error.sourceTooShort) {
+        #expect(throws: Rule.Model.Error.sourceTooShort) {
             try model.update(source: .set(""))
         }
     }
 
     @Test
     func ruleUpdateThrowsDestinationTooLong() throws {
-        var model = RedirectModule.Rule.Model(
+        var model = Rule.Model(
             id: "rule-1",
             source: "/from-a",
             destination: "/to-a",
@@ -200,7 +200,7 @@ struct RuleModelTestSuite {
             updatedAt: .distantFuture
         )
 
-        #expect(throws: RedirectModule.Rule.Model.Error.destinationTooLong) {
+        #expect(throws: Rule.Model.Error.destinationTooLong) {
             try model.update(
                 destination: .set(String(repeating: "a", count: 255))
             )
@@ -209,7 +209,7 @@ struct RuleModelTestSuite {
 
     @Test
     func ruleUpdateThrowsNotesTooLong() throws {
-        var model = RedirectModule.Rule.Model(
+        var model = Rule.Model(
             id: "rule-1",
             source: "/from-a",
             destination: "/to-a",
@@ -219,7 +219,7 @@ struct RuleModelTestSuite {
             updatedAt: .distantFuture
         )
 
-        #expect(throws: RedirectModule.Rule.Model.Error.notesTooLong) {
+        #expect(throws: Rule.Model.Error.notesTooLong) {
             try model.update(
                 notes: .set(String(repeating: "a", count: 255))
             )

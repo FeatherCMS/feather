@@ -9,7 +9,7 @@ extension AuthorLink.Add.Repository {
     protocol Interface: Sendable {
         func create(
             authorID: String,
-            input: BlogAuthorLinkFormInput
+            input: AuthorLink.Form.Input
         ) async throws
     }
 }

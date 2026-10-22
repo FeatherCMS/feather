@@ -18,6 +18,6 @@ extension Post.View {
 
 extension Post.View.Repository {
     protocol Interface: Sendable {
-        func get(id: String) async throws -> Post.View.Detail.Model
+        func get(id: String) async throws -> Post.View.Model
     }
 }

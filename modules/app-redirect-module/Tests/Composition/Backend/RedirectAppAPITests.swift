@@ -37,7 +37,8 @@ struct RedirectAppAPITests {
             using: executor
         )
         let value = try #require(
-            JSONSerialization.jsonObject(with: Data(body.utf8)) as? [String: Any]
+            JSONSerialization.jsonObject(with: Data(body.utf8))
+                as? [String: Any]
         )
 
         #expect(value["source"] as? String == "/")

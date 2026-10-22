@@ -14,5 +14,10 @@ import WebModuleWebAdmin
 extension Tag.View {
     struct Model: Sendable {
         let id: String
+        let title: String
+        let excerpt: String
+        let content: String
+        let imageAsset: AdminMediaAsset?
+        let metadata: AdminMetadataFormValue
     }
 }

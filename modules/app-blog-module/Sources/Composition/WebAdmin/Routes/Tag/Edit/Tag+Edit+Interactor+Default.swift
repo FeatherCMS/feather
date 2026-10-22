@@ -15,11 +15,11 @@ extension Tag.Edit.Interactor {
     struct Default: Interface {
         let repository: any Tag.Edit.Repository.Interface
 
-        func load(id: String) async throws -> Tag.Detail.Model {
+        func load(id: String) async throws -> Tag.View.Model {
             try await repository.load(id: id)
         }
 
-        func update(id: String, input: BlogTagFormInput) async throws {
+        func update(id: String, input: Tag.Form.Input) async throws {
             try await repository.update(id: id, input: input)
         }
     }

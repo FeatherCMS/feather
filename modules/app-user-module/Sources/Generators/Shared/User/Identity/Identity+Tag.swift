@@ -1,0 +1,16 @@
+//
+//  Identity+Tags.swift
+//  openapi-generator
+//
+//  Created by Tibor Bödecs on 2026. 02. 12..
+//
+
+public import FeatherOpenAPI
+import FeatherOpenAPIGenerator
+
+public struct IdentityTag: TagRepresentable {
+    public var name: String = "UserIdentities"
+    public var description: String? = "User identities related endpoints."
+
+    public init() {}
+}

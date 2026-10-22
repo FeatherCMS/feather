@@ -7,6 +7,6 @@ extension Post.Add {
 
 extension Post.Add.Repository {
     protocol Interface: Sendable {
-        func create(input: BlogPostFormInput) async throws
+        func create(input: Post.Form.Input) async throws
     }
 }

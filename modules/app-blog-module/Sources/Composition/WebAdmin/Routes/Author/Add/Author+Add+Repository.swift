@@ -6,6 +6,6 @@ extension Author.Add {
 
 extension Author.Add.Repository {
     protocol Interface: Sendable {
-        func create(input: BlogAuthorFormInput) async throws
+        func create(input: Author.Form.Input) async throws
     }
 }

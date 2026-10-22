@@ -1,6 +1,6 @@
 public import RedirectModule
 
-extension RedirectModule.Rule.Search {
+extension Rule.Search {
     public enum Query {
         public protocol Interface: Sendable {
             func search(query: Input.Query) async throws -> Output

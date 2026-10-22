@@ -13,7 +13,7 @@ import protocol SGML.BasicTag
 extension Tag.View {
     struct Component: WebComponents.Component {
         struct State {
-            let model: Tag.Detail.Model
+            let model: Tag.View.Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
             let routes: Tag.Router.Routes

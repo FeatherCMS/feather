@@ -1,7 +1,9 @@
 import FeatherOpenAPI
 
-struct RedirectRuleIdPathItems: PathItemRepresentable {
-    var get: (any OperationRepresentable)? { RedirectRuleGetOperation() }
-    var put: (any OperationRepresentable)? { RedirectRuleUpdateOperation() }
-    var patch: (any OperationRepresentable)? { RedirectRulePatchOperation() }
+extension Rule.ID {
+    struct PathItem: PathItemRepresentable {
+        var get: (any OperationRepresentable)? { Rule.Get.Operation() }
+        var put: (any OperationRepresentable)? { Rule.Put.Operation() }
+        var patch: (any OperationRepresentable)? { Rule.Patch.Operation() }
+    }
 }

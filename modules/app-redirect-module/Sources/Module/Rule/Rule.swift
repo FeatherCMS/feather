@@ -1,3 +1,1 @@
-extension RedirectModule {
-    public enum Rule {}
-}
+public enum Rule {}

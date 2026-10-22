@@ -23,7 +23,7 @@ extension AuthorLink.Remove.Presenter {
                 request: request,
                 context: context,
                 title: "Remove blog author link",
-                content: BlogAuthorLinkError(
+                content: AuthorLink.Error(
                     state: .init(
                         info: info,
                         message: message,

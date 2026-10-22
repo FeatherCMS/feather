@@ -29,11 +29,9 @@ extension Post.View.Controller {
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             do {
-                let rule = try await runtime.interactor.execute(
-                    entity: .init(id: id)
-                )
+                let model = try await runtime.interactor.execute(id: id)
                 return try await runtime.presenter.renderDetailsPage(
-                    rule: rule,
+                    model: model,
                     permissions: permissions
                 )
             }

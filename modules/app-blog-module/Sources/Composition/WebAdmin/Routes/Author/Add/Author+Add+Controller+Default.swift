@@ -43,11 +43,11 @@ extension Author.Add.Controller {
         ) async throws -> Response {
             let runtime = buildRuntime((request, context))
             let permissions = context.currentUserPermissions
-            var payload: BlogAuthorFormInput?
+            var payload: Author.Form.Input?
 
             do {
                 let decoded = try await request.decode(
-                    as: BlogAuthorFormInput.self,
+                    as: Author.Form.Input.self,
                     context: context
                 )
                 payload = decoded
@@ -127,7 +127,7 @@ extension Author.Add.Controller {
             selectedProfileImage: AdminMediaAsset? = nil,
             permissions: Set<String>,
             slugPrefix: String? = nil
-        ) -> BlogAuthorForm.State {
+        ) -> Author.Form.State {
             .init(
                 name: .init(
                     key: "name",

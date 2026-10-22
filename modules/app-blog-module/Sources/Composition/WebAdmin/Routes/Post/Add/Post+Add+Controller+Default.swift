@@ -45,11 +45,11 @@ extension Post.Add.Controller {
         ) async throws -> Response {
             let runtime = buildRuntime((request, context))
             let permissions = context.currentUserPermissions
-            var lastPayload: BlogPostFormInput?
+            var lastPayload: Post.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: BlogPostFormInput.self,
+                    as: Post.Form.Input.self,
                     context: context
                 )
                 lastPayload = payload
@@ -146,7 +146,7 @@ extension Post.Add.Controller {
             selectedTagIds: [String] = [],
             options: BlogPostAssociationOptionsModel,
             slugPrefix: String? = nil
-        ) -> BlogPostForm.State {
+        ) -> Post.Form.State {
             .init(
                 title: .init(
                     key: "title",
@@ -197,7 +197,7 @@ extension Post.Add.Controller {
             key: String,
             selectedIDs: [String],
             options: [BlogPostAssociationOptionModel]
-        ) -> [BlogPostForm.OptionState] {
+        ) -> [Post.Form.OptionState] {
             let selectedSet = Set(selectedIDs)
             let normalizedOptions = mergeMissingSelections(
                 selectedIDs: selectedIDs,

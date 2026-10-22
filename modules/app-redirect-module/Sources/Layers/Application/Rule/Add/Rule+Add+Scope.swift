@@ -2,11 +2,11 @@ public import FeatherModuleKit
 public import RedirectDomain
 public import RedirectModule
 
-extension RedirectModule.Rule.Add {
+extension Rule.Add {
     public struct Scope: FeatherModuleKit.Scope {
-        public let repository: any RedirectModule.Rule.Repository.Interface
+        public let repository: any Rule.Repository.Interface
 
-        public init(repository: any RedirectModule.Rule.Repository.Interface) {
+        public init(repository: any Rule.Repository.Interface) {
             self.repository = repository
         }
     }

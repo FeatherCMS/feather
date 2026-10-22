@@ -12,7 +12,7 @@ import protocol SGML.BasicTag
 extension Tag.Add {
     struct Component: WebComponents.Component {
         struct State {
-            let form: BlogTagForm.State
+            let form: Tag.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Tag.Router.Routes
         }
@@ -32,7 +32,7 @@ extension Tag.Add {
                 )
                 Div {
                     context.build(
-                        BlogTagForm(
+                        Tag.Form(
                             state: state.form,
                             action: state.routes.tagAdd().description,
                             submitLabel: "Add tag"

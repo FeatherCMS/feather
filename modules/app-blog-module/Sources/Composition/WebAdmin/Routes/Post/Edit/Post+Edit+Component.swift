@@ -17,7 +17,7 @@ extension Post.Edit {
 
         struct State {
             let id: String
-            let form: BlogPostForm.State
+            let form: Post.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Post.Router.Routes
         }
@@ -36,7 +36,7 @@ extension Post.Edit {
                     )
                 )
                 context.build(
-                    BlogPostForm(
+                    Post.Form(
                         state: state.form,
                         metadataHref: state.routes
                             .postEditMetadata(

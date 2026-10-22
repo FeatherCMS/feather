@@ -20,7 +20,7 @@ extension Tag.Add.Presenter {
         let routes: Tag.Router.Routes
 
         func renderAddPage(
-            state: BlogTagForm.State,
+            state: Tag.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(

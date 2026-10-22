@@ -25,7 +25,7 @@ struct RedirectRuleTableContent: Component {
     }
     func html(context: inout BuilderContext) -> Div {
         let canDelete = state.permissions.allows(
-            RedirectModule.Rule.Permissions.delete
+            Rule.Permissions.delete
         )
 
         return context.build(
@@ -65,7 +65,7 @@ struct RedirectRuleTableContent: Component {
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         if state.permissions.allows(
-                                            RedirectModule.Rule.Permissions.create
+                                            Rule.Permissions.create
                                         ) {
                                             context.build(
                                                 AdminButton(
@@ -190,7 +190,7 @@ struct RedirectRuleTableContent: Component {
                 },
                 toolbar: {
                     if state.permissions.allows(
-                        RedirectModule.Rule.Permissions.create
+                        Rule.Permissions.create
                     ) {
                         context.build(
                             AdminListToolbar {

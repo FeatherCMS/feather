@@ -19,7 +19,7 @@ extension AuthorLink.Edit {
         struct State {
             let authorID: String
             let id: String
-            let form: BlogAuthorLinkForm.State
+            let form: AuthorLink.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: AuthorLink.Router.Routes
         }
@@ -39,7 +39,7 @@ extension AuthorLink.Edit {
                 )
                 Div {
                     context.build(
-                        BlogAuthorLinkForm(
+                        AuthorLink.Form(
                             state: state.form,
                             action:
                                 state.routes

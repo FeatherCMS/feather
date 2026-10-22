@@ -10,7 +10,8 @@ extension AdminAPIGateway {
     public func redirectRuleQuery(
         _ input: Operations.RedirectRuleQuery.Input
     ) async throws -> Operations.RedirectRuleQuery.Output {
-        let query: Components.Schemas.RedirectRuleQueryItemSearchRequestQuerySchema
+        let query:
+            Components.Schemas.RedirectRuleQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -51,39 +52,45 @@ extension AdminAPIGateway {
     }
 
     private func searchPage(
-        from query: Components.Schemas.RedirectRuleQueryItemSearchRequestQuerySchema
+        from query: Components.Schemas
+            .RedirectRuleQueryItemSearchRequestQuerySchema
     ) -> FeatherApplication.Search.Page {
         let defaults = FeatherApplication.Search.Page()
-        return FeatherApplication.Search.Page(
-            size: query.page?.size ?? defaults.size,
-            number: query.page?.number ?? defaults.number
-        ).normalized()
+        return FeatherApplication.Search
+            .Page(
+                size: query.page?.size ?? defaults.size,
+                number: query.page?.number ?? defaults.number
+            )
+            .normalized()
     }
 
     private func responseQuery(
-        from query: Components.Schemas.RedirectRuleQueryItemSearchRequestQuerySchema
+        from query: Components.Schemas
+            .RedirectRuleQueryItemSearchRequestQuerySchema
     ) -> Components.Schemas.RedirectRuleQueryItemSearchResponseQuerySchema {
         let page = searchPage(from: query)
-        let sort = query.sort?.map { rule in
-            let field:
-                Components.Schemas.RedirectRuleQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload.FieldPayload
-            switch rule.field {
-            case .id:
-                field = .id
-            case .source:
-                field = .source
-            case .destination:
-                field = .destination
-            case .statusCode:
-                field = .statusCode
-            case .notes:
-                field = .notes
+        let sort = query.sort?
+            .map { rule in
+                let field:
+                    Components.Schemas
+                        .RedirectRuleQueryItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                switch rule.field {
+                case .id:
+                    field = .id
+                case .source:
+                    field = .source
+                case .destination:
+                    field = .destination
+                case .statusCode:
+                    field = .statusCode
+                case .notes:
+                    field = .notes
+                }
+                return Components.Schemas
+                    .RedirectRuleQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload(field: field, direction: rule.direction)
             }
-            return Components.Schemas
-                .RedirectRuleQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload(field: field, direction: rule.direction)
-        }
 
         return .init(
             page: .init(size: page.size, number: page.number),
@@ -96,16 +103,18 @@ extension AdminAPIGateway {
     }
 
     private func map(
-        _ query: Components.Schemas.RedirectRuleQueryItemSearchRequestQuerySchema
-    ) throws -> RedirectModule.Rule.Search.Input.Query {
-        let statusCode: RedirectModule.Rule.StatusCode?
+        _ query: Components.Schemas
+            .RedirectRuleQueryItemSearchRequestQuerySchema
+    ) throws -> Rule.Search.Input.Query {
+        let statusCode: Rule.StatusCode?
         if let rawValue = query.filters.statusCode {
-            guard let value = RedirectModule.Rule.StatusCode(rawValue: rawValue)
+            guard let value = Rule.StatusCode(rawValue: rawValue)
             else {
-                throw RedirectModule.Rule.Model.Error.invalidStatusCode
+                throw Rule.Model.Error.invalidStatusCode
             }
             statusCode = value
-        } else {
+        }
+        else {
             statusCode = nil
         }
 
@@ -113,7 +122,7 @@ extension AdminAPIGateway {
             page: searchPage(from: query),
             sort: (query.sort ?? [])
                 .map { rule in
-                    let field: RedirectModule.Rule.Search.Input.Query.Sort.Field
+                    let field: Rule.Search.Input.Query.Sort.Field
                     switch rule.field {
                     case .id:
                         field = .id
@@ -137,7 +146,7 @@ extension AdminAPIGateway {
     }
 
     private func map(
-        _ item: RedirectModule.Rule.Search.Output.Item
+        _ item: Rule.Search.Output.Item
     ) -> Components.Schemas.RedirectRuleQueryItemSchema {
         .init(
             id: item.id,

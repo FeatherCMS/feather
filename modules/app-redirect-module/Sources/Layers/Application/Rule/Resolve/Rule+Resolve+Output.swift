@@ -1,5 +1,5 @@
 //
-//  RedirectModule.Rule.Resolve.Output.swift
+//  Rule.Resolve.Output.swift
 //  app-redirect-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -7,16 +7,16 @@
 public import FeatherApplication
 public import RedirectModule
 
-extension RedirectModule.Rule.Resolve {
+extension Rule.Resolve {
     public struct Output: DTO {
         public let source: String
         public let destination: String
-        public let statusCode: RedirectModule.Rule.StatusCode
+        public let statusCode: Rule.StatusCode
 
         public init(
             source: String,
             destination: String,
-            statusCode: RedirectModule.Rule.StatusCode
+            statusCode: Rule.StatusCode
         ) {
             self.source = source
             self.destination = destination

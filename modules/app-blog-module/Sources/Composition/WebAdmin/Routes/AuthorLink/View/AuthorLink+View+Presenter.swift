@@ -19,7 +19,7 @@ extension AuthorLink.View {
 extension AuthorLink.View.Presenter {
     protocol Interface: Sendable {
         func renderDetailsPage(
-            model: AuthorLink.Detail.Model,
+            model: AuthorLink.View.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

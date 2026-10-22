@@ -75,7 +75,7 @@ extension Tag.List.Controller {
                 as: AdminStatusActionFormInput.self,
                 context: context
             )
-            let repository = Tag.Detail.Repository.OpenAPI(
+            let repository = Tag.View.Repository.OpenAPI(
                 api: API.Client(
                     environment: environment,
                     requestContext: context

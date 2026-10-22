@@ -6,8 +6,8 @@ extension Identity.Put {
         var openAPIIdentifier: String { "UserIdentityUpdateSchema" }
         var propertyMap: SchemaMap {
             [
-                "name": UserIdentityNameField().reference(required: false),
-                "status": UserIdentityStatusField().reference(required: false),
+                "name": IdentityNameField().reference(required: false),
+                "status": IdentityStatusField().reference(required: false),
                 "roleIds": Identity.Schemas.RoleIDs()
                     .reference(
                         required: false

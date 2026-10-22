@@ -1,109 +1,51 @@
 import FeatherOpenAPI
-import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
-struct RedirectRuleIdField: StringSchemaRepresentable {
-    var example: String? = "rr_home_old"
-}
-
-struct RedirectRuleSourceField: StringSchemaRepresentable {
-    var example: String? = "/old-home"
-}
-
-struct RedirectRuleDestinationField: StringSchemaRepresentable {
-    var example: String? = "/new-home"
-}
-
-struct RedirectRuleStatusCodeField: IntSchemaRepresentable {
-    var example: Int? = 301
-    var enumValues: [Int]? = [301, 302, 307, 308]
-}
-
-struct RedirectRuleSearchField: StringSchemaRepresentable {
-    var example: String? = "/old-home"
-}
-
-struct RedirectRuleNotesField: StringSchemaRepresentable {
-    var example: String? = "Legacy homepage redirect."
-}
-
-struct RedirectRuleUpdateMaskField: StringSchemaRepresentable {
-    var openAPIIdentifier: String { "RedirectRuleUpdateMask" }
-    var example: String? = "source,destination,statusCode,notes"
-}
-
-struct RedirectRuleCreateSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "source": RedirectRuleSourceField(),
-            "destination": RedirectRuleDestinationField(),
-            "statusCode": RedirectRuleStatusCodeField(),
-            "notes": RedirectRuleNotesField().reference(required: false),
-        ]
+extension Rule.Schemas {
+    struct ID: StringSchemaRepresentable {
+        var openAPIIdentifier: String { "RedirectRuleIdField" }
+        var example: String? = "rr_home_old"
     }
-}
 
-struct RedirectRulePatchSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "source": RedirectRuleSourceField().reference(required: false),
-            "destination": RedirectRuleDestinationField()
-                .reference(required: false),
-            "statusCode": RedirectRuleStatusCodeField()
-                .reference(required: false),
-            "notes": RedirectRuleNotesField().nullable().reference(required: false),
-        ]
+    struct Source: StringSchemaRepresentable {
+        var openAPIIdentifier: String { "RedirectRuleSourceField" }
+        var example: String? = "/old-home"
     }
-}
 
-struct RedirectRuleDetailSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "id": RedirectRuleIdField(),
-            "source": RedirectRuleSourceField(),
-            "destination": RedirectRuleDestinationField(),
-            "statusCode": RedirectRuleStatusCodeField(),
-            "notes": RedirectRuleNotesField().reference(required: false),
-        ]
+    struct Destination: StringSchemaRepresentable {
+        var openAPIIdentifier: String { "RedirectRuleDestinationField" }
+        var example: String? = "/new-home"
     }
-}
 
-struct RedirectRuleListItemSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "id": RedirectRuleIdField().reference(),
-            "source": RedirectRuleSourceField().reference(),
-            "destination": RedirectRuleDestinationField().reference(),
-            "statusCode": RedirectRuleStatusCodeField().reference(),
-        ]
+    struct StatusCode: IntSchemaRepresentable {
+        var openAPIIdentifier: String { "RedirectRuleStatusCodeField" }
+        var example: Int? = 301
+        var enumValues: [Int]? = [301, 302, 307, 308]
     }
-}
 
-struct RedirectRuleQueryItemSchema: ObjectSchemaRepresentable {
-    var openAPIIdentifier: String { "RedirectRuleQueryItemSchema" }
-
-    var propertyMap: SchemaMap {
-        [
-            "id": RedirectRuleIdField().reference(),
-            "source": RedirectRuleSourceField().reference(),
-            "destination": RedirectRuleDestinationField().reference(),
-            "statusCode": RedirectRuleStatusCodeField().reference(),
-        ]
+    struct Search: StringSchemaRepresentable {
+        var openAPIIdentifier: String { "RedirectRuleSearchField" }
+        var example: String? = "/old-home"
     }
-}
 
-struct RedirectRuleListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? {
-        RedirectRuleListItemSchema().reference()
+    struct Notes: StringSchemaRepresentable {
+        var openAPIIdentifier: String { "RedirectRuleNotesField" }
+        var example: String? = "Legacy homepage redirect."
     }
-}
 
-struct RedirectRuleFiltersSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "search": RedirectRuleSearchField().reference(required: false),
-            "statusCode":
-                RedirectRuleStatusCodeField().reference(required: false),
-        ]
+    struct UpdateMask: StringSchemaRepresentable {
+        var openAPIIdentifier: String { "RedirectRuleUpdateMask" }
+        var example: String? = "source,destination,statusCode,notes"
+    }
+
+    struct Create: ObjectSchemaRepresentable {
+        var openAPIIdentifier: String { "RedirectRuleCreateSchema" }
+        var propertyMap: SchemaMap {
+            [
+                "source": Source(),
+                "destination": Destination(),
+                "statusCode": StatusCode(),
+                "notes": Notes().reference(required: false),
+            ]
+        }
     }
 }

@@ -1,5 +1,5 @@
-public import RedirectAdminAPI
 import FeatherModuleKit
+public import RedirectAdminAPI
 import RedirectApplication
 import RedirectModule
 
@@ -22,7 +22,7 @@ extension AdminAPIGateway {
     }
 
     private func map(
-        _ item: RedirectModule.Rule.List.Output.Item
+        _ item: Rule.List.Output.Item
     ) -> Components.Schemas.RedirectRuleListItemSchema {
         .init(
             id: item.id,

@@ -79,7 +79,7 @@ extension Author.List.Controller {
                 as: AdminStatusActionFormInput.self,
                 context: context
             )
-            let details = try await Author.Detail.Repository
+            let details = try await Author.View.Repository
                 .OpenAPI(
                     api: API.Client(
                         environment: environment,

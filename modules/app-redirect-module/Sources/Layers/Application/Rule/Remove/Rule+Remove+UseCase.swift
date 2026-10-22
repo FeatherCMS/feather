@@ -3,7 +3,7 @@ public import FeatherModuleKit
 import RedirectDomain
 public import RedirectModule
 
-extension RedirectModule.Rule.Remove {
+extension Rule.Remove {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Scope>
@@ -21,7 +21,8 @@ extension RedirectModule.Rule.Remove {
             input: Input
         ) async throws -> Output {
             let action = Action()
-            guard try await authorizer.can(subject: subject, perform: action) else {
+            guard try await authorizer.can(subject: subject, perform: action)
+            else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
             let ids = try await transaction.run { scope in

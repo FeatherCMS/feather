@@ -11,7 +11,7 @@ import protocol SGML.BasicTag
 extension Author.Add {
     struct Component: WebComponents.Component {
         struct State {
-            let form: BlogAuthorForm.State
+            let form: Author.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Author.Router.Routes
         }
@@ -30,7 +30,7 @@ extension Author.Add {
                     )
                 )
                 context.build(
-                    BlogAuthorForm(
+                    Author.Form(
                         state: state.form,
                         action: state.routes.authorAdd().description,
                         submitLabel: "Add author"

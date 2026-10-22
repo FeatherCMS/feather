@@ -1,7 +1,7 @@
-import RedirectModule
 import FeatherWebAdmin
 import HTML
 import RedirectAdminAPI
+import RedirectModule
 import SGML
 import WebBuilders
 import WebComponents
@@ -14,7 +14,7 @@ struct RedirectRuleTable: Component {
         let pageState: AdminListPageState
         let search: String?
         let statusCode: String?
-        let routes: RedirectModule.Rule.Router.Routes
+        let routes: Rule.Router.Routes
     }
 
     let state: State

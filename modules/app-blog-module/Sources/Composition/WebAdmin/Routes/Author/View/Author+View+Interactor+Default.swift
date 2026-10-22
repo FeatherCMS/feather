@@ -14,12 +14,10 @@ import WebModuleWebAdmin
 
 extension Author.View.Interactor {
     struct Default: Interface {
-        let repository: any Author.Detail.Repository.Interface
+        let repository: any Author.View.Repository.Interface
 
-        func execute(entity: Author.View.Model) async throws
-            -> Author.Detail.Model
-        {
-            try await repository.get(id: entity.id)
+        func execute(id: String) async throws -> Author.View.Model {
+            try await repository.get(id: id)
         }
     }
 }

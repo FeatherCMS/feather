@@ -11,7 +11,7 @@ extension Post.View.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func get(id: String) async throws -> Post.View.Detail.Model {
+        func get(id: String) async throws -> Post.View.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client

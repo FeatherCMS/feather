@@ -20,7 +20,7 @@ extension Tag.View.Presenter {
         let routes: Tag.Router.Routes
 
         func renderDetailsPage(
-            model: Tag.Detail.Model,
+            model: Tag.View.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
@@ -47,7 +47,7 @@ extension Tag.View.Presenter {
                 request: request,
                 context: context,
                 title: "Blog tag details",
-                content: BlogTagError(
+                content: Tag.Error(
                     state: .init(
                         info: info,
                         message: message,

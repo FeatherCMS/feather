@@ -8,7 +8,7 @@ extension Overview.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
-        let ruleRoutes: RedirectModule.Rule.Router.Routes
+        let ruleRoutes: Rule.Router.Routes
 
         func renderOverview(
             model: Overview.Model,

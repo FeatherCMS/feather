@@ -8,7 +8,7 @@ import WebComponents
 struct RedirectRuleDetails: Component {
     let rule: RedirectRuleDetailsModel
     let permissions: AdminListActions
-    let routes: RedirectModule.Rule.Router.Routes
+    let routes: Rule.Router.Routes
 
     func html(context: inout BuilderContext) -> Section {
         Section {
@@ -37,7 +37,7 @@ struct RedirectRuleDetails: Component {
 
     private var actions: [AdminDetailView.Action] {
         var result: [AdminDetailView.Action] = []
-        if permissions.allows(RedirectModule.Rule.Permissions.update) {
+        if permissions.allows(Rule.Permissions.update) {
             result.append(
                 .init(
                     label: "Edit rule",
@@ -46,7 +46,7 @@ struct RedirectRuleDetails: Component {
                 )
             )
         }
-        if permissions.allows(RedirectModule.Rule.Permissions.delete) {
+        if permissions.allows(Rule.Permissions.delete) {
             result.append(
                 .init(
                     label: "Remove rule",

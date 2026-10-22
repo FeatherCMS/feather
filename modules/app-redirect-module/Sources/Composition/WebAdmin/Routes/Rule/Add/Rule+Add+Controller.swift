@@ -1,14 +1,14 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import RedirectModule
 import RedirectApplication
+import RedirectModule
 
-extension RedirectModule.Rule.Add {
+extension Rule.Add {
     enum Controller {}
 }
 
-extension RedirectModule.Rule.Add.Controller {
+extension Rule.Add.Controller {
     protocol Interface: Sendable {
         func getAddRedirectRule(
             request: Request,
@@ -21,4 +21,3 @@ extension RedirectModule.Rule.Add.Controller {
         ) async throws -> Response
     }
 }
-

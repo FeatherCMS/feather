@@ -13,9 +13,9 @@ extension Identity.List {
         var openAPIIdentifier: String { "UserIdentityListItemSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": UserIdentityIDField().reference(),
-                "name": UserIdentityNameField().reference(),
-                "status": UserIdentityStatusField().reference(),
+                "id": IdentityIDField().reference(),
+                "name": IdentityNameField().reference(),
+                "status": IdentityStatusField().reference(),
                 "roles": Identity.Schemas.RoleNames().reference(),
             ]
         }

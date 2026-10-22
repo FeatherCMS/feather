@@ -17,7 +17,7 @@ extension AuthorLink.View.Presenter {
         let routes: AuthorLink.Router.Routes
 
         func renderDetailsPage(
-            model: AuthorLink.Detail.Model,
+            model: AuthorLink.View.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
@@ -47,7 +47,7 @@ extension AuthorLink.View.Presenter {
                 request: request,
                 context: context,
                 title: "Blog author link details",
-                content: BlogAuthorLinkError(
+                content: AuthorLink.Error(
                     state: .init(
                         info: info,
                         message: message,

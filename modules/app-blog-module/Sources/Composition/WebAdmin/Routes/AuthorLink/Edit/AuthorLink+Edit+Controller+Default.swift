@@ -68,11 +68,11 @@ extension AuthorLink.Edit.Controller {
             let authorID = try context.requiredID()
             let id = try context.requiredParameter("itemId")
             let permissions = context.currentUserPermissions
-            var lastPayload: BlogAuthorLinkFormInput?
+            var lastPayload: AuthorLink.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: BlogAuthorLinkFormInput.self,
+                    as: AuthorLink.Form.Input.self,
                     context: context
                 )
                 lastPayload = payload
@@ -187,7 +187,7 @@ extension AuthorLink.Edit.Controller {
             isBlank: Bool = false,
             permission: String = "",
             notes: String = ""
-        ) -> BlogAuthorLinkForm.State {
+        ) -> AuthorLink.Form.State {
             .init(
                 label: .init(
                     key: "label",

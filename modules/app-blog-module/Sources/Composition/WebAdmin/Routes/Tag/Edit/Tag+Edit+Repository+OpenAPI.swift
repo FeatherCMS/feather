@@ -16,7 +16,7 @@ extension Tag.Edit.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func load(id: String) async throws -> Tag.Detail.Model {
+        func load(id: String) async throws -> Tag.View.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogTagGet(
                     path: .init(blogTagId: id),
@@ -53,7 +53,7 @@ extension Tag.Edit.Repository {
             }
         }
 
-        func update(id: String, input: BlogTagFormInput) async throws {
+        func update(id: String, input: Tag.Form.Input) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogTagPut(
                     path: .init(blogTagId: id),

@@ -7,8 +7,8 @@ extension Post.Edit {
 
 extension Post.Edit.Interactor {
     protocol Interface: Sendable {
-        func load(id: String) async throws -> Post.View.Detail.Model
+        func load(id: String) async throws -> Post.View.Model
         func loadOptions() async throws -> BlogPostAssociationOptionsModel
-        func update(id: String, input: BlogPostFormInput) async throws
+        func update(id: String, input: Post.Form.Input) async throws
     }
 }

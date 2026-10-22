@@ -1,11 +1,11 @@
-import FeatherModuleKit
 import FeatherBackend
 import FeatherDomain
+import FeatherModuleKit
 import Hummingbird
 public import RedirectAdminAPI
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension AdminAPIGateway {
 
@@ -48,14 +48,14 @@ extension AdminAPIGateway {
             shouldApply: fields.contains(.statusCode),
             onMissing: { HTTPError(.badRequest) }
         )
-        let statusCode: FieldChange<RedirectModule.Rule.StatusCode>
+        let statusCode: FieldChange<Rule.StatusCode>
         switch rawStatusCode {
         case .unchanged:
             statusCode = .unchanged
         case .set(let value):
-            guard let value = RedirectModule.Rule.StatusCode(rawValue: value)
+            guard let value = Rule.StatusCode(rawValue: value)
             else {
-                throw RedirectModule.Rule.Model.Error.invalidStatusCode
+                throw Rule.Model.Error.invalidStatusCode
             }
             statusCode = .set(value)
         }

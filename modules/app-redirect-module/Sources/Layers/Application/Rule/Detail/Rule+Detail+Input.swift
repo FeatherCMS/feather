@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import RedirectModule
 
-extension RedirectModule.Rule.Detail {
+extension Rule.Detail {
     public struct Input: DTO {
         public let id: String
 

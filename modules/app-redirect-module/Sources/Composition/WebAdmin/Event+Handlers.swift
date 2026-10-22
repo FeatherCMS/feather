@@ -1,6 +1,6 @@
+public import FeatherModuleKit
 import FeatherWebAdmin
 public import FeatherWebShared
-public import FeatherModuleKit
 import OpenAPIRuntime
 import RedirectAdminAPI
 public import RedirectModule
@@ -20,7 +20,7 @@ extension RedirectModule.Event {
 
         private static func registerMenu(
             in events: inout EventRegistry,
-            routes: RedirectModule.Rule.Router.Routes
+            routes: Rule.Router.Routes
         ) {
             events.register(
                 event: SystemWebAdmin.Admin.Menu.Group.Provider.self,

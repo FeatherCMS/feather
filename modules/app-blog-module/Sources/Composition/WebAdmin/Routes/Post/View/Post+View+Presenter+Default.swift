@@ -21,16 +21,16 @@ extension Post.View.Presenter {
         let routes: Post.Router.Routes
 
         func renderDetailsPage(
-            rule: Post.View.Detail.Model,
+            model: Post.View.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Blog post details",
-                content: Post.View.Detail.Component(
+                content: Post.View.Component(
                     state: .init(
-                        rule: rule,
+                        model: model,
                         breadcrumb: routes.postsBreadcrumb,
                         permissions: permissions,
                         routes: routes
@@ -48,7 +48,7 @@ extension Post.View.Presenter {
                 request: request,
                 context: context,
                 title: "Blog post details",
-                content: BlogPostError(
+                content: Post.Error(
                     state: .init(
                         info: info,
                         message: message,

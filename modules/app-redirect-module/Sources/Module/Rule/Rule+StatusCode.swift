@@ -1,4 +1,4 @@
-extension RedirectModule.Rule {
+extension Rule {
     public enum StatusCode: Int, Codable, CaseIterable, Sendable {
         case movedPermanently = 301
         case found = 302

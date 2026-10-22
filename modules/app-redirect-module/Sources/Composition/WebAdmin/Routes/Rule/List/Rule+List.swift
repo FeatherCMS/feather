@@ -4,17 +4,17 @@ import Hummingbird
 import RedirectApplication
 import RedirectModule
 
-extension RedirectModule.Rule.List {
+extension Rule.List {
     struct Router {
         static let pageSize = 20
 
         let controller: any Controller.Interface
-        let routes: RedirectModule.Rule.Router.Routes
+        let routes: Rule.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: RedirectModule.Rule.Router.Routes
+            routes: Rule.Router.Routes
         ) {
             self.routes = routes
             self.controller = Controller.Default(

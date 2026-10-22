@@ -1,22 +1,22 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import RedirectModule
 import RedirectApplication
+import RedirectModule
 
-extension RedirectModule.Rule {
+extension Rule {
     enum View {}
 }
 
-extension RedirectModule.Rule.View {
+extension Rule.View {
     struct Router {
         let controller: any Controller.Interface
-        let routes: RedirectModule.Rule.Router.Routes
+        let routes: Rule.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: RedirectModule.Rule.Router.Routes
+            routes: Rule.Router.Routes
         ) {
             self.routes = routes
             self.controller = Controller.Default(
@@ -44,7 +44,10 @@ extension RedirectModule.Rule.View {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            router.get(routes.details.routerPath, use: controller.getRedirectRule)
+            router.get(
+                routes.details.routerPath,
+                use: controller.getRedirectRule
+            )
         }
     }
 }

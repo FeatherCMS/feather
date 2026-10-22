@@ -18,7 +18,7 @@ extension AuthorLink.Add.Presenter {
     protocol Interface: Sendable {
         func render(
             authorID: String,
-            state: BlogAuthorLinkForm.State,
+            state: AuthorLink.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

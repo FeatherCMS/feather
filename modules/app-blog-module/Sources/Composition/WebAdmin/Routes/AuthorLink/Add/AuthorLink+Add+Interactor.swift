@@ -9,7 +9,7 @@ extension AuthorLink.Add.Interactor {
     protocol Interface: Sendable {
         func execute(
             authorID: String,
-            input: BlogAuthorLinkFormInput
+            input: AuthorLink.Form.Input
         ) async throws
     }
 }

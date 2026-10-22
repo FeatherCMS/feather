@@ -19,7 +19,7 @@ extension AuthorLink.Add.Repository {
 
         func create(
             authorID: String,
-            input: BlogAuthorLinkFormInput
+            input: AuthorLink.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogAuthorLinkPost(

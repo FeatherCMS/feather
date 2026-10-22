@@ -4,7 +4,7 @@ extension Email.Post {
     struct RequestBody: RequestBodyRepresentable {
         var openAPIIdentifier: String { "AuthEmailPostRequestBody" }
         var contentMap: ContentMap {
-            [.json: Content(Email.Schemas.Create().reference())]
+            [.json: Content(Email.Post.Schema().reference())]
         }
     }
 }

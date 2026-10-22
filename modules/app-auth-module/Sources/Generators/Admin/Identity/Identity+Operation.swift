@@ -8,11 +8,11 @@ extension Identity {
 }
 
 extension Identity.Operation {
-    public var tags: [any TagRepresentable] { [UserIdentityTag()] }
+    public var tags: [any TagRepresentable] { [IdentityTag()] }
 }
 
 extension Identity.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
-        [UserIdentityIdParameter().reference()]
+        [IdentityIdParameter().reference()]
     }
 }

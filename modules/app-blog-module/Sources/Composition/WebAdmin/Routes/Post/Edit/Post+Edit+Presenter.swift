@@ -9,7 +9,7 @@ extension Post.Edit.Presenter {
     protocol Interface: Sendable {
         func render(
             id: String,
-            state: BlogPostForm.State,
+            state: Post.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

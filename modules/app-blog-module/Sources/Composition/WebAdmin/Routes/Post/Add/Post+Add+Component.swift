@@ -16,7 +16,7 @@ extension Post.Add {
     struct Component: WebComponents.Component {
 
         struct State {
-            let form: BlogPostForm.State
+            let form: Post.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: Post.Router.Routes
         }
@@ -35,7 +35,7 @@ extension Post.Add {
                     )
                 )
                 context.build(
-                    BlogPostForm(
+                    Post.Form(
                         state: state.form,
                         action: state.routes.postAdd().description,
                         submitLabel: "Add post"

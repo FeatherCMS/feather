@@ -11,7 +11,7 @@ enum Overview {
         init(
             renderingEngine: any RenderingEngine,
             path: WebRoute,
-            ruleRoutes: RedirectModule.Rule.Router.Routes
+            ruleRoutes: Rule.Router.Routes
         ) {
             self.path = path
             self.controller = Controller.Default(

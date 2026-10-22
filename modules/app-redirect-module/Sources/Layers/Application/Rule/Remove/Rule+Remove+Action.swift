@@ -1,8 +1,8 @@
 public import FeatherModuleKit
 import RedirectModule
 
-extension RedirectModule.Rule.Remove {
+extension Rule.Remove {
     struct Action: PermissionAction {
-        let key = RedirectModule.Rule.Permissions.delete
+        let key = Rule.Permissions.delete
     }
 }

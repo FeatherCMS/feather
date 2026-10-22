@@ -10,10 +10,10 @@ struct RedirectRuleRow: Component {
     let rule: RedirectAdminAPI.Components.Schemas.RedirectRuleQueryItemSchema
     let returnTo: String
     let permissions: AdminListActions
-    let routes: RedirectModule.Rule.Router.Routes
+    let routes: Rule.Router.Routes
 
     private var statusChip: AdminChip {
-        guard let statusCode = RedirectModule.Rule.StatusCode(rawValue: rule.statusCode) else {
+        guard let statusCode = Rule.StatusCode(rawValue: rule.statusCode) else {
             return AdminChip(
                 label: String(rule.statusCode),
                 color: .red
@@ -34,7 +34,7 @@ struct RedirectRuleRow: Component {
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
-            if permissions.allows(RedirectModule.Rule.Permissions.delete) {
+            if permissions.allows(Rule.Permissions.delete) {
                 context.build(AdminListRowCheckbox(id: rule.id))
             }
             Td(rule.source)
@@ -53,13 +53,13 @@ struct RedirectRuleRow: Component {
                             "View",
                             href: routes.detailsPath(rule.id),
                             style: .ghost(.primary),
-                            permission: RedirectModule.Rule.Permissions.read
+                            permission: Rule.Permissions.read
                         ),
                         .init(
                             "Edit",
                             href: routes.editPath(rule.id),
                             style: .ghost(.secondary),
-                            permission: RedirectModule.Rule.Permissions.update
+                            permission: Rule.Permissions.update
                         ),
                     ],
                     permissions: permissions

@@ -22,7 +22,7 @@ extension AuthorLink.Add.Presenter {
 
         func render(
             authorID: String,
-            state: BlogAuthorLinkForm.State,
+            state: AuthorLink.Form.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(

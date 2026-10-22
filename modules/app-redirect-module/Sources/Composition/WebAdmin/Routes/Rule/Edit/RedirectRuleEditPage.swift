@@ -10,7 +10,7 @@ struct RedirectRuleEditPage: Component {
     let form: RedirectRuleEditForm.State
     let nonceToken: String
     let permissions: AdminListActions
-    let routes: RedirectModule.Rule.Router.Routes
+    let routes: Rule.Router.Routes
 
     func html(context: inout BuilderContext) -> Section {
         Section {
@@ -29,11 +29,11 @@ struct RedirectRuleEditPage: Component {
                 RedirectRuleEditForm(
                     state: form,
                     action: routes.editPath(id),
-                    viewHref: permissions.allows(RedirectModule.Rule.Permissions.read)
+                    viewHref: permissions.allows(Rule.Permissions.read)
                         ? routes.detailsPath(id)
                         : nil,
                     removeHref: permissions.allows(
-                        RedirectModule.Rule.Permissions.delete
+                        Rule.Permissions.delete
                     )
                         ? routes.removePath(id)
                         : nil,

@@ -1,7 +1,7 @@
 public import FeatherWebAdmin
 public import RedirectModule
 
-extension RedirectModule.Rule {
+extension Rule {
     public enum Router {
         public struct Routes: Sendable {
             public let list: WebRoute
@@ -23,9 +23,10 @@ extension RedirectModule.Rule {
                 self.removeDetails = self.details.appending(
                     pathComponent: "remove"
                 )
-                self.breadcrumb = breadcrumb + [
-                    .init(label: "Rules", link: root.path)
-                ]
+                self.breadcrumb =
+                    breadcrumb + [
+                        .init(label: "Rules", link: root.path)
+                    ]
                 self.redirectBreadcrumb = breadcrumb
             }
 

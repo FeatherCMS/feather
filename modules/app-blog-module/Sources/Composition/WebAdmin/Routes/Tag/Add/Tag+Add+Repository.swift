@@ -7,6 +7,6 @@ extension Tag.Add {
 
 extension Tag.Add.Repository {
     protocol Interface: Sendable {
-        func create(input: BlogTagFormInput) async throws
+        func create(input: Tag.Form.Input) async throws
     }
 }

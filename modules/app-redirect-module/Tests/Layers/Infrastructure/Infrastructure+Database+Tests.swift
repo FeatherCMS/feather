@@ -34,7 +34,7 @@ struct RedirectInfrastructureDatabaseTests {
 
     @Test
     func tableSchemaDeclaresColumnsAndConstraints() {
-        let schema = RedirectModule.Rule.Table.tableCreationSchema
+        let schema = Rule.Table.tableCreationSchema
 
         #expect(
             schema.columns.map(\.name) == [
@@ -43,14 +43,26 @@ struct RedirectInfrastructureDatabaseTests {
             ]
         )
         #expect(
-            schema.columns[0].constraints.contains {
-                if case .primaryKey = $0 { true } else { false }
-            }
+            schema.columns[0].constraints
+                .contains {
+                    if case .primaryKey = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
         )
         #expect(
-            schema.columns[1].constraints.contains {
-                if case .unique = $0 { true } else { false }
-            }
+            schema.columns[1].constraints
+                .contains {
+                    if case .unique = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
         )
         #expect(schema.columns[0].type == .string)
         #expect(schema.columns[1].type == .string)
@@ -60,39 +72,81 @@ struct RedirectInfrastructureDatabaseTests {
         #expect(schema.columns[5].type == .timestamp)
         #expect(schema.columns[6].type == .timestamp)
         #expect(
-            schema.columns[1].constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            }
+            schema.columns[1].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
         )
         #expect(
-            schema.columns[2].constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            }
+            schema.columns[2].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
         )
         #expect(
-            schema.columns[3].constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            }
+            schema.columns[3].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
         )
         #expect(
-            schema.columns[5].constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            }
+            schema.columns[5].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
         )
         #expect(
-            schema.columns[6].constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            }
+            schema.columns[6].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
         )
         #expect(
-            schema.columns[5].constraints.contains {
-                if case .default = $0 { true } else { false }
-            }
+            schema.columns[5].constraints
+                .contains {
+                    if case .default = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
         )
         #expect(
-            schema.columns[6].constraints.contains {
-                if case .default = $0 { true } else { false }
-            }
+            schema.columns[6].constraints
+                .contains {
+                    if case .default = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
         )
     }
 }

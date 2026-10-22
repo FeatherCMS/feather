@@ -9,9 +9,9 @@ public struct UserAuthTokenField: StringSchemaRepresentable {
 public struct UserAuthResponseSchema: ObjectSchemaRepresentable {
     public var propertyMap: SchemaMap {
         [
-            "user": UserIdentityDetailSchema().reference(),
-            "roles": UserIdentityRoleIDListSchema(),
-            "permissions": UserIdentityPermissionIDListSchema(),
+            "user": IdentityDetailSchema().reference(),
+            "roles": IdentityRoleIDListSchema(),
+            "permissions": IdentityPermissionIDListSchema(),
             "token": UserAuthTokenField().reference(),
         ]
     }

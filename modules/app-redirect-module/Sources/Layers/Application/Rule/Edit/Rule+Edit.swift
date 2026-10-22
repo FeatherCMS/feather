@@ -1,5 +1,5 @@
 public import RedirectModule
 
-extension RedirectModule.Rule {
+extension Rule {
     public enum Edit {}
 }

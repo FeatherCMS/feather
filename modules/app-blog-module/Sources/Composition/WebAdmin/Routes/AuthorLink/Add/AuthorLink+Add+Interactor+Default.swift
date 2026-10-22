@@ -16,7 +16,7 @@ extension AuthorLink.Add.Interactor {
 
         func execute(
             authorID: String,
-            input: BlogAuthorLinkFormInput
+            input: AuthorLink.Form.Input
         ) async throws {
             try await repository.create(authorID: authorID, input: input)
         }

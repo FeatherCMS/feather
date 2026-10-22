@@ -1,21 +1,20 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import RedirectModule
 import RedirectApplication
+import RedirectModule
 
-extension RedirectModule.Rule.List {
+extension Rule.List {
     enum Controller {}
 }
 
-extension RedirectModule.Rule.List.Controller {
+extension Rule.List.Controller {
     protocol Interface: Sendable {
 
-    func getRedirectRules(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse
+        func getRedirectRules(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
 
     }
 }
-

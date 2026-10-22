@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import RedirectModule
 
-extension RedirectModule.Rule.Remove {
+extension Rule.Remove {
     public struct Output: DTO {
         public let ids: [String]
 

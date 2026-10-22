@@ -22,7 +22,7 @@ extension Post.Add.Interactor {
         }
 
         func execute(
-            input: BlogPostFormInput
+            input: Post.Form.Input
         ) async throws {
             try await repository.create(input: input)
         }

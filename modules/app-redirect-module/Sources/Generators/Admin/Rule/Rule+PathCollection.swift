@@ -1,14 +1,14 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
-struct PathCollection: PathCollectionRepresentable {
-    var pathMap: PathMap {
-        [
-            "api/v1/admin/redirect/rules": RedirectRulePathItems(),
-            "api/v1/admin/redirect/rules/query": RedirectRuleQueryPathItems(),
-            "api/v1/admin/redirect/rules/{redirectRuleId}":
-                RedirectRuleIdPathItems(),
-        ]
+extension Rule {
+    struct PathCollection: PathCollectionRepresentable {
+        var pathMap: PathMap {
+            [
+                "api/v1/admin/redirect/rules": PathItem(),
+                "api/v1/admin/redirect/rules/query": Query.PathItem(),
+                "api/v1/admin/redirect/rules/{redirectRuleId}": ID.PathItem(),
+            ]
+        }
     }
 }

@@ -1,14 +1,14 @@
 public import FeatherWebAdmin
 public import FeatherWebShared
 public import Hummingbird
-public import RedirectModule
 import RedirectApplication
+public import RedirectModule
 
 public struct Router {
     public struct Routes: Sendable {
         public let admin: WebRoute
         public let root: WebRoute
-        public let rule: RedirectModule.Rule.Router.Routes
+        public let rule: Rule.Router.Routes
 
         public init(admin: WebRoute, root: WebRoute) {
             self.admin = admin
@@ -54,39 +54,44 @@ public struct Router {
         )
         .route(on: router)
 
-        RedirectModule.Rule.List.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: routes.rule
-        )
-        .route(on: router)
+        Rule.List
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes.rule
+            )
+            .route(on: router)
 
-        RedirectModule.Rule.View.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: routes.rule
-        )
-        .route(on: router)
+        Rule.View
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes.rule
+            )
+            .route(on: router)
 
-        RedirectModule.Rule.Add.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: routes.rule
-        )
-        .route(on: router)
+        Rule.Add
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes.rule
+            )
+            .route(on: router)
 
-        RedirectModule.Rule.Edit.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: routes.rule
-        )
-        .route(on: router)
+        Rule.Edit
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes.rule
+            )
+            .route(on: router)
 
-        RedirectModule.Rule.Remove.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: routes.rule
-        )
-        .route(on: router)
+        Rule.Remove
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes.rule
+            )
+            .route(on: router)
     }
 }

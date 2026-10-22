@@ -22,7 +22,7 @@ extension Tag.Remove.Presenter {
                 request: request,
                 context: context,
                 title: "Remove tag",
-                content: BlogTagError(
+                content: Tag.Error(
                     state: .init(
                         info: info,
                         message: message,
