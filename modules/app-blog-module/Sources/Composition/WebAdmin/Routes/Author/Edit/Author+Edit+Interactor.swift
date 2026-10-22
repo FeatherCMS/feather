@@ -6,7 +6,7 @@ extension Author.Edit {
 
 extension Author.Edit.Interactor {
     protocol Interface: Sendable {
-        func load(id: String) async throws -> Author.Details.Model
+        func load(id: String) async throws -> Author.Detail.Model
         func update(id: String, input: BlogAuthorFormInput) async throws
     }
 }

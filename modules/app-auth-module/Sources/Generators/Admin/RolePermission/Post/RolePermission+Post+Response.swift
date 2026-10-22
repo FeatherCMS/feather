@@ -2,10 +2,10 @@ import FeatherOpenAPI
 
 extension RolePermission.Post {
 
-    struct AuthRolePermissionDetailResponse: JSONResponseRepresentable {
+    struct Response: JSONResponseRepresentable {
         var openAPIIdentifier: String { "AuthRolePermissionDetailResponse" }
         var description: String = "AuthRolePermission response"
-        var schema = RolePermission.Schemas.AuthRolePermissionDetailSchema()
+        var schema = RolePermission.Post.DetailSchema()
             .reference()
     }
 }

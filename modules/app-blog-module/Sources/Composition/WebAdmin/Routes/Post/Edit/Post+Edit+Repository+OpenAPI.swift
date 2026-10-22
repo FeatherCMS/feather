@@ -19,7 +19,7 @@ extension Post.Edit.Repository {
 
         func load(
             id: String
-        ) async throws -> Post.View.Details.Model {
+        ) async throws -> Post.View.Detail.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogPostGet(
                     path: .init(blogPostId: id),

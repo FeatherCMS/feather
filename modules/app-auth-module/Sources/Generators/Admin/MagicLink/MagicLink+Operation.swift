@@ -16,6 +16,6 @@ extension MagicLink {
 
 extension MagicLink.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
-        [MagicLink.Parameters.AuthMagicLinkIdParameter().reference()]
+        [MagicLink.Parameters.ID().reference()]
     }
 }

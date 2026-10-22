@@ -15,7 +15,7 @@ extension Tag.Edit.Interactor {
     struct Default: Interface {
         let repository: any Tag.Edit.Repository.Interface
 
-        func load(id: String) async throws -> Tag.Details.Model {
+        func load(id: String) async throws -> Tag.Detail.Model {
             try await repository.load(id: id)
         }
 

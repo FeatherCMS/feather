@@ -17,6 +17,6 @@ extension Tag.View {
 
 extension Tag.View.Interactor {
     protocol Interface: Sendable {
-        func execute(_ input: Tag.View.Model) async throws -> Tag.Details.Model
+        func execute(_ input: Tag.View.Model) async throws -> Tag.Detail.Model
     }
 }

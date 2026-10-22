@@ -18,7 +18,7 @@ extension Tag.View {
 extension Tag.View.Presenter {
     protocol Interface: Sendable {
         func renderDetailsPage(
-            model: Tag.Details.Model,
+            model: Tag.Detail.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

@@ -17,7 +17,7 @@ extension Post.View.Interactor {
         let repository: any Post.View.Repository.Interface
 
         func execute(entity: Post.View.Model) async throws
-            -> Post.View.Details.Model
+            -> Post.View.Detail.Model
         {
             try await repository.get(id: entity.id)
         }

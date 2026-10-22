@@ -14,7 +14,7 @@ import WebModuleWebAdmin
 extension Author.View {
     struct Component: WebComponents.Component {
         struct State {
-            let author: Author.Details.Model
+            let author: Author.Detail.Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
             let routes: Author.Router.Routes

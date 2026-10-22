@@ -2,8 +2,11 @@
 
 ## Module boundaries
 
-- Keep public domain namespaces, permissions, and module events in
-  `Sources/Module` under `BlogModule` or the owning entity namespace.
+- The `BlogModule` SwiftPM target itself provides the module namespace. Do not
+  add a redundant `BlogModule` enum. Keep module-level `Event` and
+  `Permissions` declarations at the target root and entity namespaces under
+  their own directories. Keep application-only namespaces, including `Public`,
+  in `Sources/Layers/Application`.
 - Keep models and repository contracts under
   `Sources/Layers/Domain/<Entity>`.
 - Keep use-case contracts and implementations under
@@ -38,6 +41,10 @@
   semantics independently from HTTP tests.
 - Composition tests exercise generated API routes and gateways with mock
   dependencies rather than a local PostgreSQL server.
+- Keep route-specific views, forms, errors, and models under the owning entity
+  and operation namespace. Avoid redundant `Blog` prefixes inside the Blog
+  composition targets and keep view/detail naming consistent with the route
+  operation (`View`).
 - Test with `swift test --parallel`; `make docker-test` runs the same package
   tests under Swift 6.3. Use `make format` for formatting.
 
@@ -45,6 +52,9 @@
 
 - Use `make openapi` to regenerate Admin/App YAML and clients. The script pins
   Mint's `swift-openapi-generator` to 1.14.2 by default.
+- Keep shared generator code limited to schema declarations reused by the
+  module's distinct Admin and App API generators; do not put generator
+  assembly or I/O helpers in the shared target.
 - Use the pinned `swaggerapi/swagger-ui:v5.32.15` image for both spec viewers;
   mount the versioned YAML directly and configure `SWAGGER_JSON`.
 - Do not reintroduce a custom Swagger UI download, Nginx config, or a database

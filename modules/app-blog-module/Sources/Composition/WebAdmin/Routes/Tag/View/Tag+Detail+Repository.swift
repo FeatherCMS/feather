@@ -11,12 +11,12 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Tag.Details {
+extension Tag.Detail {
     enum Repository {}
 }
 
-extension Tag.Details.Repository {
+extension Tag.Detail.Repository {
     protocol Interface: Sendable {
-        func get(id: String) async throws -> Tag.Details.Model
+        func get(id: String) async throws -> Tag.Detail.Model
     }
 }

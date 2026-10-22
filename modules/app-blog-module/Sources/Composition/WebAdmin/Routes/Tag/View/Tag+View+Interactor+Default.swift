@@ -13,9 +13,9 @@ import WebModuleWebAdmin
 
 extension Tag.View.Interactor {
     struct Default: Interface {
-        let repository: any Tag.Details.Repository.Interface
+        let repository: any Tag.Detail.Repository.Interface
 
-        func execute(_ input: Tag.View.Model) async throws -> Tag.Details.Model
+        func execute(_ input: Tag.View.Model) async throws -> Tag.Detail.Model
         {
             try await repository.get(id: input.id)
         }

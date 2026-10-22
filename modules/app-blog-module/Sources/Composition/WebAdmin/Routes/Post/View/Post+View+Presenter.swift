@@ -19,7 +19,7 @@ extension Post.View {
 extension Post.View.Presenter {
     protocol Interface: Sendable {
         func renderDetailsPage(
-            rule: Post.View.Details.Model,
+            rule: Post.View.Detail.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

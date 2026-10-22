@@ -8,7 +8,7 @@ extension Credential.List {
         var operationId: String? { "authCredentialList" }
 
         var responseMap: ResponseMap {
-            [200: Credential.List.AuthCredentialListResponse().reference()]
+            [200: Credential.List.Response().reference()]
         }
     }
 }

@@ -19,6 +19,6 @@ extension Post.View {
 extension Post.View.Interactor {
     protocol Interface: Sendable {
         func execute(entity: Post.View.Model) async throws
-            -> Post.View.Details.Model
+            -> Post.View.Detail.Model
     }
 }

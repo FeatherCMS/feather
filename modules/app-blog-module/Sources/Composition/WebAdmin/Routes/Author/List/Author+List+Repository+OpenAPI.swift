@@ -64,7 +64,7 @@ extension Author.List.Repository {
                 try await withThrowingTaskGroup(
                     of: (Int, Author.List.Item).self
                 ) { group in
-                    let repository = Author.Details.Repository.OpenAPI(api: api)
+                    let repository = Author.Detail.Repository.OpenAPI(api: api)
                     for (index, item) in items.enumerated() {
                         group.addTask {
                             let details = try await repository.get(id: item.id)

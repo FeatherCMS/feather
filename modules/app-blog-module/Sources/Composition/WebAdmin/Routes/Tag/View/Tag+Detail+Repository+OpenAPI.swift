@@ -12,11 +12,11 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Tag.Details.Repository {
+extension Tag.Detail.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func get(id: String) async throws -> Tag.Details.Model {
+        func get(id: String) async throws -> Tag.Detail.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client

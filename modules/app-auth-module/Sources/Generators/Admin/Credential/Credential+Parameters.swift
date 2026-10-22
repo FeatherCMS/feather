@@ -2,19 +2,19 @@ import FeatherOpenAPI
 
 extension Credential.Parameters {
 
-    struct AuthCredentialIdParameter: PathParameterRepresentable {
+    struct ID: PathParameterRepresentable {
         var openAPIIdentifier: String { "AuthCredentialIdParameter" }
         var name: String { "authCredentialId" }
         var description: String? { nil }
         var schema: any OpenAPISchemaRepresentable {
-            Credential.Schemas.AuthCredentialIdField().reference()
+            Credential.Schemas.ID().reference()
         }
     }
 }
 
 extension Credential.Parameters {
 
-    struct AuthCredentialUpdateMaskParameter: QueryParameterRepresentable {
+    struct UpdateMask: QueryParameterRepresentable {
         var openAPIIdentifier: String { "AuthCredentialUpdateMaskParameter" }
         var name: String { "updateMask" }
         var required: Bool { true }
@@ -22,7 +22,7 @@ extension Credential.Parameters {
             "Comma-separated fields to update: userId, email, password"
         }
         var schema: any OpenAPISchemaRepresentable {
-            Credential.Schemas.AuthCredentialUpdateMaskField().reference()
+            Credential.Schemas.UpdateMask().reference()
         }
     }
 }

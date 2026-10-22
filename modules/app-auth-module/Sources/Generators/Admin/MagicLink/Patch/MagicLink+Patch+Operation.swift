@@ -9,19 +9,19 @@ extension MagicLink.Patch {
 
         var parameters: [any ParameterRepresentable] {
             [
-                MagicLink.Parameters.AuthMagicLinkIdParameter().reference(),
-                MagicLink.Parameters.AuthMagicLinkUpdateMaskParameter()
+                MagicLink.Parameters.ID().reference(),
+                MagicLink.Parameters.UpdateMask()
                     .reference(),
             ]
         }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            MagicLink.Patch.AuthMagicLinkPatchRequestBody().reference()
+            MagicLink.Patch.RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                200: MagicLink.Get.AuthMagicLinkDetailResponse().reference(),
+                200: MagicLink.Get.Response().reference(),
                 400: CustomResponse(description: "Invalid update mask"),
                 404: CustomResponse(description: "AuthMagicLink not found"),
             ]

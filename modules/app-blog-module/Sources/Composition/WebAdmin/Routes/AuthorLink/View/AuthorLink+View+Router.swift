@@ -20,7 +20,7 @@ extension AuthorLink.View {
                 buildRuntime: { request, context in
                     (
                         interactor: Interactor.Default(
-                            repository: AuthorLink.Details.Repository.OpenAPI(
+                            repository: AuthorLink.Detail.Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context

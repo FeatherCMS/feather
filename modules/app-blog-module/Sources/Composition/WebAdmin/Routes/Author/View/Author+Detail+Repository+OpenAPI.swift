@@ -13,11 +13,11 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Author.Details.Repository {
+extension Author.Detail.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func get(id: String) async throws -> Author.Details.Model {
+        func get(id: String) async throws -> Author.Detail.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 async let authorResponse =
                     client

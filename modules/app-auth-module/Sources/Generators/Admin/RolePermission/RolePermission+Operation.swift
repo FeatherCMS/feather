@@ -17,9 +17,9 @@ extension RolePermission {
 extension RolePermission.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
         [
-            RolePermission.Parameters.AuthRolePermissionRoleIdParameter()
+            RolePermission.Parameters.RoleID()
                 .reference(),
-            RolePermission.Parameters.AuthRolePermissionPermissionIdParameter()
+            RolePermission.Parameters.PermissionID()
                 .reference(),
         ]
     }

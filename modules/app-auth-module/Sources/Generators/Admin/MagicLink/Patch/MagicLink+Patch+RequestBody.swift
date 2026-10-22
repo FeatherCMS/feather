@@ -3,12 +3,12 @@ import OpenAPIKit30
 
 extension MagicLink.Patch {
 
-    struct AuthMagicLinkPatchRequestBody: RequestBodyRepresentable {
+    struct RequestBody: RequestBodyRepresentable {
         var openAPIIdentifier: String { "AuthMagicLinkPatchRequestBody" }
         var contentMap: ContentMap {
             [
                 .json: Content(
-                    MagicLink.Schemas.AuthMagicLinkPatchSchema().reference()
+                    MagicLink.Patch.Schema().reference()
                 )
             ]
         }

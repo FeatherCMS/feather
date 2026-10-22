@@ -10,7 +10,7 @@ extension RolePermission.Query {
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
                 items: RolePermission.Query.Schemas
-                    .AuthRolePermissionQueryItemSchema(),
+                    .Item(),
                 sortFieldKeys: ["roleId", "permissionId"],
                 filters: SearchFilterSchema()
             )

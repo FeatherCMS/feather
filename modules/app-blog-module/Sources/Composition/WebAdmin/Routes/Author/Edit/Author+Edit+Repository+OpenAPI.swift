@@ -19,7 +19,7 @@ extension Author.Edit.Repository {
 
         func load(
             id: String
-        ) async throws -> Author.Details.Model {
+        ) async throws -> Author.Detail.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogAuthorGet(
                     path: .init(blogAuthorId: id),

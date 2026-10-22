@@ -369,10 +369,12 @@ let package = Package(
         .testTarget(
             name: "BlogApplicationTests",
             dependencies: [
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherTesting", package: "feather-core"),
                 .product(name: "WebApplication", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
                 .target(name: "BlogApplication"),
+                .target(name: "BlogDomain"),
             ],
             path: "Tests/Layers/Application",
             swiftSettings: swiftSettings

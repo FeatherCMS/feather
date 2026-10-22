@@ -3,12 +3,12 @@ import OpenAPIKit30
 
 extension Credential.Patch {
 
-    struct AuthCredentialPatchRequestBody: RequestBodyRepresentable {
+    struct RequestBody: RequestBodyRepresentable {
         var openAPIIdentifier: String { "AuthCredentialPatchRequestBody" }
         var contentMap: ContentMap {
             [
                 .json: Content(
-                    Credential.Schemas.AuthCredentialPatchSchema().reference()
+                    Credential.Patch.Schema().reference()
                 )
             ]
         }

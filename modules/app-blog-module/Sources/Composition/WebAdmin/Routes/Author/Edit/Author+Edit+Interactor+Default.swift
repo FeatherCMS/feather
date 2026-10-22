@@ -4,7 +4,7 @@ extension Author.Edit.Interactor {
     struct Default: Interface {
         let repository: any Author.Edit.Repository.Interface
 
-        func load(id: String) async throws -> Author.Details.Model {
+        func load(id: String) async throws -> Author.Detail.Model {
             try await repository.load(id: id)
         }
 

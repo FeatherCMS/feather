@@ -19,6 +19,6 @@ extension Author.View {
 extension Author.View.Interactor {
     protocol Interface: Sendable {
         func execute(entity: Author.View.Model) async throws
-            -> Author.Details.Model
+            -> Author.Detail.Model
     }
 }

@@ -9,7 +9,7 @@ extension Credential.Get {
 
         var responseMap: ResponseMap {
             [
-                200: Credential.Get.AuthCredentialDetailResponse().reference(),
+                200: Credential.Get.Response().reference(),
                 404: CustomResponse(description: "AuthCredential not found"),
             ]
         }

@@ -20,7 +20,7 @@ extension Tag.View {
                 buildRuntime: { request, context in
                     (
                         interactor: Interactor.Default(
-                            repository: Tag.Details.Repository.OpenAPI(
+                            repository: Tag.Detail.Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context

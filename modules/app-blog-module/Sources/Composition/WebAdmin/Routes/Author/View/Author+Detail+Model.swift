@@ -12,19 +12,20 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Post.View {
-    enum Details {}
+extension Author {
+    enum Detail {}
 }
 
-extension Post.View.Details {
+extension Author.Detail {
     struct Model: Sendable {
         let id: String
-        let title: String
+        let name: String
         let excerpt: String
         let content: String
-        let imageAsset: AdminMediaAsset?
+        let profileImageAssetId: String?
+        let profileImage: AdminMediaAsset?
         let metadata: AdminMetadataFormValue
-        let authorIds: [String]
-        let tagIds: [String]
+        let items:
+            [BlogAdminAPI.Components.Schemas.BlogAuthorLinkQueryItemSchema]
     }
 }

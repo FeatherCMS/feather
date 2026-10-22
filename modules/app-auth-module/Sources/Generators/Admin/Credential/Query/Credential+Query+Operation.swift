@@ -9,10 +9,10 @@ extension Credential.Query {
 
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: Credential.Query.Schemas.AuthCredentialQueryItemSchema(),
+                items: Credential.Query.Schemas.Item(),
                 sortFieldKeys: ["userId", "email"],
                 filters: Credential.Query.Schemas
-                    .AuthCredentialQueryFilterSchema()
+                    .Filter()
             )
         }
 

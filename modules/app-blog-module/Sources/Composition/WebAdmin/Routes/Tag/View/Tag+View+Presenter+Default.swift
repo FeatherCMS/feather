@@ -20,7 +20,7 @@ extension Tag.View.Presenter {
         let routes: Tag.Router.Routes
 
         func renderDetailsPage(
-            model: Tag.Details.Model,
+            model: Tag.Detail.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(

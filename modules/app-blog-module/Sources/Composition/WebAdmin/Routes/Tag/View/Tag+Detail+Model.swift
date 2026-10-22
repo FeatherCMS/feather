@@ -2,10 +2,10 @@ import BlogModule
 import FeatherWebAdmin
 
 extension Tag {
-    enum Details {}
+    enum Detail {}
 }
 
-extension Tag.Details {
+extension Tag.Detail {
     struct Model: Sendable {
         let id: String
         let title: String

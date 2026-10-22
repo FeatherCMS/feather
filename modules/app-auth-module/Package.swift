@@ -214,6 +214,7 @@ let package = Package(
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
 
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
                 .product(name: "UserModule", package: "app-user-module"),

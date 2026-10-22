@@ -19,7 +19,7 @@ extension Post.Edit.Interactor {
 
         func load(
             id: String
-        ) async throws -> Post.View.Details.Model {
+        ) async throws -> Post.View.Detail.Model {
             try await repository.load(id: id)
         }
 

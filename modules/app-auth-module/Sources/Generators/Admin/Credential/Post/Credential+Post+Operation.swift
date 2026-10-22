@@ -8,11 +8,11 @@ extension Credential.Post {
         var operationId: String? { "authCredentialCreate" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            Credential.Post.AuthCredentialRequestBody().reference()
+            Credential.Post.RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
-            [201: Credential.Get.AuthCredentialDetailResponse().reference()]
+            [201: Credential.Get.Response().reference()]
         }
     }
 }

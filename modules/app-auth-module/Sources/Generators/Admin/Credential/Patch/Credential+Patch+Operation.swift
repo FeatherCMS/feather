@@ -9,19 +9,19 @@ extension Credential.Patch {
 
         var parameters: [any ParameterRepresentable] {
             [
-                Credential.Parameters.AuthCredentialIdParameter().reference(),
-                Credential.Parameters.AuthCredentialUpdateMaskParameter()
+                Credential.Parameters.ID().reference(),
+                Credential.Parameters.UpdateMask()
                     .reference(),
             ]
         }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            Credential.Patch.AuthCredentialPatchRequestBody().reference()
+            Credential.Patch.RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                200: Credential.Get.AuthCredentialDetailResponse().reference(),
+                200: Credential.Get.Response().reference(),
                 400: CustomResponse(description: "Invalid update mask"),
                 404: CustomResponse(description: "AuthCredential not found"),
             ]

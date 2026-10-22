@@ -12,17 +12,12 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension AuthorLink {
-    enum Details {}
-}
-
-extension AuthorLink.Details {
+extension Author.Detail {
     enum Repository {}
 }
 
-extension AuthorLink.Details.Repository {
+extension Author.Detail.Repository {
     protocol Interface: Sendable {
-        func get(authorID: String, id: String) async throws
-            -> AuthorLink.Details.Model
+        func get(id: String) async throws -> Author.Detail.Model
     }
 }

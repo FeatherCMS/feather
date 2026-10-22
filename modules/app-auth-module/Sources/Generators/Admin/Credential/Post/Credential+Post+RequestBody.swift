@@ -3,12 +3,12 @@ import OpenAPIKit30
 
 extension Credential.Post {
 
-    struct AuthCredentialRequestBody: RequestBodyRepresentable {
+    struct RequestBody: RequestBodyRepresentable {
         var openAPIIdentifier: String { "AuthCredentialRequestBody" }
         var contentMap: ContentMap {
             [
                 .json: Content(
-                    Credential.Schemas.AuthCredentialCreateSchema().reference()
+                    Credential.Post.Schema().reference()
                 )
             ]
         }

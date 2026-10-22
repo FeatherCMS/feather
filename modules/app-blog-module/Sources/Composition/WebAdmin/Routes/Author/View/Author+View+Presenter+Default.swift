@@ -22,7 +22,7 @@ extension Author.View.Presenter {
         let authorLinkRoutes: AuthorLink.Router.Routes
 
         func renderDetailsPage(
-            rule: Author.Details.Model,
+            rule: Author.Detail.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(

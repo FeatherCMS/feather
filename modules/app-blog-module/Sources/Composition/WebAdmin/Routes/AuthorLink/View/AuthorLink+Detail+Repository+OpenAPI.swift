@@ -13,14 +13,14 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension AuthorLink.Details.Repository {
+extension AuthorLink.Detail.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
         func get(
             authorID: String,
             id: String
-        ) async throws -> AuthorLink.Details.Model {
+        ) async throws -> AuthorLink.Detail.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client.blogAuthorLinkGet(

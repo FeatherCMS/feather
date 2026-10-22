@@ -1,3 +1,1 @@
-extension BlogModule {
-    public enum Event {}
-}
+public enum Event {}

@@ -16,6 +16,6 @@ extension Credential {
 
 extension Credential.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
-        [Credential.Parameters.AuthCredentialIdParameter().reference()]
+        [Credential.Parameters.ID().reference()]
     }
 }

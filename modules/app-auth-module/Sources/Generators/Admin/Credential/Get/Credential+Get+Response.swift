@@ -4,9 +4,9 @@ import UserOpenAPIGeneratorSupport
 
 extension Credential.Get {
 
-    struct AuthCredentialDetailResponse: JSONResponseRepresentable {
+    struct Response: JSONResponseRepresentable {
         var openAPIIdentifier: String { "AuthCredentialDetailResponse" }
         var description: String = "User credential response"
-        var schema = Credential.Schemas.AuthCredentialDetailSchema().reference()
+        var schema = Credential.Get.Schema().reference()
     }
 }

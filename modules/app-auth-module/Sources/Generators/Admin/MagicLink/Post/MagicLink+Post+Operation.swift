@@ -8,11 +8,11 @@ extension MagicLink.Post {
         var operationId: String? { "authMagicLinkCreate" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            MagicLink.Post.AuthMagicLinkManagementRequestBody().reference()
+            MagicLink.Post.RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
-            [201: MagicLink.Get.AuthMagicLinkDetailResponse().reference()]
+            [201: MagicLink.Get.Response().reference()]
         }
     }
 }

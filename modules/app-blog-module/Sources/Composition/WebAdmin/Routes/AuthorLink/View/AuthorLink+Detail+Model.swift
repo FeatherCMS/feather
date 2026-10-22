@@ -1,6 +1,6 @@
 import BlogModule
 
-extension AuthorLink.Details {
+extension AuthorLink.Detail {
     struct Model: Sendable {
         let id: String
         let authorID: String

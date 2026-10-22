@@ -16,7 +16,7 @@ extension Tag.Edit.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func load(id: String) async throws -> Tag.Details.Model {
+        func load(id: String) async throws -> Tag.Detail.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogTagGet(
                     path: .init(blogTagId: id),

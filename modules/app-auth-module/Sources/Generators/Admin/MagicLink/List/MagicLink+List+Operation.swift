@@ -8,7 +8,7 @@ extension MagicLink.List {
         var operationId: String? { "authMagicLinkList" }
 
         var responseMap: ResponseMap {
-            [200: MagicLink.List.AuthMagicLinkListResponse().reference()]
+            [200: MagicLink.List.Response().reference()]
         }
     }
 }

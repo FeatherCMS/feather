@@ -119,9 +119,11 @@ Within a route feature, keep its files together under
 
 ## Namespaces and symbols
 
-- The module target owns a top-level enum named after the module, such as
-  `UserModule`; define domain namespace enums such as `Identity` and `Role`
-  there. Avoid parallel flat names when a type naturally belongs to an entity.
+- The SwiftPM module target is already the module namespace; do not declare a
+  redundant same-named enum inside it. Define module-level `Event` and
+  `Permissions` declarations directly in that target, and define domain entity
+  namespace enums such as `Identity` and `Role` there. Avoid parallel flat
+  names when a type naturally belongs to an entity.
 - A SwiftPM target/product name does not automatically namespace declarations.
   Decide explicitly which target owns each public namespace and keep
   composition-only namespaces out of the module/domain target when that would
@@ -378,9 +380,10 @@ generated Swift manually.
 
 A small `*OpenAPIGeneratorSupport` target is an explicit exception when schemas
 are intentionally reused by another module's generator (as User identity
-schemas are consumed by Auth and Account). Keep that support API narrow and
-organized by the schema's owner; do not use it as a dumping ground for generator
-implementation details.
+schemas are consumed by Auth and Account) or by multiple API generators in the
+same module (for example, schemas intentionally shared by its App and Admin
+APIs). Keep that support API narrow and organized by the schema's owner; do not
+use it as a dumping ground for generator implementation details.
 
 ## Migration plan
 

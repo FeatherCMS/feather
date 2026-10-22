@@ -21,7 +21,7 @@ extension AuthorLink.Edit.Interactor {
         func load(
             authorID: String,
             id: String
-        ) async throws -> AuthorLink.Details.Model
+        ) async throws -> AuthorLink.Detail.Model
 
         func update(
             authorID: String,

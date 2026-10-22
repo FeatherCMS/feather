@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Post.View.Details {
+extension Post.View.Detail {
     struct Component: WebComponents.Component {
         struct State {
             let rule: Model

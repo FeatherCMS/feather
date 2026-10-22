@@ -8,12 +8,12 @@ extension RolePermission.Post {
         var operationId: String? { "authRolePermissionCreate" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            RolePermission.Post.AuthRolePermissionRequestBody().reference()
+            RolePermission.Post.RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                201: RolePermission.Post.AuthRolePermissionDetailResponse()
+                201: RolePermission.Post.Response()
                     .reference()
             ]
         }
