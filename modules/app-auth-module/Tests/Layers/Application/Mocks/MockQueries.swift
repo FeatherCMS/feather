@@ -68,6 +68,24 @@ actor MockMagicLinkQueries: MagicLink.Detail.Query.Interface,
     }
 }
 
+actor MockAuthEmailSearchQuery: Email.Search.Query.Interface {
+    private(set) var searchCallCount = 0
+    private(set) var lastQuery: Email.Search.Input.Query?
+    private let result: Email.Search.Output
+
+    init(result: Email.Search.Output) {
+        self.result = result
+    }
+
+    func search(
+        query: Email.Search.Input.Query
+    ) async throws -> Email.Search.Output {
+        searchCallCount += 1
+        lastQuery = query
+        return result
+    }
+}
+
 actor MockRolePermissionQueries: RolePermission.Search.Query.Interface {
     private(set) var listCallCount = 0
     private(set) var countCallCount = 0
@@ -142,7 +160,7 @@ actor MockSessionQueries: Session.Detail.Query.Interface,
     }
 }
 
-struct DummyIdentityQueries: Identity.Authorization.Query.Interface {
+struct DummyAuthorizationQueries: AuthModule.Authorization.Query.Interface {
     func getRolesBy(
         identityId: String
     ) async throws -> [String] {

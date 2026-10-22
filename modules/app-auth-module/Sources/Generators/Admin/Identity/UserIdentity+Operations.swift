@@ -5,7 +5,6 @@
 //  Created by Tibor Bödecs on 2026. 03. 24..
 //
 
-import AuthSharedOpenAPIGenerator
 public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
 import OpenAPIKit30
@@ -28,18 +27,8 @@ extension UserIdentitySessionOperation {
     }
 }
 
-public protocol UserIdentitySessionIdOperation: UserIdentitySessionOperation {}
-
-extension UserIdentitySessionIdOperation {
-    public var parameters: [any ParameterRepresentable] {
-        [
-            UserIdentityIdParameter().reference(),
-            UserIdentitySessionIdParameter().reference(),
-        ]
-    }
-}
-
 struct UserIdentitySessionListOperation: UserIdentitySessionOperation {
+    var operationId: String? { "userIdentitySessionList" }
 
     var responseMap: ResponseMap {
         [
@@ -52,4 +41,5 @@ struct UserIdentitySessionListOperation: UserIdentitySessionOperation {
 struct UserIdentitySessionRemoveOperation: UserIdentitySessionOperation,
     DeleteOperation
 {
+    var operationId: String? { "userIdentitySessionRemove" }
 }

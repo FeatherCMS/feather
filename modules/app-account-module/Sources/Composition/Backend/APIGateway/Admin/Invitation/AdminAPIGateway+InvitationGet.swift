@@ -16,7 +16,7 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(invitationDetailSchema(from: result))
             )
         )
     }

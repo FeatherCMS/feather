@@ -1,5 +1,6 @@
 import BlogAppAPI
 import BlogApplication
+import BlogModule
 import FeatherModuleKit
 import Foundation
 import MediaApplication
@@ -9,13 +10,23 @@ import WebDomain
 
 extension AppAPIGateway {
 
+    func notFoundErrorEnvelope(
+        message: String,
+        reason: String
+    )
+        -> BlogAppAPI.Components.Schemas
+        .DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema
+    {
+        .init(error: .init(message: message, reason: reason))
+    }
+
     func publicMedia(
         assetId: String?
     ) async -> PublicContentMedia? {
         guard let assetId, !assetId.isEmpty else {
             return nil
         }
-        guard let asset = try? await useCases.media.getAssetDetails(id: assetId)
+        guard let asset = try? await useCases.media.detailAsset(id: assetId)
         else {
             return nil
         }
@@ -94,7 +105,7 @@ extension AppAPIGateway {
     }
 
     func mapPublicPostSummary(
-        _ summary: PublicBlogPostSummary
+        _ summary: Public.Post.Summary.Output
     ) async -> BlogAppAPI.Components.Schemas.BlogPostSummarySchema {
         let media = await publicMedia(assetId: summary.imageAssetId)
         var authors: [BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema] =
@@ -123,7 +134,7 @@ extension AppAPIGateway {
     }
 
     func mapPublicAuthorSummary(
-        _ summary: PublicBlogAuthorSummary
+        _ summary: Public.Author.Summary.Output
     ) async -> BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema {
         let media = await publicMedia(assetId: summary.imageAssetId)
         return .init(
@@ -143,7 +154,7 @@ extension AppAPIGateway {
     }
 
     func mapPublicTagSummary(
-        _ summary: PublicBlogTagSummary
+        _ summary: Public.Tag.Summary.Output
     ) async -> BlogAppAPI.Components.Schemas.BlogTagSummarySchema {
         let media = await publicMedia(assetId: summary.imageAssetId)
         return .init(
@@ -161,7 +172,7 @@ extension AppAPIGateway {
     }
 
     func mapPublicAuthorLink(
-        _ link: PublicBlogAuthorLink
+        _ link: Public.Author.Link
     ) -> BlogAppAPI.Components.Schemas.BlogAuthorLinkSchema {
         .init(
             label: link.label,

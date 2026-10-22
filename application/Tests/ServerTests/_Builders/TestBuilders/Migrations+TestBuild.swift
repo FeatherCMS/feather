@@ -12,12 +12,14 @@ import UserInfrastructure
 import AuthInfrastructure
 import AuthModule
 import BlogInfrastructure
+import BlogModule
 import ContactInfrastructure
 import MediaInfrastructure
 import NewsInfrastructure
 import NewsletterInfrastructure
 import RedirectInfrastructure
 import WebInfrastructure
+import WebModule
 
 public func buildTestMigrations(
     connection: any DatabaseConnection,
@@ -27,14 +29,14 @@ public func buildTestMigrations(
     SystemModule.Event.Handlers.register(in: &events)
     AuthModule.Event.Handlers.register(in: &events)
     UserModule.Event.Handlers.register(in: &events)
-    AccountInfrastructure.EventHandlers.register(in: &events)
+    AccountModule.Event.Handlers.register(in: &events)
     AnalyticsInfrastructure.EventHandlers.register(in: &events)
     RedirectInfrastructure.EventHandlers.register(in: &events)
     MediaInfrastructure.EventHandlers.register(in: &events)
     ContactInfrastructure.EventHandlers.register(in: &events)
-    BlogInfrastructure.EventHandlers.register(in: &events)
+    BlogModule.Event.Handlers.register(in: &events)
     NewsInfrastructure.EventHandlers.register(in: &events)
-    WebInfrastructure.EventHandlers.register(
+    WebModule.Event.Handlers.register(
         in: &events,
         publicBaseURL: "http://localhost:3456"
     )
@@ -49,9 +51,15 @@ public func buildTestMigrations(
         SystemInfrastructure.TableMigration(connection: connection),
         AnalyticsInfrastructure.TableMigration(connection: connection),
         MediaInfrastructure.TableMigration(connection: connection),
-        WebInfrastructure.TableMigration(connection: connection),
+        WebInfrastructure.TableMigration(
+            connection: connection,
+            platform: PostgresDatabasePlatform()
+        ),
         RedirectInfrastructure.TableMigration(connection: connection),
-        BlogInfrastructure.TableMigration(connection: connection),
+        BlogInfrastructure.TableMigration(
+            connection: connection,
+            platform: PostgresDatabasePlatform()
+        ),
         NewsInfrastructure.TableMigration(connection: connection),
         UserInfrastructure.TableMigration(
             connection: connection,

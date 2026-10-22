@@ -18,11 +18,11 @@ public struct AddMetadata: UseCase {
     }
 
     let authorizer: any Authorizer
-    let transaction: any TransactionExecutor<WriteMetadata>
+    let transaction: any TransactionExecutor<Metadata.Repository.Scope>
 
     public init(
         authorizer: any Authorizer,
-        transaction: any TransactionExecutor<WriteMetadata>
+        transaction: any TransactionExecutor<Metadata.Repository.Scope>
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
@@ -35,7 +35,7 @@ public struct AddMetadata: UseCase {
         public let slug: String
         public let publicationDate: Date
         public let expirationDate: Date?
-        public let status: Metadata.Status
+        public let status: Metadata.Model.Status
         public let title: String?
         public let excerpt: String?
         public let imageURL: String?
@@ -53,7 +53,7 @@ public struct AddMetadata: UseCase {
             template: String,
             publicationDate: Date,
             expirationDate: Date?,
-            status: Metadata.Status,
+            status: Metadata.Model.Status,
             title: String?,
             excerpt: String?,
             imageURL: String?,
@@ -93,13 +93,13 @@ public struct AddMetadata: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let reference: Metadata.Reference = .identified(
+        let reference: Metadata.Model.Reference = .identified(
             .init(type: input.referenceType, id: input.referenceID)
         )
 
         let model = try await transaction.run { scope in
             try await scope.metadata.insert(
-                Metadata.create(
+                Metadata.Model.create(
                     reference: reference,
                     template: input.template,
                     slug: input.slug,

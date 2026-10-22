@@ -1,0 +1,17 @@
+import FeatherOpenAPI
+import FeatherOpenAPIGenerator
+
+extension Email.List {
+    struct Operation: Email.Operation {
+        var operationId: String? { "authEmailList" }
+
+        var responseMap: ResponseMap {
+            [200: Response().reference()]
+        }
+    }
+
+    struct Response: JSONResponseRepresentable {
+        var description: String = "Auth email list response"
+        var schema = Email.Schemas.List().reference()
+    }
+}

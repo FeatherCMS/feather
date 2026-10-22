@@ -1,4 +1,3 @@
-import AuthSharedOpenAPIGenerator
 public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
 import OpenAPIKit30
@@ -23,6 +22,8 @@ extension AuthCredentialIdOperation {
 }
 
 struct AuthCredentialCreateOperation: AuthCredentialOperation {
+    var operationId: String? { "authCredentialCreate" }
+
     var requestBody: (any RequestBodyRepresentable)? {
         AuthCredentialRequestBody().reference()
     }
@@ -35,6 +36,8 @@ struct AuthCredentialCreateOperation: AuthCredentialOperation {
 }
 
 struct AuthCredentialListOperation: AuthCredentialOperation {
+    var operationId: String? { "authCredentialList" }
+
     var responseMap: ResponseMap {
         [
             200: AuthCredentialListResponse().reference()
@@ -42,15 +45,17 @@ struct AuthCredentialListOperation: AuthCredentialOperation {
     }
 }
 
-struct AuthCredentialSearchOperation: AuthCredentialOperation {
+struct AuthCredentialQueryOperation: AuthCredentialOperation {
+    var operationId: String? { "authCredentialQuery" }
+
     var searchRequestQuery: SearchRequestQuerySchema {
         .init(
-            items: AuthCredentialListItemSchema(),
+            items: AuthCredentialQueryItemSchema(),
             sortFieldKeys: [
                 "userId",
                 "email",
             ],
-            filters: AuthCredentialSearchFilterSchema()
+            filters: AuthCredentialQueryFilterSchema()
         )
     }
 
@@ -71,9 +76,12 @@ struct AuthCredentialSearchOperation: AuthCredentialOperation {
 struct AuthCredentialRemoveOperation: AuthCredentialOperation,
     DeleteOperation
 {
+    var operationId: String? { "authCredentialRemove" }
 }
 
 struct AuthCredentialGetOperation: AuthCredentialIdOperation {
+    var operationId: String? { "authCredentialGet" }
+
     var responseMap: ResponseMap {
         [
             200: AuthCredentialDetailResponse().reference(),
@@ -83,6 +91,8 @@ struct AuthCredentialGetOperation: AuthCredentialIdOperation {
 }
 
 struct AuthCredentialUpdateOperation: AuthCredentialIdOperation {
+    var operationId: String? { "authCredentialUpdate" }
+
     var requestBody: (any RequestBodyRepresentable)? {
         AuthCredentialUpdateRequestBody().reference()
     }
@@ -96,6 +106,15 @@ struct AuthCredentialUpdateOperation: AuthCredentialIdOperation {
 }
 
 struct AuthCredentialPatchOperation: AuthCredentialIdOperation {
+    var operationId: String? { "authCredentialPatch" }
+
+    var parameters: [any ParameterRepresentable] {
+        [
+            AuthCredentialIdParameter().reference(),
+            AuthCredentialUpdateMaskParameter().reference(),
+        ]
+    }
+
     var requestBody: (any RequestBodyRepresentable)? {
         AuthCredentialPatchRequestBody().reference()
     }
@@ -103,6 +122,7 @@ struct AuthCredentialPatchOperation: AuthCredentialIdOperation {
     var responseMap: ResponseMap {
         [
             200: AuthCredentialDetailResponse().reference(),
+            400: CustomResponse(description: "Invalid update mask"),
             404: CustomResponse(description: "AuthCredential not found"),
         ]
     }

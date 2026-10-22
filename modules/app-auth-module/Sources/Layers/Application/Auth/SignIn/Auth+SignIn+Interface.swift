@@ -7,7 +7,7 @@ import UserModule
 
 extension AuthModule.Auth.SignIn {
     static func makeAuthResponse(
-        authorization: any Identity.Authorization.Query.Interface,
+        authorization: any AuthModule.Authorization.Query.Interface,
         userSessionRepository: any Session.Repository.Interface,
         user: Identity.Model,
         authenticationType: String,

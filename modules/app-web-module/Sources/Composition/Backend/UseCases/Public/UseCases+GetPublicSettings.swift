@@ -1,12 +1,13 @@
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
@@ -15,8 +16,8 @@ extension UseCases {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteSettings(
-                    settings: SettingsDatabaseRepository(context: context)
+                Settings.Repository.Scope(
+                    settings: Settings.Repository.Database(context: context)
                 )
             }
         )

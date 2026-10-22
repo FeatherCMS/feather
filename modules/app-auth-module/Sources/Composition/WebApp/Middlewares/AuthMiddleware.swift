@@ -3,8 +3,6 @@ public import Hummingbird
 
 public struct AuthMiddleware: RouterMiddleware {
 
-    public typealias Context = DefaultRequestContext
-
     private let authenticate: @Sendable (String) async throws -> AccountModel
     private let secureCookies: Bool
 
@@ -18,8 +16,10 @@ public struct AuthMiddleware: RouterMiddleware {
 
     public func handle(
         _ request: Request,
-        context: Context,
-        next: @concurrent (Request, Context) async throws -> Response
+        context: DefaultRequestContext,
+        next:
+            @concurrent (Request, DefaultRequestContext) async throws ->
+            Response
     ) async throws -> Response {
         let path = request.uri.path
 

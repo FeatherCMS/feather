@@ -1,12 +1,13 @@
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
@@ -15,11 +16,14 @@ extension UseCases {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadPublicMenu(
-                    menu: MenuDatabaseQueries(
+                Menu.PublicScope(
+                    menuList: Menu.List.Query.Database(
                         context: context
                     ),
-                    menuItem: MenuItemDatabaseQueries(
+                    menuDetail: Menu.Detail.Query.Database(
+                        context: context
+                    ),
+                    menuItemList: MenuItem.List.Query.Database(
                         context: context
                     )
                 )

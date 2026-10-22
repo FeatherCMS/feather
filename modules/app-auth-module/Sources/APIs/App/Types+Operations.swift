@@ -31,7 +31,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Auth response
+            /// Current user response
             ///
             /// - Remark: Generated from `#/paths//api/v1/auth/me/get(authMe)/responses/200`.
             ///

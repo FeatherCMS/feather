@@ -80,11 +80,11 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
 components:
   schemas:
-    AuthResponseSchema:
+    AuthSchemasResponse:
       type: object
       properties:
         user:
-          $ref: '#/components/schemas/AuthUserIdentityDetailSchema'
+          $ref: '#/components/schemas/AuthSchemasUserIdentity'
         roles:
           type: array
           items:
@@ -94,13 +94,13 @@ components:
           items:
             type: string
         token:
-          $ref: '#/components/schemas/UserAuthTokenField'
+          $ref: '#/components/schemas/AuthSchemasTokenField'
       required:
       - user
       - roles
       - permissions
       - token
-    AuthUserIdentityDetailSchema:
+    AuthSchemasUserIdentity:
       type: object
       properties:
         id:
@@ -122,7 +122,7 @@ components:
       - deactivated
       - anonymized
       example: active
-    UserAuthTokenField:
+    AuthSchemasTokenField:
       type: string
       example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
     DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
@@ -174,33 +174,31 @@ components:
       type: object
       properties:
         email:
-          $ref: '#/components/schemas/AuthEmailField'
+          $ref: '#/components/schemas/AuthSchemasEmailField'
         password:
-          $ref: '#/components/schemas/AuthPasswordField'
+          $ref: '#/components/schemas/AuthSchemasPasswordField'
         isPersistent:
-          $ref: '#/components/schemas/AuthIsPersistentField'
+          $ref: '#/components/schemas/AuthSchemasIsPersistentField'
       required:
       - email
       - password
       - isPersistent
-    AuthEmailField:
+    AuthSchemasEmailField:
       type: string
       example: admin@example.com
-    AuthPasswordField:
+    AuthSchemasPasswordField:
       type: string
       example: password
-    AuthIsPersistentField:
+    AuthSchemasIsPersistentField:
       type: boolean
       example: true
     AuthMagicLinkRequestSchema:
       type: object
       properties:
         email:
-          type: string
-          example: admin@example.com
+          $ref: '#/components/schemas/AuthSchemasEmailField'
         isPersistent:
-          type: boolean
-          example: true
+          $ref: '#/components/schemas/AuthSchemasIsPersistentField'
       required:
       - email
       - isPersistent
@@ -208,23 +206,25 @@ components:
       type: object
       properties:
         token:
-          type: string
-          example: mgl_3XbY...
+          $ref: '#/components/schemas/AuthSchemasMagicLinkTokenField'
       required:
       - token
+    AuthSchemasMagicLinkTokenField:
+      type: string
+      example: mgl_3XbY...
   responses:
     AuthMeResponse:
-      description: Auth response
+      description: Current user response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthResponseSchema'
+            $ref: '#/components/schemas/AuthSchemasResponse'
     AuthResponse:
       description: Auth response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthResponseSchema'
+            $ref: '#/components/schemas/AuthSchemasResponse'
   requestBodies:
     AuthLoginRequestBody:
       content:

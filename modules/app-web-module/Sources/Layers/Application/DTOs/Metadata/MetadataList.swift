@@ -18,14 +18,14 @@ public struct MetadataList: DTO {
         public let slug: String
         public let publicationDate: Date
         public let expirationDate: Date?
-        public let status: Metadata.Status
+        public let status: Metadata.Model.Status
         public let title: String
         public let createdAt: Date
         public let updatedAt: Date
 
         public func availability(
             at date: Date
-        ) -> Metadata.Availability {
+        ) -> Metadata.Model.Availability {
             .init(
                 status: status,
                 publicationDate: publicationDate,
@@ -41,7 +41,7 @@ public struct MetadataList: DTO {
             slug: String,
             publicationDate: Date,
             expirationDate: Date?,
-            status: Metadata.Status,
+            status: Metadata.Model.Status,
             title: String,
             createdAt: Date,
             updatedAt: Date

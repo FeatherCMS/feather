@@ -24,8 +24,8 @@ forward legacy layouts merely because they still compile.
 ## Namespaces and layers
 
 - Put public Auth namespaces in `Sources/Module`. Use top-level entity
-  namespaces such as `Credential`, `MagicLink`, and `Session`; define their
-  models as `<Entity>.Model` and repository contracts as
+  namespaces such as `Credential`, `Email`, `MagicLink`, and `Session`; define
+  their models as `<Entity>.Model` and repository contracts as
   `<Entity>.Repository.Interface`, and
   `<Entity>.Repository.Database` rather than parallel flat model/repository
   names. Keep entity files under `Layers/Domain/<Entity>/` and

@@ -1,6 +1,6 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-public import OpenAPIKit30
+import OpenAPIKit30
 
 public struct BlogTagIdField: StringSchemaRepresentable {
     public var example: String? = "blog_tag_1"

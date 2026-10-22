@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import WebContracts
 import WebDomain
+import WebModule
 
 //
 //  AddPage.swift
@@ -12,7 +12,7 @@ import WebDomain
 public struct AddPage: UseCase {
 
     struct Action: PermissionAction {
-        let key = WebPermissions.Pages.create
+        let key = WebModule.Permissions.Pages.create
     }
 
     let authorizer: any Authorizer
@@ -60,7 +60,7 @@ public struct AddPage: UseCase {
 
         let model = try await transaction.run { scope in
             let model = try await scope.page.insert(
-                Page.create(
+                Page.Model.create(
                     title: input.title,
                     excerpt: input.excerpt,
                     content: input.content,

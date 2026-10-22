@@ -1,5 +1,6 @@
 public import AccountAdminAPI
 import AccountApplication
+import AccountModule
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -7,7 +8,7 @@ extension AdminAPIGateway {
     public func accountInvitationPatch(
         _ input: Operations.AccountInvitationPatch.Input
     ) async throws -> Operations.AccountInvitationPatch.Output {
-        let body: Components.Schemas.AccountInvitationPatchSchema
+        let body: Components.Schemas.InvitationPatchSchema
         switch input.body {
         case .json(let value):
             body = value
@@ -17,7 +18,7 @@ extension AdminAPIGateway {
         let useCase = useCases.makeEditInvitation()
         let result = try await useCase.execute(
             subject: subject,
-            input: AccountApplication.EditInvitation.Input(
+            input: Invitation.Edit.Input(
                 id: input.path.accountInvitationId,
                 email: body.email,
                 roleIDs: body.roleIds
@@ -26,7 +27,7 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(invitationDetailSchema(from: result))
             )
         )
     }

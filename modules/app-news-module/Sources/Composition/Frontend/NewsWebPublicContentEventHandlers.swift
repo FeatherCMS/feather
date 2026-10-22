@@ -5,7 +5,7 @@ import Foundation
 import NIOCore
 import NewsAppAPI
 import OpenAPIAsyncHTTPClient
-import WebContracts
+import WebModule
 
 public enum NewsWebPublicContentEventHandlers {
     public static func register(

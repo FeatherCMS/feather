@@ -5,7 +5,7 @@ import Hummingbird
 import Logging
 import SGML
 import WebBuilders
-import WebFrontend
+import WebModuleWebApp
 
 struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "ContactForm"

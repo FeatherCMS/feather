@@ -1,0 +1,66 @@
+import BlogAdminAPI
+import BlogAppAPI
+import BlogModule
+import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import MediaWebAdmin
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebModuleWebAdmin
+
+extension AuthorLink.Edit {
+    struct Component: WebComponents.Component {
+
+        struct State {
+            let authorID: String
+            let id: String
+            let form: BlogAuthorLinkForm.State
+            let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: BlogWebAdmin.Router.Routes
+        }
+
+        let state: State
+
+        func html(context: inout BuilderContext) -> some BasicTag {
+            Section {
+                context.build(AdminBreadcrumb(links: state.breadcrumb))
+                context.build(
+                    AdminPageHeader(
+                        state: .primary(
+                            title: "Edit blog author link",
+                            description: "Update this author link."
+                        )
+                    )
+                )
+                Div {
+                    context.build(
+                        BlogAuthorLinkForm(
+                            state: state.form,
+                            action:
+                                state.routes
+                                .authorLinkEdit(
+                                    RouterPath(state.authorID),
+                                    RouterPath(state.id)
+                                )
+                                .description,
+                            submitLabel: "Edit link",
+                            removeHref:
+                                state.routes
+                                .authorLinkRemove(
+                                    RouterPath(state.authorID)
+                                )
+                                .description,
+                            removeLabel: "Remove link"
+                        )
+                    )
+                }
+            }
+            .class("cms-section")
+        }
+    }
+}

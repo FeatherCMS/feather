@@ -7,7 +7,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-import WebFrontend
+import WebModuleWebApp
 
 protocol AppNewsletterCampaignSubscriptionController: Sendable {
     var route: NewsletterSubscriptionRoute { get }

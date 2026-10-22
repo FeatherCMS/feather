@@ -53,7 +53,7 @@ struct InfrastructureDatabaseTestSuite {
     @Test
     func tableSchemasDescribeAllColumnsForeignKeysAndIndexes() {
         let schemas = [
-            AuthEmail.Table.tableCreationSchema,
+            Email.Table.tableCreationSchema,
             Credential.Table.tableCreationSchema,
             MagicLink.Table.tableCreationSchema,
             RolePermission.Table.tableCreationSchema,

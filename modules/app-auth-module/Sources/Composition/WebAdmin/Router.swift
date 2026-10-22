@@ -42,79 +42,52 @@ public struct Router {
             root: authRoot,
             breadcrumb: authBreadcrumb
         )
+        let emailRoutes = Email.Router.Routes(
+            root: authRoot,
+            breadcrumb: authBreadcrumb
+        )
+        let magicLinkRoutes = MagicLink.Router.Routes(
+            root: authRoot,
+            breadcrumb: authBreadcrumb
+        )
+        let accessControlRoutes = RolePermission.Router.Routes(
+            root: authRoot,
+            breadcrumb: authBreadcrumb
+        )
 
-        AdminViewAuthOverview(
+        Overview.Router(
             renderingEngine: renderingEngine,
-            credentialRoutes: credentialRoutes
+            routes: .init(
+                path: authRoot,
+                breadcrumb: authBreadcrumb,
+                email: emailRoutes,
+                credential: credentialRoutes,
+                magicLink: magicLinkRoutes,
+                accessControl: accessControlRoutes
+            )
         )
-        .controller.route(on: router)
-
-        AdminListAuthEmail(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
-        AdminViewAuthEmail(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
-        AdminAddAuthEmail(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller
-        .route(on: router)
-        AdminEditAuthEmail(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller
-        .route(on: router)
-        AdminRemoveAuthEmail(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller
         .route(on: router)
 
-        AdminListAuthMagicLink(
+        Email.Router(
             environment: environment,
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            routes: emailRoutes
         )
-        .controller.route(on: router)
+        .route(on: router)
 
-        AdminViewAuthMagicLink(
+        MagicLink.Router(
             environment: environment,
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            routes: magicLinkRoutes
         )
-        .controller.route(on: router)
+        .route(on: router)
 
-        AdminAddAuthMagicLink(
+        RolePermission.Router(
             environment: environment,
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            routes: accessControlRoutes
         )
-        .controller.route(on: router)
-
-        AdminEditAuthMagicLink(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
-        AdminRemoveAuthMagicLink(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
-        AdminEditAuthAccessControl(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        .route(on: router)
 
         Credential.Router(
             environment: environment,
@@ -123,17 +96,16 @@ public struct Router {
         )
         .route(on: router)
 
-        AdminListAuthSession(
+        Session.Router(
+            routes: Session.Router.Routes(
+                identityRoot: WebRoute.root
+                    .appending(pathComponent: "admin")
+                    .appending(pathComponent: "user")
+                    .appending(pathComponent: "identities")
+            ),
             environment: environment,
             renderingEngine: renderingEngine
         )
-        .controller
-        .route(on: router)
-        AdminRemoveAuthSession(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller
         .route(on: router)
     }
 }

@@ -1,0 +1,14 @@
+import MediaAdminAPI
+import MediaModule
+
+extension Variant.Processor.List.Repository {
+    protocol Interface: Sendable {
+        func list(
+            variantId: String,
+            page: Int,
+            search: String?
+        ) async throws
+            -> MediaAdminAPI.Components.Responses
+            .MediaVariantProcessorQueryItemSearchSchemaSearchResponse
+    }
+}

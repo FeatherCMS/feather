@@ -13,6 +13,6 @@ extension AdminAPIGateway {
                 subject: subject,
                 input: .init(id: input.path.accountInvitationId)
             )
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(invitationDetailSchema(from: result))))
     }
 }

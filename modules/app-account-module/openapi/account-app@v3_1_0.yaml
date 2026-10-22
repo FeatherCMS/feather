@@ -24,9 +24,9 @@ paths:
     get:
       tags:
       - Account
-      operationId: accountInvitationValidation
+      operationId: accountInvitationValidate
       parameters:
-      - $ref: '#/components/parameters/AccountInvitationTokenParameter'
+      - $ref: '#/components/parameters/InvitationValidateTokenParameter'
       responses:
         200:
           $ref: '#/components/responses/AccountInvitationValidationResponse'
@@ -43,7 +43,7 @@ paths:
     get:
       tags:
       - Account
-      operationId: accountSettings
+      operationId: accountSettingsGet
       responses:
         200:
           $ref: '#/components/responses/AccountSettingsResponse'
@@ -366,7 +366,7 @@ components:
           schema:
             $ref: '#/components/schemas/AccountProfileResponseSchema'
   parameters:
-    AccountInvitationTokenParameter:
+    InvitationValidateTokenParameter:
       name: token
       allowEmptyValue: true
       in: query

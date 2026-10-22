@@ -6,7 +6,7 @@
 
 import FeatherApplication
 public import FeatherModuleKit
-import WebDomain
+public import WebDomain
 
 public struct ListPublicMenus: Sendable {
     struct ItemPermissionAction: PermissionAction {
@@ -14,11 +14,11 @@ public struct ListPublicMenus: Sendable {
     }
 
     let authorizer: any Authorizer
-    let query: any QueryExecutor<ReadPublicMenu>
+    let query: any QueryExecutor<Menu.PublicScope>
 
     public init(
         authorizer: any Authorizer,
-        query: any QueryExecutor<ReadPublicMenu>
+        query: any QueryExecutor<Menu.PublicScope>
     ) {
         self.authorizer = authorizer
         self.query = query
@@ -28,12 +28,7 @@ public struct ListPublicMenus: Sendable {
         subject: Subject?
     ) async throws -> [PublicMenu] {
         try await query.run { scope in
-            let menus = try await scope.menu.list(
-                query: .init(
-                    page: .init(size: 10_000, number: 1),
-                    sort: [.init(field: .key, direction: .asc)]
-                )
-            )
+            let menus = try await scope.menuList.list()
 
             var result: [PublicMenu] = []
 
@@ -42,7 +37,7 @@ public struct ListPublicMenus: Sendable {
                     id: menu.id,
                     key: menu.key,
                     name: menu.name,
-                    menuItems: scope.menuItem,
+                    menuItems: scope.menuItemList,
                     subject: subject
                 )
                 guard !publicMenu.items.isEmpty else { continue }
@@ -58,14 +53,14 @@ public struct ListPublicMenus: Sendable {
         subject: Subject?
     ) async throws -> PublicMenu? {
         try await query.run { scope in
-            guard let menu = try await scope.menu.find(key: key) else {
+            guard let menu = try await scope.menuDetail.find(key: key) else {
                 return nil
             }
             return try await makePublicMenu(
                 id: menu.id,
                 key: menu.key,
                 name: menu.name,
-                menuItems: scope.menuItem,
+                menuItems: scope.menuItemList,
                 subject: subject
             )
         }
@@ -75,25 +70,16 @@ public struct ListPublicMenus: Sendable {
         id: String,
         key: String,
         name: String,
-        menuItems: any MenuItemQueries,
+        menuItems: any MenuItem.List.Query.Interface,
         subject: Subject?
     ) async throws -> PublicMenu {
-        let menuItems = try await menuItems.list(
-            menuId: id,
-            query: .init(
-                page: .init(size: 10_000, number: 1),
-                sort: [
-                    .init(field: .priority, direction: .asc),
-                    .init(field: .label, direction: .asc),
-                ]
-            )
-        )
+        let menuItems = try await menuItems.list(menuId: id)
         let items = try await filterItems(menuItems.items, subject: subject)
         return .init(id: id, key: key, name: name, items: items)
     }
 
     private func filterItems(
-        _ items: [MenuItemList.Item],
+        _ items: [MenuItem.List.Output.Item],
         subject: Subject?
     ) async throws -> [PublicMenuItem] {
         var result: [PublicMenuItem] = []
@@ -115,7 +101,7 @@ public struct ListPublicMenus: Sendable {
     }
 
     private func isAvailable(
-        item: MenuItemList.Item,
+        item: MenuItem.List.Output.Item,
         subject: Subject?
     ) async throws -> Bool {
         switch item.authentication {

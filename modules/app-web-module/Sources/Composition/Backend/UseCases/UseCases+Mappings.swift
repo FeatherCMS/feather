@@ -1,6 +1,6 @@
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDomain
+import FeatherModuleKit
 import Foundation
 import WebAdminAPI
 import WebAppAPI
@@ -79,8 +79,8 @@ extension UseCases {
 
     func timestamp(_ date: Date?) -> Double? { date?.timeIntervalSince1970 }
 
-    func mapMetadataStatus(_ value: String?) -> Metadata.Status {
-        value.flatMap(Metadata.Status.init(rawValue:)) ?? .draft
+    func mapMetadataStatus(_ value: String?) -> Metadata.Model.Status {
+        value.flatMap(Metadata.Model.Status.init(rawValue:)) ?? .draft
     }
 
     func mapPageMetadata(
@@ -157,10 +157,13 @@ extension UseCases {
         )
     }
 
-    func map(_ page: WebAdminAPI.Components.Schemas.SearchPageSchema)
+    func map(_ page: WebAdminAPI.Components.Schemas.SearchPageSchema?)
         -> Search.Page
     {
-        .init(size: page.size, number: page.number)
+        .init(
+            size: page?.size ?? 20,
+            number: page?.number ?? 1
+        )
     }
 
     func mapSortDirection(
@@ -171,7 +174,7 @@ extension UseCases {
 
     func map(
         _ query: WebAdminAPI.Components.Schemas
-            .WebMetadataListItemSearchRequestQuerySchema
+            .WebMetadataQueryItemSearchRequestQuerySchema
     ) -> MetadataList.Query {
         .init(
             page: map(query.page),
@@ -230,6 +233,25 @@ extension UseCases {
         )
     }
 
+    func mapQuery(_ item: MetadataList.Item)
+        -> WebAdminAPI.Components.Schemas.WebMetadataQueryItemSchema
+    {
+        .init(
+            id: item.id,
+            referenceType: item.referenceType,
+            referenceId: item.referenceID,
+            slug: item.slug,
+            publicationDate: timestamp(item.publicationDate),
+            expirationDate: timestamp(item.expirationDate),
+            status: item.status.rawValue,
+            availability: .init(rawValue: item.availability(at: .now).rawValue)
+                ?? .draft,
+            title: item.title,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
     func mapResolveMetadata(
         _ item: MetadataList.Item,
         at date: Date
@@ -246,7 +268,8 @@ extension UseCases {
     }
 
     func map(
-        _ query: WebAdminAPI.Components.Schemas.WebPageListItemSearchRequestQuerySchema
+        _ query: WebAdminAPI.Components.Schemas
+            .WebPageQueryItemSearchRequestQuerySchema
     ) -> PageList.Query {
         .init(page: map(query.page), sort: [], search: query.filters.search)
     }
@@ -279,12 +302,37 @@ extension UseCases {
         )
     }
 
+    func mapQuery(_ item: PageList.Item)
+        -> WebAdminAPI.Components.Schemas.WebPageQueryItemSchema
+    {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            imageAssetId: item.imageAssetId,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
     func map(
-        _ query: WebAdminAPI.Components.Schemas.WebMenuListItemSearchRequestQuerySchema
-    ) -> MenuList.Query {
+        _ query: WebAdminAPI.Components.Schemas
+            .WebMenuQueryItemSearchRequestQuerySchema
+    ) -> Menu.Search.Input.Query {
         .init(
             page: map(query.page),
-            sort: [.init(field: .key, direction: .asc)],
+            sort: query.sort?
+                .compactMap { sort in
+                    guard
+                        let field = Menu.Search.Input.Query.Sort.Field(
+                            rawValue: sort.field.rawValue
+                        )
+                    else { return nil }
+                    return .init(
+                        field: field,
+                        direction: sort.direction == .asc ? .asc : .desc
+                    )
+                } ?? [],
             search: query.filters.search
         )
     }
@@ -302,7 +350,58 @@ extension UseCases {
         )
     }
 
-    func map(_ item: MenuList.Item)
+    func map(_ output: Menu.Edit.Output)
+        -> WebAdminAPI.Components.Schemas.WebMenuDetailSchema
+    {
+        .init(
+            id: output.id,
+            key: output.key,
+            name: output.name,
+            notes: output.notes,
+            createdAt: output.createdAt.timeIntervalSince1970,
+            updatedAt: output.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func map(_ output: Menu.Detail.Output)
+        -> WebAdminAPI.Components.Schemas.WebMenuDetailSchema
+    {
+        .init(
+            id: output.id,
+            key: output.key,
+            name: output.name,
+            notes: output.notes,
+            createdAt: output.createdAt.timeIntervalSince1970,
+            updatedAt: output.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func map(_ output: Menu.Add.Output)
+        -> WebAdminAPI.Components.Schemas.WebMenuDetailSchema
+    {
+        .init(
+            id: output.id,
+            key: output.key,
+            name: output.name,
+            notes: output.notes,
+            createdAt: output.createdAt.timeIntervalSince1970,
+            updatedAt: output.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func mapQuery(_ item: Menu.Search.Output.Item)
+        -> WebAdminAPI.Components.Schemas.WebMenuQueryItemSchema
+    {
+        .init(
+            id: item.id,
+            key: item.key,
+            name: item.name,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func mapList(_ item: Menu.List.Output.Item)
         -> WebAdminAPI.Components.Schemas.WebMenuListItemSchema
     {
         .init(
@@ -316,16 +415,29 @@ extension UseCases {
 
     func map(
         _ query: WebAdminAPI.Components.Schemas
-            .WebMenuItemListItemSearchRequestQuerySchema
-    ) -> MenuItemList.Query {
+            .WebMenuItemQueryItemSearchRequestQuerySchema
+    ) -> MenuItem.Search.Input.Query {
         .init(
             page: map(query.page),
-            sort: [.init(field: .priority, direction: .asc)],
+            sort: (query.sort ?? [])
+                .compactMap { sort in
+                    guard
+                        let field = MenuItem.Search.Input.Query.Sort.Field(
+                            rawValue: sort.field.rawValue
+                        )
+                    else {
+                        return nil
+                    }
+                    return .init(
+                        field: field,
+                        direction: sort.direction == .asc ? .asc : .desc
+                    )
+                },
             search: query.filters.search
         )
     }
 
-    func map(_ detail: MenuItemDetail)
+    func map(_ detail: MenuItem.Add.Output)
         -> WebAdminAPI.Components.Schemas.WebMenuItemDetailSchema
     {
         .init(
@@ -343,8 +455,61 @@ extension UseCases {
         )
     }
 
-    func map(_ item: MenuItemList.Item)
+    func map(_ detail: MenuItem.Edit.Output)
+        -> WebAdminAPI.Components.Schemas.WebMenuItemDetailSchema
+    {
+        .init(
+            id: detail.id,
+            menuId: detail.menuId,
+            label: detail.label,
+            url: detail.url,
+            priority: detail.priority,
+            isBlank: detail.isBlank,
+            permission: detail.permission,
+            authentication: detail.authentication.rawValue,
+            notes: detail.notes,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func map(_ detail: MenuItem.Detail.Output)
+        -> WebAdminAPI.Components.Schemas.WebMenuItemDetailSchema
+    {
+        .init(
+            id: detail.id,
+            menuId: detail.menuId,
+            label: detail.label,
+            url: detail.url,
+            priority: detail.priority,
+            isBlank: detail.isBlank,
+            permission: detail.permission,
+            authentication: detail.authentication.rawValue,
+            notes: detail.notes,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func mapList(_ item: MenuItem.List.Output.Item)
         -> WebAdminAPI.Components.Schemas.WebMenuItemListItemSchema
+    {
+        .init(
+            id: item.id,
+            menuId: item.menuId,
+            label: item.label,
+            url: item.url,
+            priority: item.priority,
+            isBlank: item.isBlank,
+            permission: item.permission,
+            authentication: item.authentication.rawValue,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func mapQuery(_ item: MenuItem.Search.Output.Item)
+        -> WebAdminAPI.Components.Schemas.WebMenuItemQueryItemSchema
     {
         .init(
             id: item.id,

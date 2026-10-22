@@ -8,9 +8,21 @@ extension Components {
         public typealias UserIdentityIdParameter = Components.Schemas.UserIdentityIDField
         /// - Remark: Generated from `#/components/parameters/AuthCredentialIdParameter`.
         public typealias AuthCredentialIdParameter = Components.Schemas.AuthCredentialIdField
-        /// - Remark: Generated from `#/components/parameters/AuthEmailIdParameter`.
-        public typealias AuthEmailIdParameter = Components.Schemas.AuthEmailIdField
+        /// Comma-separated fields to update: userId, email, password
+        ///
+        /// - Remark: Generated from `#/components/parameters/AuthCredentialUpdateMaskParameter`.
+        public typealias AuthCredentialUpdateMaskParameter = Components.Schemas.AuthCredentialUpdateMaskField
+        /// - Remark: Generated from `#/components/parameters/AuthEmailParametersID`.
+        public typealias AuthEmailParametersID = Components.Schemas.AuthEmailSchemasIDField
+        /// Comma-separated fields to update: identityId, email
+        ///
+        /// - Remark: Generated from `#/components/parameters/AuthEmailParametersUpdateMask`.
+        public typealias AuthEmailParametersUpdateMask = Components.Schemas.AuthEmailSchemasUpdateMask
         /// - Remark: Generated from `#/components/parameters/AuthMagicLinkIdParameter`.
         public typealias AuthMagicLinkIdParameter = Components.Schemas.AuthMagicLinkIdField
+        /// Comma-separated fields to update: credentialId, isPersistent
+        ///
+        /// - Remark: Generated from `#/components/parameters/AuthMagicLinkUpdateMaskParameter`.
+        public typealias AuthMagicLinkUpdateMaskParameter = Components.Schemas.AuthMagicLinkUpdateMaskField
     }
 }

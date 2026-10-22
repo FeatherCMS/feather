@@ -1,27 +1,29 @@
-import SystemModule
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import MediaBackend
 import SystemApplication
 import SystemInfrastructure
+import SystemModule
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
 
-    public func makeAddTag() -> AddTag {
+    public func makeAddTag() -> Tag.Add.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteTagMetadata(
-                    tag: TagDatabaseRepository(
+                Tag.Add.Scope(
+                    tag: Tag.Repository.Database(
                         context: context
                     ),
-                    metadata: MetadataDatabaseRepository(
+                    metadata: Metadata.Repository.Database(
                         context: context
                     ),
                     variable: SystemModule.Variable.Lookup.Database(

@@ -1,0 +1,29 @@
+import FeatherWebAdmin
+import Hummingbird
+import OpenAPIRuntime
+
+struct AdminEditWebMenu {
+    let controller: any AdminEditWebMenuController
+
+    init(
+        apiBuilder: API.Builder,
+        renderingEngine: any RenderingEngine
+    ) {
+        self.controller = AdminEditWebMenuDefaultController(
+            buildRuntime: { request, context in
+                (
+                    interactor: AdminEditWebMenuDefaultInteractor(
+                        repository: AdminEditWebMenuOpenAPIRepository(
+                            api: apiBuilder.makeWebAdmin(context)
+                        )
+                    ),
+                    presenter: AdminEditWebMenuDefaultPresenter(
+                        request: request,
+                        context: context,
+                        renderingEngine: renderingEngine
+                    )
+                )
+            }
+        )
+    }
+}

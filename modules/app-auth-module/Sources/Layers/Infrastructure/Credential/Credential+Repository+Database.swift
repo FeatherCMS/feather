@@ -32,7 +32,7 @@ extension Credential.Repository {
 
         public func findBy(userId: String) async throws -> Credential.Model? {
             guard
-                let authEmail = try await AuthEmail.Repository
+                let authEmail = try await Email.Repository
                     .Database(context: context)
                     .findBy(identityId: userId)
             else {
@@ -45,7 +45,7 @@ extension Credential.Repository {
 
         public func findBy(email: String) async throws -> Credential.Model? {
             guard
-                let authEmail = try await AuthEmail.Repository
+                let authEmail = try await Email.Repository
                     .Database(context: context)
                     .findBy(email: email)
             else {

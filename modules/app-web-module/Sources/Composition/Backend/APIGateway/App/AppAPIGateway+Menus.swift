@@ -28,7 +28,18 @@ extension AppAPIGateway {
                 subject: await CurrentSubject.get()
             )
         else {
-            return .notFound
+            return .notFound(
+                .init(
+                    body: .json(
+                        .init(
+                            error: .init(
+                                message: "Menu not found",
+                                reason: "No published menu exists for this key."
+                            )
+                        )
+                    )
+                )
+            )
         }
 
         return .ok(

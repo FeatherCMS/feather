@@ -1,18 +1,21 @@
 import AccountApplication
 import AccountInfrastructure
+import AccountModule
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 
-    func makeCreateAccount() -> AccountApplication.CreateAccount {
+    func makeCreateAccount() -> Account.Create.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteAccount(
+                Account.Create.Scope(
                     identity: Identity.Repository.Database(context: context),
-                    authEmail: AuthEmail.Repository.Database(context: context),
+                    authEmail: Email.Repository.Database(context: context),
                     credential: Credential.Repository.Database(context: context)
                 )
             }

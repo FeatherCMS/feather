@@ -15,6 +15,3 @@ struct UserIdentitySessionPathItems: PathItemRepresentable {
         UserIdentitySessionRemoveOperation()
     }
 }
-
-struct UserIdentitySessionIdPathItems: PathItemRepresentable {
-}

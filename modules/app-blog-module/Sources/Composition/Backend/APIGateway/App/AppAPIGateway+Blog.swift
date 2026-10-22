@@ -1,13 +1,14 @@
 public import BlogAppAPI
 import BlogApplication
 import BlogDomain
+import BlogModule
 import FeatherInfrastructure
 import WebApplication
 
 extension AppAPIGateway {
-    public func blogRouteSettings(
-        _ input: Operations.BlogRouteSettings.Input
-    ) async throws -> Operations.BlogRouteSettings.Output {
+    public func blogSettingsGet(
+        _ input: Operations.BlogSettingsGet.Input
+    ) async throws -> Operations.BlogSettingsGet.Output {
         let settings = try await self.useCases.makeGetPublicSettings()
             .run { context in
                 try await context.settings.get()
@@ -33,7 +34,8 @@ extension AppAPIGateway {
     public func blogPostList(
         _ input: Operations.BlogPostList.Input
     ) async throws -> Operations.BlogPostList.Output {
-        let items = try await self.useCases.makeListPublicPosts().execute()
+        let items = try await self.useCases.makeListPublicPosts()
+            .execute(input: .init()).items
         var result: [Components.Schemas.BlogPostSummarySchema] = []
         result.reserveCapacity(items.count)
         for item in items {
@@ -53,9 +55,7 @@ extension AppAPIGateway {
     ) async throws -> Operations.BlogPostGet.Output {
         do {
             let detail = try await self.useCases.makeGetPublicPost()
-                .execute(
-                    id: input.path.id
-                )
+                .execute(input: .init(id: input.path.id))
             let media = await publicMedia(assetId: detail.imageAssetId)
             var authors: [Components.Schemas.BlogAuthorSummarySchema] = []
             authors.reserveCapacity(detail.authors.count)
@@ -95,15 +95,25 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is GetPublicPost.Error {
-            return .notFound
+        catch is Public.Post.Detail.UseCase.Error {
+            return .notFound(
+                .init(
+                    body: .json(
+                        notFoundErrorEnvelope(
+                            message: "Blog post not found",
+                            reason: "No published blog post matches this path."
+                        )
+                    )
+                )
+            )
         }
     }
 
     public func blogAuthorList(
         _ input: Operations.BlogAuthorList.Input
     ) async throws -> Operations.BlogAuthorList.Output {
-        let items = try await self.useCases.makeListPublicAuthors().execute()
+        let items = try await self.useCases.makeListPublicAuthors()
+            .execute(input: .init()).items
         var result: [Components.Schemas.BlogAuthorSummarySchema] = []
         result.reserveCapacity(items.count)
         for item in items {
@@ -123,9 +133,7 @@ extension AppAPIGateway {
     ) async throws -> Operations.BlogAuthorGet.Output {
         do {
             let detail = try await self.useCases.makeGetPublicAuthor()
-                .execute(
-                    id: input.path.id
-                )
+                .execute(input: .init(id: input.path.id))
             let media = await publicMedia(assetId: detail.imageAssetId)
             var posts: [Components.Schemas.BlogPostSummarySchema] = []
             posts.reserveCapacity(detail.posts.count)
@@ -155,15 +163,26 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is GetPublicAuthor.Error {
-            return .notFound
+        catch is Public.Author.Detail.UseCase.Error {
+            return .notFound(
+                .init(
+                    body: .json(
+                        notFoundErrorEnvelope(
+                            message: "Blog author not found",
+                            reason:
+                                "No published blog author matches this path."
+                        )
+                    )
+                )
+            )
         }
     }
 
     public func blogTagList(
         _ input: Operations.BlogTagList.Input
     ) async throws -> Operations.BlogTagList.Output {
-        let items = try await self.useCases.makeListPublicTags().execute()
+        let items = try await self.useCases.makeListPublicTags()
+            .execute(input: .init()).items
         var result: [Components.Schemas.BlogTagSummarySchema] = []
         result.reserveCapacity(items.count)
         for item in items {
@@ -183,9 +202,7 @@ extension AppAPIGateway {
     ) async throws -> Operations.BlogTagGet.Output {
         do {
             let detail = try await self.useCases.makeGetPublicTag()
-                .execute(
-                    id: input.path.id
-                )
+                .execute(input: .init(id: input.path.id))
             let media = await publicMedia(assetId: detail.imageAssetId)
             var posts: [Components.Schemas.BlogPostSummarySchema] = []
             posts.reserveCapacity(detail.posts.count)
@@ -213,8 +230,17 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is GetPublicTag.Error {
-            return .notFound
+        catch is Public.Tag.Detail.UseCase.Error {
+            return .notFound(
+                .init(
+                    body: .json(
+                        notFoundErrorEnvelope(
+                            message: "Blog tag not found",
+                            reason: "No published blog tag matches this path."
+                        )
+                    )
+                )
+            )
         }
     }
 }

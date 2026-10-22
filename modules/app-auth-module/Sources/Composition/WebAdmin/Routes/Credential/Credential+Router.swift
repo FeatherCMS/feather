@@ -4,6 +4,7 @@ import FeatherWebShared
 import Hummingbird
 
 extension Credential {
+    enum Form {}
     struct Router {
         struct Routes {
             let list: WebRoute
@@ -64,30 +65,34 @@ extension Credential {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            AdminListAuthCredential(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .controller.route(on: router, routes: routes)
-            AdminAddAuthCredential(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .controller.route(on: router, routes: routes)
-            AdminEditAuthCredential(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .controller.route(on: router, routes: routes)
-            AdminRemoveAuthCredential(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .controller.route(on: router, routes: routes)
+            Credential.List
+                .Router(
+                    environment: environment,
+                    renderingEngine: renderingEngine,
+                    routes: routes
+                )
+                .route(on: router)
+            Credential.Add
+                .Router(
+                    environment: environment,
+                    renderingEngine: renderingEngine,
+                    routes: routes
+                )
+                .route(on: router)
+            Credential.Edit
+                .Router(
+                    environment: environment,
+                    renderingEngine: renderingEngine,
+                    routes: routes
+                )
+                .route(on: router)
+            Credential.Remove
+                .Router(
+                    environment: environment,
+                    renderingEngine: renderingEngine,
+                    routes: routes
+                )
+                .route(on: router)
         }
     }
 }

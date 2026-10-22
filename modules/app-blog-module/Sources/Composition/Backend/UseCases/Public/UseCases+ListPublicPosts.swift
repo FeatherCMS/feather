@@ -1,43 +1,45 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import MediaBackend
 import SystemInfrastructure
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
 
-    public func makeListPublicPosts() -> ListPublicPosts {
+    public func makeListPublicPosts() -> Public.Post.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadPublic(
-                    post: PostDatabaseQueries(
+                Public.Query.Scope(
+                    post: Post.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    author: AuthorDatabaseQueries(
+                    author: Author.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    tag: TagDatabaseQueries(
+                    tag: Tag.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    authorLink: AuthorLinkDatabaseQueries(
+                    authorLink: AuthorLink.Query.Database(
                         context: context
                     ),
-                    metadata: MetadataDatabaseQueries(
+                    metadata: Metadata.Query.Database(
                         context: context
                     )
                 )

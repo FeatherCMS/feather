@@ -22,11 +22,11 @@ public struct EditMetadata: UseCase {
     }
 
     let authorizer: any Authorizer
-    let transaction: any TransactionExecutor<WriteMetadata>
+    let transaction: any TransactionExecutor<Metadata.Repository.Scope>
 
     public init(
         authorizer: any Authorizer,
-        transaction: any TransactionExecutor<WriteMetadata>
+        transaction: any TransactionExecutor<Metadata.Repository.Scope>
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
@@ -38,7 +38,7 @@ public struct EditMetadata: UseCase {
         public let slug: String?
         public let publicationDate: Date?
         public let expirationDate: Date?
-        public let status: Metadata.Status?
+        public let status: Metadata.Model.Status?
         public let title: String?
         public let excerpt: String?
         public let imageURL: String?
@@ -55,7 +55,7 @@ public struct EditMetadata: UseCase {
             slug: String?,
             publicationDate: Date?,
             expirationDate: Date?,
-            status: Metadata.Status?,
+            status: Metadata.Model.Status?,
             title: String? = nil,
             excerpt: String? = nil,
             imageURL: String? = nil,

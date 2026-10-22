@@ -4,9 +4,9 @@ import FeatherModuleKit
 
 extension AdminAPIGateway {
 
-    public func blogAuthorLinkUpdate(
-        _ input: Operations.BlogAuthorLinkUpdate.Input
-    ) async throws -> Operations.BlogAuthorLinkUpdate.Output {
+    public func blogAuthorLinkPut(
+        _ input: Operations.BlogAuthorLinkPut.Input
+    ) async throws -> Operations.BlogAuthorLinkPut.Output {
         let body: Components.Schemas.BlogAuthorLinkCreateSchema
         switch input.body {
         case .json(let value):

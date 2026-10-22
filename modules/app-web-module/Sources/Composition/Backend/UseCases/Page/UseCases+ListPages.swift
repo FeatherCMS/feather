@@ -1,13 +1,14 @@
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
 import WebInfrastructure
+import WebDomain
 
 extension UseCases {
 
@@ -16,13 +17,13 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 ReadPageMetadata(
-                    page: PageDatabaseQueries(
+                    page: Page.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    metadata: MetadataDatabaseQueries(
+                    metadata: Metadata.Query.Database(
                         context: context
                     )
                 )

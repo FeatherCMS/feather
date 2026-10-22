@@ -12,8 +12,8 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 RolePermission.Search.Scope(
-                    authorization: Identity.Authorization.Query.Database(
-                        connection: context.connection
+                    authorization: AuthModule.Authorization.Query.Database(
+                        context: context
                     ),
                     rolePermissions: RolePermission.Search.Query.Database(
                         context: context

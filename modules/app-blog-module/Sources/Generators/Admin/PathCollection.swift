@@ -1,33 +1,21 @@
 import BlogSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct PathCollection: PathCollectionRepresentable {
 
     var pathMap: PathMap {
-        [
-            "api/v1/admin/blog/posts": BlogPostPathItems(),
-            "api/v1/admin/blog/posts/": BlogPostListPathItems(),
-            "api/v1/admin/blog/posts/search": BlogPostSearchPathItems(),
-            "api/v1/admin/blog/posts/{blogPostId}": BlogPostIdPathItems(),
-            "api/v1/admin/blog/authors": BlogAuthorPathItems(),
-            "api/v1/admin/blog/authors/": BlogAuthorListPathItems(),
-            "api/v1/admin/blog/authors/search": BlogAuthorSearchPathItems(),
-            "api/v1/admin/blog/authors/{blogAuthorId}": BlogAuthorIdPathItems(),
-            "api/v1/admin/blog/authors/{blogAuthorId}/links":
-                BlogAuthorLinkPathItems(),
-            "api/v1/admin/blog/authors/{blogAuthorId}/links/":
-                BlogAuthorLinkListPathItems(),
-            "api/v1/admin/blog/authors/{blogAuthorId}/links/search":
-                BlogAuthorLinkSearchPathItems(),
-            "api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}":
-                BlogAuthorLinkIdPathItems(),
-            "api/v1/admin/blog/settings": BlogSettingsPathItems(),
-            "api/v1/admin/blog/tags": BlogTagPathItems(),
-            "api/v1/admin/blog/tags/": BlogTagListPathItems(),
-            "api/v1/admin/blog/tags/search": BlogTagSearchPathItems(),
-            "api/v1/admin/blog/tags/{blogTagId}": BlogTagIdPathItems(),
-        ]
+        var paths: PathMap = [:]
+        paths.merge(BlogAuthor.PathCollection().pathMap) { current, _ in current
+        }
+        paths.merge(BlogAuthorLink.PathCollection().pathMap) { current, _ in
+            current
+        }
+        paths.merge(BlogPost.PathCollection().pathMap) { current, _ in current }
+        paths.merge(BlogSettings.PathCollection().pathMap) { current, _ in
+            current
+        }
+        paths.merge(BlogTag.PathCollection().pathMap) { current, _ in current }
+        return paths
     }
 }

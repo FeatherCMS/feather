@@ -7,7 +7,7 @@ extension AdminAPIGateway {
     public func accountInvitationCreate(
         _ input: Operations.AccountInvitationCreate.Input
     ) async throws -> Operations.AccountInvitationCreate.Output {
-        let body: Components.Schemas.AccountInvitationCreateSchema
+        let body: Components.Schemas.InvitationPostSchema
         switch input.body {
         case .json(let value):
             body = value
@@ -25,7 +25,7 @@ extension AdminAPIGateway {
 
         return .created(
             .init(
-                body: .json(map(result))
+                body: .json(invitationDetailSchema(from: result))
             )
         )
     }

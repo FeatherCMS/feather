@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import WebContracts
 import WebDomain
+import WebModule
 
 //
 //  EditPage.swift
@@ -12,7 +12,7 @@ import WebDomain
 public struct EditPage: UseCase {
 
     struct Action: PermissionAction {
-        let key = WebPermissions.Pages.update
+        let key = WebModule.Permissions.Pages.update
     }
 
     struct Error: UseCaseError {

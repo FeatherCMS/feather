@@ -3,13 +3,15 @@ import FeatherWebShared
 import Foundation
 import FeatherModuleKit
 import WebApplication
-import BlogFrontend
+import BlogWebAdmin
+import BlogWebApp
 import NewsFrontend
-import MediaFrontend
+import MediaWebAdmin
 import ContactFrontend
 import NewsletterFrontend
-import WebFrontend
-import WebContracts
+import WebModuleWebAdmin
+import WebModule
+import WebModuleWebApp
 import AnalyticsFrontend
 import RedirectWebAdmin
 import RedirectWebApp
@@ -20,7 +22,8 @@ import Hummingbird
 import HummingbirdAuth
 import AuthWebAdmin
 import AuthWebApp
-import AccountFrontend
+import AccountWebAdmin
+import AccountWebApp
 import Logging
 
 func buildRouter(
@@ -31,7 +34,7 @@ func buildRouter(
 ) async throws -> Hummingbird.Router<DefaultRequestContext> {
 
     let router = Hummingbird.Router(context: DefaultRequestContext.self)
-    let apiBuilder = APIBuilder(apiBaseURL: environment.apiBaseURL)
+    let apiBuilder = APIBuilder(environment: environment)
     let mediaResolver = MediaResolver(
         mediaBaseURL: environment.publicOrigins.mediaBaseURL
     )
@@ -58,10 +61,10 @@ func buildRouter(
     let systemRoutes = SystemWebAdmin.Router.Routes.standard
     let redirectRoutes = RedirectWebAdmin.Router.Routes.standard
     var adminEvents = EventRegistry()
-    WebFrontend.WebEventHandlers.register(in: &adminEvents)
-    BlogFrontend.BlogEventHandlers.register(in: &adminEvents)
+    WebModuleWebApp.WebEventHandlers.register(in: &adminEvents)
+    BlogWebApp.Event.Handlers.register(in: &adminEvents)
     NewsFrontend.NewsEventHandlers.register(in: &adminEvents)
-    BlogAdminDashboardEventHandlers.register(
+    BlogWebAdmin.Event.Handlers.registerDashboard(
         in: &adminEvents,
         environment: environment
     )
@@ -82,12 +85,12 @@ func buildRouter(
         in: &adminEvents,
         routes: systemRoutes
     )
-    AccountAdminMenuEventHandlers.register(in: &adminEvents)
+    AccountWebAdmin.Event.Handlers.register(in: &adminEvents)
     AuthAdminMenuEventHandlers.register(in: &adminEvents)
     UserModule.Event.Handlers.register(in: &adminEvents)
-    MediaAdminMenuEventHandlers.register(in: &adminEvents)
+    MediaWebAdmin.Event.Handlers.register(in: &adminEvents)
     AnalyticsAdminMenuEventHandlers.register(in: &adminEvents)
-    BlogAdminMenuEventHandlers.register(in: &adminEvents)
+    BlogWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     NewsAdminMenuEventHandlers.register(in: &adminEvents)
     NewsletterRichContentEditorEventHandlers.register(in: &adminEvents)
     ContactRichContentEditorEventHandlers.register(in: &adminEvents)
@@ -109,8 +112,7 @@ func buildRouter(
         richContentEditorBlocks: richContentEditorBlocks,
         adminPageRenderContextProvider: DefaultAdminPageRenderContextProvider(
             events: adminEvents,
-            accountAPIBuilder: .init(apiBaseURL: environment.apiBaseURL),
-            mediaAPIBuilder: .init(apiBaseURL: environment.apiBaseURL),
+            environment: environment,
             mediaResolver: mediaResolver
         )
     )
@@ -138,7 +140,7 @@ func buildRouter(
     var publicContentEvents = EventRegistry()
     WebPublicContentEventHandlers.register(in: &publicContentEvents)
     WebMarkdownEventHandlers.register(in: &publicContentEvents)
-    BlogWebPublicContentEventHandlers.register(in: &publicContentEvents)
+    BlogWebApp.PublicContent.Event.Handlers.register(in: &publicContentEvents)
     NewsWebPublicContentEventHandlers.register(in: &publicContentEvents)
 
     ContactMarkdownEventHandlers.register(
@@ -156,6 +158,8 @@ func buildRouter(
     buildAppRoutes(
         router: router,
         authRouter: authRouter,
+        environment: environment,
+        environment: environment,
         renderingEngine: renderingEngine,
         themeRenderer: themeRenderer,
         publicContentEvents: publicContentEvents,
@@ -168,7 +172,8 @@ func buildRouter(
         renderingEngine: renderingEngine,
         environment: environment,
         usesSecureCookies: environment.publicOrigins.usesSecureCookies
-    ).route(on: router)
+    )
+    .route(on: router)
 
     // MARK: - admin
 

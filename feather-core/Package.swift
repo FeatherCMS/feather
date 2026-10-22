@@ -227,6 +227,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "NIOCore", package: "swift-nio"),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"

@@ -25,6 +25,10 @@ struct AuthMagicLinkIsPersistentField: BoolSchemaRepresentable {
     var example: Bool? = true
 }
 
+struct AuthMagicLinkUpdateMaskField: StringSchemaRepresentable {
+    var example: String? = "credentialId,isPersistent"
+}
+
 struct AuthMagicLinkUserIdField: StringSchemaRepresentable {}
 
 struct AuthMagicLinkCreateSchema: ObjectSchemaRepresentable {
@@ -61,6 +65,19 @@ struct AuthMagicLinkDetailSchema: ObjectSchemaRepresentable {
 }
 
 struct AuthMagicLinkListItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "id": AuthMagicLinkIdField().reference(),
+            "credentialId": AuthMagicLinkCredentialIdField().reference(),
+            "token": AuthMagicLinkTokenField().reference(),
+            "expiresAt": AuthMagicLinkExpiresAtField().reference(),
+            "isPersistent": AuthMagicLinkIsPersistentField().reference(),
+            "isUsed": AuthMagicLinkIsUsedField().reference(),
+        ]
+    }
+}
+
+struct AuthMagicLinkQueryItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": AuthMagicLinkIdField().reference(),

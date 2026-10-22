@@ -6,7 +6,7 @@
 
 import WebDomain
 
-extension Menu {
+extension Menu.Model {
 
     var asDetail: MenuDetail {
         .init(

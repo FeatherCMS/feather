@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -21,6 +20,10 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
 
 let package = Package(
     name: "app-web-module",
@@ -33,16 +36,22 @@ let package = Package(
     ],
     products: [
         .library(name: "WebDomain", targets: ["WebDomain"]),
-        .library(name: "WebContracts", targets: ["WebContracts"]),
+        .library(name: "WebModule", targets: ["WebModule"]),
         .library(name: "WebApplication", targets: ["WebApplication"]),
         .library(name: "WebInfrastructure", targets: ["WebInfrastructure"]),
         .library(name: "WebAdminAPI", targets: ["WebAdminAPI"]),
         .library(name: "WebAppAPI", targets: ["WebAppAPI"]),
         .library(name: "WebBackend", targets: ["WebBackend"]),
-        .library(name: "WebFrontend", targets: ["WebFrontend"]),
-        .library(name: "WebSharedOpenAPIGenerator", targets: ["WebSharedOpenAPIGenerator"]),
-        .executable(name: "WebAdminOpenAPIGenerator", targets: ["WebAdminOpenAPIGenerator"]),
-        .executable(name: "WebAppOpenAPIGenerator", targets: ["WebAppOpenAPIGenerator"]),
+        .library(name: "WebModuleWebApp", targets: ["WebModuleWebApp"]),
+        .library(name: "WebModuleWebAdmin", targets: ["WebModuleWebAdmin"]),
+        .executable(
+            name: "WebAdminOpenAPIGenerator",
+            targets: ["WebAdminOpenAPIGenerator"]
+        ),
+        .executable(
+            name: "WebAppOpenAPIGenerator",
+            targets: ["WebAppOpenAPIGenerator"]
+        ),
     ],
     dependencies: [
         .package(
@@ -62,24 +71,35 @@ let package = Package(
             from: "1.13.2"
         ),
         .package(
+            url: "https://github.com/apple/swift-nio",
+            from: "2.0.0"
+        ),
+        .package(
             url: "https://github.com/hummingbird-project/hummingbird",
             from: "2.27.0"
+        ),
+        .package(
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            from: "2.0.1"
+        ),
+        .package(
+            url:
+                "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http",
+            exact: "1.0.0-beta.1"
         ),
         .package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-database-postgres",
-            exact: "1.0.0-rc.2"
-        ),
-        .package(
-            url: "https://github.com/vapor/postgres-nio",
-            from: "1.32.2"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio-ssl",
-            from: "2.34.0"
+            url:
+                "https://github.com/swift-server/swift-openapi-async-http-client",
+            from: "1.0.0"
         ),
         .package(
             url: "https://github.com/hummingbird-project/swift-mustache",
@@ -99,19 +119,19 @@ let package = Package(
             exact: "1.0.0-alpha.1"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-dbal-postgres",
-            exact: "1.0.0-alpha.1"
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
         ),
         .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
     ],
     targets: [
         .target(
-            name: "WebContracts",
+            name: "WebModule",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-core")
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
@@ -119,7 +139,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
 
-                .target(name: "WebContracts"),
+                .target(name: "WebModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -145,10 +165,15 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "MediaDomain", package: "app-media-module"),
-                .product(name: "MediaInfrastructure", package: "app-media-module"),
-                .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .product(
+                    name: "MediaInfrastructure",
+                    package: "app-media-module"
+                ),
+                .product(
+                    name: "SystemInfrastructure",
+                    package: "app-system-module"
+                ),
 
                 .target(name: "WebDomain"),
                 .target(name: "WebApplication"),
@@ -160,24 +185,39 @@ let package = Package(
         .target(
             name: "WebAdminAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "WebAppAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         // MARK: -
         .target(
             name: "WebSharedOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                )
             ],
             path: "Sources/Generators/Shared",
             swiftSettings: swiftSettings
@@ -185,6 +225,10 @@ let package = Package(
         .executableTarget(
             name: "WebAdminOpenAPIGenerator",
             dependencies: [
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
 
@@ -196,6 +240,10 @@ let package = Package(
         .executableTarget(
             name: "WebAppOpenAPIGenerator",
             dependencies: [
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
 
@@ -208,10 +256,15 @@ let package = Package(
         .target(
             name: "WebBackend",
             dependencies: [
+                .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .product(
+                    name: "SystemInfrastructure",
+                    package: "app-system-module"
+                ),
 
+                .target(name: "WebDomain"),
                 .target(name: "WebInfrastructure"),
                 .target(name: "WebAdminAPI"),
                 .target(name: "WebAppAPI"),
@@ -220,29 +273,68 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "WebFrontend",
+            name: "WebModuleWebShared",
+            dependencies: [
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "WebModuleWebApp",
+            dependencies: [
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "CSS", package: "swift-web-standards"),
+                .product(name: "FeatherWebApp", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "HTML", package: "swift-web-standards"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "Markdown", package: "swift-markdown"),
+                .product(name: "Mustache", package: "swift-mustache"),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
+                .product(name: "RSS", package: "swift-web-standards"),
+                .product(name: "SGML", package: "swift-web-standards"),
+                .product(name: "Sitemap", package: "swift-web-standards"),
+                .product(name: "WebComponents", package: "swift-web-standards"),
+
+                .target(name: "WebModule"),
+                .target(name: "WebDomain"),
+                .target(name: "WebModuleWebShared"),
+                .target(name: "WebAppAPI"),
+            ],
+            path: "Sources/Composition/WebApp",
+            resources: [
+                .copy("Resources/Templates")
+            ],
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "WebModuleWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "Markdown", package: "swift-markdown"),
-                .product(name: "Mustache", package: "swift-mustache"),
-                .product(name: "RSS", package: "swift-web-standards"),
                 .product(name: "SGML", package: "swift-web-standards"),
-                .product(name: "Sitemap", package: "swift-web-standards"),
                 .product(name: "SystemModule", package: "app-system-module"),
 
-                .target(name: "WebContracts"),
+                .target(name: "WebModule"),
+                .target(name: "WebDomain"),
+                .target(name: "WebModuleWebShared"),
                 .target(name: "WebAdminAPI"),
-                .target(name: "WebAppAPI"),
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "MediaFrontend", package: "app-media-module")
+                .product(name: "MediaWebAdmin", package: "app-media-module"),
             ],
-            path: "Sources/Composition/Frontend",
-            resources: [
-                .copy("Resources/Templates")
-            ],
+            path: "Sources/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
         // MARK: -
@@ -251,38 +343,84 @@ let package = Package(
             dependencies: [
                 .target(name: "WebDomain")
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
-            name: "WebApplicationTests",
+            name: "WebApplicationLayerTests",
             dependencies: [
-                .target(name: "WebApplication")
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .target(name: "WebApplication"),
+                .target(name: "WebDomain"),
+                .target(name: "WebModule"),
             ],
+            path: "Tests/Layers/Application",
             swiftSettings: swiftSettings
         ),
         .testTarget(
-            name: "WebFrontendTests",
+            name: "WebAppTests",
             dependencies: [
-                .target(name: "WebFrontend")
+                .target(name: "WebModuleWebApp"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "CSS", package: "swift-web-standards"),
+                .product(name: "WebComponents", package: "swift-web-standards"),
             ],
-            path: "Tests/WebFrontendTests",
+            path: "Tests/Composition/WebApp",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "WebBackendTests",
+            dependencies: [
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "HummingbirdTesting", package: "hummingbird"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .target(name: "WebBackend"),
+                .target(name: "WebAdminAPI"),
+                .target(name: "WebApplication"),
+                .target(name: "WebDomain"),
+                .target(name: "WebModule"),
+            ],
+            path: "Tests/Composition/Backend",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "WebInfrastructureTests",
             dependencies: [
                 .target(name: "WebInfrastructure"),
+                .target(name: "WebModule"),
+                .target(name: "WebDomain"),
 
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(
-                    name: "FeatherDatabasePostgres",
-                    package: "feather-database-postgres"
+                    name: "SystemApplication",
+                    package: "app-system-module"
                 ),
-                .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
-                .product(name: "PostgresNIO", package: "postgres-nio"),
-                .product(name: "NIOSSL", package: "swift-nio-ssl"),
             ],
+            path: "Tests/Layers/Infrastructure",
             swiftSettings: swiftSettings
         ),
     ]

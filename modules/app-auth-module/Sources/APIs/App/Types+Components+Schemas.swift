@@ -6,17 +6,17 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/AuthResponseSchema`.
-        public struct AuthResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthResponseSchema/user`.
-            public var user: Components.Schemas.AuthUserIdentityDetailSchema
-            /// - Remark: Generated from `#/components/schemas/AuthResponseSchema/roles`.
+        /// - Remark: Generated from `#/components/schemas/AuthSchemasResponse`.
+        public struct AuthSchemasResponse: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasResponse/user`.
+            public var user: Components.Schemas.AuthSchemasUserIdentity
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasResponse/roles`.
             public var roles: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/AuthResponseSchema/permissions`.
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasResponse/permissions`.
             public var permissions: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/AuthResponseSchema/token`.
-            public var token: Components.Schemas.UserAuthTokenField
-            /// Creates a new `AuthResponseSchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasResponse/token`.
+            public var token: Components.Schemas.AuthSchemasTokenField
+            /// Creates a new `AuthSchemasResponse`.
             ///
             /// - Parameters:
             ///   - user:
@@ -24,10 +24,10 @@ extension Components {
             ///   - permissions:
             ///   - token:
             public init(
-                user: Components.Schemas.AuthUserIdentityDetailSchema,
+                user: Components.Schemas.AuthSchemasUserIdentity,
                 roles: [Swift.String],
                 permissions: [Swift.String],
-                token: Components.Schemas.UserAuthTokenField
+                token: Components.Schemas.AuthSchemasTokenField
             ) {
                 self.user = user
                 self.roles = roles
@@ -41,13 +41,13 @@ extension Components {
                 case token
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthUserIdentityDetailSchema`.
-        public struct AuthUserIdentityDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthUserIdentityDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/AuthSchemasUserIdentity`.
+        public struct AuthSchemasUserIdentity: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasUserIdentity/id`.
             public var id: Components.Schemas.UserIdentityIDField
-            /// - Remark: Generated from `#/components/schemas/AuthUserIdentityDetailSchema/status`.
+            /// - Remark: Generated from `#/components/schemas/AuthSchemasUserIdentity/status`.
             public var status: Components.Schemas.UserIdentityStatusField
-            /// Creates a new `AuthUserIdentityDetailSchema`.
+            /// Creates a new `AuthSchemasUserIdentity`.
             ///
             /// - Parameters:
             ///   - id:
@@ -74,8 +74,8 @@ extension Components {
             case deactivated = "deactivated"
             case anonymized = "anonymized"
         }
-        /// - Remark: Generated from `#/components/schemas/UserAuthTokenField`.
-        public typealias UserAuthTokenField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthSchemasTokenField`.
+        public typealias AuthSchemasTokenField = Swift.String
         /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
         public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
@@ -179,11 +179,11 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema`.
         public struct AuthLoginRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema/email`.
-            public var email: Components.Schemas.AuthEmailField
+            public var email: Components.Schemas.AuthSchemasEmailField
             /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema/password`.
-            public var password: Components.Schemas.AuthPasswordField
+            public var password: Components.Schemas.AuthSchemasPasswordField
             /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema/isPersistent`.
-            public var isPersistent: Components.Schemas.AuthIsPersistentField
+            public var isPersistent: Components.Schemas.AuthSchemasIsPersistentField
             /// Creates a new `AuthLoginRequestSchema`.
             ///
             /// - Parameters:
@@ -191,9 +191,9 @@ extension Components {
             ///   - password:
             ///   - isPersistent:
             public init(
-                email: Components.Schemas.AuthEmailField,
-                password: Components.Schemas.AuthPasswordField,
-                isPersistent: Components.Schemas.AuthIsPersistentField
+                email: Components.Schemas.AuthSchemasEmailField,
+                password: Components.Schemas.AuthSchemasPasswordField,
+                isPersistent: Components.Schemas.AuthSchemasIsPersistentField
             ) {
                 self.email = email
                 self.password = password
@@ -205,26 +205,26 @@ extension Components {
                 case isPersistent
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthEmailField`.
-        public typealias AuthEmailField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthPasswordField`.
-        public typealias AuthPasswordField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthIsPersistentField`.
-        public typealias AuthIsPersistentField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/AuthSchemasEmailField`.
+        public typealias AuthSchemasEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthSchemasPasswordField`.
+        public typealias AuthSchemasPasswordField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthSchemasIsPersistentField`.
+        public typealias AuthSchemasIsPersistentField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/AuthMagicLinkRequestSchema`.
         public struct AuthMagicLinkRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthMagicLinkRequestSchema/email`.
-            public var email: Swift.String
+            public var email: Components.Schemas.AuthSchemasEmailField
             /// - Remark: Generated from `#/components/schemas/AuthMagicLinkRequestSchema/isPersistent`.
-            public var isPersistent: Swift.Bool
+            public var isPersistent: Components.Schemas.AuthSchemasIsPersistentField
             /// Creates a new `AuthMagicLinkRequestSchema`.
             ///
             /// - Parameters:
             ///   - email:
             ///   - isPersistent:
             public init(
-                email: Swift.String,
-                isPersistent: Swift.Bool
+                email: Components.Schemas.AuthSchemasEmailField,
+                isPersistent: Components.Schemas.AuthSchemasIsPersistentField
             ) {
                 self.email = email
                 self.isPersistent = isPersistent
@@ -237,17 +237,19 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/AuthMagicLinkVerifyRequestSchema`.
         public struct AuthMagicLinkVerifyRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthMagicLinkVerifyRequestSchema/token`.
-            public var token: Swift.String
+            public var token: Components.Schemas.AuthSchemasMagicLinkTokenField
             /// Creates a new `AuthMagicLinkVerifyRequestSchema`.
             ///
             /// - Parameters:
             ///   - token:
-            public init(token: Swift.String) {
+            public init(token: Components.Schemas.AuthSchemasMagicLinkTokenField) {
                 self.token = token
             }
             public enum CodingKeys: String, CodingKey {
                 case token
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AuthSchemasMagicLinkTokenField`.
+        public typealias AuthSchemasMagicLinkTokenField = Swift.String
     }
 }

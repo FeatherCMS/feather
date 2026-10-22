@@ -1,0 +1,26 @@
+import BlogModule
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+
+extension Author {
+    enum List {}
+}
+
+extension Author.List {
+    enum Controller {}
+}
+
+extension Author.List.Controller {
+    protocol Interface: Sendable {
+        func get(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
+
+        func postStatus(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
+    }
+}

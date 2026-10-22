@@ -22,6 +22,64 @@ import struct Foundation.Date
 struct AuthApplicationTestSuite {
 
     @Test
+    func searchAuthEmailsReturnsItemsAndTotal() async throws {
+        let query = MockAuthEmailSearchQuery(
+            result: .init(
+                items: [
+                    .init(
+                        id: "email-1",
+                        identityId: "identity-1",
+                        email: "user@example.test"
+                    )
+                ],
+                total: 4
+            )
+        )
+        let executor = MockQueryExecutor(
+            context: Email.Search.Scope(authEmail: query)
+        )
+        let useCase = Email.Search.UseCase(
+            authorizer: MockAuthorizer(result: true),
+            query: executor
+        )
+
+        let result = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(
+                query: .init(
+                    search: "user",
+                    identityId: "identity-1"
+                )
+            )
+        )
+
+        #expect(result.items.map(\.email) == ["user@example.test"])
+        #expect(result.total == 4)
+        #expect(await query.searchCallCount == 1)
+        #expect(await query.lastQuery?.identityId == "identity-1")
+        #expect(await executor.runCallCount == 1)
+    }
+
+    @Test
+    func searchAuthEmailsRejectsForbiddenSubject() async throws {
+        let query = MockAuthEmailSearchQuery(result: .init(items: [], total: 0))
+        let useCase = Email.Search.UseCase(
+            authorizer: MockAuthorizer(result: false),
+            query: MockQueryExecutor(
+                context: Email.Search.Scope(authEmail: query)
+            )
+        )
+
+        await #expect(throws: AuthError.self) {
+            try await useCase.execute(
+                subject: Subject(id: "unauthorized"),
+                input: .init(query: .init())
+            )
+        }
+        #expect(await query.searchCallCount == 0)
+    }
+
+    @Test
     func addMagicLinkSuccess() async throws {
         let repo = MockMagicLinkRepository(result: makeMagicLink(id: "m-1"))
         let transaction = MockTransactionExecutor(
@@ -139,7 +197,7 @@ struct AuthApplicationTestSuite {
         let transaction = MockTransactionExecutor(
             context: AuthModule.Auth.SignIn.MagicLink.Scope(
                 identity: MockAuthIdentityRepository(identity: identity),
-                authorization: DummyIdentityQueries(),
+                authorization: DummyAuthorizationQueries(),
                 authEmail: MockAuthEmailRepository(
                     result: makeAuthEmail(identityId: identity.id)
                 ),
@@ -175,7 +233,7 @@ struct AuthApplicationTestSuite {
         let transaction = MockTransactionExecutor(
             context: AuthModule.Auth.SignIn.MagicLink.Scope(
                 identity: MockAuthIdentityRepository(),
-                authorization: DummyIdentityQueries(),
+                authorization: DummyAuthorizationQueries(),
                 authEmail: MockAuthEmailRepository(
                     result: makeAuthEmail(identityId: "identity-1")
                 ),
@@ -315,7 +373,7 @@ struct AuthApplicationTestSuite {
         )
         let queryExecutor = MockQueryExecutor(
             context: RolePermission.Search.Scope(
-                authorization: DummyIdentityQueries(),
+                authorization: DummyAuthorizationQueries(),
                 rolePermissions: rpQueries
             )
         )
@@ -504,7 +562,7 @@ private func makeCredential() -> Credential.Model {
 
 private func makeAuthEmail(
     identityId: String
-) -> AuthEmail.Model {
+) -> Email.Model {
     .init(
         id: "auth-email-1",
         identityId: identityId,

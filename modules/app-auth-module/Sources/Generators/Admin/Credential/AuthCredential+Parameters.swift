@@ -7,3 +7,14 @@ struct AuthCredentialIdParameter: PathParameterRepresentable {
         AuthCredentialIdField().reference()
     }
 }
+
+struct AuthCredentialUpdateMaskParameter: QueryParameterRepresentable {
+    var name: String { "updateMask" }
+    var required: Bool { true }
+    var description: String? {
+        "Comma-separated fields to update: userId, email, password"
+    }
+    var schema: any OpenAPISchemaRepresentable {
+        AuthCredentialUpdateMaskField().reference()
+    }
+}

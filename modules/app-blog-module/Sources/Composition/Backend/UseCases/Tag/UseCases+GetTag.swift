@@ -1,28 +1,30 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import MediaBackend
 import SystemInfrastructure
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
 
-    public func makeGetTag() -> GetTag {
+    public func makeGetTag() -> Tag.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadTagMetadata(
-                    tag: TagDatabaseQueries(
+                Tag.Detail.Scope(
+                    tag: Tag.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    metadata: MetadataDatabaseQueries(
+                    metadata: Metadata.Query.Database(
                         context: context
                     )
                 )

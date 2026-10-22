@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import WebContracts
-import WebDomain
+public import WebDomain
+import WebModule
 
 //
 //  GetSettings.swift
@@ -11,15 +11,15 @@ import WebDomain
 
 public struct GetSettings: UseCase {
     struct Action: PermissionAction {
-        let key = WebPermissions.Settings.read
+        let key = WebModule.Permissions.Settings.read
     }
 
     let authorizer: any Authorizer
-    let query: any QueryExecutor<WriteSettings>
+    let query: any QueryExecutor<Settings.Repository.Scope>
 
     public init(
         authorizer: any Authorizer,
-        query: any QueryExecutor<WriteSettings>
+        query: any QueryExecutor<Settings.Repository.Scope>
     ) {
         self.authorizer = authorizer
         self.query = query

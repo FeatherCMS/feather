@@ -18,14 +18,18 @@ struct AuthCredentialPasswordField: StringSchemaRepresentable {
     var format: String? = "password"
 }
 
-struct AuthCredentialSearchField: StringSchemaRepresentable {
+struct AuthCredentialUpdateMaskField: StringSchemaRepresentable {
+    var example: String? = "userId,email,password"
+}
+
+struct AuthCredentialQueryField: StringSchemaRepresentable {
     var example: String? = "foo"
 }
 
-struct AuthCredentialSearchFilterSchema: ObjectSchemaRepresentable {
+struct AuthCredentialQueryFilterSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "search": AuthCredentialSearchField().reference(required: false),
+            "search": AuthCredentialQueryField().reference(required: false),
             "userId": AuthCredentialUserIdField()
                 .reference(required: false),
         ]
@@ -68,6 +72,17 @@ struct AuthCredentialDetailSchema: ObjectSchemaRepresentable {
 }
 
 struct AuthCredentialListItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "id": AuthCredentialIdField().reference(),
+            "userId": AuthCredentialUserIdField().reference(),
+            "identityName": AuthCredentialIdentityNameField().reference(),
+            "email": AuthCredentialEmailField().reference(),
+        ]
+    }
+}
+
+struct AuthCredentialQueryItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": AuthCredentialIdField().reference(),

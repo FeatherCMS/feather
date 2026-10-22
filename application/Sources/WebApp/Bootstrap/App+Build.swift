@@ -1,9 +1,8 @@
-import BlogFrontend
 import FeatherWebShared
-import MediaFrontend
+import MediaWebAdmin
 import ContactFrontend
 import NewsletterFrontend
-import WebFrontend
+import WebModuleWebAdmin
 import AnalyticsFrontend
 import RedirectWebAdmin
 import UserWebAdmin

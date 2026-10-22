@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherModuleKit
 public import FeatherDomain
+import FeatherModuleKit
 public import Foundation
 public import WebDomain
 
@@ -26,7 +26,7 @@ public struct Article: Model {
         public let content: String
         public let imageAssetId: String?
         public let categoryIds: [String]
-        public let metadata: Metadata.New
+        public let metadata: WebDomain.Metadata.Model.New
     }
 
     public let id: String
@@ -35,7 +35,7 @@ public struct Article: Model {
     public var content: String
     public var imageAssetId: String?
     public var categoryIds: [String]
-    public var metadata: Metadata
+    public var metadata: WebDomain.Metadata.Model
     public let createdAt: Date
     public let updatedAt: Date
 
@@ -46,7 +46,7 @@ public struct Article: Model {
         content: String,
         imageAssetId: String?,
         categoryIds: [String],
-        metadata: Metadata,
+        metadata: WebDomain.Metadata.Model,
         createdAt: Date,
         updatedAt: Date
     ) {
@@ -97,13 +97,13 @@ extension Article {
         content: String,
         imageAssetId: String? = nil,
         categoryIds: [String],
-        metadata: Metadata.Base? = nil
+        metadata: WebDomain.Metadata.Model.Base? = nil
     ) throws -> Self.New {
         try validate(title: title)
         try validate(excerpt: excerpt)
         try validate(content: content)
 
-        let metadataModel = try Metadata.create(
+        let metadataModel = try WebDomain.Metadata.Model.create(
             reference: .type("news.article"),
             base: metadata
                 ?? .init(

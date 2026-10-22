@@ -4,6 +4,7 @@ import Foundation
 import MediaAdminAPI
 import MediaApplication
 import MediaDomain
+import MediaModule
 
 extension AdminAPIGateway {
     func mapSortDirection(
@@ -16,15 +17,15 @@ extension AdminAPIGateway {
     }
     func map(_ page: MediaAdminAPI.Components.Schemas.SearchPageSchema)
         -> Search.Page
-    { .init(size: page.size, number: page.number) }
+    { .init(size: page.size ?? 20, number: page.number ?? 1) }
 
     func map(
         _ query: MediaAdminAPI.Components.Schemas
-            .MediaAssetNodeSearchItemSearchRequestQuerySchema
-    ) -> MediaAssetList.Query {
+            .MediaAssetNodeQueryItemSearchRequestQuerySchema
+    ) -> Asset.File.Search.Input.Query {
         let sort = (query.sort ?? [])
-            .map { rule -> MediaAssetList.Query.Sort in
-                let field: MediaAssetList.Query.Sort.Field
+            .map { rule -> Asset.File.Search.Input.Query.Sort in
+                let field: Asset.File.Search.Input.Query.Sort.Field
                 switch rule.field {
                 case .id: field = .id
                 case .name: field = .name
@@ -42,14 +43,161 @@ extension AdminAPIGateway {
                 )
             }
         return .init(
-            page: map(query.page),
+            page: map(query.page ?? .init()),
             sort: sort,
             search: query.filters.search,
             parentId: (query.filters.parentId ?? "").emptyToNil
         )
     }
 
-    func map(_ detail: MediaAssetDetail)
+    func responseQuery(
+        from query: MediaAdminAPI.Components.Schemas
+            .MediaAssetNodeQueryItemSearchRequestQuerySchema
+    )
+        -> MediaAdminAPI.Components.Schemas
+        .MediaAssetNodeQueryItemSearchResponseQuerySchema
+    {
+        let page = map(query.page ?? .init())
+        let sort = query.sort?
+            .map { rule in
+                let field:
+                    MediaAdminAPI.Components.Schemas
+                        .MediaAssetNodeQueryItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                switch rule.field {
+                case .id: field = .id
+                case .name: field = .name
+                case .slugPath: field = .slugPath
+                case ._extension: field = ._extension
+                case .sizeBytes: field = .sizeBytes
+                case .status: field = .status
+                case .title: field = .title
+                case .createdAt: field = .createdAt
+                case .updatedAt: field = .updatedAt
+                }
+                return MediaAdminAPI.Components.Schemas
+                    .MediaAssetNodeQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload(field: field, direction: rule.direction)
+            }
+        return .init(
+            page: .init(size: page.size, number: page.number),
+            sort: sort,
+            filters: .init(
+                search: query.filters.search,
+                parentId: query.filters.parentId
+            )
+        )
+    }
+
+    func responseQuery(
+        from query: MediaAdminAPI.Components.Schemas
+            .MediaFolderQueryItemSearchRequestQuerySchema
+    )
+        -> MediaAdminAPI.Components.Schemas
+        .MediaFolderQueryItemSearchResponseQuerySchema
+    {
+        let page = map(query.page ?? .init())
+        let sort = query.sort?
+            .map { rule in
+                let field:
+                    MediaAdminAPI.Components.Schemas
+                        .MediaFolderQueryItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                switch rule.field {
+                case .id: field = .id
+                case .name: field = .name
+                case .path: field = .path
+                case .assetCount: field = .assetCount
+                case .totalSizeBytes: field = .totalSizeBytes
+                case .createdAt: field = .createdAt
+                case .updatedAt: field = .updatedAt
+                }
+                return MediaAdminAPI.Components.Schemas
+                    .MediaFolderQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload(field: field, direction: rule.direction)
+            }
+        return .init(
+            page: .init(size: page.size, number: page.number),
+            sort: sort,
+            filters: .init(parentId: query.filters.parentId)
+        )
+    }
+
+    func responseQuery(
+        from query: MediaAdminAPI.Components.Schemas
+            .MediaVariantQueryItemSearchRequestQuerySchema
+    )
+        -> MediaAdminAPI.Components.Schemas
+        .MediaVariantQueryItemSearchResponseQuerySchema
+    {
+        let page = map(query.page ?? .init())
+        let sort = query.sort?
+            .map { rule in
+                let field:
+                    MediaAdminAPI.Components.Schemas
+                        .MediaVariantQueryItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                switch rule.field {
+                case .id: field = .id
+                case .key: field = .key
+                case .name: field = .name
+                case .isRequired: field = .isRequired
+                case .isActive: field = .isActive
+                }
+                return MediaAdminAPI.Components.Schemas
+                    .MediaVariantQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload(field: field, direction: rule.direction)
+            }
+        return .init(
+            page: .init(size: page.size, number: page.number),
+            sort: sort,
+            filters: .init(search: query.filters.search)
+        )
+    }
+
+    func responseQuery(
+        from query: MediaAdminAPI.Components.Schemas
+            .MediaVariantProcessorQueryItemSearchRequestQuerySchema
+    )
+        -> MediaAdminAPI.Components.Schemas
+        .MediaVariantProcessorQueryItemSearchResponseQuerySchema
+    {
+        let page = map(query.page ?? .init())
+        let sort = query.sort?
+            .map { rule in
+                let field:
+                    MediaAdminAPI.Components.Schemas
+                        .MediaVariantProcessorQueryItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                switch rule.field {
+                case .id: field = .id
+                case .name: field = .name
+                case .matchExtensions: field = .matchExtensions
+                case .commandTemplate: field = .commandTemplate
+                case .isActive: field = .isActive
+                }
+                return MediaAdminAPI.Components.Schemas
+                    .MediaVariantProcessorQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload(field: field, direction: rule.direction)
+            }
+        return .init(
+            page: .init(size: page.size, number: page.number),
+            sort: sort,
+            filters: .init(search: query.filters.search)
+        )
+    }
+
+    func errorEnvelope(
+        message: String,
+        reason: String
+    )
+        -> MediaAdminAPI.Components.Schemas
+        .DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema
+    {
+        .init(error: .init(message: message, reason: reason))
+    }
+
+    func map(_ detail: Asset.File.Detail.Output)
         -> MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema
     {
         .init(
@@ -70,7 +218,7 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ item: MediaAssetResolve.Item)
+    func map(_ item: Asset.File.Resolve.Output.Item)
         -> MediaAdminAPI.Components.Schemas.MediaAssetResolveItemSchema
     {
         .init(
@@ -90,8 +238,8 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ item: MediaAssetList.Item)
-        -> MediaAdminAPI.Components.Schemas.MediaAssetListItemSchema
+    func map(_ item: Asset.File.Search.Output.AssetItem)
+        -> MediaAdminAPI.Components.Schemas.MediaAssetQueryItemFileSchema
     {
         .init(
             id: item.id,
@@ -111,12 +259,13 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ item: MediaAssetSearchList.Item)
-        -> MediaAdminAPI.Components.Schemas.MediaAssetNodeSearchItemSchema
+    func map(_ item: Asset.File.Search.Output.Item)
+        -> MediaAdminAPI.Components.Schemas.MediaAssetNodeQueryItemSchema
     {
         switch item {
         case .asset(let item): return .init(kind: "file", file: map(item))
-        case .folder(let item): return .init(kind: "folder", folder: map(item))
+        case .folder(let item):
+            return .init(kind: "folder", folder: mapAssetFolder(item))
         }
     }
 
@@ -131,14 +280,7 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(
-        _ query: MediaAdminAPI.Components.Schemas
-            .MediaFolderListItemSearchRequestQuerySchema
-    ) -> MediaFolderList.Query {
-        .init(parentId: (query.filters.parentId ?? "").emptyToNil)
-    }
-
-    func map(_ detail: MediaFolderDetail)
+    func map(_ detail: Asset.Folder.Detail.Output)
         -> MediaAdminAPI.Components.Schemas.MediaFolderDetailSchema
     {
         .init(
@@ -154,8 +296,8 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ item: MediaFolderList.Item)
-        -> MediaAdminAPI.Components.Schemas.MediaFolderListItemSchema
+    func map(_ item: Asset.Folder.List.Output.Item)
+        -> MediaAdminAPI.Components.Schemas.MediaFolderQueryItemSchema
     {
         .init(
             id: item.id,
@@ -170,7 +312,23 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ detail: MediaVariantDetail)
+    func mapAssetFolder(_ item: Asset.Folder.List.Output.Item)
+        -> MediaAdminAPI.Components.Schemas.MediaAssetQueryItemFolderSchema
+    {
+        .init(
+            id: item.id,
+            parentId: item.parentId,
+            name: item.name,
+            slug: item.slug,
+            slugPath: item.slugPath,
+            assetCount: item.assetCount,
+            totalSizeBytes: item.totalSizeBytes,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func map(_ detail: Variant.Detail.Output)
         -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
     {
         .init(
@@ -179,14 +337,14 @@ extension AdminAPIGateway {
             name: detail.name,
             isRequired: detail.isRequired,
             isActive: detail.isActive,
-            processors: detail.processors.map(map),
+            processors: detail.processors.map(mapVariantProcessorListItem),
             createdAt: detail.createdAt.timeIntervalSince1970,
             updatedAt: detail.updatedAt.timeIntervalSince1970
         )
     }
 
-    func map(_ item: MediaVariantList.Item)
-        -> MediaAdminAPI.Components.Schemas.MediaVariantListItemSchema
+    func map(_ item: Variant.Search.Output.Item)
+        -> MediaAdminAPI.Components.Schemas.MediaVariantQueryItemSchema
     {
         .init(
             id: item.id,
@@ -197,7 +355,21 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ item: MediaVariantProcessorList.Item)
+    func map(_ item: Variant.Processor.Search.Output.Item)
+        -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorQueryItemSchema
+    {
+        .init(
+            id: item.id,
+            name: item.name,
+            matchExtensions: item.matchExtensions,
+            commandTemplate: item.commandTemplate,
+            isActive: item.isActive
+        )
+    }
+
+    func mapVariantProcessorListItem(
+        _ item: Variant.Processor.Search.Output.Item
+    )
         -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
     {
         .init(
@@ -209,7 +381,7 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ processor: MediaVariantProcessor)
+    func map(_ processor: Variant.Processor.Detail.Output)
         -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema
     {
         .init(
@@ -226,15 +398,15 @@ extension AdminAPIGateway {
 
     func map(
         _ query: MediaAdminAPI.Components.Schemas
-            .MediaVariantListItemSearchRequestQuerySchema
-    ) -> MediaVariantList.Query {
-        .init(page: map(query.page), search: query.filters.search)
+            .MediaVariantQueryItemSearchRequestQuerySchema
+    ) -> Variant.Search.Input.Query {
+        .init(page: map(query.page ?? .init()), search: query.filters.search)
     }
 
     func map(
         _ query: MediaAdminAPI.Components.Schemas
-            .MediaVariantProcessorListItemSearchRequestQuerySchema
-    ) -> MediaVariantProcessorList.Query {
-        .init(page: map(query.page), search: query.filters.search)
+            .MediaVariantProcessorQueryItemSearchRequestQuerySchema
+    ) -> Variant.Processor.Search.Input.Query {
+        .init(page: map(query.page ?? .init()), search: query.filters.search)
     }
 }

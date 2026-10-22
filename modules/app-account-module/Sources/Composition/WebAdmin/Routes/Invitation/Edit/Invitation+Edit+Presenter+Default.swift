@@ -1,0 +1,89 @@
+import AccountModule
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+
+extension Invitation.Edit.Presenter {
+
+    struct Default:
+        Invitation.Edit.Presenter.Interface
+    {
+        let request: Request
+        let context: AuthenticatedRequestContext
+        let renderEngine: any RenderingEngine
+        let routes: Invitation.Router.Routes
+
+        func renderEditPage(
+            id: String,
+            state: AccountInvitationForm.State,
+            isEdited: Bool,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse {
+            var state = state
+            state.nonceToken = await AdminNonceStore.shared.issue(
+                sessionToken: context.sessionToken
+            )
+            return try await renderEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Edit user invitation",
+                content: AccountInvitationEdit(
+                    routes: routes,
+                    state: .init(
+                        id: id,
+                        isEdited: isEdited,
+                        form: state,
+                        breadcrumb: routes.invitationEditBreadcrumb(id)
+                    )
+                )
+            )
+        }
+
+        func renderErrorPage(
+            id: String,
+            info: String,
+            message: String,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse {
+            try await renderEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Edit user invitation",
+                content: AdminStatusView(
+                    state: .init(title: info, message: message),
+                    icon: FeatherIcons.alertCircle()
+                )
+            )
+        }
+
+        func formState(
+            email: String = "",
+            roleIDs: [String] = [],
+            roleOptions: [AccountInvitationForm.RoleOptionState] = []
+        ) -> AccountInvitationForm.State {
+            .init(
+                email: .init(
+                    key: "email",
+                    label: "Email address",
+                    value: email,
+                    error: nil
+                ),
+                roleIds: .init(
+                    key: "roleIds",
+                    label: "Roles",
+                    value: roleIDs.joined(separator: ", "),
+                    error: nil
+                ),
+                roleOptions: roleOptions,
+                error: nil,
+                success: nil
+            )
+        }
+
+        func format(
+            error: OpenAPIRepositoryError
+        ) -> String {
+            error.errorDescription
+        }
+    }
+}

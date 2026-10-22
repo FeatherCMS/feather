@@ -1,12 +1,11 @@
 public import FeatherModuleKit
-import WebContracts
-import WebFrontend
+import WebModule
 
 public enum NewsEventHandlers {
     public static func register(in registry: inout EventRegistry) {
         registry.register(
             event: WebTemplateProviderEvent.self,
-            context: WebFrontendEventContext.self
+            context: WebModule.Event.Context.self
         ) { _, _ in
             NewsWebTemplateProvider()
         }

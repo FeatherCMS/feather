@@ -1,22 +1,26 @@
 import AccountApplication
 import AccountInfrastructure
+import AccountModule
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 
     func makeCompleteInvitationRegistration()
-        -> AccountApplication.CompleteInvitationRegistration
+        -> Invitation.CompleteRegistration.UseCase
     {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteInvitation(
-                    invitation: InvitationDatabaseRepository(context: context),
+                Invitation.CompleteRegistration.Scope(
+                    invitation: Invitation.Repository.Database(
+                        context: context
+                    ),
                     identity: Identity.Repository.Database(context: context),
-                    role: Role.Repository.Database(context: context),
-                    authEmail: AuthEmail.Repository.Database(context: context),
+                    authEmail: Email.Repository.Database(context: context),
                     credential: credentialWriter
                 )
             }

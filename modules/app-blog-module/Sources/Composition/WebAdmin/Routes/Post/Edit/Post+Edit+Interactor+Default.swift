@@ -1,0 +1,37 @@
+import BlogAdminAPI
+import BlogAppAPI
+import BlogModule
+import FeatherValidation
+import FeatherWebAdmin
+import HTML
+import Hummingbird
+import MediaWebAdmin
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebModuleWebAdmin
+
+extension Post.Edit.Interactor {
+    struct Default: Interface {
+        let repository: any Post.Edit.Repository.Interface
+        let optionRepository: any Post.Add.OptionRepository.Interface
+
+        func load(
+            id: String
+        ) async throws -> Post.View.Details.Model {
+            try await repository.load(id: id)
+        }
+
+        func loadOptions() async throws -> BlogPostAssociationOptionsModel {
+            try await optionRepository.loadOptions()
+        }
+
+        func update(
+            id: String,
+            input: BlogPostFormInput
+        ) async throws {
+            try await repository.update(id: id, input: input)
+        }
+    }
+}

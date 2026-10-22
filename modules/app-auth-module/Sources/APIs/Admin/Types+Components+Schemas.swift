@@ -6,76 +6,86 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/AuthResponseSchema`.
-        public struct AuthResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthResponseSchema/user`.
-            public var user: Components.Schemas.AuthUserIdentityDetailSchema
-            /// - Remark: Generated from `#/components/schemas/AuthResponseSchema/roles`.
-            public var roles: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/AuthResponseSchema/permissions`.
-            public var permissions: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/AuthResponseSchema/token`.
-            public var token: Components.Schemas.UserAuthTokenField
-            /// Creates a new `AuthResponseSchema`.
+        /// - Remark: Generated from `#/components/schemas/UserIdentityIDField`.
+        public typealias UserIdentityIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserAuthSessionListSchema`.
+        public struct UserAuthSessionListSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListSchema/items`.
+            public var items: Components.Schemas.UserAuthSessionListItemsField
+            /// Creates a new `UserAuthSessionListSchema`.
             ///
             /// - Parameters:
-            ///   - user:
-            ///   - roles:
-            ///   - permissions:
-            ///   - token:
-            public init(
-                user: Components.Schemas.AuthUserIdentityDetailSchema,
-                roles: [Swift.String],
-                permissions: [Swift.String],
-                token: Components.Schemas.UserAuthTokenField
-            ) {
-                self.user = user
-                self.roles = roles
-                self.permissions = permissions
-                self.token = token
+            ///   - items:
+            public init(items: Components.Schemas.UserAuthSessionListItemsField) {
+                self.items = items
             }
             public enum CodingKeys: String, CodingKey {
-                case user
-                case roles
-                case permissions
-                case token
+                case items
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthUserIdentityDetailSchema`.
-        public struct AuthUserIdentityDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthUserIdentityDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemsField`.
+        public typealias UserAuthSessionListItemsField = [Components.Schemas.UserAuthSessionListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema`.
+        public struct UserAuthSessionListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/id`.
             public var id: Components.Schemas.UserIdentityIDField
-            /// - Remark: Generated from `#/components/schemas/AuthUserIdentityDetailSchema/status`.
-            public var status: Components.Schemas.UserIdentityStatusField
-            /// Creates a new `AuthUserIdentityDetailSchema`.
+            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/authenticationType`.
+            public var authenticationType: Components.Schemas.UserAuthSessionAuthenticationTypeField
+            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/authenticationReference`.
+            public var authenticationReference: Components.Schemas.UserAuthSessionAuthenticationReferenceField
+            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/expiresAt`.
+            public var expiresAt: Components.Schemas.UserAuthSessionTimestampField
+            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/isPersistent`.
+            public var isPersistent: Components.Schemas.UserAuthSessionPersistentField
+            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.UserAuthSessionTimestampField
+            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.UserAuthSessionTimestampField
+            /// Creates a new `UserAuthSessionListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
-            ///   - status:
+            ///   - authenticationType:
+            ///   - authenticationReference:
+            ///   - expiresAt:
+            ///   - isPersistent:
+            ///   - createdAt:
+            ///   - updatedAt:
             public init(
                 id: Components.Schemas.UserIdentityIDField,
-                status: Components.Schemas.UserIdentityStatusField
+                authenticationType: Components.Schemas.UserAuthSessionAuthenticationTypeField,
+                authenticationReference: Components.Schemas.UserAuthSessionAuthenticationReferenceField,
+                expiresAt: Components.Schemas.UserAuthSessionTimestampField,
+                isPersistent: Components.Schemas.UserAuthSessionPersistentField,
+                createdAt: Components.Schemas.UserAuthSessionTimestampField,
+                updatedAt: Components.Schemas.UserAuthSessionTimestampField
             ) {
                 self.id = id
-                self.status = status
+                self.authenticationType = authenticationType
+                self.authenticationReference = authenticationReference
+                self.expiresAt = expiresAt
+                self.isPersistent = isPersistent
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
             }
             public enum CodingKeys: String, CodingKey {
                 case id
-                case status
+                case authenticationType
+                case authenticationReference
+                case expiresAt
+                case isPersistent
+                case createdAt
+                case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/UserIdentityIDField`.
-        public typealias UserIdentityIDField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/UserIdentityStatusField`.
-        @frozen public enum UserIdentityStatusField: String, Codable, Hashable, Sendable, CaseIterable {
-            case invited = "invited"
-            case active = "active"
-            case suspended = "suspended"
-            case deactivated = "deactivated"
-            case anonymized = "anonymized"
-        }
-        /// - Remark: Generated from `#/components/schemas/UserAuthTokenField`.
-        public typealias UserAuthTokenField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserAuthSessionAuthenticationTypeField`.
+        public typealias UserAuthSessionAuthenticationTypeField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserAuthSessionAuthenticationReferenceField`.
+        public typealias UserAuthSessionAuthenticationReferenceField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserAuthSessionTimestampField`.
+        public typealias UserAuthSessionTimestampField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/UserAuthSessionPersistentField`.
+        public typealias UserAuthSessionPersistentField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
         public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
@@ -176,159 +186,6 @@ extension Components {
                 case message
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema`.
-        public struct AuthLoginRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema/email`.
-            public var email: Components.Schemas.UserAuthEmailField
-            /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema/password`.
-            public var password: Components.Schemas.UserAuthPasswordField
-            /// - Remark: Generated from `#/components/schemas/AuthLoginRequestSchema/isPersistent`.
-            public var isPersistent: Components.Schemas.UserAuthIsPersistentField
-            /// Creates a new `AuthLoginRequestSchema`.
-            ///
-            /// - Parameters:
-            ///   - email:
-            ///   - password:
-            ///   - isPersistent:
-            public init(
-                email: Components.Schemas.UserAuthEmailField,
-                password: Components.Schemas.UserAuthPasswordField,
-                isPersistent: Components.Schemas.UserAuthIsPersistentField
-            ) {
-                self.email = email
-                self.password = password
-                self.isPersistent = isPersistent
-            }
-            public enum CodingKeys: String, CodingKey {
-                case email
-                case password
-                case isPersistent
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/UserAuthEmailField`.
-        public typealias UserAuthEmailField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/UserAuthPasswordField`.
-        public typealias UserAuthPasswordField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/UserAuthIsPersistentField`.
-        public typealias UserAuthIsPersistentField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkRequestSchema`.
-        public struct AuthMagicLinkRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkRequestSchema/email`.
-            public var email: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkRequestSchema/isPersistent`.
-            public var isPersistent: Swift.Bool
-            /// Creates a new `AuthMagicLinkRequestSchema`.
-            ///
-            /// - Parameters:
-            ///   - email:
-            ///   - isPersistent:
-            public init(
-                email: Swift.String,
-                isPersistent: Swift.Bool
-            ) {
-                self.email = email
-                self.isPersistent = isPersistent
-            }
-            public enum CodingKeys: String, CodingKey {
-                case email
-                case isPersistent
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkVerifyRequestSchema`.
-        public struct AuthMagicLinkVerifyRequestSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkVerifyRequestSchema/token`.
-            public var token: Swift.String
-            /// Creates a new `AuthMagicLinkVerifyRequestSchema`.
-            ///
-            /// - Parameters:
-            ///   - token:
-            public init(token: Swift.String) {
-                self.token = token
-            }
-            public enum CodingKeys: String, CodingKey {
-                case token
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/UserAuthSessionListSchema`.
-        public struct UserAuthSessionListSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListSchema/items`.
-            public var items: Components.Schemas.UserAuthSessionListItemsField
-            /// Creates a new `UserAuthSessionListSchema`.
-            ///
-            /// - Parameters:
-            ///   - items:
-            public init(items: Components.Schemas.UserAuthSessionListItemsField) {
-                self.items = items
-            }
-            public enum CodingKeys: String, CodingKey {
-                case items
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemsField`.
-        public typealias UserAuthSessionListItemsField = [Components.Schemas.UserAuthSessionListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema`.
-        public struct UserAuthSessionListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/id`.
-            public var id: Components.Schemas.UserAuthSessionIdField
-            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/authenticationType`.
-            public var authenticationType: Components.Schemas.UserAuthSessionAuthenticationTypeField
-            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/authenticationReference`.
-            public var authenticationReference: Components.Schemas.UserAuthSessionAuthenticationReferenceField
-            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/expiresAt`.
-            public var expiresAt: Components.Schemas.UserAuthSessionTimestampField
-            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/isPersistent`.
-            public var isPersistent: Components.Schemas.UserAuthSessionPersistentField
-            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.UserAuthSessionTimestampField
-            /// - Remark: Generated from `#/components/schemas/UserAuthSessionListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.UserAuthSessionTimestampField
-            /// Creates a new `UserAuthSessionListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - authenticationType:
-            ///   - authenticationReference:
-            ///   - expiresAt:
-            ///   - isPersistent:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.UserAuthSessionIdField,
-                authenticationType: Components.Schemas.UserAuthSessionAuthenticationTypeField,
-                authenticationReference: Components.Schemas.UserAuthSessionAuthenticationReferenceField,
-                expiresAt: Components.Schemas.UserAuthSessionTimestampField,
-                isPersistent: Components.Schemas.UserAuthSessionPersistentField,
-                createdAt: Components.Schemas.UserAuthSessionTimestampField,
-                updatedAt: Components.Schemas.UserAuthSessionTimestampField
-            ) {
-                self.id = id
-                self.authenticationType = authenticationType
-                self.authenticationReference = authenticationReference
-                self.expiresAt = expiresAt
-                self.isPersistent = isPersistent
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case authenticationType
-                case authenticationReference
-                case expiresAt
-                case isPersistent
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/UserAuthSessionIdField`.
-        public typealias UserAuthSessionIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/UserAuthSessionAuthenticationTypeField`.
-        public typealias UserAuthSessionAuthenticationTypeField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/UserAuthSessionAuthenticationReferenceField`.
-        public typealias UserAuthSessionAuthenticationReferenceField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/UserAuthSessionTimestampField`.
-        public typealias UserAuthSessionTimestampField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/UserAuthSessionPersistentField`.
-        public typealias UserAuthSessionPersistentField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
@@ -344,6 +201,51 @@ extension Components {
                 case ids
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialListSchema`.
+        public typealias AuthCredentialListSchema = [Components.Schemas.AuthCredentialListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema`.
+        public struct AuthCredentialListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/id`.
+            public var id: Components.Schemas.AuthCredentialIdField
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/userId`.
+            public var userId: Components.Schemas.AuthCredentialUserIdField
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/identityName`.
+            public var identityName: Components.Schemas.AuthCredentialIdentityNameField
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/email`.
+            public var email: Components.Schemas.AuthCredentialEmailField
+            /// Creates a new `AuthCredentialListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - userId:
+            ///   - identityName:
+            ///   - email:
+            public init(
+                id: Components.Schemas.AuthCredentialIdField,
+                userId: Components.Schemas.AuthCredentialUserIdField,
+                identityName: Components.Schemas.AuthCredentialIdentityNameField,
+                email: Components.Schemas.AuthCredentialEmailField
+            ) {
+                self.id = id
+                self.userId = userId
+                self.identityName = identityName
+                self.email = email
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case userId
+                case identityName
+                case email
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialIdField`.
+        public typealias AuthCredentialIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialUserIdField`.
+        public typealias AuthCredentialUserIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialIdentityNameField`.
+        public typealias AuthCredentialIdentityNameField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialEmailField`.
+        public typealias AuthCredentialEmailField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema`.
         public struct AuthCredentialCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthCredentialCreateSchema/userId`.
@@ -402,65 +304,20 @@ extension Components {
                 case email
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialListSchema`.
-        public typealias AuthCredentialListSchema = [Components.Schemas.AuthCredentialListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema`.
-        public struct AuthCredentialListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/id`.
-            public var id: Components.Schemas.AuthCredentialIdField
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/userId`.
-            public var userId: Components.Schemas.AuthCredentialUserIdField
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/identityName`.
-            public var identityName: Components.Schemas.AuthCredentialIdentityNameField
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSchema/email`.
-            public var email: Components.Schemas.AuthCredentialEmailField
-            /// Creates a new `AuthCredentialListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - userId:
-            ///   - identityName:
-            ///   - email:
-            public init(
-                id: Components.Schemas.AuthCredentialIdField,
-                userId: Components.Schemas.AuthCredentialUserIdField,
-                identityName: Components.Schemas.AuthCredentialIdentityNameField,
-                email: Components.Schemas.AuthCredentialEmailField
-            ) {
-                self.id = id
-                self.userId = userId
-                self.identityName = identityName
-                self.email = email
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case userId
-                case identityName
-                case email
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialIdField`.
-        public typealias AuthCredentialIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialUserIdField`.
-        public typealias AuthCredentialUserIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialIdentityNameField`.
-        public typealias AuthCredentialIdentityNameField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialEmailField`.
-        public typealias AuthCredentialEmailField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema`.
-        public struct AuthCredentialListItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema`.
+        public struct AuthCredentialQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case userId = "userId"
                     case email = "email"
                 }
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthCredentialQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -468,7 +325,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.AuthCredentialQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -479,15 +336,15 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthCredentialQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthCredentialQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/filters/search`.
-                public var search: Components.Schemas.AuthCredentialSearchField?
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/filters/userId`.
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/filters/search`.
+                public var search: Components.Schemas.AuthCredentialQueryField?
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/filters/userId`.
                 public var userId: Components.Schemas.AuthCredentialUserIdField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -495,7 +352,7 @@ extension Components {
                 ///   - search:
                 ///   - userId:
                 public init(
-                    search: Components.Schemas.AuthCredentialSearchField? = nil,
+                    search: Components.Schemas.AuthCredentialQueryField? = nil,
                     userId: Components.Schemas.AuthCredentialUserIdField? = nil
                 ) {
                     self.search = search
@@ -506,9 +363,9 @@ extension Components {
                     case userId
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `AuthCredentialListItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthCredentialQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `AuthCredentialQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -516,8 +373,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.AuthCredentialQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthCredentialQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -565,17 +422,17 @@ extension Components {
             case asc = "asc"
             case desc = "desc"
         }
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialSearchField`.
-        public typealias AuthCredentialSearchField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchSchema`.
-        public struct AuthCredentialListItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchSchema/query`.
-            public var query: Components.Schemas.AuthCredentialListItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryField`.
+        public typealias AuthCredentialQueryField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchSchema`.
+        public struct AuthCredentialQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.AuthCredentialQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.AuthCredentialListItemSchema]
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.AuthCredentialQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -583,7 +440,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.AuthCredentialListItemSchema],
+                    items: [Components.Schemas.AuthCredentialQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -594,16 +451,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchSchema/data`.
-            public var data: Components.Schemas.AuthCredentialListItemSearchSchema.DataPayload
-            /// Creates a new `AuthCredentialListItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.AuthCredentialQueryItemSearchSchema.DataPayload
+            /// Creates a new `AuthCredentialQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.AuthCredentialListItemSearchResponseQuerySchema,
-                data: Components.Schemas.AuthCredentialListItemSearchSchema.DataPayload
+                query: Components.Schemas.AuthCredentialQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.AuthCredentialQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -613,20 +470,20 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema`.
-        public struct AuthCredentialListItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema`.
+        public struct AuthCredentialQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case userId = "userId"
                     case email = "email"
                 }
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.AuthCredentialListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthCredentialQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -634,7 +491,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.AuthCredentialListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.AuthCredentialQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -645,15 +502,15 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.AuthCredentialListItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.AuthCredentialListItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthCredentialQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthCredentialQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/filters/search`.
-                public var search: Components.Schemas.AuthCredentialSearchField?
-                /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/filters/userId`.
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.AuthCredentialQueryField?
+                /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/filters/userId`.
                 public var userId: Components.Schemas.AuthCredentialUserIdField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -661,7 +518,7 @@ extension Components {
                 ///   - search:
                 ///   - userId:
                 public init(
-                    search: Components.Schemas.AuthCredentialSearchField? = nil,
+                    search: Components.Schemas.AuthCredentialQueryField? = nil,
                     userId: Components.Schemas.AuthCredentialUserIdField? = nil
                 ) {
                     self.search = search
@@ -672,9 +529,9 @@ extension Components {
                     case userId
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.AuthCredentialListItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `AuthCredentialListItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthCredentialQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `AuthCredentialQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -682,8 +539,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.AuthCredentialListItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.AuthCredentialListItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.AuthCredentialQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthCredentialQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -718,6 +575,43 @@ extension Components {
                 case number
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSchema`.
+        public struct AuthCredentialQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSchema/id`.
+            public var id: Components.Schemas.AuthCredentialIdField
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSchema/userId`.
+            public var userId: Components.Schemas.AuthCredentialUserIdField
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSchema/identityName`.
+            public var identityName: Components.Schemas.AuthCredentialIdentityNameField
+            /// - Remark: Generated from `#/components/schemas/AuthCredentialQueryItemSchema/email`.
+            public var email: Components.Schemas.AuthCredentialEmailField
+            /// Creates a new `AuthCredentialQueryItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - userId:
+            ///   - identityName:
+            ///   - email:
+            public init(
+                id: Components.Schemas.AuthCredentialIdField,
+                userId: Components.Schemas.AuthCredentialUserIdField,
+                identityName: Components.Schemas.AuthCredentialIdentityNameField,
+                email: Components.Schemas.AuthCredentialEmailField
+            ) {
+                self.id = id
+                self.userId = userId
+                self.identityName = identityName
+                self.email = email
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case userId
+                case identityName
+                case email
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthCredentialUpdateMaskField`.
+        public typealias AuthCredentialUpdateMaskField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthCredentialPatchSchema`.
         public struct AuthCredentialPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthCredentialPatchSchema/userId`.
@@ -749,47 +643,26 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/AuthCredentialPasswordField`.
         public typealias AuthCredentialPasswordField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthEmailCreateSchema`.
-        public struct AuthEmailCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthEmailCreateSchema/identityId`.
-            public var identityId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthEmailCreateSchema/email`.
-            public var email: Swift.String
-            /// Creates a new `AuthEmailCreateSchema`.
-            ///
-            /// - Parameters:
-            ///   - identityId:
-            ///   - email:
-            public init(
-                identityId: Swift.String,
-                email: Swift.String
-            ) {
-                self.identityId = identityId
-                self.email = email
-            }
-            public enum CodingKeys: String, CodingKey {
-                case identityId
-                case email
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AuthEmailDetailSchema`.
-        public struct AuthEmailDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthEmailDetailSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthEmailDetailSchema/identityId`.
-            public var identityId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AuthEmailDetailSchema/email`.
-            public var email: Swift.String
-            /// Creates a new `AuthEmailDetailSchema`.
+        /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasList`.
+        public typealias AuthEmailSchemasList = [Components.Schemas.AuthEmailSchemasDetail]
+        /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasDetail`.
+        public struct AuthEmailSchemasDetail: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasDetail/id`.
+            public var id: Components.Schemas.AuthEmailSchemasIDField
+            /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasDetail/identityId`.
+            public var identityId: Components.Schemas.AuthEmailSchemasIdentityIDField
+            /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasDetail/email`.
+            public var email: Components.Schemas.AuthEmailSchemasEmailField
+            /// Creates a new `AuthEmailSchemasDetail`.
             ///
             /// - Parameters:
             ///   - id:
             ///   - identityId:
             ///   - email:
             public init(
-                id: Swift.String,
-                identityId: Swift.String,
-                email: Swift.String
+                id: Components.Schemas.AuthEmailSchemasIDField,
+                identityId: Components.Schemas.AuthEmailSchemasIdentityIDField,
+                email: Components.Schemas.AuthEmailSchemasEmailField
             ) {
                 self.id = id
                 self.identityId = identityId
@@ -801,24 +674,26 @@ extension Components {
                 case email
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthEmailListSchema`.
-        public typealias AuthEmailListSchema = [Components.Schemas.AuthEmailDetailSchema]
-        /// - Remark: Generated from `#/components/schemas/AuthEmailIdField`.
-        public typealias AuthEmailIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthEmailPatchSchema`.
-        public struct AuthEmailPatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthEmailPatchSchema/identityId`.
-            public var identityId: Components.Schemas.AuthEmailIdentityIdField?
-            /// - Remark: Generated from `#/components/schemas/AuthEmailPatchSchema/email`.
-            public var email: Components.Schemas.AuthEmailEmailField?
-            /// Creates a new `AuthEmailPatchSchema`.
+        /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasIDField`.
+        public typealias AuthEmailSchemasIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasIdentityIDField`.
+        public typealias AuthEmailSchemasIdentityIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasEmailField`.
+        public typealias AuthEmailSchemasEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasCreate`.
+        public struct AuthEmailSchemasCreate: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasCreate/identityId`.
+            public var identityId: Components.Schemas.AuthEmailSchemasIdentityIDField
+            /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasCreate/email`.
+            public var email: Components.Schemas.AuthEmailSchemasEmailField
+            /// Creates a new `AuthEmailSchemasCreate`.
             ///
             /// - Parameters:
             ///   - identityId:
             ///   - email:
             public init(
-                identityId: Components.Schemas.AuthEmailIdentityIdField? = nil,
-                email: Components.Schemas.AuthEmailEmailField? = nil
+                identityId: Components.Schemas.AuthEmailSchemasIdentityIDField,
+                email: Components.Schemas.AuthEmailSchemasEmailField
             ) {
                 self.identityId = identityId
                 self.email = email
@@ -828,10 +703,272 @@ extension Components {
                 case email
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthEmailIdentityIdField`.
-        public typealias AuthEmailIdentityIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthEmailEmailField`.
-        public typealias AuthEmailEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema`.
+        public struct AuthEmailQuerySchemasItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case identityId = "identityId"
+                    case email = "email"
+                }
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthEmailQuerySchemasItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.AuthEmailQuerySchemasItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthEmailQuerySchemasItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthEmailQuerySchemasItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/filters/identityId`.
+                public var identityId: Components.Schemas.AuthEmailSchemasIdentityIDField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - identityId:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    identityId: Components.Schemas.AuthEmailSchemasIdentityIDField? = nil
+                ) {
+                    self.search = search
+                    self.identityId = identityId
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case identityId
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthEmailQuerySchemasItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `AuthEmailQuerySchemasItemSearchRequestQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.AuthEmailQuerySchemasItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthEmailQuerySchemasItemSearchRequestQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
+        public typealias SearchStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchSchema`.
+        public struct AuthEmailQuerySchemasItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchSchema/query`.
+            public var query: Components.Schemas.AuthEmailQuerySchemasItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchSchema/data`.
+            public struct DataPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.AuthEmailQuerySchemasItem]
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchSchema/data/total`.
+                public var total: Swift.Int
+                /// Creates a new `DataPayload`.
+                ///
+                /// - Parameters:
+                ///   - items:
+                ///   - total:
+                public init(
+                    items: [Components.Schemas.AuthEmailQuerySchemasItem],
+                    total: Swift.Int
+                ) {
+                    self.items = items
+                    self.total = total
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case items
+                    case total
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchSchema/data`.
+            public var data: Components.Schemas.AuthEmailQuerySchemasItemSearchSchema.DataPayload
+            /// Creates a new `AuthEmailQuerySchemasItemSearchSchema`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - data:
+            public init(
+                query: Components.Schemas.AuthEmailQuerySchemasItemSearchResponseQuerySchema,
+                data: Components.Schemas.AuthEmailQuerySchemasItemSearchSchema.DataPayload
+            ) {
+                self.query = query
+                self.data = data
+            }
+            public enum CodingKeys: String, CodingKey {
+                case query
+                case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema`.
+        public struct AuthEmailQuerySchemasItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case identityId = "identityId"
+                    case email = "email"
+                }
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthEmailQuerySchemasItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.AuthEmailQuerySchemasItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthEmailQuerySchemasItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthEmailQuerySchemasItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/filters/identityId`.
+                public var identityId: Components.Schemas.AuthEmailSchemasIdentityIDField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - identityId:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    identityId: Components.Schemas.AuthEmailSchemasIdentityIDField? = nil
+                ) {
+                    self.search = search
+                    self.identityId = identityId
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case identityId
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthEmailQuerySchemasItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `AuthEmailQuerySchemasItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.AuthEmailQuerySchemasItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthEmailQuerySchemasItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItem`.
+        public struct AuthEmailQuerySchemasItem: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItem/id`.
+            public var id: Components.Schemas.AuthEmailSchemasIDField
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItem/identityId`.
+            public var identityId: Components.Schemas.AuthEmailSchemasIdentityIDField
+            /// - Remark: Generated from `#/components/schemas/AuthEmailQuerySchemasItem/email`.
+            public var email: Components.Schemas.AuthEmailSchemasEmailField
+            /// Creates a new `AuthEmailQuerySchemasItem`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - identityId:
+            ///   - email:
+            public init(
+                id: Components.Schemas.AuthEmailSchemasIDField,
+                identityId: Components.Schemas.AuthEmailSchemasIdentityIDField,
+                email: Components.Schemas.AuthEmailSchemasEmailField
+            ) {
+                self.id = id
+                self.identityId = identityId
+                self.email = email
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case identityId
+                case email
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasUpdateMask`.
+        public typealias AuthEmailSchemasUpdateMask = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasPatch`.
+        public struct AuthEmailSchemasPatch: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasPatch/identityId`.
+            public var identityId: Components.Schemas.AuthEmailSchemasIdentityIDField?
+            /// - Remark: Generated from `#/components/schemas/AuthEmailSchemasPatch/email`.
+            public var email: Components.Schemas.AuthEmailSchemasEmailField?
+            /// Creates a new `AuthEmailSchemasPatch`.
+            ///
+            /// - Parameters:
+            ///   - identityId:
+            ///   - email:
+            public init(
+                identityId: Components.Schemas.AuthEmailSchemasIdentityIDField? = nil,
+                email: Components.Schemas.AuthEmailSchemasEmailField? = nil
+            ) {
+                self.identityId = identityId
+                self.email = email
+            }
+            public enum CodingKeys: String, CodingKey {
+                case identityId
+                case email
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/AuthRolePermissionCreateSchema`.
         public struct AuthRolePermissionCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthRolePermissionCreateSchema/roleId`.
@@ -882,20 +1019,20 @@ extension Components {
         public typealias AuthRolePermissionRoleIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthRolePermissionPermissionIdField`.
         public typealias AuthRolePermissionPermissionIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema`.
-        public struct AuthRolePermissionListItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema`.
+        public struct AuthRolePermissionQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case roleId = "roleId"
                     case permissionId = "permissionId"
                 }
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthRolePermissionQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -903,7 +1040,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.AuthRolePermissionQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -914,13 +1051,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthRolePermissionQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthRolePermissionQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -933,9 +1070,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `AuthRolePermissionListItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthRolePermissionQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `AuthRolePermissionQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -943,8 +1080,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.AuthRolePermissionQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthRolePermissionQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -956,17 +1093,15 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/SearchStringField`.
-        public typealias SearchStringField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchSchema`.
-        public struct AuthRolePermissionListItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchSchema/query`.
-            public var query: Components.Schemas.AuthRolePermissionListItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchSchema`.
+        public struct AuthRolePermissionQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.AuthRolePermissionQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.AuthRolePermissionListItemSchema]
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.AuthRolePermissionQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -974,7 +1109,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.AuthRolePermissionListItemSchema],
+                    items: [Components.Schemas.AuthRolePermissionQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -985,16 +1120,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchSchema/data`.
-            public var data: Components.Schemas.AuthRolePermissionListItemSearchSchema.DataPayload
-            /// Creates a new `AuthRolePermissionListItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.AuthRolePermissionQueryItemSearchSchema.DataPayload
+            /// Creates a new `AuthRolePermissionQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.AuthRolePermissionListItemSearchResponseQuerySchema,
-                data: Components.Schemas.AuthRolePermissionListItemSearchSchema.DataPayload
+                query: Components.Schemas.AuthRolePermissionQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.AuthRolePermissionQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -1004,20 +1139,20 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema`.
-        public struct AuthRolePermissionListItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema`.
+        public struct AuthRolePermissionQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case roleId = "roleId"
                     case permissionId = "permissionId"
                 }
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.AuthRolePermissionListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthRolePermissionQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -1025,7 +1160,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.AuthRolePermissionListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.AuthRolePermissionQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -1036,13 +1171,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.AuthRolePermissionListItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.AuthRolePermissionListItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthRolePermissionQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthRolePermissionQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1055,9 +1190,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.AuthRolePermissionListItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `AuthRolePermissionListItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthRolePermissionQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `AuthRolePermissionQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -1065,8 +1200,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.AuthRolePermissionListItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.AuthRolePermissionListItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.AuthRolePermissionQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthRolePermissionQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1078,13 +1213,13 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSchema`.
-        public struct AuthRolePermissionListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSchema/roleId`.
+        /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSchema`.
+        public struct AuthRolePermissionQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSchema/roleId`.
             public var roleId: Components.Schemas.AuthRolePermissionRoleIdField
-            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionListItemSchema/permissionId`.
+            /// - Remark: Generated from `#/components/schemas/AuthRolePermissionQueryItemSchema/permissionId`.
             public var permissionId: Components.Schemas.AuthRolePermissionPermissionIdField
-            /// Creates a new `AuthRolePermissionListItemSchema`.
+            /// Creates a new `AuthRolePermissionQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - roleId:
@@ -1101,6 +1236,67 @@ extension Components {
                 case permissionId
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListSchema`.
+        public typealias AuthMagicLinkListSchema = [Components.Schemas.AuthMagicLinkListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema`.
+        public struct AuthMagicLinkListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/id`.
+            public var id: Components.Schemas.AuthMagicLinkIdField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/credentialId`.
+            public var credentialId: Components.Schemas.AuthMagicLinkCredentialIdField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/token`.
+            public var token: Components.Schemas.AuthMagicLinkTokenField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/expiresAt`.
+            public var expiresAt: Components.Schemas.AuthMagicLinkExpiresAtField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/isPersistent`.
+            public var isPersistent: Components.Schemas.AuthMagicLinkIsPersistentField
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/isUsed`.
+            public var isUsed: Components.Schemas.AuthMagicLinkIsUsedField
+            /// Creates a new `AuthMagicLinkListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - credentialId:
+            ///   - token:
+            ///   - expiresAt:
+            ///   - isPersistent:
+            ///   - isUsed:
+            public init(
+                id: Components.Schemas.AuthMagicLinkIdField,
+                credentialId: Components.Schemas.AuthMagicLinkCredentialIdField,
+                token: Components.Schemas.AuthMagicLinkTokenField,
+                expiresAt: Components.Schemas.AuthMagicLinkExpiresAtField,
+                isPersistent: Components.Schemas.AuthMagicLinkIsPersistentField,
+                isUsed: Components.Schemas.AuthMagicLinkIsUsedField
+            ) {
+                self.id = id
+                self.credentialId = credentialId
+                self.token = token
+                self.expiresAt = expiresAt
+                self.isPersistent = isPersistent
+                self.isUsed = isUsed
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case credentialId
+                case token
+                case expiresAt
+                case isPersistent
+                case isUsed
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIdField`.
+        public typealias AuthMagicLinkIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkCredentialIdField`.
+        public typealias AuthMagicLinkCredentialIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkTokenField`.
+        public typealias AuthMagicLinkTokenField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkExpiresAtField`.
+        public typealias AuthMagicLinkExpiresAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIsPersistentField`.
+        public typealias AuthMagicLinkIsPersistentField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIsUsedField`.
+        public typealias AuthMagicLinkIsUsedField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/AuthMagicLinkCreateSchema`.
         public struct AuthMagicLinkCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthMagicLinkCreateSchema/credentialId`.
@@ -1171,23 +1367,241 @@ extension Components {
                 case isUsed
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListSchema`.
-        public typealias AuthMagicLinkListSchema = [Components.Schemas.AuthMagicLinkListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema`.
-        public struct AuthMagicLinkListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema`.
+        public struct AuthMagicLinkQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case id = "id"
+                    case credentialId = "credentialId"
+                    case token = "token"
+                    case expiresAt = "expiresAt"
+                    case isPersistent = "isPersistent"
+                    case isUsed = "isUsed"
+                }
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthMagicLinkQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.AuthMagicLinkQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthMagicLinkQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthMagicLinkQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/filters/userId`.
+                public var userId: Components.Schemas.AuthMagicLinkUserIdField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - userId:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    userId: Components.Schemas.AuthMagicLinkUserIdField? = nil
+                ) {
+                    self.search = search
+                    self.userId = userId
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case userId
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthMagicLinkQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `AuthMagicLinkQueryItemSearchRequestQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.AuthMagicLinkQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthMagicLinkQueryItemSearchRequestQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkUserIdField`.
+        public typealias AuthMagicLinkUserIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchSchema`.
+        public struct AuthMagicLinkQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.AuthMagicLinkQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchSchema/data`.
+            public struct DataPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.AuthMagicLinkQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchSchema/data/total`.
+                public var total: Swift.Int
+                /// Creates a new `DataPayload`.
+                ///
+                /// - Parameters:
+                ///   - items:
+                ///   - total:
+                public init(
+                    items: [Components.Schemas.AuthMagicLinkQueryItemSchema],
+                    total: Swift.Int
+                ) {
+                    self.items = items
+                    self.total = total
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case items
+                    case total
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.AuthMagicLinkQueryItemSearchSchema.DataPayload
+            /// Creates a new `AuthMagicLinkQueryItemSearchSchema`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - data:
+            public init(
+                query: Components.Schemas.AuthMagicLinkQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.AuthMagicLinkQueryItemSearchSchema.DataPayload
+            ) {
+                self.query = query
+                self.data = data
+            }
+            public enum CodingKeys: String, CodingKey {
+                case query
+                case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema`.
+        public struct AuthMagicLinkQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case id = "id"
+                    case credentialId = "credentialId"
+                    case token = "token"
+                    case expiresAt = "expiresAt"
+                    case isPersistent = "isPersistent"
+                    case isUsed = "isUsed"
+                }
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthMagicLinkQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.AuthMagicLinkQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthMagicLinkQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthMagicLinkQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/filters/userId`.
+                public var userId: Components.Schemas.AuthMagicLinkUserIdField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - userId:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    userId: Components.Schemas.AuthMagicLinkUserIdField? = nil
+                ) {
+                    self.search = search
+                    self.userId = userId
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case userId
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthMagicLinkQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `AuthMagicLinkQueryItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.AuthMagicLinkQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthMagicLinkQueryItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSchema`.
+        public struct AuthMagicLinkQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSchema/id`.
             public var id: Components.Schemas.AuthMagicLinkIdField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/credentialId`.
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSchema/credentialId`.
             public var credentialId: Components.Schemas.AuthMagicLinkCredentialIdField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/token`.
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSchema/token`.
             public var token: Components.Schemas.AuthMagicLinkTokenField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/expiresAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSchema/expiresAt`.
             public var expiresAt: Components.Schemas.AuthMagicLinkExpiresAtField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/isPersistent`.
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSchema/isPersistent`.
             public var isPersistent: Components.Schemas.AuthMagicLinkIsPersistentField
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSchema/isUsed`.
+            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkQueryItemSchema/isUsed`.
             public var isUsed: Components.Schemas.AuthMagicLinkIsUsedField
-            /// Creates a new `AuthMagicLinkListItemSchema`.
+            /// Creates a new `AuthMagicLinkQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1220,238 +1634,8 @@ extension Components {
                 case isUsed
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIdField`.
-        public typealias AuthMagicLinkIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkCredentialIdField`.
-        public typealias AuthMagicLinkCredentialIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkTokenField`.
-        public typealias AuthMagicLinkTokenField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkExpiresAtField`.
-        public typealias AuthMagicLinkExpiresAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIsPersistentField`.
-        public typealias AuthMagicLinkIsPersistentField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkIsUsedField`.
-        public typealias AuthMagicLinkIsUsedField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema`.
-        public struct AuthMagicLinkListItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/page`.
-            public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/SortPayload`.
-            public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/SortPayload/field`.
-                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
-                    case id = "id"
-                    case credentialId = "credentialId"
-                    case token = "token"
-                    case expiresAt = "expiresAt"
-                    case isPersistent = "isPersistent"
-                    case isUsed = "isUsed"
-                }
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/SortPayload/direction`.
-                public var direction: Components.Schemas.SortDirection
-                /// Creates a new `SortPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - field:
-                ///   - direction:
-                public init(
-                    field: Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
-                    direction: Components.Schemas.SortDirection
-                ) {
-                    self.field = field
-                    self.direction = direction
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case field
-                    case direction
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/filters`.
-            public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/filters/search`.
-                public var search: Components.Schemas.SearchStringField?
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/filters/userId`.
-                public var userId: Components.Schemas.AuthMagicLinkUserIdField?
-                /// Creates a new `FiltersPayload`.
-                ///
-                /// - Parameters:
-                ///   - search:
-                ///   - userId:
-                public init(
-                    search: Components.Schemas.SearchStringField? = nil,
-                    userId: Components.Schemas.AuthMagicLinkUserIdField? = nil
-                ) {
-                    self.search = search
-                    self.userId = userId
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case search
-                    case userId
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `AuthMagicLinkListItemSearchRequestQuerySchema`.
-            ///
-            /// - Parameters:
-            ///   - page:
-            ///   - sort:
-            ///   - filters:
-            public init(
-                page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema.FiltersPayload
-            ) {
-                self.page = page
-                self.sort = sort
-                self.filters = filters
-            }
-            public enum CodingKeys: String, CodingKey {
-                case page
-                case sort
-                case filters
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkUserIdField`.
-        public typealias AuthMagicLinkUserIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchSchema`.
-        public struct AuthMagicLinkListItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchSchema/query`.
-            public var query: Components.Schemas.AuthMagicLinkListItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchSchema/data`.
-            public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.AuthMagicLinkListItemSchema]
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchSchema/data/total`.
-                public var total: Swift.Int
-                /// Creates a new `DataPayload`.
-                ///
-                /// - Parameters:
-                ///   - items:
-                ///   - total:
-                public init(
-                    items: [Components.Schemas.AuthMagicLinkListItemSchema],
-                    total: Swift.Int
-                ) {
-                    self.items = items
-                    self.total = total
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case items
-                    case total
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchSchema/data`.
-            public var data: Components.Schemas.AuthMagicLinkListItemSearchSchema.DataPayload
-            /// Creates a new `AuthMagicLinkListItemSearchSchema`.
-            ///
-            /// - Parameters:
-            ///   - query:
-            ///   - data:
-            public init(
-                query: Components.Schemas.AuthMagicLinkListItemSearchResponseQuerySchema,
-                data: Components.Schemas.AuthMagicLinkListItemSearchSchema.DataPayload
-            ) {
-                self.query = query
-                self.data = data
-            }
-            public enum CodingKeys: String, CodingKey {
-                case query
-                case data
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema`.
-        public struct AuthMagicLinkListItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/page`.
-            public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/SortPayload`.
-            public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/SortPayload/field`.
-                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
-                    case id = "id"
-                    case credentialId = "credentialId"
-                    case token = "token"
-                    case expiresAt = "expiresAt"
-                    case isPersistent = "isPersistent"
-                    case isUsed = "isUsed"
-                }
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.AuthMagicLinkListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/SortPayload/direction`.
-                public var direction: Components.Schemas.SortDirection
-                /// Creates a new `SortPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - field:
-                ///   - direction:
-                public init(
-                    field: Components.Schemas.AuthMagicLinkListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
-                    direction: Components.Schemas.SortDirection
-                ) {
-                    self.field = field
-                    self.direction = direction
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case field
-                    case direction
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.AuthMagicLinkListItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.AuthMagicLinkListItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/filters`.
-            public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/filters/search`.
-                public var search: Components.Schemas.SearchStringField?
-                /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/filters/userId`.
-                public var userId: Components.Schemas.AuthMagicLinkUserIdField?
-                /// Creates a new `FiltersPayload`.
-                ///
-                /// - Parameters:
-                ///   - search:
-                ///   - userId:
-                public init(
-                    search: Components.Schemas.SearchStringField? = nil,
-                    userId: Components.Schemas.AuthMagicLinkUserIdField? = nil
-                ) {
-                    self.search = search
-                    self.userId = userId
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case search
-                    case userId
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.AuthMagicLinkListItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `AuthMagicLinkListItemSearchResponseQuerySchema`.
-            ///
-            /// - Parameters:
-            ///   - page:
-            ///   - sort:
-            ///   - filters:
-            public init(
-                page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.AuthMagicLinkListItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.AuthMagicLinkListItemSearchResponseQuerySchema.FiltersPayload
-            ) {
-                self.page = page
-                self.sort = sort
-                self.filters = filters
-            }
-            public enum CodingKeys: String, CodingKey {
-                case page
-                case sort
-                case filters
-            }
-        }
+        /// - Remark: Generated from `#/components/schemas/AuthMagicLinkUpdateMaskField`.
+        public typealias AuthMagicLinkUpdateMaskField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AuthMagicLinkPatchSchema`.
         public struct AuthMagicLinkPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AuthMagicLinkPatchSchema/credentialId`.

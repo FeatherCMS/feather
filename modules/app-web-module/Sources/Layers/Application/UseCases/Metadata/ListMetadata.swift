@@ -1,6 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import SystemModule
+public import WebDomain
 
 //
 //  ListMetadata.swift
@@ -14,11 +15,11 @@ public struct ListMetadata: UseCase {
     }
 
     let authorizer: any Authorizer
-    let query: any QueryExecutor<ReadMetadata>
+    let query: any QueryExecutor<Metadata.Query.Scope>
 
     public init(
         authorizer: any Authorizer,
-        query: any QueryExecutor<ReadMetadata>
+        query: any QueryExecutor<Metadata.Query.Scope>
     ) {
         self.authorizer = authorizer
         self.query = query

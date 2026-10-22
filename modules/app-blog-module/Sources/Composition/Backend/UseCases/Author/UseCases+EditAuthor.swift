@@ -1,22 +1,24 @@
-import SystemModule
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherInfrastructure
 import SystemApplication
 import SystemInfrastructure
+import SystemModule
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
 
-    public func makeEditAuthor() -> EditAuthor {
+    public func makeEditAuthor() -> Author.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteAuthorMetadata(
-                    author: AuthorDatabaseRepository(
+                Author.Edit.Scope(
+                    author: Author.Repository.Database(
                         context: context
                     ),
-                    metadata: MetadataDatabaseRepository(
+                    metadata: Metadata.Repository.Database(
                         context: context
                     ),
                     variable: SystemModule.Variable.Lookup.Database(

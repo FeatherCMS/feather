@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import WebContracts
 import WebDomain
+import WebModule
 
 //
 //  RemovePage.swift
@@ -11,7 +11,7 @@ import WebDomain
 
 public struct RemovePage: UseCase {
     struct Action: PermissionAction {
-        let key = WebPermissions.Pages.delete
+        let key = WebModule.Permissions.Pages.delete
     }
 
     let authorizer: any Authorizer

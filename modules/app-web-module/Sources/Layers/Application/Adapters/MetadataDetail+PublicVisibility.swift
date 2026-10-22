@@ -11,7 +11,7 @@ extension MetadataDetail {
 
     public func availability(
         at date: Date
-    ) -> Metadata.Availability {
+    ) -> Metadata.Model.Availability {
         .init(
             status: status,
             publicationDate: publicationDate,

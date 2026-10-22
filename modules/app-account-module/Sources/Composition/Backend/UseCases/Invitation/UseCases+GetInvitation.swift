@@ -1,17 +1,16 @@
 import AccountApplication
 import AccountInfrastructure
+import AccountModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeGetInvitation() -> GetInvitation {
+    func makeGetInvitation() -> Invitation.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadInvitation(
-                    invitation: InvitationDatabaseQueries(
-                        context: context
-                    )
+                Invitation.Detail.Scope(
+                    query: Invitation.Detail.Query.Database(context: context)
                 )
             }
         )

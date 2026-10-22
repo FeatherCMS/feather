@@ -1,4 +1,5 @@
 import AuthAppAPI
+import AuthModule
 import CSS
 import FeatherValidation
 import FeatherValidationFoundation
@@ -30,8 +31,8 @@ public struct Router {
     }
 
     public func route(on router: Hummingbird.Router<DefaultRequestContext>) {
-        AppLoginAuth(
-            repository: AppLoginAuthOpenAPIRepository(
+        Login.Router(
+            repository: Login.Repository.OpenAPI(
                 appClient: API.Client(environment: environment)
             ),
             usesSecureCookies: usesSecureCookies,
@@ -39,20 +40,21 @@ public struct Router {
         )
         .controller.route(on: router)
 
-        AppLogoutAuth(
-            repository: AppLogoutAuthOpenAPIRepository(
+        Logout.Router(
+            repository: Logout.Repository.OpenAPI(
                 environment: environment
             ),
             usesSecureCookies: usesSecureCookies
         )
         .controller.route(on: router)
 
-        AppMagicLink(
-            environment: environment,
-            usesSecureCookies: usesSecureCookies,
-            turnstileVerifier: turnstileVerifier
-        )
-        .route(on: router)
+        MagicLink.App
+            .Router(
+                environment: environment,
+                usesSecureCookies: usesSecureCookies,
+                turnstileVerifier: turnstileVerifier
+            )
+            .route(on: router)
     }
 
 }

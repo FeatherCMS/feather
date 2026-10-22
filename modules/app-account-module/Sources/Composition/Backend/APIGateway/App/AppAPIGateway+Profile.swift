@@ -4,23 +4,53 @@ import FeatherModuleKit
 
 extension AppAPIGateway {
 
-    public func accountSettings(
-        _ input: Operations.AccountSettings.Input
-    ) async throws -> Operations.AccountSettings.Output {
+    public func accountProfileGet(
+        _ input: Operations.AccountProfileGet.Input
+    ) async throws -> Operations.AccountProfileGet.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeGetSettings()
+        let result = try await useCases.makeGetAccountProfile()
             .execute(
                 subject: subject,
                 input: .init()
             )
-
         return .ok(
             .init(
                 body: .json(
                     .init(
-                        language: result.language,
-                        timezone: result.timezone,
-                        pageSize: result.pageSize
+                        firstName: result.firstName,
+                        lastName: result.lastName,
+                        profileImageAssetId: result.profileImageAssetId
+                    )
+                )
+            )
+        )
+    }
+
+    public func accountProfileUpdate(
+        _ input: Operations.AccountProfileUpdate.Input
+    ) async throws -> Operations.AccountProfileUpdate.Output {
+        let body: Components.Schemas.AccountProfileUpdateSchema
+        switch input.body {
+        case .json(let value): body = value
+        }
+
+        let subject = try await CurrentSubject.require()
+        let result = try await useCases.makeEditAccountProfile()
+            .execute(
+                subject: subject,
+                input: .init(
+                    firstName: body.firstName,
+                    lastName: body.lastName,
+                    profileImageAssetId: body.profileImageAssetId
+                )
+            )
+        return .ok(
+            .init(
+                body: .json(
+                    .init(
+                        firstName: result.firstName,
+                        lastName: result.lastName,
+                        profileImageAssetId: result.profileImageAssetId
                     )
                 )
             )

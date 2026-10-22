@@ -1,21 +1,21 @@
-import FeatherDBAL
+public import FeatherDBAL
 import FeatherInfrastructure
-import Foundation
-import SystemModule
+public import Foundation
+public import SystemModule
 
 extension Permission {
-    struct Table: DatabaseTable {
+    public struct Table: DatabaseTable {
 
-        static let name = "system_permission"
-        static let columns = Columns()
+        public static let name = "system_permission"
+        public static let columns = Columns()
 
-        struct Columns: DatabaseTableColumns {
-            let id = DatabaseTableColumn<String>(name: "id")
-            let key = DatabaseTableColumn<String>(name: "key")
-            let name = DatabaseTableColumn<String?>(name: "name")
-            let notes = DatabaseTableColumn<String?>(name: "notes")
-            let createdAt = DatabaseTableColumn<Date>(name: "created_at")
-            let updatedAt = DatabaseTableColumn<Date>(name: "updated_at")
+        public struct Columns: DatabaseTableColumns {
+            public let id = DatabaseTableColumn<String>(name: "id")
+            public let key = DatabaseTableColumn<String>(name: "key")
+            public let name = DatabaseTableColumn<String?>(name: "name")
+            public let notes = DatabaseTableColumn<String?>(name: "notes")
+            public let createdAt = DatabaseTableColumn<Date>(name: "created_at")
+            public let updatedAt = DatabaseTableColumn<Date>(name: "updated_at")
         }
     }
 }

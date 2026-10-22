@@ -1,4 +1,3 @@
-import AuthSharedOpenAPIGenerator
 import FeatherOpenAPI
 import Foundation
 import OpenAPIKit

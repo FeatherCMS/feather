@@ -1,4 +1,3 @@
-import AuthSharedOpenAPIGenerator
 public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
 import OpenAPIKit30
@@ -23,6 +22,8 @@ extension AuthMagicLinkIdOperation {
 }
 
 struct AuthMagicLinkCreateOperation: AuthMagicLinkOperation {
+    var operationId: String? { "authMagicLinkCreate" }
+
     var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkManagementRequestBody().reference()
     }
@@ -34,6 +35,8 @@ struct AuthMagicLinkCreateOperation: AuthMagicLinkOperation {
 }
 
 struct AuthMagicLinkListOperation: AuthMagicLinkOperation {
+    var operationId: String? { "authMagicLinkList" }
+
     var responseMap: ResponseMap {
         [
             200: AuthMagicLinkListResponse().reference()
@@ -41,10 +44,12 @@ struct AuthMagicLinkListOperation: AuthMagicLinkOperation {
     }
 }
 
-struct AuthMagicLinkSearchOperation: AuthMagicLinkOperation {
+struct AuthMagicLinkQueryOperation: AuthMagicLinkOperation {
+    var operationId: String? { "authMagicLinkQuery" }
+
     var searchRequestQuery: SearchRequestQuerySchema {
         .init(
-            items: AuthMagicLinkListItemSchema(),
+            items: AuthMagicLinkQueryItemSchema(),
             sortFieldKeys: [
                 "id",
                 "credentialId",
@@ -79,9 +84,12 @@ struct AuthMagicLinkSearchOperation: AuthMagicLinkOperation {
 struct AuthMagicLinkRemoveOperation: AuthMagicLinkOperation,
     DeleteOperation
 {
+    var operationId: String? { "authMagicLinkRemove" }
 }
 
 struct AuthMagicLinkGetOperation: AuthMagicLinkIdOperation {
+    var operationId: String? { "authMagicLinkGet" }
+
     var responseMap: ResponseMap {
         [
             200: AuthMagicLinkDetailResponse().reference(),
@@ -91,6 +99,8 @@ struct AuthMagicLinkGetOperation: AuthMagicLinkIdOperation {
 }
 
 struct AuthMagicLinkUpdateOperation: AuthMagicLinkIdOperation {
+    var operationId: String? { "authMagicLinkUpdate" }
+
     var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkUpdateRequestBody().reference()
     }
@@ -103,12 +113,22 @@ struct AuthMagicLinkUpdateOperation: AuthMagicLinkIdOperation {
 }
 
 struct AuthMagicLinkPatchOperation: AuthMagicLinkIdOperation {
+    var operationId: String? { "authMagicLinkPatch" }
+
+    var parameters: [any ParameterRepresentable] {
+        [
+            AuthMagicLinkIdParameter().reference(),
+            AuthMagicLinkUpdateMaskParameter().reference(),
+        ]
+    }
+
     var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {
         [
             200: AuthMagicLinkDetailResponse().reference(),
+            400: CustomResponse(description: "Invalid update mask"),
             404: CustomResponse(description: "AuthMagicLink not found"),
         ]
     }

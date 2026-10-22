@@ -6,7 +6,7 @@
 
 public import WebDomain
 
-extension Metadata {
+extension Metadata.Model {
 
     public var asDetail: MetadataDetail {
         .init(

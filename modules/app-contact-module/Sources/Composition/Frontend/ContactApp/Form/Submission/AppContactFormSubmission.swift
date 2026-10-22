@@ -7,7 +7,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-public import WebFrontend
+public import WebModuleWebApp
 
 public struct AppContactFormSubmission {
     let controller: any AppContactFormSubmissionController

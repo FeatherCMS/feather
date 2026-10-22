@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDomain
 import FeatherDBAL
+import FeatherDomain
 public import FeatherInfrastructure
 public import NewsDomain
 import WebDomain
@@ -13,7 +13,7 @@ import WebInfrastructure
 
 extension ArticleTable.Row {
     func asDomain(
-        metadata: Metadata,
+        metadata: WebDomain.Metadata.Model,
         categoryIds: [String]
     ) -> Article {
         .init(
@@ -127,7 +127,8 @@ public struct ArticleDatabaseRepository: ArticleRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        try await DatabaseAccessLayer<ArticleTable>(context: context).delete(where: \.id, in: ids)
+        try await DatabaseAccessLayer<ArticleTable>(context: context)
+            .delete(where: \.id, in: ids)
         return ids
     }
 }

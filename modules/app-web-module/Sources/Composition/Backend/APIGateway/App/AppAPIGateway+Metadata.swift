@@ -54,11 +54,35 @@ extension AppAPIGateway {
             )
         }
         catch is ResolveWebRoute.Error {
-            return .notFound
+            return .notFound(
+                .init(
+                    body: .json(
+                        .init(
+                            error: .init(
+                                message: "Page not found",
+                                reason:
+                                    "No published page exists for this route."
+                            )
+                        )
+                    )
+                )
+            )
         }
         catch let error as DatabaseError
         where error.isResolveWebRouteNotFound {
-            return .notFound
+            return .notFound(
+                .init(
+                    body: .json(
+                        .init(
+                            error: .init(
+                                message: "Page not found",
+                                reason:
+                                    "No published page exists for this route."
+                            )
+                        )
+                    )
+                )
+            )
         }
     }
 }

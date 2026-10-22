@@ -6,7 +6,7 @@ extension PageMetadataInput {
     public func asMetadataBase(
         template: String,
         slug: String
-    ) -> Metadata.Base {
+    ) -> Metadata.Model.Base {
         .init(
             template: template,
             slug: slug,

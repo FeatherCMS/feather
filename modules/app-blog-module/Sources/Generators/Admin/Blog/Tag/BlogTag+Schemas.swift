@@ -84,6 +84,20 @@ struct BlogTagListItemSchema: ObjectSchemaRepresentable {
     }
 }
 
+struct BlogTagQueryItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "id": BlogTagIdField().reference(),
+            "title": BlogTagTitleField().reference(),
+            "excerpt": BlogTagExcerptField().reference(),
+            "imageAssetId": BlogTagImageAssetIdField()
+                .reference(required: false),
+            "createdAt": BlogTagCreatedAtField().reference(),
+            "updatedAt": BlogTagUpdatedAtField().reference(),
+        ]
+    }
+}
+
 struct BlogTagListSchema: ArraySchemaRepresentable {
     var items: (any SchemaRepresentable)? {
         BlogTagListItemSchema().reference()

@@ -1,4 +1,3 @@
-import AuthSharedOpenAPIGenerator
 public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
 import OpenAPIKit30
@@ -24,6 +23,8 @@ extension AuthRolePermissionIdOperation {
 }
 
 struct AuthRolePermissionCreateOperation: AuthRolePermissionOperation {
+    var operationId: String? { "authRolePermissionCreate" }
+
     var requestBody: (any RequestBodyRepresentable)? {
         AuthRolePermissionRequestBody().reference()
     }
@@ -35,10 +36,12 @@ struct AuthRolePermissionCreateOperation: AuthRolePermissionOperation {
     }
 }
 
-struct AuthRolePermissionSearchOperation: AuthRolePermissionOperation {
+struct AuthRolePermissionQueryOperation: AuthRolePermissionOperation {
+    var operationId: String? { "authRolePermissionQuery" }
+
     var searchRequestQuery: SearchRequestQuerySchema {
         .init(
-            items: AuthRolePermissionListItemSchema(),
+            items: AuthRolePermissionQueryItemSchema(),
             sortFieldKeys: [
                 "roleId",
                 "permissionId",
@@ -64,4 +67,5 @@ struct AuthRolePermissionSearchOperation: AuthRolePermissionOperation {
 struct AuthRolePermissionRemoveOperation: AuthRolePermissionOperation,
     DeleteOperation
 {
+    var operationId: String? { "authRolePermissionRemove" }
 }

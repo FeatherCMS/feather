@@ -1,10 +1,11 @@
 public import FeatherApplication
 public import FeatherModuleKit
+public import WebDomain
 
 public struct ListPublicMetadata: UseCase {
-    let query: any QueryExecutor<ReadMetadata>
+    let query: any QueryExecutor<Metadata.Query.Scope>
 
-    public init(query: any QueryExecutor<ReadMetadata>) {
+    public init(query: any QueryExecutor<Metadata.Query.Scope>) {
         self.query = query
     }
 

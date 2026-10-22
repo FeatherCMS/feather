@@ -4,15 +4,15 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDomain
 import FeatherDBAL
+import FeatherDomain
 public import FeatherInfrastructure
 public import NewsDomain
 import WebDomain
 import WebInfrastructure
 
 extension CategoryTable.Row {
-    func asDomain(metadata: Metadata) -> Category {
+    func asDomain(metadata: WebDomain.Metadata.Model) -> Category {
         .init(
             id: id,
             title: title,
@@ -92,7 +92,8 @@ public struct CategoryDatabaseRepository: CategoryRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        try await DatabaseAccessLayer<CategoryTable>(context: context).delete(where: \.id, in: ids)
+        try await DatabaseAccessLayer<CategoryTable>(context: context)
+            .delete(where: \.id, in: ids)
         return ids
     }
 }

@@ -4,24 +4,20 @@ import FeatherModuleKit
 
 extension AdminAPIGateway {
 
-    public func blogTagSearch(
-        _ input: Operations.BlogTagSearch.Input
-    ) async throws -> Operations.BlogTagSearch.Output {
-        let query: Components.Schemas.BlogTagListItemSearchRequestQuerySchema
+    public func blogTagQuery(
+        _ input: Operations.BlogTagQuery.Input
+    ) async throws -> Operations.BlogTagQuery.Output {
+        let query: Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
         }
 
-        let useCase = self.useCases.makeListTags()
+        let useCase = self.useCases.makeSearchTags()
         let objectQuery = map(query)
         let subject = try await CurrentSubject.require()
 
-        let list = try await useCase.execute(
-            subject: subject,
-            input: .init(query: objectQuery)
-        )
-        let total = try await useCase.count(
+        let result = try await useCase.execute(
             subject: subject,
             input: .init(query: objectQuery)
         )
@@ -30,8 +26,11 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: query,
-                        data: .init(items: list.items.map(map), total: total)
+                        query: responseQuery(from: query),
+                        data: .init(
+                            items: result.items.map(mapQuery),
+                            total: result.total
+                        )
                     )
                 )
             )

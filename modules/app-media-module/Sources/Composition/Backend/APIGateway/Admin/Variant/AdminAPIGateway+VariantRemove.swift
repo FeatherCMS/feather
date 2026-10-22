@@ -3,8 +3,8 @@ public import MediaAdminAPI
 import MediaApplication
 
 extension AdminAPIGateway {
-    public func mediaVariantRemove(_ input: Operations.MediaVariantRemove.Input)
-        async throws -> Operations.MediaVariantRemove.Output
+    public func mediaVariantDelete(_ input: Operations.MediaVariantDelete.Input)
+        async throws -> Operations.MediaVariantDelete.Output
     {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {

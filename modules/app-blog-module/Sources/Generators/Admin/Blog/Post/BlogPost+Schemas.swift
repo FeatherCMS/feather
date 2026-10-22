@@ -102,6 +102,20 @@ struct BlogPostListItemSchema: ObjectSchemaRepresentable {
     }
 }
 
+struct BlogPostQueryItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "id": BlogPostIdField().reference(),
+            "title": BlogPostTitleField().reference(),
+            "excerpt": BlogPostExcerptField().reference(),
+            "imageAssetId": BlogPostImageAssetIdField()
+                .reference(required: false),
+            "createdAt": BlogPostCreatedAtField().reference(),
+            "updatedAt": BlogPostUpdatedAtField().reference(),
+        ]
+    }
+}
+
 struct BlogPostListSchema: ArraySchemaRepresentable {
     var items: (any SchemaRepresentable)? {
         BlogPostListItemSchema().reference()

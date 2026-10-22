@@ -2,15 +2,16 @@ import SystemModule
 import FeatherWebShared
 import FeatherModuleKit
 import WebApplication
-import BlogFrontend
-import MediaFrontend
+import BlogWebAdmin
+import MediaWebAdmin
 import ContactFrontend
 import NewsletterFrontend
-import WebFrontend
+import WebModuleWebAdmin
+import WebModuleWebApp
 import AnalyticsFrontend
 import RedirectWebAdmin
 import UserWebAdmin
-import AccountFrontend
+import AccountWebAdmin
 import SystemWebAdmin
 import AuthWebAdmin
 import FeatherWebAdmin
@@ -31,8 +32,8 @@ func buildAdminRoutes(
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AccountAdmin(
-        apiBuilder: apiBuilder.account,
+    AccountWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)
@@ -60,21 +61,24 @@ func buildAdminRoutes(
         routes: redirectRoutes
     )
     .route(on: router)
-    AdminBlog(
-        apiBuilder: apiBuilder.blog,
+    BlogWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents
     )
     .route(on: router)
 
-    AdminWeb(
+    Router(
         apiBuilder: apiBuilder.web,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents
     )
     .route(on: router)
-    AdminMedia(apiBuilder: apiBuilder.media, renderingEngine: renderingEngine)
-        .route(on: router)
+    MediaWebAdmin.Router(
+        environment: environment,
+        renderingEngine: renderingEngine
+    )
+    .route(on: router)
     AdminNewsletter(
         apiBuilder: apiBuilder.newsletter,
         renderingEngine: renderingEngine

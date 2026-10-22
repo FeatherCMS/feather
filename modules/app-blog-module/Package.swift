@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -21,6 +20,11 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
+
 
 let package = Package(
     name: "app-blog-module",
@@ -32,16 +36,12 @@ let package = Package(
         .visionOS(.v2),
     ],
     products: [
+        .library(name: "BlogModule", targets: ["BlogModule"]),
         .library(name: "BlogDomain", targets: ["BlogDomain"]),
-        .library(name: "BlogContracts", targets: ["BlogContracts"]),
         .library(name: "BlogApplication", targets: ["BlogApplication"]),
         .library(name: "BlogInfrastructure", targets: ["BlogInfrastructure"]),
         .library(name: "BlogAdminAPI", targets: ["BlogAdminAPI"]),
         .library(name: "BlogAppAPI", targets: ["BlogAppAPI"]),
-        .library(
-            name: "BlogSharedOpenAPIGenerator",
-            targets: ["BlogSharedOpenAPIGenerator"]
-        ),
         .executable(
             name: "BlogAdminOpenAPIGenerator",
             targets: ["BlogAdminOpenAPIGenerator"]
@@ -51,10 +51,9 @@ let package = Package(
             targets: ["BlogAppOpenAPIGenerator"]
         ),
         .library(name: "BlogBackend", targets: ["BlogBackend"]),
-        .library(
-            name: "BlogFrontend",
-            targets: ["BlogFrontend"]
-        ),
+        .library(name: "BlogWebApp", targets: ["BlogWebApp"]),
+        .library(name: "BlogWebAdmin", targets: ["BlogWebAdmin"]),
+        .library(name: "BlogWebShared", targets: ["BlogWebShared"]),
     ],
     dependencies: [
         .package(
@@ -82,6 +81,14 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
+            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            from: "1.0.0"
+        ),
+        .package(
+            url: "https://github.com/BinaryBirds/swift-web-standards",
+            exact: "1.0.0-beta.4"
+        ),
+        .package(
             url: "https://github.com/apple/swift-nio-ssl",
             from: "2.34.0"
         ),
@@ -91,8 +98,8 @@ let package = Package(
             exact: "1.0.0-alpha.1"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-dbal-postgres",
-            exact: "1.0.0-alpha.1"
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
         ),
         .package(path: "../app-system-module"),
         .package(path: "../app-web-module"),
@@ -101,11 +108,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "BlogContracts",
+            name: "BlogModule",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-core")
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
@@ -114,7 +121,7 @@ let package = Package(
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
-                .target(name: "BlogContracts"),
+                .target(name: "BlogModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -126,7 +133,9 @@ let package = Package(
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
+                .product(name: "WebDomain", package: "app-web-module"),
 
+                .target(name: "BlogModule"),
                 .target(name: "BlogDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -138,15 +147,18 @@ let package = Package(
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "MediaDomain", package: "app-media-module"),
+                .product(name: "MediaModule", package: "app-media-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
                 .target(name: "BlogApplication"),
+                .target(name: "BlogModule"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: swiftSettings
@@ -158,7 +170,10 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "BlogAppAPI",
@@ -166,7 +181,10 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         // MARK: -
         .target(
@@ -211,8 +229,15 @@ let package = Package(
 
                 .product(name: "WebAdminAPI", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
+                .product(
+                    name: "WebInfrastructure",
+                    package: "app-web-module"
+                ),
 
                 .target(name: "BlogInfrastructure"),
+                .target(name: "BlogModule"),
+                .target(name: "BlogApplication"),
+                .target(name: "BlogDomain"),
                 .target(name: "BlogAdminAPI"),
                 .target(name: "BlogAppAPI"),
             ],
@@ -220,25 +245,56 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "BlogFrontend",
+            name: "BlogWebShared",
             dependencies: [
-                .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
-
-                .product(name: "SystemModule", package: "app-system-module"),
-                .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "WebContracts", package: "app-web-module"),
-                .product(name: "WebFrontend", package: "app-web-module"),
-                .product(name: "MediaFrontend", package: "app-media-module"),
-
-                .target(name: "BlogContracts"),
-                .target(name: "BlogAdminAPI"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .target(name: "BlogAppAPI"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "BlogWebApp",
+            dependencies: [
+                .product(name: "FeatherWebApp", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "WebModule", package: "app-web-module"),
+                .product(name: "WebModuleWebApp", package: "app-web-module"),
+                .product(name: "WebBuilders", package: "swift-web-standards"),
+                .target(name: "BlogWebShared"),
+                .target(name: "BlogApplication"),
+                .target(name: "BlogAppAPI"),
+            ],
+            path: "Sources/Composition/WebApp",
             resources: [
                 .copy("Resources/Templates")
             ],
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "BlogWebAdmin",
+            dependencies: [
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
+                .product(name: "WebModule", package: "app-web-module"),
+                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
+                .product(name: "MediaWebAdmin", package: "app-media-module"),
+                .product(name: "MediaModule", package: "app-media-module"),
+                .target(name: "BlogWebShared"),
+                .target(name: "BlogModule"),
+                .target(name: "BlogAdminAPI"),
+            ],
+            path: "Sources/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
         // MARK: -
@@ -247,20 +303,45 @@ let package = Package(
             dependencies: [
                 .target(name: "BlogDomain"),
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "BlogApplicationTests",
             dependencies: [
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "WebApplication", package: "app-web-module"),
+                .product(name: "WebDomain", package: "app-web-module"),
                 .target(name: "BlogApplication"),
             ],
+            path: "Tests/Layers/Application",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "BlogInfrastructureTests",
             dependencies: [
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherTesting", package: "feather-core"),
                 .target(name: "BlogInfrastructure"),
+                .target(name: "BlogModule"),
             ],
+            path: "Tests/Layers/Infrastructure",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "BlogWebAdminTests",
+            dependencies: [
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .target(name: "BlogWebAdmin"),
+            ],
+            path: "Tests/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
     ]

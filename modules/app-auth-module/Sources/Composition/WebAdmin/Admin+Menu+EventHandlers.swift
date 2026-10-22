@@ -26,12 +26,25 @@ public enum AuthAdminMenuEventHandlers {
             context: SystemWebAdmin.Admin.Menu.Context.self
         ) { event, _ in
             guard event.menuKey == "auth" else { return [] }
+            let authRoot = WebRoute.root
+                .appending(pathComponent: "admin")
+                .appending(pathComponent: "auth")
+            let magicLinkListRoute =
+                authRoot
+                .appending(pathComponent: "magic-links")
+            let accessControlRoute =
+                authRoot
+                .appending(pathComponent: "access-control")
             return [
                 .init(
                     menuKey: "auth",
                     label: "Emails",
                     icon: "mail",
-                    link: AuthEmailRoutes.list.description + "/",
+                    link: WebRoute.root
+                        .appending(pathComponent: "admin")
+                        .appending(pathComponent: "auth")
+                        .appending(pathComponent: "emails")
+                        .path,
                     permission: "auth:email:list"
                 ),
                 .init(
@@ -49,15 +62,14 @@ public enum AuthAdminMenuEventHandlers {
                     menuKey: "auth",
                     label: "Magic links",
                     icon: "link",
-                    link: AuthMagicLinkRoutes.list.description + "/",
+                    link: magicLinkListRoute.path + "/",
                     permission: "auth:magic-links:list"
                 ),
                 .init(
                     menuKey: "auth",
                     label: "Access Control",
                     icon: "unlock",
-                    link: AuthAccessControlRoutes.accessControl.description
-                        + "/",
+                    link: accessControlRoute.path + "/",
                     permission: "auth:access-control:list"
                 ),
             ]

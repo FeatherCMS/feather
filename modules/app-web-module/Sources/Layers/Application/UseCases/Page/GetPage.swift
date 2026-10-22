@@ -1,6 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import WebContracts
+import WebModule
 
 //
 //  GetPage.swift
@@ -10,7 +10,7 @@ import WebContracts
 
 public struct GetPage: UseCase {
     struct Action: PermissionAction {
-        let key = WebPermissions.Pages.read
+        let key = WebModule.Permissions.Pages.read
     }
 
     struct Error: UseCaseError {

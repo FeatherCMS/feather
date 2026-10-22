@@ -14,7 +14,7 @@ public struct PageMetadataInput: DTO {
     public let slug: String
     public let publicationDate: Date?
     public let expirationDate: Date?
-    public let status: Metadata.Status
+    public let status: Metadata.Model.Status
     public let title: String?
     public let excerpt: String?
     public let imageURL: String?
@@ -30,7 +30,7 @@ public struct PageMetadataInput: DTO {
         template: String = "default",
         publicationDate: Date?,
         expirationDate: Date?,
-        status: Metadata.Status,
+        status: Metadata.Model.Status,
         title: String?,
         excerpt: String?,
         imageURL: String?,

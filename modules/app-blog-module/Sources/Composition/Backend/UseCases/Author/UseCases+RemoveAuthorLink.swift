@@ -1,15 +1,16 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    public func makeRemoveAuthorLink() -> RemoveAuthorLink {
+    public func makeRemoveAuthorLink() -> AuthorLink.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteAuthorLink(
-                    authorLink: AuthorLinkDatabaseRepository(
+                AuthorLink.Remove.Scope(
+                    authorLink: AuthorLink.Repository.Database(
                         context: context
                     )
                 )

@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import WebContracts
-import WebDomain
+public import WebDomain
+import WebModule
 
 //
 //  EditSettings.swift
@@ -12,15 +12,15 @@ import WebDomain
 public struct EditSettings: UseCase {
 
     struct Action: PermissionAction {
-        let key = WebPermissions.Settings.update
+        let key = WebModule.Permissions.Settings.update
     }
 
     let authorizer: any Authorizer
-    let transaction: any TransactionExecutor<WriteSettings>
+    let transaction: any TransactionExecutor<Settings.Repository.Scope>
 
     public init(
         authorizer: any Authorizer,
-        transaction: any TransactionExecutor<WriteSettings>
+        transaction: any TransactionExecutor<Settings.Repository.Scope>
     ) {
         self.authorizer = authorizer
         self.transaction = transaction

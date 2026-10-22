@@ -8,9 +8,8 @@ extension MagicLink {
             [
                 "api/v1/admin/auth/magic-links":
                     AuthMagicLinkManagementPathItems(),
-                "api/v1/admin/auth/magic-links/": AuthMagicLinkListPathItems(),
-                "api/v1/admin/auth/magic-links/search":
-                    AuthMagicLinkSearchPathItems(),
+                "api/v1/admin/auth/magic-links/query":
+                    AuthMagicLinkQueryPathItems(),
                 "api/v1/admin/auth/magic-links/{authMagicLinkId}":
                     AuthMagicLinkIdPathItems(),
             ]

@@ -3,12 +3,12 @@ info:
   title: Blog Admin API
   version: 0.1.0
 tags:
-- name: BlogPosts
-  description: Manage blog posts.
 - name: BlogAuthors
   description: Manage blog authors.
 - name: BlogAuthorLinks
   description: Manage blog author links.
+- name: BlogPosts
+  description: Manage blog posts.
 - name: BlogSettings
   description: Manage blog settings.
 - name: BlogTags
@@ -18,200 +18,11 @@ servers:
 security:
 - bearerAuth: []
 paths:
-  /api/v1/admin/blog/posts:
-    post:
-      tags:
-      - BlogPosts
-      operationId: blogPostCreate
-      requestBody:
-        $ref: '#/components/requestBodies/BlogPostRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/BlogPostDetailResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - BlogPosts
-      operationId: blogPostRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        204:
-          $ref: '#/components/responses/NoContentResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-  /api/v1/admin/blog/posts/:
-    get:
-      tags:
-      - BlogPosts
-      operationId: blogPostList
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostListResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-  /api/v1/admin/blog/posts/search:
-    post:
-      tags:
-      - BlogPosts
-      operationId: blogPostSearch
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPostListItemSearchRequestQuerySchema'
-        required: true
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostListItemSearchSchemaSearchResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-  /api/v1/admin/blog/posts/{blogPostId}:
-    get:
-      tags:
-      - BlogPosts
-      operationId: blogPostGet
-      parameters:
-      - $ref: '#/components/parameters/BlogPostIdParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostDetailResponse'
-        404:
-          description: BlogPost not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-    put:
-      tags:
-      - BlogPosts
-      operationId: blogPostUpdate
-      parameters:
-      - $ref: '#/components/parameters/BlogPostIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/BlogPostUpdateRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostDetailResponse'
-        404:
-          description: BlogPost not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-    patch:
-      tags:
-      - BlogPosts
-      operationId: blogPostPatch
-      parameters:
-      - $ref: '#/components/parameters/BlogPostIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/BlogPostPatchRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostDetailResponse'
-        404:
-          description: BlogPost not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
   /api/v1/admin/blog/authors:
     post:
       tags:
       - BlogAuthors
-      operationId: blogAuthorCreate
+      operationId: blogAuthorPost
       requestBody:
         $ref: '#/components/requestBodies/BlogAuthorRequestBody'
       responses:
@@ -234,7 +45,7 @@ paths:
     delete:
       tags:
       - BlogAuthors
-      operationId: blogAuthorRemove
+      operationId: blogAuthorDelete
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -280,16 +91,16 @@ paths:
     post:
       tags:
       - BlogAuthors
-      operationId: blogAuthorSearch
+      operationId: blogAuthorQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogAuthorListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/BlogAuthorQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -315,7 +126,7 @@ paths:
         200:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
         404:
-          description: BlogAuthor not found
+          description: Blog author not found
           content:
             application/json:
               schema:
@@ -337,7 +148,7 @@ paths:
     put:
       tags:
       - BlogAuthors
-      operationId: blogAuthorUpdate
+      operationId: blogAuthorPut
       parameters:
       - $ref: '#/components/parameters/BlogAuthorIdParameter'
       requestBody:
@@ -346,7 +157,7 @@ paths:
         200:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
         404:
-          description: BlogAuthor not found
+          description: Blog author not found
           content:
             application/json:
               schema:
@@ -377,7 +188,7 @@ paths:
         200:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
         404:
-          description: BlogAuthor not found
+          description: Blog author not found
           content:
             application/json:
               schema:
@@ -400,7 +211,7 @@ paths:
     post:
       tags:
       - BlogAuthorLinks
-      operationId: blogAuthorLinkCreate
+      operationId: blogAuthorLinkPost
       parameters:
       - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
       requestBody:
@@ -425,7 +236,7 @@ paths:
     delete:
       tags:
       - BlogAuthorLinks
-      operationId: blogAuthorLinkRemove
+      operationId: blogAuthorLinkDelete
       parameters:
       - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
       requestBody:
@@ -475,18 +286,18 @@ paths:
     post:
       tags:
       - BlogAuthorLinks
-      operationId: blogAuthorLinkSearch
+      operationId: blogAuthorLinkQuery
       parameters:
       - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogAuthorLinkListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorLinkListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/BlogAuthorLinkQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -513,7 +324,7 @@ paths:
         200:
           $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
         404:
-          description: BlogAuthorLink not found
+          description: Blog author link not found
           content:
             application/json:
               schema:
@@ -535,7 +346,7 @@ paths:
     put:
       tags:
       - BlogAuthorLinks
-      operationId: blogAuthorLinkUpdate
+      operationId: blogAuthorLinkPut
       parameters:
       - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
       - $ref: '#/components/parameters/BlogAuthorLinkIdParameter'
@@ -545,7 +356,7 @@ paths:
         200:
           $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
         404:
-          description: BlogAuthorLink not found
+          description: Blog author link not found
           content:
             application/json:
               schema:
@@ -577,7 +388,196 @@ paths:
         200:
           $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
         404:
-          description: BlogAuthorLink not found
+          description: Blog author link not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/posts:
+    post:
+      tags:
+      - BlogPosts
+      operationId: blogPostPost
+      requestBody:
+        $ref: '#/components/requestBodies/BlogPostRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/BlogPostDetailResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - BlogPosts
+      operationId: blogPostDelete
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/posts/:
+    get:
+      tags:
+      - BlogPosts
+      operationId: blogPostList
+      responses:
+        200:
+          $ref: '#/components/responses/BlogPostListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/posts/search:
+    post:
+      tags:
+      - BlogPosts
+      operationId: blogPostQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/BlogPostQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/posts/{blogPostId}:
+    get:
+      tags:
+      - BlogPosts
+      operationId: blogPostGet
+      parameters:
+      - $ref: '#/components/parameters/BlogPostIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/BlogPostDetailResponse'
+        404:
+          description: Blog post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - BlogPosts
+      operationId: blogPostPut
+      parameters:
+      - $ref: '#/components/parameters/BlogPostIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BlogPostUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BlogPostDetailResponse'
+        404:
+          description: Blog post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - BlogPosts
+      operationId: blogPostPatch
+      parameters:
+      - $ref: '#/components/parameters/BlogPostIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/BlogPostPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/BlogPostDetailResponse'
+        404:
+          description: Blog post not found
           content:
             application/json:
               schema:
@@ -621,7 +621,7 @@ paths:
     put:
       tags:
       - BlogSettings
-      operationId: blogSettingsUpdate
+      operationId: blogSettingsPut
       requestBody:
         $ref: '#/components/requestBodies/BlogSettingsUpdateRequestBody'
       responses:
@@ -645,7 +645,7 @@ paths:
     post:
       tags:
       - BlogTags
-      operationId: blogTagCreate
+      operationId: blogTagPost
       requestBody:
         $ref: '#/components/requestBodies/BlogTagRequestBody'
       responses:
@@ -668,7 +668,7 @@ paths:
     delete:
       tags:
       - BlogTags
-      operationId: blogTagRemove
+      operationId: blogTagDelete
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -714,16 +714,16 @@ paths:
     post:
       tags:
       - BlogTags
-      operationId: blogTagSearch
+      operationId: blogTagQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogTagListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/BlogTagListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/BlogTagQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -749,7 +749,7 @@ paths:
         200:
           $ref: '#/components/responses/BlogTagDetailResponse'
         404:
-          description: BlogTag not found
+          description: Blog tag not found
           content:
             application/json:
               schema:
@@ -771,7 +771,7 @@ paths:
     put:
       tags:
       - BlogTags
-      operationId: blogTagUpdate
+      operationId: blogTagPut
       parameters:
       - $ref: '#/components/parameters/BlogTagIdParameter'
       requestBody:
@@ -780,7 +780,7 @@ paths:
         200:
           $ref: '#/components/responses/BlogTagDetailResponse'
         404:
-          description: BlogTag not found
+          description: Blog tag not found
           content:
             application/json:
               schema:
@@ -811,7 +811,7 @@ paths:
         200:
           $ref: '#/components/responses/BlogTagDetailResponse'
         404:
-          description: BlogTag not found
+          description: Blog tag not found
           content:
             application/json:
               schema:
@@ -832,66 +832,46 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    BlogPostCreateSchema:
+    BlogAuthorCreateSchema:
       type: object
       properties:
-        title:
+        name:
           type: string
-          example: Hello world
+          example: Header menu
         excerpt:
-          type: string
-          example: Short post summary.
+          $ref: '#/components/schemas/BlogAuthorExcerptField'
         content:
-          type: string
-          example: <h1>Homepage</h1>
-        imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdField'
-        authorIds:
-          $ref: '#/components/schemas/BlogPostAuthorIdsField'
-        tagIds:
-          $ref: '#/components/schemas/BlogPostTagIdsField'
+          $ref: '#/components/schemas/BlogAuthorContentField'
+        profileImageAssetId:
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
       required:
-      - title
-      - excerpt
-      - content
-    BlogPostImageAssetIdField:
+      - name
+    BlogAuthorExcerptField:
+      type: string
+      example: Short author summary.
+    BlogAuthorContentField:
+      type: string
+      example: Author biography.
+    BlogAuthorProfileImageAssetIdField:
       type: string
       example: media_asset_1
-    BlogPostAuthorIdsField:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogAuthorIdField'
-    BlogAuthorIdField:
-      type: string
-      example: wm_header
-    BlogPostTagIdsField:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogTagIdField'
-    BlogTagIdField:
-      type: string
-      example: wp_home
-    BlogPostDetailSchema:
+    BlogAuthorDetailSchema:
       type: object
       properties:
         id:
           type: string
-          example: wp_home
-        title:
+          example: wm_header
+        name:
           type: string
-          example: Hello world
+          example: Header menu
         excerpt:
           type: string
-          example: Short post summary.
+          example: Short author summary.
         content:
           type: string
-          example: <h1>Homepage</h1>
-        imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdField'
-        authorIds:
-          $ref: '#/components/schemas/BlogPostAuthorIdsField'
-        tagIds:
-          $ref: '#/components/schemas/BlogPostTagIdsField'
+          example: Author biography.
+        profileImageAssetId:
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
         metadata:
           $ref: '#/components/schemas/WebMetadataDetailSchema'
         createdAt:
@@ -904,11 +884,9 @@ components:
           example: 1.76e+9
       required:
       - id
-      - title
+      - name
       - excerpt
       - content
-      - authorIds
-      - tagIds
       - metadata
       - createdAt
       - updatedAt
@@ -1042,49 +1020,46 @@ components:
             example: id1
       required:
       - ids
-    BlogPostListSchema:
+    BlogAuthorListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/BlogPostListItemSchema'
-    BlogPostListItemSchema:
+        $ref: '#/components/schemas/BlogAuthorListItemSchema'
+    BlogAuthorListItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/BlogPostIdField'
-        title:
-          $ref: '#/components/schemas/BlogPostTitleField'
+          $ref: '#/components/schemas/BlogAuthorIdField'
+        name:
+          $ref: '#/components/schemas/BlogAuthorNameField'
         excerpt:
-          $ref: '#/components/schemas/BlogPostExcerptField'
-        imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+          $ref: '#/components/schemas/BlogAuthorExcerptField'
+        profileImageAssetId:
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
         createdAt:
-          $ref: '#/components/schemas/BlogPostCreatedAtField'
+          $ref: '#/components/schemas/BlogAuthorCreatedAtField'
         updatedAt:
-          $ref: '#/components/schemas/BlogPostUpdatedAtField'
+          $ref: '#/components/schemas/BlogAuthorUpdatedAtField'
       required:
       - id
-      - title
+      - name
       - excerpt
       - createdAt
       - updatedAt
-    BlogPostIdField:
+    BlogAuthorIdField:
       type: string
-      example: wp_home
-    BlogPostTitleField:
+      example: wm_header
+    BlogAuthorNameField:
       type: string
-      example: Hello world
-    BlogPostExcerptField:
-      type: string
-      example: Short post summary.
-    BlogPostCreatedAtField:
+      example: Header menu
+    BlogAuthorCreatedAtField:
       type: number
       format: double
       example: 1.76e+9
-    BlogPostUpdatedAtField:
+    BlogAuthorUpdatedAtField:
       type: number
       format: double
       example: 1.76e+9
-    BlogPostListItemSearchRequestQuerySchema:
+    BlogAuthorQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1098,7 +1073,8 @@ components:
                 type: string
                 enum:
                 - id
-                - title
+                - key
+                - name
                 - createdAt
                 - updatedAt
                 example: id
@@ -1144,18 +1120,18 @@ components:
     SearchStringField:
       type: string
       example: foo
-    BlogPostListItemSearchSchema:
+    BlogAuthorQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogPostListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/BlogPostListItemSchema'
+                $ref: '#/components/schemas/BlogAuthorQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -1165,7 +1141,7 @@ components:
       required:
       - query
       - data
-    BlogPostListItemSearchResponseQuerySchema:
+    BlogAuthorQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1179,7 +1155,8 @@ components:
                 type: string
                 enum:
                 - id
-                - title
+                - key
+                - name
                 - createdAt
                 - updatedAt
                 example: id
@@ -1208,87 +1185,7 @@ components:
       required:
       - size
       - number
-    BlogPostPatchSchema:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/BlogPostTitleField'
-        excerpt:
-          $ref: '#/components/schemas/BlogPostExcerptField'
-        content:
-          $ref: '#/components/schemas/BlogPostContentField'
-        imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdField'
-        authorIds:
-          $ref: '#/components/schemas/BlogPostAuthorIdsField'
-        tagIds:
-          $ref: '#/components/schemas/BlogPostTagIdsField'
-    BlogPostContentField:
-      type: string
-      example: <h1>Homepage</h1>
-    BlogAuthorCreateSchema:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Header menu
-        excerpt:
-          $ref: '#/components/schemas/BlogAuthorExcerptField'
-        content:
-          $ref: '#/components/schemas/BlogAuthorContentField'
-        profileImageAssetId:
-          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
-      required:
-      - name
-    BlogAuthorExcerptField:
-      type: string
-      example: Short author summary.
-    BlogAuthorContentField:
-      type: string
-      example: Author biography.
-    BlogAuthorProfileImageAssetIdField:
-      type: string
-      example: media_asset_1
-    BlogAuthorDetailSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          example: wm_header
-        name:
-          type: string
-          example: Header menu
-        excerpt:
-          type: string
-          example: Short author summary.
-        content:
-          type: string
-          example: Author biography.
-        profileImageAssetId:
-          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
-        metadata:
-          $ref: '#/components/schemas/WebMetadataDetailSchema'
-        createdAt:
-          type: number
-          format: double
-          example: 1.76e+9
-        updatedAt:
-          type: number
-          format: double
-          example: 1.76e+9
-      required:
-      - id
-      - name
-      - excerpt
-      - content
-      - metadata
-      - createdAt
-      - updatedAt
-    BlogAuthorListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogAuthorListItemSchema'
-    BlogAuthorListItemSchema:
+    BlogAuthorQueryItemSchema:
       type: object
       properties:
         id:
@@ -1309,105 +1206,6 @@ components:
       - excerpt
       - createdAt
       - updatedAt
-    BlogAuthorNameField:
-      type: string
-      example: Header menu
-    BlogAuthorCreatedAtField:
-      type: number
-      format: double
-      example: 1.76e+9
-    BlogAuthorUpdatedAtField:
-      type: number
-      format: double
-      example: 1.76e+9
-    BlogAuthorListItemSearchRequestQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - key
-                - name
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          example:
-            search: foo
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - filters
-    BlogAuthorListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/BlogAuthorListItemSearchResponseQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/BlogAuthorListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
-    BlogAuthorListItemSearchResponseQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchResponsePageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - key
-                - name
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          example:
-            search: foo
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - page
-      - filters
     BlogAuthorPatchSchema:
       type: object
       properties:
@@ -1555,7 +1353,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    BlogAuthorLinkListItemSearchRequestQuerySchema:
+    BlogAuthorLinkQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1590,18 +1388,18 @@ components:
               $ref: '#/components/schemas/SearchStringField'
       required:
       - filters
-    BlogAuthorLinkListItemSearchSchema:
+    BlogAuthorLinkQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogAuthorLinkListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/BlogAuthorLinkListItemSchema'
+                $ref: '#/components/schemas/BlogAuthorLinkQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -1611,7 +1409,7 @@ components:
       required:
       - query
       - data
-    BlogAuthorLinkListItemSearchResponseQuerySchema:
+    BlogAuthorLinkQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1647,6 +1445,37 @@ components:
       required:
       - page
       - filters
+    BlogAuthorLinkQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogAuthorLinkIdField'
+        menuId:
+          $ref: '#/components/schemas/BlogAuthorIdField'
+        label:
+          $ref: '#/components/schemas/BlogAuthorLinkLabelField'
+        url:
+          $ref: '#/components/schemas/BlogAuthorLinkURLField'
+        priority:
+          $ref: '#/components/schemas/BlogAuthorLinkPriorityField'
+        isBlank:
+          $ref: '#/components/schemas/BlogAuthorLinkIsBlankField'
+        permission:
+          $ref: '#/components/schemas/BlogAuthorLinkPermissionField'
+        createdAt:
+          $ref: '#/components/schemas/BlogAuthorLinkCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogAuthorLinkUpdatedAtField'
+      required:
+      - id
+      - menuId
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      - createdAt
+      - updatedAt
     BlogAuthorLinkPatchSchema:
       type: object
       properties:
@@ -1662,6 +1491,250 @@ components:
           $ref: '#/components/schemas/BlogAuthorLinkPermissionField'
         notes:
           $ref: '#/components/schemas/BlogAuthorLinkNotesField'
+    BlogPostCreateSchema:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Hello world
+        excerpt:
+          type: string
+          example: Short post summary.
+        content:
+          type: string
+          example: <h1>Homepage</h1>
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+        authorIds:
+          $ref: '#/components/schemas/BlogPostAuthorIdsField'
+        tagIds:
+          $ref: '#/components/schemas/BlogPostTagIdsField'
+      required:
+      - title
+      - excerpt
+      - content
+    BlogPostImageAssetIdField:
+      type: string
+      example: media_asset_1
+    BlogPostAuthorIdsField:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogAuthorIdField'
+    BlogPostTagIdsField:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogTagIdField'
+    BlogTagIdField:
+      type: string
+      example: wp_home
+    BlogPostDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: wp_home
+        title:
+          type: string
+          example: Hello world
+        excerpt:
+          type: string
+          example: Short post summary.
+        content:
+          type: string
+          example: <h1>Homepage</h1>
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+        authorIds:
+          $ref: '#/components/schemas/BlogPostAuthorIdsField'
+        tagIds:
+          $ref: '#/components/schemas/BlogPostTagIdsField'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataDetailSchema'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - title
+      - excerpt
+      - content
+      - authorIds
+      - tagIds
+      - metadata
+      - createdAt
+      - updatedAt
+    BlogPostListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogPostListItemSchema'
+    BlogPostListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostIdField'
+        title:
+          $ref: '#/components/schemas/BlogPostTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/BlogPostCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogPostUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+    BlogPostIdField:
+      type: string
+      example: wp_home
+    BlogPostTitleField:
+      type: string
+      example: Hello world
+    BlogPostExcerptField:
+      type: string
+      example: Short post summary.
+    BlogPostCreatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    BlogPostUpdatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    BlogPostQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - filters
+    BlogPostQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/BlogPostQueryItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    BlogPostQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    BlogPostQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostIdField'
+        title:
+          $ref: '#/components/schemas/BlogPostTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/BlogPostCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogPostUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+    BlogPostPatchSchema:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/BlogPostTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogPostContentField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+        authorIds:
+          $ref: '#/components/schemas/BlogPostAuthorIdsField'
+        tagIds:
+          $ref: '#/components/schemas/BlogPostTagIdsField'
+    BlogPostContentField:
+      type: string
+      example: <h1>Homepage</h1>
     BlogSettingsDetailSchema:
       type: object
       properties:
@@ -1813,7 +1886,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    BlogTagListItemSearchRequestQuerySchema:
+    BlogTagQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1845,18 +1918,18 @@ components:
               $ref: '#/components/schemas/SearchStringField'
       required:
       - filters
-    BlogTagListItemSearchSchema:
+    BlogTagQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogTagListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/BlogTagListItemSchema'
+                $ref: '#/components/schemas/BlogTagQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -1866,7 +1939,7 @@ components:
       required:
       - query
       - data
-    BlogTagListItemSearchResponseQuerySchema:
+    BlogTagQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1899,6 +1972,27 @@ components:
       required:
       - page
       - filters
+    BlogTagQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogTagIdField'
+        title:
+          $ref: '#/components/schemas/BlogTagTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogTagExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogTagImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/BlogTagCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogTagUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
     BlogTagPatchSchema:
       type: object
       properties:
@@ -1914,44 +2008,26 @@ components:
       type: string
       example: <h1>Homepage</h1>
   responses:
-    BlogPostDetailResponse:
-      description: BlogPost response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogPostDetailSchema'
-    NoContentResponse:
-      description: Delete succeeded
-    BlogPostListResponse:
-      description: BlogPost list response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogPostListSchema'
-    BlogPostListItemSearchSchemaSearchResponse:
-      description: Search response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogPostListItemSearchSchema'
     BlogAuthorDetailResponse:
       description: BlogAuthor response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogAuthorDetailSchema'
+    NoContentResponse:
+      description: Delete succeeded
     BlogAuthorListResponse:
       description: BlogAuthor list response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogAuthorListSchema'
-    BlogAuthorListItemSearchSchemaSearchResponse:
+    BlogAuthorQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorListItemSearchSchema'
+            $ref: '#/components/schemas/BlogAuthorQueryItemSearchSchema'
     BlogAuthorLinkDetailResponse:
       description: BlogAuthorLink response
       content:
@@ -1964,12 +2040,30 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogAuthorLinkListSchema'
-    BlogAuthorLinkListItemSearchSchemaSearchResponse:
+    BlogAuthorLinkQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorLinkListItemSearchSchema'
+            $ref: '#/components/schemas/BlogAuthorLinkQueryItemSearchSchema'
+    BlogPostDetailResponse:
+      description: BlogPost response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostDetailSchema'
+    BlogPostListResponse:
+      description: BlogPost list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostListSchema'
+    BlogPostQueryItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostQueryItemSearchSchema'
     BlogSettingsDetailResponse:
       description: BlogSettings response
       content:
@@ -1988,20 +2082,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogTagListSchema'
-    BlogTagListItemSearchSchemaSearchResponse:
+    BlogTagQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogTagListItemSearchSchema'
+            $ref: '#/components/schemas/BlogTagQueryItemSearchSchema'
   parameters:
-    BlogPostIdParameter:
-      name: blogPostId
-      in: path
-      required: true
-      schema:
-        $ref: '#/components/schemas/BlogPostIdField'
-      description: BlogPost id
     BlogAuthorIdParameter:
       name: blogAuthorId
       in: path
@@ -2023,6 +2110,13 @@ components:
       schema:
         $ref: '#/components/schemas/BlogAuthorLinkIdField'
       description: BlogAuthorLink id
+    BlogPostIdParameter:
+      name: blogPostId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogPostIdField'
+      description: BlogPost id
     BlogTagIdParameter:
       name: blogTagId
       in: path
@@ -2031,35 +2125,17 @@ components:
         $ref: '#/components/schemas/BlogTagIdField'
       description: BlogTag id
   requestBodies:
-    BlogPostRequestBody:
+    BlogAuthorRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogPostCreateSchema'
+            $ref: '#/components/schemas/BlogAuthorCreateSchema'
       required: true
     DeleteRequestBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
-      required: true
-    BlogPostUpdateRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogPostPatchSchema'
-      required: true
-    BlogPostPatchRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogPostPatchSchema'
-      required: true
-    BlogAuthorRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogAuthorCreateSchema'
       required: true
     BlogAuthorUpdateRequestBody:
       content:
@@ -2090,6 +2166,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogAuthorLinkPatchSchema'
+      required: true
+    BlogPostRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostCreateSchema'
+      required: true
+    BlogPostUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostPatchSchema'
+      required: true
+    BlogPostPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostPatchSchema'
       required: true
     BlogSettingsUpdateRequestBody:
       content:

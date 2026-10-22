@@ -1,27 +1,21 @@
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 public import MediaApplication
 import MediaDomain
 import MediaInfrastructure
+public import MediaModule
 
 extension UseCases {
 
-    public func makeSearchAssets() -> SearchMediaAssets {
+    public func makeSearchAssets() -> Asset.File.Search.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadMedia(
-                    folders: MediaFolderDatabaseQueries(
-                        context: context
-                    ),
-                    assets: MediaAssetDatabaseQueries(
-                        context: context,
-                        objectKeyGenerator: storageContext.objectKeyGenerator
-                    ),
-                    assetSearch: MediaAssetSearchDatabaseQueries(
+                Asset.File.Search.Scope(
+                    query: Asset.File.Search.Query.Database(
                         context: context,
                         objectKeyGenerator: storageContext.objectKeyGenerator
                     )

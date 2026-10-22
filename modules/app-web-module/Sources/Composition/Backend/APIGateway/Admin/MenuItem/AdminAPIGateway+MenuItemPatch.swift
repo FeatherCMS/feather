@@ -27,7 +27,7 @@ extension AdminAPIGateway {
                 isBlank: body.isBlank,
                 permission: body.permission,
                 authentication: body.authentication.flatMap(
-                    MenuItemAuthentication.init(rawValue:)
+                    MenuItem.Authentication.init(rawValue:)
                 ),
                 notes: body.notes
             )

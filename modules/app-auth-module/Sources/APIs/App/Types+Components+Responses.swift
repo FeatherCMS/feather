@@ -6,12 +6,12 @@ extension Components {
             /// - Remark: Generated from `#/components/responses/AuthMeResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/components/responses/AuthMeResponse/content/application\/json`.
-                case json(Components.Schemas.AuthResponseSchema)
+                case json(Components.Schemas.AuthSchemasResponse)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthResponseSchema {
+                public var json: Components.Schemas.AuthSchemasResponse {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -34,12 +34,12 @@ extension Components {
             /// - Remark: Generated from `#/components/responses/AuthResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/components/responses/AuthResponse/content/application\/json`.
-                case json(Components.Schemas.AuthResponseSchema)
+                case json(Components.Schemas.AuthSchemasResponse)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthResponseSchema {
+                public var json: Components.Schemas.AuthSchemasResponse {
                     get throws {
                         switch self {
                         case let .json(body):

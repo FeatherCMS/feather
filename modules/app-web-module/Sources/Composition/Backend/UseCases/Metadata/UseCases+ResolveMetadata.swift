@@ -1,11 +1,12 @@
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
+import WebDomain
 import WebApplication
 import WebInfrastructure
 
@@ -15,8 +16,8 @@ extension UseCases {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadMetadata(
-                    metadata: MetadataDatabaseQueries(
+                Metadata.Query.Scope(
+                    metadata: Metadata.Query.Database(
                         context: context
                     )
                 )

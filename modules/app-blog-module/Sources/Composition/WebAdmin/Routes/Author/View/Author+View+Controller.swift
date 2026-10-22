@@ -1,0 +1,31 @@
+import BlogAdminAPI
+import BlogAppAPI
+import BlogModule
+import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import MediaWebAdmin
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebModuleWebAdmin
+
+extension Author {
+    enum View {}
+}
+
+extension Author.View {
+    enum Controller {}
+}
+
+extension Author.View.Controller {
+    protocol Interface: Sendable {
+        func getBlogAuthor(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
+    }
+}

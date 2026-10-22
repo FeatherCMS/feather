@@ -1,42 +1,42 @@
-import FeatherDBAL
-import SystemModule
+public import FeatherDBAL
+public import SystemModule
 
 extension Permission.Table: DatabaseTableWithInsert {
-    struct Insert: DatabaseTableRowEncodable {
-        let id: String
-        let key: String
-        let name: String?
-        let notes: String?
+    public struct Insert: DatabaseTableRowEncodable {
+        public let id: String
+        public let key: String
+        public let name: String?
+        public let notes: String?
     }
 }
 
 extension Permission.Table: DatabaseTableWithUpdate {
-    struct Update: DatabaseTableRowEncodable {
-        let key: String
-        let name: String?
-        let notes: String?
+    public struct Update: DatabaseTableRowEncodable {
+        public let key: String
+        public let name: String?
+        public let notes: String?
 
-        func afterEncode(values: inout DatabaseTableRowValues) throws {
+        public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Permission.Table.columns.updatedAt] = .currentTimestamp
         }
     }
 }
 
 extension Permission.Table: DatabaseTableWithDetail {
-    struct Detail: DatabaseTableRowDecodable {
-        let id: String
-        let key: String
-        let name: String?
-        let notes: String?
+    public struct Detail: DatabaseTableRowDecodable {
+        public let id: String
+        public let key: String
+        public let name: String?
+        public let notes: String?
     }
 }
 
 extension Permission.Table: DatabaseTableWithList {
-    struct List: DatabaseTableRowDecodable {
-        let id: String
-        let key: String
-        let name: String?
-        let notes: String?
+    public struct List: DatabaseTableRowDecodable {
+        public let id: String
+        public let key: String
+        public let name: String?
+        public let notes: String?
     }
 }
 

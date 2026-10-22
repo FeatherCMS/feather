@@ -3,7 +3,7 @@ import FeatherWebShared
 import FeatherWebAdmin
 import Testing
 
-@testable import WebApp
+@testable import WebModuleWebApp
 
 @Suite
 struct PermissionConsistencyTestSuite {

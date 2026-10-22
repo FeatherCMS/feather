@@ -1,14 +1,15 @@
-import SystemModule
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemApplication
 import SystemInfrastructure
+import SystemModule
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
@@ -18,9 +19,9 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 WritePageMetadata(
-                    page: PageDatabaseRepository(context: context),
-                    metadata: MetadataDatabaseRepository(context: context),
-                    settings: SettingsDatabaseRepository(context: context),
+                    page: Page.Repository.Database(context: context),
+                    metadata: Metadata.Repository.Database(context: context),
+                    settings: Settings.Repository.Database(context: context),
                     variable: SystemModule.Variable.Lookup.Database(
                         context: context
                     )

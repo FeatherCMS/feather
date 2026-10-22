@@ -1,0 +1,77 @@
+import BlogModule
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+import WebModuleWebAdmin
+
+extension Post.Status.Controller {
+    struct Default: Interface {
+        let environment: AppEnvironment
+        let routes: BlogWebAdmin.Router.Routes
+
+        func post(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let id = try context.requiredID()
+            let payload = try await request.decode(
+                as: AdminStatusActionFormInput.self,
+                context: context
+            )
+            let api = API.Client(
+                environment: environment,
+                requestContext: context
+            )
+            let details = try await Post.View.Repository.OpenAPI(api: api)
+                .get(
+                    id: id
+                )
+            let targetStatus = resolvedStatus(
+                from: payload,
+                current: details.metadata
+            )
+            try await AdminWebMetadataStatusUpdater(
+                api: WebModuleWebAdmin.API.Client(
+                    environment: environment,
+                    requestContext: context
+                )
+            )
+            .update(
+                referenceType: "blog.post",
+                referenceID: id,
+                status: targetStatus
+            )
+
+            let toast = statusToastContent(for: targetStatus)
+            return AdminNotificationFlash.redirect(
+                to: payload.normalizedReturnTo ?? routes.posts.description
+                    + "/",
+                notification: .init(title: toast.title, message: toast.message)
+            )
+        }
+
+        private func resolvedStatus(
+            from payload: AdminStatusActionFormInput,
+            current metadata: AdminMetadataFormValue
+        ) -> String {
+            let allowedStatuses = Set(["draft", "published", "archived"])
+            let selectedStatus = payload.normalizedStatus
+            return allowedStatuses.contains(selectedStatus)
+                ? selectedStatus
+                : metadata.normalizedStatus
+        }
+
+        private func statusToastContent(
+            for status: String
+        ) -> (title: String, message: String) {
+            switch status {
+            case "published":
+                return ("Published", "Blog post published successfully.")
+            case "archived":
+                return ("Archived", "Blog post archived successfully.")
+            default:
+                return ("Draft", "Blog post moved to draft successfully.")
+            }
+        }
+    }
+}

@@ -4,9 +4,9 @@ import FeatherModuleKit
 
 extension AdminAPIGateway {
 
-    public func accountInvitationRemove(
-        _ input: Operations.AccountInvitationRemove.Input
-    ) async throws -> Operations.AccountInvitationRemove.Output {
+    public func accountInvitationDelete(
+        _ input: Operations.AccountInvitationDelete.Input
+    ) async throws -> Operations.AccountInvitationDelete.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value):

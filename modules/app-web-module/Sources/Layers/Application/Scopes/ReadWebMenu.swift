@@ -5,16 +5,22 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherModuleKit
+public import WebDomain
 
-public struct ReadPublicMenu: Scope {
-    public let menu: any MenuQueries
-    public let menuItem: any MenuItemQueries
+extension Menu {
+    public struct PublicScope: FeatherModuleKit.Scope {
+        public let menuList: any Menu.List.Query.Interface
+        public let menuDetail: any Menu.Detail.Query.Interface
+        public let menuItemList: any MenuItem.List.Query.Interface
 
-    public init(
-        menu: any MenuQueries,
-        menuItem: any MenuItemQueries
-    ) {
-        self.menu = menu
-        self.menuItem = menuItem
+        public init(
+            menuList: any Menu.List.Query.Interface,
+            menuDetail: any Menu.Detail.Query.Interface,
+            menuItemList: any MenuItem.List.Query.Interface
+        ) {
+            self.menuList = menuList
+            self.menuDetail = menuDetail
+            self.menuItemList = menuItemList
+        }
     }
 }

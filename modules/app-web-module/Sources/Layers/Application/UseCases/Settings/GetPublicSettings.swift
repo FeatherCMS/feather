@@ -5,13 +5,13 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherModuleKit
-import WebDomain
+public import WebDomain
 
 public struct GetPublicSettings {
-    let query: any QueryExecutor<WriteSettings>
+    let query: any QueryExecutor<Settings.Repository.Scope>
 
     public init(
-        query: any QueryExecutor<WriteSettings>
+        query: any QueryExecutor<Settings.Repository.Scope>
     ) {
         self.query = query
     }

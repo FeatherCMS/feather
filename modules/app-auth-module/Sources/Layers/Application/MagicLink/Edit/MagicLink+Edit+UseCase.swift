@@ -1,6 +1,7 @@
 import AuthDomain
 public import AuthModule
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 
 extension MagicLink.Edit {
@@ -43,11 +44,14 @@ extension MagicLink.Edit {
 
                 let updated = MagicLink.Model(
                     id: existing.id,
-                    authEmailId: input.authEmailId
-                        ?? existing.authEmailId,
+                    authEmailId: input.authEmailId.apply(
+                        to: existing.authEmailId
+                    ),
                     token: existing.token,
                     expiresAt: existing.expiresAt,
-                    isPersistent: input.isPersistent ?? existing.isPersistent,
+                    isPersistent: input.isPersistent.apply(
+                        to: existing.isPersistent
+                    ),
                     isUsed: existing.isUsed,
                     createdAt: existing.createdAt,
                     updatedAt: existing.updatedAt

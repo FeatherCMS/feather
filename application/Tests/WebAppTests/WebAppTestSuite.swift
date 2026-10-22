@@ -9,11 +9,13 @@ import SGML
 import SystemWebAdmin
 import Testing
 import UserWebAdmin
-import AccountFrontend
-@testable import WebFrontend
+import AccountWebAdmin
+import AccountWebApp
+@testable import WebModuleWebApp
+@testable import WebModuleWebAdmin
 import FeatherValidation
 
-@testable import WebApp
+@testable import WebModuleWebApp
 
 @Suite
 struct WebAppTestSuite {

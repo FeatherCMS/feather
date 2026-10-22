@@ -37,10 +37,10 @@ extension Credential.Table {
                     columns: [
                         .init(name: columns.authEmailId.name, type: .string)
                     ],
-                    referencesTable: AuthEmail.Table.name,
+                    referencesTable: Email.Table.name,
                     referencedColumns: [
                         .init(
-                            name: AuthEmail.Table.columns.id.name,
+                            name: Email.Table.columns.id.name,
                             type: .string
                         )
                     ],

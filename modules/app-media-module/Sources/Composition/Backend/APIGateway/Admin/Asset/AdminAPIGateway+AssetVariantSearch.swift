@@ -2,9 +2,9 @@ import FeatherModuleKit
 public import MediaAdminAPI
 
 extension AdminAPIGateway {
-    public func mediaAssetVariantSearch(
-        _ input: Operations.MediaAssetVariantSearch.Input
-    ) async throws -> Operations.MediaAssetVariantSearch.Output {
+    public func mediaAssetVariantQuery(
+        _ input: Operations.MediaAssetVariantQuery.Input
+    ) async throws -> Operations.MediaAssetVariantQuery.Output {
         _ = try await CurrentSubject.require()
         do {
             let items = try await useCases.listAssociatedVariantFiles(
@@ -21,7 +21,16 @@ extension AdminAPIGateway {
             )
         }
         catch {
-            return .notFound(.init())
+            return .notFound(
+                .init(
+                    body: .json(
+                        errorEnvelope(
+                            message: "Media asset not found.",
+                            reason: "media_asset_not_found"
+                        )
+                    )
+                )
+            )
         }
     }
 }

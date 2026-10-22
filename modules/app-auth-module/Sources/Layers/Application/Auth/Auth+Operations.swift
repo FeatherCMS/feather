@@ -2,11 +2,13 @@ public import AuthModule
 
 extension AuthModule {
     public enum Auth {}
+    public enum Authorization {
+        public enum CurrentUser {}
+        public enum Query {}
+    }
 }
 
 extension AuthModule.Auth {
-    public enum Authorization {}
-    public enum CurrentUser {}
     public enum SignIn {}
     public enum TokenAuth {}
 }

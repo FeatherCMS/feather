@@ -1,9 +1,9 @@
-import FeatherDBAL
+public import FeatherDBAL
 
 extension IdentityRole.Table: DatabaseTableWithInsert {
-    struct Insert: DatabaseTableRowEncodable {
-        let roleId: String
-        let identityId: String
+    public struct Insert: DatabaseTableRowEncodable {
+        public let roleId: String
+        public let identityId: String
     }
 }
 

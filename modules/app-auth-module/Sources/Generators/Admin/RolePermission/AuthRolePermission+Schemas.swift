@@ -36,6 +36,15 @@ struct AuthRolePermissionListItemSchema: ObjectSchemaRepresentable {
     }
 }
 
+struct AuthRolePermissionQueryItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "roleId": AuthRolePermissionRoleIdField().reference(),
+            "permissionId": AuthRolePermissionPermissionIdField().reference(),
+        ]
+    }
+}
+
 struct AuthRolePermissionListSchema: ArraySchemaRepresentable {
     var items: (any SchemaRepresentable)? {
         AuthRolePermissionListItemSchema().reference()

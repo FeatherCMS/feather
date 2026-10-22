@@ -1,0 +1,67 @@
+import FeatherOpenAPI
+import FeatherOpenAPIGenerator
+
+struct MediaAssetIdField: StringSchemaRepresentable {
+    var example: String? = "media_asset_1"
+}
+
+struct MediaAssetKeyField: StringSchemaRepresentable {
+    var example: String? = "preview"
+}
+
+struct MediaAssetURLField: StringSchemaRepresentable {
+    var example: String? = "/public/12/34/56789/originals/cover-image.jpg"
+}
+
+struct MediaAssetTypeField: StringSchemaRepresentable {
+    var example: String? = "jpeg"
+}
+
+struct MediaAssetResolveIDsField: ArraySchemaRepresentable {
+    var items: (any SchemaRepresentable)? { MediaAssetIdField() }
+}
+
+struct MediaAssetResolveVariantsField: ArraySchemaRepresentable {
+    var items: (any SchemaRepresentable)? { MediaAssetKeyField() }
+}
+
+struct MediaAssetResolveRequestSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "ids": MediaAssetResolveIDsField(),
+            "variants": MediaAssetResolveVariantsField()
+                .reference(required: false),
+        ]
+    }
+}
+
+struct MediaAssetResolveVariantSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "key": MediaAssetKeyField().reference(),
+            "url": MediaAssetURLField(),
+        ]
+    }
+}
+
+struct MediaAssetResolveVariantListField: ArraySchemaRepresentable {
+    var items: (any SchemaRepresentable)? {
+        MediaAssetResolveVariantSchema().reference()
+    }
+}
+
+struct MediaAssetResolveItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "id": MediaAssetIdField().reference(),
+            "url": MediaAssetURLField(),
+            "variants": MediaAssetResolveVariantListField(),
+        ]
+    }
+}
+
+struct MediaAssetResolveSchema: ArraySchemaRepresentable {
+    var items: (any SchemaRepresentable)? {
+        MediaAssetResolveItemSchema().reference()
+    }
+}

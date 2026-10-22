@@ -2,7 +2,7 @@ import AsyncHTTPClient
 import FeatherWebShared
 public import FeatherWebAdmin
 public import Foundation
-public import MediaFrontend
+public import MediaWebAdmin
 import NIOCore
 public import NewsAdminAPI
 import OpenAPIAsyncHTTPClient

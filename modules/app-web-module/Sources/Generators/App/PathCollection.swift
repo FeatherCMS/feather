@@ -6,13 +6,11 @@ import WebSharedOpenAPIGenerator
 struct PathCollection: PathCollectionRepresentable {
 
     var pathMap: PathMap {
-        [
-            "api/v1/web/settings": WebSiteSettingsPathItems(),
-            "api/v1/web/menus": WebMenuListPathItems(),
-            "api/v1/web/menus/{key}": WebMenuGetByKeyPathItems(),
-            "api/v1/web/routes/{slug}": WebMetadataGetPathItems(),
-            "api/v1/web/metadata": WebMetadataListPathItems(),
-            "api/v1/web/pages/{id}": WebPageGetPathItems(),
-        ]
+        var paths: PathMap = [:]
+        paths.merge(Menu.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Metadata.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Page.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Settings.PathCollection().pathMap) { current, _ in current }
+        return paths
     }
 }

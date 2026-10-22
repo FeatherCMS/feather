@@ -1,0 +1,36 @@
+import BlogAppAPI
+import FeatherValidation
+import FeatherWebAdmin
+import HTML
+import Hummingbird
+import MediaWebAdmin
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+public import WebModuleWebApp
+
+public struct AppGetBlogTagModel: Sendable {
+    public let title: String
+    public let excerpt: String
+    public let imageURL: String?
+    public let content: String
+    public let posts: [AppPublicPostSummaryModel]
+    public let metadata: AppPublicMetadataModel
+
+    public init(
+        title: String,
+        excerpt: String,
+        imageURL: String?,
+        content: String,
+        posts: [AppPublicPostSummaryModel],
+        metadata: AppPublicMetadataModel
+    ) {
+        self.title = title
+        self.excerpt = excerpt
+        self.imageURL = imageURL
+        self.content = content
+        self.posts = posts
+        self.metadata = metadata
+    }
+}

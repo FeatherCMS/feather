@@ -1,0 +1,54 @@
+import BlogModule
+import FeatherModuleKit
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+import WebModuleWebAdmin
+
+extension Post.List.Presenter {
+    struct Default: Interface {
+        let request: Request
+        let context: AuthenticatedRequestContext
+        let renderingEngine: any RenderingEngine
+        let routes: BlogWebAdmin.Router.Routes
+
+        func render(
+            model: Post.List.Model,
+            permissions: Set<String>,
+            search: String?,
+            error: String?
+        ) async throws -> HTMLResponse {
+            try await renderingEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Manage blog posts",
+                content: Post.List.Component(
+                    state: .init(
+                        canAccess: permissions.contains(
+                            BlogModule.Permissions.Posts.list.rawValue
+                        ),
+                        canEdit: permissions.contains(
+                            BlogModule.Permissions.Posts.update.rawValue
+                        ),
+                        canAdd: permissions.contains(
+                            BlogModule.Permissions.Posts.create.rawValue
+                        ),
+                        items: model.items,
+                        pageState: .init(
+                            page: model.page,
+                            pageSize: model.pageSize,
+                            total: model.total
+                        ),
+                        search: search ?? "",
+                        permissions: .init(
+                            Set(permissions.map(PermissionKey.init))
+                        ),
+                        breadcrumb: routes.postsBreadcrumb,
+                        routes: routes,
+                        error: error
+                    )
+                )
+            )
+        }
+    }
+}

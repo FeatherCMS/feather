@@ -6,6 +6,7 @@ import UserInfrastructure
 import UserModule
 import MediaBackend
 import MediaInfrastructure
+import MediaModule
 import AnalyticsBackend
 import WebBackend
 import NewsletterBackend
@@ -49,7 +50,7 @@ struct AppModules: Sendable {
         let query = DatabaseQueryExecutor(
             databaseContext: infrastructure.databaseContext,
             scope: { context in
-                return AuthModule.Auth.Authorization.Scope(
+                return AuthModule.Authorization.Scope(
                     authorization: Identity.Authorization.Query.Database(
                         connection: context.connection
                     ),
@@ -104,7 +105,9 @@ struct AppModules: Sendable {
             databaseContext: infrastructure.databaseContext,
             storageContext: infrastructure.storageContext,
             authorizer: authorizer,
-            jobs: JobQueueMediaJobController(queue: infrastructure.jobQueue)
+            jobs: Asset.File.GenerateVariant.JobController.JobQueue(
+                queue: infrastructure.jobQueue
+            )
         )
         self.media = media
         let blog = BlogBackend.UseCases(

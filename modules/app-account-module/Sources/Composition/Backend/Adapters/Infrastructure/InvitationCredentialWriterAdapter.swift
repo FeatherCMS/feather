@@ -1,8 +1,9 @@
 public import AccountApplication
 import AuthDomain
 import AuthInfrastructure
-public import FeatherModuleKit
+import AuthModule
 import FeatherInfrastructure
+public import FeatherModuleKit
 
 /// Adapts Account's registration port to Auth's credential infrastructure.
 public struct InvitationCredentialWriterAdapter: InvitationCredentialWriter {
@@ -19,17 +20,18 @@ public struct InvitationCredentialWriterAdapter: InvitationCredentialWriter {
             throw InvitationCredentialWriterError.invalidTransactionContext
         }
         guard
-            let authEmail = try await AuthEmail.Repository.Database(
-                context: context
-            )
-            .findBy(email: email), authEmail.identityId == userID
+            let authEmail = try await Email.Repository
+                .Database(
+                    context: context
+                )
+                .findBy(email: email), authEmail.identityId == userID
         else {
             throw InvitationCredentialWriterError.authEmailNotFound
         }
         let passwordHash = try await BCryptPasswordHasher().hash(password)
         _ = try await Credential.Repository.Database(context: context)
             .insert(
-                try Credential.create(
+                try Credential.Model.create(
                     authEmailId: authEmail.id,
                     passwordHash: passwordHash
                 )

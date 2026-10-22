@@ -18,7 +18,7 @@ struct InvitationCredentialWriterAdapter: InvitationCredentialWriter {
         }
         let passwordHash = try await BCryptPasswordHasher().hash(password)
         guard
-            let authEmail = try await AuthEmail.Repository.Database(
+            let authEmail = try await Email.Repository.Database(
                 context: context
             )
             .findBy(email: email), authEmail.identityId == userID

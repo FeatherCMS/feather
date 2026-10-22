@@ -5,7 +5,6 @@
 //  Created by Tibor Bödecs on 2026. 02. 12..
 //
 
-import AuthSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport

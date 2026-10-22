@@ -17,7 +17,7 @@ public struct TableMigration: DatabaseMigration {
 
     public func apply(on connection: any DatabaseConnection) async throws {
         let schemas = [
-            AuthEmail.Table.tableCreationSchema,
+            Email.Table.tableCreationSchema,
             Credential.Table.tableCreationSchema,
             MagicLink.Table.tableCreationSchema,
             RolePermission.Table.tableCreationSchema,

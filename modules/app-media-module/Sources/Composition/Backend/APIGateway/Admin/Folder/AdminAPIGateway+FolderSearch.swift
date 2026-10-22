@@ -3,10 +3,11 @@ public import MediaAdminAPI
 import MediaApplication
 
 extension AdminAPIGateway {
-    public func mediaFolderList(
-        _ input: Operations.MediaFolderList.Input
-    ) async throws -> Operations.MediaFolderList.Output {
-        let query: Components.Schemas.MediaFolderListItemSearchRequestQuerySchema
+    public func mediaFolderQuery(
+        _ input: Operations.MediaFolderQuery.Input
+    ) async throws -> Operations.MediaFolderQuery.Output {
+        let query:
+            Components.Schemas.MediaFolderQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -16,14 +17,16 @@ extension AdminAPIGateway {
         let result = try await self.useCases.makeListFolders()
             .execute(
                 subject: subject,
-                input: .init(query: map(query))
+                input: .init(
+                    parentId: (query.filters.parentId ?? "").emptyToNil
+                )
             )
 
         return .ok(
             .init(
                 body: .json(
                     .init(
-                        query: query,
+                        query: responseQuery(from: query),
                         data: .init(
                             items: result.items.map(map),
                             total: result.items.count

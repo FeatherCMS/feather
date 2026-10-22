@@ -1,7 +1,7 @@
 import HTML
 import SGML
 import WebBuilders
-import WebFrontend
+import WebModuleWebApp
 
 struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "NewsletterCampaign"

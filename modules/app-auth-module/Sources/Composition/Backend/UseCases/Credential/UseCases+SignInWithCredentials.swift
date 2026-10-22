@@ -15,13 +15,13 @@ extension UseCases {
             scope: { context in
                 AuthModule.Auth.SignIn.Credentials.Scope(
                     identity: Identity.Repository.Database(context: context),
-                    authorization: Identity.Authorization.Query.Database(
-                        connection: context.connection
+                    authorization: AuthModule.Authorization.Query.Database(
+                        context: context
                     ),
                     credential: Credential.Repository.Database(
                         context: context
                     ),
-                    authEmail: AuthEmail.Repository.Database(
+                    authEmail: Email.Repository.Database(
                         context: context
                     ),
                     session: Session.Repository.Database(context: context)

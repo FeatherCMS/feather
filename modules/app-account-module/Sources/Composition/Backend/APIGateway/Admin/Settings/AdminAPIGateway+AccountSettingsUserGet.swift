@@ -4,9 +4,9 @@ import FeatherModuleKit
 
 extension AdminAPIGateway {
 
-    public func adminAccountSettingsGet(
-        _ input: Operations.AdminAccountSettingsGet.Input
-    ) async throws -> Operations.AdminAccountSettingsGet.Output {
+    public func accountUserSettingsGet(
+        _ input: Operations.AccountUserSettingsGet.Input
+    ) async throws -> Operations.AccountUserSettingsGet.Output {
         let subject = try await CurrentSubject.require()
         let result = try await useCases.makeGetSettings()
             .execute(

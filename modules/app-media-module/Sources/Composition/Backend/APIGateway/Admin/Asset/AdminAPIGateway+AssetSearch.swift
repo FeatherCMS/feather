@@ -3,10 +3,11 @@ public import MediaAdminAPI
 import MediaApplication
 
 extension AdminAPIGateway {
-    public func mediaAssetList(
-        _ input: Operations.MediaAssetList.Input
-    ) async throws -> Operations.MediaAssetList.Output {
-        let query: Components.Schemas.MediaAssetNodeSearchItemSearchRequestQuerySchema
+    public func mediaAssetQuery(
+        _ input: Operations.MediaAssetQuery.Input
+    ) async throws -> Operations.MediaAssetQuery.Output {
+        let query:
+            Components.Schemas.MediaAssetNodeQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -15,11 +16,7 @@ extension AdminAPIGateway {
         let subject = try await CurrentSubject.require()
         let useCase = self.useCases.makeSearchAssets()
         let objectQuery = map(query)
-        let list = try await useCase.execute(
-            subject: subject,
-            input: .init(query: objectQuery)
-        )
-        let total = try await useCase.count(
+        let result = try await useCase.execute(
             subject: subject,
             input: .init(query: objectQuery)
         )
@@ -28,8 +25,11 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: query,
-                        data: .init(items: list.items.map(map), total: total)
+                        query: responseQuery(from: query),
+                        data: .init(
+                            items: result.items.map(map),
+                            total: result.total
+                        )
                     )
                 )
             )

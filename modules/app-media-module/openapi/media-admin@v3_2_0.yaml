@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Admin API
+  title: Media Admin API
   version: 0.1.0
 tags:
 - name: MediaAssets
@@ -18,7 +18,7 @@ paths:
     post:
       tags:
       - MediaAssets
-      operationId: mediaAssetCreate
+      operationId: mediaAssetPost
       parameters:
       - $ref: '#/components/parameters/MediaAssetParentIDHeader'
       - $ref: '#/components/parameters/MediaAssetFileNameHeader'
@@ -53,7 +53,7 @@ paths:
     delete:
       tags:
       - MediaAssets
-      operationId: mediaAssetNodeRemove
+      operationId: mediaAssetDelete
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -73,20 +73,20 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/media/assets/list:
+  /api/v1/admin/media/assets/query:
     post:
       tags:
       - MediaAssets
-      operationId: mediaAssetList
+      operationId: mediaAssetQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/MediaAssetNodeQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/MediaAssetNodeSearchItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MediaAssetNodeQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -158,14 +158,21 @@ paths:
     patch:
       tags:
       - MediaAssets
-      operationId: mediaAssetUpdate
+      operationId: mediaAssetPatch
       parameters:
       - $ref: '#/components/parameters/MediaAssetIdParameter'
+      - $ref: '#/components/parameters/MediaAssetUpdateMaskParameter'
       requestBody:
         $ref: '#/components/requestBodies/MediaAssetPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/MediaAssetDetailResponse'
+        400:
+          description: Invalid update mask
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: MediaAsset not found
           content:
@@ -190,7 +197,7 @@ paths:
     get:
       tags:
       - MediaAssets
-      operationId: mediaAssetVariantSearch
+      operationId: mediaAssetVariantQuery
       parameters:
       - $ref: '#/components/parameters/MediaAssetIdParameter'
       responses:
@@ -220,7 +227,7 @@ paths:
     post:
       tags:
       - MediaFolders
-      operationId: mediaFolderCreate
+      operationId: mediaFolderPost
       requestBody:
         $ref: '#/components/requestBodies/MediaFolderCreateRequestBody'
       responses:
@@ -246,20 +253,20 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/media/folders/list:
+  /api/v1/admin/media/folders/query:
     post:
       tags:
       - MediaFolders
-      operationId: mediaFolderList
+      operationId: mediaFolderQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediaFolderListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/MediaFolderQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/MediaFolderListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MediaFolderQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -307,14 +314,21 @@ paths:
     patch:
       tags:
       - MediaFolders
-      operationId: mediaFolderUpdate
+      operationId: mediaFolderPatch
       parameters:
       - $ref: '#/components/parameters/MediaFolderIdParameter'
+      - $ref: '#/components/parameters/MediaFolderUpdateMaskParameter'
       requestBody:
         $ref: '#/components/requestBodies/MediaFolderPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/MediaFolderDetailResponse'
+        400:
+          description: Invalid update mask
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: MediaFolder not found
           content:
@@ -339,7 +353,7 @@ paths:
     post:
       tags:
       - MediaVariants
-      operationId: mediaVariantCreate
+      operationId: mediaVariantPost
       requestBody:
         $ref: '#/components/requestBodies/MediaVariantCreateRequestBody'
       responses:
@@ -362,7 +376,7 @@ paths:
     delete:
       tags:
       - MediaVariants
-      operationId: mediaVariantRemove
+      operationId: mediaVariantDelete
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -382,20 +396,20 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/media/variants/list:
+  /api/v1/admin/media/variants/query:
     post:
       tags:
       - MediaVariants
-      operationId: mediaVariantList
+      operationId: mediaVariantQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediaVariantListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/MediaVariantQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/MediaVariantListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MediaVariantQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -443,14 +457,21 @@ paths:
     patch:
       tags:
       - MediaVariants
-      operationId: mediaVariantUpdate
+      operationId: mediaVariantPatch
       parameters:
       - $ref: '#/components/parameters/MediaVariantIdParameter'
+      - $ref: '#/components/parameters/MediaVariantUpdateMaskParameter'
       requestBody:
-        $ref: '#/components/requestBodies/MediaVariantCreateRequestBody'
+        $ref: '#/components/requestBodies/MediaVariantPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/MediaVariantDetailResponse'
+        400:
+          description: Invalid update mask
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Media variant not found
           content:
@@ -475,7 +496,7 @@ paths:
     post:
       tags:
       - MediaVariants
-      operationId: mediaVariantProcessorCreate
+      operationId: mediaVariantProcessorPost
       parameters:
       - $ref: '#/components/parameters/MediaVariantIdParameter'
       requestBody:
@@ -506,7 +527,7 @@ paths:
     delete:
       tags:
       - MediaVariants
-      operationId: mediaVariantProcessorRemove
+      operationId: mediaVariantProcessorDelete
       parameters:
       - $ref: '#/components/parameters/MediaVariantIdParameter'
       requestBody:
@@ -528,22 +549,22 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/media/variants/{mediaVariantId}/processors/list:
+  /api/v1/admin/media/variants/{mediaVariantId}/processors/query:
     post:
       tags:
       - MediaVariants
-      operationId: mediaVariantProcessorList
+      operationId: mediaVariantProcessorQuery
       parameters:
       - $ref: '#/components/parameters/MediaVariantIdParameter'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/MediaVariantProcessorQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/MediaVariantProcessorListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MediaVariantProcessorQueryItemSearchSchemaSearchResponse'
         404:
           description: Media variant not found
           content:
@@ -598,15 +619,22 @@ paths:
     patch:
       tags:
       - MediaVariants
-      operationId: mediaVariantProcessorUpdate
+      operationId: mediaVariantProcessorPatch
       parameters:
       - $ref: '#/components/parameters/MediaVariantIdParameter'
       - $ref: '#/components/parameters/MediaVariantProcessorIdParameter'
+      - $ref: '#/components/parameters/MediaVariantProcessorUpdateMaskParameter'
       requestBody:
-        $ref: '#/components/requestBodies/MediaVariantProcessorCreateRequestBody'
+        $ref: '#/components/requestBodies/MediaVariantProcessorPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/MediaVariantProcessorDetailResponse'
+        400:
+          description: Invalid update mask
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Media variant processor not found
           content:
@@ -769,7 +797,7 @@ components:
       required:
       - ids
       minProperties: 1
-    MediaAssetNodeSearchItemSearchRequestQuerySchema:
+    MediaAssetNodeQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -845,18 +873,18 @@ components:
       - desc
       examples:
       - asc
-    MediaAssetNodeSearchItemSearchSchema:
+    MediaAssetNodeQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/MediaAssetNodeQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/MediaAssetNodeSearchItemSchema'
+                $ref: '#/components/schemas/MediaAssetNodeQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -871,7 +899,7 @@ components:
       - query
       - data
       minProperties: 2
-    MediaAssetNodeSearchItemSearchResponseQuerySchema:
+    MediaAssetNodeQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -930,19 +958,19 @@ components:
       - size
       - number
       minProperties: 2
-    MediaAssetNodeSearchItemSchema:
+    MediaAssetNodeQueryItemSchema:
       type: object
       properties:
         kind:
           type: string
         file:
-          $ref: '#/components/schemas/MediaAssetListItemSchema'
+          $ref: '#/components/schemas/MediaAssetQueryItemFileSchema'
         folder:
-          $ref: '#/components/schemas/MediaFolderListItemSchema'
+          $ref: '#/components/schemas/MediaAssetQueryItemFolderSchema'
       required:
       - kind
       minProperties: 1
-    MediaAssetListItemSchema:
+    MediaAssetQueryItemFileSchema:
       type: object
       properties:
         id:
@@ -1013,7 +1041,7 @@ components:
       - createdAt
       - updatedAt
       minProperties: 11
-    MediaFolderListItemSchema:
+    MediaAssetQueryItemFolderSchema:
       type: object
       properties:
         id:
@@ -1155,6 +1183,10 @@ components:
       type: string
       examples:
       - preview
+    MediaAssetUpdateMaskField:
+      type: string
+      examples:
+      - title,altText
     MediaAssetPatchSchema:
       type: object
       properties:
@@ -1268,7 +1300,7 @@ components:
       - createdAt
       - updatedAt
       minProperties: 8
-    MediaFolderListItemSearchRequestQuerySchema:
+    MediaFolderQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1309,18 +1341,18 @@ components:
       required:
       - filters
       minProperties: 1
-    MediaFolderListItemSearchSchema:
+    MediaFolderQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/MediaFolderListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/MediaFolderQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/MediaFolderListItemSchema'
+                $ref: '#/components/schemas/MediaFolderQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -1335,7 +1367,7 @@ components:
       - query
       - data
       minProperties: 2
-    MediaFolderListItemSearchResponseQuerySchema:
+    MediaFolderQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1377,16 +1409,68 @@ components:
       - page
       - filters
       minProperties: 2
-    MediaFolderPatchSchema:
+    MediaFolderQueryItemSchema:
       type: object
       properties:
+        id:
+          $ref: '#/components/schemas/MediaFolderIdField'
+        parentId:
+          type:
+          - string
+          - 'null'
         name:
           type: string
           examples:
           - Posts
+        slug:
+          type: string
+          examples:
+          - posts
+        slugPath:
+          type: string
+          examples:
+          - blog/posts
+        assetCount:
+          type: integer
+          examples:
+          - 3
+        totalSizeBytes:
+          type: integer
+          format: int64
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+        updatedAt:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
       required:
+      - id
       - name
-      minProperties: 1
+      - slug
+      - slugPath
+      - assetCount
+      - totalSizeBytes
+      - createdAt
+      - updatedAt
+      minProperties: 8
+    MediaFolderUpdateMaskField:
+      type: string
+      examples:
+      - name
+    MediaFolderPatchSchema:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/MediaFolderNameField'
+      minProperties: 0
+    MediaFolderNameField:
+      type: string
+      examples:
+      - Posts
     MediaVariantCreateSchema:
       type: object
       properties:
@@ -1491,7 +1575,7 @@ components:
       - commandTemplate
       - isActive
       minProperties: 5
-    MediaVariantListItemSearchRequestQuerySchema:
+    MediaVariantQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1534,18 +1618,18 @@ components:
       type: string
       examples:
       - foo
-    MediaVariantListItemSearchSchema:
+    MediaVariantQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/MediaVariantListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/MediaVariantQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/MediaVariantListItemSchema'
+                $ref: '#/components/schemas/MediaVariantQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -1560,7 +1644,7 @@ components:
       - query
       - data
       minProperties: 2
-    MediaVariantListItemSearchResponseQuerySchema:
+    MediaVariantQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1600,7 +1684,7 @@ components:
       - page
       - filters
       minProperties: 2
-    MediaVariantListItemSchema:
+    MediaVariantQueryItemSchema:
       type: object
       properties:
         id:
@@ -1628,6 +1712,34 @@ components:
       - isRequired
       - isActive
       minProperties: 5
+    MediaVariantUpdateMaskField:
+      type: string
+      examples:
+      - key,name,isRequired,isActive
+    MediaVariantPatchSchema:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/MediaVariantKeyField'
+        name:
+          $ref: '#/components/schemas/MediaVariantNameField'
+        isRequired:
+          $ref: '#/components/schemas/MediaVariantBooleanField'
+        isActive:
+          $ref: '#/components/schemas/MediaVariantBooleanField'
+      minProperties: 0
+    MediaVariantKeyField:
+      type: string
+      examples:
+      - preview
+    MediaVariantNameField:
+      type: string
+      examples:
+      - Preview
+    MediaVariantBooleanField:
+      type: boolean
+      examples:
+      - true
     MediaVariantProcessorCreateSchema:
       type: object
       properties:
@@ -1696,7 +1808,7 @@ components:
       - createdAt
       - updatedAt
       minProperties: 8
-    MediaVariantProcessorListItemSearchRequestQuerySchema:
+    MediaVariantProcessorQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1735,18 +1847,18 @@ components:
       required:
       - filters
       minProperties: 1
-    MediaVariantProcessorListItemSearchSchema:
+    MediaVariantProcessorQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/MediaVariantProcessorQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/MediaVariantProcessorListItemSchema'
+                $ref: '#/components/schemas/MediaVariantProcessorQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -1761,7 +1873,7 @@ components:
       - query
       - data
       minProperties: 2
-    MediaVariantProcessorListItemSearchResponseQuerySchema:
+    MediaVariantProcessorQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -1801,6 +1913,58 @@ components:
       - page
       - filters
       minProperties: 2
+    MediaVariantProcessorQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaVariantIdField'
+        name:
+          type: string
+          examples:
+          - Preview
+        matchExtensions:
+          type: string
+          examples:
+          - png,jpg,jpeg,bmp
+        commandTemplate:
+          type: string
+          examples:
+          - convert {input.fullname} -resize 256x256 {output.fullname}
+        isActive:
+          type: boolean
+          examples:
+          - true
+      required:
+      - id
+      - name
+      - matchExtensions
+      - commandTemplate
+      - isActive
+      minProperties: 5
+    MediaVariantProcessorUpdateMaskField:
+      type: string
+      examples:
+      - name,matchExtensions,commandTemplate,isActive
+    MediaVariantProcessorPatchSchema:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/MediaVariantNameField'
+        matchExtensions:
+          $ref: '#/components/schemas/MediaVariantExtensionsField'
+        commandTemplate:
+          $ref: '#/components/schemas/MediaVariantCommandField'
+        isActive:
+          $ref: '#/components/schemas/MediaVariantBooleanField'
+      minProperties: 0
+    MediaVariantExtensionsField:
+      type: string
+      examples:
+      - png,jpg,jpeg,bmp
+    MediaVariantCommandField:
+      type: string
+      examples:
+      - convert {input.fullname} -resize 256x256 {output.fullname}
   responses:
     MediaAssetDetailResponse:
       description: MediaAsset response
@@ -1810,12 +1974,12 @@ components:
             $ref: '#/components/schemas/MediaAssetDetailSchema'
     NoContentResponse:
       description: Delete succeeded
-    MediaAssetNodeSearchItemSearchSchemaSearchResponse:
+    MediaAssetNodeQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchSchema'
+            $ref: '#/components/schemas/MediaAssetNodeQueryItemSearchSchema'
     MediaAssetResolveResponse:
       description: MediaAsset resolve response
       content:
@@ -1834,36 +1998,36 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaFolderDetailSchema'
-    MediaFolderListItemSearchSchemaSearchResponse:
+    MediaFolderQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MediaFolderListItemSearchSchema'
+            $ref: '#/components/schemas/MediaFolderQueryItemSearchSchema'
     MediaVariantDetailResponse:
       description: Media variant response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaVariantDetailSchema'
-    MediaVariantListItemSearchSchemaSearchResponse:
+    MediaVariantQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MediaVariantListItemSearchSchema'
+            $ref: '#/components/schemas/MediaVariantQueryItemSearchSchema'
     MediaVariantProcessorDetailResponse:
       description: Media variant processor response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaVariantProcessorDetailSchema'
-    MediaVariantProcessorListItemSearchSchemaSearchResponse:
+    MediaVariantProcessorQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MediaVariantProcessorListItemSearchSchema'
+            $ref: '#/components/schemas/MediaVariantProcessorQueryItemSearchSchema'
   parameters:
     MediaAssetParentIDHeader:
       name: X-Media-Asset-Parent-ID
@@ -1904,6 +2068,15 @@ components:
       schema:
         $ref: '#/components/schemas/MediaAssetIdField'
       description: MediaAsset id
+    MediaAssetUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/MediaAssetUpdateMaskField'
+      description: Comma-separated fields to update. Include an optional field to
+        clear it when omitted from the body.
     MediaFolderIdParameter:
       name: mediaFolderId
       in: path
@@ -1911,6 +2084,14 @@ components:
       schema:
         $ref: '#/components/schemas/MediaFolderIdField'
       description: Media folder id
+    MediaFolderUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/MediaFolderUpdateMaskField'
+      description: Comma-separated fields to update.
     MediaVariantIdParameter:
       name: mediaVariantId
       in: path
@@ -1918,6 +2099,14 @@ components:
       schema:
         $ref: '#/components/schemas/MediaVariantIdField'
       description: Media variant id
+    MediaVariantUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/MediaVariantUpdateMaskField'
+      description: Comma-separated fields to update.
     MediaVariantProcessorIdParameter:
       name: mediaVariantProcessorId
       in: path
@@ -1925,6 +2114,14 @@ components:
       schema:
         $ref: '#/components/schemas/MediaVariantIdField'
       description: Media variant processor id
+    MediaVariantProcessorUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/MediaVariantProcessorUpdateMaskField'
+      description: Comma-separated fields to update.
   requestBodies:
     MediaAssetCreateRequestBody:
       content:
@@ -1970,11 +2167,23 @@ components:
           schema:
             $ref: '#/components/schemas/MediaVariantCreateSchema'
       required: true
+    MediaVariantPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaVariantPatchSchema'
+      required: true
     MediaVariantProcessorCreateRequestBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaVariantProcessorCreateSchema'
+      required: true
+    MediaVariantProcessorPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaVariantProcessorPatchSchema'
       required: true
   securitySchemes:
     bearerAuth:

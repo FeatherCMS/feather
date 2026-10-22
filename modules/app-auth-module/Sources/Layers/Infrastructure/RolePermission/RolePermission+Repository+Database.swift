@@ -3,7 +3,9 @@ public import AuthModule
 import FeatherDBAL
 import FeatherDatabase
 public import FeatherInfrastructure
+import SystemDomain
 import SystemInfrastructure
+import SystemModule
 
 extension RolePermission.Table.Detail {
     func asDomain(permissionKey: String) -> RolePermission.Model {
@@ -28,12 +30,8 @@ extension RolePermission.Repository {
 
         private func permissionID(forKey key: String) async throws -> String {
             guard
-                let permission = try await DatabaseAccessLayer<
-                    Permission.Table
-                >(
-                    context: context
-                )
-                .selectFirst(by: \.key, equals: key)
+                let permission = try await SystemModule.Permission.Repository
+                    .Database(context: context).find(key: key)
             else {
                 throw RepositoryError.notFound
             }

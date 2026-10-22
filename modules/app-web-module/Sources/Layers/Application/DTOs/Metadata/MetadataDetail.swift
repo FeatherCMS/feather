@@ -17,7 +17,7 @@ public struct MetadataDetail: DTO {
     public let slug: String
     public let publicationDate: Date
     public let expirationDate: Date?
-    public let status: Metadata.Status
+    public let status: Metadata.Model.Status
     public let title: String?
     public let excerpt: String?
     public let imageURL: String?
@@ -38,7 +38,7 @@ public struct MetadataDetail: DTO {
         slug: String,
         publicationDate: Date,
         expirationDate: Date?,
-        status: Metadata.Status,
+        status: Metadata.Model.Status,
         title: String?,
         excerpt: String?,
         imageURL: String?,

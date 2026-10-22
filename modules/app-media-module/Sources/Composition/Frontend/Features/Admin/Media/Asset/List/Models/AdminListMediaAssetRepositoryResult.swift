@@ -1,7 +1,0 @@
-import FeatherWebAdmin
-import MediaAdminAPI
-
-struct AdminListMediaAssetRepositoryResult: Sendable {
-    let items: [Components.Schemas.MediaAssetNodeSearchItemSchema]
-    let pageState: AdminListPageState
-}

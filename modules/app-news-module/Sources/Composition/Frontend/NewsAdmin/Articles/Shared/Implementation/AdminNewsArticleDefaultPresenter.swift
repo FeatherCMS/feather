@@ -2,7 +2,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import FeatherModuleKit
 import Hummingbird
-import MediaFrontend
+import MediaWebAdmin
 import NewsAdminAPI
 import NewsContracts
 

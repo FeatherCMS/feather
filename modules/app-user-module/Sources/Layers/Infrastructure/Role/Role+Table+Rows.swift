@@ -1,45 +1,45 @@
-import FeatherDBAL
-import Foundation
-import UserModule
+public import FeatherDBAL
+public import Foundation
+public import UserModule
 
 extension Role.Table: DatabaseTableWithDetail {
-    struct Detail: DatabaseTableRowDecodable {
-        let id: String
-        let key: String
-        let name: String?
-        let notes: String?
-        let createdAt: Date
-        let updatedAt: Date
+    public struct Detail: DatabaseTableRowDecodable {
+        public let id: String
+        public let key: String
+        public let name: String?
+        public let notes: String?
+        public let createdAt: Date
+        public let updatedAt: Date
     }
 }
 
 extension Role.Table: DatabaseTableWithList {
-    struct List: DatabaseTableRowDecodable {
-        let id: String
-        let key: String
-        let name: String?
-        let notes: String?
-        let createdAt: Date
-        let updatedAt: Date
+    public struct List: DatabaseTableRowDecodable {
+        public let id: String
+        public let key: String
+        public let name: String?
+        public let notes: String?
+        public let createdAt: Date
+        public let updatedAt: Date
     }
 }
 
 extension Role.Table: DatabaseTableWithInsert {
-    struct Insert: DatabaseTableRowEncodable {
-        let id: String
-        let key: String
-        let name: String?
-        let notes: String?
+    public struct Insert: DatabaseTableRowEncodable {
+        public let id: String
+        public let key: String
+        public let name: String?
+        public let notes: String?
     }
 }
 
 extension Role.Table: DatabaseTableWithUpdate {
-    struct Update: DatabaseTableRowEncodable {
-        let key: String
-        let name: String?
-        let notes: String?
+    public struct Update: DatabaseTableRowEncodable {
+        public let key: String
+        public let name: String?
+        public let notes: String?
 
-        func afterEncode(values: inout DatabaseTableRowValues) throws {
+        public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Role.Table.columns.updatedAt] = .currentTimestamp
         }
     }

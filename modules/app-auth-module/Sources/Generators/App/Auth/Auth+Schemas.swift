@@ -1,46 +1,51 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
+import UserOpenAPIGeneratorSupport
 
-struct AuthEmailField: StringSchemaRepresentable {
-    var example: String? = "admin@example.com"
+extension Auth {
+    enum Schemas {}
 }
 
-struct AuthPasswordField: StringSchemaRepresentable {
-    var example: String? = "password"
-}
-
-struct AuthIsPersistentField: BoolSchemaRepresentable {
-    var example: Bool? = true
-}
-
-struct AuthMagicLinkTokenField: StringSchemaRepresentable {
-    var example: String? = "mgl_3XbY..."
-}
-
-struct AuthLoginRequestSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "email": AuthEmailField().reference(),
-            "password": AuthPasswordField().reference(),
-            "isPersistent": AuthIsPersistentField().reference(),
-        ]
+extension Auth.Schemas {
+    struct EmailField: StringSchemaRepresentable {
+        var example: String? = "admin@example.com"
     }
-}
 
-struct AuthMagicLinkRequestSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "email": AuthEmailField(),
-            "isPersistent": AuthIsPersistentField(),
-        ]
+    struct PasswordField: StringSchemaRepresentable {
+        var example: String? = "password"
     }
-}
 
-struct AuthMagicLinkVerifyRequestSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "token": AuthMagicLinkTokenField()
-        ]
+    struct IsPersistentField: BoolSchemaRepresentable {
+        var example: Bool? = true
+    }
+
+    struct MagicLinkTokenField: StringSchemaRepresentable {
+        var example: String? = "mgl_3XbY..."
+    }
+
+    struct UserIdentity: ObjectSchemaRepresentable {
+        var propertyMap: SchemaMap {
+            [
+                "id": UserIdentityIDField().reference(),
+                "status": UserIdentityStatusField().reference(),
+            ]
+        }
+    }
+
+    struct Response: ObjectSchemaRepresentable {
+        var propertyMap: SchemaMap {
+            [
+                "user": UserIdentity().reference(),
+                "roles": UserIdentityRoleIDListSchema(),
+                "permissions": UserIdentityPermissionIDListSchema(),
+                "token": TokenField().reference(),
+            ]
+        }
+    }
+
+    struct TokenField: StringSchemaRepresentable {
+        var example: String? =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
     }
 }

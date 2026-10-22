@@ -1,16 +1,13 @@
 import FeatherOpenAPI
 
 struct AuthMagicLinkManagementPathItems: PathItemRepresentable {
+    var get: (any OperationRepresentable)? { AuthMagicLinkListOperation() }
     var post: (any OperationRepresentable)? { AuthMagicLinkCreateOperation() }
     var delete: (any OperationRepresentable)? { AuthMagicLinkRemoveOperation() }
 }
 
-struct AuthMagicLinkSearchPathItems: PathItemRepresentable {
-    var post: (any OperationRepresentable)? { AuthMagicLinkSearchOperation() }
-}
-
-struct AuthMagicLinkListPathItems: PathItemRepresentable {
-    var get: (any OperationRepresentable)? { AuthMagicLinkListOperation() }
+struct AuthMagicLinkQueryPathItems: PathItemRepresentable {
+    var post: (any OperationRepresentable)? { AuthMagicLinkQueryOperation() }
 }
 
 struct AuthMagicLinkIdPathItems: PathItemRepresentable {

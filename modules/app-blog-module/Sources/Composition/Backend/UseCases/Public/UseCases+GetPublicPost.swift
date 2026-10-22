@@ -1,37 +1,39 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherInfrastructure
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
 
-    public func makeGetPublicPost() -> GetPublicPost {
+    public func makeGetPublicPost() -> Public.Post.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadPublic(
-                    post: PostDatabaseQueries(
+                Public.Query.Scope(
+                    post: Post.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    author: AuthorDatabaseQueries(
+                    author: Author.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    tag: TagDatabaseQueries(
+                    tag: Tag.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    authorLink: AuthorLinkDatabaseQueries(
+                    authorLink: AuthorLink.Query.Database(
                         context: context
                     ),
-                    metadata: MetadataDatabaseQueries(
+                    metadata: Metadata.Query.Database(
                         context: context
                     )
                 )

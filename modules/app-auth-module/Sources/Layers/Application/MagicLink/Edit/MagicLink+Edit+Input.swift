@@ -1,18 +1,19 @@
 import AuthDomain
 public import AuthModule
 public import FeatherApplication
+public import FeatherDomain
 import FeatherModuleKit
 
 extension MagicLink.Edit {
     public struct Input: DTO {
         public let id: String
-        public let authEmailId: String?
-        public let isPersistent: Bool?
+        public let authEmailId: FieldChange<String>
+        public let isPersistent: FieldChange<Bool>
 
         public init(
             id: String,
-            authEmailId: String?,
-            isPersistent: Bool?
+            authEmailId: FieldChange<String> = .unchanged,
+            isPersistent: FieldChange<Bool> = .unchanged
         ) {
             self.id = id
             self.authEmailId = authEmailId

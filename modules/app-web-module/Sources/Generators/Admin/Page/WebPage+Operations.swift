@@ -1,0 +1,111 @@
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
+import OpenAPIKit30
+import WebSharedOpenAPIGenerator
+
+public protocol WebPageOperation: BearerProtectedOperation {
+}
+
+extension WebPageOperation {
+    public var tags: [any TagRepresentable] { [WebPageTag()] }
+}
+
+public protocol WebPageIDOperation: WebPageOperation {
+}
+
+extension WebPageIDOperation {
+    public var parameters: [any ParameterRepresentable] {
+        [
+            WebPageIdParameter().reference()
+        ]
+    }
+}
+
+struct WebPageCreateOperation: WebPageOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        WebPageRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            201: WebPageDetailResponse().reference()
+        ]
+    }
+}
+
+struct WebPageListOperation: WebPageOperation {
+    var responseMap: ResponseMap {
+        [
+            200: WebPageListResponse().reference()
+        ]
+    }
+}
+
+struct WebPageQueryOperation: WebPageOperation {
+    var operationId: String? { "webPageQuery" }
+    var searchRequestQuery: SearchRequestQuerySchema {
+        .init(
+            items: WebPageQueryItemSchema(),
+            sortFieldKeys: [
+                "id",
+                "title",
+                "createdAt",
+                "updatedAt",
+            ],
+            filters: SearchFilterSchema()
+        )
+    }
+
+    var requestBody: (any RequestBodyRepresentable)? {
+        SearchRequestBody(query: searchRequestQuery)
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
+        ]
+    }
+}
+
+struct WebPageGetOperation: WebPageIDOperation {
+    var responseMap: ResponseMap {
+        [
+            200: WebPageDetailResponse().reference(),
+            404: CustomResponse(description: "WebPage not found"),
+        ]
+    }
+}
+
+struct WebPageUpdateOperation: WebPageIDOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        WebPageUpdateRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: WebPageDetailResponse().reference(),
+            404: CustomResponse(description: "WebPage not found"),
+        ]
+    }
+}
+
+struct WebPagePatchOperation: WebPageIDOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        WebPagePatchRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: WebPageDetailResponse().reference(),
+            404: CustomResponse(description: "WebPage not found"),
+        ]
+    }
+}
+
+struct WebPageRemoveOperation: WebPageOperation,
+    DeleteOperation
+{
+}

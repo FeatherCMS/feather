@@ -13,6 +13,6 @@ extension AdminAPIGateway {
             input: .init()
         )
 
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(mapGetSettings(result))))
     }
 }

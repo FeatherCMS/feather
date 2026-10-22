@@ -36,7 +36,68 @@ extension AdminAPIGateway {
 
     public func map(
         _ query: AuthAdminAPI.Components.Schemas
-            .AuthRolePermissionListItemSearchRequestQuerySchema
+            .AuthEmailQuerySchemasItemSearchRequestQuerySchema
+    ) -> Email.Search.Input.Query {
+        .init(
+            page: map(query.page),
+            sort: (query.sort ?? [])
+                .map { rule in
+                    let field: Email.Search.Input.Query.Sort.Field
+                    switch rule.field {
+                    case .identityId: field = .identityId
+                    case .email: field = .email
+                    }
+                    return .init(
+                        field: field,
+                        direction: mapSortDirection(rule.direction)
+                    )
+                },
+            search: query.filters.search,
+            identityId: query.filters.identityId
+        )
+    }
+
+    public func responseQuery(
+        _ query: AuthAdminAPI.Components.Schemas
+            .AuthEmailQuerySchemasItemSearchRequestQuerySchema
+    )
+        -> AuthAdminAPI.Components.Schemas
+        .AuthEmailQuerySchemasItemSearchResponseQuerySchema
+    {
+        let page = map(query.page).normalized()
+        let sort = query.sort?
+            .map { rule in
+                let field:
+                    AuthAdminAPI.Components.Schemas
+                        .AuthEmailQuerySchemasItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                switch rule.field {
+                case .identityId: field = .identityId
+                case .email: field = .email
+                }
+                return AuthAdminAPI.Components.Schemas
+                    .AuthEmailQuerySchemasItemSearchResponseQuerySchema
+                    .SortPayloadPayload(field: field, direction: rule.direction)
+            }
+        return .init(
+            page: .init(size: page.size, number: page.number),
+            sort: sort,
+            filters: .init(
+                search: query.filters.search,
+                identityId: query.filters.identityId
+            )
+        )
+    }
+
+    public func mapQuery(
+        _ item: Email.Search.Output.Item
+    ) -> AuthAdminAPI.Components.Schemas.AuthEmailQuerySchemasItem {
+        .init(id: item.id, identityId: item.identityId, email: item.email)
+    }
+
+    public func map(
+        _ query: AuthAdminAPI.Components.Schemas
+            .AuthRolePermissionQueryItemSearchRequestQuerySchema
     ) -> RolePermission.Search.Input.Query {
         .init(
             page: map(query.page),
@@ -58,24 +119,24 @@ extension AdminAPIGateway {
 
     public func responseQuery(
         _ query: AuthAdminAPI.Components.Schemas
-            .AuthRolePermissionListItemSearchRequestQuerySchema
+            .AuthRolePermissionQueryItemSearchRequestQuerySchema
     )
         -> AuthAdminAPI.Components.Schemas
-        .AuthRolePermissionListItemSearchResponseQuerySchema
+        .AuthRolePermissionQueryItemSearchResponseQuerySchema
     {
         let page = map(query.page).normalized()
         let sort = query.sort?
             .map { rule in
                 let field:
                     AuthAdminAPI.Components.Schemas
-                        .AuthRolePermissionListItemSearchResponseQuerySchema
+                        .AuthRolePermissionQueryItemSearchResponseQuerySchema
                         .SortPayloadPayload.FieldPayload
                 switch rule.field {
                 case .roleId: field = .roleId
                 case .permissionId: field = .permissionId
                 }
                 return AuthAdminAPI.Components.Schemas
-                    .AuthRolePermissionListItemSearchResponseQuerySchema
+                    .AuthRolePermissionQueryItemSearchResponseQuerySchema
                     .SortPayloadPayload(field: field, direction: rule.direction)
             }
 
@@ -92,15 +153,15 @@ extension AdminAPIGateway {
         .init(roleId: detail.roleId, permissionId: detail.permissionId)
     }
 
-    public func map(
+    public func mapQuery(
         _ item: RolePermission.Search.Output.Item
-    ) -> AuthAdminAPI.Components.Schemas.AuthRolePermissionListItemSchema {
+    ) -> AuthAdminAPI.Components.Schemas.AuthRolePermissionQueryItemSchema {
         .init(roleId: item.roleId, permissionId: item.permissionId)
     }
 
     public func map(
         _ query: AuthAdminAPI.Components.Schemas
-            .AuthMagicLinkListItemSearchRequestQuerySchema
+            .AuthMagicLinkQueryItemSearchRequestQuerySchema
     ) -> MagicLink.List.Input.Query {
         .init(
             page: map(query.page),
@@ -123,10 +184,10 @@ extension AdminAPIGateway {
 
     public func responseQuery(
         _ query: AuthAdminAPI.Components.Schemas
-            .AuthMagicLinkListItemSearchRequestQuerySchema
+            .AuthMagicLinkQueryItemSearchRequestQuerySchema
     )
         -> AuthAdminAPI.Components.Schemas
-        .AuthMagicLinkListItemSearchResponseQuerySchema
+        .AuthMagicLinkQueryItemSearchResponseQuerySchema
     {
         let page =
             Search.Page(
@@ -138,7 +199,7 @@ extension AdminAPIGateway {
             .map { rule in
                 let field:
                     AuthAdminAPI.Components.Schemas
-                        .AuthMagicLinkListItemSearchResponseQuerySchema
+                        .AuthMagicLinkQueryItemSearchResponseQuerySchema
                         .SortPayloadPayload.FieldPayload
                 switch rule.field {
                 case .id: field = .id
@@ -149,7 +210,7 @@ extension AdminAPIGateway {
                 case .isUsed: field = .isUsed
                 }
                 return AuthAdminAPI.Components.Schemas
-                    .AuthMagicLinkListItemSearchResponseQuerySchema
+                    .AuthMagicLinkQueryItemSearchResponseQuerySchema
                     .SortPayloadPayload(field: field, direction: rule.direction)
             }
 
@@ -189,9 +250,22 @@ extension AdminAPIGateway {
         )
     }
 
+    public func mapQuery(
+        _ item: MagicLink.List.Output.Item
+    ) -> AuthAdminAPI.Components.Schemas.AuthMagicLinkQueryItemSchema {
+        .init(
+            id: item.id,
+            credentialId: item.authEmailId,
+            token: item.token,
+            expiresAt: item.expiresAt.timeIntervalSince1970,
+            isPersistent: item.isPersistent,
+            isUsed: item.isUsed
+        )
+    }
+
     public func map(
         _ query: AuthAdminAPI.Components.Schemas
-            .AuthCredentialListItemSearchRequestQuerySchema
+            .AuthCredentialQueryItemSearchRequestQuerySchema
     ) -> Credential.List.Input.Query {
         .init(
             page: map(query.page),
@@ -213,10 +287,10 @@ extension AdminAPIGateway {
 
     public func responseQuery(
         _ query: AuthAdminAPI.Components.Schemas
-            .AuthCredentialListItemSearchRequestQuerySchema
+            .AuthCredentialQueryItemSearchRequestQuerySchema
     )
         -> AuthAdminAPI.Components.Schemas
-        .AuthCredentialListItemSearchResponseQuerySchema
+        .AuthCredentialQueryItemSearchResponseQuerySchema
     {
         let page =
             Search.Page(
@@ -228,14 +302,14 @@ extension AdminAPIGateway {
             .map { rule in
                 let field:
                     AuthAdminAPI.Components.Schemas
-                        .AuthCredentialListItemSearchResponseQuerySchema
+                        .AuthCredentialQueryItemSearchResponseQuerySchema
                         .SortPayloadPayload.FieldPayload
                 switch rule.field {
                 case .userId: field = .userId
                 case .email: field = .email
                 }
                 return AuthAdminAPI.Components.Schemas
-                    .AuthCredentialListItemSearchResponseQuerySchema
+                    .AuthCredentialQueryItemSearchResponseQuerySchema
                     .SortPayloadPayload(field: field, direction: rule.direction)
             }
 
@@ -262,6 +336,17 @@ extension AdminAPIGateway {
     public func map(
         _ item: Credential.List.Output.Item
     ) -> AuthAdminAPI.Components.Schemas.AuthCredentialListItemSchema {
+        .init(
+            id: item.id,
+            userId: item.userId,
+            identityName: item.identityName,
+            email: item.email
+        )
+    }
+
+    public func mapQuery(
+        _ item: Credential.List.Output.Item
+    ) -> AuthAdminAPI.Components.Schemas.AuthCredentialQueryItemSchema {
         .init(
             id: item.id,
             userId: item.userId,

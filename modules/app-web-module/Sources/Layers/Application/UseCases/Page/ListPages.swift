@@ -1,6 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import WebContracts
+import WebModule
 
 //
 //  ListPages.swift
@@ -10,7 +10,7 @@ import WebContracts
 
 public struct ListPages: UseCase {
     struct Action: PermissionAction {
-        let key = WebPermissions.Pages.list
+        let key = WebModule.Permissions.Pages.list
     }
 
     let authorizer: any Authorizer

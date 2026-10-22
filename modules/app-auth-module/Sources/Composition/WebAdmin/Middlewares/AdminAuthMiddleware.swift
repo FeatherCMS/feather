@@ -5,8 +5,6 @@ public import SystemModule
 
 public struct AdminAuthMiddleware: RouterMiddleware {
 
-    public typealias Context = DefaultRequestContext
-
     private let loginPath: String
     private let unauthorizedPath: String
     private let requiredPermission: PermissionKey
@@ -23,8 +21,10 @@ public struct AdminAuthMiddleware: RouterMiddleware {
 
     public func handle(
         _ request: Request,
-        context: Context,
-        next: @concurrent (Request, Context) async throws -> Response
+        context: DefaultRequestContext,
+        next:
+            @concurrent (Request, DefaultRequestContext) async throws ->
+            Response
     ) async throws -> Response {
         guard let account = context.account else {
             return Response(

@@ -1,5 +1,6 @@
 import BlogAdminAPI
 import BlogApplication
+import BlogModule
 import FeatherApplication
 import FeatherModuleKit
 import Foundation
@@ -32,15 +33,21 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ page: BlogAdminAPI.Components.Schemas.SearchPageSchema
+        _ page: BlogAdminAPI.Components.Schemas.SearchPageSchema?
     ) -> Search.Page {
-        .init(size: page.size, number: page.number)
+        let defaults = Search.Page()
+        return
+            Search.Page(
+                size: page?.size ?? defaults.size,
+                number: page?.number ?? defaults.number
+            )
+            .normalized()
     }
 
     func mapMetadataStatus(
         _ value: String?
-    ) -> Metadata.Status {
-        value.flatMap(Metadata.Status.init(rawValue:)) ?? .draft
+    ) -> Metadata.Model.Status {
+        value.flatMap(Metadata.Model.Status.init(rawValue:)) ?? .draft
     }
 
     func mapBlogMetadata(
@@ -157,11 +164,11 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogPostListItemSearchRequestQuerySchema
-    ) -> PostList.Query {
+            .BlogPostQueryItemSearchRequestQuerySchema
+    ) -> Post.Search.Input.Query {
         let sort = (query.sort ?? [])
             .map { item in
-                let field: PostList.Query.Sort.Field
+                let field: Post.Search.Input.Query.Sort.Field
                 switch item.field {
                 case .id:
                     field = .id
@@ -172,7 +179,7 @@ extension AdminAPIGateway {
                 case .updatedAt:
                     field = .updatedAt
                 }
-                return PostList.Query.Sort(
+                return Post.Search.Input.Query.Sort(
                     field: field,
                     direction: mapSortDirection(item.direction)
                 )
@@ -185,7 +192,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: PostDetail
+        _ detail: Post.Detail.Output
     ) -> BlogAdminAPI.Components.Schemas.BlogPostDetailSchema {
         .init(
             id: detail.id,
@@ -202,8 +209,59 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ item: PostList.Item
+        _ output: Post.Add.Output
+    ) -> BlogAdminAPI.Components.Schemas.BlogPostDetailSchema {
+        map(
+            Post.Detail.Output(
+                id: output.id,
+                title: output.title,
+                excerpt: output.excerpt,
+                content: output.content,
+                imageAssetId: output.imageAssetId,
+                authorIds: output.authorIds,
+                tagIds: output.tagIds,
+                metadata: output.metadata,
+                createdAt: output.createdAt,
+                updatedAt: output.updatedAt
+            )
+        )
+    }
+
+    func map(
+        _ output: Post.Edit.Output
+    ) -> BlogAdminAPI.Components.Schemas.BlogPostDetailSchema {
+        map(
+            Post.Detail.Output(
+                id: output.id,
+                title: output.title,
+                excerpt: output.excerpt,
+                content: output.content,
+                imageAssetId: output.imageAssetId,
+                authorIds: output.authorIds,
+                tagIds: output.tagIds,
+                metadata: output.metadata,
+                createdAt: output.createdAt,
+                updatedAt: output.updatedAt
+            )
+        )
+    }
+
+    func map(
+        _ item: Post.List.Output.Item
     ) -> BlogAdminAPI.Components.Schemas.BlogPostListItemSchema {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            imageAssetId: item.imageAssetId,
+            createdAt: timestamp(item.createdAt),
+            updatedAt: timestamp(item.updatedAt)
+        )
+    }
+
+    func mapQuery(
+        _ item: Post.Search.Output.Item
+    ) -> BlogAdminAPI.Components.Schemas.BlogPostQueryItemSchema {
         .init(
             id: item.id,
             title: item.title,
@@ -216,11 +274,11 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogTagListItemSearchRequestQuerySchema
-    ) -> TagList.Query {
+            .BlogTagQueryItemSearchRequestQuerySchema
+    ) -> Tag.Search.Input.Query {
         let sort = (query.sort ?? [])
             .map { item in
-                let field: TagList.Query.Sort.Field
+                let field: Tag.Search.Input.Query.Sort.Field
                 switch item.field {
                 case .id:
                     field = .id
@@ -231,7 +289,7 @@ extension AdminAPIGateway {
                 case .updatedAt:
                     field = .updatedAt
                 }
-                return TagList.Query.Sort(
+                return Tag.Search.Input.Query.Sort(
                     field: field,
                     direction: mapSortDirection(item.direction)
                 )
@@ -244,7 +302,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: TagDetail
+        _ detail: Tag.Detail.Output
     ) -> BlogAdminAPI.Components.Schemas.BlogTagDetailSchema {
         .init(
             id: detail.id,
@@ -259,8 +317,55 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ item: TagList.Item
+        _ output: Tag.Add.Output
+    ) -> BlogAdminAPI.Components.Schemas.BlogTagDetailSchema {
+        map(
+            Tag.Detail.Output(
+                id: output.id,
+                title: output.title,
+                excerpt: output.excerpt,
+                content: output.content,
+                imageAssetId: output.imageAssetId,
+                metadata: output.metadata,
+                createdAt: output.createdAt,
+                updatedAt: output.updatedAt
+            )
+        )
+    }
+
+    func map(
+        _ output: Tag.Edit.Output
+    ) -> BlogAdminAPI.Components.Schemas.BlogTagDetailSchema {
+        map(
+            Tag.Detail.Output(
+                id: output.id,
+                title: output.title,
+                excerpt: output.excerpt,
+                content: output.content,
+                imageAssetId: output.imageAssetId,
+                metadata: output.metadata,
+                createdAt: output.createdAt,
+                updatedAt: output.updatedAt
+            )
+        )
+    }
+
+    func map(
+        _ item: Tag.List.Output.Item
     ) -> BlogAdminAPI.Components.Schemas.BlogTagListItemSchema {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            imageAssetId: item.imageAssetId,
+            createdAt: timestamp(item.createdAt),
+            updatedAt: timestamp(item.updatedAt)
+        )
+    }
+
+    func mapQuery(
+        _ item: Tag.Search.Output.Item
+    ) -> BlogAdminAPI.Components.Schemas.BlogTagQueryItemSchema {
         .init(
             id: item.id,
             title: item.title,
@@ -273,11 +378,11 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogAuthorListItemSearchRequestQuerySchema
-    ) -> AuthorList.Query {
+            .BlogAuthorQueryItemSearchRequestQuerySchema
+    ) -> Author.Search.Input.Query {
         let sort = (query.sort ?? [])
             .map { item in
-                let field: AuthorList.Query.Sort.Field
+                let field: Author.Search.Input.Query.Sort.Field
                 switch item.field {
                 case .id:
                     field = .id
@@ -288,7 +393,7 @@ extension AdminAPIGateway {
                 case .updatedAt:
                     field = .updatedAt
                 }
-                return AuthorList.Query.Sort(
+                return Author.Search.Input.Query.Sort(
                     field: field,
                     direction: mapSortDirection(item.direction)
                 )
@@ -301,7 +406,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: AuthorDetail
+        _ detail: Author.Detail.Output
     ) -> BlogAdminAPI.Components.Schemas.BlogAuthorDetailSchema {
         .init(
             id: detail.id,
@@ -316,7 +421,50 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ item: AuthorList.Item
+        _ detail: Author.Add.Output
+    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorDetailSchema {
+        .init(
+            id: detail.id,
+            name: detail.name,
+            excerpt: detail.excerpt,
+            content: detail.content,
+            profileImageAssetId: detail.profileImageAssetId,
+            metadata: map(detail.metadata),
+            createdAt: timestamp(detail.createdAt),
+            updatedAt: timestamp(detail.updatedAt)
+        )
+    }
+
+    func map(
+        _ detail: Author.Edit.Output
+    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorDetailSchema {
+        .init(
+            id: detail.id,
+            name: detail.name,
+            excerpt: detail.excerpt,
+            content: detail.content,
+            profileImageAssetId: detail.profileImageAssetId,
+            metadata: map(detail.metadata),
+            createdAt: timestamp(detail.createdAt),
+            updatedAt: timestamp(detail.updatedAt)
+        )
+    }
+
+    func map(
+        _ item: Author.Search.Output.Item
+    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorQueryItemSchema {
+        .init(
+            id: item.id,
+            name: item.name,
+            excerpt: item.excerpt,
+            profileImageAssetId: item.profileImageAssetId,
+            createdAt: timestamp(item.createdAt),
+            updatedAt: timestamp(item.updatedAt)
+        )
+    }
+
+    func map(
+        _ item: Author.List.Output.Item
     ) -> BlogAdminAPI.Components.Schemas.BlogAuthorListItemSchema {
         .init(
             id: item.id,
@@ -330,11 +478,11 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogAuthorLinkListItemSearchRequestQuerySchema
-    ) -> AuthorLinkList.Query {
+            .BlogAuthorLinkQueryItemSearchRequestQuerySchema
+    ) -> AuthorLink.Search.Input.Query {
         let sort = (query.sort ?? [])
             .map { item in
-                let field: AuthorLinkList.Query.Sort.Field
+                let field: AuthorLink.Search.Input.Query.Sort.Field
                 switch item.field {
                 case .id:
                     field = .id
@@ -351,7 +499,7 @@ extension AdminAPIGateway {
                 case .updatedAt:
                     field = .updatedAt
                 }
-                return AuthorLinkList.Query.Sort(
+                return AuthorLink.Search.Input.Query.Sort(
                     field: field,
                     direction: mapSortDirection(item.direction)
                 )
@@ -364,7 +512,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: AuthorLinkDetail
+        _ detail: AuthorLink.Detail.Output
     ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkDetailSchema {
         .init(
             id: detail.id,
@@ -381,7 +529,45 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ item: AuthorLinkList.Item
+        _ output: AuthorLink.Add.Output
+    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkDetailSchema {
+        map(
+            AuthorLink.Detail.Output(
+                id: output.id,
+                authorId: output.authorId,
+                label: output.label,
+                url: output.url,
+                priority: output.priority,
+                isBlank: output.isBlank,
+                permission: output.permission,
+                notes: output.notes,
+                createdAt: output.createdAt,
+                updatedAt: output.updatedAt
+            )
+        )
+    }
+
+    func map(
+        _ output: AuthorLink.Edit.Output
+    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkDetailSchema {
+        map(
+            AuthorLink.Detail.Output(
+                id: output.id,
+                authorId: output.authorId,
+                label: output.label,
+                url: output.url,
+                priority: output.priority,
+                isBlank: output.isBlank,
+                permission: output.permission,
+                notes: output.notes,
+                createdAt: output.createdAt,
+                updatedAt: output.updatedAt
+            )
+        )
+    }
+
+    func map(
+        _ item: AuthorLink.List.Output.Item
     ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkListItemSchema {
         .init(
             id: item.id,
@@ -396,16 +582,20 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(
-        _ detail: BlogApplication.SettingsDetail
-    ) -> BlogAdminAPI.Components.Schemas.BlogSettingsDetailSchema {
+    func mapQuery(
+        _ item: AuthorLink.Search.Output.Item
+    ) -> BlogAdminAPI.Components.Schemas.BlogAuthorLinkQueryItemSchema {
         .init(
-            postListPath: detail.postListPath,
-            authorListPath: detail.authorListPath,
-            tagListPath: detail.tagListPath,
-            postPathPrefix: detail.postPathPrefix,
-            authorPathPrefix: detail.authorPathPrefix,
-            tagPathPrefix: detail.tagPathPrefix
+            id: item.id,
+            menuId: item.authorId,
+            label: item.label,
+            url: item.url,
+            priority: item.priority,
+            isBlank: item.isBlank,
+            permission: item.permission,
+            createdAt: timestamp(item.createdAt),
+            updatedAt: timestamp(item.updatedAt)
         )
     }
+
 }

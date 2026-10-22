@@ -1,6 +1,7 @@
 public import AuthAdminAPI
 import AuthApplication
 import AuthModule
+import FeatherDomain
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -20,8 +21,8 @@ extension AdminAPIGateway {
             subject: subject,
             input: MagicLink.Edit.Input(
                 id: input.path.authMagicLinkId,
-                authEmailId: body.credentialId,
-                isPersistent: body.isPersistent
+                authEmailId: .set(body.credentialId),
+                isPersistent: .set(body.isPersistent)
             )
         )
 

@@ -16,7 +16,7 @@ extension UseCases {
                     credential: Credential.Repository.Database(
                         context: context
                     ),
-                    authEmail: AuthEmail.Repository.Database(
+                    authEmail: Email.Repository.Database(
                         context: context
                     ),
                     magicLink: MagicLink.Repository.Database(context: context),

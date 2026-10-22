@@ -1,9 +1,9 @@
 import FeatherWebAdmin
 import HTML
-import MediaFrontend
+import MediaWebAdmin
 import WebBuilders
 import WebComponents
-import WebFrontend
+import WebModuleWebAdmin
 
 struct AdminNewsArticleFormPage: Component {
     let input: AdminNewsArticleFormInput

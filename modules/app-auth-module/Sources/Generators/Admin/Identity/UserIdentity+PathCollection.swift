@@ -7,9 +7,7 @@ extension Identity {
         var pathMap: PathMap {
             [
                 "api/v1/admin/user/identities/{userIdentityId}/sessions":
-                    UserIdentitySessionPathItems(),
-                "api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}":
-                    UserIdentitySessionIdPathItems(),
+                    UserIdentitySessionPathItems()
             ]
         }
     }

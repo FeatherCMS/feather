@@ -1,5 +1,5 @@
 public import FeatherModuleKit
-import WebFrontend
+import WebModuleWebApp
 
 public enum ContactMarkdownEventHandlers {
     public static func register(

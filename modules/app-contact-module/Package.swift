@@ -166,7 +166,8 @@ let package = Package(
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "WebFrontend", package: "app-web-module"),
+                .product(name: "WebModuleWebApp", package: "app-web-module"),
+                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
 
                 .target(name: "ContactContracts"),
                 .target(name: "ContactAdminAPI"),

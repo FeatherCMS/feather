@@ -3,9 +3,9 @@ import BlogApplication
 import FeatherModuleKit
 
 extension AdminAPIGateway {
-    public func blogSettingsUpdate(
-        _ input: Operations.BlogSettingsUpdate.Input
-    ) async throws -> Operations.BlogSettingsUpdate.Output {
+    public func blogSettingsPut(
+        _ input: Operations.BlogSettingsPut.Input
+    ) async throws -> Operations.BlogSettingsPut.Output {
         let body: Components.Schemas.BlogSettingsUpdateSchema
         switch input.body {
         case .json(let value):
@@ -26,6 +26,6 @@ extension AdminAPIGateway {
             )
         )
 
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(mapEditSettings(result))))
     }
 }

@@ -38,7 +38,7 @@ public struct TableSeedMigration: DatabaseMigration {
     ) async throws {
         let rootPassword = try await BCryptPasswordHasher().hash("root")
         let identityRepository = Identity.Repository.Database(context: context)
-        let authEmailRepository = AuthEmail.Repository.Database(
+        let authEmailRepository = Email.Repository.Database(
             context: context
         )
         let credentialRepository = Credential.Repository.Database(
@@ -98,7 +98,7 @@ public struct TableSeedMigration: DatabaseMigration {
         }
 
         let rootEmail = "mail.tib@gmail.com"
-        let authEmail: AuthEmail.Model
+        let authEmail: Email.Model
         if let existing = try await authEmailRepository.findBy(email: rootEmail)
         {
             authEmail = existing

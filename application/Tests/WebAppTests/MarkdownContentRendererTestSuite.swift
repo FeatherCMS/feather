@@ -2,7 +2,7 @@ import FeatherModuleKit
 import Foundation
 import Testing
 
-import WebFrontend
+import WebModuleWebAdmin
 
 @Suite
 struct MarkdownContentRendererTestSuite {

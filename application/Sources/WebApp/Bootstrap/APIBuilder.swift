@@ -1,29 +1,22 @@
-import AccountFrontend
 import AnalyticsFrontend
-import BlogFrontend
+import BlogWebAdmin
 import ContactFrontend
 import FeatherWebAdmin
-import Foundation
-import MediaFrontend
+import FeatherWebShared
+import MediaWebAdmin
 import NewsletterFrontend
-import WebFrontend
+import WebModuleWebAdmin
 
 struct APIBuilder: Sendable {
-    let account: AccountAPIBuilder
     let analytics: AnalyticsAPIBuilder
-    let blog: BlogAPIBuilder
     let contact: ContactAPIBuilder
-    let media: MediaAPIBuilder
     let newsletter: NewsletterAPIBuilder
-    let web: WebAPIBuilder
+    let web: WebModuleWebAdmin.API.Builder
 
-    init(apiBaseURL: URL) {
-        self.account = .init(apiBaseURL: apiBaseURL)
-        self.analytics = .init(apiBaseURL: apiBaseURL)
-        self.blog = .init(apiBaseURL: apiBaseURL)
-        self.contact = .init(apiBaseURL: apiBaseURL)
-        self.media = .init(apiBaseURL: apiBaseURL)
-        self.newsletter = .init(apiBaseURL: apiBaseURL)
-        self.web = .init(apiBaseURL: apiBaseURL)
+    init(environment: AppEnvironment) {
+        self.analytics = .init(apiBaseURL: environment.apiBaseURL)
+        self.contact = .init(apiBaseURL: environment.apiBaseURL)
+        self.newsletter = .init(apiBaseURL: environment.apiBaseURL)
+        self.web = .init(environment: environment)
     }
 }

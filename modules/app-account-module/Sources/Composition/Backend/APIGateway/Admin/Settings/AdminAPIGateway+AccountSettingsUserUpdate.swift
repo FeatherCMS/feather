@@ -4,9 +4,9 @@ import FeatherModuleKit
 
 extension AdminAPIGateway {
 
-    public func adminAccountSettingsUpdate(
-        _ input: Operations.AdminAccountSettingsUpdate.Input
-    ) async throws -> Operations.AdminAccountSettingsUpdate.Output {
+    public func accountUserSettingsUpdate(
+        _ input: Operations.AccountUserSettingsUpdate.Input
+    ) async throws -> Operations.AccountUserSettingsUpdate.Output {
         let body: Components.Schemas.AccountSettingsUpdateSchema
         switch input.body {
         case .json(let value): body = value

@@ -6,7 +6,7 @@
 
 import WebDomain
 
-extension Settings {
+extension Settings.Model {
 
     var asDetail: SettingsDetail {
         .init(

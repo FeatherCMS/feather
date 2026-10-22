@@ -2,7 +2,7 @@ import FeatherWebAdmin
 import FeatherModuleKit
 import Foundation
 import NewsAdminAPI
-import WebFrontend
+import WebModuleWebAdmin
 
 struct NewsMetadataFormInput: Codable, Sendable {
     var slug: String

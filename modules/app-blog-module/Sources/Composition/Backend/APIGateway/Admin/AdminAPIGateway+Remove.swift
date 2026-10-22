@@ -4,9 +4,9 @@ import FeatherModuleKit
 
 extension AdminAPIGateway {
 
-    public func blogAuthorRemove(
-        _ input: Operations.BlogAuthorRemove.Input
-    ) async throws -> Operations.BlogAuthorRemove.Output {
+    public func blogAuthorDelete(
+        _ input: Operations.BlogAuthorDelete.Input
+    ) async throws -> Operations.BlogAuthorDelete.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value): body = value
@@ -20,9 +20,9 @@ extension AdminAPIGateway {
         return .noContent(.init())
     }
 
-    public func blogAuthorLinkRemove(
-        _ input: Operations.BlogAuthorLinkRemove.Input
-    ) async throws -> Operations.BlogAuthorLinkRemove.Output {
+    public func blogAuthorLinkDelete(
+        _ input: Operations.BlogAuthorLinkDelete.Input
+    ) async throws -> Operations.BlogAuthorLinkDelete.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value): body = value
@@ -36,9 +36,9 @@ extension AdminAPIGateway {
         return .noContent(.init())
     }
 
-    public func blogPostRemove(
-        _ input: Operations.BlogPostRemove.Input
-    ) async throws -> Operations.BlogPostRemove.Output {
+    public func blogPostDelete(
+        _ input: Operations.BlogPostDelete.Input
+    ) async throws -> Operations.BlogPostDelete.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value): body = value
@@ -52,9 +52,9 @@ extension AdminAPIGateway {
         return .noContent(.init())
     }
 
-    public func blogTagRemove(
-        _ input: Operations.BlogTagRemove.Input
-    ) async throws -> Operations.BlogTagRemove.Output {
+    public func blogTagDelete(
+        _ input: Operations.BlogTagDelete.Input
+    ) async throws -> Operations.BlogTagDelete.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value): body = value

@@ -9,7 +9,7 @@ import AccountInfrastructure
 func buildAppEventPublisher() -> any EventPublisher {
     var events = EventRegistry()
 
-    AccountInfrastructure.EventHandlers.register(in: &events)
+    AccountModule.Event.Handlers.register(in: &events)
 
     return events
 }

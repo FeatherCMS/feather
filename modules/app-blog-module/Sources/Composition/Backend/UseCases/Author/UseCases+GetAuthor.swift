@@ -1,23 +1,22 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherInfrastructure
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
 
-    public func makeGetAuthor() -> GetAuthor {
+    public func makeGetAuthor() -> Author.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadAuthorMetadata(
-                    author: AuthorDatabaseQueries(
+                Author.Detail.Scope(
+                    author: Author.Detail.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
-                    ),
-                    metadata: MetadataDatabaseQueries(
-                        context: context
                     )
                 )
             }

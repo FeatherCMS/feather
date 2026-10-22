@@ -7,6 +7,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import Foundation
+public import WebDomain
 
 public struct ResolveWebRoute {
     public struct Error: UseCaseError {
@@ -17,10 +18,10 @@ public struct ResolveWebRoute {
         }
     }
 
-    let query: any QueryExecutor<ReadMetadata>
+    let query: any QueryExecutor<Metadata.Query.Scope>
 
     public init(
-        query: any QueryExecutor<ReadMetadata>
+        query: any QueryExecutor<Metadata.Query.Scope>
     ) {
         self.query = query
     }

@@ -8,38 +8,6 @@ tags:
 servers:
 - url: http://127.0.0.1:8080/
 paths:
-  /api/v1/blog/settings:
-    get:
-      tags:
-      - Blog
-      operationId: blogRouteSettings
-      responses:
-        200:
-          $ref: '#/components/responses/BlogRouteSettingsResponse'
-  /api/v1/blog/posts:
-    get:
-      tags:
-      - Blog
-      operationId: blogPostList
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostListResponse'
-  /api/v1/blog/posts/{id}:
-    get:
-      tags:
-      - Blog
-      operationId: blogPostGet
-      parameters:
-      - $ref: '#/components/parameters/BlogPostIdParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostDetailResponse'
-        404:
-          description: Blog post not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
   /api/v1/blog/authors:
     get:
       tags:
@@ -64,6 +32,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+  /api/v1/blog/posts:
+    get:
+      tags:
+      - Blog
+      operationId: blogPostList
+      responses:
+        200:
+          $ref: '#/components/responses/BlogPostListResponse'
+  /api/v1/blog/posts/{id}:
+    get:
+      tags:
+      - Blog
+      operationId: blogPostGet
+      parameters:
+      - $ref: '#/components/parameters/BlogPostIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/BlogPostDetailResponse'
+        404:
+          description: Blog post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+  /api/v1/blog/settings:
+    get:
+      tags:
+      - Blog
+      operationId: blogSettingsGet
+      responses:
+        200:
+          $ref: '#/components/responses/BlogRouteSettingsResponse'
   /api/v1/blog/tags:
     get:
       tags:
@@ -90,103 +90,57 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
 components:
   schemas:
-    BlogRouteSettingsSchema:
-      type: object
-      properties:
-        postListPath:
-          $ref: '#/components/schemas/BlogSettingsPostListPathField'
-        authorListPath:
-          $ref: '#/components/schemas/BlogSettingsAuthorListPathField'
-        tagListPath:
-          $ref: '#/components/schemas/BlogSettingsTagListPathField'
-        postPathPrefix:
-          $ref: '#/components/schemas/BlogSettingsPostPathPrefixField'
-        authorPathPrefix:
-          $ref: '#/components/schemas/BlogSettingsAuthorPathPrefixField'
-        tagPathPrefix:
-          $ref: '#/components/schemas/BlogSettingsTagPathPrefixField'
-        siteNoIndex:
-          $ref: '#/components/schemas/BlogSettingsSiteNoIndexField'
-      required:
-      - postListPath
-      - authorListPath
-      - tagListPath
-      - postPathPrefix
-      - authorPathPrefix
-      - tagPathPrefix
-      - siteNoIndex
-      minProperties: 7
-    BlogSettingsPostListPathField:
-      type: string
-      examples:
-      - blog
-    BlogSettingsAuthorListPathField:
-      type: string
-      examples:
-      - authors
-    BlogSettingsTagListPathField:
-      type: string
-      examples:
-      - tags
-    BlogSettingsPostPathPrefixField:
-      type: string
-      examples:
-      - posts
-    BlogSettingsAuthorPathPrefixField:
-      type: string
-      examples:
-      - authors
-    BlogSettingsTagPathPrefixField:
-      type: string
-      examples:
-      - tags
-    BlogSettingsSiteNoIndexField:
-      type: boolean
-      examples:
-      - false
-    BlogPostListSchema:
+    BlogAuthorListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/BlogPostSummarySchema'
+        $ref: '#/components/schemas/BlogAuthorSummarySchema'
       minItems: 0
       uniqueItems: false
-    BlogPostSummarySchema:
+    BlogAuthorSummarySchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/BlogPostIdField'
+          $ref: '#/components/schemas/BlogAuthorIdField'
+        name:
+          $ref: '#/components/schemas/BlogAuthorNameField'
         excerpt:
-          $ref: '#/components/schemas/BlogPostExcerptField'
+          $ref: '#/components/schemas/BlogAuthorExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogAuthorContentField'
         imageURL:
-          $ref: '#/components/schemas/BlogPostImageURLField'
+          $ref: '#/components/schemas/BlogAuthorImageURLField'
         media:
           $ref: '#/components/schemas/MediaAssetSchema'
         metadata:
           $ref: '#/components/schemas/WebMetadataContentSchema'
-        authors:
-          $ref: '#/components/schemas/BlogAuthorSummaryListSchema'
-        tags:
-          $ref: '#/components/schemas/BlogTagSummaryListSchema'
       required:
       - id
+      - name
       - excerpt
+      - content
       - imageURL
       - metadata
-      - authors
-      - tags
       minProperties: 6
-    BlogPostIdField:
+    BlogAuthorIdField:
       type: string
       examples:
-      - blog_post_1
-    BlogPostExcerptField:
+      - blog_author_1
+    BlogAuthorNameField:
       type: string
       examples:
-      - Short post summary.
-    BlogPostImageURLField:
+      - Jane Doe
+    BlogAuthorExcerptField:
       type: string
       examples:
-      - /public/12/34/56789/originals/blog-post.png
+      - Short author summary.
+    BlogAuthorContentField:
+      type: string
+      examples:
+      - <p>Author bio</p>
+    BlogAuthorImageURLField:
+      type: string
+      examples:
+      - /public/12/34/56789/originals/author.png
     MediaAssetSchema:
       type: object
       properties:
@@ -311,192 +265,6 @@ components:
       type: string
       examples:
       - <p>Hello world</p>
-    BlogAuthorSummaryListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogAuthorSummarySchema'
-      minItems: 0
-      uniqueItems: false
-    BlogAuthorSummarySchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/BlogAuthorIdField'
-        name:
-          $ref: '#/components/schemas/BlogAuthorNameField'
-        excerpt:
-          $ref: '#/components/schemas/BlogAuthorExcerptField'
-        content:
-          $ref: '#/components/schemas/BlogAuthorContentField'
-        imageURL:
-          $ref: '#/components/schemas/BlogAuthorImageURLField'
-        media:
-          $ref: '#/components/schemas/MediaAssetSchema'
-        metadata:
-          $ref: '#/components/schemas/WebMetadataContentSchema'
-      required:
-      - id
-      - name
-      - excerpt
-      - content
-      - imageURL
-      - metadata
-      minProperties: 6
-    BlogAuthorIdField:
-      type: string
-      examples:
-      - blog_author_1
-    BlogAuthorNameField:
-      type: string
-      examples:
-      - Jane Doe
-    BlogAuthorExcerptField:
-      type: string
-      examples:
-      - Short author summary.
-    BlogAuthorContentField:
-      type: string
-      examples:
-      - <p>Author bio</p>
-    BlogAuthorImageURLField:
-      type: string
-      examples:
-      - /public/12/34/56789/originals/author.png
-    BlogTagSummaryListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogTagSummarySchema'
-      minItems: 0
-      uniqueItems: false
-    BlogTagSummarySchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/BlogTagIdField'
-        excerpt:
-          $ref: '#/components/schemas/BlogTagExcerptField'
-        imageURL:
-          $ref: '#/components/schemas/BlogTagImageURLField'
-        media:
-          $ref: '#/components/schemas/MediaAssetSchema'
-        metadata:
-          $ref: '#/components/schemas/WebMetadataContentSchema'
-      required:
-      - id
-      - excerpt
-      - imageURL
-      - metadata
-      minProperties: 4
-    BlogTagIdField:
-      type: string
-      examples:
-      - blog_tag_1
-    BlogTagExcerptField:
-      type: string
-      examples:
-      - Short tag summary.
-    BlogTagImageURLField:
-      type: string
-      examples:
-      - /public/12/34/56789/originals/tag.png
-    BlogPostDetailSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/BlogPostIdField'
-        excerpt:
-          $ref: '#/components/schemas/BlogPostExcerptField'
-        content:
-          $ref: '#/components/schemas/BlogPostContentField'
-        imageURL:
-          $ref: '#/components/schemas/BlogPostImageURLField'
-        media:
-          $ref: '#/components/schemas/MediaAssetSchema'
-        metadata:
-          $ref: '#/components/schemas/WebMetadataContentSchema'
-        authors:
-          $ref: '#/components/schemas/BlogAuthorSummaryListSchema'
-        tags:
-          $ref: '#/components/schemas/BlogTagSummaryListSchema'
-        relatedPosts:
-          $ref: '#/components/schemas/BlogPostSummaryListSchema'
-      required:
-      - id
-      - excerpt
-      - content
-      - imageURL
-      - metadata
-      - authors
-      - tags
-      - relatedPosts
-      minProperties: 8
-    BlogPostContentField:
-      type: string
-      examples:
-      - <p>Hello world</p>
-    BlogPostSummaryListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogPostSummarySchema'
-      minItems: 0
-      uniqueItems: false
-    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
-        trace:
-          $ref: '#/components/schemas/ErrorTraceSchema'
-      required:
-      - error
-      minProperties: 1
-    DefaultHTTPErrorContentSchema:
-      type: object
-      properties:
-        message:
-          type: string
-        reason:
-          type: string
-      required:
-      - message
-      - reason
-      minProperties: 2
-    ErrorTraceSchema:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-        reasons:
-          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
-      required:
-      - id
-      - message
-      minProperties: 2
-    ErrorTraceReasonsSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/ErrorTraceReasonSchema'
-      minItems: 0
-      uniqueItems: false
-    ErrorTraceReasonSchema:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-      required:
-      - id
-      - message
-      minProperties: 2
-    BlogAuthorListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogAuthorSummarySchema'
-      minItems: 0
-      uniqueItems: false
     BlogAuthorDetailSchema:
       type: object
       properties:
@@ -560,6 +328,238 @@ components:
       type: boolean
       examples:
       - false
+    BlogPostSummaryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogPostSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogPostSummarySchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostIdField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        imageURL:
+          $ref: '#/components/schemas/BlogPostImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+        authors:
+          $ref: '#/components/schemas/BlogAuthorSummaryListSchema'
+        tags:
+          $ref: '#/components/schemas/BlogTagSummaryListSchema'
+      required:
+      - id
+      - excerpt
+      - imageURL
+      - metadata
+      - authors
+      - tags
+      minProperties: 6
+    BlogPostIdField:
+      type: string
+      examples:
+      - blog_post_1
+    BlogPostExcerptField:
+      type: string
+      examples:
+      - Short post summary.
+    BlogPostImageURLField:
+      type: string
+      examples:
+      - /public/12/34/56789/originals/blog-post.png
+    BlogAuthorSummaryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogAuthorSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogTagSummaryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogTagSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogTagSummarySchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogTagIdField'
+        excerpt:
+          $ref: '#/components/schemas/BlogTagExcerptField'
+        imageURL:
+          $ref: '#/components/schemas/BlogTagImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+      required:
+      - id
+      - excerpt
+      - imageURL
+      - metadata
+      minProperties: 4
+    BlogTagIdField:
+      type: string
+      examples:
+      - blog_tag_1
+    BlogTagExcerptField:
+      type: string
+      examples:
+      - Short tag summary.
+    BlogTagImageURLField:
+      type: string
+      examples:
+      - /public/12/34/56789/originals/tag.png
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+      minProperties: 1
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+      minProperties: 2
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+      minProperties: 2
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+      minItems: 0
+      uniqueItems: false
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
+      minProperties: 2
+    BlogPostListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogPostSummarySchema'
+      minItems: 0
+      uniqueItems: false
+    BlogPostDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostIdField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogPostContentField'
+        imageURL:
+          $ref: '#/components/schemas/BlogPostImageURLField'
+        media:
+          $ref: '#/components/schemas/MediaAssetSchema'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataContentSchema'
+        authors:
+          $ref: '#/components/schemas/BlogAuthorSummaryListSchema'
+        tags:
+          $ref: '#/components/schemas/BlogTagSummaryListSchema'
+        relatedPosts:
+          $ref: '#/components/schemas/BlogPostSummaryListSchema'
+      required:
+      - id
+      - excerpt
+      - content
+      - imageURL
+      - metadata
+      - authors
+      - tags
+      - relatedPosts
+      minProperties: 8
+    BlogPostContentField:
+      type: string
+      examples:
+      - <p>Hello world</p>
+    BlogRouteSettingsSchema:
+      type: object
+      properties:
+        postListPath:
+          $ref: '#/components/schemas/BlogSettingsPostListPathField'
+        authorListPath:
+          $ref: '#/components/schemas/BlogSettingsAuthorListPathField'
+        tagListPath:
+          $ref: '#/components/schemas/BlogSettingsTagListPathField'
+        postPathPrefix:
+          $ref: '#/components/schemas/BlogSettingsPostPathPrefixField'
+        authorPathPrefix:
+          $ref: '#/components/schemas/BlogSettingsAuthorPathPrefixField'
+        tagPathPrefix:
+          $ref: '#/components/schemas/BlogSettingsTagPathPrefixField'
+        siteNoIndex:
+          $ref: '#/components/schemas/BlogSettingsSiteNoIndexField'
+      required:
+      - postListPath
+      - authorListPath
+      - tagListPath
+      - postPathPrefix
+      - authorPathPrefix
+      - tagPathPrefix
+      - siteNoIndex
+      minProperties: 7
+    BlogSettingsPostListPathField:
+      type: string
+      examples:
+      - blog
+    BlogSettingsAuthorListPathField:
+      type: string
+      examples:
+      - authors
+    BlogSettingsTagListPathField:
+      type: string
+      examples:
+      - tags
+    BlogSettingsPostPathPrefixField:
+      type: string
+      examples:
+      - posts
+    BlogSettingsAuthorPathPrefixField:
+      type: string
+      examples:
+      - authors
+    BlogSettingsTagPathPrefixField:
+      type: string
+      examples:
+      - tags
+    BlogSettingsSiteNoIndexField:
+      type: boolean
+      examples:
+      - false
     BlogTagListSchema:
       type: array
       items:
@@ -596,24 +596,6 @@ components:
       examples:
       - <p>Tag description</p>
   responses:
-    BlogRouteSettingsResponse:
-      description: Blog route settings
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogRouteSettingsSchema'
-    BlogPostListResponse:
-      description: Blog post list
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogPostListSchema'
-    BlogPostDetailResponse:
-      description: Blog post detail
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogPostDetailSchema'
     BlogAuthorListResponse:
       description: Blog author list
       content:
@@ -626,6 +608,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogAuthorDetailSchema'
+    BlogPostListResponse:
+      description: Blog post list
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostListSchema'
+    BlogPostDetailResponse:
+      description: Blog post detail
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogPostDetailSchema'
+    BlogRouteSettingsResponse:
+      description: Blog route settings
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BlogRouteSettingsSchema'
     BlogTagListResponse:
       description: Blog tag list
       content:
@@ -639,13 +639,6 @@ components:
           schema:
             $ref: '#/components/schemas/BlogTagDetailSchema'
   parameters:
-    BlogPostIdParameter:
-      name: id
-      in: path
-      required: true
-      schema:
-        $ref: '#/components/schemas/BlogPostIdField'
-      description: Blog post identifier
     BlogAuthorIdParameter:
       name: id
       in: path
@@ -653,6 +646,13 @@ components:
       schema:
         $ref: '#/components/schemas/BlogAuthorIdField'
       description: Blog author identifier
+    BlogPostIdParameter:
+      name: id
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogPostIdField'
+      description: Blog post identifier
     BlogTagIdParameter:
       name: id
       in: path

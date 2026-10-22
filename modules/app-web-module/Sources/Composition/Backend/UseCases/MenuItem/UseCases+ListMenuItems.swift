@@ -1,30 +1,20 @@
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
-import SystemInfrastructure
-import WebAdminAPI
-import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
-
-    func makeListMenuItems() -> ListMenuItems {
+    func makeListMenuItems() -> MenuItem.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadMenuItem(
-                    menuItem: MenuItemDatabaseQueries(
-                        context: context
-                    )
+                MenuItem.List.Scope(
+                    menuItem: MenuItem.List.Query.Database(context: context)
                 )
             }
         )
-        return .init(
-            authorizer: authorizer,
-            query: query
-        )
+        return .init(authorizer: authorizer, query: query)
     }
 }

@@ -8,14 +8,6 @@ tags:
 servers:
 - url: http://127.0.0.1:8080/
 paths:
-  /api/v1/web/settings:
-    get:
-      tags:
-      - Web
-      operationId: webSiteSettings
-      responses:
-        200:
-          $ref: '#/components/responses/WebSiteSettingsResponse'
   /api/v1/web/menus:
     get:
       tags:
@@ -80,117 +72,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+  /api/v1/web/settings:
+    get:
+      tags:
+      - Web
+      operationId: webSiteSettings
+      responses:
+        200:
+          $ref: '#/components/responses/WebSiteSettingsResponse'
 components:
   schemas:
-    WebSiteSettingsSchema:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/WebSiteSettingsTitleField'
-        excerpt:
-          $ref: '#/components/schemas/WebSiteSettingsExcerptField'
-        locale:
-          $ref: '#/components/schemas/WebSiteSettingsLocaleField'
-        noIndex:
-          $ref: '#/components/schemas/WebSiteSettingsNoIndexField'
-        logo:
-          $ref: '#/components/schemas/WebSiteSettingsLogoField'
-        logoDark:
-          $ref: '#/components/schemas/WebSiteSettingsLogoDarkField'
-        metaImage:
-          $ref: '#/components/schemas/WebSiteSettingsMetaImageField'
-        primaryColor:
-          $ref: '#/components/schemas/WebSiteSettingsPrimaryColorField'
-        secondaryColor:
-          $ref: '#/components/schemas/WebSiteSettingsSecondaryColorField'
-        tertiaryColor:
-          $ref: '#/components/schemas/WebSiteSettingsTertiaryColorField'
-        primaryFont:
-          $ref: '#/components/schemas/WebSiteSettingsPrimaryFontField'
-        secondaryFont:
-          $ref: '#/components/schemas/WebSiteSettingsSecondaryFontField'
-        homePageId:
-          $ref: '#/components/schemas/WebSiteSettingsHomePageIDField'
-        css:
-          $ref: '#/components/schemas/WebSiteSettingsCSSField'
-        js:
-          $ref: '#/components/schemas/WebSiteSettingsJSField'
-      required:
-      - title
-      - excerpt
-      - locale
-      - noIndex
-      - logo
-      - logoDark
-      - metaImage
-      - primaryColor
-      - secondaryColor
-      - tertiaryColor
-      - primaryFont
-      - secondaryFont
-      - css
-      - js
-      minProperties: 14
-    WebSiteSettingsTitleField:
-      type: string
-      examples:
-      - Example Site
-    WebSiteSettingsExcerptField:
-      type: string
-      examples:
-      - A concise site description.
-    WebSiteSettingsLocaleField:
-      type: string
-      examples:
-      - en-US
-    WebSiteSettingsNoIndexField:
-      type: boolean
-      examples:
-      - false
-    WebSiteSettingsLogoField:
-      type: string
-      examples:
-      - /images/logo.svg
-    WebSiteSettingsLogoDarkField:
-      type: string
-      examples:
-      - /images/logo-dark.svg
-    WebSiteSettingsMetaImageField:
-      type: string
-      examples:
-      - /public/12/34/56789/originals/default-meta-image.webp
-    WebSiteSettingsPrimaryColorField:
-      type: string
-      examples:
-      - '#1d4ed8'
-    WebSiteSettingsSecondaryColorField:
-      type: string
-      examples:
-      - '#0f172a'
-    WebSiteSettingsTertiaryColorField:
-      type: string
-      examples:
-      - '#e2e8f0'
-    WebSiteSettingsPrimaryFontField:
-      type: string
-      examples:
-      - Geist
-    WebSiteSettingsSecondaryFontField:
-      type: string
-      examples:
-      - Merriweather
-    WebSiteSettingsHomePageIDField:
-      type: string
-      examples:
-      - web_page_1
-    WebSiteSettingsCSSField:
-      type: string
-      examples:
-      - body { }
-    WebSiteSettingsJSField:
-      type: string
-      examples:
-      - console.log('web');
     WebMenuListSchema:
       type: array
       items:
@@ -522,13 +413,116 @@ components:
       type: string
       examples:
       - <p>Hello world</p>
+    WebSiteSettingsSchema:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/WebSiteSettingsTitleField'
+        excerpt:
+          $ref: '#/components/schemas/WebSiteSettingsExcerptField'
+        locale:
+          $ref: '#/components/schemas/WebSiteSettingsLocaleField'
+        noIndex:
+          $ref: '#/components/schemas/WebSiteSettingsNoIndexField'
+        logo:
+          $ref: '#/components/schemas/WebSiteSettingsLogoField'
+        logoDark:
+          $ref: '#/components/schemas/WebSiteSettingsLogoDarkField'
+        metaImage:
+          $ref: '#/components/schemas/WebSiteSettingsMetaImageField'
+        primaryColor:
+          $ref: '#/components/schemas/WebSiteSettingsPrimaryColorField'
+        secondaryColor:
+          $ref: '#/components/schemas/WebSiteSettingsSecondaryColorField'
+        tertiaryColor:
+          $ref: '#/components/schemas/WebSiteSettingsTertiaryColorField'
+        primaryFont:
+          $ref: '#/components/schemas/WebSiteSettingsPrimaryFontField'
+        secondaryFont:
+          $ref: '#/components/schemas/WebSiteSettingsSecondaryFontField'
+        homePageId:
+          $ref: '#/components/schemas/WebSiteSettingsHomePageIDField'
+        css:
+          $ref: '#/components/schemas/WebSiteSettingsCSSField'
+        js:
+          $ref: '#/components/schemas/WebSiteSettingsJSField'
+      required:
+      - title
+      - excerpt
+      - locale
+      - noIndex
+      - logo
+      - logoDark
+      - metaImage
+      - primaryColor
+      - secondaryColor
+      - tertiaryColor
+      - primaryFont
+      - secondaryFont
+      - css
+      - js
+      minProperties: 14
+    WebSiteSettingsTitleField:
+      type: string
+      examples:
+      - Example Site
+    WebSiteSettingsExcerptField:
+      type: string
+      examples:
+      - A concise site description.
+    WebSiteSettingsLocaleField:
+      type: string
+      examples:
+      - en-US
+    WebSiteSettingsNoIndexField:
+      type: boolean
+      examples:
+      - false
+    WebSiteSettingsLogoField:
+      type: string
+      examples:
+      - /images/logo.svg
+    WebSiteSettingsLogoDarkField:
+      type: string
+      examples:
+      - /images/logo-dark.svg
+    WebSiteSettingsMetaImageField:
+      type: string
+      examples:
+      - /public/12/34/56789/originals/default-meta-image.webp
+    WebSiteSettingsPrimaryColorField:
+      type: string
+      examples:
+      - '#1d4ed8'
+    WebSiteSettingsSecondaryColorField:
+      type: string
+      examples:
+      - '#0f172a'
+    WebSiteSettingsTertiaryColorField:
+      type: string
+      examples:
+      - '#e2e8f0'
+    WebSiteSettingsPrimaryFontField:
+      type: string
+      examples:
+      - Geist
+    WebSiteSettingsSecondaryFontField:
+      type: string
+      examples:
+      - Merriweather
+    WebSiteSettingsHomePageIDField:
+      type: string
+      examples:
+      - web_page_1
+    WebSiteSettingsCSSField:
+      type: string
+      examples:
+      - body { }
+    WebSiteSettingsJSField:
+      type: string
+      examples:
+      - console.log('web');
   responses:
-    WebSiteSettingsResponse:
-      description: Web site settings
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/WebSiteSettingsSchema'
     WebMenuListResponse:
       description: Web menu list
       content:
@@ -559,6 +553,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebPageDetailSchema'
+    WebSiteSettingsResponse:
+      description: Web site settings
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebSiteSettingsSchema'
   parameters:
     WebMenuKeyParameter:
       name: key

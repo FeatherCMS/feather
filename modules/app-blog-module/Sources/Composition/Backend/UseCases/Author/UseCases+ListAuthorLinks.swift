@@ -1,15 +1,16 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    public func makeListAuthorLinks() -> ListAuthorLinks {
+    public func makeListAuthorLinks() -> AuthorLink.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadAuthorLink(
-                    authorLink: AuthorLinkDatabaseQueries(
+                AuthorLink.List.Scope(
+                    authorLink: AuthorLink.Query.Database(
                         context: context
                     )
                 )

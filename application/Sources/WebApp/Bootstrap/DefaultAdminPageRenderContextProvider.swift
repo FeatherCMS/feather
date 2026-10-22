@@ -1,10 +1,9 @@
-import AccountFrontend
+import AccountWebAdmin
 import FeatherWebShared
-import AccountAppAPI
 import FeatherWebAdmin
 import FeatherModuleKit
 import Hummingbird
-import MediaFrontend
+import MediaWebAdmin
 import SystemWebAdmin
 import SystemModule
 
@@ -12,8 +11,7 @@ struct DefaultAdminPageRenderContextProvider:
     AdminPageRenderContextProvider
 {
     let events: any EventPublisher
-    let accountAPIBuilder: AccountAPIBuilder
-    let mediaAPIBuilder: MediaAPIBuilder
+    let environment: AppEnvironment
     let mediaResolver: MediaResolver
 
     func make(
@@ -28,7 +26,10 @@ struct DefaultAdminPageRenderContextProvider:
 
         var topBarState = AdminTopBar.State()
         do {
-            let accountAPI = accountAPIBuilder.makeAccountApp(context)
+            let accountAPI = AccountWebAdmin.API.AppClient(
+                environment: environment,
+                requestContext: context
+            )
             let profileID =
                 try await accountAPI
                 .withOpenAPIRepositoryErrorMapping { client in
@@ -37,10 +38,10 @@ struct DefaultAdminPageRenderContextProvider:
                 }
 
             if let profileID {
-                let asset =
-                    try await mediaAPIBuilder
-                    .makeMediaAdmin(context)
-                    .loadImageAsset(assetId: profileID)
+                let asset = try await MediaAdminAPIClient(
+                    environment: environment,
+                    requestContext: context
+                ).loadImageAsset(assetId: profileID)
                 topBarState = .init(
                     profileImageURL: asset?.previewURL
                         .flatMap {

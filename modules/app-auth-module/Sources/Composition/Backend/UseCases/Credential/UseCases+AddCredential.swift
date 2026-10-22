@@ -13,7 +13,7 @@ extension UseCases {
                     credential: Credential.Repository.Database(
                         context: context
                     ),
-                    authEmail: AuthEmail.Repository.Database(context: context)
+                    authEmail: Email.Repository.Database(context: context)
                 )
             }
         )

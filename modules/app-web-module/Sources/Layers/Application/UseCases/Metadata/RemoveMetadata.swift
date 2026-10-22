@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import SystemModule
-import WebDomain
+public import WebDomain
 
 //
 //  RemoveMetadata.swift
@@ -15,11 +15,11 @@ public struct RemoveMetadata: UseCase {
     }
 
     let authorizer: any Authorizer
-    let transaction: any TransactionExecutor<WriteMetadata>
+    let transaction: any TransactionExecutor<Metadata.Repository.Scope>
 
     public init(
         authorizer: any Authorizer,
-        transaction: any TransactionExecutor<WriteMetadata>
+        transaction: any TransactionExecutor<Metadata.Repository.Scope>
     ) {
         self.authorizer = authorizer
         self.transaction = transaction

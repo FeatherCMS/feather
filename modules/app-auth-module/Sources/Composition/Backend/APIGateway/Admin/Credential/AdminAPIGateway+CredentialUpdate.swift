@@ -1,5 +1,6 @@
 public import AuthAdminAPI
 import AuthApplication
+import FeatherDomain
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -19,9 +20,9 @@ extension AdminAPIGateway {
             subject: subject,
             input: .init(
                 id: input.path.authCredentialId,
-                userId: body.userId,
-                email: body.email,
-                password: body.password
+                userId: .set(body.userId),
+                email: .set(body.email),
+                password: .set(body.password)
             )
         )
 

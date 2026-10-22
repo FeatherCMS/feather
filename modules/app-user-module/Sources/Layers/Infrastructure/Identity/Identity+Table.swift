@@ -1,20 +1,20 @@
-import FeatherDBAL
+public import FeatherDBAL
 import FeatherInfrastructure
-import Foundation
-import UserModule
+public import Foundation
+public import UserModule
 
 extension Identity {
-    struct Table: DatabaseTable {
-        static let name = "user_identity"
-        static let columns = Columns()
+    public struct Table: DatabaseTable {
+        public static let name = "user_identity"
+        public static let columns = Columns()
 
-        struct Columns: DatabaseTableColumns {
-            let id = DatabaseTableColumn<String>(name: "id")
-            let name = DatabaseTableColumn<String>(name: "name")
-            let status = DatabaseTableColumn<String>(name: "status")
-            let isRoot = DatabaseTableColumn<Bool>(name: "is_root")
-            let createdAt = DatabaseTableColumn<Date>(name: "created_at")
-            let updatedAt = DatabaseTableColumn<Date>(name: "updated_at")
+        public struct Columns: DatabaseTableColumns {
+            public let id = DatabaseTableColumn<String>(name: "id")
+            public let name = DatabaseTableColumn<String>(name: "name")
+            public let status = DatabaseTableColumn<String>(name: "status")
+            public let isRoot = DatabaseTableColumn<Bool>(name: "is_root")
+            public let createdAt = DatabaseTableColumn<Date>(name: "created_at")
+            public let updatedAt = DatabaseTableColumn<Date>(name: "updated_at")
         }
 
     }

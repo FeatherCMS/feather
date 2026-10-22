@@ -1,22 +1,23 @@
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
 
-    func makeRemoveMenu() -> RemoveMenu {
+    func makeRemoveMenu() -> Menu.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteMenu(
-                    menu: MenuDatabaseRepository(context: context)
+                Menu.Remove.Scope(
+                    menu: Menu.Repository.Database(context: context)
                 )
             }
         )

@@ -9,9 +9,9 @@ struct AuthRolePermissionPathItems: PathItemRepresentable {
     }
 }
 
-struct AuthRolePermissionSearchPathItems: PathItemRepresentable {
+struct AuthRolePermissionQueryPathItems: PathItemRepresentable {
     var post: (any OperationRepresentable)? {
-        AuthRolePermissionSearchOperation()
+        AuthRolePermissionQueryOperation()
     }
 }
 

@@ -34,7 +34,7 @@ extension Credential.Edit {
 
             let passwordHash: String?
 
-            if let password = input.password {
+            if case .set(let password) = input.password {
                 passwordHash = try await passwordHasher.hash(password)
             }
             else {
@@ -57,9 +57,7 @@ extension Credential.Edit {
                 let currentAuthEmail = try await scope.authEmail.findBy(
                     id: model.authEmailId
                 )
-                let userId = input.userId ?? currentAuthEmail?.identityId
-                let email = input.email ?? currentAuthEmail?.email
-                guard let userId, let email else {
+                guard let currentAuthEmail else {
                     throw UseCaseError(
                         reason: .validation,
                         logMessage:
@@ -67,6 +65,8 @@ extension Credential.Edit {
                         userFriendlyMessage: "Auth email not found"
                     )
                 }
+                let userId = input.userId.apply(to: currentAuthEmail.identityId)
+                let email = input.email.apply(to: currentAuthEmail.email)
                 guard
                     let authEmail = try await scope.authEmail.findBy(
                         email: email

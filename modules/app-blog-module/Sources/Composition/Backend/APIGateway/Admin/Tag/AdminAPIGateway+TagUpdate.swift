@@ -4,9 +4,9 @@ import FeatherModuleKit
 
 extension AdminAPIGateway {
 
-    public func blogTagUpdate(
-        _ input: Operations.BlogTagUpdate.Input
-    ) async throws -> Operations.BlogTagUpdate.Output {
+    public func blogTagPut(
+        _ input: Operations.BlogTagPut.Input
+    ) async throws -> Operations.BlogTagPut.Output {
         let body: Components.Schemas.BlogTagPatchSchema
         switch input.body {
         case .json(let value):

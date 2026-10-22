@@ -1,20 +1,24 @@
-import SystemModule
 import AccountApplication
 import AccountInfrastructure
+import AccountModule
+import AuthModule
 import FeatherInfrastructure
 import SystemApplication
 import SystemInfrastructure
+import SystemModule
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 
-    func makeResendInvitation() -> AccountApplication.ResendInvitation {
+    func makeResendInvitation() -> Invitation.Resend.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteInvitationOnlyWithVariable(
-                    invitation: InvitationDatabaseRepository(context: context),
-                    role: Role.Repository.Database(context: context),
+                Invitation.Resend.Scope(
+                    invitation: Invitation.Repository.Database(
+                        context: context
+                    ),
                     variable: SystemModule.Variable.Lookup.Database(
                         context: context
                     )

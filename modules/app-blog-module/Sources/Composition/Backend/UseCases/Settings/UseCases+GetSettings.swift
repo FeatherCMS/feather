@@ -1,22 +1,23 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import MediaBackend
 import SystemInfrastructure
 import WebInfrastructure
 
 extension UseCases {
 
-    public func makeGetSettings() -> GetSettings {
+    public func makeGetSettings() -> Settings.Get.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteSettings(
-                    settings: SettingsDatabaseRepository(context: context)
+                Settings.Get.Scope(
+                    settings: Settings.Repository.Database(context: context)
                 )
             }
         )

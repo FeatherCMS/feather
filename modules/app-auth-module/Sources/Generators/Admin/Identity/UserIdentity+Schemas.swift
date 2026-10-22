@@ -5,7 +5,6 @@
 //  Created by Tibor Bödecs on 2026. 03. 24..
 //
 
-import AuthSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
@@ -28,8 +27,7 @@ struct UserAuthSessionListItemsField: ArraySchemaRepresentable {
 struct UserAuthSessionListItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "id": AuthSharedOpenAPIGenerator.UserAuthSessionIdField()
-                .reference(),
+            "id": UserIdentityIDField().reference(),
             "authenticationType": UserAuthSessionAuthenticationTypeField()
                 .reference(),
             "authenticationReference":

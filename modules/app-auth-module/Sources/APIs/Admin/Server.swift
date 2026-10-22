@@ -26,61 +26,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authMe(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/me")
-        )
-        try transport.register(
-            {
-                try await server.authLogin(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/login")
-        )
-        try transport.register(
-            {
-                try await server.authLogout(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/logout")
-        )
-        try transport.register(
-            {
-                try await server.authMagicLink(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/magic-link")
-        )
-        try transport.register(
-            {
-                try await server.authMagicLinkVerify(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/magic-link/verify")
-        )
-        try transport.register(
-            {
                 try await server.userIdentitySessionList(
                     request: $0,
                     body: $1,
@@ -100,6 +45,17 @@ extension APIProtocol {
             },
             method: .delete,
             path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/user/identities/{userIdentityId}/sessions")
+        )
+        try transport.register(
+            {
+                try await server.authCredentialList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/credentials")
         )
         try transport.register(
             {
@@ -125,25 +81,14 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authCredentialList(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/credentials/")
-        )
-        try transport.register(
-            {
-                try await server.authCredentialSearch(
+                try await server.authCredentialQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/credentials/search")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/credentials/query")
         )
         try transport.register(
             {
@@ -180,6 +125,17 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.authEmailList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/emails")
+        )
+        try transport.register(
+            {
                 try await server.authEmailCreate(
                     request: $0,
                     body: $1,
@@ -202,14 +158,14 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authEmailList(
+                try await server.authEmailQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/emails/")
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/emails/query")
         )
         try transport.register(
             {
@@ -257,14 +213,25 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authRolePermissionSearch(
+                try await server.authRolePermissionQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/role-permissions/search")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/role-permissions/query")
+        )
+        try transport.register(
+            {
+                try await server.authMagicLinkList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/magic-links")
         )
         try transport.register(
             {
@@ -290,25 +257,14 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authMagicLinkList(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/magic-links/")
-        )
-        try transport.register(
-            {
-                try await server.authMagicLinkSearch(
+                try await server.authMagicLinkQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/magic-links/search")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/magic-links/query")
         )
         try transport.register(
             {
@@ -347,342 +303,6 @@ extension APIProtocol {
 }
 
 fileprivate extension UniversalServer where APIHandler: APIProtocol {
-    /// - Remark: HTTP `GET /api/v1/admin/auth/me`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/me/get(authMe)`.
-    func authMe(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthMe.id,
-            using: {
-                APIHandler.authMe($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthMe.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.AuthMe.Input(headers: headers)
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/auth/login`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/login/post(authLogin)`.
-    func authLogin(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthLogin.id,
-            using: {
-                APIHandler.authLogin($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthLogin.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.AuthLoginRequestBody
-                let chosenContentType = try converter.bestContentType(
-                    received: contentType,
-                    options: [
-                        "application/json"
-                    ]
-                )
-                switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.AuthLoginRequestSchema.self,
-                        from: requestBody,
-                        transforming: { value in
-                            .json(value)
-                        }
-                    )
-                default:
-                    preconditionFailure("bestContentType chose an invalid content type.")
-                }
-                return Operations.AuthLogin.Input(
-                    headers: headers,
-                    body: body
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/auth/logout`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/logout/post(authLogout)`.
-    func authLogout(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthLogout.id,
-            using: {
-                APIHandler.authLogout($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthLogout.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.AuthLogout.Input(headers: headers)
-            },
-            serializer: { output, request in
-                switch output {
-                case let .noContent(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/auth/magic-link`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-link/post(authMagicLink)`.
-    func authMagicLink(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthMagicLink.id,
-            using: {
-                APIHandler.authMagicLink($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.AuthMagicLinkRequestBody
-                let chosenContentType = try converter.bestContentType(
-                    received: contentType,
-                    options: [
-                        "application/json"
-                    ]
-                )
-                switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.AuthMagicLinkRequestSchema.self,
-                        from: requestBody,
-                        transforming: { value in
-                            .json(value)
-                        }
-                    )
-                default:
-                    preconditionFailure("bestContentType chose an invalid content type.")
-                }
-                return Operations.AuthMagicLink.Input(body: body)
-            },
-            serializer: { output, request in
-                switch output {
-                case let .noContent(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/auth/magic-link/verify`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-link/verify/post(authMagicLinkVerify)`.
-    func authMagicLinkVerify(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthMagicLinkVerify.id,
-            using: {
-                APIHandler.authMagicLinkVerify($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthMagicLinkVerify.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.AuthMagicLinkVerifyRequestBody
-                let chosenContentType = try converter.bestContentType(
-                    received: contentType,
-                    options: [
-                        "application/json"
-                    ]
-                )
-                switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.AuthMagicLinkVerifyRequestSchema.self,
-                        from: requestBody,
-                        transforming: { value in
-                            .json(value)
-                        }
-                    )
-                default:
-                    preconditionFailure("bestContentType chose an invalid content type.")
-                }
-                return Operations.AuthMagicLinkVerify.Input(
-                    headers: headers,
-                    body: body
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `GET /api/v1/admin/user/identities/{userIdentityId}/sessions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/get(userIdentitySessionList)`.
     func userIdentitySessionList(
@@ -845,6 +465,87 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 204)
                     suppressMutabilityWarning(&response)
                     return (response, nil)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/get(authCredentialList)`.
+    func authCredentialList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AuthCredentialList.id,
+            using: {
+                APIHandler.authCredentialList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.AuthCredentialList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.AuthCredentialList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .unauthorized(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
@@ -1082,9 +783,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials//get(authCredentialList)`.
-    func authCredentialList(
+    /// - Remark: HTTP `POST /api/v1/admin/auth/credentials/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/query/post(authCredentialQuery)`.
+    func authCredentialQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1093,95 +794,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthCredentialList.id,
+            forOperation: Operations.AuthCredentialQuery.id,
             using: {
-                APIHandler.authCredentialList($0)
+                APIHandler.authCredentialQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthCredentialList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.AuthCredentialList.Input(headers: headers)
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/auth/credentials/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/search/post(authCredentialSearch)`.
-    func authCredentialSearch(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthCredentialSearch.id,
-            using: {
-                APIHandler.authCredentialSearch($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthCredentialSearch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.AuthCredentialQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Operations.AuthCredentialSearch.Input.Body
+                let body: Operations.AuthCredentialQuery.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1191,7 +811,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema.self,
+                        Components.Schemas.AuthCredentialQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1200,7 +820,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.AuthCredentialSearch.Input(
+                return Operations.AuthCredentialQuery.Input(
                     headers: headers,
                     body: body
                 )
@@ -1395,6 +1015,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     name: "authCredentialId",
                     as: Components.Parameters.AuthCredentialIdParameter.self
                 ))
+                let query: Operations.AuthCredentialPatch.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.AuthCredentialUpdateMaskParameter.self
+                ))
                 let headers: Operations.AuthCredentialPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.AuthCredentialPatchRequestBody
@@ -1418,6 +1045,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.AuthCredentialPatch.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -1427,6 +1055,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -1630,6 +1276,87 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `GET /api/v1/admin/auth/emails`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails/get(authEmailList)`.
+    func authEmailList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AuthEmailList.id,
+            using: {
+                APIHandler.authEmailList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.AuthEmailList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.AuthEmailList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `POST /api/v1/admin/auth/emails`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails/post(authEmailCreate)`.
     func authEmailCreate(
@@ -1648,7 +1375,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let headers: Operations.AuthEmailCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.AuthEmailRequestBody
+                let body: Components.RequestBodies.AuthEmailPostRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1658,7 +1385,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.AuthEmailCreateSchema.self,
+                        Components.Schemas.AuthEmailSchemasCreate.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1825,9 +1552,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/emails/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails//get(authEmailList)`.
-    func authEmailList(
+    /// - Remark: HTTP `POST /api/v1/admin/auth/emails/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails/query/post(authEmailQuery)`.
+    func authEmailQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1836,13 +1563,36 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthEmailList.id,
+            forOperation: Operations.AuthEmailQuery.id,
             using: {
-                APIHandler.authEmailList($0)
+                APIHandler.authEmailQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthEmailList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.AuthEmailList.Input(headers: headers)
+                let headers: Operations.AuthEmailQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Operations.AuthEmailQuery.Input.Body
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.AuthEmailQuerySchemasItemSearchRequestQuerySchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.AuthEmailQuery.Input(
+                    headers: headers,
+                    body: body
+                )
             },
             serializer: { output, request in
                 switch output {
@@ -1925,7 +1675,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 let path: Operations.AuthEmailGet.Input.Path = .init(authEmailId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "authEmailId",
-                    as: Components.Parameters.AuthEmailIdParameter.self
+                    as: Components.Parameters.AuthEmailParametersID.self
                 ))
                 let headers: Operations.AuthEmailGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 return Operations.AuthEmailGet.Input(
@@ -2032,7 +1782,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 let path: Operations.AuthEmailPatch.Input.Path = .init(authEmailId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "authEmailId",
-                    as: Components.Parameters.AuthEmailIdParameter.self
+                    as: Components.Parameters.AuthEmailParametersID.self
+                ))
+                let query: Operations.AuthEmailPatch.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.AuthEmailParametersUpdateMask.self
                 ))
                 let headers: Operations.AuthEmailPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
@@ -2046,7 +1803,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.AuthEmailPatchSchema.self,
+                        Components.Schemas.AuthEmailSchemasPatch.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2057,6 +1814,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.AuthEmailPatch.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -2066,6 +1824,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -2336,9 +2112,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/search/post(authRolePermissionSearch)`.
-    func authRolePermissionSearch(
+    /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/query/post(authRolePermissionQuery)`.
+    func authRolePermissionQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2347,14 +2123,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthRolePermissionSearch.id,
+            forOperation: Operations.AuthRolePermissionQuery.id,
             using: {
-                APIHandler.authRolePermissionSearch($0)
+                APIHandler.authRolePermissionQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthRolePermissionSearch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.AuthRolePermissionQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Operations.AuthRolePermissionSearch.Input.Body
+                let body: Operations.AuthRolePermissionQuery.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2364,7 +2140,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema.self,
+                        Components.Schemas.AuthRolePermissionQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2373,10 +2149,91 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.AuthRolePermissionSearch.Input(
+                return Operations.AuthRolePermissionQuery.Input(
                     headers: headers,
                     body: body
                 )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/get(authMagicLinkList)`.
+    func authMagicLinkList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AuthMagicLinkList.id,
+            using: {
+                APIHandler.authMagicLinkList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.AuthMagicLinkList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.AuthMagicLinkList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {
@@ -2635,9 +2492,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links//get(authMagicLinkList)`.
-    func authMagicLinkList(
+    /// - Remark: HTTP `POST /api/v1/admin/auth/magic-links/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/query/post(authMagicLinkQuery)`.
+    func authMagicLinkQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2646,95 +2503,14 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthMagicLinkList.id,
+            forOperation: Operations.AuthMagicLinkQuery.id,
             using: {
-                APIHandler.authMagicLinkList($0)
+                APIHandler.authMagicLinkQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthMagicLinkList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.AuthMagicLinkList.Input(headers: headers)
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/auth/magic-links/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/search/post(authMagicLinkSearch)`.
-    func authMagicLinkSearch(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthMagicLinkSearch.id,
-            using: {
-                APIHandler.authMagicLinkSearch($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthMagicLinkSearch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.AuthMagicLinkQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Operations.AuthMagicLinkSearch.Input.Body
+                let body: Operations.AuthMagicLinkQuery.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2744,7 +2520,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema.self,
+                        Components.Schemas.AuthMagicLinkQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2753,7 +2529,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.AuthMagicLinkSearch.Input(
+                return Operations.AuthMagicLinkQuery.Input(
                     headers: headers,
                     body: body
                 )
@@ -2948,6 +2724,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     name: "authMagicLinkId",
                     as: Components.Parameters.AuthMagicLinkIdParameter.self
                 ))
+                let query: Operations.AuthMagicLinkPatch.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.AuthMagicLinkUpdateMaskParameter.self
+                ))
                 let headers: Operations.AuthMagicLinkPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.AuthMagicLinkPatchRequestBody
@@ -2971,6 +2754,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.AuthMagicLinkPatch.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -2980,6 +2764,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {

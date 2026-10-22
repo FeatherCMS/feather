@@ -8,7 +8,9 @@ import UserModule
 
 extension UseCases {
 
-    public func makeGetCurrentUser() -> AuthModule.Auth.CurrentUser.UseCase {
+    public func makeGetCurrentUser()
+        -> AuthModule.Authorization.CurrentUser.UseCase
+    {
         let detailQuery = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
@@ -22,9 +24,9 @@ extension UseCases {
         let authorizationQuery = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Identity.Authorization.Query.Scope(
-                    authorization: Identity.Authorization.Query.Database(
-                        connection: context.connection
+                AuthModule.Authorization.Query.Scope(
+                    authorization: AuthModule.Authorization.Query.Database(
+                        context: context
                     )
                 )
             }
