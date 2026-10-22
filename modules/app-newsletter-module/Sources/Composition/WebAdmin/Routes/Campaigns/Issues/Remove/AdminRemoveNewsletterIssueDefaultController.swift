@@ -3,7 +3,7 @@ import FeatherWebShared
 import FeatherValidation
 import HTML
 import Hummingbird
-import NewsletterContracts
+import NewsletterModule
 import OpenAPIRuntime
 import SGML
 import WebBuilders

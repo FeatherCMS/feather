@@ -1,4 +1,4 @@
-import ContactContracts
+import ContactModule
 import FeatherWebAdmin
 import FeatherModuleKit
 import HTML

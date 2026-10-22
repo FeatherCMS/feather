@@ -33,7 +33,7 @@ let package = Package(
     ],
     products: [
         .library(name: "NewsletterDomain", targets: ["NewsletterDomain"]),
-        .library(name: "NewsletterContracts", targets: ["NewsletterContracts"]),
+        .library(name: "NewsletterModule", targets: ["NewsletterModule"]),
         .library(name: "NewsletterApplication", targets: ["NewsletterApplication"]),
         .library(name: "NewsletterInfrastructure", targets: ["NewsletterInfrastructure"]),
         .library(name: "NewsletterAdminAPI", targets: ["NewsletterAdminAPI"]),
@@ -88,11 +88,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "NewsletterContracts",
+            name: "NewsletterModule",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-core")
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
@@ -100,7 +100,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
 
-                .target(name: "NewsletterContracts"),
+                .target(name: "NewsletterModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -200,7 +200,7 @@ let package = Package(
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
-                .target(name: "NewsletterContracts"),
+                .target(name: "NewsletterModule"),
                 .target(name: "NewsletterAdminAPI"),
             ],
             path: "Sources/Composition/WebAdmin",
@@ -217,7 +217,7 @@ let package = Package(
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
-                .target(name: "NewsletterContracts"),
+                .target(name: "NewsletterModule"),
                 .target(name: "NewsletterAppAPI"),
             ],
             path: "Sources/Composition/WebApp",

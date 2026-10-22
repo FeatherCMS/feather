@@ -33,7 +33,7 @@ let package = Package(
     ],
     products: [
         .library(name: "NewsDomain", targets: ["NewsDomain"]),
-        .library(name: "NewsContracts", targets: ["NewsContracts"]),
+        .library(name: "NewsModule", targets: ["NewsModule"]),
         .library(name: "NewsApplication", targets: ["NewsApplication"]),
         .library(name: "NewsInfrastructure", targets: ["NewsInfrastructure"]),
         .library(name: "NewsAdminAPI", targets: ["NewsAdminAPI"]),
@@ -101,11 +101,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "NewsContracts",
+            name: "NewsModule",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-core")
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
@@ -114,7 +114,7 @@ let package = Package(
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
-                .target(name: "NewsContracts"),
+                .target(name: "NewsModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -241,7 +241,7 @@ let package = Package(
                 .product(name: "SGML", package: "swift-web-standards"),
                 .product(name: "WebBuilders", package: "swift-web-standards"),
                 .product(name: "WebComponents", package: "swift-web-standards"),
-                .target(name: "NewsContracts"),
+                .target(name: "NewsModule"),
                 .target(name: "NewsAdminAPI"),
             ],
             path: "Sources/Composition/WebAdmin",

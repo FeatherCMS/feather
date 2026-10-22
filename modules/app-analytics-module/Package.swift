@@ -33,7 +33,7 @@ let package = Package(
     ],
     products: [
         .library(name: "AnalyticsDomain", targets: ["AnalyticsDomain"]),
-        .library(name: "AnalyticsContracts", targets: ["AnalyticsContracts"]),
+        .library(name: "AnalyticsModule", targets: ["AnalyticsModule"]),
         .library(name: "AnalyticsApplication", targets: ["AnalyticsApplication"]),
         .library(name: "AnalyticsInfrastructure", targets: ["AnalyticsInfrastructure"]),
         .library(name: "AnalyticsAdminAPI", targets: ["AnalyticsAdminAPI"]),
@@ -74,11 +74,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "AnalyticsContracts",
+            name: "AnalyticsModule",
             dependencies: [
                 .product(name: "FeatherModuleKit", package: "feather-core")
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
@@ -86,7 +86,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
 
-                .target(name: "AnalyticsContracts"),
+                .target(name: "AnalyticsModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -167,7 +167,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
 
-                .target(name: "AnalyticsContracts"),
+                .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsInfrastructure"),
                 .target(name: "AnalyticsAdminAPI"),
                 .target(name: "AnalyticsAppAPI"),
@@ -185,7 +185,7 @@ let package = Package(
 
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .target(name: "AnalyticsContracts"),
+                .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsAdminAPI"),
             ],
             path: "Sources/Composition/WebAdmin",
@@ -200,7 +200,7 @@ let package = Package(
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
-                .target(name: "AnalyticsContracts"),
+                .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsAppAPI"),
             ],
             path: "Sources/Composition/WebApp",

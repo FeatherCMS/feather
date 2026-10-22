@@ -1,7 +1,7 @@
 import FeatherWebAdmin
 import Hummingbird
 import NewsAdminAPI
-import NewsContracts
+import NewsModule
 
 protocol AdminNewsCategoryPresenter: Sendable {
     func renderList(

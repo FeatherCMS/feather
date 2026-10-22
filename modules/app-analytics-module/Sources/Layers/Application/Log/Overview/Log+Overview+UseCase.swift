@@ -1,4 +1,4 @@
-import AnalyticsContracts
+import AnalyticsModule
 public import AnalyticsDomain
 public import FeatherApplication
 public import FeatherModuleKit

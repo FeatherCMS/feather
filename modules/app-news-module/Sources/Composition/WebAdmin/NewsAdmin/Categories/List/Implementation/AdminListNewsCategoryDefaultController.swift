@@ -2,7 +2,7 @@ import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import NewsContracts
+import NewsModule
 
 struct AdminListNewsCategoryDefaultController:
     AdminListNewsCategoryController

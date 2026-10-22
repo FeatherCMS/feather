@@ -1,5 +1,5 @@
 import AnalyticsAppAPI
-public import AnalyticsContracts
+public import AnalyticsModule
 import FeatherWebAdmin
 public import FeatherWebShared
 public import Foundation

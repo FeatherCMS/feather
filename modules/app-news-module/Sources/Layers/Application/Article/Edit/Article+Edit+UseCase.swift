@@ -1,6 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsContracts
+import NewsModule
 public import NewsDomain
 import WebApplication
 import WebDomain

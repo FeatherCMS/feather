@@ -2,7 +2,7 @@ import FeatherModuleKit
 import FeatherWebAdmin
 import Hummingbird
 import NewsAdminAPI
-import NewsContracts
+import NewsModule
 
 protocol AdminNewsArticlePresenter: Sendable {
     func renderList(

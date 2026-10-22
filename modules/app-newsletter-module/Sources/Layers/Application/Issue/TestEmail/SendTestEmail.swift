@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import FeatherMail
-import NewsletterContracts
+import NewsletterModule
 import NewsletterDomain
 
 public struct SendTestEmail: UseCase {

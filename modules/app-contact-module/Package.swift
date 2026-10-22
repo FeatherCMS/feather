@@ -33,7 +33,6 @@ let package = Package(
     products: [
         .library(name: "ContactModule", targets: ["ContactModule"]),
         .library(name: "ContactDomain", targets: ["ContactDomain"]),
-        .library(name: "ContactContracts", targets: ["ContactContracts"]),
         .library(name: "ContactApplication", targets: ["ContactApplication"]),
         .library(
             name: "ContactInfrastructure",
@@ -120,12 +119,6 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "ContactContracts",
-            dependencies: [],
-            path: "Sources/Contracts",
-            swiftSettings: swiftSettings
-        ),
-        .target(
             name: "ContactDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core")
@@ -145,7 +138,6 @@ let package = Package(
                 .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "ContactModule"),
-                .target(name: "ContactContracts"),
                 .target(name: "ContactDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -294,7 +286,6 @@ let package = Package(
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
 
                 .target(name: "ContactModule"),
-                .target(name: "ContactContracts"),
                 .target(name: "ContactAdminAPI"),
                 .target(name: "ContactWebShared"),
             ],
@@ -314,7 +305,6 @@ let package = Package(
             name: "ContactApplicationTests",
             dependencies: [
                 .target(name: "ContactApplication"),
-                .target(name: "ContactContracts"),
                 .target(name: "ContactDomain"),
             ],
             path: "Tests/Layers/Application",

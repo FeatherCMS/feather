@@ -158,7 +158,7 @@ let package = Package(
         .target(
             name: "Environment",
             dependencies: [
-                .product(name: "AnalyticsContracts", package: "app-analytics-module"),
+                .product(name: "AnalyticsModule", package: "app-analytics-module"),
                 .product(name: "RedirectWebApp", package: "app-redirect-module"),
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),

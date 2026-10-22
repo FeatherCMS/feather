@@ -4,7 +4,7 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import NewsletterAdminAPI
-import NewsletterContracts
+import NewsletterModule
 import OpenAPIRuntime
 import SGML
 import WebBuilders

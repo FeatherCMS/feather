@@ -4,7 +4,7 @@ import FeatherWebShared
 import Hummingbird
 import MediaWebAdmin
 import NewsAdminAPI
-import NewsContracts
+import NewsModule
 
 struct AdminNewsArticleDefaultPresenter: AdminNewsArticlePresenter {
     let request: Request

@@ -1,7 +1,7 @@
 public import FeatherWebAdmin
 import FeatherWebShared
 public import Hummingbird
-import NewsContracts
+import NewsModule
 
 public struct AdminNews: Sendable {
     private let apiBuilder: NewsAPIBuilder

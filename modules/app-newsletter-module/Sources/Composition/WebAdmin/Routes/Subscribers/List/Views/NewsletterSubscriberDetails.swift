@@ -2,7 +2,7 @@ import FeatherWebAdmin
 import FeatherModuleKit
 import HTML
 import Hummingbird
-import NewsletterContracts
+import NewsletterModule
 import SGML
 import WebBuilders
 import WebComponents

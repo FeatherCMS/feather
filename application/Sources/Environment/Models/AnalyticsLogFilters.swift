@@ -1,4 +1,4 @@
-public import AnalyticsContracts
+public import AnalyticsModule
 import Foundation
 
 public struct WebAppAnalyticsLogFilter: AnalyticsLogFilter {

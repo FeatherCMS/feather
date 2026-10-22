@@ -1,5 +1,5 @@
 import AnalyticsApplication
-public import AnalyticsContracts
+public import AnalyticsModule
 import AnalyticsDomain
 import Foundation
 import HTTPTypes

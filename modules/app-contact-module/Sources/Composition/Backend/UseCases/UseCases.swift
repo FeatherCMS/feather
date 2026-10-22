@@ -1,5 +1,5 @@
 import ContactApplication
-import ContactContracts
+import ContactModule
 import ContactInfrastructure
 public import FeatherApplication
 public import FeatherModuleKit

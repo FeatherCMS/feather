@@ -1,4 +1,4 @@
-import ContactContracts
+import ContactModule
 public import ContactDomain
 import ContactModule
 public import FeatherApplication

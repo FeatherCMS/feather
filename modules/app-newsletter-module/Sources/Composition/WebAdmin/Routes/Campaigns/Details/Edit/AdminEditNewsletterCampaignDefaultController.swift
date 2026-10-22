@@ -1,7 +1,7 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import NewsletterContracts
+import NewsletterModule
 
 struct AdminEditNewsletterCampaignDefaultController:
     AdminEditNewsletterCampaignController

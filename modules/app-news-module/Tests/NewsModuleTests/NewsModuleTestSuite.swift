@@ -1,4 +1,4 @@
-import NewsContracts
+import NewsModule
 import Testing
 import WebDomain
 

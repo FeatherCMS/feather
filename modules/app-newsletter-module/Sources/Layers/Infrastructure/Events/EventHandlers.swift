@@ -1,5 +1,5 @@
 public import FeatherModuleKit
-import NewsletterContracts
+import NewsletterModule
 import SystemModule
 import SystemApplication
 
@@ -11,7 +11,7 @@ public enum EventHandlers {
         registry.register(
             event: Permission.Event.Seed.self
         ) { _ in
-            NewsletterContracts.Permissions.allPermissions()
+            NewsletterModule.Permissions.allPermissions()
                 .map {
                     .init(permission: $0)
                 }

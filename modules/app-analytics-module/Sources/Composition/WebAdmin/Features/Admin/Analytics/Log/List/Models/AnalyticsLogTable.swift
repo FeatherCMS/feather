@@ -1,5 +1,5 @@
 import AnalyticsAdminAPI
-import AnalyticsContracts
+import AnalyticsModule
 import CSS
 import FeatherWebAdmin
 import HTML

@@ -2,7 +2,7 @@ import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import NewsContracts
+import NewsModule
 
 struct AdminListNewsArticleDefaultController: AdminListNewsArticleController {
     let buildRuntime: @Sendable (Request, AuthenticatedRequestContext) -> AdminNewsArticleRuntime

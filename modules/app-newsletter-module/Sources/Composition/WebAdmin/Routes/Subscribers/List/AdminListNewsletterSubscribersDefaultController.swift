@@ -2,7 +2,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import FeatherModuleKit
 import Hummingbird
-import NewsletterContracts
+import NewsletterModule
 
 struct AdminListNewsletterSubscribersDefaultController:
     AdminListNewsletterSubscribersController

@@ -1,5 +1,5 @@
 public import FeatherModuleKit
-import NewsContracts
+import NewsModule
 import SystemApplication
 import SystemModule
 

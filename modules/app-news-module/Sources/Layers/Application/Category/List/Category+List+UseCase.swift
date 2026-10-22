@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 public import NewsDomain
-import NewsContracts
+import NewsModule
 
 //
 //  ListCategories.swift
