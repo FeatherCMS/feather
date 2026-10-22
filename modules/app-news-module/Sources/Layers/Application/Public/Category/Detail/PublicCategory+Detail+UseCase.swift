@@ -97,7 +97,7 @@ extension GetPublicCategory {
             (total + resolvedPageSize - 1) / resolvedPageSize
         )
         let currentPage = min(requestedPage, pageCount)
-        let articles: Article.List.Output
+        let articles: PublicNewsArticle.List.Query.Output
         if currentPage == requestedPage || total == 0 {
             articles = requestedArticles
         }

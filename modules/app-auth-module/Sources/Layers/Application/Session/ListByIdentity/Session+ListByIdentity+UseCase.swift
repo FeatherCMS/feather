@@ -19,7 +19,7 @@ extension Session.ListByIdentity {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Session.List.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -28,9 +28,7 @@ extension Session.ListByIdentity {
             }
 
             return try await query.run { scope in
-                try await scope.session.list(
-                    query: .init(identityId: input.identityId)
-                )
+                try await scope.session.list(identityId: input.identityId)
             }
         }
 

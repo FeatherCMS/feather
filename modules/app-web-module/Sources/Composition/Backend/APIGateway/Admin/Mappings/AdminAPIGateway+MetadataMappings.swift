@@ -113,7 +113,33 @@ extension AdminAPIGateway {
     func map(_ detail: Metadata.Detail.Output)
         -> WebAdminAPI.Components.Schemas.MetadataDetailSchema
     {
-        map(detail.asSnapshot)
+        mapMetadata(
+            id: detail.id,
+            referenceType: detail.referenceType,
+            referenceID: detail.referenceID,
+            slug: detail.slug,
+            template: detail.template,
+            publicationDate: detail.publicationDate,
+            expirationDate: detail.expirationDate,
+            status: detail.status,
+            availability: .init(
+                status: detail.status,
+                publicationDate: detail.publicationDate,
+                expirationDate: detail.expirationDate,
+                at: .now
+            ),
+            title: detail.title,
+            excerpt: detail.excerpt,
+            imageURL: detail.imageURL,
+            canonicalURL: detail.canonicalURL,
+            noIndex: detail.noIndex,
+            primaryKeyword: detail.primaryKeyword,
+            cssCodeInjection: detail.cssCodeInjection,
+            javascriptCodeInjection: detail.javascriptCodeInjection,
+            structuredDataCodeInjection: detail.structuredDataCodeInjection,
+            createdAt: detail.createdAt,
+            updatedAt: detail.updatedAt
+        )
     }
 
     func map(_ detail: Metadata.Snapshot)

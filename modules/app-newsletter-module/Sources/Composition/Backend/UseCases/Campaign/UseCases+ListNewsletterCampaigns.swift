@@ -1,8 +1,23 @@
 import NewsletterApplication
+import FeatherDatabase
+import FeatherInfrastructure
+import NewsletterInfrastructure
+import NewsletterModule
 
 extension UseCases {
 
-    func makeListNewsletterCampaigns() -> ListCampaigns {
-        .init(authorizer: authorizer, transaction: transaction())
+    func makeListNewsletterCampaigns() -> Campaign.List.UseCase {
+        let transaction = DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Campaign.List.Scope(
+                    campaign: CampaignDatabaseRepository(context: context)
+                )
+            }
+        )
+        return Campaign.List.UseCase(
+            authorizer: authorizer,
+            transaction: transaction
+        )
     }
 }

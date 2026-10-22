@@ -23,22 +23,3 @@ public struct UseCases: Sendable {
         self.events = events
     }
 }
-
-extension UseCases {
-    func formTransaction() -> DatabaseTransactionExecutor<
-        WriteForm
-    > {
-        DatabaseTransactionExecutor(
-            databaseContext: databaseContext,
-            scope: { context in
-                WriteForm(
-                    form: FormDatabaseRepository(context: context),
-                    field: FormFieldDatabaseRepository(context: context),
-                    mail: SubmissionMailDatabaseRepository(context: context),
-                    submission: SubmissionDatabaseRepository(context: context)
-                )
-            }
-        )
-    }
-
-}

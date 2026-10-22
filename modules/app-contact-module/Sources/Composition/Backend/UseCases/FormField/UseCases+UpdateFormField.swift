@@ -5,13 +5,22 @@ import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import ContactModule
 
 extension UseCases {
 
-    public func makeUpdateFormField() -> UpdateFormField {
-        .init(
+    public func makeUpdateFormField() -> FormField.Edit.UseCase {
+        let transaction = DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                FormField.Edit.Scope(
+                    field: FormFieldDatabaseRepository(context: context)
+                )
+            }
+        )
+        return FormField.Edit.UseCase(
             authorizer: authorizer,
-            transaction: formTransaction()
+            transaction: transaction
         )
     }
 }

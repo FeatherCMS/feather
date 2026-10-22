@@ -14,19 +14,6 @@ private func decodeAssociationIDs(_ value: String) throws -> [String] {
     try JSONDecoder().decode([String].self, from: Data(value.utf8))
 }
 
-extension Post.Table.List {
-    var asQueryItem: Post.List.Output.Item {
-        .init(
-            id: id,
-            title: title,
-            excerpt: excerpt,
-            imageAssetId: imageAssetId,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}
-
 extension Post.Table.Detail {
     func asDetail(metadata: WebModule.Metadata.Snapshot) throws
         -> Post.Detail.Output
@@ -80,7 +67,7 @@ extension BlogApplication.Public.Post {
         }
 
         public func list(query: Post.Search.Input.Query) async throws
-            -> Post.List.Output
+            -> BlogApplication.Public.Post.List.Query.Output
         {
             let accessLayer = DatabaseAccessLayer<Post.Table>(context: context)
             let page = query.page.normalized()
@@ -128,7 +115,16 @@ extension BlogApplication.Public.Post {
                     .limit(page.size)
                     .offset(offset)
             }
-            return .init(items: items.map(\.asQueryItem))
+            return .init(
+                items: items.map {
+                    .init(
+                        id: $0.id,
+                        title: $0.title,
+                        excerpt: $0.excerpt,
+                        imageAssetId: $0.imageAssetId
+                    )
+                }
+            )
         }
 
         public func count(query: Post.Search.Input.Query) async throws -> Int {

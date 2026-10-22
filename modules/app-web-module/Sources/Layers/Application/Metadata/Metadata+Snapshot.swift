@@ -95,32 +95,6 @@ extension Metadata.Model {
     }
 }
 
-extension Metadata.Detail.Output {
-    public var asSnapshot: Metadata.Snapshot {
-        .init(
-            id: id,
-            referenceType: referenceType,
-            referenceID: referenceID,
-            template: template,
-            slug: slug,
-            publicationDate: publicationDate,
-            expirationDate: expirationDate,
-            status: status,
-            title: title,
-            excerpt: excerpt,
-            imageURL: imageURL,
-            canonicalURL: canonicalURL,
-            noIndex: noIndex,
-            primaryKeyword: primaryKeyword,
-            cssCodeInjection: cssCodeInjection,
-            javascriptCodeInjection: javascriptCodeInjection,
-            structuredDataCodeInjection: structuredDataCodeInjection,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}
-
 extension Metadata.Snapshot {
     public struct Resolved: Sendable {
         public let title: String

@@ -142,13 +142,23 @@ public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
             .listCategoryIDs(articleIDs: articleIDs)
     }
 
-    public func resolve(ids: [String]) async throws -> Article.List.Output {
+    public func resolve(
+        ids: [String]
+    ) async throws -> PublicNewsArticle.Resolve.Output {
         guard !ids.isEmpty else { return .init(items: []) }
         let rows = try await ArticleTable(connection: context.connection)
             .resolve(ids: ids)
-        let itemsByID = Dictionary(
-            uniqueKeysWithValues: rows.map { ($0.id, $0.asQueryListItem) }
-        )
+        let itemsByID = Dictionary(uniqueKeysWithValues: rows.map {
+            ($0.id, PublicNewsArticle.Item(
+                id: $0.id,
+                title: $0.title,
+                excerpt: $0.excerpt,
+                content: $0.content,
+                imageAssetId: $0.imageAssetId,
+                createdAt: $0.createdAt,
+                updatedAt: $0.updatedAt
+            ))
+        })
         return .init(items: ids.compactMap { itemsByID[$0] })
     }
 
@@ -203,7 +213,7 @@ public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
     public func listPublic(
         query: Article.List.Input.Query,
         categoryID: String?
-    ) async throws -> Article.List.Output {
+    ) async throws -> PublicNewsArticle.List.Query.Output {
         let page = pageSizeOffset(query.page)
         let table = ArticleTable(connection: context.connection)
         let items =
@@ -214,7 +224,17 @@ public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
                 limit: page.size,
                 offset: page.offset
             )
-            .map(\.asQueryListItem)
+            .map {
+                PublicNewsArticle.Item(
+                    id: $0.id,
+                    title: $0.title,
+                    excerpt: $0.excerpt,
+                    content: $0.content,
+                    imageAssetId: $0.imageAssetId,
+                    createdAt: $0.createdAt,
+                    updatedAt: $0.updatedAt
+                )
+            }
 
         return .init(items: items)
     }
@@ -223,7 +243,7 @@ public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
         categoryIDs: [String],
         excludingArticleID: String,
         limit: Int
-    ) async throws -> Article.List.Output {
+    ) async throws -> PublicNewsArticle.Related.Output {
         let categoryIDs = Array(Set(categoryIDs)).filter { !$0.isEmpty }
             .sorted()
         guard !categoryIDs.isEmpty, limit > 0 else { return .init(items: []) }
@@ -234,7 +254,17 @@ public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
                 limit: limit,
                 orderBy: orderByArticle(.init())
             )
-            .map(\.asQueryListItem)
+            .map {
+                PublicNewsArticle.Item(
+                    id: $0.id,
+                    title: $0.title,
+                    excerpt: $0.excerpt,
+                    content: $0.content,
+                    imageAssetId: $0.imageAssetId,
+                    createdAt: $0.createdAt,
+                    updatedAt: $0.updatedAt
+                )
+            }
         return .init(items: items)
     }
 

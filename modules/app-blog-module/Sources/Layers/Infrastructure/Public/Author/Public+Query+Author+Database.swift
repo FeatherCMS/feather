@@ -33,10 +33,11 @@ extension BlogApplication.Public.Author {
         }
 
         public func list(query: Author.Search.Input.Query) async throws
-            -> Author.Search.Output
+            -> BlogApplication.Public.Author.List.Query.Output
         {
-            try await Author.Search.Query.Database(context: context)
+            let result = try await Author.Search.Query.Database(context: context)
                 .search(query: query)
+            return .init(items: result.items.map { .init(id: $0.id) })
         }
     }
 }

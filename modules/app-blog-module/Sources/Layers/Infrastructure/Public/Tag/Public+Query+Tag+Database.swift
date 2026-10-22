@@ -6,19 +6,6 @@ public import FeatherInfrastructure
 public import WebApplication
 public import WebModule
 
-extension Tag.Table.List {
-    var asQueryItem: Tag.List.Output.Item {
-        .init(
-            id: id,
-            title: title,
-            excerpt: excerpt,
-            imageAssetId: imageAssetId,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}
-
 extension Tag.Table.Detail {
     func asDetail(metadata: WebModule.Metadata.Snapshot)
         -> Tag.Detail.Output
@@ -70,7 +57,7 @@ extension BlogApplication.Public.Tag {
         }
 
         public func list(query: Tag.Search.Input.Query) async throws
-            -> Tag.List.Output
+            -> BlogApplication.Public.Tag.List.Query.Output
         {
             let accessLayer = DatabaseAccessLayer<Tag.Table>(context: context)
             let page = query.page.normalized()
@@ -117,7 +104,16 @@ extension BlogApplication.Public.Tag {
                     .limit(page.size)
                     .offset(offset)
             }
-            return .init(items: items.map(\.asQueryItem))
+            return .init(
+                items: items.map {
+                    .init(
+                        id: $0.id,
+                        title: $0.title,
+                        excerpt: $0.excerpt,
+                        imageAssetId: $0.imageAssetId
+                    )
+                }
+            )
         }
 
         public func count(query: Tag.Search.Input.Query) async throws -> Int {

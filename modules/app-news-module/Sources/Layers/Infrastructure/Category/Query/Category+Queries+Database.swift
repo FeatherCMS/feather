@@ -122,8 +122,8 @@ public struct CategoryDatabaseQueries: Category.Detail.Query.Interface,
 
     public func findCategories(
         ids: [String]
-    ) async throws -> [Category.Detail.Output] {
-        guard !ids.isEmpty else { return [] }
+    ) async throws -> PublicNewsArticle.Detail.Query.Output {
+        guard !ids.isEmpty else { return .init(items: []) }
         let rows = try await CategoryTable(connection: context.connection)
             .list(ids: ids)
         let details = try await resolveNewsMetadataDetails(
@@ -134,10 +134,17 @@ public struct CategoryDatabaseQueries: Category.Detail.Query.Interface,
         let metadataByID = Dictionary(
             uniqueKeysWithValues: details.map { ($0.referenceID, $0) }
         )
-        return rows.compactMap { row in
+        let items = rows.compactMap { row in
             guard let detail = metadataByID[row.id] else { return nil }
-            return row.asDetail(metadata: detail)
+            return PublicNewsArticle.Detail.Query.Item(
+                id: row.id,
+                title: row.title,
+                excerpt: row.excerpt,
+                imageAssetId: row.imageAssetId,
+                metadata: detail
+            )
         }
+        return .init(items: items)
     }
 
     public func list(

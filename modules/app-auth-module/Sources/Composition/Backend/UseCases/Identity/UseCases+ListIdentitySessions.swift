@@ -10,7 +10,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Session.ListByIdentity.Scope(
-                    session: Session.List.Query.Database(
+                    session: Session.ListByIdentity.Query.Database(
                         context: context
                     )
                 )

@@ -7,7 +7,7 @@ extension PublicNewsArticle.Related {
                 categoryIDs: [String],
                 excludingArticleID: String,
                 limit: Int
-            ) async throws -> Article.List.Output
+            ) async throws -> Output
         }
     }
 }

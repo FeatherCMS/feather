@@ -18,7 +18,7 @@ struct ContactFieldsTableContent: Component {
     let permissions: AdminListActions
 
     private var emptyStateMessage: String {
-        if formKey == FormField.List.Filter.unassigned {
+        if formKey == Filter.unassigned {
             return search.isEmpty
                 ? "No unassigned contact form fields."
                 : "No unassigned fields match your search."
@@ -241,12 +241,11 @@ struct ContactFieldsTableContent: Component {
                                             }
                                         Option("No form assigned")
                                             .value(
-                                                FormField.List.Filter.unassigned
+                                                Filter.unassigned
                                             )
                                             .if(
                                                 formKey
-                                                    == FormField.List.Filter
-                                                    .unassigned
+                                                    == Filter.unassigned
                                             ) {
                                                 $0.selected()
                                             }

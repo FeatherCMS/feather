@@ -9,7 +9,7 @@ extension AppAPIGateway {
     ) async throws -> Operations.AppContactFormGet.Output {
         let result = try await self.useCases.makeGetPublicForm()
             .execute(
-                .init(key: input.path.contactFormKey)
+                input: .init(key: input.path.contactFormKey)
             )
         return .ok(
             .init(
@@ -54,7 +54,7 @@ extension AppAPIGateway {
         }
         let result = try await self.useCases.makeSubmitContactForm()
             .execute(
-                .init(
+                input: .init(
                     formKey: input.path.contactFormKey,
                     valuesJSON: valuesJSON,
                     itemsSnapshotJSON: "{}",

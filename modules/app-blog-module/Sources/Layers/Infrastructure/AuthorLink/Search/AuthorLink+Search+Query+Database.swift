@@ -17,23 +17,26 @@ extension AuthorLink.Search.Query {
             let database = BlogApplication.Public.AuthorLink.Database(
                     context: context
                 )
-            async let list = database.list(authorId: authorId, query: query)
-            async let total = database.count(authorId: authorId, query: query)
-            let (listResult, totalResult) = try await (list, total)
-            let items = listResult.items.map {
-                AuthorLink.Search.Output.Item(
-                    id: $0.id,
-                    authorId: $0.authorId,
-                    label: $0.label,
-                    url: $0.url,
-                    priority: $0.priority,
-                    isBlank: $0.isBlank,
-                    permission: $0.permission,
-                    createdAt: $0.createdAt,
-                    updatedAt: $0.updatedAt
-                )
-            }
-            return .init(items: items, total: totalResult)
+            let result = try await database.search(
+                authorId: authorId,
+                query: query
+            )
+            return .init(
+                items: result.items.map {
+                    .init(
+                        id: $0.id,
+                        authorId: $0.authorId,
+                        label: $0.label,
+                        url: $0.url,
+                        priority: $0.priority,
+                        isBlank: $0.isBlank,
+                        permission: $0.permission,
+                        createdAt: $0.createdAt,
+                        updatedAt: $0.updatedAt
+                    )
+                },
+                total: result.total
+            )
         }
     }
 }

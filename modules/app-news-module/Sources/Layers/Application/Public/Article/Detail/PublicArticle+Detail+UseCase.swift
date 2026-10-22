@@ -30,6 +30,7 @@ public struct GetPublicArticle {
             }
             let categories = try await scope.category
                 .findCategories(ids: article.categoryIds)
+                .items
                 .filter { $0.metadata.isPublic(at: now) }
                 .map {
                     PublicNewsCategory.Summary.Item(

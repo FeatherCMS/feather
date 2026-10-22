@@ -4,22 +4,6 @@ import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 
-extension AuthorLink.Table.List {
-    var asQueryItem: AuthorLink.List.Output.Item {
-        .init(
-            id: id,
-            authorId: authorId,
-            label: label,
-            url: url,
-            priority: priority,
-            isBlank: isBlank,
-            permission: permission,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}
-
 extension AuthorLink.Table.Detail {
     var asDetail: AuthorLink.Detail.Output {
         .init(
@@ -38,14 +22,19 @@ extension AuthorLink.Table.Detail {
 }
 
 extension BlogApplication.Public.AuthorLink {
-    public struct Database: Query.Interface {
+    public struct Database: Detail.Query.Interface,
+        List.Query.Interface,
+        Search.Query.Interface
+    {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {
             self.context = context
         }
 
-        public func find(id: String) async throws -> AuthorLink.Detail.Output {
+        public func find(
+            id: String
+        ) async throws -> Detail.Query.Output {
             guard
                 let detail = try await DatabaseAccessLayer<AuthorLink.Table>(
                     context: context
@@ -54,13 +43,46 @@ extension BlogApplication.Public.AuthorLink {
             else {
                 throw RepositoryError.notFound
             }
-            return detail.asDetail
+            let value = detail.asDetail
+            return .init(
+                id: value.id,
+                authorId: value.authorId,
+                label: value.label,
+                url: value.url,
+                priority: value.priority,
+                isBlank: value.isBlank,
+                permission: value.permission,
+                notes: value.notes,
+                createdAt: value.createdAt,
+                updatedAt: value.updatedAt
+            )
         }
 
         public func list(
+            authorId: String
+        ) async throws -> List.Query.Output {
+            let result = try await search(authorId: authorId, query: .init())
+            return .init(
+                items: result.items.map {
+                    .init(
+                        id: $0.id,
+                        authorId: $0.authorId,
+                        label: $0.label,
+                        url: $0.url,
+                        priority: $0.priority,
+                        isBlank: $0.isBlank,
+                        permission: $0.permission,
+                        createdAt: $0.createdAt,
+                        updatedAt: $0.updatedAt
+                    )
+                }
+            )
+        }
+
+        public func search(
             authorId: String,
-            query: AuthorLink.Search.Input.Query
-        ) async throws -> AuthorLink.List.Output {
+            query: BlogModule.AuthorLink.Search.Input.Query
+        ) async throws -> Search.Query.Output {
             let accessLayer = DatabaseAccessLayer<AuthorLink.Table>(
                 context: context
             )
@@ -134,10 +156,26 @@ extension BlogApplication.Public.AuthorLink {
                     .limit(page.size)
                     .offset(offset)
             }
-            return .init(items: items.map(\.asQueryItem))
+            let total = try await count(authorId: authorId, query: query)
+            return .init(
+                items: items.map {
+                    .init(
+                        id: $0.id,
+                        authorId: $0.authorId,
+                        label: $0.label,
+                        url: $0.url,
+                        priority: $0.priority,
+                        isBlank: $0.isBlank,
+                        permission: $0.permission,
+                        createdAt: $0.createdAt,
+                        updatedAt: $0.updatedAt
+                    )
+                },
+                total: total
+            )
         }
 
-        public func count(
+        private func count(
             authorId: String,
             query: AuthorLink.Search.Input.Query
         ) async throws -> Int {

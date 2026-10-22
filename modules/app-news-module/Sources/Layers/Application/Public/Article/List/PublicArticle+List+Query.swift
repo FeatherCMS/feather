@@ -6,7 +6,7 @@ extension PublicNewsArticle.List {
             func listPublic(
                 query: Article.List.Input.Query,
                 categoryID: String?
-            ) async throws -> Article.List.Output
+            ) async throws -> Output
             func countPublic(
                 query: Article.List.Input.Query,
                 categoryID: String?

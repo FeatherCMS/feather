@@ -19,7 +19,7 @@ extension Metadata.Resolve {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> [Metadata.List.Output.Item] {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

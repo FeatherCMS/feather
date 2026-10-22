@@ -11,8 +11,21 @@ extension AuthorLink.Detail.Query {
         }
 
         public func find(id: String) async throws -> AuthorLink.Detail.Output {
-            try await BlogApplication.Public.AuthorLink.Database(context: context)
-                .find(id: id)
+            let value = try await BlogApplication.Public.AuthorLink.Database(
+                context: context
+            ).find(id: id)
+            return .init(
+                id: value.id,
+                authorId: value.authorId,
+                label: value.label,
+                url: value.url,
+                priority: value.priority,
+                isBlank: value.isBlank,
+                permission: value.permission,
+                notes: value.notes,
+                createdAt: value.createdAt,
+                updatedAt: value.updatedAt
+            )
         }
     }
 }

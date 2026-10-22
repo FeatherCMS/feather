@@ -117,7 +117,8 @@ actor MockRolePermissionQueries: RolePermission.Search.Query.Interface {
 }
 
 actor MockSessionQueries: Session.Detail.Query.Interface,
-    Session.List.Query.Interface
+    Session.List.Query.Interface,
+    Session.ListByIdentity.Query.Interface
 {
     private let findResult: Session.Detail.Output
     private(set) var listCallCount = 0
@@ -157,6 +158,28 @@ actor MockSessionQueries: Session.Detail.Query.Interface,
         listCallCount += 1
         lastQuery = query
         return listResult
+    }
+
+    func list(identityId: String) async throws -> Session.ListByIdentity.Output {
+        listCallCount += 1
+        lastQuery = .init(identityId: identityId)
+        return .init(
+            items: listResult.items
+                .filter { $0.identityId == identityId }
+                .map {
+                    .init(
+                        id: $0.id,
+                        token: $0.token,
+                        identityId: $0.identityId,
+                        authenticationType: $0.authenticationType,
+                        authenticationReference: $0.authenticationReference,
+                        expiresAt: $0.expiresAt,
+                        isPersistent: $0.isPersistent,
+                        createdAt: $0.createdAt,
+                        updatedAt: $0.updatedAt
+                    )
+                }
+        )
     }
 }
 

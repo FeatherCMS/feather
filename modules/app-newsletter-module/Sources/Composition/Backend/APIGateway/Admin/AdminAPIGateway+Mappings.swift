@@ -200,7 +200,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ value: Subscriber.List.Output,
+        _ value: Subscriber.List.Item,
         campaignKey: String
     ) -> Components.Schemas.NewsletterSubscriberSchema {
         map(
