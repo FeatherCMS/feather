@@ -1,6 +1,5 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-public import OpenAPIKit30
 
 struct AnalyticsLogOverviewDateField: DoubleSchemaRepresentable {
     var example: Double? = 1_717_171_717

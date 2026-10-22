@@ -1,5 +1,9 @@
 import FeatherOpenAPI
 
+extension Variant.Processor.Query {
+    enum Schemas {}
+}
+
 extension Variant.Processor.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {
         var openAPIIdentifier: String {

@@ -381,6 +381,7 @@ let package = Package(
             name: "WebModuleWebAdminTests",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .target(name: "WebDomain"),
                 .target(name: "WebModuleWebAdmin"),
             ],
             path: "Tests/Composition/WebAdmin",

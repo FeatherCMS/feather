@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import Testing
+import WebDomain
 
 @testable import WebModuleWebAdmin
 

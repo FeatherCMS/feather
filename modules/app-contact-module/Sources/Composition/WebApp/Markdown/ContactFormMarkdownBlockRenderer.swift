@@ -7,14 +7,14 @@ import SGML
 import WebBuilders
 import WebModuleWebApp
 
-struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
+struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
     let name = "ContactForm"
     let usesFormSubmissionNonce = true
     let api: ContactAppAPIClient
     let turnstileSiteKey: String?
 
     func render(
-        request: WebMarkdownBlockRendererRequest
+        request: MarkdownBlockRendererRequest
     ) async -> String? {
         guard
             let identifier = request.arguments["key"],
@@ -52,8 +52,8 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     private func render(
         form: ContactAppAPI.Components.Schemas.AppContactFormSchema,
         nonce: String,
-        feedback: WebFormSubmissionFeedback?,
-        layoutChildren: [WebMarkdownBlockRendererRequest.Child]? = nil
+        feedback: FormSubmissionFeedback?,
+        layoutChildren: [MarkdownBlockRendererRequest.Child]? = nil
     ) -> String {
         let fields = form.items.sorted { $0.position < $1.position }
         let action = ContactAppRoutes.submissionAction(for: form.key)
@@ -107,10 +107,10 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     }
 
     private func resolveLayout(
-        _ children: [WebMarkdownBlockRendererRequest.Child],
+        _ children: [MarkdownBlockRendererRequest.Child],
         fields: [ContactAppAPI.Components.Schemas.AppFormFieldSchema],
         form: ContactAppAPI.Components.Schemas.AppContactFormSchema,
-        feedback: WebFormSubmissionFeedback?
+        feedback: FormSubmissionFeedback?
     ) -> String? {
         let fieldsByKey = Dictionary(uniqueKeysWithValues: fields.map { ($0.key, $0) })
         var fieldCounts: [String: Int] = [:]
@@ -120,7 +120,7 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         var successCount = 0
         var captchaCount = 0
 
-        func render(_ child: WebMarkdownBlockRendererRequest.Child) -> String? {
+        func render(_ child: MarkdownBlockRendererRequest.Child) -> String? {
             switch child.name.lowercased() {
             case "contactformfield":
                 guard let key = child.arguments["key"],
@@ -201,9 +201,9 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     }
 
     private func feedbackElement(
-        _ feedback: WebFormSubmissionFeedback?,
+        _ feedback: FormSubmissionFeedback?,
         form: ContactAppAPI.Components.Schemas.AppContactFormSchema,
-        status: WebFormSubmissionFeedback.Status?
+        status: FormSubmissionFeedback.Status?
     ) -> (any Element)? {
         guard
             let feedback,

@@ -1,5 +1,9 @@
 import FeatherOpenAPI
 
+extension Permission.Query {
+    enum Schemas {}
+}
+
 extension Permission.Query.Schemas {
 
     struct Filter: ArraySchemaRepresentable {

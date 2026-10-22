@@ -1,4 +1,4 @@
-import ContactDomain
+public import ContactDomain
 public import FeatherApplication
 import FeatherMail
 public import FeatherModuleKit

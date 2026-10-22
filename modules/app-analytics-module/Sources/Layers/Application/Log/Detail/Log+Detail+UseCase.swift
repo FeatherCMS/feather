@@ -1,5 +1,5 @@
 import AnalyticsContracts
-import AnalyticsDomain
+public import AnalyticsDomain
 public import FeatherApplication
 public import FeatherModuleKit
 

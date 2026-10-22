@@ -1,6 +1,10 @@
 import FeatherOpenAPI
 import UserOpenAPIGeneratorSupport
 
+extension Identity.Query {
+    enum Schemas {}
+}
+
 extension Identity.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {
         var openAPIIdentifier: String { "UserIdentityQueryItemSchema" }

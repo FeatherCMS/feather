@@ -13,6 +13,6 @@ struct AnalyticsApplicationTestSuite {
 
     @Test
     func moduleIsReadyForApplicationFeatures() {
-        _ = LogQueries.self
+        _ = (any LogQueries).self
     }
 }

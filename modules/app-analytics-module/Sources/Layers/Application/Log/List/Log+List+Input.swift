@@ -1,4 +1,4 @@
-import AnalyticsDomain
+public import AnalyticsDomain
 public import FeatherApplication
 
 extension Log.List {

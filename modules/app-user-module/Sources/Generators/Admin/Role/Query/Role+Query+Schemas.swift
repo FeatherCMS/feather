@@ -1,5 +1,9 @@
 import FeatherOpenAPI
 
+extension Role.Query {
+    enum Schemas {}
+}
+
 extension Role.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {
         var openAPIIdentifier: String { "UserRoleQueryItemSchema" }

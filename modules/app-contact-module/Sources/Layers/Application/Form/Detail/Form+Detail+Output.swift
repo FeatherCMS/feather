@@ -1,4 +1,4 @@
-import ContactDomain
+public import ContactDomain
 public import FeatherApplication
 
 public import struct Foundation.Date

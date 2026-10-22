@@ -1,5 +1,9 @@
 import FeatherOpenAPI
 
+extension Variable.Query {
+    enum Schemas {}
+}
+
 extension Variable.Query.Schemas {
     struct Filter: ArraySchemaRepresentable {
         var openAPIIdentifier: String { "SystemVariableIDsFilter" }

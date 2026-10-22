@@ -1,6 +1,6 @@
 public import ContactAdminAPI
 public import ContactApplication
-import ContactDomain
+public import ContactDomain
 import Foundation
 
 extension AdminAPIGateway {

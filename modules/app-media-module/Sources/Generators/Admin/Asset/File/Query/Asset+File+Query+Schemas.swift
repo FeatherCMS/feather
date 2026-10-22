@@ -1,5 +1,9 @@
 import FeatherOpenAPI
 
+extension Asset.File.Query {
+    enum Schemas {}
+}
+
 extension Asset.File.Query.Schemas {
     struct Filters: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {

@@ -1,5 +1,9 @@
 import FeatherOpenAPI
 
+extension Job.Query {
+    enum Schemas {}
+}
+
 extension Job.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {
         var openAPIIdentifier: String { "SystemJobQueryItemSchema" }

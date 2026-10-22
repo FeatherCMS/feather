@@ -1,4 +1,5 @@
 import AnalyticsContracts
+import AnalyticsDomain
 import FeatherModuleKit
 
 extension Log.Overview {

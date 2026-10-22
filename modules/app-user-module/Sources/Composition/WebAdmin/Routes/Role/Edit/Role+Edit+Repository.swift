@@ -1,6 +1,9 @@
 import FeatherWebAdmin
 import UserModule
 
+extension Role.Edit {
+    enum Repository {}
+}
 
 
 extension Role.Edit.Repository {

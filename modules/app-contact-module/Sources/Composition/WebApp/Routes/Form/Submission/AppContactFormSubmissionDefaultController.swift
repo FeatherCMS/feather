@@ -28,10 +28,10 @@ struct AppContactFormSubmissionDefaultController:
         )
         let form = decoded.data
         guard
-            WebFormSubmissionNonce.matches(
+            FormSubmissionNonce.matches(
                 formValue: form.nonce,
                 cookieValue: request.cookies[
-                    WebFormSubmissionNonce.cookieName
+                    FormSubmissionNonce.cookieName
                 ]?
                 .value
             )
@@ -116,26 +116,26 @@ struct AppContactFormSubmissionDefaultController:
                     var queryItems = (refererComponents.queryItems ?? [])
                         .filter {
                             ![
-                                WebFormSubmissionFeedback.sourceQueryKey,
-                                WebFormSubmissionFeedback.keyQueryKey,
-                                WebFormSubmissionFeedback.statusQueryKey,
+                                FormSubmissionFeedback.sourceQueryKey,
+                                FormSubmissionFeedback.keyQueryKey,
+                                FormSubmissionFeedback.statusQueryKey,
                             ]
                             .contains($0.name)
                         }
                     queryItems.append(
                         contentsOf: [
                             .init(
-                                name: WebFormSubmissionFeedback.sourceQueryKey,
-                                value: WebFormSubmissionFeedback.Source.contact
+                                name: FormSubmissionFeedback.sourceQueryKey,
+                                value: FormSubmissionFeedback.Source.contact
                                     .rawValue
                             ),
                             .init(
-                                name: WebFormSubmissionFeedback.keyQueryKey,
+                                name: FormSubmissionFeedback.keyQueryKey,
                                 value: formKey
                             ),
                             .init(
-                                name: WebFormSubmissionFeedback.statusQueryKey,
-                                value: WebFormSubmissionFeedback.Status.success
+                                name: FormSubmissionFeedback.statusQueryKey,
+                                value: FormSubmissionFeedback.Status.success
                                     .rawValue
                             ),
                         ]
@@ -149,16 +149,16 @@ struct AppContactFormSubmissionDefaultController:
                 components.path = "/"
                 components.queryItems = [
                     .init(
-                        name: WebFormSubmissionFeedback.sourceQueryKey,
-                        value: WebFormSubmissionFeedback.Source.contact.rawValue
+                        name: FormSubmissionFeedback.sourceQueryKey,
+                        value: FormSubmissionFeedback.Source.contact.rawValue
                     ),
                     .init(
-                        name: WebFormSubmissionFeedback.keyQueryKey,
+                        name: FormSubmissionFeedback.keyQueryKey,
                         value: formKey
                     ),
                     .init(
-                        name: WebFormSubmissionFeedback.statusQueryKey,
-                        value: WebFormSubmissionFeedback.Status.success.rawValue
+                        name: FormSubmissionFeedback.statusQueryKey,
+                        value: FormSubmissionFeedback.Status.success.rawValue
                     ),
                 ]
                 redirectURL = components.string
@@ -201,26 +201,26 @@ struct AppContactFormSubmissionDefaultController:
                     var queryItems = (refererComponents.queryItems ?? [])
                         .filter {
                             ![
-                                WebFormSubmissionFeedback.sourceQueryKey,
-                                WebFormSubmissionFeedback.keyQueryKey,
-                                WebFormSubmissionFeedback.statusQueryKey,
+                                FormSubmissionFeedback.sourceQueryKey,
+                                FormSubmissionFeedback.keyQueryKey,
+                                FormSubmissionFeedback.statusQueryKey,
                             ]
                             .contains($0.name)
                         }
                     queryItems.append(
                         contentsOf: [
                             .init(
-                                name: WebFormSubmissionFeedback.sourceQueryKey,
-                                value: WebFormSubmissionFeedback.Source.contact
+                                name: FormSubmissionFeedback.sourceQueryKey,
+                                value: FormSubmissionFeedback.Source.contact
                                     .rawValue
                             ),
                             .init(
-                                name: WebFormSubmissionFeedback.keyQueryKey,
+                                name: FormSubmissionFeedback.keyQueryKey,
                                 value: formKey
                             ),
                             .init(
-                                name: WebFormSubmissionFeedback.statusQueryKey,
-                                value: WebFormSubmissionFeedback.Status.failure
+                                name: FormSubmissionFeedback.statusQueryKey,
+                                value: FormSubmissionFeedback.Status.failure
                                     .rawValue
                             ),
                         ]
@@ -234,16 +234,16 @@ struct AppContactFormSubmissionDefaultController:
                 components.path = "/"
                 components.queryItems = [
                     .init(
-                        name: WebFormSubmissionFeedback.sourceQueryKey,
-                        value: WebFormSubmissionFeedback.Source.contact.rawValue
+                        name: FormSubmissionFeedback.sourceQueryKey,
+                        value: FormSubmissionFeedback.Source.contact.rawValue
                     ),
                     .init(
-                        name: WebFormSubmissionFeedback.keyQueryKey,
+                        name: FormSubmissionFeedback.keyQueryKey,
                         value: formKey
                     ),
                     .init(
-                        name: WebFormSubmissionFeedback.statusQueryKey,
-                        value: WebFormSubmissionFeedback.Status.failure.rawValue
+                        name: FormSubmissionFeedback.statusQueryKey,
+                        value: FormSubmissionFeedback.Status.failure.rawValue
                     ),
                 ]
                 redirectURL = components.string

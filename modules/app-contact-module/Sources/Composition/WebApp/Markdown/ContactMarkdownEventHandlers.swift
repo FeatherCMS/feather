@@ -8,8 +8,8 @@ public enum ContactMarkdownEventHandlers {
         turnstileSiteKey: String? = nil
     ) {
         registry.register(
-            event: WebMarkdownBlockRendererProvider.self,
-            context: WebMarkdownBlockRendererRequest.self
+            event: MarkdownBlockRendererProvider.self,
+            context: MarkdownBlockRendererRequest.self
         ) { _, _ in
             ContactFormMarkdownBlockRenderer(
                 api: api,

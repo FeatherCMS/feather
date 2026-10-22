@@ -1,5 +1,9 @@
 import FeatherOpenAPI
 
+extension Variant.Query {
+    enum Schemas {}
+}
+
 extension Variant.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {
         var openAPIIdentifier: String { "MediaVariantQueryItemSchema" }
