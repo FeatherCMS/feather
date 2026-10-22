@@ -8,9 +8,9 @@ import SGML
 import WebBuilders
 import WebComponents
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.Remove.Presenter {
+extension WebModule.Menu.Remove.Presenter {
     struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
@@ -26,7 +26,7 @@ extension Menu.Remove.Presenter {
                 request: request,
                 context: context,
                 title: AdminRemoveConfirmation.dialogTitle,
-                content: Menu.Remove.Confirmation(
+                content: WebModule.Menu.Remove.Confirmation(
                     state: .init(
                         id: item.id,
                         source: item.label,

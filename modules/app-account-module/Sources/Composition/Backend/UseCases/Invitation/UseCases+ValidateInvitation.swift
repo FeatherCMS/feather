@@ -9,8 +9,8 @@ extension UseCases {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Invitation.Detail.Scope(
-                    query: Invitation.Detail.Query.Database(context: context)
+                Invitation.Validate.Scope(
+                    query: Invitation.Validate.Query.Database(context: context)
                 )
             }
         )

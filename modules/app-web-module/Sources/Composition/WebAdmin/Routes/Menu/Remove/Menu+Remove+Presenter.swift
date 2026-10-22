@@ -2,13 +2,13 @@ import FeatherWebAdmin
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.Remove {
+extension WebModule.Menu.Remove {
     enum Presenter {}
 }
 
-extension Menu.Remove.Presenter {
+extension WebModule.Menu.Remove.Presenter {
     protocol Interface: Sendable {
 
         func renderRemovePage(

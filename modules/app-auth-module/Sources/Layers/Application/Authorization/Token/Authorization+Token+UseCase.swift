@@ -28,8 +28,8 @@ extension AuthModule.Authorization.Token {
                     return nil
                 }
                 let (roles, permissions) = try await (
-                    scope.authorization.getRolesBy(identityId: identity.id),
-                    scope.authorization.getPermissionsBy(
+                    scope.roles.getRolesBy(identityId: identity.id),
+                    scope.permissions.getPermissionsBy(
                         identityId: identity.id
                     )
                 )

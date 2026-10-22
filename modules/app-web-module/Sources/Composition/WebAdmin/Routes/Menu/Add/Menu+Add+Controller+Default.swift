@@ -5,14 +5,14 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.Add.Controller {
+extension WebModule.Menu.Add.Controller {
     struct Default: Interface {
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
-                any Menu.Add.Interactor.Interface,
-                any Menu.Add.Presenter.Interface
+                any WebModule.Menu.Add.Interactor.Interface,
+                any WebModule.Menu.Add.Presenter.Interface
             >
 
         func getAddMenu(

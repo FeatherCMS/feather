@@ -1,4 +1,4 @@
 
 extension Profile {
-    enum Edit {}
+    public enum Edit {}
 }

@@ -1,5 +1,6 @@
 import AuthModule
 import FeatherWebApp
+import FeatherWebShared
 
 extension MagicLink.App.Presenter {
     struct Default: Interface {

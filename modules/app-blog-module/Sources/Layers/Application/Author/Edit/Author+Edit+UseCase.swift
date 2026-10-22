@@ -13,10 +13,6 @@ import WebDomain
 
 extension Author.Edit {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Error: UseCaseError {
-            let message: String
-        }
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Author.Edit.Scope>
 

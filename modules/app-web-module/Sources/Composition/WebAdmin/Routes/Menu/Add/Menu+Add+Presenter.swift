@@ -2,13 +2,13 @@ import FeatherWebAdmin
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.Add {
+extension WebModule.Menu.Add {
     enum Presenter {}
 }
 
-extension Menu.Add.Presenter {
+extension WebModule.Menu.Add.Presenter {
     protocol Interface: Sendable {
 
         func renderAddPage(

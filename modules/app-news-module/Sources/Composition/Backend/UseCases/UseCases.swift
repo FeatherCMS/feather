@@ -4,6 +4,7 @@ public import FeatherInfrastructure
 public import FeatherModuleKit
 import NewsApplication
 import NewsInfrastructure
+import NewsModule
 import SystemApplication
 import SystemInfrastructure
 import SystemModule
@@ -30,34 +31,59 @@ extension UseCases {
 }
 
 extension UseCases {
-    func articleQuery() -> DatabaseQueryExecutor<
-        ReadArticleMetadata
-    > {
+    func articleDetailQuery() -> DatabaseQueryExecutor<Article.Detail.Scope> {
         DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadArticleMetadata(
+                Article.Detail.Scope(
                     article: ArticleDatabaseQueries(
                         context: context,
                         metadata: WebModule.Metadata.Query.Database(
                             context: context
                         )
-                    ),
-                    metadata: WebModule.Metadata.Query.Database(
-                        context: context
                     )
                 )
             }
         )
     }
 
-    func articleTransaction() -> DatabaseTransactionExecutor<
-        WriteArticleMetadata
-    > {
+    func articleListQuery() -> DatabaseQueryExecutor<Article.List.Scope> {
+        DatabaseQueryExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Article.List.Scope(
+                    article: ArticleDatabaseQueries(
+                        context: context,
+                        metadata: WebModule.Metadata.Query.Database(
+                            context: context
+                        )
+                    )
+                )
+            }
+        )
+    }
+
+    func articleSearchQuery() -> DatabaseQueryExecutor<Article.Search.Scope> {
+        DatabaseQueryExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Article.Search.Scope(
+                    article: ArticleDatabaseQueries(
+                        context: context,
+                        metadata: WebModule.Metadata.Query.Database(
+                            context: context
+                        )
+                    )
+                )
+            }
+        )
+    }
+
+    func articleAddTransaction() -> DatabaseTransactionExecutor<Article.Add.Scope> {
         DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteArticleMetadata(
+                Article.Add.Scope(
                     article: ArticleDatabaseRepository(context: context),
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
@@ -70,20 +96,13 @@ extension UseCases {
         )
     }
 
-    func categoryQuery() -> DatabaseQueryExecutor<
-        ReadCategoryMetadata
-    > {
-        DatabaseQueryExecutor(
+    func articleEditTransaction() -> DatabaseTransactionExecutor<Article.Edit.Scope> {
+        DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadCategoryMetadata(
-                    category: CategoryDatabaseQueries(
-                        context: context,
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
-                    ),
-                    metadata: WebModule.Metadata.Query.Database(
+                Article.Edit.Scope(
+                    article: ArticleDatabaseRepository(context: context),
+                    metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     )
                 )
@@ -91,13 +110,73 @@ extension UseCases {
         )
     }
 
-    func categoryTransaction() -> DatabaseTransactionExecutor<
-        WriteCategoryMetadata
-    > {
+    func articleRemoveTransaction() -> DatabaseTransactionExecutor<Article.Remove.Scope> {
         DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteCategoryMetadata(
+                Article.Remove.Scope(
+                    article: ArticleDatabaseRepository(context: context),
+                    metadata: WebModule.Metadata.Repository.Database(
+                        context: context
+                    )
+                )
+            }
+        )
+    }
+
+    func categoryDetailQuery() -> DatabaseQueryExecutor<Category.Detail.Scope> {
+        DatabaseQueryExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Category.Detail.Scope(
+                    category: CategoryDatabaseQueries(
+                        context: context,
+                        metadata: WebModule.Metadata.Query.Database(
+                            context: context
+                        )
+                    )
+                )
+            }
+        )
+    }
+
+    func categoryListQuery() -> DatabaseQueryExecutor<Category.List.Scope> {
+        DatabaseQueryExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Category.List.Scope(
+                    category: CategoryDatabaseQueries(
+                        context: context,
+                        metadata: WebModule.Metadata.Query.Database(
+                            context: context
+                        )
+                    )
+                )
+            }
+        )
+    }
+
+    func categorySearchQuery() -> DatabaseQueryExecutor<Category.Search.Scope> {
+        DatabaseQueryExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Category.Search.Scope(
+                    category: CategoryDatabaseQueries(
+                        context: context,
+                        metadata: WebModule.Metadata.Query.Database(
+                            context: context
+                        )
+                    )
+                )
+            }
+        )
+    }
+
+    func categoryAddTransaction() -> DatabaseTransactionExecutor<Category.Add.Scope> {
+        DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Category.Add.Scope(
                     category: CategoryDatabaseRepository(context: context),
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
@@ -110,15 +189,25 @@ extension UseCases {
         )
     }
 
-    func categoryArticlesTransaction()
-        -> DatabaseTransactionExecutor<
-            WriteCategoryArticlesMetadata
-        >
-    {
+    func categoryEditTransaction() -> DatabaseTransactionExecutor<Category.Edit.Scope> {
         DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteCategoryArticlesMetadata(
+                Category.Edit.Scope(
+                    category: CategoryDatabaseRepository(context: context),
+                    metadata: WebModule.Metadata.Repository.Database(
+                        context: context
+                    )
+                )
+            }
+        )
+    }
+
+    func categoryRemoveTransaction() -> DatabaseTransactionExecutor<Category.Remove.Scope> {
+        DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Category.Remove.Scope(
                     article: ArticleDatabaseRepository(context: context),
                     category: CategoryDatabaseRepository(context: context),
                     metadata: WebModule.Metadata.Repository.Database(

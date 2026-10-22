@@ -52,10 +52,19 @@ public enum Permissions: PermissionProvider {
         }
     }
 
+    public enum Metadata: PermissionProvider {
+        public static let access = PermissionKey("web:metadata:access")
+
+        public static func allPermissions() -> Set<PermissionKey> {
+            [access]
+        }
+    }
+
     public static func allPermissions() -> Set<PermissionKey> {
         Pages.allPermissions()
             .union(Menus.allPermissions())
             .union(MenuItems.allPermissions())
             .union(Settings.allPermissions())
+            .union(Metadata.allPermissions())
     }
 }

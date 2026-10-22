@@ -8,7 +8,7 @@ import SGML
 import WebBuilders
 import WebComponents
 import WebDomain
-public import WebModule
+import WebModule
 
 struct AdminRemoveMenuItemDefaultPresenter:
     AdminRemoveMenuItemPresenter
@@ -20,7 +20,7 @@ struct AdminRemoveMenuItemDefaultPresenter:
     func renderRemovePage(
         menuId: String,
         item: AdminRemoveItemContext,
-        origin: Menu.Item.Routes.RemoveOrigin
+        origin: WebModule.Menu.Item.Routes.RemoveOrigin
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -48,7 +48,7 @@ struct AdminRemoveMenuItemDefaultPresenter:
         id: String,
         info: String,
         message: String,
-        origin: Menu.Item.Routes.RemoveOrigin
+        origin: WebModule.Menu.Item.Routes.RemoveOrigin
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderAdminPage(
             request: request,

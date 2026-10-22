@@ -1,4 +1,4 @@
 
 extension Settings {
-    enum Edit {}
+    public enum Edit {}
 }

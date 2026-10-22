@@ -8,11 +8,11 @@ public import WebModule
 extension Post.Search.Query {
     public struct Database: Interface {
         let context: DatabaseQueryContext
-        let metadata: any WebModule.Metadata.Query.Interface
+        let metadata: any WebModule.Metadata.Reference.Query.Interface
 
         public init(
             context: DatabaseQueryContext,
-            metadata: any WebModule.Metadata.Query.Interface
+            metadata: any WebModule.Metadata.Reference.Query.Interface
         ) {
             self.context = context
             self.metadata = metadata
@@ -21,7 +21,7 @@ extension Post.Search.Query {
         public func search(
             query: Post.Search.Input.Query
         ) async throws -> Post.Search.Output {
-            let database = BlogApplication.Public.Query.PostContent.Database(
+            let database = BlogApplication.Public.Post.Database(
                 context: context,
                 metadata: metadata
             )

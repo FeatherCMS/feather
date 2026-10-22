@@ -7,9 +7,9 @@ import SGML
 import WebBuilders
 import WebComponents
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.View.Presenter {
+extension WebModule.Menu.View.Presenter {
     struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext

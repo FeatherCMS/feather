@@ -8,12 +8,12 @@ extension AuthModule.Authorization.CurrentUser {
     public struct UseCase: FeatherApplication.UseCase {
         let detailQuery: any QueryExecutor<Identity.Detail.Scope>
         let authorizationQuery:
-            any QueryExecutor<AuthModule.Authorization.Query.Scope>
+            any QueryExecutor<Scope>
 
         public init(
             detailQuery: any QueryExecutor<Identity.Detail.Scope>,
             authorizationQuery: any QueryExecutor<
-                AuthModule.Authorization.Query.Scope
+                Scope
             >
         ) {
             self.detailQuery = detailQuery
@@ -35,12 +35,10 @@ extension AuthModule.Authorization.CurrentUser {
                 try await scope.identity.find(id: input.id)
             }
             async let roles = authorizationQuery.run { scope in
-                try await scope.authorization.getRolesBy(
-                    identityId: identity.id
-                )
+                try await scope.roles.getRolesBy(identityId: identity.id)
             }
             async let permissions = authorizationQuery.run { scope in
-                try await scope.authorization.getPermissionsBy(
+                try await scope.permissions.getPermissionsBy(
                     identityId: identity.id
                 )
             }

@@ -1,4 +1,4 @@
 
 extension Invitation {
-    enum Remove {}
+    public enum Remove {}
 }

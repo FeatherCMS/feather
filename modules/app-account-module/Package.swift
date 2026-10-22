@@ -268,6 +268,7 @@ let package = Package(
                 .product(name: "UserWebAdmin", package: "app-user-module"),
 
                 .target(name: "AccountModule"),
+                .target(name: "AccountDomain"),
                 .target(name: "AccountAdminAPI"),
             ],
             path: "Sources/Composition/WebAdmin",

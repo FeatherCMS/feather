@@ -4,7 +4,7 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
 struct AdminRemoveMenuItemDefaultController:
     AdminRemoveMenuItemController
@@ -21,7 +21,7 @@ struct AdminRemoveMenuItemDefaultController:
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
-        let origin = Menu.Item.Routes.removeOrigin(
+        let origin = WebModule.Menu.Item.Routes.removeOrigin(
             request.queryString("origin")
         )
         let nonceRequest = try await request.decode(
@@ -36,7 +36,7 @@ struct AdminRemoveMenuItemDefaultController:
         else { return Response(status: .badRequest) }
         let ids = nonceRequest.input.normalizedIds
         let location = AdminLocation.url(
-            path: Menu.Item.Routes.list(RouterPath(menuId)).description,
+            path: WebModule.Menu.Item.Routes.list(RouterPath(menuId)).description,
             page: nonceRequest.input.normalizedPage,
             search: nonceRequest.input.normalizedSearch
         )

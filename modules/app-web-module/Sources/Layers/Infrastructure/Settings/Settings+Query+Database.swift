@@ -10,7 +10,7 @@ public import WebApplication
 import WebDomain
 public import WebModule
 
-extension Settings.Query {
+extension Settings.Detail.Query {
     public struct Database: Interface {
 
         public let context: DatabaseQueryContext

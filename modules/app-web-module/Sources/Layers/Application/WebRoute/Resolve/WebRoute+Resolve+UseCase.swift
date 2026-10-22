@@ -7,33 +7,25 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import Foundation
-public import WebModule
+import WebModule
 
 extension WebRoute.Resolve {
-    public struct UseCase {
-        public struct Error: UseCaseError {
-            public let message: String
-
-            public init(message: String) {
-                self.message = message
-            }
-        }
-
-        let query: any QueryExecutor<Metadata.Query.Scope>
+    public struct UseCase: FeatherApplication.UseCase {
+        let query: any QueryExecutor<Scope>
 
         public init(
-            query: any QueryExecutor<Metadata.Query.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.query = query
         }
 
-        public func execute(
-            slug: String
-        ) async throws -> Output {
+        public func execute(input: Input) async throws -> Output {
             let now = Date()
             return try await query.run { scope in
                 guard
-                    let metadata = try await scope.metadata.resolve(slug: slug),
+                    let metadata = try await scope.metadata.resolve(
+                        slug: input.slug
+                    ),
                     metadata.isDirectlyAccessible(at: now)
                 else {
                     throw Error(message: "Route not found")

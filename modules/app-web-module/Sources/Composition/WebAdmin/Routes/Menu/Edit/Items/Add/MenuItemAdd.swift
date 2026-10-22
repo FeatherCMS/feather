@@ -8,7 +8,7 @@ import WebAdminAPI
 import WebBuilders
 import WebComponents
 import WebDomain
-public import WebModule
+import WebModule
 
 struct MenuItemAdd: Component {
 
@@ -45,7 +45,7 @@ struct MenuItemAdd: Component {
                         MenuItemForm(
                             state: state.form,
                             action:
-                                Menu.Item.Routes
+                                WebModule.Menu.Item.Routes
                                 .add(
                                     RouterPath(state.menuId)
                                 )

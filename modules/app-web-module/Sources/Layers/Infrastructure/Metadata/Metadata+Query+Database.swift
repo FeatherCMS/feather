@@ -33,8 +33,17 @@ extension Metadata.Table.Detail {
     }
 }
 
+extension Metadata {
+    public enum Query {}
+}
+
 extension Metadata.Query {
-    public struct Database: Interface {
+    public struct Database: Metadata.Detail.Query.Interface,
+        Metadata.Reference.Query.Interface,
+        Metadata.Resolve.Query.Interface,
+        Metadata.Resolve.Detail.Query.Interface,
+        WebRoute.Resolve.Query.Interface
+    {
         public let context: DatabaseQueryContext
         private var accessLayer: DatabaseAccessLayer<Metadata.Table> {
             .init(context: context)
@@ -63,18 +72,6 @@ extension Metadata.Query {
             try await accessLayer.selectFirst(as: Metadata.Table.Detail.self) {
                 $0.where(\.referenceType, equals: referenceType)
                     .where(\.referenceID, equals: referenceID)
-                    .limit(1)
-            }
-            .map { $0.asDetail }
-        }
-
-        public func find(
-            referenceType: String,
-            slug: String
-        ) async throws -> Metadata.Detail.Output? {
-            try await accessLayer.selectFirst(as: Metadata.Table.Detail.self) {
-                $0.where(\.referenceType, equals: referenceType)
-                    .where(\.slug, equals: slug)
                     .limit(1)
             }
             .map { $0.asDetail }

@@ -5,7 +5,7 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
 struct AdminAddMenuItemDefaultController: AdminAddMenuItemController {
     let buildRuntime:
@@ -142,7 +142,7 @@ struct AdminAddMenuItemDefaultController: AdminAddMenuItemController {
             try await runtime.interactor.execute(menuId: menuId, input: payload)
 
             return AdminNotificationFlash.redirect(
-                to: Menu.Item.Routes.list(RouterPath(menuId)).description,
+                to: WebModule.Menu.Item.Routes.list(RouterPath(menuId)).description,
                 notification: .init(
                     title: "Added",
                     message: "Item added successfully."

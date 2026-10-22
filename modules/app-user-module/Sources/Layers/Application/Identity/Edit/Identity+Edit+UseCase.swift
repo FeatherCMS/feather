@@ -12,11 +12,6 @@ public import UserModule
 
 extension Identity.Edit {
     public struct UseCase: FeatherApplication.UseCase {
-        public enum Error: UseCaseError {
-            case identityNotFound
-            case roleNotFound
-        }
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Scope>
 

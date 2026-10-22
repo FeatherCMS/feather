@@ -1,5 +1,5 @@
 public import FeatherWebShared
-import FeatherWebApp
+public import FeatherWebApp
 public import Hummingbird
 
 public struct Router {

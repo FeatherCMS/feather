@@ -9,22 +9,26 @@ struct AdminNewsArticles: Sendable {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        let buildRuntime: @Sendable (Request, AuthenticatedRequestContext) -> AdminNewsArticleRuntime = {
-            request,
-            context in
-            let api = apiBuilder.makeNewsAdmin(context)
-            return AdminNewsArticleRuntime(
-                interactor: AdminNewsArticleDefaultInteractor(
-                    repository: AdminNewsArticleOpenAPIRepository(api: api)
-                ),
-                presenter: AdminNewsArticleDefaultPresenter(
-                    request: request,
-                    context: context,
-                    mediaAPI: api.mediaAdminAPI(),
-                    renderingEngine: renderingEngine
-                )
-            )
-        }
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) ->
+                AdminNewsArticleRuntime = {
+                    request,
+                    context in
+                    let api = apiBuilder.makeNewsAdmin(context)
+                    return AdminNewsArticleRuntime(
+                        interactor: AdminNewsArticleDefaultInteractor(
+                            repository: AdminNewsArticleOpenAPIRepository(
+                                api: api
+                            )
+                        ),
+                        presenter: AdminNewsArticleDefaultPresenter(
+                            request: request,
+                            context: context,
+                            mediaAPI: api.mediaAdminAPI(),
+                            renderingEngine: renderingEngine
+                        )
+                    )
+                }
         AdminListNewsArticleDefaultController(buildRuntime: buildRuntime)
             .route(on: router)
         AdminAddNewsArticleDefaultController(buildRuntime: buildRuntime)

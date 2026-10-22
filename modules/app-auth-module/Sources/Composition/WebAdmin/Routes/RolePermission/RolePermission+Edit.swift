@@ -4,5 +4,10 @@ import FeatherWebShared
 import Hummingbird
 
 extension RolePermission {
-    enum Edit {}
+    enum Edit {
+        enum Controller {}
+        enum Interactor {}
+        enum Presenter {}
+        enum Repository {}
+    }
 }

@@ -4,13 +4,13 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.Remove {
+extension WebModule.Menu.Remove {
     enum Controller {}
 }
 
-extension Menu.Remove.Controller {
+extension WebModule.Menu.Remove.Controller {
     protocol Interface: Sendable {
 
         func postRemoveMenu(

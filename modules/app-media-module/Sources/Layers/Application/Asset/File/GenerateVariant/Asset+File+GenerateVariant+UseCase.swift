@@ -24,7 +24,7 @@ extension Asset.File.GenerateVariant {
             let variant: Variant.Model
         }
 
-        private struct Output: Sendable {
+        private struct GeneratedObject: Sendable {
             let assetID: String
             let plan: Plan
             let `extension`: String
@@ -96,7 +96,7 @@ extension Asset.File.GenerateVariant {
                 extension: inputExtension
             )
             defer { try? FileManager.default.removeItem(at: inputURL) }
-            var outputs: [Output] = []
+            var outputs: [GeneratedObject] = []
             outputs.reserveCapacity(prepared.plans.count)
             var uploadedKeys: [String] = []
             do {
@@ -106,7 +106,7 @@ extension Asset.File.GenerateVariant {
                         asset: prepared.asset,
                         inputURL: inputURL
                     )
-                    let generated = Output(
+                    let generated = GeneratedObject(
                         assetID: prepared.asset.id,
                         plan: plan,
                         extension: output.extension,

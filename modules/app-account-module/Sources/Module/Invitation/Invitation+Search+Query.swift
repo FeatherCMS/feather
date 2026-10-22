@@ -1,4 +1,4 @@
 
 extension Invitation.Search {
-    enum Query {}
+    public enum Query {}
 }

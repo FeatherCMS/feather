@@ -106,7 +106,7 @@ struct AccountApplicationTestSuite {
         )
         let useCase = Invitation.Validate.UseCase(
             query: FeatherTesting.QueryExecutor.Mock(
-                context: Invitation.Detail.Scope(query: queries)
+                context: Invitation.Validate.Scope(query: queries)
             )
         )
 
@@ -135,7 +135,7 @@ struct AccountApplicationTestSuite {
         )
         let useCase = Invitation.Validate.UseCase(
             query: FeatherTesting.QueryExecutor.Mock(
-                context: Invitation.Detail.Scope(query: queries)
+                context: Invitation.Validate.Scope(query: queries)
             )
         )
 

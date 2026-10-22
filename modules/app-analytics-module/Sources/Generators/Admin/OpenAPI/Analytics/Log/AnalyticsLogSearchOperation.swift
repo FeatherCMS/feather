@@ -6,7 +6,7 @@ import OpenAPIKit30
 struct AnalyticsLogSearchOperation: AnalyticsLogOperation {
     var searchRequestQuery: SearchRequestQuerySchema {
         .init(
-            items: AnalyticsLogListItemSchema(),
+            items: AnalyticsLogQueryItemSchema(),
             sortFieldKeys: [
                 "id",
                 "accountId",

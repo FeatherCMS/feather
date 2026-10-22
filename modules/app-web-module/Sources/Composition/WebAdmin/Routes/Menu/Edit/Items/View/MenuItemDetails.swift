@@ -7,7 +7,7 @@ import SGML
 import WebBuilders
 import WebComponents
 import WebDomain
-public import WebModule
+import WebModule
 
 struct MenuItemDetails: Component {
     struct State {
@@ -106,7 +106,7 @@ struct MenuItemDetails: Component {
                             AdminButton(
                                 "Edit item",
                                 href:
-                                    Menu.Item.Routes
+                                    WebModule.Menu.Item.Routes
                                     .edit(
                                         RouterPath(state.item.menuId),
                                         RouterPath(state.item.id)
@@ -118,7 +118,7 @@ struct MenuItemDetails: Component {
                         context.build(
                             AdminButton(
                                 "Remove item",
-                                href: Menu.Item.Routes.itemRemove(
+                                href: WebModule.Menu.Item.Routes.itemRemove(
                                     RouterPath(state.item.menuId),
                                     RouterPath(state.item.id),
                                     origin: .view

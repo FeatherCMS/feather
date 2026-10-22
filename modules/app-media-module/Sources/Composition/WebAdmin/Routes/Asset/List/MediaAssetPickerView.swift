@@ -10,6 +10,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import FeatherWebShared
 
 struct MediaAssetPickerView: Component {
     struct State {

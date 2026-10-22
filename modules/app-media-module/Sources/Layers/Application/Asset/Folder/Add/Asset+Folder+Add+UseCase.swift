@@ -55,7 +55,19 @@ extension Asset.Folder.Add {
                             slugPath: slugPath
                         )
                     )
-                return .init(detail: folder.asDetail)
+                return .init(
+                    detail: .init(
+                        id: folder.id,
+                        parentId: folder.parentId,
+                        name: folder.name,
+                        slug: folder.slug,
+                        slugPath: folder.slugPath,
+                        assetCount: folder.assetCount,
+                        totalSizeBytes: folder.totalSizeBytes,
+                        createdAt: folder.createdAt,
+                        updatedAt: folder.updatedAt
+                    )
+                )
             }
         }
     }

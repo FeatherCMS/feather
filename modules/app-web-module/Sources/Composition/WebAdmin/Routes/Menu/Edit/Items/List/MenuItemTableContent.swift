@@ -22,7 +22,7 @@ struct MenuItemTableContent: Component {
 
     private var returnTo: String {
         AdminLocation.url(
-            path: Menu.Item.Routes.list(RouterPath(state.menuId)).description,
+            path: WebModule.Menu.Item.Routes.list(RouterPath(state.menuId)).description,
             page: state.pageState.page,
             search: state.search
         )
@@ -95,7 +95,7 @@ struct MenuItemTableContent: Component {
                                 AdminListInvalidPageState(
                                     pageState: state.pageState,
                                     path:
-                                        Menu.Item.Routes
+                                        WebModule.Menu.Item.Routes
                                         .list(
                                             RouterPath(state.menuId)
                                         )
@@ -114,7 +114,7 @@ struct MenuItemTableContent: Component {
                                                 AdminButton(
                                                     "Reset search",
                                                     href:
-                                                        Menu.Item.Routes
+                                                        WebModule.Menu.Item.Routes
                                                         .list(
                                                             RouterPath(
                                                                 state.menuId
@@ -142,7 +142,7 @@ struct MenuItemTableContent: Component {
                                                     AdminButton(
                                                         "Add new",
                                                         href:
-                                                            Menu.Item.Routes
+                                                            WebModule.Menu.Item.Routes
                                                             .add(
                                                                 RouterPath(
                                                                     state.menuId
@@ -162,7 +162,7 @@ struct MenuItemTableContent: Component {
                                 AdminListSelectionForm(
                                     state: .init(
                                         action:
-                                            Menu.Item.Routes
+                                            WebModule.Menu.Item.Routes
                                             .remove(
                                                 RouterPath(state.menuId)
                                             )
@@ -246,7 +246,7 @@ struct MenuItemTableContent: Component {
                             AdminListSearch(
                                 state: .init(
                                     action:
-                                        Menu.Item.Routes
+                                        WebModule.Menu.Item.Routes
                                         .list(
                                             RouterPath(state.menuId)
                                         )
@@ -267,7 +267,7 @@ struct MenuItemTableContent: Component {
                                         AdminButton(
                                             "Add new",
                                             href:
-                                                Menu.Item.Routes
+                                                WebModule.Menu.Item.Routes
                                                 .add(
                                                     RouterPath(state.menuId)
                                                 )
@@ -283,7 +283,7 @@ struct MenuItemTableContent: Component {
                             AdminListPagination(
                                 state: .init(
                                     path:
-                                        Menu.Item.Routes
+                                        WebModule.Menu.Item.Routes
                                         .list(
                                             RouterPath(state.menuId)
                                         )

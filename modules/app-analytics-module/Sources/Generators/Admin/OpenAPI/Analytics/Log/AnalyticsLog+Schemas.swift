@@ -127,6 +127,22 @@ struct AnalyticsLogListItemSchema: ObjectSchemaRepresentable {
     }
 }
 
+struct AnalyticsLogQueryItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "id": AnalyticsLogIdField().reference(),
+            "accountId": AnalyticsLogAccountIdField(),
+            "source": AnalyticsLogSourceField(),
+            "method": AnalyticsLogMethodField(),
+            "path": AnalyticsLogPathField(),
+            "responseCode": AnalyticsLogResponseCodeField(),
+            "ip": AnalyticsLogIPField(),
+            "browserName": AnalyticsLogBrowserNameField(),
+            "createdAt": AnalyticsLogTimestampField(),
+        ]
+    }
+}
+
 struct AnalyticsLogListSchema: ArraySchemaRepresentable {
     var items: (any SchemaRepresentable)? {
         AnalyticsLogListItemSchema().reference()

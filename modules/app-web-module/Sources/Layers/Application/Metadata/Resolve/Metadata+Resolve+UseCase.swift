@@ -5,32 +5,15 @@ public import WebModule
 
 extension Metadata.Resolve {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Action: PermissionAction {
-            let key = Admin.Permissions.access
-        }
-
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Metadata.Query.Scope>
+        let query: any QueryExecutor<Metadata.Resolve.Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Metadata.Query.Scope>
+            query: any QueryExecutor<Metadata.Resolve.Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
-        }
-
-        public struct Input: DTO {
-            public let referenceType: String
-            public let referenceIDs: [String]
-
-            public init(
-                referenceType: String,
-                referenceIDs: [String]
-            ) {
-                self.referenceType = referenceType
-                self.referenceIDs = referenceIDs
-            }
         }
 
         public func execute(

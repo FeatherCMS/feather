@@ -39,7 +39,7 @@ extension AppAPIGateway {
         do {
             let route = try await useCases.makeResolveWebRoute()
                 .execute(
-                    slug: input.path.slug
+                    input: WebRoute.Resolve.Input(slug: input.path.slug)
                 )
             return .ok(
                 .init(

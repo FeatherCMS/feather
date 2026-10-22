@@ -7,11 +7,11 @@ public import WebModule
 extension Tag.Search.Query {
     public struct Database: Interface {
         let context: DatabaseQueryContext
-        let metadata: any WebModule.Metadata.Query.Interface
+        let metadata: any WebModule.Metadata.Reference.Query.Interface
 
         public init(
             context: DatabaseQueryContext,
-            metadata: any WebModule.Metadata.Query.Interface
+            metadata: any WebModule.Metadata.Reference.Query.Interface
         ) {
             self.context = context
             self.metadata = metadata
@@ -20,7 +20,7 @@ extension Tag.Search.Query {
         public func search(
             query: Tag.Search.Input.Query
         ) async throws -> Tag.Search.Output {
-            let database = BlogApplication.Public.Query.TagContent.Database(
+            let database = BlogApplication.Public.Tag.Database(
                 context: context,
                 metadata: metadata
             )

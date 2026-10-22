@@ -1,27 +1,19 @@
 public import FeatherApplication
 public import FeatherModuleKit
-public import WebDomain
+import WebDomain
 public import WebModule
 
 extension Settings.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Action: PermissionAction {
-            let key = WebModule.Permissions.Settings.read
-        }
-
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Settings.Repository.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Settings.Repository.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
-        }
-
-        public struct Input: DTO {
-            public init() {}
         }
 
         public func execute(

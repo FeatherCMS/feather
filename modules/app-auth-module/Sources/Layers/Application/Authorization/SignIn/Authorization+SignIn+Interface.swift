@@ -7,7 +7,8 @@ import UserModule
 
 extension AuthModule.Authorization.SignIn {
     static func makeAuthResponse(
-        authorization: any AuthModule.Authorization.Query.Interface,
+        rolesQuery: any Authorization.Roles.Query.Interface,
+        permissionsQuery: any Authorization.Permissions.Query.Interface,
         userSessionRepository: any Session.Repository.Interface,
         user: Identity.Model,
         authenticationType: String,
@@ -15,8 +16,8 @@ extension AuthModule.Authorization.SignIn {
         isPersistent: Bool
     ) async throws -> AuthModule.Authorization.SignIn.Output {
         let (roles, permissions) = try await (
-            authorization.getRolesBy(identityId: user.id),
-            authorization.getPermissionsBy(identityId: user.id)
+            rolesQuery.getRolesBy(identityId: user.id),
+            permissionsQuery.getPermissionsBy(identityId: user.id)
         )
         let sessionLifetime =
             isPersistent

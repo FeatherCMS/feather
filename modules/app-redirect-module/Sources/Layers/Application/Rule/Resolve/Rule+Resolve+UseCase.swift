@@ -3,11 +3,7 @@ public import FeatherModuleKit
 public import RedirectModule
 
 extension Rule.Resolve {
-    public struct UseCase {
-        public enum Error: UseCaseError {
-            case notFound
-        }
-
+    public struct UseCase: FeatherApplication.UseCase {
         let query: any QueryExecutor<Scope>
 
         public init(query: any QueryExecutor<Scope>) {

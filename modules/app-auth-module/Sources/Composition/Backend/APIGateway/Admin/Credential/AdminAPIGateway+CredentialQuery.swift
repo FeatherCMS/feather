@@ -1,5 +1,6 @@
 public import AuthAdminAPI
 import AuthApplication
+import AuthModule
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -15,21 +16,24 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let useCase = self.useCases.makeListCredential()
-        let objectQuery = map(query)
+        let useCase = self.useCases.makeSearchCredentials()
+        let listQuery = map(query)
+        let objectQuery = Credential.Search.Input.Query(
+            page: listQuery.page,
+            sort: listQuery.sort.map {
+                .init(
+                    field: .init(rawValue: $0.field.rawValue) ?? .userId,
+                    direction: $0.direction
+                )
+            },
+            search: listQuery.search
+        )
         let userId =
             query.filters.userId?.isEmpty == true
             ? nil
             : query.filters.userId
 
-        let list = try await useCase.execute(
-            subject: subject,
-            input: .init(
-                query: objectQuery,
-                userId: userId
-            )
-        )
-        let total = try await useCase.count(
+        let result = try await useCase.execute(
             subject: subject,
             input: .init(
                 query: objectQuery,
@@ -43,12 +47,25 @@ extension AdminAPIGateway {
                     .init(
                         query: responseQuery(query),
                         data: .init(
-                            items: list.items.map(mapQuery),
-                            total: total
+                            items: result.items.map(mapQuery),
+                            total: result.total
                         )
                     )
                 )
             )
+        )
+    }
+}
+
+extension AdminAPIGateway {
+    fileprivate func mapQuery(
+        _ item: Credential.Search.Output.Item
+    ) -> Components.Schemas.AuthCredentialQueryItemSchema {
+        .init(
+            id: item.id,
+            userId: item.userId,
+            identityName: item.identityName,
+            email: item.email
         )
     }
 }

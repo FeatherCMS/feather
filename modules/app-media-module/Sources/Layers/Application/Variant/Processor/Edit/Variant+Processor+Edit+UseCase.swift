@@ -44,7 +44,18 @@ extension Variant.Processor.Edit {
                 let updated = try await scope.variantProcessors.update(
                     processor
                 )
-                return .init(detail: updated.asDetail)
+                return .init(
+                    detail: .init(
+                        id: updated.id,
+                        variantId: updated.variantId,
+                        name: updated.name,
+                        matchExtensions: updated.matchExtensions,
+                        commandTemplate: updated.commandTemplate,
+                        isActive: updated.isActive,
+                        createdAt: updated.createdAt,
+                        updatedAt: updated.updatedAt
+                    )
+                )
             }
         }
     }

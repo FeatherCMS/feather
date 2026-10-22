@@ -4,22 +4,22 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
+public import FeatherApplication
 public import FeatherModuleKit
 public import WebModule
 
 extension Menu.Public.List {
-    public struct UseCase: Sendable {
+    public struct UseCase: FeatherApplication.UseCase {
         struct ItemPermissionAction: PermissionAction {
             let key: PermissionKey
         }
 
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Menu.Public.Scope>
+        let query: any QueryExecutor<Menu.Public.List.Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Menu.Public.Scope>
+            query: any QueryExecutor<Menu.Public.List.Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -54,7 +54,7 @@ extension Menu.Public.List {
             subject: Subject?
         ) async throws -> Output.Menu? {
             try await query.run { scope in
-                guard let menu = try await scope.menuDetail.find(key: key)
+                guard let menu = try await scope.menuLookup.find(key: key)
                 else {
                     return nil
                 }

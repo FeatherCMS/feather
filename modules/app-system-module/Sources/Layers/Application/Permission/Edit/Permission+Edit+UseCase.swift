@@ -11,10 +11,6 @@ public import SystemModule
 
 extension Permission.Edit {
     public struct UseCase: FeatherApplication.UseCase {
-        public enum Error: UseCaseError {
-            case notFound
-        }
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Permission.Edit.Scope>
 

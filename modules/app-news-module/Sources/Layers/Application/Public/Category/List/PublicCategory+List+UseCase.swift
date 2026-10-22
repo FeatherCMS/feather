@@ -10,10 +10,10 @@ import Foundation
 import WebApplication
 
 public struct ListPublicCategories {
-    let query: any QueryExecutor<ReadPublicNewsCategory>
+    let query: any QueryExecutor<PublicNewsCategory.List.Scope>
 
     public init(
-        query: any QueryExecutor<ReadPublicNewsCategory>
+        query: any QueryExecutor<PublicNewsCategory.List.Scope>
     ) {
         self.query = query
     }
@@ -29,12 +29,12 @@ public struct ListPublicCategories {
             )
             let metadataByID = Dictionary(
                 uniqueKeysWithValues: try await resolveNewsMetadataDetails(
-                        metadata: scope.metadata,
-                        referenceType: "news.category",
-                        referenceIDs: categories.items.map(\.id)
-                    )
-                    .filter { $0.isPublic(at: now) }
-                    .map { ($0.referenceID, $0) }
+                    metadata: scope.metadataDetails,
+                    referenceType: "news.category",
+                    referenceIDs: categories.items.map(\.id)
+                )
+                .filter { $0.isPublic(at: now) }
+                .map { ($0.referenceID, $0) }
             )
             return categories.items.compactMap { item in
                 guard let metadata = metadataByID[item.id] else { return nil }

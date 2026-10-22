@@ -2,6 +2,7 @@ public import FeatherModuleKit
 import FeatherWebAdmin
 import SystemModule
 import SystemWebAdmin
+import FeatherWebShared
 
 extension Event {
     public enum Handlers {

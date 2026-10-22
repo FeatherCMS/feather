@@ -211,6 +211,7 @@ let package = Package(
         .testTarget(
             name: "AnalyticsDomainTests",
             dependencies: [
+                .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsDomain"),
             ],
             swiftSettings: swiftSettings
@@ -218,6 +219,7 @@ let package = Package(
         .testTarget(
             name: "AnalyticsApplicationTests",
             dependencies: [
+                .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsApplication"),
             ],
             swiftSettings: swiftSettings

@@ -27,7 +27,15 @@ extension Variant.Search {
             }
             let items = try await transaction.run { scope in
                 var result = try await scope.variantDefinitions.list()
-                    .map(\.asVariantSearchItem)
+                    .map {
+                        Variant.Search.Output.Item(
+                            id: $0.id,
+                            key: $0.key,
+                            name: $0.name,
+                            isRequired: $0.isRequired,
+                            isActive: $0.isActive
+                        )
+                    }
                 if let search = input.query.search?.lowercased(),
                     !search.isEmpty
                 {

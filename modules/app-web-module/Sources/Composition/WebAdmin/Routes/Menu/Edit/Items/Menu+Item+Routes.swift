@@ -1,13 +1,13 @@
 import FeatherWebAdmin
 import Hummingbird
 import WebDomain
-public import WebModule
+import WebModule
 
 extension Menu {
     enum Item {}
 }
 
-extension Menu.Item {
+extension WebModule.Menu.Item {
     enum Routes {
         enum RemoveOrigin: String {
             case list

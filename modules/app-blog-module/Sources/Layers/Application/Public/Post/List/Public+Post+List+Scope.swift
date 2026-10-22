@@ -5,18 +5,21 @@ public import WebModule
 
 extension Public.Post.List {
     public struct Scope: FeatherModuleKit.Scope {
-        public let post: any Public.Query.PostContent.Interface
-        public let author: any Public.Query.AuthorContent.Interface
-        public let tag: any Public.Query.TagContent.Interface
-        public let metadata: any WebModule.Metadata.Query.Interface
+        public let post: any Public.Post.Detail.Query.Interface
+        public let postList: any Public.Post.List.Query.Interface
+        public let author: any Public.Author.Detail.Query.Interface
+        public let tag: any Public.Tag.Detail.Query.Interface
+        public let metadata: any WebModule.Metadata.Reference.Query.Interface
 
         public init(
-            post: any Public.Query.PostContent.Interface,
-            author: any Public.Query.AuthorContent.Interface,
-            tag: any Public.Query.TagContent.Interface,
-            metadata: any WebModule.Metadata.Query.Interface
+            post: any Public.Post.Detail.Query.Interface,
+            postList: any Public.Post.List.Query.Interface,
+            author: any Public.Author.Detail.Query.Interface,
+            tag: any Public.Tag.Detail.Query.Interface,
+            metadata: any WebModule.Metadata.Reference.Query.Interface
         ) {
             self.post = post
+            self.postList = postList
             self.author = author
             self.tag = tag
             self.metadata = metadata

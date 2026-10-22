@@ -3,13 +3,13 @@ import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.View {
+extension WebModule.Menu.View {
     enum Controller {}
 }
 
-extension Menu.View.Controller {
+extension WebModule.Menu.View.Controller {
     protocol Interface: Sendable {
 
         func getMenu(

@@ -1,6 +1,6 @@
 public import FeatherApplication
-public import NewsModule
 import NewsDomain
+public import NewsModule
 
 extension Category.Detail {
     public struct Input: DTO {

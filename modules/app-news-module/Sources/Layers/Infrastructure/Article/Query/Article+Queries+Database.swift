@@ -45,14 +45,21 @@ extension ArticleTable.Row {
     }
 }
 
-public struct ArticleDatabaseQueries: ArticleQueries {
+public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
+    Article.List.Query.Interface,
+    Article.Search.Query.Interface,
+    PublicNewsArticle.List.Query.Interface,
+    PublicNewsArticle.Resolve.Query.Interface,
+    PublicNewsArticle.CategoryIDs.Query.Interface,
+    PublicNewsArticle.Related.Query.Interface
+{
 
     public let context: DatabaseQueryContext
-    public var metadata: any WebModule.Metadata.Query.Interface
+    public var metadata: any WebModule.Metadata.Reference.Query.Interface
 
     public init(
         context: DatabaseQueryContext,
-        metadata: any WebModule.Metadata.Query.Interface
+        metadata: any WebModule.Metadata.Reference.Query.Interface
     ) {
         self.context = context
         self.metadata = metadata
@@ -160,6 +167,37 @@ public struct ArticleDatabaseQueries: ArticleQueries {
             .map(\.asQueryListItem)
 
         return .init(items: items)
+    }
+
+    public func search(
+        query: Article.Search.Input.Query
+    ) async throws -> Article.Search.Output {
+        let listQuery = Article.List.Input.Query(
+            page: query.page,
+            sort: query.sort.map {
+                .init(
+                    field: .init(rawValue: $0.field.rawValue) ?? .id,
+                    direction: $0.direction
+                )
+            },
+            search: query.search
+        )
+        let result = try await list(query: listQuery)
+        let total = try await count(query: listQuery)
+        return .init(
+            items: result.items.map {
+                .init(
+                    id: $0.id,
+                    title: $0.title,
+                    excerpt: $0.excerpt,
+                    content: $0.content,
+                    imageAssetId: $0.imageAssetId,
+                    createdAt: $0.createdAt,
+                    updatedAt: $0.updatedAt
+                )
+            },
+            total: total
+        )
     }
 
     public func listPublic(

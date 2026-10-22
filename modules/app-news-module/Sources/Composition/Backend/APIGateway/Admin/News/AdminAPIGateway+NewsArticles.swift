@@ -45,19 +45,15 @@ extension AdminAPIGateway {
                 case .json(let value): value
                 }
         let subject = try await CurrentSubject.require()
-        let objectQuery = Article.List.Input.Query(
+        let objectQuery = Article.Search.Input.Query(
             page: .init(
                 size: query.page?.size ?? 20,
                 number: query.page?.number ?? 1
             ),
             search: query.filters.search
         )
-        let useCase = useCases.makeListArticles()
+        let useCase = useCases.makeSearchArticles()
         let result = try await useCase.execute(
-            subject: subject,
-            input: .init(query: objectQuery)
-        )
-        let total = try await useCase.count(
             subject: subject,
             input: .init(query: objectQuery)
         )
@@ -66,7 +62,10 @@ extension AdminAPIGateway {
                 body: .json(
                     .init(
                         query: query.asResponse,
-                        data: .init(items: result.items.map(map), total: total)
+                        data: .init(
+                            items: result.items.map(mapSearch),
+                            total: result.total
+                        )
                     )
                 )
             )
@@ -143,22 +142,38 @@ extension Components.Schemas.NewsArticleCreateSchema {
     }
 }
 
-private extension Components.Schemas.NewsArticleListItemSearchRequestQuerySchema {
-    var asResponse: Components.Schemas.NewsArticleListItemSearchResponseQuerySchema {
+extension Components.Schemas.NewsArticleListItemSearchRequestQuerySchema {
+    fileprivate var asResponse:
+        Components.Schemas.NewsArticleListItemSearchResponseQuerySchema
+    {
         .init(
             page: .init(size: page?.size ?? 20, number: page?.number ?? 1),
-            sort: sort?.map {
-                .init(
-                    field: .init(rawValue: $0.field.rawValue) ?? .id,
-                    direction: $0.direction
-                )
-            },
+            sort: sort?
+                .map {
+                    .init(
+                        field: .init(rawValue: $0.field.rawValue) ?? .id,
+                        direction: $0.direction
+                    )
+                },
             filters: .init(search: filters.search)
         )
     }
 }
 
 extension AdminAPIGateway {
+    fileprivate func mapSearch(
+        _ item: Article.Search.Output.Item
+    ) -> Components.Schemas.NewsArticleListItemSchema {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            imageAssetId: item.imageAssetId,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
     fileprivate func map(
         _ item: Article.Detail.Output
     ) -> Components.Schemas.NewsArticleDetailSchema {

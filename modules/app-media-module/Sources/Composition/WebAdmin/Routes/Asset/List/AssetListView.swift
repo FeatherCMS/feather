@@ -11,6 +11,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import FeatherWebShared
 
 import class Foundation.ByteCountFormatter
 import struct Foundation.CharacterSet

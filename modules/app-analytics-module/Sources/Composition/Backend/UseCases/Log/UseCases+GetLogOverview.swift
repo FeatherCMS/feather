@@ -10,8 +10,8 @@ extension UseCases {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadLog(
-                    log: LogDatabaseQueries(
+                Log.Overview.Scope(
+                    query: LogDatabaseQueries(
                         context: context
                     )
                 )

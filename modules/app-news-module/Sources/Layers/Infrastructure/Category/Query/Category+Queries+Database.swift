@@ -42,17 +42,25 @@ extension CategoryTable.Row {
     }
 }
 
-public struct CategoryDatabaseQueries: CategoryQueries {
+public struct CategoryDatabaseQueries: Category.Detail.Query.Interface,
+    Category.List.Query.Interface,
+    Category.Search.Query.Interface,
+    PublicNewsArticle.Detail.Query.Interface
+{
 
     public let context: DatabaseQueryContext
-    public var metadata: any WebModule.Metadata.Query.Interface
+    public var metadata: any WebModule.Metadata.Reference.Query.Interface
+    public var metadataResolver:
+        any WebModule.Metadata.Resolve.Detail.Query.Interface
 
     public init(
         context: DatabaseQueryContext,
-        metadata: any WebModule.Metadata.Query.Interface
+        metadata: any WebModule.Metadata.Reference.Query.Interface
+            & WebModule.Metadata.Resolve.Detail.Query.Interface
     ) {
         self.context = context
         self.metadata = metadata
+        self.metadataResolver = metadata
     }
 
     func pageSizeOffset(
@@ -112,14 +120,14 @@ public struct CategoryDatabaseQueries: CategoryQueries {
         return row.asDetail(metadata: metadata)
     }
 
-    public func find(
+    public func findCategories(
         ids: [String]
     ) async throws -> [Category.Detail.Output] {
         guard !ids.isEmpty else { return [] }
         let rows = try await CategoryTable(connection: context.connection)
             .list(ids: ids)
         let details = try await resolveNewsMetadataDetails(
-            metadata: metadata,
+            metadata: metadataResolver,
             referenceType: "news.category",
             referenceIDs: ids
         )
@@ -147,6 +155,36 @@ public struct CategoryDatabaseQueries: CategoryQueries {
             .map(\.asQueryListItem)
 
         return .init(items: items)
+    }
+
+    public func search(
+        query: Category.Search.Input.Query
+    ) async throws -> Category.Search.Output {
+        let listQuery = Category.List.Input.Query(
+            page: query.page,
+            sort: query.sort.map {
+                .init(
+                    field: .init(rawValue: $0.field.rawValue) ?? .id,
+                    direction: $0.direction
+                )
+            },
+            search: query.search
+        )
+        let result = try await list(query: listQuery)
+        let total = try await count(query: listQuery)
+        return .init(
+            items: result.items.map {
+                .init(
+                    id: $0.id,
+                    title: $0.title,
+                    excerpt: $0.excerpt,
+                    imageAssetId: $0.imageAssetId,
+                    createdAt: $0.createdAt,
+                    updatedAt: $0.updatedAt
+                )
+            },
+            total: total
+        )
     }
 
     public func count(

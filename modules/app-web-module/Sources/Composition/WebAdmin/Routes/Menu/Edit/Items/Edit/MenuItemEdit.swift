@@ -8,7 +8,7 @@ import WebAdminAPI
 import WebBuilders
 import WebComponents
 import WebDomain
-public import WebModule
+import WebModule
 
 struct MenuItemEdit: Component {
 
@@ -46,7 +46,7 @@ struct MenuItemEdit: Component {
                         MenuItemForm(
                             state: state.form,
                             action:
-                                Menu.Item.Routes
+                                WebModule.Menu.Item.Routes
                                 .edit(
                                     RouterPath(state.menuId),
                                     RouterPath(state.id)
@@ -54,7 +54,7 @@ struct MenuItemEdit: Component {
                                 .description,
                             submitLabel: "Edit item",
                             removeHref:
-                                Menu.Item.Routes.itemRemove(
+                                WebModule.Menu.Item.Routes.itemRemove(
                                     RouterPath(state.menuId),
                                     RouterPath(state.id),
                                     origin: .edit

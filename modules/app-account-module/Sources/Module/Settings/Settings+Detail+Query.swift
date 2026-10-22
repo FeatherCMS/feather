@@ -1,4 +1,4 @@
 
 extension Settings.Detail {
-    enum Query {}
+    public enum Query {}
 }

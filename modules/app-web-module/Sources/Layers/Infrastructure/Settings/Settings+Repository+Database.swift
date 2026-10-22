@@ -32,7 +32,7 @@ extension Settings.Repository {
 
             ) async throws -> Settings.Model
         {
-            let detail = try await Settings.Query
+            let detail = try await Settings.Detail.Query
                 .Database(
                     context: DatabaseQueryContext(
                         platform: context.platform,

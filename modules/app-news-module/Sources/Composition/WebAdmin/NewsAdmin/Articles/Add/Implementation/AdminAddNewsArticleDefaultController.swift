@@ -4,7 +4,9 @@ import FeatherWebShared
 import Hummingbird
 
 struct AdminAddNewsArticleDefaultController: AdminAddNewsArticleController {
-    let buildRuntime: @Sendable (Request, AuthenticatedRequestContext) -> AdminNewsArticleRuntime
+    let buildRuntime:
+        @Sendable (Request, AuthenticatedRequestContext) ->
+            AdminNewsArticleRuntime
 
     func getAddNewsArticle(
         request: Request,

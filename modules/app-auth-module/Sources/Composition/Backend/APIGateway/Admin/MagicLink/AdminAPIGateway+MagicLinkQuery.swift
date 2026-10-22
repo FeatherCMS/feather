@@ -1,6 +1,8 @@
 public import AuthAdminAPI
 import AuthApplication
+import AuthModule
 import FeatherModuleKit
+import Foundation
 
 extension AdminAPIGateway {
 
@@ -15,14 +17,21 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let useCase = self.useCases.makeListMagicLinks()
-        let objectQuery = map(query)
-
-        let list = try await useCase.execute(
-            subject: subject,
-            input: .init(query: objectQuery)
+        let useCase = self.useCases.makeSearchMagicLinks()
+        let listQuery = map(query)
+        let objectQuery = MagicLink.Search.Input.Query(
+            page: listQuery.page,
+            sort: listQuery.sort.map {
+                .init(
+                    field: .init(rawValue: $0.field.rawValue) ?? .id,
+                    direction: $0.direction
+                )
+            },
+            search: listQuery.search,
+            userId: listQuery.userId
         )
-        let total = try await useCase.count(
+
+        let result = try await useCase.execute(
             subject: subject,
             input: .init(query: objectQuery)
         )
@@ -33,12 +42,27 @@ extension AdminAPIGateway {
                     .init(
                         query: responseQuery(query),
                         data: .init(
-                            items: list.items.map(mapQuery),
-                            total: total
+                            items: result.items.map(mapQuery),
+                            total: result.total
                         )
                     )
                 )
             )
+        )
+    }
+}
+
+extension AdminAPIGateway {
+    fileprivate func mapQuery(
+        _ item: MagicLink.Search.Output.Item
+    ) -> Components.Schemas.AuthMagicLinkQueryItemSchema {
+        .init(
+            id: item.id,
+            credentialId: item.authEmailId,
+            token: item.token,
+            expiresAt: item.expiresAt.timeIntervalSince1970,
+            isPersistent: item.isPersistent,
+            isUsed: item.isUsed
         )
     }
 }

@@ -1,4 +1,4 @@
-import FeatherWebApp
+public import FeatherWebApp
 import Foundation
 import Mustache
 
@@ -21,7 +21,8 @@ public struct MustacheTemplateRenderer: TemplateRenderer {
         ]
         var templates: [String: MustacheTemplate] = [:]
         for (identifier, filename) in templateFiles {
-            let fileURL = templatesURL
+            let fileURL =
+                templatesURL
                 .appendingPathComponent(filename)
             let source = try String(contentsOf: fileURL, encoding: .utf8)
             templates[identifier] = try MustacheTemplate(string: source)
@@ -33,7 +34,8 @@ public struct MustacheTemplateRenderer: TemplateRenderer {
         template: String,
         context: [String: any Sendable]
     ) throws -> String {
-        guard let rendered = library.render(context, withTemplate: template) else {
+        guard let rendered = library.render(context, withTemplate: template)
+        else {
             throw TemplateRendererError.missingTemplate(template)
         }
         return rendered

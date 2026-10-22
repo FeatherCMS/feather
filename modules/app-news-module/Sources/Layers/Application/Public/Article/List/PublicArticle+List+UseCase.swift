@@ -5,17 +5,17 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-import NewsModule
 public import FeatherModuleKit
 import Foundation
-import WebApplication
 import NewsDomain
+import NewsModule
+import WebApplication
 
 public struct ListPublicArticles {
-    let query: any QueryExecutor<ReadPublicNewsArticle>
+    let query: any QueryExecutor<PublicNewsArticle.List.Scope>
 
     public init(
-        query: any QueryExecutor<ReadPublicNewsArticle>
+        query: any QueryExecutor<PublicNewsArticle.List.Scope>
     ) {
         self.query = query
     }
@@ -37,22 +37,23 @@ public struct ListPublicArticles {
         guard !ids.isEmpty else { return [] }
         let now = Date()
         return try await query.run { scope in
-            let articles = try await scope.article.resolve(ids: ids)
+            let articles = try await scope.articleResolver.resolve(ids: ids)
             let metadataByID = Dictionary(
                 uniqueKeysWithValues: try await resolveNewsMetadataDetails(
-                        metadata: scope.metadata,
-                        referenceType: "news.article",
-                        referenceIDs: articles.items.map(\.id)
-                    )
-                    .filter { $0.isPublic(at: now) }
-                    .map { ($0.referenceID, $0) }
+                    metadata: scope.metadataDetails,
+                    referenceType: "news.article",
+                    referenceIDs: articles.items.map(\.id)
+                )
+                .filter { $0.isPublic(at: now) }
+                .map { ($0.referenceID, $0) }
             )
             let publicArticles = articles.items.filter {
                 metadataByID[$0.id] != nil
             }
-            let categoriesByArticleID = try await scope.article.categoryIDs(
-                for: publicArticles.map(\.id)
-            )
+            let categoriesByArticleID = try await scope.articleCategoryIDs
+                .categoryIDs(
+                    for: publicArticles.map(\.id)
+                )
             return publicArticles.compactMap { article in
                 guard let metadata = metadataByID[article.id] else {
                     return nil
@@ -81,23 +82,24 @@ public struct ListPublicArticles {
         guard !categoryIDs.isEmpty, limit > 0 else { return [] }
         let now = Date()
         return try await query.run { scope in
-            let articles = try await scope.article.listPublicRelated(
+            let articles = try await scope.relatedArticles.listPublicRelated(
                 categoryIDs: categoryIDs,
                 excludingArticleID: excludingArticleID,
                 limit: limit
             )
             let metadataByID = Dictionary(
                 uniqueKeysWithValues: try await resolveNewsMetadataDetails(
-                        metadata: scope.metadata,
-                        referenceType: "news.article",
-                        referenceIDs: articles.items.map(\.id)
-                    )
-                    .filter { $0.isPublic(at: now) }
-                    .map { ($0.referenceID, $0) }
+                    metadata: scope.metadataDetails,
+                    referenceType: "news.article",
+                    referenceIDs: articles.items.map(\.id)
+                )
+                .filter { $0.isPublic(at: now) }
+                .map { ($0.referenceID, $0) }
             )
-            let categoryIDsByArticleID = try await scope.article.categoryIDs(
-                for: articles.items.map(\.id)
-            )
+            let categoryIDsByArticleID = try await scope.articleCategoryIDs
+                .categoryIDs(
+                    for: articles.items.map(\.id)
+                )
             return articles.items.compactMap { item in
                 guard let metadata = metadataByID[item.id] else { return nil }
                 return PublicNewsArticleSummary(
@@ -161,19 +163,20 @@ public struct ListPublicArticles {
             )
             let metadataByID = Dictionary(
                 uniqueKeysWithValues: try await resolveNewsMetadataDetails(
-                        metadata: scope.metadata,
-                        referenceType: "news.article",
-                        referenceIDs: articles.items.map(\.id)
-                    )
-                    .filter { $0.isPublic(at: now) }
-                    .map { ($0.referenceID, $0) }
+                    metadata: scope.metadataDetails,
+                    referenceType: "news.article",
+                    referenceIDs: articles.items.map(\.id)
+                )
+                .filter { $0.isPublic(at: now) }
+                .map { ($0.referenceID, $0) }
             )
             let publicItems = articles.items.filter {
                 metadataByID[$0.id] != nil
             }
-            let categoryIDsByArticleID = try await scope.article.categoryIDs(
-                for: publicItems.map(\.id)
-            )
+            let categoryIDsByArticleID = try await scope.articleCategoryIDs
+                .categoryIDs(
+                    for: publicItems.map(\.id)
+                )
             return .init(
                 items: publicItems.compactMap { item in
                     guard let metadata = metadataByID[item.id] else {

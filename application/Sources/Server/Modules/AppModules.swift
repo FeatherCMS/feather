@@ -51,7 +51,7 @@ struct AppModules: Sendable {
             databaseContext: infrastructure.databaseContext,
             scope: { context in
                 return AuthModule.Authorization.Scope(
-                    authorization: AuthModule.Authorization.Query.Database(
+                    permissions: AuthModule.Authorization.Database(
                         context: context
                     ),
                     rolePermissions: RolePermissionDatabaseQueries(

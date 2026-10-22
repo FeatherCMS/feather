@@ -14,10 +14,6 @@ import WebDomain
 extension Tag.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
-        struct Error: UseCaseError {
-            let message: String
-        }
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Tag.Edit.Scope>
 

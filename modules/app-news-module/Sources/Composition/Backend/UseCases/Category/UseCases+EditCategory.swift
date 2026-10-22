@@ -1,8 +1,9 @@
 public import NewsApplication
+public import NewsModule
 
 extension UseCases {
 
-    public func makeEditCategory() -> EditCategory {
-        .init(authorizer: authorizer, transaction: categoryTransaction())
+    public func makeEditCategory() -> Category.Edit.UseCase {
+        .init(authorizer: authorizer, transaction: categoryEditTransaction())
     }
 }

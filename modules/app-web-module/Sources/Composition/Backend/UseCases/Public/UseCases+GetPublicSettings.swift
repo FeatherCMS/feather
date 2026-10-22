@@ -17,7 +17,7 @@ extension UseCases {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Settings.Repository.Scope(
+                Settings.Public.Detail.Scope(
                     settings: Settings.Repository.Database(context: context)
                 )
             }

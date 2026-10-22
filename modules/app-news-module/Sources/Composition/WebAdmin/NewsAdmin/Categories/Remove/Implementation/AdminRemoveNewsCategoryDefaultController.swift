@@ -6,7 +6,9 @@ import Hummingbird
 struct AdminRemoveNewsCategoryDefaultController:
     AdminRemoveNewsCategoryController
 {
-    let buildRuntime: @Sendable (Request, AuthenticatedRequestContext) -> AdminNewsCategoryRuntime
+    let buildRuntime:
+        @Sendable (Request, AuthenticatedRequestContext) ->
+            AdminNewsCategoryRuntime
 
     func postRemoveNewsCategory(
         request: Request,

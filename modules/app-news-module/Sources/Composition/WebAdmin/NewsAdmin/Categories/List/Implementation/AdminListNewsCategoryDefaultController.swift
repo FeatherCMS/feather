@@ -7,7 +7,9 @@ import NewsModule
 struct AdminListNewsCategoryDefaultController:
     AdminListNewsCategoryController
 {
-    let buildRuntime: @Sendable (Request, AuthenticatedRequestContext) -> AdminNewsCategoryRuntime
+    let buildRuntime:
+        @Sendable (Request, AuthenticatedRequestContext) ->
+            AdminNewsCategoryRuntime
 
     func getNewsCategories(
         request: Request,

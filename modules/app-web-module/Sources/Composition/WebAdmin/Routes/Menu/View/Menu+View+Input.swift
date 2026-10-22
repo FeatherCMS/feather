@@ -1,8 +1,8 @@
 import FeatherWebAdmin
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.View {
+extension WebModule.Menu.View {
     struct Input: Sendable {
         let id: String
     }

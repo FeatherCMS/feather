@@ -4,9 +4,9 @@ import Hummingbird
 import OpenAPIRuntime
 import WebAdminAPI
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.Remove.Repository {
+extension WebModule.Menu.Remove.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 

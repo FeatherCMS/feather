@@ -12,7 +12,7 @@ extension UseCases {
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
                 scope: { context in
-                    ReadPublicNewsArticle(
+                    PublicNewsArticle.Detail.Scope(
                         article: ArticleDatabaseQueries(
                             context: context,
                             metadata: WebModule.Metadata.Query.Database(
@@ -24,9 +24,6 @@ extension UseCases {
                             metadata: WebModule.Metadata.Query.Database(
                                 context: context
                             )
-                        ),
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
                         )
                     )
                 }

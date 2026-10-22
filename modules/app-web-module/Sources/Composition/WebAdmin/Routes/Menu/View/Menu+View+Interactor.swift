@@ -1,17 +1,17 @@
 import FeatherWebAdmin
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.View {
+extension WebModule.Menu.View {
     enum Interactor {}
 }
 
-extension Menu.View.Interactor {
+extension WebModule.Menu.View.Interactor {
     protocol Interface: Sendable {
 
         func execute(
-            input: Menu.View.Input
+            input: WebModule.Menu.View.Input
         ) async throws -> MenuDetailsModel
     }
 }

@@ -6,10 +6,10 @@
 
 public import AnalyticsApplication
 import AnalyticsDomain
+public import AnalyticsModule
 import FeatherApplication
 import FeatherDBAL
 import FeatherDatabase
-public import AnalyticsModule
 public import FeatherInfrastructure
 import Foundation
 
@@ -29,7 +29,10 @@ extension LogTable.Row {
     }
 }
 
-public struct LogDatabaseQueries: LogQueries {
+public struct LogDatabaseQueries: Log.List.Query.Interface,
+    Log.Detail.Query.Interface,
+    Log.Overview.Query.Interface
+{
 
     struct OverviewBreakdownRow {
         let category: String = ""
@@ -1429,6 +1432,94 @@ public struct LogDatabaseQueries: LogQueries {
         guard let row = try await table.find(id: id) else {
             throw RepositoryError.notFound
         }
-        return row.asDomain.asDetail
+        let model = row.asDomain
+        return .init(
+            id: model.id,
+            accountId: model.accountId,
+            source: model.source.rawValue,
+            method: model.method,
+            url: model.url,
+            headers: model.headers,
+            ip: model.ip,
+            path: model.path,
+            referer: model.referer,
+            origin: model.origin,
+            acceptLanguage: model.acceptLanguage,
+            userAgent: model.userAgent,
+            language: model.language,
+            region: model.region,
+            osName: model.osName,
+            osVersion: model.osVersion,
+            browserName: model.browserName,
+            browserVersion: model.browserVersion,
+            engineName: model.engineName,
+            engineVersion: model.engineVersion,
+            deviceVendor: model.deviceVendor,
+            deviceType: model.deviceType,
+            deviceModel: model.deviceModel,
+            cpu: model.cpu,
+            responseCode: model.responseCode,
+            createdAt: model.createdAt.timeIntervalSince1970,
+            updatedAt: model.updatedAt.timeIntervalSince1970
+        )
+    }
+}
+
+extension Log.Search.Query {
+    public struct Database: Interface {
+        private let queries: LogDatabaseQueries
+
+        public init(context: DatabaseQueryContext) {
+            self.queries = LogDatabaseQueries(context: context)
+        }
+
+        public func search(query: Log.Search.Input.Query) async throws
+            -> Log.Search.Output
+        {
+            let listQuery = Log.List.Input.Query(
+                page: query.page,
+                sort: query.sort.map { sort in
+                    let field: Log.List.Input.Query.Sort.Field = switch sort.field {
+                    case .id: .id
+                    case .accountId: .accountId
+                    case .method: .method
+                    case .source: .source
+                    case .path: .path
+                    case .responseCode: .responseCode
+                    case .ip: .ip
+                    case .browserName: .browserName
+                    case .createdAt: .createdAt
+                    }
+                    return Log.List.Input.Query.Sort(
+                        field: field,
+                        direction: sort.direction
+                    )
+                },
+                search: query.search,
+                source: query.source,
+                method: query.method,
+                responseCode: query.responseCode,
+                from: query.from,
+                to: query.to
+            )
+            let result = try await queries.list(query: listQuery)
+            let total = try await queries.count(query: listQuery)
+            return .init(
+                items: result.items.map {
+                    .init(
+                        id: $0.id,
+                        accountId: $0.accountId,
+                        source: $0.source,
+                        method: $0.method,
+                        path: $0.path,
+                        responseCode: $0.responseCode,
+                        ip: $0.ip,
+                        browserName: $0.browserName,
+                        createdAt: $0.createdAt
+                    )
+                },
+                total: total
+            )
+        }
     }
 }

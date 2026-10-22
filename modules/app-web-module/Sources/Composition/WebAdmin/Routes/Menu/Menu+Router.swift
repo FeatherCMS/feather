@@ -2,7 +2,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import WebDomain
-public import WebModule
+import WebModule
 
 extension Menu {
     enum Add {}
@@ -70,15 +70,15 @@ extension Menu {
     }
 }
 
-extension Menu.View {
+extension WebModule.Menu.View {
     struct Router {
         let controller: any Controller.Interface
-        let routes: Menu.Router.Routes
+        let routes: WebModule.Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: Menu.Router.Routes
+            routes: WebModule.Menu.Router.Routes
         ) {
             self.routes = routes
             controller = Controller.Default(
@@ -108,15 +108,15 @@ extension Menu.View {
     }
 }
 
-extension Menu.Add {
+extension WebModule.Menu.Add {
     struct Router {
         let controller: any Controller.Interface
-        let routes: Menu.Router.Routes
+        let routes: WebModule.Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: Menu.Router.Routes
+            routes: WebModule.Menu.Router.Routes
         ) {
             self.routes = routes
             controller = Controller.Default(
@@ -153,15 +153,15 @@ extension Menu.Add {
     }
 }
 
-extension Menu.Edit {
+extension WebModule.Menu.Edit {
     struct Router {
         let controller: any Controller.Interface
-        let routes: Menu.Router.Routes
+        let routes: WebModule.Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: Menu.Router.Routes
+            routes: WebModule.Menu.Router.Routes
         ) {
             self.routes = routes
             controller = Controller.Default(
@@ -198,15 +198,15 @@ extension Menu.Edit {
     }
 }
 
-extension Menu.Remove {
+extension WebModule.Menu.Remove {
     struct Router {
         let controller: any Controller.Interface
-        let routes: Menu.Router.Routes
+        let routes: WebModule.Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: Menu.Router.Routes
+            routes: WebModule.Menu.Router.Routes
         ) {
             self.routes = routes
             controller = Controller.Default(

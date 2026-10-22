@@ -1,7 +1,7 @@
 import AnalyticsAdminAPI
 import AnalyticsApplication
-import AnalyticsModule
 import AnalyticsDomain
+import AnalyticsModule
 import FeatherApplication
 import FeatherModuleKit
 
@@ -94,6 +94,22 @@ extension AdminAPIGateway {
 
     func map(
         _ item: Log.List.Output.Item
+    ) -> Components.Schemas.AnalyticsLogListItemSchema {
+        .init(
+            id: item.id,
+            accountId: item.accountId ?? "",
+            source: item.source,
+            method: item.method,
+            path: item.path,
+            responseCode: item.responseCode,
+            ip: item.ip ?? "",
+            browserName: item.browserName ?? "",
+            createdAt: item.createdAt
+        )
+    }
+
+    func map(
+        _ item: Log.Search.Output.Item
     ) -> Components.Schemas.AnalyticsLogListItemSchema {
         .init(
             id: item.id,

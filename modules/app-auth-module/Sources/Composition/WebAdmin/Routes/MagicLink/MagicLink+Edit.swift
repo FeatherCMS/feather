@@ -4,5 +4,11 @@ import FeatherWebShared
 import Hummingbird
 
 extension MagicLink {
-    enum Edit {}
+    enum Edit {
+        enum Controller {}
+        enum Form {}
+        enum Interactor {}
+        enum Presenter {}
+        enum Repository {}
+    }
 }

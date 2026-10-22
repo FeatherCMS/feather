@@ -8,9 +8,9 @@ import WebAdminAPI
 import WebBuilders
 import WebComponents
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.Remove {
+extension WebModule.Menu.Remove {
     struct Confirmation: Component {
 
         struct State {

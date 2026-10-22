@@ -11,29 +11,15 @@ public import WebModule
 
 extension Metadata.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Action: PermissionAction {
-            let key = Admin.Permissions.access
-        }
-
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Metadata.Query.Scope>
+        let query: any QueryExecutor<Metadata.Detail.Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Metadata.Query.Scope>
+            query: any QueryExecutor<Metadata.Detail.Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
-        }
-
-        public struct Input: DTO {
-            public let id: String
-
-            public init(
-                id: String
-            ) {
-                self.id = id
-            }
         }
 
         public func execute(

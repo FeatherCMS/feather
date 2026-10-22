@@ -4,26 +4,17 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import FeatherApplication
-import NewsModule
 public import FeatherModuleKit
 import Foundation
+import NewsModule
 import WebApplication
 import WebDomain
 
 public struct GetPublicArticle {
-    public struct Error: UseCaseError {
-        public let message: String
-
-        public init(message: String) {
-            self.message = message
-        }
-    }
-
-    let query: any QueryExecutor<ReadPublicNewsArticle>
+    let query: any QueryExecutor<PublicNewsArticle.Detail.Scope>
 
     public init(
-        query: any QueryExecutor<ReadPublicNewsArticle>
+        query: any QueryExecutor<PublicNewsArticle.Detail.Scope>
     ) {
         self.query = query
     }
@@ -33,19 +24,12 @@ public struct GetPublicArticle {
     ) async throws -> PublicNewsArticleDetail {
         let now = Date()
         return try await query.run { scope in
-            guard
-                let metadata = try await scope.metadata.find(
-                    referenceType: "news.article",
-                    referenceID: id
-                ),
-                metadata.isDirectlyAccessible(at: now)
-            else {
+            let article = try await scope.article.find(id: id)
+            guard article.metadata.isDirectlyAccessible(at: now) else {
                 throw Error(message: "Article not found")
             }
-
-            let article = try await scope.article.find(id: id)
             let categories = try await scope.category
-                .find(ids: article.categoryIds)
+                .findCategories(ids: article.categoryIds)
                 .filter { $0.metadata.isPublic(at: now) }
                 .map {
                     PublicNewsCategorySummary(
@@ -67,7 +51,7 @@ public struct GetPublicArticle {
                 imageAssetId: article.imageAssetId,
                 imageURL: "",
                 media: nil,
-                metadata: metadata,
+                metadata: article.metadata,
                 categories: categories
             )
         }

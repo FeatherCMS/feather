@@ -22,7 +22,7 @@ extension Public.Author.List {
         public func execute(input: Input) async throws -> Output {
             let now = Date()
             let items = try await query.run { scope in
-                let authors = try await scope.author.list(
+                let authors = try await scope.authorList.list(
                     query: .init(
                         page: .init(size: 10_000, number: 1),
                         sort: [.init(field: .createdAt, direction: .desc)]

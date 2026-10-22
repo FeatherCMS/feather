@@ -17,20 +17,6 @@ import UserModule
 
 extension Invitation.Add {
     public struct UseCase: FeatherApplication.UseCase {
-        enum Error: UseCaseError {
-            case roleNotFound(String)
-            case mailFromNotConfigured
-
-            var message: String {
-                switch self {
-                case .roleNotFound(let roleID):
-                    "Role not found: \(roleID)"
-                case .mailFromNotConfigured:
-                    "System mail from address is not configured. Configure the system-settings-mail-from-address variable in System → Variables."
-                }
-            }
-        }
-
         private struct MailContext: Sendable {
             let invitation: Invitation.Model
             let publicBaseURL: String

@@ -10,7 +10,7 @@ extension UseCases {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteLog(
+                Log.Track.Scope(
                     log: LogDatabaseRepository(context: context)
                 )
             }

@@ -5,7 +5,7 @@ import OpenAPIKit30
 struct NewsArticleSearchOperation: NewsArticleOperation {
     var searchRequestQuery: SearchRequestQuerySchema {
         .init(
-            items: NewsArticleListItemSchema(),
+            items: NewsArticleQueryItemSchema(),
             sortFieldKeys: ["id", "title", "createdAt", "updatedAt"],
             filters: SearchFilterSchema()
         )

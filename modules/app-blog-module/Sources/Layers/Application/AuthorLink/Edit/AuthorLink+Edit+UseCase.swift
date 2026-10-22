@@ -13,10 +13,6 @@ import WebModule
 extension AuthorLink.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
-        struct Error: UseCaseError {
-            let message: String
-        }
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<AuthorLink.Edit.Scope>
 

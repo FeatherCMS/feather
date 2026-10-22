@@ -5,14 +5,6 @@ import WebDomain
 
 extension Public.Page.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        public struct Error: UseCaseError {
-            public let message: String
-
-            public init(message: String) {
-                self.message = message
-            }
-        }
-
         let query: any QueryExecutor<Scope>
 
         public init(query: any QueryExecutor<Scope>) {

@@ -59,6 +59,7 @@ extension Email.Add.Controller {
                     .response(from: request, context: context)
             }
             var lastPayload: Email.Add.Form.Input?
+            let identities = (try? await interactor.listIdentities()) ?? []
             do {
                 let nonceRequest = try await request.decode(
                     as: NonceRequest<Email.Add.Form.Input>.self,
@@ -72,8 +73,7 @@ extension Email.Add.Controller {
                 else {
                     var state = presenter.formState(
                         identityId: "",
-                        identities: (try? await interactor.listIdentities())
-                            ?? []
+                        identities: identities
                     )
                     state.error =
                         "This form has expired. Please reload the page."
@@ -106,7 +106,7 @@ extension Email.Add.Controller {
                 for f in error.failures { errs[f.key] = f.message }
                 var state = presenter.formState(
                     identityId: lastPayload?.normalizedIdentityId ?? "",
-                    identities: (try? await interactor.listIdentities()) ?? []
+                    identities: identities
                 )
                 state.apply(errors: errs)
                 return try await createResponse(
@@ -118,7 +118,8 @@ extension Email.Add.Controller {
             }
             catch let error as OpenAPIRepositoryError {
                 var state = presenter.formState(
-                    identityId: lastPayload?.normalizedIdentityId ?? ""
+                    identityId: lastPayload?.normalizedIdentityId ?? "",
+                    identities: identities
                 )
                 state.error = presenter.format(error: error)
                 return try await createResponse(
@@ -130,7 +131,8 @@ extension Email.Add.Controller {
             }
             catch {
                 var state = presenter.formState(
-                    identityId: lastPayload?.normalizedIdentityId ?? ""
+                    identityId: lastPayload?.normalizedIdentityId ?? "",
+                    identities: identities
                 )
                 state.error = error.displayMessage
                 return try await createResponse(

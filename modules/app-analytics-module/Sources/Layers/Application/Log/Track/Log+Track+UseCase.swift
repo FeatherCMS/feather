@@ -12,10 +12,10 @@ public import FeatherModuleKit
 extension Log.Track {
     public struct UseCase: FeatherApplication.UseCase {
 
-        let transaction: any TransactionExecutor<WriteLog>
+        let transaction: any TransactionExecutor<Log.Track.Scope>
 
         public init(
-            transaction: any TransactionExecutor<WriteLog>
+            transaction: any TransactionExecutor<Log.Track.Scope>
         ) {
             self.transaction = transaction
         }

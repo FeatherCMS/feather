@@ -66,7 +66,7 @@ struct MenuItemRow: Component {
                         .init(
                             "View",
                             href:
-                                Menu.Item.Routes
+                                WebModule.Menu.Item.Routes
                                 .details(
                                     RouterPath(menuId),
                                     RouterPath(item.id)
@@ -78,7 +78,7 @@ struct MenuItemRow: Component {
                         .init(
                             "Edit",
                             href:
-                                Menu.Item.Routes
+                                WebModule.Menu.Item.Routes
                                 .edit(
                                     RouterPath(menuId),
                                     RouterPath(item.id)
@@ -96,7 +96,7 @@ struct MenuItemRow: Component {
         .data("web-menu-item", item.id)
         .data(
             "web-menu-item-move-url",
-            Menu.Item.Routes.move(RouterPath(menuId), RouterPath(item.id))
+            WebModule.Menu.Item.Routes.move(RouterPath(menuId), RouterPath(item.id))
                 .description
         )
     }

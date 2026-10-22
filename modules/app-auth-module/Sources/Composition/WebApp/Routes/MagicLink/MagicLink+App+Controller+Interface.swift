@@ -21,3 +21,14 @@ extension MagicLink.App.Controller {
         ) async throws -> Response
     }
 }
+
+extension MagicLink.App.Controller.Interface {
+    func route(
+        on router: any RouterMethods<DefaultRequestContext>,
+        routes: MagicLink.App.Router.Routes
+    ) {
+        router.get(routes.request.routerPath, use: getRequest)
+        router.post(routes.request.routerPath, use: postRequest)
+        router.get(routes.verify.routerPath, use: verify)
+    }
+}

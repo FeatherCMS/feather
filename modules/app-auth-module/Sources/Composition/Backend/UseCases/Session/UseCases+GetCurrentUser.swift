@@ -24,8 +24,11 @@ extension UseCases {
         let authorizationQuery = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                AuthModule.Authorization.Query.Scope(
-                    authorization: AuthModule.Authorization.Query.Database(
+                AuthModule.Authorization.CurrentUser.Scope(
+                    roles: AuthModule.Authorization.Database(
+                        context: context
+                    ),
+                    permissions: AuthModule.Authorization.Database(
                         context: context
                     )
                 )

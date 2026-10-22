@@ -5,10 +5,6 @@ public import WebModule
 
 extension Menu.Add {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Error: UseCaseError {
-            let message: String
-        }
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Scope>
 

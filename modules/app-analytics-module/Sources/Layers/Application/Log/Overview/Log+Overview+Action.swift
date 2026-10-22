@@ -1,9 +1,9 @@
-import AnalyticsModule
 import AnalyticsDomain
-import FeatherModuleKit
+public import AnalyticsModule
+public import FeatherModuleKit
 
 extension Log.Overview {
-    struct Action: PermissionAction {
-        let key = Insight.Permissions.list
+    public struct Action: PermissionAction {
+        public let key = Insight.Permissions.list
     }
 }

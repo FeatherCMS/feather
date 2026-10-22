@@ -27,8 +27,8 @@ private struct AuthorizationPermissionName: DatabaseTableRowDecodable {
     let name: String?
 }
 
-extension AuthModule.Authorization.Query {
-    public struct Database: Interface {
+extension AuthModule.Authorization {
+    public struct Database: Roles.Query.Interface, Permissions.Query.Interface {
         private let context: any DatabaseContext
 
         public init(context: any DatabaseContext) {

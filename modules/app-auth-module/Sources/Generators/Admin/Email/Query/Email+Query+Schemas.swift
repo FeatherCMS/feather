@@ -1,6 +1,10 @@
 import FeatherOpenAPI
 import OpenAPIKit30
 
+extension Email.Query {
+    enum Schemas {}
+}
+
 extension Email.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {
         var openAPIIdentifier: String { "AuthEmailQuerySchemasItem" }

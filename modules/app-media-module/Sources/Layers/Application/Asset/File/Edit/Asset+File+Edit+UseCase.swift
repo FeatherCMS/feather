@@ -46,11 +46,30 @@ extension Asset.File.Edit {
                 asset.title = input.title.apply(to: asset.title)
                 asset.altText = input.altText.apply(to: asset.altText)
 
+                let updated = try await scope.assets.update(asset)
                 return .init(
-                    detail: try await scope.assets.update(asset)
-                        .asDetail(
+                    detail: try .init(
+                        id: updated.id,
+                        folderId: updated.folderId,
+                        name: updated.name,
+                        slug: updated.slug,
+                        slugPath: updated.slugPath,
+                        url: mediaAssetPublicURL(
+                            id: updated.id,
+                            slugPath: updated.slugPath,
+                            filename: updated.name,
+                            extension: updated.extension,
                             objectKeyGenerator: objectKeyGenerator
-                        )
+                        ),
+                        extension: updated.extension,
+                        contentType: updated.contentType,
+                        sizeBytes: updated.sizeBytes,
+                        status: updated.status.rawValue,
+                        title: updated.title,
+                        altText: updated.altText,
+                        createdAt: updated.createdAt,
+                        updatedAt: updated.updatedAt
+                    )
                 )
             }
         }

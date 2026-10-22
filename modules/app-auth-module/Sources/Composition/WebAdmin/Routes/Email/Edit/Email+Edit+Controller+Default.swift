@@ -86,6 +86,7 @@ extension Email.Edit.Controller {
                     .response(from: request, context: context)
             }
             var lastPayload: Email.Edit.Form.Input?
+            let identities = (try? await interactor.listIdentities()) ?? []
             do {
                 let nonceRequest = try await request.decode(
                     as: NonceRequest<Email.Edit.Form.Input>.self,
@@ -97,7 +98,11 @@ extension Email.Edit.Controller {
                         sessionToken: context.sessionToken
                     )
                 else {
-                    var state = presenter.formState(identityId: id, email: "")
+                    var state = presenter.formState(
+                        identityId: id,
+                        identities: identities,
+                        email: ""
+                    )
                     state.error =
                         "This form has expired. Please reload the page."
                     return try await updateResponse(
@@ -131,6 +136,7 @@ extension Email.Edit.Controller {
                 for f in error.failures { errs[f.key] = f.message }
                 var state = presenter.formState(
                     identityId: lastPayload?.normalizedIdentityId ?? "",
+                    identities: identities,
                     email: lastPayload?.normalizedEmail ?? ""
                 )
                 state.apply(errors: errs)
@@ -145,6 +151,7 @@ extension Email.Edit.Controller {
             catch let error as OpenAPIRepositoryError {
                 var state = presenter.formState(
                     identityId: lastPayload?.normalizedIdentityId ?? "",
+                    identities: identities,
                     email: lastPayload?.normalizedEmail ?? ""
                 )
                 state.error = presenter.format(error: error)
@@ -159,6 +166,7 @@ extension Email.Edit.Controller {
             catch {
                 var state = presenter.formState(
                     identityId: lastPayload?.normalizedIdentityId ?? "",
+                    identities: identities,
                     email: lastPayload?.normalizedEmail ?? ""
                 )
                 state.error = error.displayMessage

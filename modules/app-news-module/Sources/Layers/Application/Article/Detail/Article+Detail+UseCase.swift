@@ -2,68 +2,40 @@ public import FeatherApplication
 public import FeatherModuleKit
 import NewsDomain
 public import NewsModule
-import WebApplication
-import WebDomain
 
 //
-//  GetArticle.swift
+//  Article.Detail.UseCase.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public struct GetArticle: UseCase {
-    struct Action: PermissionAction {
-        let key = Article.Permissions.read
-    }
+extension Article.Detail {
+    public struct UseCase: FeatherApplication.UseCase {
+        let authorizer: any Authorizer
+        let query: any QueryExecutor<Scope>
 
-    struct Error: UseCaseError {
-        let message: String
-    }
-
-    let authorizer: any Authorizer
-    let query: any QueryExecutor<ReadArticleMetadata>
-
-    public init(
-        authorizer: any Authorizer,
-        query: any QueryExecutor<ReadArticleMetadata>
-    ) {
-        self.authorizer = authorizer
-        self.query = query
-    }
-
-    public func execute(
-        subject: Subject,
-        input: Article.Detail.Input
-    ) async throws -> Article.Detail.Output {
-        let action = Action()
-
-        guard try await authorizer.can(subject: subject, perform: action) else {
-            throw AuthError(kind: .forbidden, message: action.key.rawValue)
+        public init(
+            authorizer: any Authorizer,
+            query: any QueryExecutor<Scope>
+        ) {
+            self.authorizer = authorizer
+            self.query = query
         }
 
-        let id = input.id
+        public func execute(
+            subject: Subject,
+            input: Article.Detail.Input
+        ) async throws -> Article.Detail.Output {
+            let action = Action()
 
-        return try await query.run { scope in
-            let article = try await scope.article.find(id: id)
-            guard
-                let metadata = try await scope.metadata.find(
-                    referenceType: "news.article",
-                    referenceID: id
-                )
+            guard try await authorizer.can(subject: subject, perform: action)
             else {
-                throw Error(message: "Article metadata not found")
+                throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            return .init(
-                id: article.id,
-                title: article.title,
-                excerpt: article.excerpt,
-                content: article.content,
-                imageAssetId: article.imageAssetId,
-                categoryIds: article.categoryIds,
-                metadata: metadata,
-                createdAt: article.createdAt,
-                updatedAt: article.updatedAt
-            )
+
+            return try await query.run { scope in
+                try await scope.article.find(id: input.id)
+            }
         }
     }
 }

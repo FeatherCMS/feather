@@ -45,19 +45,15 @@ extension AdminAPIGateway {
                 case .json(let value): value
                 }
         let subject = try await CurrentSubject.require()
-        let objectQuery = NewsModule.Category.List.Input.Query(
+        let objectQuery = NewsModule.Category.Search.Input.Query(
             page: .init(
                 size: query.page?.size ?? 20,
                 number: query.page?.number ?? 1
             ),
             search: query.filters.search
         )
-        let useCase = useCases.makeListCategories()
+        let useCase = useCases.makeSearchCategories()
         let result = try await useCase.execute(
-            subject: subject,
-            input: .init(query: objectQuery)
-        )
-        let total = try await useCase.count(
             subject: subject,
             input: .init(query: objectQuery)
         )
@@ -66,7 +62,10 @@ extension AdminAPIGateway {
                 body: .json(
                     .init(
                         query: query.asResponse,
-                        data: .init(items: result.items.map(map), total: total)
+                        data: .init(
+                            items: result.items.map(mapSearch),
+                            total: result.total
+                        )
                     )
                 )
             )
@@ -129,7 +128,9 @@ extension Components.Schemas.NewsCategoryCreateSchema {
         )
     }
 
-    fileprivate func editCategoryInput(id: String) -> NewsModule.Category.Edit.Input {
+    fileprivate func editCategoryInput(id: String)
+        -> NewsModule.Category.Edit.Input
+    {
         .init(
             id: id,
             title: title,
@@ -142,6 +143,19 @@ extension Components.Schemas.NewsCategoryCreateSchema {
 }
 
 extension AdminAPIGateway {
+    fileprivate func mapSearch(
+        _ item: NewsModule.Category.Search.Output.Item
+    ) -> Components.Schemas.NewsCategoryListItemSchema {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            imageAssetId: item.imageAssetId,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
     fileprivate func map(
         _ item: NewsModule.Category.Detail.Output
     ) -> Components.Schemas.NewsCategoryDetailSchema {
@@ -172,16 +186,19 @@ extension AdminAPIGateway {
 
 }
 
-private extension Components.Schemas.NewsCategoryListItemSearchRequestQuerySchema {
-    var asResponse: Components.Schemas.NewsCategoryListItemSearchResponseQuerySchema {
+extension Components.Schemas.NewsCategoryListItemSearchRequestQuerySchema {
+    fileprivate var asResponse:
+        Components.Schemas.NewsCategoryListItemSearchResponseQuerySchema
+    {
         .init(
             page: .init(size: page?.size ?? 20, number: page?.number ?? 1),
-            sort: sort?.map {
-                .init(
-                    field: .init(rawValue: $0.field.rawValue) ?? .id,
-                    direction: $0.direction
-                )
-            },
+            sort: sort?
+                .map {
+                    .init(
+                        field: .init(rawValue: $0.field.rawValue) ?? .id,
+                        direction: $0.direction
+                    )
+                },
             filters: .init(search: filters.search)
         )
     }

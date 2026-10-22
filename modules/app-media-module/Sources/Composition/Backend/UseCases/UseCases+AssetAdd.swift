@@ -71,11 +71,30 @@ extension UseCases {
             }
             var value = asset
             value.status = matchingProcessors.isEmpty ? .ready : .processing
+            let updatedAsset = try await repo.update(value)
             return .init(
-                detail: try await repo.update(value)
-                    .asDetail(
+                detail: .init(
+                    id: updatedAsset.id,
+                    folderId: updatedAsset.folderId,
+                    name: updatedAsset.name,
+                    slug: updatedAsset.slug,
+                    slugPath: updatedAsset.slugPath,
+                    url: try mediaAssetPublicURL(
+                        id: updatedAsset.id,
+                        slugPath: updatedAsset.slugPath,
+                        filename: updatedAsset.name,
+                        extension: updatedAsset.extension,
                         objectKeyGenerator: storageContext.objectKeyGenerator
-                    )
+                    ),
+                    extension: updatedAsset.extension,
+                    contentType: updatedAsset.contentType,
+                    sizeBytes: updatedAsset.sizeBytes,
+                    status: updatedAsset.status.rawValue,
+                    title: updatedAsset.title,
+                    altText: updatedAsset.altText,
+                    createdAt: updatedAsset.createdAt,
+                    updatedAt: updatedAsset.updatedAt
+                )
             )
         }
         if !matchingProcessors.isEmpty {

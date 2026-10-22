@@ -22,7 +22,7 @@ extension Public.Post.List {
         public func execute(input: Input) async throws -> Output {
             let now = Date()
             let items = try await query.run { scope in
-                let posts = try await scope.post.list(
+                let posts = try await scope.postList.list(
                     query: .init(
                         page: .init(size: 10_000, number: 1),
                         sort: [.init(field: .createdAt, direction: .desc)]

@@ -6,12 +6,24 @@ import FeatherInfrastructure
 
 extension UseCases {
 
+    func makeLogSearch() -> Log.Search.UseCase {
+        let query = DatabaseQueryExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Log.Search.Scope(
+                    log: Log.Search.Query.Database(context: context)
+                )
+            }
+        )
+        return .init(authorizer: authorizer, query: query)
+    }
+
     func makeLogList() -> Log.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadLog(
-                    log: LogDatabaseQueries(
+                Log.List.Scope(
+                    query: LogDatabaseQueries(
                         context: context
                     )
                 )

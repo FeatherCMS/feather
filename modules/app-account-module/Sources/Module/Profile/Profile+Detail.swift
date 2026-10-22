@@ -1,4 +1,4 @@
 
 extension Profile {
-    enum Detail {}
+    public enum Detail {}
 }

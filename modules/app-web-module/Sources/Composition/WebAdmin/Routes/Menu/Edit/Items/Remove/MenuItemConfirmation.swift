@@ -8,7 +8,7 @@ import WebAdminAPI
 import WebBuilders
 import WebComponents
 import WebDomain
-public import WebModule
+import WebModule
 
 struct MenuItemConfirmation: Component {
 
@@ -18,7 +18,7 @@ struct MenuItemConfirmation: Component {
         let label: String
         let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String
-        let origin: Menu.Item.Routes.RemoveOrigin
+        let origin: WebModule.Menu.Item.Routes.RemoveOrigin
     }
 
     let state: State
@@ -32,7 +32,7 @@ struct MenuItemConfirmation: Component {
                 ),
                 selectedItems: [state.label],
                 action:
-                    Menu.Item.Routes.itemRemove(
+                    WebModule.Menu.Item.Routes.itemRemove(
                         RouterPath(state.menuId),
                         RouterPath(state.id),
                         origin: state.origin

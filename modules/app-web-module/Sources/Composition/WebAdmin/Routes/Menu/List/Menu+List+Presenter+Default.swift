@@ -10,14 +10,14 @@ import WebComponents
 import WebDomain
 import WebModule
 
-extension Menu.List.Presenter {
+extension WebModule.Menu.List.Presenter {
     struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine
 
         func renderListPage(
-            model: Menu.List.Model,
+            model: WebModule.Menu.List.Model,
             permissions: Set<String>,
             search: String?,
             error: String?

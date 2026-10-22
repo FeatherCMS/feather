@@ -17,7 +17,7 @@ extension UseCases {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Metadata.Repository.Scope(
+                Metadata.Add.Scope(
                     metadata: Metadata.Repository.Database(context: context)
                 )
             }

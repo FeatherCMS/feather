@@ -19,7 +19,8 @@ extension Login.Controller {
             context: DefaultRequestContext
         ) async throws -> WebAppHTMLResponse {
             let (_, presenter) = buildRuntime((request, context))
-            let redirectPath = request.queryString("redirect") ?? "/"
+            let redirectPath =
+                request.uri.queryParameters["redirect"].map(String.init) ?? "/"
             return try presenter.renderPage(
                 form: presenter.formState(
                     email: "",
@@ -66,7 +67,9 @@ extension Login.Controller {
                                 email: payload.email,
                                 password: payload.password,
                                 isPersistent: payload.isPersistent.value,
-                                redirectPath: request.queryString("redirect")
+                                redirectPath: request.uri
+                                    .queryParameters["redirect"]
+                                    .map(String.init)
                                     ?? "/",
                                 turnstileSiteKey: turnstileVerifier.siteKey
                             ),
@@ -97,7 +100,7 @@ extension Login.Controller {
                 )
 
                 let redirectPath =
-                    request.queryString("redirect")
+                    request.uri.queryParameters["redirect"].map(String.init)
                     .flatMap { path in
                         guard path.hasPrefix("/"), !path.hasPrefix("//") else {
                             return nil
@@ -123,7 +126,8 @@ extension Login.Controller {
                     email: lastPayload?.email ?? "",
                     password: lastPayload?.password ?? "",
                     isPersistent: lastPayload?.isPersistent.value ?? true,
-                    redirectPath: request.queryString("redirect") ?? "/",
+                    redirectPath: request.uri.queryParameters["redirect"]
+                        .map(String.init) ?? "/",
                     turnstileSiteKey: turnstileVerifier?.siteKey
                 )
                 state.apply(errors: errors)
@@ -144,7 +148,8 @@ extension Login.Controller {
                         email: lastPayload?.email ?? "",
                         password: lastPayload?.password ?? "",
                         isPersistent: lastPayload?.isPersistent.value ?? true,
-                        redirectPath: request.queryString("redirect") ?? "/",
+                        redirectPath: request.uri.queryParameters["redirect"]
+                            .map(String.init) ?? "/",
                         turnstileSiteKey: turnstileVerifier?.siteKey
                     ),
                     message: "Incorrect email or password."

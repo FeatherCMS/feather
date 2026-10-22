@@ -3,9 +3,9 @@ import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.List.Controller {
+extension WebModule.Menu.List.Controller {
     protocol Interface: Sendable {
 
         func getMenus(

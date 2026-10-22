@@ -8,7 +8,7 @@ import WebAdminAPI
 import WebBuilders
 import WebComponents
 import WebDomain
-public import WebModule
+import WebModule
 
 struct MenuItemBulkConfirmation: Component {
     struct State {
@@ -30,7 +30,7 @@ struct MenuItemBulkConfirmation: Component {
                 ),
                 selectedItems: state.items.map(\.label),
                 action:
-                    Menu.Item.Routes
+                    WebModule.Menu.Item.Routes
                     .remove(
                         RouterPath(state.menuId)
                     )

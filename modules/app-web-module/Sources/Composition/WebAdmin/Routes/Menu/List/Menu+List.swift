@@ -3,12 +3,12 @@ import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
 extension Menu {
     enum List {}
 }
 
-extension Menu.List {
+extension WebModule.Menu.List {
     enum Controller {}
 }

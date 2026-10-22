@@ -6,6 +6,7 @@ import MediaModule
 import SGML
 import WebBuilders
 import WebComponents
+import FeatherWebShared
 
 struct MediaVariantTable: Component {
     struct State {

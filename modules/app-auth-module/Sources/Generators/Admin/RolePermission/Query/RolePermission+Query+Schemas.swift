@@ -1,6 +1,10 @@
 import FeatherOpenAPI
 import OpenAPIKit30
 
+extension RolePermission.Query {
+    enum Schemas {}
+}
+
 extension RolePermission.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {
         var openAPIIdentifier: String { "AuthRolePermissionQueryItemSchema" }

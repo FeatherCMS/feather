@@ -1,5 +1,6 @@
 import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird

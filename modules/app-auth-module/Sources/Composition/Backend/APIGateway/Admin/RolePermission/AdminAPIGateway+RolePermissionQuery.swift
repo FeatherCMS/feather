@@ -16,7 +16,7 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let useCase = self.useCases.makeListRolePermissions()
+        let useCase = self.useCases.makeSearchRolePermissions()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(query: map(query))

@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 07. 16.
 
 import Testing
+import AnalyticsModule
 
 @testable import AnalyticsDomain
 
@@ -18,7 +19,7 @@ struct AnalyticsDomainTestSuite {
 
     @Test
     func logRejectsInvalidResponseCode() {
-        #expect(throws: Log.Error.invalidResponseCode) {
+        #expect(throws: Log.Model.Error.invalidResponseCode) {
             try Log.Model.create(
                 accountId: nil,
                 source: .backendAPI,

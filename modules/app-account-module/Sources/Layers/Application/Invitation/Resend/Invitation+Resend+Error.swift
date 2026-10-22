@@ -1,0 +1,18 @@
+public import FeatherApplication
+public import AccountModule
+
+extension Invitation.Resend.UseCase {
+    public enum Error: UseCaseError {
+        case invitationNotFound
+        case mailFromNotConfigured
+
+        public var message: String {
+            switch self {
+            case .invitationNotFound:
+                "Invitation not found."
+            case .mailFromNotConfigured:
+                "System mail from address is not configured. Configure the system-settings-mail-from-address variable in System → Variables."
+            }
+        }
+    }
+}

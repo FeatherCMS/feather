@@ -1,6 +1,10 @@
 import FeatherOpenAPI
 import OpenAPIKit30
 
+extension MagicLink.Query {
+    enum Schemas {}
+}
+
 extension MagicLink.Query.Schemas {
     struct UserID: StringSchemaRepresentable {
         var openAPIIdentifier: String { "AuthMagicLinkUserIdField" }

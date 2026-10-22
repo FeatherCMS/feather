@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import SystemModule
-public import WebDomain
+import WebDomain
 public import WebModule
 
 //
@@ -12,27 +12,15 @@ public import WebModule
 
 extension Metadata.Remove {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Action: PermissionAction {
-            let key = Admin.Permissions.access
-        }
-
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Metadata.Repository.Scope>
+        let transaction: any TransactionExecutor<Metadata.Remove.Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Metadata.Repository.Scope>
+            transaction: any TransactionExecutor<Metadata.Remove.Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
-        }
-
-        public struct Input: DTO {
-            public let ids: [String]
-
-            public init(ids: [String]) {
-                self.ids = ids
-            }
         }
 
         public func execute(

@@ -4,27 +4,19 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import FeatherApplication
-import NewsModule
 public import FeatherModuleKit
+import FeatherApplication
 import Foundation
 import NewsDomain
+import NewsModule
 import WebApplication
 import WebDomain
 
 public struct GetPublicCategory {
-    public struct Error: UseCaseError {
-        public let message: String
-
-        public init(message: String) {
-            self.message = message
-        }
-    }
-
-    let query: any QueryExecutor<ReadPublicNewsCategory>
+    let query: any QueryExecutor<PublicNewsCategory.Detail.Scope>
 
     public init(
-        query: any QueryExecutor<ReadPublicNewsCategory>
+        query: any QueryExecutor<PublicNewsCategory.Detail.Scope>
     ) {
         self.query = query
     }
@@ -36,17 +28,10 @@ public struct GetPublicCategory {
     ) async throws -> PublicNewsCategoryDetail {
         let now = Date()
         return try await query.run { scope in
-            guard
-                let metadata = try await scope.metadata.find(
-                    referenceType: "news.category",
-                    referenceID: id
-                ),
-                metadata.isDirectlyAccessible(at: now)
-            else {
+            let category = try await scope.category.find(id: id)
+            guard category.metadata.isDirectlyAccessible(at: now) else {
                 throw Error(message: "Category not found")
             }
-
-            let category = try await scope.category.find(id: id)
             let articles = try await Self.publicArticles(
                 matchingCategoryID: id,
                 now: now,
@@ -62,7 +47,7 @@ public struct GetPublicCategory {
                 imageAssetId: category.imageAssetId,
                 imageURL: "",
                 media: nil,
-                metadata: metadata,
+                metadata: category.metadata,
                 articles: articles.items,
                 total: articles.total,
                 page: articles.page,
@@ -83,7 +68,7 @@ extension GetPublicCategory {
     fileprivate static func publicArticles(
         matchingCategoryID categoryID: String,
         now: Date,
-        context: ReadPublicNewsCategory,
+        context: PublicNewsCategory.Detail.Scope,
         pageNumber: Int,
         pageSize: Int
     ) async throws -> PublicArticlePage {
@@ -128,11 +113,11 @@ extension GetPublicCategory {
                 categoryID: categoryID
             )
         }
-        async let categoryIDsTask = context.article.categoryIDs(
+        async let categoryIDsTask = context.articleCategoryIDs.categoryIDs(
             for: articles.items.map(\.id)
         )
         async let metadataTask = resolveNewsMetadataDetails(
-            metadata: context.metadata,
+            metadata: context.metadataDetails,
             referenceType: "news.article",
             referenceIDs: articles.items.map(\.id)
         )

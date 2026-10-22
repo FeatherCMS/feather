@@ -5,7 +5,7 @@ import WebDomain
 public import WebModule
 
 extension Menu.Detail.Query {
-    public struct Database: Interface {
+    public struct Database: Interface, Menu.Lookup.Query.Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {

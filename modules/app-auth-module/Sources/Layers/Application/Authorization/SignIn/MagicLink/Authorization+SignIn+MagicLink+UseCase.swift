@@ -32,7 +32,8 @@ extension AuthModule.Authorization.SignIn.MagicLink {
                         throw Error.authenticationFailed
                     }
                     return try await AuthModule.Authorization.SignIn.makeAuthResponse(
-                        authorization: scope.authorization,
+                        rolesQuery: scope.roles,
+                        permissionsQuery: scope.permissions,
                         userSessionRepository: scope.session,
                         user: user,
                         authenticationType: Session.Model.AuthenticationTypes

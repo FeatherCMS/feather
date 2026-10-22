@@ -1,6 +1,10 @@
 import FeatherOpenAPI
 import OpenAPIKit30
 
+extension Credential.Query {
+    enum Schemas {}
+}
+
 extension Credential.Query.Schemas {
     struct Search: StringSchemaRepresentable {
         var openAPIIdentifier: String { "AuthCredentialQueryField" }

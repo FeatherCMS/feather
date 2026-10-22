@@ -5,14 +5,17 @@ public import WebModule
 
 extension Public.Author.List {
     public struct Scope: FeatherModuleKit.Scope {
-        public let author: any Public.Query.AuthorContent.Interface
-        public let metadata: any WebModule.Metadata.Query.Interface
+        public let author: any Public.Author.Detail.Query.Interface
+        public let authorList: any Public.Author.List.Query.Interface
+        public let metadata: any WebModule.Metadata.Reference.Query.Interface
 
         public init(
-            author: any Public.Query.AuthorContent.Interface,
-            metadata: any WebModule.Metadata.Query.Interface
+            author: any Public.Author.Detail.Query.Interface,
+            authorList: any Public.Author.List.Query.Interface,
+            metadata: any WebModule.Metadata.Reference.Query.Interface
         ) {
             self.author = author
+            self.authorList = authorList
             self.metadata = metadata
         }
     }

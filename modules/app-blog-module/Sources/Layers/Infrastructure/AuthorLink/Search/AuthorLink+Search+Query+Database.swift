@@ -14,8 +14,7 @@ extension AuthorLink.Search.Query {
             authorId: String,
             query: AuthorLink.Search.Input.Query
         ) async throws -> AuthorLink.Search.Output {
-            let database = BlogApplication.Public.Query.AuthorLinkContent
-                .Database(
+            let database = BlogApplication.Public.AuthorLink.Database(
                     context: context
                 )
             async let list = database.list(authorId: authorId, query: query)

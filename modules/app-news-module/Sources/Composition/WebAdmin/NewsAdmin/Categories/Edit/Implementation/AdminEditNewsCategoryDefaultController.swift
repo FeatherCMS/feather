@@ -6,7 +6,9 @@ import Hummingbird
 struct AdminEditNewsCategoryDefaultController:
     AdminEditNewsCategoryController
 {
-    let buildRuntime: @Sendable (Request, AuthenticatedRequestContext) -> AdminNewsCategoryRuntime
+    let buildRuntime:
+        @Sendable (Request, AuthenticatedRequestContext) ->
+            AdminNewsCategoryRuntime
 
     func getEditNewsCategory(
         request: Request,

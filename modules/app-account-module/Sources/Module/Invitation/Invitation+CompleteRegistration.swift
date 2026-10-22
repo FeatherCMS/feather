@@ -1,4 +1,4 @@
 
 extension Invitation {
-    enum CompleteRegistration {}
+    public enum CompleteRegistration {}
 }

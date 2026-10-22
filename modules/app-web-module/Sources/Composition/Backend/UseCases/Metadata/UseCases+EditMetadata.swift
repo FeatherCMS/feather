@@ -13,11 +13,11 @@ import WebModule
 
 extension UseCases {
 
-    func makeEditMetadata() -> EditMetadata {
+    func makeEditMetadata() -> Metadata.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Metadata.Repository.Scope(
+                Metadata.Edit.Scope(
                     metadata: Metadata.Repository.Database(context: context)
                 )
             }

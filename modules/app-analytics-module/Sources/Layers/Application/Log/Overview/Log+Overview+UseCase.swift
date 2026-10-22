@@ -1,5 +1,5 @@
-public import AnalyticsModule
 import AnalyticsDomain
+public import AnalyticsModule
 public import FeatherApplication
 public import FeatherModuleKit
 
@@ -12,11 +12,11 @@ public import FeatherModuleKit
 extension Log.Overview {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let query: any QueryExecutor<ReadLog>
+        let query: any QueryExecutor<Log.Overview.Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<ReadLog>
+            query: any QueryExecutor<Log.Overview.Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -32,7 +32,7 @@ extension Log.Overview {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
             return try await query.run { scope in
-                try await scope.log.overview(query: input.query)
+                try await scope.query.overview(query: input.query)
             }
         }
     }

@@ -31,7 +31,16 @@ extension Variant.Processor.Search {
                 else { throw Variant.Processor.Search.Error.variantNotFound }
                 var result = try await scope.variantProcessors
                     .list(variantId: input.variantId)
-                    .map(\.asVariantProcessorSearchItem)
+                    .map {
+                        Variant.Processor.Search.Output.Item(
+                            id: $0.id,
+                            variantId: $0.variantId,
+                            name: $0.name,
+                            matchExtensions: $0.matchExtensions,
+                            commandTemplate: $0.commandTemplate,
+                            isActive: $0.isActive
+                        )
+                    }
                 if let search = input.query.search?.lowercased(),
                     !search.isEmpty
                 {

@@ -1,4 +1,4 @@
 
 extension Invitation {
-    enum Search {}
+    public enum Search {}
 }

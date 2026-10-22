@@ -16,20 +16,6 @@ extension Invitation.Resend {
             let mailFromName: String?
         }
 
-        public enum Error: UseCaseError {
-            case invitationNotFound
-            case mailFromNotConfigured
-
-            public var message: String {
-                switch self {
-                case .invitationNotFound:
-                    "Invitation not found."
-                case .mailFromNotConfigured:
-                    "System mail from address is not configured. Configure the system-settings-mail-from-address variable in System → Variables."
-                }
-            }
-        }
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Invitation.Resend.Scope>
         let jobs: any SendMailJobController

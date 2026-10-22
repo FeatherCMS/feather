@@ -4,6 +4,7 @@ public import HTML
 import SGML
 import WebBuilders
 public import WebComponents
+import FeatherWebShared
 
 public enum MediaAssetSelectionMode: String, Sendable {
     case single

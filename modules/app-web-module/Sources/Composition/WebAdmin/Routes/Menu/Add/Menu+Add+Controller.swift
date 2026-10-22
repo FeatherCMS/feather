@@ -4,13 +4,13 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.Add {
+extension WebModule.Menu.Add {
     enum Controller {}
 }
 
-extension Menu.Add.Controller {
+extension WebModule.Menu.Add.Controller {
     protocol Interface: Sendable {
 
         func getAddMenu(

@@ -24,11 +24,11 @@ extension Profile.Detail.Controller {
             let account = context.account
 
             let permissions = account.permissionSet
-            let profile = try await runtime.interactor
+            let profileModel = try await runtime.interactor
                 .getProfile()
             let profile = try await runtime.interactor.getProfile(
                 account: account,
-                profile: profile
+                profile: profileModel
             )
             return try await runtime.presenter.renderPage(
                 state: .init(

@@ -6,13 +6,11 @@
 
 public import WebModule
 
-extension Settings {
-    public enum Query {}
-}
+extension Settings.Detail {
+    public enum Query {
+        public protocol Interface: Sendable {
 
-extension Settings.Query {
-    public protocol Interface: Sendable {
-
-        func get() async throws -> Settings.Detail.Output
+            func get() async throws -> Settings.Detail.Output
+        }
     }
 }

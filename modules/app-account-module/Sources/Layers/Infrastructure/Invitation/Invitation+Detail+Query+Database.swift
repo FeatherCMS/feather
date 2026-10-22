@@ -30,23 +30,5 @@ extension Invitation.Detail.Query {
             return try detail.asDetail()
         }
 
-        public func getBy(token: String) async throws
-            -> Invitation.Detail.Output
-        {
-            guard
-                let detail = try await DatabaseAccessLayer<Invitation.Table>(
-                    context: context
-                )
-                .selectFirst(
-                    by: \.token,
-                    equals: token,
-                    as: Invitation.Table.Detail.self
-                )
-            else {
-                throw RepositoryError.notFound
-            }
-            return try detail.asDetail()
-        }
-
     }
 }

@@ -1,4 +1,4 @@
 
 extension Invitation.List {
-    enum Query {}
+    public enum Query {}
 }

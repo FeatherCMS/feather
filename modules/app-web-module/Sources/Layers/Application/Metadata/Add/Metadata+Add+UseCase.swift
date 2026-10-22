@@ -1,10 +1,8 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import SystemModule
-public import WebDomain
+import WebDomain
 public import WebModule
-
-public import struct Foundation.Date
 
 //
 //  AddMetadata.swift
@@ -14,75 +12,15 @@ public import struct Foundation.Date
 
 extension Metadata.Add {
     public struct UseCase: FeatherApplication.UseCase {
-
-        struct Action: PermissionAction {
-            let key = Admin.Permissions.access
-        }
-
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Metadata.Repository.Scope>
+        let transaction: any TransactionExecutor<Metadata.Add.Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Metadata.Repository.Scope>
+            transaction: any TransactionExecutor<Metadata.Add.Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
-        }
-
-        public struct Input: DTO {
-            public let referenceType: String
-            public let referenceID: String
-            public let template: String
-            public let slug: String
-            public let publicationDate: Date
-            public let expirationDate: Date?
-            public let status: Metadata.Model.Status
-            public let title: String?
-            public let excerpt: String?
-            public let imageURL: String?
-            public let canonicalURL: String?
-            public let noIndex: Bool
-            public let primaryKeyword: String
-            public let cssCodeInjection: String?
-            public let javascriptCodeInjection: String?
-            public let structuredDataCodeInjection: String?
-
-            public init(
-                referenceType: String,
-                referenceID: String,
-                slug: String,
-                template: String,
-                publicationDate: Date,
-                expirationDate: Date?,
-                status: Metadata.Model.Status,
-                title: String?,
-                excerpt: String?,
-                imageURL: String?,
-                canonicalURL: String?,
-                noIndex: Bool,
-                primaryKeyword: String,
-                cssCodeInjection: String?,
-                javascriptCodeInjection: String?,
-                structuredDataCodeInjection: String?
-            ) {
-                self.referenceType = referenceType
-                self.referenceID = referenceID
-                self.template = template
-                self.slug = slug
-                self.publicationDate = publicationDate
-                self.expirationDate = expirationDate
-                self.status = status
-                self.title = title
-                self.excerpt = excerpt
-                self.imageURL = imageURL
-                self.canonicalURL = canonicalURL
-                self.noIndex = noIndex
-                self.primaryKeyword = primaryKeyword
-                self.cssCodeInjection = cssCodeInjection
-                self.javascriptCodeInjection = javascriptCodeInjection
-                self.structuredDataCodeInjection = structuredDataCodeInjection
-            }
         }
 
         public func execute(

@@ -6,6 +6,13 @@ import Hummingbird
 
 
 extension MagicLink {
+    enum Add {
+        enum Controller {}
+        enum Interactor {}
+        enum Presenter {}
+        enum Repository {}
+    }
+
     struct Router {
         struct Routes {
             let list: WebRoute

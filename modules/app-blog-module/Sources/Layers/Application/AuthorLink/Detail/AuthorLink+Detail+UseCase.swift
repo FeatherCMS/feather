@@ -11,10 +11,6 @@ import WebModule
 
 extension AuthorLink.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Error: UseCaseError {
-            let message: String
-        }
-
         let authorizer: any Authorizer
         let query: any QueryExecutor<AuthorLink.Detail.Scope>
 

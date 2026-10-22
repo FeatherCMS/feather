@@ -1,4 +1,4 @@
 
 extension Invitation {
-    enum List {}
+    public enum List {}
 }

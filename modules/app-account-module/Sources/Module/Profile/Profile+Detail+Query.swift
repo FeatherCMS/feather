@@ -1,4 +1,4 @@
 
 extension Profile.Detail {
-    enum Query {}
+    public enum Query {}
 }

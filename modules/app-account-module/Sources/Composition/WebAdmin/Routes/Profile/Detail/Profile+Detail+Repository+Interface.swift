@@ -1,4 +1,5 @@
 import AccountModule
+import AccountDomain
 
 extension Profile.Detail.Repository {
 

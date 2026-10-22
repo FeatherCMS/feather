@@ -5,6 +5,6 @@ import WebModule
 
 extension Metadata.Search {
     struct Action: PermissionAction {
-        let key = Admin.Permissions.access
+        let key = WebModule.Permissions.Metadata.access
     }
 }

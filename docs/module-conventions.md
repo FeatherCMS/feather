@@ -139,12 +139,15 @@ Within a route feature, keep its files together under
   `Identity.Add.Input`, `Identity.Add.Output`, and `Identity.Add.UseCase`.
   Read/search contracts belong under named query namespaces, not in unrelated
   list operation types. Every operation owns its `Action`, `Input`, `Output`,
-  `Scope`, and `UseCase` declarations as applicable. Keep each declaration in
+  `Error`, `Scope`, and `UseCase` declarations as applicable. Keep each declaration in
   its own operation directory and source file (for example,
   `Identity+Edit+Action.swift`, `Identity+Edit+Input.swift`,
-  `Identity+Edit+Output.swift`, `Identity+Edit+Scope.swift`, and
-  `Identity+Edit+UseCase.swift`); do not hide actions inside use-case types or
-  reuse a neighboring operation's scope/output just because the fields match.
+  `Identity+Edit+Output.swift`, `Identity+Edit+Error.swift`,
+  `Identity+Edit+Scope.swift`, and `Identity+Edit+UseCase.swift`); do not hide
+  actions or operation errors inside use-case types or reuse a neighboring
+  operation's scope/output just because the fields match. Omit `Error` when no
+  operation-specific error contract exists, and omit `Input` or `Output` only
+  when the operation genuinely has no input or result.
 - Keep request and response models separate from the use-case implementation:
   `Identity.Add.Input`, `Identity.Add.Output`, and `Identity.Add.UseCase` are
   sibling declarations, normally in `Identity+Add+Input.swift`,
@@ -159,10 +162,21 @@ Within a route feature, keep its files together under
   `UserModule.Permissions`. Avoid parallel flat permission types per entity.
 - Put repository/query abstractions below the entity, with implementations
   under the same abstraction: `Identity.Repository.Interface` and
-  `Identity.Repository.Database`; `Identity.Query.Interface` and
-  `Identity.Query.Database`. Put shared executor scopes under the abstraction
-  they bind to (`Identity.Query.Scope`, `Identity.Repository.Scope`) only when
-  the scope is genuinely shared. Use operation-specific executor scopes for
+  `Identity.Repository.Database`; query contracts belong to the operation
+  (`Identity.Detail.Query.Interface`, `Identity.List.Query.Interface`,
+  `Identity.Search.Query.Interface`) rather than a shared entity-level
+  `Identity.Query.Interface` or `Identity.Queries` that combines operations.
+  Apply this to every module and every entity: if one query abstraction serves
+  multiple use-cases, split it into operation-owned contracts (for example,
+  `Log.List.Query.Interface` and `Log.Detail.Query.Interface`). A detail query
+  must not also own list/search methods; each use-case scope depends only on
+  the query interface it calls. Methods that jointly implement one operation,
+  such as `list` plus `count` for a paginated list, may stay together; unrelated
+  lookups must not be bundled merely because one adapter can implement them.
+  Infrastructure adapters may conform to multiple narrow interfaces when they
+  share the same persistence implementation. Put shared executor scopes under
+  the abstraction they bind to only when the scope is genuinely shared. Use
+  operation-specific scopes for
   use-cases (`Identity.Add.Scope`, `Identity.Edit.Scope`, etc.) and include
   only the repositories/query interfaces that operation needs. Name files to
   match, e.g.
@@ -227,6 +241,14 @@ Within a route feature, keep its files together under
   Keep the HTTP/OpenAPI operation named `Query` (not `Search`); its application
   use-case remains `Entity.Search`, and the gateway translates the generated
   `Query` request into `Search.Input` and maps the result to the query response.
+- Keep application query contracts scoped to one use-case. Define them under
+  that use-case namespace (`Entity.Detail.Query`, `Entity.List.Query`,
+  `Entity.Search.Query`) and give each use-case its own Scope. Do not create an
+  entity-wide `Entity.Query` or `EntityQueries` interface that combines detail,
+  list, search, or unrelated lookup methods. A query interface may expose the
+  small set of operations that its single use-case needs (for example `list`
+  and `count` for one paginated list); separate use-cases must depend on
+  separate interfaces even when one infrastructure adapter implements several.
 - Implement partial updates consistently with System: every PATCH operation
   has a required, entity-specific `updateMask` query parameter listing the
   fields being changed, plus a PATCH-specific request schema and documented

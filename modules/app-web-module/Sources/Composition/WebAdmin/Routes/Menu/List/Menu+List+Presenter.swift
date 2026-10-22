@@ -2,13 +2,13 @@ import FeatherWebAdmin
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.List {
+extension WebModule.Menu.List {
     enum Presenter {
         protocol Interface: Sendable {
             func renderListPage(
-                model: Menu.List.Model,
+                model: WebModule.Menu.List.Model,
                 permissions: Set<String>,
                 search: String?,
                 error: String?

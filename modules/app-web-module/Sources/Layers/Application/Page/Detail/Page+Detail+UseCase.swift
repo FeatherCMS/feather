@@ -4,10 +4,6 @@ public import WebModule
 
 extension Page.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Error: UseCaseError {
-            let message: String
-        }
-
         let authorizer: any Authorizer
         let query: any QueryExecutor<Scope>
 

@@ -1,4 +1,4 @@
 
 extension Settings {
-    enum Detail {}
+    public enum Detail {}
 }

@@ -22,11 +22,11 @@ extension Page.Table.Detail {
 extension Page.Detail.Query {
     public struct Database: Interface {
         public let context: DatabaseQueryContext
-        public let metadata: any Metadata.Query.Interface
+        public let metadata: any Metadata.Reference.Query.Interface
 
         public init(
             context: DatabaseQueryContext,
-            metadata: any Metadata.Query.Interface
+            metadata: any Metadata.Reference.Query.Interface
         ) {
             self.context = context
             self.metadata = metadata

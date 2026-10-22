@@ -55,7 +55,19 @@ extension Asset.Folder.Edit {
                 folder.slug = slug
                 folder.slugPath = slugPath
                 let updated = try await scope.folders.update(folder)
-                return .init(detail: updated.asDetail)
+                return .init(
+                    detail: .init(
+                        id: updated.id,
+                        parentId: updated.parentId,
+                        name: updated.name,
+                        slug: updated.slug,
+                        slugPath: updated.slugPath,
+                        assetCount: updated.assetCount,
+                        totalSizeBytes: updated.totalSizeBytes,
+                        createdAt: updated.createdAt,
+                        updatedAt: updated.updatedAt
+                    )
+                )
             }
         }
     }

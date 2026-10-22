@@ -1,4 +1,4 @@
 
 extension Invitation {
-    enum Validate {}
+    public enum Validate {}
 }

@@ -46,14 +46,14 @@ extension Post.Table.Detail {
     }
 }
 
-extension BlogApplication.Public.Query.PostContent {
-    public struct Database: Interface {
+extension BlogApplication.Public.Post {
+    public struct Database: Detail.Query.Interface, List.Query.Interface {
         public let context: DatabaseQueryContext
-        public let metadata: any WebModule.Metadata.Query.Interface
+        public let metadata: any WebModule.Metadata.Reference.Query.Interface
 
         public init(
             context: DatabaseQueryContext,
-            metadata: any WebModule.Metadata.Query.Interface
+            metadata: any WebModule.Metadata.Reference.Query.Interface
         ) {
             self.context = context
             self.metadata = metadata

@@ -7,14 +7,11 @@ import UserModule
 
 extension UseCases {
 
-    func makeListRolePermissions() -> RolePermission.Search.UseCase {
+    func makeSearchRolePermissions() -> RolePermission.Search.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 RolePermission.Search.Scope(
-                    authorization: AuthModule.Authorization.Query.Database(
-                        context: context
-                    ),
                     rolePermissions: RolePermission.Search.Query.Database(
                         context: context
                     )

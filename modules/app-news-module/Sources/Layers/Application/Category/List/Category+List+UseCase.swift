@@ -4,75 +4,77 @@ import NewsDomain
 public import NewsModule
 
 //
-//  ListCategories.swift
+//  Category.List.UseCase.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public struct ListCategories: UseCase {
-    struct Action: PermissionAction {
-        let key = Category.Permissions.list
-    }
+extension Category.List {
+    public struct UseCase: FeatherApplication.UseCase {
+        let authorizer: any Authorizer
+        let query: any QueryExecutor<Scope>
 
-    let authorizer: any Authorizer
-    let query: any QueryExecutor<ReadCategoryMetadata>
-
-    public init(
-        authorizer: any Authorizer,
-        query: any QueryExecutor<ReadCategoryMetadata>
-    ) {
-        self.authorizer = authorizer
-        self.query = query
-    }
-
-    public func execute(
-        subject: Subject,
-        input: Category.List.Input
-    ) async throws -> Category.List.Output {
-        let action = Action()
-
-        guard try await authorizer.can(subject: subject, perform: action) else {
-            throw AuthError(kind: .forbidden, message: action.key.rawValue)
+        public init(
+            authorizer: any Authorizer,
+            query: any QueryExecutor<Scope>
+        ) {
+            self.authorizer = authorizer
+            self.query = query
         }
 
-        let inputQuery = input.query
+        public func execute(
+            subject: Subject,
+            input: Category.List.Input
+        ) async throws -> Category.List.Output {
+            let action = Action()
 
-        return try await query.run { scope in
-            let categories = try await scope.category.list(query: inputQuery)
-            var items: [Category.List.Output.Item] = []
-            items.reserveCapacity(categories.items.count)
-            for item in categories.items {
-                items.append(
-                    .init(
-                        id: item.id,
-                        title: item.title,
-                        excerpt: item.excerpt,
-                        imageAssetId: item.imageAssetId,
-                        createdAt: item.createdAt,
-                        updatedAt: item.updatedAt
+            guard try await authorizer.can(subject: subject, perform: action)
+            else {
+                throw AuthError(kind: .forbidden, message: action.key.rawValue)
+            }
+
+            let inputQuery = input.query
+
+            return try await query.run { scope in
+                let categories = try await scope.category.list(
+                    query: inputQuery
+                )
+                var items: [Category.List.Output.Item] = []
+                items.reserveCapacity(categories.items.count)
+                for item in categories.items {
+                    items.append(
+                        .init(
+                            id: item.id,
+                            title: item.title,
+                            excerpt: item.excerpt,
+                            imageAssetId: item.imageAssetId,
+                            createdAt: item.createdAt,
+                            updatedAt: item.updatedAt
+                        )
                     )
+                }
+                return .init(items: items)
+            }
+        }
+
+        public func count(
+            subject: Subject,
+            input: Category.List.Input
+        ) async throws -> Int {
+            let action = Action()
+
+            guard try await authorizer.can(subject: subject, perform: action)
+            else {
+                throw AuthError(kind: .forbidden, message: action.key.rawValue)
+            }
+
+            let inputQuery = input.query
+
+            return try await query.run { scope in
+                try await scope.category.count(
+                    query: inputQuery
                 )
             }
-            return .init(items: items)
-        }
-    }
-
-    public func count(
-        subject: Subject,
-        input: Category.List.Input
-    ) async throws -> Int {
-        let action = Action()
-
-        guard try await authorizer.can(subject: subject, perform: action) else {
-            throw AuthError(kind: .forbidden, message: action.key.rawValue)
-        }
-
-        let inputQuery = input.query
-
-        return try await query.run { scope in
-            try await scope.category.count(
-                query: inputQuery
-            )
         }
     }
 }

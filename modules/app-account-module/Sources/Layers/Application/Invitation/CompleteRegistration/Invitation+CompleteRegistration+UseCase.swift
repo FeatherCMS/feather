@@ -16,14 +16,6 @@ public import UserModule
 
 extension Invitation.CompleteRegistration {
     public struct UseCase: FeatherApplication.UseCase {
-        public struct Error: UseCaseError {
-            public let message: String
-
-            public init(message: String) {
-                self.message = message
-            }
-        }
-
         let transaction:
             any ContextualTransactionExecutor<
                 Invitation.CompleteRegistration.Scope

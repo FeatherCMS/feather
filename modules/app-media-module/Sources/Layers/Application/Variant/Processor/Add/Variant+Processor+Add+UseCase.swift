@@ -39,7 +39,18 @@ extension Variant.Processor.Add {
                         isActive: input.isActive
                     )
                 )
-                return .init(detail: processor.asDetail)
+                return .init(
+                    detail: .init(
+                        id: processor.id,
+                        variantId: processor.variantId,
+                        name: processor.name,
+                        matchExtensions: processor.matchExtensions,
+                        commandTemplate: processor.commandTemplate,
+                        isActive: processor.isActive,
+                        createdAt: processor.createdAt,
+                        updatedAt: processor.updatedAt
+                    )
+                )
             }
         }
     }

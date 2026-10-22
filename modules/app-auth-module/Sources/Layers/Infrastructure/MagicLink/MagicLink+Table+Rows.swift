@@ -10,9 +10,9 @@ extension MagicLink.Table: DatabaseTableWithInsert {
         let expiresAt: Date
         let isPersistent: Bool
     }
-    }
+}
 
-    extension MagicLink.Table: DatabaseTableWithUpdate {
+extension MagicLink.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let authEmailId: String
         let token: String
@@ -24,9 +24,9 @@ extension MagicLink.Table: DatabaseTableWithInsert {
             values[MagicLink.Table.columns.updatedAt] = .currentTimestamp
         }
     }
-    }
+}
 
-    extension MagicLink.Table: DatabaseTableWithDetail {
+extension MagicLink.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let authEmailId: String

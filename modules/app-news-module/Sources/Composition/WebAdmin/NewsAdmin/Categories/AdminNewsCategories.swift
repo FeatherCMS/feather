@@ -9,24 +9,26 @@ struct AdminNewsCategories: Sendable {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        let buildRuntime: @Sendable (Request, AuthenticatedRequestContext) -> AdminNewsCategoryRuntime = {
-            request,
-            context in
-            let api = apiBuilder.makeNewsAdmin(context)
-            return AdminNewsCategoryRuntime(
-                interactor: AdminNewsCategoryDefaultInteractor(
-                    repository: AdminNewsCategoryOpenAPIRepository(
-                        api: api
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) ->
+                AdminNewsCategoryRuntime = {
+                    request,
+                    context in
+                    let api = apiBuilder.makeNewsAdmin(context)
+                    return AdminNewsCategoryRuntime(
+                        interactor: AdminNewsCategoryDefaultInteractor(
+                            repository: AdminNewsCategoryOpenAPIRepository(
+                                api: api
+                            )
+                        ),
+                        presenter: AdminNewsCategoryDefaultPresenter(
+                            request: request,
+                            context: context,
+                            mediaAPI: api.mediaAdminAPI(),
+                            renderingEngine: renderingEngine
+                        )
                     )
-                ),
-                presenter: AdminNewsCategoryDefaultPresenter(
-                    request: request,
-                    context: context,
-                    mediaAPI: api.mediaAdminAPI(),
-                    renderingEngine: renderingEngine
-                )
-            )
-        }
+                }
         AdminListNewsCategoryDefaultController(buildRuntime: buildRuntime)
             .route(on: router)
         AdminAddNewsCategoryDefaultController(buildRuntime: buildRuntime)

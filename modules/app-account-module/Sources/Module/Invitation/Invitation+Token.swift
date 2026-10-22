@@ -1,4 +1,4 @@
 
 extension Invitation {
-    enum Token {}
+    public enum Token {}
 }

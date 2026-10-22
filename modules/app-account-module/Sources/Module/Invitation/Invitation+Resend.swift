@@ -1,4 +1,4 @@
 
 extension Invitation {
-    enum Resend {}
+    public enum Resend {}
 }

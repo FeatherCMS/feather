@@ -2,9 +2,9 @@ import FeatherWebAdmin
 import OpenAPIRuntime
 import WebAdminAPI
 import WebDomain
-public import WebModule
+import WebModule
 
-extension Menu.List {
+extension WebModule.Menu.List {
     struct Model: Sendable {
         let items: [Components.Schemas.MenuQueryItemSchema]
         let total: Int

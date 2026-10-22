@@ -6,25 +6,17 @@ import Foundation
 extension Invitation.Validate {
     public struct UseCase: FeatherApplication.UseCase {
 
-        public struct Error: UseCaseError {
-            public let message: String
-
-            public init(message: String) {
-                self.message = message
-            }
-        }
-
-        let query: any QueryExecutor<Invitation.Detail.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
-            query: any QueryExecutor<Invitation.Detail.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.query = query
         }
 
         public func execute(
             input: Invitation.Validate.Input
-        ) async throws -> Invitation.Detail.Output {
+        ) async throws -> Output {
             try await query.run { scope in
                 let invitation = try await scope.query.getBy(
                     token: input.token

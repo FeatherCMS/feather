@@ -17,7 +17,7 @@ extension UseCases {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Metadata.Query.Scope(
+                WebRoute.Resolve.Scope(
                     metadata: Metadata.Query.Database(
                         context: context
                     )

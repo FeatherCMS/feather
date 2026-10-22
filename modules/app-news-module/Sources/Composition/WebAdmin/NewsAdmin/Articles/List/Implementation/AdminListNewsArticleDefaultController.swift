@@ -5,7 +5,9 @@ import Hummingbird
 import NewsModule
 
 struct AdminListNewsArticleDefaultController: AdminListNewsArticleController {
-    let buildRuntime: @Sendable (Request, AuthenticatedRequestContext) -> AdminNewsArticleRuntime
+    let buildRuntime:
+        @Sendable (Request, AuthenticatedRequestContext) ->
+            AdminNewsArticleRuntime
 
     func getNewsArticles(
         request: Request,

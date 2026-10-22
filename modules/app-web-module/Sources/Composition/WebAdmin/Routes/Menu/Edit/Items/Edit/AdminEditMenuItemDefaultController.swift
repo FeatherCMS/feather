@@ -5,7 +5,7 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
-public import WebModule
+import WebModule
 
 struct AdminEditMenuItemDefaultController:
     AdminEditMenuItemController
@@ -175,7 +175,7 @@ struct AdminEditMenuItemDefaultController:
 
             return AdminNotificationFlash.redirect(
                 to:
-                    Menu.Item.Routes
+                    WebModule.Menu.Item.Routes
                     .edit(
                         RouterPath(menuId),
                         RouterPath(id)

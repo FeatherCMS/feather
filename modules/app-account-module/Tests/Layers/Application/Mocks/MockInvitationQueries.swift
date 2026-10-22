@@ -11,6 +11,7 @@ import AccountModule
 @testable import UserApplication
 
 actor MockInvitationQueries: Invitation.Detail.Query.Interface,
+    Invitation.Validate.Query.Interface,
     Invitation.List.Query.Interface,
     Invitation.Search.Query.Interface
 {
@@ -39,9 +40,18 @@ actor MockInvitationQueries: Invitation.Detail.Query.Interface,
 
     func getBy(
         token: String
-    ) async throws -> Invitation.Detail.Output {
+    ) async throws -> Invitation.Validate.Output {
         guard let tokenResult else { fatalError("not needed in tests") }
-        return tokenResult
+        return .init(
+            id: tokenResult.id,
+            userId: tokenResult.userId,
+            email: tokenResult.email,
+            token: tokenResult.token,
+            roleIDs: tokenResult.roleIDs,
+            expiresAt: tokenResult.expiresAt,
+            createdAt: tokenResult.createdAt,
+            updatedAt: tokenResult.updatedAt
+        )
     }
 
     func list() async throws -> Invitation.List.Output {

@@ -1,13 +1,14 @@
 public import FeatherModuleKit
-public import WebDomain
+public import FeatherApplication
+import WebDomain
 public import WebModule
 
 extension Settings.Public.Detail {
-    public struct UseCase {
-        let query: any QueryExecutor<Settings.Repository.Scope>
+    public struct UseCase: FeatherApplication.UseCase {
+        let query: any QueryExecutor<Scope>
 
         public init(
-            query: any QueryExecutor<Settings.Repository.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.query = query
         }

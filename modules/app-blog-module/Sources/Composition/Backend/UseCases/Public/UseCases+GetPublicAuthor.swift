@@ -12,16 +12,16 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Public.Author.Detail.Scope(
-                    author: Public.Query.AuthorContent.Database(
+                    author: Public.Author.Database(
                         context: context,
                         metadata: WebModule.Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    authorLink: Public.Query.AuthorLinkContent.Database(
+                    authorLink: Public.AuthorLink.Database(
                         context: context
                     ),
-                    post: Public.Query.PostContent.Database(
+                    post: Public.Post.Database(
                         context: context,
                         metadata: WebModule.Metadata.Query.Database(
                             context: context

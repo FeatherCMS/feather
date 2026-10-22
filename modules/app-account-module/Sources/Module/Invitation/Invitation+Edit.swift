@@ -1,4 +1,4 @@
 
 extension Invitation {
-    enum Edit {}
+    public enum Edit {}
 }

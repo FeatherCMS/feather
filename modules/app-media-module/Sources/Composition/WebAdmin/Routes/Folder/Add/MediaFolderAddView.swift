@@ -8,6 +8,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import FeatherWebShared
 
 struct MediaFolderAddView: Component {
     struct State {

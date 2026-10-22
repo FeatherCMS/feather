@@ -8,19 +8,18 @@ public import WebModule
 extension Post.List.Query {
     public struct Database: Interface {
         let context: DatabaseQueryContext
-        let metadata: any WebModule.Metadata.Query.Interface
+        let metadata: any WebModule.Metadata.Reference.Query.Interface
 
         public init(
             context: DatabaseQueryContext,
-            metadata: any WebModule.Metadata.Query.Interface
+            metadata: any WebModule.Metadata.Reference.Query.Interface
         ) {
             self.context = context
             self.metadata = metadata
         }
 
         public func list() async throws -> Post.List.Output {
-            try await BlogApplication.Public.Query.PostContent
-                .Database(
+            try await BlogApplication.Public.Post.Database(
                     context: context,
                     metadata: metadata
                 )

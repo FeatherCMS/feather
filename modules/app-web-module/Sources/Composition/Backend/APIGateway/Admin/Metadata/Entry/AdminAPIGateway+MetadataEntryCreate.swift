@@ -31,7 +31,7 @@ extension AdminAPIGateway {
         )
         let expDate = body.expirationDate.map(Date.init(timeIntervalSince1970:))
 
-        let addInput = Metadata.Add.UseCase.Input(
+        let addInput = Metadata.Add.Input(
             referenceType: body.referenceType ?? "",
             referenceID: body.referenceId ?? "",
             slug: body.slug,
