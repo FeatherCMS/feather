@@ -148,6 +148,7 @@ let package = Package(
             name: "WebApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .target(name: "WebModule"),
 
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(
@@ -165,6 +166,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .target(name: "WebModule"),
                 .product(name: "MediaDomain", package: "app-media-module"),
                 .product(
                     name: "MediaInfrastructure",
@@ -256,6 +258,7 @@ let package = Package(
         .target(
             name: "WebBackend",
             dependencies: [
+                .target(name: "WebModule"),
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),

@@ -5,6 +5,7 @@ import MediaBackend
 import WebAppAPI
 import WebApplication
 import WebDomain
+import WebModule
 
 extension AppAPIGateway {
     func publicMedia(assetId: String?) async -> Public.Page.Detail.Output.Media?

@@ -6,6 +6,7 @@ import Foundation
 import WebAdminAPI
 import WebApplication
 import WebDomain
+import WebModule
 
 extension AdminAPIGateway {
     func timestamp(
@@ -45,8 +46,8 @@ extension AdminAPIGateway {
 
     func mapMetadataStatus(
         _ value: String?
-    ) -> Metadata.Model.Status {
-        value.flatMap(Metadata.Model.Status.init(rawValue:)) ?? .draft
+    ) -> WebModule.Metadata.Model.Status {
+        value.flatMap(WebModule.Metadata.Model.Status.init(rawValue:)) ?? .draft
     }
 
     func mapBlogMetadata(
@@ -136,7 +137,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: Metadata.Detail.Output
+        _ detail: WebModule.Metadata.Detail.Output
     ) -> BlogAdminAPI.Components.Schemas.WebMetadataDetailSchema {
         .init(
             id: detail.id,

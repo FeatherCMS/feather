@@ -1,7 +1,8 @@
 public import BlogModule
 public import FeatherApplication
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension Tag.Add {
     public struct Input: DTO {

@@ -1,3 +1,1 @@
-public enum Settings {
-    public enum Repository {}
-}
+public enum Settings {}

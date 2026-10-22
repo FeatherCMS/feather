@@ -1,5 +1,5 @@
 public import FeatherModuleKit
-public import WebDomain
+public import WebModule
 
 extension Page.Detail {
     public struct Scope: FeatherModuleKit.Scope {

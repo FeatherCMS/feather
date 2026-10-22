@@ -11,10 +11,11 @@ public import NewsDomain
 public import NewsModule
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension ArticleTable.Row {
     func asDomain(
-        metadata: WebDomain.Metadata.Model,
+        metadata: WebModule.Metadata.Model,
         categoryIds: [String]
     ) -> Article.Model {
         .init(
@@ -59,7 +60,8 @@ public struct ArticleDatabaseRepository: Article.Repository.Interface {
         var newMetadata = model.metadata
         try newMetadata.set(referenceID: saved.id)
 
-        let metadata = try await Metadata.Repository.Database(context: context)
+        let metadata = try await WebModule.Metadata.Repository
+            .Database(context: context)
             .insert(newMetadata)
 
         return saved.asDomain(
@@ -78,10 +80,11 @@ public struct ArticleDatabaseRepository: Article.Repository.Interface {
         )
         .listCategoryIDs(articleID: id)
         guard
-            let metadata = try await Metadata.Repository.Database(
-                context: context
-            )
-            .find(referenceType: "news.article", referenceId: id)
+            let metadata = try await WebModule.Metadata.Repository
+                .Database(
+                    context: context
+                )
+                .find(referenceType: "news.article", referenceId: id)
         else { return nil }
         return article.asDomain(
             metadata: metadata,
@@ -110,7 +113,7 @@ public struct ArticleDatabaseRepository: Article.Repository.Interface {
                 articleID: model.id,
                 categoryIDs: model.categoryIds
             )
-        _ = try await Metadata.Repository.Database(context: context)
+        _ = try await WebModule.Metadata.Repository.Database(context: context)
             .update(model.metadata)
         return updated.asDomain(
             metadata: model.metadata,

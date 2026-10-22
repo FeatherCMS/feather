@@ -4,7 +4,7 @@ import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import WebApplication
-public import WebDomain
+public import WebModule
 
 extension Tag.Table.List {
     var asQueryItem: Tag.List.Output.Item {
@@ -20,7 +20,9 @@ extension Tag.Table.List {
 }
 
 extension Tag.Table.Detail {
-    func asDetail(metadata: Metadata.Detail.Output) -> Tag.Detail.Output {
+    func asDetail(metadata: WebModule.Metadata.Detail.Output)
+        -> Tag.Detail.Output
+    {
         .init(
             id: id,
             title: title,
@@ -37,11 +39,11 @@ extension Tag.Table.Detail {
 extension BlogApplication.Public.Query.TagContent {
     public struct Database: Interface {
         public let context: DatabaseQueryContext
-        public let metadata: any Metadata.Query.Interface
+        public let metadata: any WebModule.Metadata.Query.Interface
 
         public init(
             context: DatabaseQueryContext,
-            metadata: any Metadata.Query.Interface
+            metadata: any WebModule.Metadata.Query.Interface
         ) {
             self.context = context
             self.metadata = metadata

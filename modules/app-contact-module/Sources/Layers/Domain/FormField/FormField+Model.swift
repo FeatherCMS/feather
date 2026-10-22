@@ -1,86 +1,86 @@
-public import FeatherDomain
 public import ContactModule
+public import FeatherDomain
 
 public import struct Foundation.Date
 
 extension FormField {
     public struct Model: FeatherDomain.Model {
 
-    public enum ItemType: String, Sendable, CaseIterable, Codable {
-        case text
-        case textarea
-        case select
-        case radio
-        case toggle
-        case hidden
-    }
-
-    public struct Option: Codable, Sendable, Equatable {
-        public let value: String
-        public let label: String
-
-        public init(
-            value: String,
-            label: String
-        ) {
-            self.value = value
-            self.label = label
+        public enum ItemType: String, Sendable, CaseIterable, Codable {
+            case text
+            case textarea
+            case select
+            case radio
+            case toggle
+            case hidden
         }
-    }
 
-    public enum Error: DomainError {
-        case keyTooShort
-        case keyTooLong
-        case labelTooShort
-        case labelTooLong
-        case optionsRequired
-        case optionsNotAllowed
-    }
+        public struct Option: Codable, Sendable, Equatable {
+            public let value: String
+            public let label: String
 
-    public struct New: Sendable {
+            public init(
+                value: String,
+                label: String
+            ) {
+                self.value = value
+                self.label = label
+            }
+        }
+
+        public enum Error: DomainError {
+            case keyTooShort
+            case keyTooLong
+            case labelTooShort
+            case labelTooLong
+            case optionsRequired
+            case optionsNotAllowed
+        }
+
+        public struct New: Sendable {
+            public let formId: String
+            public let key: String
+            public let type: ItemType
+            public let label: String
+            public let allowedValues: [Option]
+            public let isRequired: Bool
+            public let position: Int
+        }
+
+        public let id: String
         public let formId: String
-        public let key: String
-        public let type: ItemType
-        public let label: String
-        public let allowedValues: [Option]
-        public let isRequired: Bool
-        public let position: Int
-    }
+        public var key: String
+        public var type: ItemType
+        public var label: String
+        public var allowedValues: [Option]
+        public var isRequired: Bool
+        public var position: Int
+        public let createdAt: Date
+        public let updatedAt: Date
 
-    public let id: String
-    public let formId: String
-    public var key: String
-    public var type: ItemType
-    public var label: String
-    public var allowedValues: [Option]
-    public var isRequired: Bool
-    public var position: Int
-    public let createdAt: Date
-    public let updatedAt: Date
-
-    package init(
-        id: String,
-        formId: String,
-        key: String,
-        type: ItemType,
-        label: String,
-        allowedValues: [Option],
-        isRequired: Bool,
-        position: Int,
-        createdAt: Date,
-        updatedAt: Date
-    ) {
-        self.id = id
-        self.formId = formId
-        self.key = key
-        self.type = type
-        self.label = label
-        self.allowedValues = allowedValues
-        self.isRequired = isRequired
-        self.position = position
-        self.createdAt = createdAt
-        self.updatedAt = updatedAt
-    }
+        package init(
+            id: String,
+            formId: String,
+            key: String,
+            type: ItemType,
+            label: String,
+            allowedValues: [Option],
+            isRequired: Bool,
+            position: Int,
+            createdAt: Date,
+            updatedAt: Date
+        ) {
+            self.id = id
+            self.formId = formId
+            self.key = key
+            self.type = type
+            self.label = label
+            self.allowedValues = allowedValues
+            self.isRequired = isRequired
+            self.position = position
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
+        }
     }
 }
 

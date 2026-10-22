@@ -1,7 +1,8 @@
 import FeatherDBAL
 public import FeatherInfrastructure
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension MenuItem.List.Query {
     public struct Database: Interface {

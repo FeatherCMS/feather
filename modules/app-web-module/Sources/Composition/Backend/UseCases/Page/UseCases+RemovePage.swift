@@ -2,6 +2,7 @@ import FeatherInfrastructure
 import WebApplication
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 

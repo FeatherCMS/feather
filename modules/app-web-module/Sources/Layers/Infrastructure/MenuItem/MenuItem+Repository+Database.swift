@@ -2,6 +2,7 @@ import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 public import WebDomain
+public import WebModule
 
 extension MenuItem.Table.Detail {
     var asDomain: MenuItem.Model {

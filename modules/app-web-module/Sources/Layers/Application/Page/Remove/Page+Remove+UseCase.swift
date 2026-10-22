@@ -1,6 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension Page.Remove {
     public struct UseCase: FeatherApplication.UseCase {

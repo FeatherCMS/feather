@@ -40,9 +40,9 @@ extension Credential {
         }
     }
 
-    }
+}
 
-    extension Credential.Model {
+extension Credential.Model {
 
     private static func validate(
         authEmailId: String

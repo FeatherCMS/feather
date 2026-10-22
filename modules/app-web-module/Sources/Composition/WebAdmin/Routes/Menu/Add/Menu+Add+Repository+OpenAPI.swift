@@ -1,11 +1,12 @@
 import FeatherWebAdmin
-import WebDomain
 import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import WebAdminAPI
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Add.Repository {
+extension Menu.Add.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 

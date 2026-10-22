@@ -2,6 +2,7 @@ public import BlogApplication
 import BlogInfrastructure
 public import BlogModule
 public import FeatherInfrastructure
+import WebModule
 
 extension UseCases {
 

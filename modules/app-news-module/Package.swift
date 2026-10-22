@@ -21,7 +21,6 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
-
 let package = Package(
     name: "app-news-module",
     platforms: [
@@ -38,9 +37,18 @@ let package = Package(
         .library(name: "NewsInfrastructure", targets: ["NewsInfrastructure"]),
         .library(name: "NewsAdminAPI", targets: ["NewsAdminAPI"]),
         .library(name: "NewsAppAPI", targets: ["NewsAppAPI"]),
-        .library(name: "NewsSharedOpenAPIGenerator", targets: ["NewsSharedOpenAPIGenerator"]),
-        .executable(name: "NewsAdminOpenAPIGenerator", targets: ["NewsAdminOpenAPIGenerator"]),
-        .executable(name: "NewsAppOpenAPIGenerator", targets: ["NewsAppOpenAPIGenerator"]),
+        .library(
+            name: "NewsSharedOpenAPIGenerator",
+            targets: ["NewsSharedOpenAPIGenerator"]
+        ),
+        .executable(
+            name: "NewsAdminOpenAPIGenerator",
+            targets: ["NewsAdminOpenAPIGenerator"]
+        ),
+        .executable(
+            name: "NewsAppOpenAPIGenerator",
+            targets: ["NewsAppOpenAPIGenerator"]
+        ),
         .library(name: "NewsBackend", targets: ["NewsBackend"]),
         .library(name: "NewsWebAdmin", targets: ["NewsWebAdmin"]),
         .library(name: "NewsWebApp", targets: ["NewsWebApp"]),
@@ -71,7 +79,8 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            url:
+                "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
         ),
         .package(
@@ -112,6 +121,7 @@ let package = Package(
             name: "NewsDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
                 .target(name: "NewsModule"),
@@ -123,8 +133,12 @@ let package = Package(
             name: "NewsApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
                 .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
 
                 .target(name: "NewsModule"),
@@ -136,14 +150,27 @@ let package = Package(
         .target(
             name: "NewsInfrastructure",
             dependencies: [
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
+                .product(
+                    name: "FeatherDBALPostgres",
+                    package: "feather-dbal-postgres"
+                ),
                 .product(name: "MediaDomain", package: "app-media-module"),
-                .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(
+                    name: "MediaInfrastructure",
+                    package: "app-media-module"
+                ),
                 .product(name: "MediaModule", package: "app-media-module"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
                 .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
 
                 .target(name: "NewsModule"),
@@ -156,7 +183,10 @@ let package = Package(
         .target(
             name: "NewsAppAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/App",
             swiftSettings: swiftSettings
@@ -164,7 +194,10 @@ let package = Package(
         .target(
             name: "NewsAdminAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/Admin",
             swiftSettings: swiftSettings
@@ -173,7 +206,10 @@ let package = Package(
         .target(
             name: "NewsSharedOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                )
             ],
             path: "Sources/Generators/Shared",
             swiftSettings: swiftSettings
@@ -181,7 +217,10 @@ let package = Package(
         .executableTarget(
             name: "NewsAdminOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
             ],
@@ -207,9 +246,13 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "WebApplication", package: "app-web-module"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
-                .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .product(
+                    name: "SystemInfrastructure",
+                    package: "app-system-module"
+                ),
                 .target(name: "NewsModule"),
                 .target(name: "NewsDomain"),
 
@@ -237,8 +280,14 @@ let package = Package(
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "NIOCore", package: "swift-nio"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
                 .product(name: "CSS", package: "swift-web-standards"),
                 .product(name: "HTML", package: "swift-web-standards"),
                 .product(name: "SGML", package: "swift-web-standards"),
@@ -260,8 +309,14 @@ let package = Package(
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "NIOCore", package: "swift-nio"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
                 .product(name: "WebModule", package: "app-web-module"),
                 .target(name: "NewsAppAPI"),
             ],

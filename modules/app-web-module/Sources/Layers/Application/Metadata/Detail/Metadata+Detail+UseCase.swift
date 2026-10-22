@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import SystemModule
-public import WebDomain
+public import WebModule
 
 //
 //  GetMetadata.swift

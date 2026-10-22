@@ -7,7 +7,8 @@
 import FeatherDatabase
 public import FeatherInfrastructure
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension Settings.Query {
     public struct Database: Interface {

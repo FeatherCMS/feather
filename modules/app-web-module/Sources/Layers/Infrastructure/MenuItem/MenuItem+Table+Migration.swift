@@ -1,5 +1,6 @@
 import FeatherDBAL
 import WebDomain
+import WebModule
 
 extension MenuItem.Table {
     static var tableCreationSchema: DatabaseTableSchema {

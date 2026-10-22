@@ -5,7 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherModuleKit
-public import WebDomain
+public import WebModule
 
 extension Metadata.Query {
     public struct Scope: FeatherModuleKit.Scope {

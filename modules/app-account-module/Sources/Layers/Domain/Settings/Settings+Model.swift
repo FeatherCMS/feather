@@ -56,9 +56,9 @@ extension Settings {
             self.updatedAt = updatedAt
         }
     }
-    }
+}
 
-    extension Settings.Model {
+extension Settings.Model {
 
     private static func validate(
         userId: String

@@ -3,7 +3,8 @@ import FeatherDBAL
 import FeatherDatabase
 public import FeatherInfrastructure
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension Page.Table.List {
     var asSearchItem: Page.Search.Output.Item {

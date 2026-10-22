@@ -6,10 +6,9 @@
 
 public import FeatherDomain
 import FeatherModuleKit
+public import WebModule
 
 public import struct Foundation.Date
-
-public enum Metadata {}
 
 extension Metadata {
     public struct Model: FeatherDomain.Model {

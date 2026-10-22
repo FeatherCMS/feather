@@ -4,6 +4,7 @@ public import BlogModule
 import FeatherInfrastructure
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
@@ -15,7 +16,7 @@ extension UseCases {
                     post: Post.Repository.Database(
                         context: context
                     ),
-                    metadata: Metadata.Repository.Database(
+                    metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     ),
                 )

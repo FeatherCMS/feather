@@ -129,6 +129,7 @@ let package = Package(
             name: "BlogDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
                 .target(name: "BlogModule"),
@@ -145,6 +146,7 @@ let package = Package(
                     package: "app-system-module"
                 ),
                 .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
@@ -280,6 +282,7 @@ let package = Package(
                     name: "WebInfrastructure",
                     package: "app-web-module"
                 ),
+                .product(name: "WebModule", package: "app-web-module"),
 
                 .target(name: "BlogInfrastructure"),
                 .target(name: "BlogModule"),

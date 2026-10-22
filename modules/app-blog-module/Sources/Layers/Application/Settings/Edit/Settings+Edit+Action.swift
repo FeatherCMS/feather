@@ -1,8 +1,9 @@
 public import BlogModule
 public import FeatherModuleKit
+import WebModule
 
-extension Settings.Edit {
+extension BlogModule.Settings.Edit {
     public struct Action: PermissionAction {
-        public let key = Settings.Permissions.update
+        public let key = BlogModule.Settings.Permissions.update
     }
 }

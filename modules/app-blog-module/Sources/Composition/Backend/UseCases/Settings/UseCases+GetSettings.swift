@@ -9,6 +9,7 @@ import FeatherModuleKit
 import MediaBackend
 import SystemInfrastructure
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 

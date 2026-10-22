@@ -5,10 +5,9 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherDomain
+public import WebModule
 
 public import struct Foundation.Date
-
-public enum Menu {}
 
 extension Menu {
     public struct Model: FeatherDomain.Model {

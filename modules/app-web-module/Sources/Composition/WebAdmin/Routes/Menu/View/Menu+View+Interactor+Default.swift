@@ -1,13 +1,14 @@
 import FeatherWebAdmin
-import WebDomain
 import OpenAPIRuntime
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.View.Interactor {
+extension Menu.View.Interactor {
     struct Default: Interface {
-        let repository: any WebDomain.Menu.View.Repository.Interface
+        let repository: any Menu.View.Repository.Interface
 
         func execute(
-            input: WebDomain.Menu.View.Input
+            input: Menu.View.Input
         ) async throws -> MenuDetailsModel {
             try await repository.get(id: input.id)
         }

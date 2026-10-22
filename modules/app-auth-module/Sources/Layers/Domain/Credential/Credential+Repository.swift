@@ -1,33 +1,33 @@
 public import AuthModule
 public import FeatherDomain
 
-extension Credential.Repository {
+extension Credential {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
-    public protocol Interface: FeatherDomain.Repository {
+            func findBy(
+                id: String
+            ) async throws -> Model?
 
-        func findBy(
-            id: String
-        ) async throws -> Credential.Model?
+            func findBy(
+                userId: String
+            ) async throws -> Model?
 
-        func findBy(
-            userId: String
-        ) async throws -> Credential.Model?
+            func findBy(
+                email: String
+            ) async throws -> Model?
 
-        func findBy(
-            email: String
-        ) async throws -> Credential.Model?
+            func insert(
+                _ model: Model.New
+            ) async throws -> Model
 
-        func insert(
-            _ model: Credential.Model.New
-        ) async throws -> Credential.Model
+            func update(
+                _ model: Model
+            ) async throws -> Model
 
-        func update(
-            _ model: Credential.Model
-        ) async throws -> Credential.Model
-
-        func delete(
-            ids: [String]
-        ) async throws -> [String]
+            func delete(
+                ids: [String]
+            ) async throws -> [String]
+        }
     }
-
 }

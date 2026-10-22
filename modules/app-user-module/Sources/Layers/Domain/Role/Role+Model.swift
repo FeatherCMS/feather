@@ -50,9 +50,9 @@ extension Role {
             self.updatedAt = updatedAt
         }
     }
-    }
+}
 
-    extension Role.Model {
+extension Role.Model {
 
     private static func validate(
         key: String

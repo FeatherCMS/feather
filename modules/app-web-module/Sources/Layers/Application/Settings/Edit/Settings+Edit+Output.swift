@@ -1,5 +1,5 @@
 public import FeatherApplication
-public import WebDomain
+public import WebModule
 
 extension Settings.Edit {
     public struct Output: DTO {

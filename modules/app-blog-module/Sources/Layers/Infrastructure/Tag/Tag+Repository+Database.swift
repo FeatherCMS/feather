@@ -5,9 +5,10 @@ import FeatherDomain
 public import FeatherInfrastructure
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension Tag.Table.Detail {
-    func asDomain(metadata: WebDomain.Metadata.Model) -> Tag.Model {
+    func asDomain(metadata: WebModule.Metadata.Model) -> Tag.Model {
         .init(
             id: id,
             title: title,
@@ -51,7 +52,7 @@ extension Tag.Repository {
             }
             var newMetadata = model.metadata
             try newMetadata.set(referenceID: id)
-            let metadata = try await Metadata.Repository
+            let metadata = try await WebModule.Metadata.Repository
                 .Database(context: context)
                 .insert(newMetadata)
             return tag.asDomain(metadata: metadata)
@@ -68,7 +69,7 @@ extension Tag.Repository {
                 return nil
             }
             guard
-                let metadata = try await Metadata.Repository
+                let metadata = try await WebModule.Metadata.Repository
                     .Database(context: context)
                     .find(referenceType: "blog.tag", referenceId: id)
             else {

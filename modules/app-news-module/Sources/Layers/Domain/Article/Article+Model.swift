@@ -6,62 +6,63 @@
 
 public import FeatherDomain
 import FeatherModuleKit
-public import NewsModule
 public import Foundation
+public import NewsModule
 public import WebDomain
+public import WebModule
 
 public import struct Foundation.Date
 
 extension Article {
     public struct Model: FeatherDomain.Model {
 
-    public enum Error: DomainError {
-        case titleTooShort
-        case titleTooLong
-        case excerptTooLong
-        case contentTooLong
-    }
+        public enum Error: DomainError {
+            case titleTooShort
+            case titleTooLong
+            case excerptTooLong
+            case contentTooLong
+        }
 
-    public struct New: Sendable {
-        public let title: String
-        public let excerpt: String
-        public let content: String
-        public let imageAssetId: String?
-        public let categoryIds: [String]
-        public let metadata: WebDomain.Metadata.Model.New
-    }
+        public struct New: Sendable {
+            public let title: String
+            public let excerpt: String
+            public let content: String
+            public let imageAssetId: String?
+            public let categoryIds: [String]
+            public let metadata: WebModule.Metadata.Model.New
+        }
 
-    public let id: String
-    public var title: String
-    public var excerpt: String
-    public var content: String
-    public var imageAssetId: String?
-    public var categoryIds: [String]
-    public var metadata: WebDomain.Metadata.Model
-    public let createdAt: Date
-    public let updatedAt: Date
+        public let id: String
+        public var title: String
+        public var excerpt: String
+        public var content: String
+        public var imageAssetId: String?
+        public var categoryIds: [String]
+        public var metadata: WebModule.Metadata.Model
+        public let createdAt: Date
+        public let updatedAt: Date
 
-    package init(
-        id: String,
-        title: String,
-        excerpt: String,
-        content: String,
-        imageAssetId: String?,
-        categoryIds: [String],
-        metadata: WebDomain.Metadata.Model,
-        createdAt: Date,
-        updatedAt: Date
-    ) {
-        self.id = id
-        self.title = title
-        self.excerpt = excerpt
-        self.content = content
-        self.imageAssetId = imageAssetId
-        self.categoryIds = categoryIds
-        self.metadata = metadata
-        self.createdAt = createdAt
-        self.updatedAt = updatedAt
-    }
+        package init(
+            id: String,
+            title: String,
+            excerpt: String,
+            content: String,
+            imageAssetId: String?,
+            categoryIds: [String],
+            metadata: WebModule.Metadata.Model,
+            createdAt: Date,
+            updatedAt: Date
+        ) {
+            self.id = id
+            self.title = title
+            self.excerpt = excerpt
+            self.content = content
+            self.imageAssetId = imageAssetId
+            self.categoryIds = categoryIds
+            self.metadata = metadata
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
+        }
     }
 }
 
@@ -100,13 +101,13 @@ extension Article.Model {
         content: String,
         imageAssetId: String? = nil,
         categoryIds: [String],
-        metadata: WebDomain.Metadata.Model.Base? = nil
+        metadata: WebModule.Metadata.Model.Base? = nil
     ) throws -> Self.New {
         try validate(title: title)
         try validate(excerpt: excerpt)
         try validate(content: content)
 
-        let metadataModel = try WebDomain.Metadata.Model.create(
+        let metadataModel = try WebModule.Metadata.Model.create(
             reference: .type("news.article"),
             base: metadata
                 ?? .init(

@@ -11,9 +11,10 @@ public import NewsDomain
 public import NewsModule
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension CategoryTable.Row {
-    func asDomain(metadata: WebDomain.Metadata.Model) -> Category.Model {
+    func asDomain(metadata: WebModule.Metadata.Model) -> Category.Model {
         .init(
             id: id,
             title: title,
@@ -50,7 +51,8 @@ public struct CategoryDatabaseRepository: Category.Repository.Interface {
         var newMetadata = model.metadata
         try newMetadata.set(referenceID: saved.id)
 
-        let metadata = try await Metadata.Repository.Database(context: context)
+        let metadata = try await WebModule.Metadata.Repository
+            .Database(context: context)
             .insert(newMetadata)
         return saved.asDomain(metadata: metadata)
     }
@@ -61,10 +63,11 @@ public struct CategoryDatabaseRepository: Category.Repository.Interface {
         let table = CategoryTable(connection: context.connection)
         guard let category = try await table.find(id: id) else { return nil }
         guard
-            let metadata = try await Metadata.Repository.Database(
-                context: context
-            )
-            .find(referenceType: "news.category", referenceId: id)
+            let metadata = try await WebModule.Metadata.Repository
+                .Database(
+                    context: context
+                )
+                .find(referenceType: "news.category", referenceId: id)
         else { return nil }
         return category.asDomain(metadata: metadata)
     }
@@ -85,7 +88,7 @@ public struct CategoryDatabaseRepository: Category.Repository.Interface {
                 updatedAt: model.updatedAt
             )
         )
-        _ = try await Metadata.Repository.Database(context: context)
+        _ = try await WebModule.Metadata.Repository.Database(context: context)
             .update(model.metadata)
         return updated.asDomain(metadata: model.metadata)
     }

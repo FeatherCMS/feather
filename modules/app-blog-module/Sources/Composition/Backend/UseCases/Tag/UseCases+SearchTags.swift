@@ -6,6 +6,7 @@ import MediaBackend
 import SystemInfrastructure
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
     public func makeSearchTags() -> Tag.Search.UseCase {
@@ -15,7 +16,9 @@ extension UseCases {
                 Tag.Search.Scope(
                     tag: Tag.Search.Query.Database(
                         context: context,
-                        metadata: Metadata.Query.Database(context: context)
+                        metadata: WebModule.Metadata.Query.Database(
+                            context: context
+                        )
                     )
                 )
             }

@@ -1,6 +1,3 @@
-import WebBuilders
-import WebDomain
-import WebComponents
 import FeatherValidation
 import FeatherWebAdmin
 import HTML
@@ -8,6 +5,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
+import WebBuilders
+import WebComponents
+import WebDomain
+public import WebModule
 
 struct MenuItemBulkConfirmation: Component {
     struct State {
@@ -29,7 +30,7 @@ struct MenuItemBulkConfirmation: Component {
                 ),
                 selectedItems: state.items.map(\.label),
                 action:
-                    WebDomain.Menu.Item.Routes
+                    Menu.Item.Routes
                     .remove(
                         RouterPath(state.menuId)
                     )

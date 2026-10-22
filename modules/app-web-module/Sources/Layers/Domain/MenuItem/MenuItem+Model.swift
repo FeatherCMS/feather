@@ -6,10 +6,9 @@
 
 public import FeatherDomain
 import FeatherModuleKit
+public import WebModule
 
 public import struct Foundation.Date
-
-public enum MenuItem {}
 
 extension MenuItem {
     public struct Model: FeatherDomain.Model {

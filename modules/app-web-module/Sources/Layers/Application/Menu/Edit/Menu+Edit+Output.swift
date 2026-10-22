@@ -1,5 +1,6 @@
 public import FeatherApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 public import struct Foundation.Date
 

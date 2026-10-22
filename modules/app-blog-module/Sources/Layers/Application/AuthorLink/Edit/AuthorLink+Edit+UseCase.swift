@@ -2,6 +2,7 @@ import BlogDomain
 public import BlogModule
 public import FeatherApplication
 public import FeatherModuleKit
+import WebModule
 
 //
 //  EditAuthorLink.swift

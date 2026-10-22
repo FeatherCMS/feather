@@ -1,12 +1,12 @@
-import WebBuilders
-import WebDomain
-import WebComponents
 import FeatherModuleKit
 import FeatherWebAdmin
 import HTML
 import Hummingbird
 import SGML
 import WebAdminAPI
+import WebBuilders
+import WebComponents
+import WebDomain
 import WebModule
 
 struct MenuItemRow: Component {
@@ -66,7 +66,7 @@ struct MenuItemRow: Component {
                         .init(
                             "View",
                             href:
-                                WebDomain.Menu.Item.Routes
+                                Menu.Item.Routes
                                 .details(
                                     RouterPath(menuId),
                                     RouterPath(item.id)
@@ -78,7 +78,7 @@ struct MenuItemRow: Component {
                         .init(
                             "Edit",
                             href:
-                                WebDomain.Menu.Item.Routes
+                                Menu.Item.Routes
                                 .edit(
                                     RouterPath(menuId),
                                     RouterPath(item.id)
@@ -96,7 +96,7 @@ struct MenuItemRow: Component {
         .data("web-menu-item", item.id)
         .data(
             "web-menu-item-move-url",
-            WebDomain.Menu.Item.Routes.move(RouterPath(menuId), RouterPath(item.id))
+            Menu.Item.Routes.move(RouterPath(menuId), RouterPath(item.id))
                 .description
         )
     }

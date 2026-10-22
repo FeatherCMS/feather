@@ -1,12 +1,13 @@
 import FeatherWebAdmin
-import WebDomain
 import OpenAPIRuntime
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Add {
+extension Menu.Add {
     enum Interactor {}
 }
 
-extension WebDomain.Menu.Add.Interactor {
+extension Menu.Add.Interactor {
     protocol Interface: Sendable {
 
         func execute(

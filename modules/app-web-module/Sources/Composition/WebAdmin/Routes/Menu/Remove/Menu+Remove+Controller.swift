@@ -4,17 +4,18 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Remove {
+extension Menu.Remove {
     enum Controller {}
 }
 
-extension WebDomain.Menu.Remove.Controller {
+extension Menu.Remove.Controller {
     protocol Interface: Sendable {
 
-    func postRemoveMenu(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
+        func postRemoveMenu(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
     }
 }

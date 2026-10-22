@@ -5,6 +5,7 @@ import Hummingbird
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
 
 extension Overview {
     struct Content: Component {

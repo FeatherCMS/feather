@@ -1,6 +1,7 @@
 import FeatherModuleKit
 import Foundation
 public import WebDomain
+public import WebModule
 
 extension Page.Add.Input.MetadataInput {
     public func asMetadataBase(

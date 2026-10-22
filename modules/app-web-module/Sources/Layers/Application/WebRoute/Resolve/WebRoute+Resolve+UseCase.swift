@@ -7,7 +7,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import Foundation
-public import WebDomain
+public import WebModule
 
 extension WebRoute.Resolve {
     public struct UseCase {

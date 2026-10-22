@@ -1,8 +1,9 @@
 public import FeatherApplication
-public import NewsModule
 import NewsDomain
+public import NewsModule
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 public import struct Foundation.Date
 
@@ -18,7 +19,7 @@ extension Article.Detail {
         public let content: String
         public let imageAssetId: String?
         public let categoryIds: [String]
-        public let metadata: Metadata.Detail.Output
+        public let metadata: WebModule.Metadata.Detail.Output
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -29,7 +30,7 @@ extension Article.Detail {
             content: String,
             imageAssetId: String?,
             categoryIds: [String],
-            metadata: Metadata.Detail.Output,
+            metadata: WebModule.Metadata.Detail.Output,
             createdAt: Date,
             updatedAt: Date
         ) {

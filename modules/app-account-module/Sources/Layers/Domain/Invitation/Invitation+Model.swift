@@ -61,9 +61,9 @@ extension Invitation {
             self.updatedAt = updatedAt
         }
     }
-    }
+}
 
-    extension Invitation.Model {
+extension Invitation.Model {
 
     package init(
         id: String,

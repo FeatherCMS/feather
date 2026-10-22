@@ -1,6 +1,5 @@
 public import FeatherModuleKit
-public import WebDomain
-import WebModule
+public import WebModule
 
 extension Menu.Add {
     public struct Action: PermissionAction {

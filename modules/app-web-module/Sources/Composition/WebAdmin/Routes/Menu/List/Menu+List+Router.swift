@@ -3,16 +3,17 @@ import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.List {
+extension Menu.List {
     struct Router {
         let controller: any Controller.Interface
-        let routes: WebDomain.Menu.Router.Routes
+        let routes: Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: WebDomain.Menu.Router.Routes
+            routes: Menu.Router.Routes
         ) {
             self.routes = routes
             self.controller = Controller.Default(

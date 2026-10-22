@@ -2,6 +2,7 @@ import Foundation
 import NewsAdminAPI
 import WebApplication
 import WebDomain
+import WebModule
 
 extension Components.Schemas.NewsMetadataInputSchema {
     func pageAddMetadata(template: String) -> Page.Add.Input.MetadataInput {
@@ -14,7 +15,7 @@ extension Components.Schemas.NewsMetadataInputSchema {
             expirationDate: expirationDate.map(
                 Date.init(timeIntervalSince1970:)
             ),
-            status: Metadata.Model.Status(rawValue: status) ?? .draft,
+            status: WebModule.Metadata.Model.Status(rawValue: status) ?? .draft,
             title: title,
             excerpt: excerpt,
             imageURL: imageURL,
@@ -37,7 +38,7 @@ extension Components.Schemas.NewsMetadataInputSchema {
             expirationDate: expirationDate.map(
                 Date.init(timeIntervalSince1970:)
             ),
-            status: Metadata.Model.Status(rawValue: status) ?? .draft,
+            status: WebModule.Metadata.Model.Status(rawValue: status) ?? .draft,
             title: title,
             excerpt: excerpt,
             imageURL: imageURL,

@@ -1,5 +1,6 @@
 public import FeatherModuleKit
 public import WebDomain
+public import WebModule
 
 extension Page.Edit {
     public struct Scope: FeatherModuleKit.Scope {

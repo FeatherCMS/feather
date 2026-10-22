@@ -65,9 +65,9 @@ extension MagicLink {
         }
     }
 
-    }
+}
 
-    extension MagicLink.Model {
+extension MagicLink.Model {
 
     private static func validate(
         authEmailId: String

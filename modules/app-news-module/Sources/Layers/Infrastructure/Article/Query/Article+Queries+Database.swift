@@ -11,7 +11,8 @@ public import NewsApplication
 import NewsDomain
 public import NewsModule
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension ArticleTable.Row {
     var asQueryListItem: Article.List.Output.Item {
@@ -27,7 +28,7 @@ extension ArticleTable.Row {
     }
 
     func asDetail(
-        metadata: Metadata.Detail.Output,
+        metadata: WebModule.Metadata.Detail.Output,
         categoryIds: [String]
     ) -> Article.Detail.Output {
         .init(
@@ -47,11 +48,11 @@ extension ArticleTable.Row {
 public struct ArticleDatabaseQueries: ArticleQueries {
 
     public let context: DatabaseQueryContext
-    public var metadata: any Metadata.Query.Interface
+    public var metadata: any WebModule.Metadata.Query.Interface
 
     public init(
         context: DatabaseQueryContext,
-        metadata: any Metadata.Query.Interface
+        metadata: any WebModule.Metadata.Query.Interface
     ) {
         self.context = context
         self.metadata = metadata

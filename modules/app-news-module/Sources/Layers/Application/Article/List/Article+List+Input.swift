@@ -1,6 +1,7 @@
 public import FeatherApplication
-public import NewsModule
 import NewsDomain
+public import NewsModule
+import WebModule
 
 extension Article {
     public enum List {}

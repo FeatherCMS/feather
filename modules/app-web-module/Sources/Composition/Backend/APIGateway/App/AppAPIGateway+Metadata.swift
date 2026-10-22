@@ -1,6 +1,7 @@
 import FeatherDatabase
 public import WebAppAPI
 import WebApplication
+import WebModule
 
 extension Error {
     fileprivate var isResolveWebRouteNotFound: Bool {

@@ -8,6 +8,7 @@ import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 public import WebDomain
+public import WebModule
 
 extension Menu.Table.Detail {
     var asDomain: Menu.Model {

@@ -2,6 +2,7 @@ public import FeatherDBAL
 public import FeatherDatabase
 public import FeatherInfrastructure
 import WebDomain
+import WebModule
 
 public struct TableMigration: DatabaseMigration {
     public let connection: any DatabaseConnection

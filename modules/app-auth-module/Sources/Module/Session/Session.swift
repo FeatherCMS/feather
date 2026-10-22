@@ -1,3 +1,1 @@
-public enum Session {
-    public enum Repository {}
-}
+public enum Session {}

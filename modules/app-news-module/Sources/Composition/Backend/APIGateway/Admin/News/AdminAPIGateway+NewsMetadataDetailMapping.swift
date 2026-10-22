@@ -2,10 +2,11 @@ import Foundation
 import NewsAdminAPI
 import WebApplication
 import WebDomain
+import WebModule
 
 extension AdminAPIGateway {
     func map(
-        _ item: Metadata.Detail.Output
+        _ item: WebModule.Metadata.Detail.Output
     ) -> Components.Schemas.NewsMetadataDetailSchema {
         .init(
             id: item.id,

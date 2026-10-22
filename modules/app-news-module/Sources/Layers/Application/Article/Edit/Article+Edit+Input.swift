@@ -1,8 +1,9 @@
 public import FeatherApplication
+import NewsDomain
 public import NewsModule
 public import WebApplication
-import NewsDomain
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension Article {
     public enum Edit {}

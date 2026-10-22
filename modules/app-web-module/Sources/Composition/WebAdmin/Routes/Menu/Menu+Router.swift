@@ -2,8 +2,9 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import WebDomain
+public import WebModule
 
-extension WebDomain.Menu {
+extension Menu {
     enum Add {}
     enum Edit {}
     enum Remove {}
@@ -69,15 +70,15 @@ extension WebDomain.Menu {
     }
 }
 
-extension WebDomain.Menu.View {
+extension Menu.View {
     struct Router {
         let controller: any Controller.Interface
-        let routes: WebDomain.Menu.Router.Routes
+        let routes: Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: WebDomain.Menu.Router.Routes
+            routes: Menu.Router.Routes
         ) {
             self.routes = routes
             controller = Controller.Default(
@@ -107,15 +108,15 @@ extension WebDomain.Menu.View {
     }
 }
 
-extension WebDomain.Menu.Add {
+extension Menu.Add {
     struct Router {
         let controller: any Controller.Interface
-        let routes: WebDomain.Menu.Router.Routes
+        let routes: Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: WebDomain.Menu.Router.Routes
+            routes: Menu.Router.Routes
         ) {
             self.routes = routes
             controller = Controller.Default(
@@ -152,15 +153,15 @@ extension WebDomain.Menu.Add {
     }
 }
 
-extension WebDomain.Menu.Edit {
+extension Menu.Edit {
     struct Router {
         let controller: any Controller.Interface
-        let routes: WebDomain.Menu.Router.Routes
+        let routes: Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: WebDomain.Menu.Router.Routes
+            routes: Menu.Router.Routes
         ) {
             self.routes = routes
             controller = Controller.Default(
@@ -197,15 +198,15 @@ extension WebDomain.Menu.Edit {
     }
 }
 
-extension WebDomain.Menu.Remove {
+extension Menu.Remove {
     struct Router {
         let controller: any Controller.Interface
-        let routes: WebDomain.Menu.Router.Routes
+        let routes: Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: WebDomain.Menu.Router.Routes
+            routes: Menu.Router.Routes
         ) {
             self.routes = routes
             controller = Controller.Default(

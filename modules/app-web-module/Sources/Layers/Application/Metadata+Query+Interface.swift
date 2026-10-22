@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
-public import WebDomain
+public import WebModule
 
 extension Metadata {
     public enum Query {}

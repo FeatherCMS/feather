@@ -4,8 +4,9 @@ import Hummingbird
 import OpenAPIRuntime
 import WebAdminAPI
 import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.List.Repository {
+extension Menu.List.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
         private let listUnauthorizedMessage =
@@ -26,7 +27,7 @@ extension WebDomain.Menu.List.Repository {
         func listMenus(
             page: Int,
             search: String?
-        ) async throws -> WebDomain.Menu.List.Model {
+        ) async throws -> Menu.List.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client

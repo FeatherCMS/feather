@@ -1,5 +1,6 @@
 public import BlogModule
 public import FeatherApplication
+import WebModule
 
 extension AuthorLink.Search {
     public struct Input: DTO {

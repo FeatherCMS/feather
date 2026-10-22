@@ -4,36 +4,64 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import FeatherDomain
 public import AnalyticsModule
+public import FeatherDomain
 
 public import struct Foundation.Date
 
 extension Log {
     public struct Model: FeatherDomain.Model {
 
-    public enum TrafficCategory: String, Sendable {
-        case human
-        case bot
-        case ai
-    }
+        public enum TrafficCategory: String, Sendable {
+            case human
+            case bot
+            case ai
+        }
 
-    public enum Source: String, Sendable, CaseIterable {
-        case backendAPI = "backend_api"
-        case webApp = "web_app"
-    }
+        public enum Source: String, Sendable, CaseIterable {
+            case backendAPI = "backend_api"
+            case webApp = "web_app"
+        }
 
-    public enum Error: DomainError {
-        case methodTooShort
-        case methodTooLong
-        case urlTooShort
-        case urlTooLong
-        case pathTooShort
-        case pathTooLong
-        case invalidResponseCode
-    }
+        public enum Error: DomainError {
+            case methodTooShort
+            case methodTooLong
+            case urlTooShort
+            case urlTooLong
+            case pathTooShort
+            case pathTooLong
+            case invalidResponseCode
+        }
 
-    public struct New: Sendable {
+        public struct New: Sendable {
+            public let accountId: String?
+            public let source: Source
+            public let method: String
+            public let url: String
+            public let headers: String
+            public let ip: String?
+            public let path: String
+            public let referer: String?
+            public let origin: String?
+            public let acceptLanguage: String?
+            public let userAgent: String?
+            public let trafficCategory: TrafficCategory
+            public let language: String?
+            public let region: String?
+            public let osName: String?
+            public let osVersion: String?
+            public let browserName: String?
+            public let browserVersion: String?
+            public let engineName: String?
+            public let engineVersion: String?
+            public let deviceVendor: String?
+            public let deviceType: String?
+            public let deviceModel: String?
+            public let cpu: String?
+            public let responseCode: Int
+        }
+
+        public let id: String
         public let accountId: String?
         public let source: Source
         public let method: String
@@ -59,96 +87,68 @@ extension Log {
         public let deviceModel: String?
         public let cpu: String?
         public let responseCode: Int
-    }
+        public let createdAt: Date
+        public let updatedAt: Date
 
-    public let id: String
-    public let accountId: String?
-    public let source: Source
-    public let method: String
-    public let url: String
-    public let headers: String
-    public let ip: String?
-    public let path: String
-    public let referer: String?
-    public let origin: String?
-    public let acceptLanguage: String?
-    public let userAgent: String?
-    public let trafficCategory: TrafficCategory
-    public let language: String?
-    public let region: String?
-    public let osName: String?
-    public let osVersion: String?
-    public let browserName: String?
-    public let browserVersion: String?
-    public let engineName: String?
-    public let engineVersion: String?
-    public let deviceVendor: String?
-    public let deviceType: String?
-    public let deviceModel: String?
-    public let cpu: String?
-    public let responseCode: Int
-    public let createdAt: Date
-    public let updatedAt: Date
-
-    package init(
-        id: String,
-        accountId: String?,
-        source: Source,
-        method: String,
-        url: String,
-        headers: String,
-        ip: String?,
-        path: String,
-        referer: String?,
-        origin: String?,
-        acceptLanguage: String?,
-        userAgent: String?,
-        trafficCategory: TrafficCategory,
-        language: String?,
-        region: String?,
-        osName: String?,
-        osVersion: String?,
-        browserName: String?,
-        browserVersion: String?,
-        engineName: String?,
-        engineVersion: String?,
-        deviceVendor: String?,
-        deviceType: String?,
-        deviceModel: String?,
-        cpu: String?,
-        responseCode: Int,
-        createdAt: Date,
-        updatedAt: Date
-    ) {
-        self.id = id
-        self.accountId = accountId
-        self.source = source
-        self.method = method
-        self.url = url
-        self.headers = headers
-        self.ip = ip
-        self.path = path
-        self.referer = referer
-        self.origin = origin
-        self.acceptLanguage = acceptLanguage
-        self.userAgent = userAgent
-        self.trafficCategory = trafficCategory
-        self.language = language
-        self.region = region
-        self.osName = osName
-        self.osVersion = osVersion
-        self.browserName = browserName
-        self.browserVersion = browserVersion
-        self.engineName = engineName
-        self.engineVersion = engineVersion
-        self.deviceVendor = deviceVendor
-        self.deviceType = deviceType
-        self.deviceModel = deviceModel
-        self.cpu = cpu
-        self.responseCode = responseCode
-        self.createdAt = createdAt
-        self.updatedAt = updatedAt
-    }
+        package init(
+            id: String,
+            accountId: String?,
+            source: Source,
+            method: String,
+            url: String,
+            headers: String,
+            ip: String?,
+            path: String,
+            referer: String?,
+            origin: String?,
+            acceptLanguage: String?,
+            userAgent: String?,
+            trafficCategory: TrafficCategory,
+            language: String?,
+            region: String?,
+            osName: String?,
+            osVersion: String?,
+            browserName: String?,
+            browserVersion: String?,
+            engineName: String?,
+            engineVersion: String?,
+            deviceVendor: String?,
+            deviceType: String?,
+            deviceModel: String?,
+            cpu: String?,
+            responseCode: Int,
+            createdAt: Date,
+            updatedAt: Date
+        ) {
+            self.id = id
+            self.accountId = accountId
+            self.source = source
+            self.method = method
+            self.url = url
+            self.headers = headers
+            self.ip = ip
+            self.path = path
+            self.referer = referer
+            self.origin = origin
+            self.acceptLanguage = acceptLanguage
+            self.userAgent = userAgent
+            self.trafficCategory = trafficCategory
+            self.language = language
+            self.region = region
+            self.osName = osName
+            self.osVersion = osVersion
+            self.browserName = browserName
+            self.browserVersion = browserVersion
+            self.engineName = engineName
+            self.engineVersion = engineVersion
+            self.deviceVendor = deviceVendor
+            self.deviceType = deviceType
+            self.deviceModel = deviceModel
+            self.cpu = cpu
+            self.responseCode = responseCode
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
+        }
     }
 }
 

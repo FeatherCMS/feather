@@ -7,8 +7,9 @@ import NewsInfrastructure
 import SystemApplication
 import SystemInfrastructure
 import SystemModule
-import WebInfrastructure
 import WebDomain
+import WebInfrastructure
+import WebModule
 
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext
@@ -38,11 +39,11 @@ extension UseCases {
                 ReadArticleMetadata(
                     article: ArticleDatabaseQueries(
                         context: context,
-                        metadata: Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    metadata: Metadata.Query.Database(
+                    metadata: WebModule.Metadata.Query.Database(
                         context: context
                     )
                 )
@@ -58,7 +59,9 @@ extension UseCases {
             scope: { context in
                 WriteArticleMetadata(
                     article: ArticleDatabaseRepository(context: context),
-                    metadata: Metadata.Repository.Database(context: context),
+                    metadata: WebModule.Metadata.Repository.Database(
+                        context: context
+                    ),
                     variable: SystemModule.Variable.Lookup.Database(
                         context: context
                     )
@@ -76,11 +79,11 @@ extension UseCases {
                 ReadCategoryMetadata(
                     category: CategoryDatabaseQueries(
                         context: context,
-                        metadata: Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    metadata: Metadata.Query.Database(
+                    metadata: WebModule.Metadata.Query.Database(
                         context: context
                     )
                 )
@@ -96,7 +99,9 @@ extension UseCases {
             scope: { context in
                 WriteCategoryMetadata(
                     category: CategoryDatabaseRepository(context: context),
-                    metadata: Metadata.Repository.Database(context: context),
+                    metadata: WebModule.Metadata.Repository.Database(
+                        context: context
+                    ),
                     variable: SystemModule.Variable.Lookup.Database(
                         context: context
                     )
@@ -116,7 +121,9 @@ extension UseCases {
                 WriteCategoryArticlesMetadata(
                     article: ArticleDatabaseRepository(context: context),
                     category: CategoryDatabaseRepository(context: context),
-                    metadata: Metadata.Repository.Database(context: context)
+                    metadata: WebModule.Metadata.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )

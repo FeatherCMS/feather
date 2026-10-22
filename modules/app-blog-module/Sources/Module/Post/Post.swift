@@ -1,3 +1,1 @@
-public enum Post {
-    public enum Repository {}
-}
+public enum Post {}

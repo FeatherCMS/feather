@@ -6,7 +6,7 @@
 
 import FeatherApplication
 public import FeatherModuleKit
-public import WebDomain
+public import WebModule
 
 extension Menu.Public.List {
     public struct UseCase: Sendable {

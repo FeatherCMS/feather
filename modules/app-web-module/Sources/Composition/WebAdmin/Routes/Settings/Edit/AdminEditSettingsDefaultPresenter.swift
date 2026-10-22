@@ -3,6 +3,7 @@ import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
+import WebModule
 
 struct AdminEditSettingsDefaultPresenter:
     AdminEditSettingsPresenter

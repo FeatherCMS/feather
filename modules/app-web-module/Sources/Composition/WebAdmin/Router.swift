@@ -4,6 +4,7 @@ public import FeatherWebShared
 public import Hummingbird
 import OpenAPIRuntime
 import WebDomain
+import WebModule
 
 public struct Router {
     public struct Routes: Sendable {

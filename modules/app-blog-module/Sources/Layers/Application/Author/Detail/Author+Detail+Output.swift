@@ -2,7 +2,8 @@ public import BlogModule
 public import FeatherApplication
 import FeatherModuleKit
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 public import struct Foundation.Date
 
@@ -19,7 +20,7 @@ extension Author.Detail {
         public let excerpt: String
         public let content: String
         public let profileImageAssetId: String?
-        public let metadata: Metadata.Detail.Output
+        public let metadata: WebModule.Metadata.Detail.Output
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -29,7 +30,7 @@ extension Author.Detail {
             excerpt: String,
             content: String,
             profileImageAssetId: String?,
-            metadata: Metadata.Detail.Output,
+            metadata: WebModule.Metadata.Detail.Output,
             createdAt: Date,
             updatedAt: Date
         ) {

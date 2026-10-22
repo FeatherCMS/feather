@@ -1,16 +1,17 @@
 import FeatherWebAdmin
-import WebDomain
 import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.View.Controller {
+extension Menu.View.Controller {
     struct Default: Interface {
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
-                any WebDomain.Menu.View.Interactor.Interface,
-                any WebDomain.Menu.View.Presenter.Interface
+                any Menu.View.Interactor.Interface,
+                any Menu.View.Presenter.Interface
             >
 
         func getMenu(

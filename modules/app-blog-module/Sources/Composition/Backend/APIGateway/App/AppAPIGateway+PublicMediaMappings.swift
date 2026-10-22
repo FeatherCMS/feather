@@ -5,6 +5,7 @@ import MediaApplication
 import MediaBackend
 import WebApplication
 public import WebDomain
+public import WebModule
 
 extension AppAPIGateway {
     func publicMedia(

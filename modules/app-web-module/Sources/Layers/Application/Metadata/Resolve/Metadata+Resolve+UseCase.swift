@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import SystemModule
-public import WebDomain
+public import WebModule
 
 extension Metadata.Resolve {
     public struct UseCase: FeatherApplication.UseCase {

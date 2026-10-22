@@ -1,5 +1,6 @@
 public import BlogModule
+import WebModule
 
-extension Settings {
+extension BlogModule.Settings {
     public enum Detail {}
 }

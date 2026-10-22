@@ -5,6 +5,7 @@ import FeatherInfrastructure
 import WebApplication
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
     func makeSearchPages() -> Page.Search.UseCase {

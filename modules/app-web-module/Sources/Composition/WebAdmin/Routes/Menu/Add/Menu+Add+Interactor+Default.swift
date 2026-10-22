@@ -1,10 +1,11 @@
 import FeatherWebAdmin
-import WebDomain
 import OpenAPIRuntime
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Add.Interactor {
+extension Menu.Add.Interactor {
     struct Default: Interface {
-        let repository: any WebDomain.Menu.Add.Repository.Interface
+        let repository: any Menu.Add.Repository.Interface
 
         func execute(
             input: MenuFormInput

@@ -1,3 +1,1 @@
-public enum Tag {
-    public enum Repository {}
-}
+public enum Tag {}

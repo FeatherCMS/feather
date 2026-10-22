@@ -7,7 +7,8 @@
 public import BlogModule
 public import FeatherApplication
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 public import struct Foundation.Date
 
@@ -20,7 +21,7 @@ extension Post.Detail {
         public let imageAssetId: String?
         public let authorIds: [String]
         public let tagIds: [String]
-        public let metadata: Metadata.Detail.Output
+        public let metadata: WebModule.Metadata.Detail.Output
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -32,7 +33,7 @@ extension Post.Detail {
             imageAssetId: String?,
             authorIds: [String],
             tagIds: [String],
-            metadata: Metadata.Detail.Output,
+            metadata: WebModule.Metadata.Detail.Output,
             createdAt: Date,
             updatedAt: Date
         ) {

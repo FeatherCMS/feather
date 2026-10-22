@@ -12,6 +12,7 @@ import SystemInfrastructure
 import SystemModule
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
@@ -23,7 +24,7 @@ extension UseCases {
                     tag: Tag.Repository.Database(
                         context: context
                     ),
-                    metadata: Metadata.Repository.Database(
+                    metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     ),
                     variable: SystemModule.Variable.Lookup.Database(

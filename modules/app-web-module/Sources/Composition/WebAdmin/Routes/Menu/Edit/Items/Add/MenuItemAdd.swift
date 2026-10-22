@@ -1,6 +1,3 @@
-import WebBuilders
-import WebDomain
-import WebComponents
 import FeatherValidation
 import FeatherWebAdmin
 import HTML
@@ -8,6 +5,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
+import WebBuilders
+import WebComponents
+import WebDomain
+public import WebModule
 
 struct MenuItemAdd: Component {
 
@@ -44,7 +45,7 @@ struct MenuItemAdd: Component {
                         MenuItemForm(
                             state: state.form,
                             action:
-                                WebDomain.Menu.Item.Routes
+                                Menu.Item.Routes
                                 .add(
                                     RouterPath(state.menuId)
                                 )

@@ -7,10 +7,9 @@
 public import FeatherDomain
 import FeatherModuleKit
 public import Foundation
+public import WebModule
 
 public import struct Foundation.Date
-
-public enum Page {}
 
 extension Page {
     public struct Model: FeatherDomain.Model {

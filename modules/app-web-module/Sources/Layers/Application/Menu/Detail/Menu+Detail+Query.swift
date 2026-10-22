@@ -1,4 +1,4 @@
-public import WebDomain
+public import WebModule
 
 extension Menu.Detail.Query {
     public protocol Interface: Sendable {

@@ -2,8 +2,9 @@ import BlogDomain
 public import BlogModule
 public import FeatherApplication
 public import FeatherModuleKit
+import WebModule
 
-extension Settings.Detail {
+extension BlogModule.Settings.Detail {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
         let query: any QueryExecutor<Scope>

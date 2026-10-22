@@ -10,6 +10,7 @@ import MediaBackend
 import SystemInfrastructure
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
@@ -20,7 +21,7 @@ extension UseCases {
                 Tag.Detail.Scope(
                     tag: Tag.Detail.Query.Database(
                         context: context,
-                        metadata: Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Query.Database(
                             context: context
                         )
                     )

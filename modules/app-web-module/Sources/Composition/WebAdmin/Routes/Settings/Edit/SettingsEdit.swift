@@ -4,6 +4,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct SettingsEdit: Component {
 

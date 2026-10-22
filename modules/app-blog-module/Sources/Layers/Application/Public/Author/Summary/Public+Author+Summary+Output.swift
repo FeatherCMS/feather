@@ -6,7 +6,8 @@
 
 public import FeatherApplication
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension Public.Author.Summary {
     public struct Output: DTO {
@@ -17,7 +18,7 @@ extension Public.Author.Summary {
         public let imageAssetId: String?
         public let imageURL: String
         public let media: WebApplication.Public.Page.Detail.Output.Media?
-        public let metadata: Metadata.Detail.Output
+        public let metadata: WebModule.Metadata.Detail.Output
 
         public init(
             id: String,
@@ -27,7 +28,7 @@ extension Public.Author.Summary {
             imageAssetId: String?,
             imageURL: String,
             media: WebApplication.Public.Page.Detail.Output.Media?,
-            metadata: Metadata.Detail.Output
+            metadata: WebModule.Metadata.Detail.Output
         ) {
             self.id = id
             self.name = name

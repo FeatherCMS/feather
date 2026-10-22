@@ -1,5 +1,6 @@
 public import WebAppAPI
 import WebApplication
+import WebModule
 
 extension AppAPIGateway {
     public func pageGet(

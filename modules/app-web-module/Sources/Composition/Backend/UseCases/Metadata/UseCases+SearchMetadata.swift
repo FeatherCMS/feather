@@ -5,6 +5,7 @@ import FeatherModuleKit
 import WebApplication
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
     func makeSearchMetadata() -> Metadata.Search.UseCase {

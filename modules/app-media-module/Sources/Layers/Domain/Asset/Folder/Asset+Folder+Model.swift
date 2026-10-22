@@ -49,9 +49,9 @@ extension Asset.Folder {
             self.deletedAt = deletedAt
         }
     }
-    }
+}
 
-    extension Asset.Folder.Model {
+extension Asset.Folder.Model {
     public static func create(
         parentId: String?,
         name: String,

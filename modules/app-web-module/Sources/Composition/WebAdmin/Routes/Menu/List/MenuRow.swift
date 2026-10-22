@@ -15,8 +15,7 @@ struct MenuRow: Component {
         let name: String
         let actions: [AdminListRowActions.Action]
 
-        init(menu: Components.Schemas.MenuQueryItemSchema, returnTo: String)
-        {
+        init(menu: Components.Schemas.MenuQueryItemSchema, returnTo: String) {
             self.id = menu.id
             self.key = menu.key
             self.name = menu.name

@@ -6,6 +6,7 @@ import SGML
 import WebAdminAPI
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct MenuDetails: Component {
     struct State {

@@ -4,7 +4,8 @@ import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 import struct Foundation.Data
 import class Foundation.JSONDecoder
@@ -27,7 +28,8 @@ extension Post.Table.List {
 }
 
 extension Post.Table.Detail {
-    func asDetail(metadata: Metadata.Detail.Output) throws -> Post.Detail.Output
+    func asDetail(metadata: WebModule.Metadata.Detail.Output) throws
+        -> Post.Detail.Output
     {
         .init(
             id: id,
@@ -47,11 +49,11 @@ extension Post.Table.Detail {
 extension BlogApplication.Public.Query.PostContent {
     public struct Database: Interface {
         public let context: DatabaseQueryContext
-        public let metadata: any Metadata.Query.Interface
+        public let metadata: any WebModule.Metadata.Query.Interface
 
         public init(
             context: DatabaseQueryContext,
-            metadata: any Metadata.Query.Interface
+            metadata: any WebModule.Metadata.Query.Interface
         ) {
             self.context = context
             self.metadata = metadata

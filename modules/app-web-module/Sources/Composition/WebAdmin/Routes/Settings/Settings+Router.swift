@@ -2,6 +2,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import WebDomain
+import WebModule
 
 extension Settings {
     struct Router {

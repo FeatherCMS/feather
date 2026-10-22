@@ -5,9 +5,10 @@ import FeatherDomain
 public import FeatherInfrastructure
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension Author.Table.Detail {
-    func asDomain(metadata: WebDomain.Metadata.Model) -> Author.Model {
+    func asDomain(metadata: WebModule.Metadata.Model) -> Author.Model {
         .init(
             id: id,
             name: name,
@@ -57,7 +58,7 @@ extension Author.Repository {
             }
             var newMetadata = model.metadata
             try newMetadata.set(referenceID: id)
-            let metadata = try await Metadata.Repository
+            let metadata = try await WebModule.Metadata.Repository
                 .Database(context: context)
                 .insert(newMetadata)
             return author.asDomain(metadata: metadata)
@@ -76,7 +77,7 @@ extension Author.Repository {
                 return nil
             }
             guard
-                let metadata = try await Metadata.Repository
+                let metadata = try await WebModule.Metadata.Repository
                     .Database(context: context)
                     .find(referenceType: "blog.author", referenceId: id)
             else {

@@ -1,5 +1,5 @@
 public import FeatherApplication
-public import WebDomain
+public import WebModule
 
 extension MenuItem.Detail {
     public struct Input: DTO {

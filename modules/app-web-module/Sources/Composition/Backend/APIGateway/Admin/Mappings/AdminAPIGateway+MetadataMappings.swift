@@ -6,6 +6,7 @@ import WebAdminAPI
 import WebAppAPI
 import WebApplication
 import WebDomain
+import WebModule
 
 extension AdminAPIGateway {
     func mapMetadataStatus(_ value: String?) -> Metadata.Model.Status {

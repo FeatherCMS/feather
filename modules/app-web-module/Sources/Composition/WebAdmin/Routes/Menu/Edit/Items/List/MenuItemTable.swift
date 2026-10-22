@@ -4,6 +4,7 @@ import SGML
 import WebAdminAPI
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct MenuItemTable: Component {
     struct State {

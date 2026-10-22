@@ -7,23 +7,25 @@
 public import BlogModule
 public import FeatherDomain
 
-extension Author.Repository {
-    public protocol Interface: FeatherDomain.Repository {
+extension Author {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
-        func find(
-            id: String
-        ) async throws -> Author.Model?
+            func find(
+                id: String
+            ) async throws -> Model?
 
-        func insert(
-            _ model: Author.Model.New
-        ) async throws -> Author.Model
+            func insert(
+                _ model: Model.New
+            ) async throws -> Model
 
-        func update(
-            _ model: Author.Model
-        ) async throws -> Author.Model
+            func update(
+                _ model: Model
+            ) async throws -> Model
 
-        func delete(
-            ids: [String]
-        ) async throws -> [String]
+            func delete(
+                ids: [String]
+            ) async throws -> [String]
+        }
     }
 }

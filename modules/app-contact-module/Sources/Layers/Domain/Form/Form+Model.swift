@@ -1,54 +1,54 @@
-public import FeatherDomain
 public import ContactModule
+public import FeatherDomain
 
 public import struct Foundation.Date
 
 extension Form {
     public struct Model: FeatherDomain.Model {
 
-    public enum Error: DomainError {
-        case keyTooShort
-        case keyTooLong
-        case nameTooShort
-        case nameTooLong
-    }
+        public enum Error: DomainError {
+            case keyTooShort
+            case keyTooLong
+            case nameTooShort
+            case nameTooLong
+        }
 
-    public struct New: Sendable {
-        public let key: String
-        public let name: String
-        public let successMessage: String
-        public let failureMessage: String
-        public let redirectUrl: String?
-    }
+        public struct New: Sendable {
+            public let key: String
+            public let name: String
+            public let successMessage: String
+            public let failureMessage: String
+            public let redirectUrl: String?
+        }
 
-    public let id: String
-    public var key: String
-    public var name: String
-    public var successMessage: String
-    public var failureMessage: String
-    public var redirectUrl: String?
-    public let createdAt: Date
-    public let updatedAt: Date
+        public let id: String
+        public var key: String
+        public var name: String
+        public var successMessage: String
+        public var failureMessage: String
+        public var redirectUrl: String?
+        public let createdAt: Date
+        public let updatedAt: Date
 
-    package init(
-        id: String,
-        key: String,
-        name: String,
-        successMessage: String,
-        failureMessage: String,
-        redirectUrl: String?,
-        createdAt: Date,
-        updatedAt: Date
-    ) {
-        self.id = id
-        self.key = key
-        self.name = name
-        self.successMessage = successMessage
-        self.failureMessage = failureMessage
-        self.redirectUrl = redirectUrl
-        self.createdAt = createdAt
-        self.updatedAt = updatedAt
-    }
+        package init(
+            id: String,
+            key: String,
+            name: String,
+            successMessage: String,
+            failureMessage: String,
+            redirectUrl: String?,
+            createdAt: Date,
+            updatedAt: Date
+        ) {
+            self.id = id
+            self.key = key
+            self.name = name
+            self.successMessage = successMessage
+            self.failureMessage = failureMessage
+            self.redirectUrl = redirectUrl
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
+        }
     }
 }
 

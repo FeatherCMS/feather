@@ -4,6 +4,7 @@ public import BlogModule
 import FeatherInfrastructure
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
@@ -14,7 +15,7 @@ extension UseCases {
                 Author.Detail.Scope(
                     author: Author.Detail.Query.Database(
                         context: context,
-                        metadata: Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Query.Database(
                             context: context
                         )
                     )

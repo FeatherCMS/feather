@@ -1,10 +1,11 @@
 import FeatherWebAdmin
-import WebDomain
 import OpenAPIRuntime
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Edit.Interactor {
+extension Menu.Edit.Interactor {
     struct Default: Interface {
-        let repository: any WebDomain.Menu.Edit.Repository.Interface
+        let repository: any Menu.Edit.Repository.Interface
 
         func load(
             id: String

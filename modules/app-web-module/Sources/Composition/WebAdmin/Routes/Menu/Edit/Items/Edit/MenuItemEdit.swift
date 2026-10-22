@@ -1,6 +1,3 @@
-import WebBuilders
-import WebDomain
-import WebComponents
 import FeatherValidation
 import FeatherWebAdmin
 import HTML
@@ -8,6 +5,10 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
+import WebBuilders
+import WebComponents
+import WebDomain
+public import WebModule
 
 struct MenuItemEdit: Component {
 
@@ -45,7 +46,7 @@ struct MenuItemEdit: Component {
                         MenuItemForm(
                             state: state.form,
                             action:
-                                WebDomain.Menu.Item.Routes
+                                Menu.Item.Routes
                                 .edit(
                                     RouterPath(state.menuId),
                                     RouterPath(state.id)
@@ -53,7 +54,7 @@ struct MenuItemEdit: Component {
                                 .description,
                             submitLabel: "Edit item",
                             removeHref:
-                                WebDomain.Menu.Item.Routes.itemRemove(
+                                Menu.Item.Routes.itemRemove(
                                     RouterPath(state.menuId),
                                     RouterPath(state.id),
                                     origin: .edit

@@ -1,15 +1,16 @@
 import FeatherWebAdmin
-import WebDomain
 import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Add {
+extension Menu.Add {
     enum Controller {}
 }
 
-extension WebDomain.Menu.Add.Controller {
+extension Menu.Add.Controller {
     protocol Interface: Sendable {
 
         func getAddMenu(

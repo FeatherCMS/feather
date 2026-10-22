@@ -1,5 +1,4 @@
 import FeatherModuleKit
-import WebDomain
 import WebModule
 
 extension Settings.Edit {

@@ -1,4 +1,4 @@
-public import WebDomain
+public import WebModule
 
 extension Menu {
     public enum Public {}

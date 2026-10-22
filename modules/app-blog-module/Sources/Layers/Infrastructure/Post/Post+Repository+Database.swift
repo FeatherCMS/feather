@@ -5,6 +5,7 @@ import FeatherDomain
 public import FeatherInfrastructure
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 import struct Foundation.Data
 import class Foundation.JSONDecoder
@@ -27,7 +28,7 @@ private func decodeIDs(_ value: String) throws -> [String] {
 }
 
 extension Post.Table.Detail {
-    func asDomain(metadata: WebDomain.Metadata.Model) throws -> Post.Model {
+    func asDomain(metadata: WebModule.Metadata.Model) throws -> Post.Model {
         .init(
             id: id,
             title: title,
@@ -75,7 +76,7 @@ extension Post.Repository {
             }
             var newMetadata = model.metadata
             try newMetadata.set(referenceID: id)
-            let metadata = try await Metadata.Repository
+            let metadata = try await WebModule.Metadata.Repository
                 .Database(context: context)
                 .insert(newMetadata)
             return try post.asDomain(metadata: metadata)
@@ -92,7 +93,7 @@ extension Post.Repository {
                 return nil
             }
             guard
-                let metadata = try await Metadata.Repository
+                let metadata = try await WebModule.Metadata.Repository
                     .Database(context: context)
                     .find(referenceType: "blog.post", referenceId: id)
             else {

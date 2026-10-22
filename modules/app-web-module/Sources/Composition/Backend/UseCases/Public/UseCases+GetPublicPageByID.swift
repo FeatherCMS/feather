@@ -9,6 +9,7 @@ import WebAppAPI
 import WebApplication
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 

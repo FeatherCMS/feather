@@ -2,14 +2,15 @@ import FeatherWebAdmin
 import Hummingbird
 import OpenAPIRuntime
 import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.List {
+extension Menu.List {
     enum Repository {
         protocol Interface: Sendable {
             func listMenus(
                 page: Int,
                 search: String?
-            ) async throws -> WebDomain.Menu.List.Model
+            ) async throws -> Menu.List.Model
         }
     }
 }

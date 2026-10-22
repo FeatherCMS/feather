@@ -1,6 +1,7 @@
 import BlogAdminAPI
 import BlogApplication
 import BlogModule
+import WebModule
 
 extension AdminAPIGateway {
     func mapGetSettings(

@@ -1,12 +1,14 @@
 public import BlogModule
 public import FeatherDomain
 
-extension Settings.Repository {
-    public protocol Interface: FeatherDomain.Repository {
-        func get() async throws -> Settings.Model
+extension Settings {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
+            func get() async throws -> Model
 
-        func update(
-            _ model: Settings.Model
-        ) async throws -> Settings.Model
+            func update(
+                _ model: Model
+            ) async throws -> Model
+        }
     }
 }

@@ -3,10 +3,13 @@ public import BlogModule
 import FeatherDBAL
 public import FeatherInfrastructure
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension Author.Table.Detail {
-    func asDetail(metadata: Metadata.Detail.Output) -> Author.Detail.Output {
+    func asDetail(metadata: WebModule.Metadata.Detail.Output)
+        -> Author.Detail.Output
+    {
         .init(
             id: id,
             name: name,
@@ -23,11 +26,11 @@ extension Author.Table.Detail {
 extension Author.Detail.Query {
     public struct Database: Interface {
         public let context: DatabaseQueryContext
-        public let metadata: any Metadata.Query.Interface
+        public let metadata: any WebModule.Metadata.Query.Interface
 
         public init(
             context: DatabaseQueryContext,
-            metadata: any Metadata.Query.Interface
+            metadata: any WebModule.Metadata.Query.Interface
         ) {
             self.context = context
             self.metadata = metadata

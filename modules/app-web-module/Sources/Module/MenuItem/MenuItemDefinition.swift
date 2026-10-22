@@ -4,7 +4,7 @@ public struct MenuItemDefinition: Sendable, Hashable, Codable {
     public let priority: Int
     public let isBlank: Bool
     public let permission: String
-    public let authentication: MenuItemAuthentication
+    public let authentication: MenuItem.Authentication
     public let notes: String
 
     public init(
@@ -13,7 +13,7 @@ public struct MenuItemDefinition: Sendable, Hashable, Codable {
         priority: Int,
         isBlank: Bool = false,
         permission: String = "",
-        authentication: MenuItemAuthentication = .any,
+        authentication: MenuItem.Authentication = .any,
         notes: String = ""
     ) {
         self.label = label

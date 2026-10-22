@@ -7,26 +7,26 @@
 public import AuthModule
 public import FeatherDomain
 
-extension RolePermission.Repository {
+extension RolePermission {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
-    public protocol Interface: FeatherDomain.Repository {
+            func findBy(
+                roleId: String,
+                permissionId: String
+            ) async throws -> Model?
 
-        func findBy(
-            roleId: String,
-            permissionId: String
-        ) async throws -> RolePermission.Model?
+            func insert(
+                _ model: Model.New
+            ) async throws -> Model
 
-        func insert(
-            _ model: RolePermission.Model.New
-        ) async throws -> RolePermission.Model
+            func update(
+                roleId: String,
+                permissionId: String,
+                _ model: Model.New
+            ) async throws -> Model
 
-        func update(
-            roleId: String,
-            permissionId: String,
-            _ model: RolePermission.Model.New
-        ) async throws -> RolePermission.Model
-
-        func delete(ids: [String]) async throws -> [String]
+            func delete(ids: [String]) async throws -> [String]
+        }
     }
-
 }

@@ -1,22 +1,23 @@
 import FeatherWebAdmin
 import OpenAPIRuntime
 import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Remove {
+extension Menu.Remove {
     enum Interactor {}
 }
 
-extension WebDomain.Menu.Remove.Interactor {
+extension Menu.Remove.Interactor {
     protocol Interface: Sendable {
 
-    func get(
-        id: String
-    ) async throws -> MenuDetailsModel
+        func get(
+            id: String
+        ) async throws -> MenuDetailsModel
 
-    func delete(
-        id: String
-    ) async throws
+        func delete(
+            id: String
+        ) async throws
 
-    func delete(ids: [String]) async throws
+        func delete(ids: [String]) async throws
     }
 }

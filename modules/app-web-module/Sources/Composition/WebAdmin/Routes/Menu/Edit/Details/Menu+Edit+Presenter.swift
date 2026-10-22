@@ -1,13 +1,14 @@
 import FeatherWebAdmin
-import WebDomain
 import HTML
 import OpenAPIRuntime
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Edit {
+extension Menu.Edit {
     enum Presenter {}
 }
 
-extension WebDomain.Menu.Edit.Presenter {
+extension Menu.Edit.Presenter {
     protocol Interface: Sendable {
 
         func renderEditPage(

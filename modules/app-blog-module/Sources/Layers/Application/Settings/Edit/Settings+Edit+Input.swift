@@ -1,7 +1,8 @@
 public import BlogModule
 public import FeatherApplication
+import WebModule
 
-extension Settings.Edit {
+extension BlogModule.Settings.Edit {
     public struct Input: DTO {
         public let postListPath: String
         public let authorListPath: String

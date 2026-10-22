@@ -1,5 +1,6 @@
 import FeatherDBAL
 import WebDomain
+import WebModule
 
 import struct Foundation.Date
 

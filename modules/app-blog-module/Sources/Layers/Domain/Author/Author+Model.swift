@@ -8,6 +8,7 @@ public import BlogModule
 public import FeatherDomain
 import FeatherModuleKit
 public import WebDomain
+public import WebModule
 
 public import struct Foundation.Date
 
@@ -26,7 +27,7 @@ extension Author {
             public let excerpt: String
             public let content: String
             public let profileImageAssetId: String?
-            public let metadata: WebDomain.Metadata.Model.New
+            public let metadata: WebModule.Metadata.Model.New
         }
 
         public let id: String
@@ -34,7 +35,7 @@ extension Author {
         public var excerpt: String
         public var content: String
         public var profileImageAssetId: String?
-        public var metadata: WebDomain.Metadata.Model
+        public var metadata: WebModule.Metadata.Model
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -44,7 +45,7 @@ extension Author {
             excerpt: String,
             content: String,
             profileImageAssetId: String?,
-            metadata: WebDomain.Metadata.Model,
+            metadata: WebModule.Metadata.Model,
             createdAt: Date,
             updatedAt: Date
         ) {
@@ -94,13 +95,13 @@ extension Author.Model {
         excerpt: String,
         content: String,
         profileImageAssetId: String? = nil,
-        metadata: WebDomain.Metadata.Model.Base? = nil
+        metadata: WebModule.Metadata.Model.Base? = nil
     ) throws -> Self.New {
         try validate(name: name)
         try validate(excerpt: excerpt)
         try validate(content: content)
 
-        let metadataModel = try WebDomain.Metadata.Model.create(
+        let metadataModel = try WebModule.Metadata.Model.create(
             reference: .type("blog.author"),
             base: metadata
                 ?? .init(

@@ -1,4 +1,4 @@
-public import WebDomain
+public import WebModule
 
 extension MenuItem.Detail {
     public enum Query {

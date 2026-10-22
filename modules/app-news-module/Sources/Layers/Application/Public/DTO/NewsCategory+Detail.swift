@@ -6,7 +6,8 @@
 
 public import FeatherApplication
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 public struct PublicNewsCategoryDetail: DTO {
     public let id: String
@@ -16,7 +17,7 @@ public struct PublicNewsCategoryDetail: DTO {
     public let imageAssetId: String?
     public let imageURL: String
     public let media: WebApplication.Public.Page.Detail.Output.Media?
-    public let metadata: Metadata.Detail.Output
+    public let metadata: WebModule.Metadata.Detail.Output
     public let articles: [PublicNewsArticleSummary]
     public let total: Int
     public let page: Int
@@ -30,7 +31,7 @@ public struct PublicNewsCategoryDetail: DTO {
         imageAssetId: String?,
         imageURL: String,
         media: WebApplication.Public.Page.Detail.Output.Media?,
-        metadata: Metadata.Detail.Output,
+        metadata: WebModule.Metadata.Detail.Output,
         articles: [PublicNewsArticleSummary],
         total: Int = 0,
         page: Int = 1,

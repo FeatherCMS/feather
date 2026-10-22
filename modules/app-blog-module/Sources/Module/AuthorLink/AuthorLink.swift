@@ -1,3 +1,1 @@
-public enum AuthorLink {
-    public enum Repository {}
-}
+public enum AuthorLink {}

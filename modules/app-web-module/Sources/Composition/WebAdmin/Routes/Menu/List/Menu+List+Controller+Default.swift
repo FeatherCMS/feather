@@ -5,12 +5,12 @@ import OpenAPIRuntime
 import WebDomain
 import WebModule
 
-extension WebDomain.Menu.List.Controller {
+extension Menu.List.Controller {
     struct Default: Interface {
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
-                any WebDomain.Menu.List.Interactor.Interface,
-                any WebDomain.Menu.List.Presenter.Interface
+                any Menu.List.Interactor.Interface,
+                any Menu.List.Presenter.Interface
             >
 
         func getMenus(
@@ -24,13 +24,13 @@ extension WebDomain.Menu.List.Controller {
             let canAccess = context.isCurrentUserAllowed(
                 to: WebModule.Permissions.Menus.list
             )
-            let emptyModel = WebDomain.Menu.List.Model(
+            let emptyModel = Menu.List.Model(
                 items: [],
                 total: 0,
                 page: page,
                 pageSize: 20
             )
-            let model: WebDomain.Menu.List.Model
+            let model: Menu.List.Model
             let error: String?
             if canAccess {
                 do {

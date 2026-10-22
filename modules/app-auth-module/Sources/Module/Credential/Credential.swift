@@ -1,3 +1,1 @@
-public enum Credential {
-    public enum Repository {}
-}
+public enum Credential {}

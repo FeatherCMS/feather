@@ -1,3 +1,1 @@
-public enum MagicLink {
-    public enum Repository {}
-}
+public enum MagicLink {}

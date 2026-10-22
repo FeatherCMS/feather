@@ -7,29 +7,29 @@
 public import AuthModule
 public import FeatherDomain
 
-extension Session.Repository {
+extension Session {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
-    public protocol Interface: FeatherDomain.Repository {
+            func findBy(
+                id: String
+            ) async throws -> Model?
 
-        func findBy(
-            id: String
-        ) async throws -> Session.Model?
+            func findBy(
+                token: String
+            ) async throws -> Model?
 
-        func findBy(
-            token: String
-        ) async throws -> Session.Model?
+            func insert(
+                _ model: Model.New
+            ) async throws -> Model
 
-        func insert(
-            _ model: Session.Model.New
-        ) async throws -> Session.Model
+            func update(
+                _ model: Model
+            ) async throws -> Model
 
-        func update(
-            _ model: Session.Model
-        ) async throws -> Session.Model
-
-        func delete(
-            ids: [String]
-        ) async throws -> [String]
+            func delete(
+                ids: [String]
+            ) async throws -> [String]
+        }
     }
-
 }

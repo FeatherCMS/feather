@@ -1,14 +1,15 @@
-import WebBuilders
-import WebDomain
-import WebComponents
 import FeatherWebAdmin
 import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Edit.Presenter {
+extension Menu.Edit.Presenter {
     struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext

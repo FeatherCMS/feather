@@ -7,29 +7,29 @@
 public import AuthModule
 public import FeatherDomain
 
-extension MagicLink.Repository {
+extension MagicLink {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
-    public protocol Interface: FeatherDomain.Repository {
+            func findById(
+                id: String
+            ) async throws -> Model?
 
-        func findById(
-            id: String
-        ) async throws -> MagicLink.Model?
+            func insert(
+                _ model: Model.New
+            ) async throws -> Model
 
-        func insert(
-            _ model: MagicLink.Model.New
-        ) async throws -> MagicLink.Model
+            func update(
+                _ model: Model
+            ) async throws -> Model
 
-        func update(
-            _ model: MagicLink.Model
-        ) async throws -> MagicLink.Model
+            func consumeByToken(
+                token: String
+            ) async throws -> Model
 
-        func consumeByToken(
-            token: String
-        ) async throws -> MagicLink.Model
-
-        func delete(
-            ids: [String]
-        ) async throws -> [String]
+            func delete(
+                ids: [String]
+            ) async throws -> [String]
+        }
     }
-
 }

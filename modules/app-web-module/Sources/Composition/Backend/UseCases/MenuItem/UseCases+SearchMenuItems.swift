@@ -7,6 +7,7 @@ import SystemInfrastructure
 import WebApplication
 import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
     func makeSearchMenuItems() -> MenuItem.Search.UseCase {

@@ -3,16 +3,17 @@ public import BlogModule
 import FeatherDBAL
 public import FeatherInfrastructure
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 extension BlogApplication.Public.Query.AuthorContent {
     public struct Database: Interface {
         public let context: DatabaseQueryContext
-        public let metadata: any Metadata.Query.Interface
+        public let metadata: any WebModule.Metadata.Query.Interface
 
         public init(
             context: DatabaseQueryContext,
-            metadata: any Metadata.Query.Interface
+            metadata: any WebModule.Metadata.Query.Interface
         ) {
             self.context = context
             self.metadata = metadata

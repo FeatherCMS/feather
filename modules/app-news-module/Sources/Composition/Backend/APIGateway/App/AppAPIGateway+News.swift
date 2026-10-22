@@ -4,6 +4,7 @@ public import NewsAppAPI
 import NewsApplication
 import WebApplication
 import WebDomain
+import WebModule
 
 extension AppAPIGateway {
 
@@ -168,12 +169,12 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapMetadata(
-        _ metadata: Metadata.Detail.Output,
+        _ metadata: WebModule.Metadata.Detail.Output,
         title: String,
         excerpt: String,
         imageURL: String
     ) -> Components.Schemas.WebMetadataContentSchema {
-        let resolved = Metadata.Detail.Output.Resolved(
+        let resolved = WebModule.Metadata.Detail.Output.Resolved(
             metadata: metadata,
             fallbackTitle: title,
             fallbackExcerpt: excerpt,

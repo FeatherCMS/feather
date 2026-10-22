@@ -1,9 +1,10 @@
 public import FeatherModuleKit
-public import NewsModule
 public import NewsDomain
+public import NewsModule
 public import SystemApplication
 public import SystemModule
 public import WebDomain
+public import WebModule
 
 //
 //  WriteCategoryMetadata.swift
@@ -13,12 +14,12 @@ public import WebDomain
 
 public struct WriteCategoryMetadata: Scope {
     public let category: any Category.Repository.Interface
-    public let metadata: any Metadata.Repository.Interface
+    public let metadata: any WebModule.Metadata.Repository.Interface
     public let variable: any SystemModule.Variable.Lookup.Interface
 
     public init(
         category: any Category.Repository.Interface,
-        metadata: any Metadata.Repository.Interface,
+        metadata: any WebModule.Metadata.Repository.Interface,
         variable: any SystemModule.Variable.Lookup.Interface
     ) {
         self.category = category

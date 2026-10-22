@@ -1,14 +1,15 @@
 import FeatherWebAdmin
-import WebDomain
 import Hummingbird
 import OpenAPIRuntime
+import WebDomain
+public import WebModule
 
 protocol AdminRemoveMenuItemPresenter: Sendable {
 
     func renderRemovePage(
         menuId: String,
         item: AdminRemoveItemContext,
-        origin: WebDomain.Menu.Item.Routes.RemoveOrigin
+        origin: Menu.Item.Routes.RemoveOrigin
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
@@ -16,7 +17,7 @@ protocol AdminRemoveMenuItemPresenter: Sendable {
         id: String,
         info: String,
         message: String,
-        origin: WebDomain.Menu.Item.Routes.RemoveOrigin
+        origin: Menu.Item.Routes.RemoveOrigin
     ) async throws -> HTMLResponse
 
 }

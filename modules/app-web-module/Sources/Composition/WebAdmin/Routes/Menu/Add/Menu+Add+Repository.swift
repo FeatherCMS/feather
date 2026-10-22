@@ -1,12 +1,13 @@
 import FeatherWebAdmin
-import WebDomain
 import OpenAPIRuntime
+import WebDomain
+public import WebModule
 
-extension WebDomain.Menu.Add {
+extension Menu.Add {
     enum Repository {}
 }
 
-extension WebDomain.Menu.Add.Repository {
+extension Menu.Add.Repository {
     protocol Interface: Sendable {
 
         func create(

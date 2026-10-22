@@ -48,9 +48,9 @@ extension Identity {
             self.updatedAt = updatedAt
         }
     }
-    }
+}
 
-    extension Identity.Model {
+extension Identity.Model {
 
     public static func create(
         name: String = "User",

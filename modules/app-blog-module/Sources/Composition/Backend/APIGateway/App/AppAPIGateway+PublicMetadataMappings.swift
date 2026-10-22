@@ -3,6 +3,7 @@ import BlogApplication
 import Foundation
 import WebApplication
 import WebDomain
+import WebModule
 
 extension AppAPIGateway {
     func publicTimestamp(
@@ -12,12 +13,12 @@ extension AppAPIGateway {
     }
 
     func mapPublicMetadata(
-        _ metadata: Metadata.Detail.Output,
+        _ metadata: WebModule.Metadata.Detail.Output,
         title: String,
         excerpt: String,
         imageURL: String
     ) -> BlogAppAPI.Components.Schemas.WebMetadataContentSchema {
-        let resolved = Metadata.Detail.Output.Resolved(
+        let resolved = WebModule.Metadata.Detail.Output.Resolved(
             metadata: metadata,
             fallbackTitle: title,
             fallbackExcerpt: excerpt,
@@ -41,7 +42,7 @@ extension AppAPIGateway {
     }
 
     private func publicTemplate(
-        for metadata: Metadata.Detail.Output
+        for metadata: WebModule.Metadata.Detail.Output
     ) -> String {
         guard metadata.template == "default" else {
             return metadata.template

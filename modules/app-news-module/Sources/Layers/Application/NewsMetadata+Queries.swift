@@ -1,11 +1,12 @@
 public import WebApplication
-public import WebDomain
+import WebDomain
+public import WebModule
 
 public func resolveNewsMetadataDetails(
-    metadata: any Metadata.Query.Interface,
+    metadata: any WebModule.Metadata.Query.Interface,
     referenceType: String,
     referenceIDs: [String]
-) async throws -> [Metadata.Detail.Output] {
+) async throws -> [WebModule.Metadata.Detail.Output] {
     try await metadata.resolveDetails(
         referenceType: referenceType,
         referenceIDs: Array(Set(referenceIDs))

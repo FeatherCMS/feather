@@ -7,7 +7,7 @@
 public import FeatherDomain
 public import NewsModule
 
-extension NewsModule.Category {
+extension Category {
     public enum Repository {
         public protocol Interface: FeatherDomain.Repository {
 

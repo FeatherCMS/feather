@@ -40,9 +40,9 @@ extension Permission {
             self.notes = notes
         }
     }
-    }
+}
 
-    extension Permission.Model {
+extension Permission.Model {
 
     private static func validate(key: String) throws(Self.Error) {
         guard !key.isEmpty else { throw .keyTooShort }

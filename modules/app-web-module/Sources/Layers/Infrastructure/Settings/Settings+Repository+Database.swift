@@ -12,6 +12,7 @@ import SystemInfrastructure
 public import SystemModule
 import WebApplication
 public import WebDomain
+public import WebModule
 
 extension Settings.Repository {
     public struct Database: Interface {

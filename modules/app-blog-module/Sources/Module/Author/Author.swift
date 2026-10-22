@@ -1,3 +1,1 @@
-public enum Author {
-    public enum Repository {}
-}
+public enum Author {}
