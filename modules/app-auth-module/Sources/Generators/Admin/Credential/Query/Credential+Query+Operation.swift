@@ -2,27 +2,31 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthCredentialQueryOperation: AuthCredentialOperation {
-    var operationId: String? { "authCredentialQuery" }
+extension Credential.Query {
 
-    var searchRequestQuery: SearchRequestQuerySchema {
-        .init(
-            items: AuthCredentialQueryItemSchema(),
-            sortFieldKeys: ["userId", "email"],
-            filters: AuthCredentialQueryFilterSchema()
-        )
-    }
+    struct Operation: Credential.Operation {
+        var operationId: String? { "authCredentialQuery" }
 
-    var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchRequestQuery)
-    }
-
-    var responseMap: ResponseMap {
-        [
-            200: SearchResponse(
-                query: SearchResponseQuerySchema(query: searchRequestQuery)
+        var searchRequestQuery: SearchRequestQuerySchema {
+            .init(
+                items: Credential.Query.Schemas.AuthCredentialQueryItemSchema(),
+                sortFieldKeys: ["userId", "email"],
+                filters: Credential.Query.Schemas
+                    .AuthCredentialQueryFilterSchema()
             )
-            .reference()
-        ]
+        }
+
+        var requestBody: (any RequestBodyRepresentable)? {
+            SearchRequestBody(query: searchRequestQuery)
+        }
+
+        var responseMap: ResponseMap {
+            [
+                200: SearchResponse(
+                    query: SearchResponseQuerySchema(query: searchRequestQuery)
+                )
+                .reference()
+            ]
+        }
     }
 }

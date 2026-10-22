@@ -2,14 +2,17 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthMagicLinkCreateOperation: AuthMagicLinkOperation {
-    var operationId: String? { "authMagicLinkCreate" }
+extension MagicLink.Post {
 
-    var requestBody: (any RequestBodyRepresentable)? {
-        AuthMagicLinkManagementRequestBody().reference()
-    }
+    struct Operation: MagicLink.Operation {
+        var operationId: String? { "authMagicLinkCreate" }
 
-    var responseMap: ResponseMap {
-        [201: AuthMagicLinkDetailResponse().reference()]
+        var requestBody: (any RequestBodyRepresentable)? {
+            MagicLink.Post.AuthMagicLinkManagementRequestBody().reference()
+        }
+
+        var responseMap: ResponseMap {
+            [201: MagicLink.Get.AuthMagicLinkDetailResponse().reference()]
+        }
     }
 }

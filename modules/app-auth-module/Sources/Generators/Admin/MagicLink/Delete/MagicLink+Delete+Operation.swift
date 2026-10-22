@@ -2,6 +2,9 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthMagicLinkRemoveOperation: AuthMagicLinkOperation, DeleteOperation {
-    var operationId: String? { "authMagicLinkRemove" }
+extension MagicLink.Delete {
+
+    struct Operation: MagicLink.Operation, DeleteOperation {
+        var operationId: String? { "authMagicLinkRemove" }
+    }
 }

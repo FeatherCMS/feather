@@ -11,9 +11,10 @@ extension Post {
             public init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
                 let posts = root.appending(pathComponent: "posts")
                 self.posts = posts
-                self.postsBreadcrumb = breadcrumb + [
-                    .init(label: "Posts", link: posts.path)
-                ]
+                self.postsBreadcrumb =
+                    breadcrumb + [
+                        .init(label: "Posts", link: posts.path)
+                    ]
             }
 
             func post(_ id: RouterPath) -> RouterPath {

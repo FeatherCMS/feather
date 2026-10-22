@@ -10,9 +10,10 @@ extension Settings {
             public init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
                 let settings = root.appending(pathComponent: "settings")
                 self.settings = settings
-                self.breadcrumb = breadcrumb + [
-                    .init(label: "Settings", link: settings.path)
-                ]
+                self.breadcrumb =
+                    breadcrumb + [
+                        .init(label: "Settings", link: settings.path)
+                    ]
             }
         }
     }

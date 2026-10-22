@@ -220,7 +220,8 @@ extension AuthorLink.List {
                                                                                 )
                                                                                 .description,
                                                                             permission:
-                                                                                AuthorLink.Permissions
+                                                                                AuthorLink
+                                                                                .Permissions
                                                                                 .read
                                                                         ),
                                                                         .init(
@@ -244,7 +245,8 @@ extension AuthorLink.List {
                                                                                     .secondary
                                                                                 ),
                                                                             permission:
-                                                                                AuthorLink.Permissions
+                                                                                AuthorLink
+                                                                                .Permissions
                                                                                 .update
                                                                         ),
                                                                     ],

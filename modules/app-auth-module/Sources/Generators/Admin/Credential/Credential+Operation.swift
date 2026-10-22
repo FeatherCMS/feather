@@ -2,16 +2,20 @@ public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-public protocol AuthCredentialOperation: BearerProtectedOperation {}
-
-extension AuthCredentialOperation {
-    public var tags: [any TagRepresentable] { [AuthCredentialTag()] }
+extension Credential {
+    public protocol Operation: BearerProtectedOperation {}
 }
 
-public protocol AuthCredentialIdOperation: AuthCredentialOperation {}
+extension Credential.Operation {
+    public var tags: [any TagRepresentable] { [Credential.Tag()] }
+}
 
-extension AuthCredentialIdOperation {
+extension Credential {
+    public protocol IdentifiableOperation: Credential.Operation {}
+}
+
+extension Credential.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
-        [AuthCredentialIdParameter().reference()]
+        [Credential.Parameters.AuthCredentialIdParameter().reference()]
     }
 }

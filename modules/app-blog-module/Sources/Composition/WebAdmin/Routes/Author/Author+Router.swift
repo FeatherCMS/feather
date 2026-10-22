@@ -11,9 +11,10 @@ extension Author {
             public init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
                 let authors = root.appending(pathComponent: "authors")
                 self.authors = authors
-                self.authorsBreadcrumb = breadcrumb + [
-                    .init(label: "Authors", link: authors.path)
-                ]
+                self.authorsBreadcrumb =
+                    breadcrumb + [
+                        .init(label: "Authors", link: authors.path)
+                    ]
             }
 
             func author(_ id: RouterPath) -> RouterPath {

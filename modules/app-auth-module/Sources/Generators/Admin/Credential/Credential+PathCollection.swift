@@ -4,11 +4,11 @@ extension Credential {
     struct PathCollection: PathCollectionRepresentable {
         var pathMap: PathMap {
             [
-                "api/v1/admin/auth/credentials": AuthCredentialPathItems(),
+                "api/v1/admin/auth/credentials": Credential.PathItem(),
                 "api/v1/admin/auth/credentials/query":
-                    AuthCredentialQueryPathItems(),
+                    Credential.Query.PathItem(),
                 "api/v1/admin/auth/credentials/{authCredentialId}":
-                    AuthCredentialIdPathItems(),
+                    Credential.ID.PathItem(),
             ]
         }
     }

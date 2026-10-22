@@ -1,7 +1,10 @@
 import FeatherOpenAPI
 
-struct AuthRolePermissionQueryPathItems: PathItemRepresentable {
-    var post: (any OperationRepresentable)? {
-        AuthRolePermissionQueryOperation()
+extension RolePermission.Query {
+
+    struct PathItem: PathItemRepresentable {
+        var post: (any OperationRepresentable)? {
+            RolePermission.Query.Operation()
+        }
     }
 }

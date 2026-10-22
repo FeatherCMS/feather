@@ -249,7 +249,8 @@ extension Tag.List {
                                                                                     .primary
                                                                                 ),
                                                                             permission:
-                                                                                Tag.Permissions
+                                                                                Tag
+                                                                                .Permissions
                                                                                 .read
                                                                         ),
                                                                         .init(
@@ -269,7 +270,8 @@ extension Tag.List {
                                                                                     .secondary
                                                                                 ),
                                                                             permission:
-                                                                                Tag.Permissions
+                                                                                Tag
+                                                                                .Permissions
                                                                                 .update
                                                                         ),
                                                                         .init(
@@ -295,7 +297,8 @@ extension Tag.List {
                                                                             style:
                                                                                 .destructive,
                                                                             permission:
-                                                                                Tag.Permissions
+                                                                                Tag
+                                                                                .Permissions
                                                                                 .delete
                                                                         ),
                                                                     ],

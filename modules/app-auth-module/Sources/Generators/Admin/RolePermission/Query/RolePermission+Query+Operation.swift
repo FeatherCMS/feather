@@ -2,27 +2,31 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthRolePermissionQueryOperation: AuthRolePermissionOperation {
-    var operationId: String? { "authRolePermissionQuery" }
+extension RolePermission.Query {
 
-    var searchRequestQuery: SearchRequestQuerySchema {
-        .init(
-            items: AuthRolePermissionQueryItemSchema(),
-            sortFieldKeys: ["roleId", "permissionId"],
-            filters: SearchFilterSchema()
-        )
-    }
+    struct Operation: RolePermission.Operation {
+        var operationId: String? { "authRolePermissionQuery" }
 
-    var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchRequestQuery)
-    }
-
-    var responseMap: ResponseMap {
-        [
-            200: SearchResponse(
-                query: SearchResponseQuerySchema(query: searchRequestQuery)
+        var searchRequestQuery: SearchRequestQuerySchema {
+            .init(
+                items: RolePermission.Query.Schemas
+                    .AuthRolePermissionQueryItemSchema(),
+                sortFieldKeys: ["roleId", "permissionId"],
+                filters: SearchFilterSchema()
             )
-            .reference()
-        ]
+        }
+
+        var requestBody: (any RequestBodyRepresentable)? {
+            SearchRequestBody(query: searchRequestQuery)
+        }
+
+        var responseMap: ResponseMap {
+            [
+                200: SearchResponse(
+                    query: SearchResponseQuerySchema(query: searchRequestQuery)
+                )
+                .reference()
+            ]
+        }
     }
 }

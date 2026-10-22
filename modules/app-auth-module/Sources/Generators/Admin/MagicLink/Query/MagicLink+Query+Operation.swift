@@ -2,39 +2,43 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthMagicLinkQueryOperation: AuthMagicLinkOperation {
-    var operationId: String? { "authMagicLinkQuery" }
+extension MagicLink.Query {
 
-    var searchRequestQuery: SearchRequestQuerySchema {
-        .init(
-            items: AuthMagicLinkQueryItemSchema(),
-            sortFieldKeys: [
-                "id",
-                "credentialId",
-                "token",
-                "expiresAt",
-                "isPersistent",
-                "isUsed",
-            ],
-            filters: SearchFilterSchema(
-                additionalProperties: [
-                    "userId": AuthMagicLinkUserIdField()
-                        .reference(required: false)
-                ]
+    struct Operation: MagicLink.Operation {
+        var operationId: String? { "authMagicLinkQuery" }
+
+        var searchRequestQuery: SearchRequestQuerySchema {
+            .init(
+                items: MagicLink.Query.Schemas.AuthMagicLinkQueryItemSchema(),
+                sortFieldKeys: [
+                    "id",
+                    "credentialId",
+                    "token",
+                    "expiresAt",
+                    "isPersistent",
+                    "isUsed",
+                ],
+                filters: SearchFilterSchema(
+                    additionalProperties: [
+                        "userId": MagicLink.Query.Schemas
+                            .AuthMagicLinkUserIdField()
+                            .reference(required: false)
+                    ]
+                )
             )
-        )
-    }
+        }
 
-    var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchRequestQuery)
-    }
+        var requestBody: (any RequestBodyRepresentable)? {
+            SearchRequestBody(query: searchRequestQuery)
+        }
 
-    var responseMap: ResponseMap {
-        [
-            200: SearchResponse(
-                query: SearchResponseQuerySchema(query: searchRequestQuery)
-            )
-            .reference()
-        ]
+        var responseMap: ResponseMap {
+            [
+                200: SearchResponse(
+                    query: SearchResponseQuerySchema(query: searchRequestQuery)
+                )
+                .reference()
+            ]
+        }
     }
 }

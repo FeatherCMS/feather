@@ -1,10 +1,8 @@
 import FeatherOpenAPI
 
-struct UserIdentitySessionPathItems: PathItemRepresentable {
-    var get: (any OperationRepresentable)? {
-        UserIdentitySessionListOperation()
-    }
-    var delete: (any OperationRepresentable)? {
-        UserIdentitySessionRemoveOperation()
+extension Identity.Session {
+    struct PathItem: PathItemRepresentable {
+        var get: (any OperationRepresentable)? { List.Operation() }
+        var delete: (any OperationRepresentable)? { Delete.Operation() }
     }
 }

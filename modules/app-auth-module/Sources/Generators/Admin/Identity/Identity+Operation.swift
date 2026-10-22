@@ -2,15 +2,16 @@ public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-public protocol UserIdentityOperation: BearerProtectedOperation {}
+extension Identity {
+    public protocol Operation: BearerProtectedOperation {}
+    public protocol IdentifiableOperation: Operation {}
+}
 
-extension UserIdentityOperation {
+extension Identity.Operation {
     public var tags: [any TagRepresentable] { [UserIdentityTag()] }
 }
 
-public protocol UserIdentitySessionOperation: UserIdentityOperation {}
-
-extension UserIdentitySessionOperation {
+extension Identity.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
         [UserIdentityIdParameter().reference()]
     }

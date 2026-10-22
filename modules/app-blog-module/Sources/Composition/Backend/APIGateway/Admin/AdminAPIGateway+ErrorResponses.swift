@@ -4,7 +4,8 @@ import FeatherDomain
 extension AdminAPIGateway {
     func badRequestErrorEnvelope(
         reason: String
-    ) -> Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+    ) -> Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema
+    {
         .init(error: .init(message: "Bad Request", reason: reason))
     }
 

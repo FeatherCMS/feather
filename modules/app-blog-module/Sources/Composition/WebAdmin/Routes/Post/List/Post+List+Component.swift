@@ -249,7 +249,8 @@ extension Post.List {
                                                                                     .primary
                                                                                 ),
                                                                             permission:
-                                                                                Post.Permissions
+                                                                                Post
+                                                                                .Permissions
                                                                                 .read
                                                                         ),
                                                                         .init(
@@ -269,7 +270,8 @@ extension Post.List {
                                                                                     .secondary
                                                                                 ),
                                                                             permission:
-                                                                                Post.Permissions
+                                                                                Post
+                                                                                .Permissions
                                                                                 .update
                                                                         ),
                                                                         .init(
@@ -295,7 +297,8 @@ extension Post.List {
                                                                             style:
                                                                                 .destructive,
                                                                             permission:
-                                                                                Post.Permissions
+                                                                                Post
+                                                                                .Permissions
                                                                                 .delete
                                                                         ),
                                                                     ],

@@ -105,7 +105,7 @@ extension Author.View {
                         AdminButton(
                             "Add link",
                             href:
-                                    state.authorLinkRoutes
+                                state.authorLinkRoutes
                                 .authorLinkAdd(
                                     RouterPath(state.author.id)
                                 )

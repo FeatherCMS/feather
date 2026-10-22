@@ -5,11 +5,11 @@ extension RolePermission {
         var pathMap: PathMap {
             [
                 "api/v1/admin/auth/role-permissions":
-                    AuthRolePermissionPathItems(),
+                    RolePermission.PathItem(),
                 "api/v1/admin/auth/role-permissions/query":
-                    AuthRolePermissionQueryPathItems(),
+                    RolePermission.Query.PathItem(),
                 "api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}":
-                    AuthRolePermissionIdPathItems(),
+                    RolePermission.ID.PathItem(),
             ]
         }
     }

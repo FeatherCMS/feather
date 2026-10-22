@@ -5,7 +5,7 @@ extension Identity {
         var pathMap: PathMap {
             [
                 "api/v1/admin/user/identities/{userIdentityId}/sessions":
-                    UserIdentitySessionPathItems()
+                    Session.PathItem()
             ]
         }
     }

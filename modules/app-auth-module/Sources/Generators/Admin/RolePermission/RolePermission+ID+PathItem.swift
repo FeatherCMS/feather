@@ -1,3 +1,6 @@
 import FeatherOpenAPI
 
-struct AuthRolePermissionIdPathItems: PathItemRepresentable {}
+extension RolePermission.ID {
+
+    struct PathItem: PathItemRepresentable {}
+}

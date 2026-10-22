@@ -1,7 +1,10 @@
 import FeatherOpenAPI
 
-struct AuthMagicLinkIdPathItems: PathItemRepresentable {
-    var get: (any OperationRepresentable)? { AuthMagicLinkGetOperation() }
-    var put: (any OperationRepresentable)? { AuthMagicLinkUpdateOperation() }
-    var patch: (any OperationRepresentable)? { AuthMagicLinkPatchOperation() }
+extension MagicLink.ID {
+
+    struct PathItem: PathItemRepresentable {
+        var get: (any OperationRepresentable)? { MagicLink.Get.Operation() }
+        var put: (any OperationRepresentable)? { MagicLink.Put.Operation() }
+        var patch: (any OperationRepresentable)? { MagicLink.Patch.Operation() }
+    }
 }

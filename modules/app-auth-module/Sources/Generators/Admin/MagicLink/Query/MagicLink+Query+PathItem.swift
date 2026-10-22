@@ -1,5 +1,8 @@
 import FeatherOpenAPI
 
-struct AuthMagicLinkQueryPathItems: PathItemRepresentable {
-    var post: (any OperationRepresentable)? { AuthMagicLinkQueryOperation() }
+extension MagicLink.Query {
+
+    struct PathItem: PathItemRepresentable {
+        var post: (any OperationRepresentable)? { MagicLink.Query.Operation() }
+    }
 }

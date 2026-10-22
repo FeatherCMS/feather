@@ -36,10 +36,12 @@ extension AdminAPIGateway {
             )
         }
 
-        guard let name = requiredFieldChange(
-            value: body.name,
-            shouldApply: fields.contains(.name)
-        ) else {
+        guard
+            let name = requiredFieldChange(
+                value: body.name,
+                shouldApply: fields.contains(.name)
+            )
+        else {
             return .badRequest(
                 .init(
                     body: .json(
@@ -50,10 +52,12 @@ extension AdminAPIGateway {
                 )
             )
         }
-        guard let excerpt = requiredFieldChange(
-            value: body.excerpt,
-            shouldApply: fields.contains(.excerpt)
-        ) else {
+        guard
+            let excerpt = requiredFieldChange(
+                value: body.excerpt,
+                shouldApply: fields.contains(.excerpt)
+            )
+        else {
             return .badRequest(
                 .init(
                     body: .json(
@@ -64,10 +68,12 @@ extension AdminAPIGateway {
                 )
             )
         }
-        guard let content = requiredFieldChange(
-            value: body.content,
-            shouldApply: fields.contains(.content)
-        ) else {
+        guard
+            let content = requiredFieldChange(
+                value: body.content,
+                shouldApply: fields.contains(.content)
+            )
+        else {
             return .badRequest(
                 .init(
                     body: .json(

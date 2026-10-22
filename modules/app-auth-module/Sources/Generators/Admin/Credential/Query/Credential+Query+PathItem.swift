@@ -1,5 +1,8 @@
 import FeatherOpenAPI
 
-struct AuthCredentialQueryPathItems: PathItemRepresentable {
-    var post: (any OperationRepresentable)? { AuthCredentialQueryOperation() }
+extension Credential.Query {
+
+    struct PathItem: PathItemRepresentable {
+        var post: (any OperationRepresentable)? { Credential.Query.Operation() }
+    }
 }

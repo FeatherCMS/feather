@@ -26,12 +26,22 @@ struct RouterRoutesTestSuite {
                 == "/console/blog/tags/{id}/edit/metadata/{metadataID}"
         )
         #expect(
-            routes.authorLink.authorLinkEdit(
-                RouterPath("author id"),
-                RouterPath("link/id")
-            )
-            .description
+            routes.authorLink
+                .authorLinkEdit(
+                    RouterPath("author id"),
+                    RouterPath("link/id")
+                )
+                .description
                 == "/console/blog/authors/author%20id/links/link%2Fid/edit"
+        )
+        #expect(
+            routes.authorLink.authorLinkAdd(RouterPath("author id"))
+                .description
+                == "/console/blog/authors/author%20id/links/add"
+        )
+        #expect(
+            routes.authorLink.author(RouterPath("author id")).description
+                == "/console/blog/authors/author%20id"
         )
     }
 }

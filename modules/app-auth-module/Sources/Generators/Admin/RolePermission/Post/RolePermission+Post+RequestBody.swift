@@ -1,8 +1,17 @@
 import FeatherOpenAPI
 import OpenAPIKit30
 
-struct AuthRolePermissionRequestBody: RequestBodyRepresentable {
-    var contentMap: ContentMap {
-        [.json: Content(AuthRolePermissionCreateSchema().reference())]
+extension RolePermission.Post {
+
+    struct AuthRolePermissionRequestBody: RequestBodyRepresentable {
+        var openAPIIdentifier: String { "AuthRolePermissionRequestBody" }
+        var contentMap: ContentMap {
+            [
+                .json: Content(
+                    RolePermission.Schemas.AuthRolePermissionCreateSchema()
+                        .reference()
+                )
+            ]
+        }
     }
 }

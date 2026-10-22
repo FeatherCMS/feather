@@ -1,8 +1,16 @@
 import FeatherOpenAPI
 import OpenAPIKit30
 
-struct AuthCredentialUpdateRequestBody: RequestBodyRepresentable {
-    var contentMap: ContentMap {
-        [.json: Content(AuthCredentialCreateSchema().reference())]
+extension Credential.Put {
+
+    struct AuthCredentialUpdateRequestBody: RequestBodyRepresentable {
+        var openAPIIdentifier: String { "AuthCredentialUpdateRequestBody" }
+        var contentMap: ContentMap {
+            [
+                .json: Content(
+                    Credential.Schemas.AuthCredentialCreateSchema().reference()
+                )
+            ]
+        }
     }
 }

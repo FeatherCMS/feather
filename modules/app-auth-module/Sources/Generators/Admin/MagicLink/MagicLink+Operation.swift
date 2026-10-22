@@ -2,16 +2,20 @@ public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-public protocol AuthMagicLinkOperation: BearerProtectedOperation {}
-
-extension AuthMagicLinkOperation {
-    public var tags: [any TagRepresentable] { [AuthMagicLinkTag()] }
+extension MagicLink {
+    public protocol Operation: BearerProtectedOperation {}
 }
 
-public protocol AuthMagicLinkIdOperation: AuthMagicLinkOperation {}
+extension MagicLink.Operation {
+    public var tags: [any TagRepresentable] { [MagicLink.Tag()] }
+}
 
-extension AuthMagicLinkIdOperation {
+extension MagicLink {
+    public protocol IdentifiableOperation: MagicLink.Operation {}
+}
+
+extension MagicLink.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
-        [AuthMagicLinkIdParameter().reference()]
+        [MagicLink.Parameters.AuthMagicLinkIdParameter().reference()]
     }
 }

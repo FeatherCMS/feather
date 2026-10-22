@@ -38,39 +38,89 @@ extension AdminAPIGateway {
             )
         }
 
-        guard let title = requiredFieldChange(
-            value: body.title,
-            shouldApply: fields.contains(.title)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: title"))))
+        guard
+            let title = requiredFieldChange(
+                value: body.title,
+                shouldApply: fields.contains(.title)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: title"
+                        )
+                    )
+                )
+            )
         }
-        guard let excerpt = requiredFieldChange(
-            value: body.excerpt,
-            shouldApply: fields.contains(.excerpt)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: excerpt"))))
+        guard
+            let excerpt = requiredFieldChange(
+                value: body.excerpt,
+                shouldApply: fields.contains(.excerpt)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: excerpt"
+                        )
+                    )
+                )
+            )
         }
-        guard let content = requiredFieldChange(
-            value: body.content,
-            shouldApply: fields.contains(.content)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: content"))))
+        guard
+            let content = requiredFieldChange(
+                value: body.content,
+                shouldApply: fields.contains(.content)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: content"
+                        )
+                    )
+                )
+            )
         }
         let imageAssetId = OptionalFieldChange(
             value: body.imageAssetId ?? nil,
             shouldApply: fields.contains(.imageAssetId)
         )
-        guard let authorIds = requiredFieldChange(
-            value: body.authorIds.map(Array.init),
-            shouldApply: fields.contains(.authorIds)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: authorIds"))))
+        guard
+            let authorIds = requiredFieldChange(
+                value: body.authorIds.map(Array.init),
+                shouldApply: fields.contains(.authorIds)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: authorIds"
+                        )
+                    )
+                )
+            )
         }
-        guard let tagIds = requiredFieldChange(
-            value: body.tagIds.map(Array.init),
-            shouldApply: fields.contains(.tagIds)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: tagIds"))))
+        guard
+            let tagIds = requiredFieldChange(
+                value: body.tagIds.map(Array.init),
+                shouldApply: fields.contains(.tagIds)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: tagIds"
+                        )
+                    )
+                )
+            )
         }
 
         let useCase = self.useCases.makeEditPost()

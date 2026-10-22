@@ -2,19 +2,25 @@ public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-public protocol AuthRolePermissionOperation: BearerProtectedOperation {}
-
-extension AuthRolePermissionOperation {
-    public var tags: [any TagRepresentable] { [AuthRolePermissionTag()] }
+extension RolePermission {
+    public protocol Operation: BearerProtectedOperation {}
 }
 
-public protocol AuthRolePermissionIdOperation: AuthRolePermissionOperation {}
+extension RolePermission.Operation {
+    public var tags: [any TagRepresentable] { [RolePermission.Tag()] }
+}
 
-extension AuthRolePermissionIdOperation {
+extension RolePermission {
+    public protocol IdentifiableOperation: RolePermission.Operation {}
+}
+
+extension RolePermission.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
         [
-            AuthRolePermissionRoleIdParameter().reference(),
-            AuthRolePermissionPermissionIdParameter().reference(),
+            RolePermission.Parameters.AuthRolePermissionRoleIdParameter()
+                .reference(),
+            RolePermission.Parameters.AuthRolePermissionPermissionIdParameter()
+                .reference(),
         ]
     }
 }

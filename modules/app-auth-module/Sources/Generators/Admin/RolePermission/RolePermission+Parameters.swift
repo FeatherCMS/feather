@@ -1,17 +1,28 @@
 import FeatherOpenAPI
 
-struct AuthRolePermissionRoleIdParameter: PathParameterRepresentable {
-    var name: String { "userRoleId" }
-    var description: String? { "User role id" }
-    var schema: any OpenAPISchemaRepresentable {
-        AuthRolePermissionRoleIdField().reference()
+extension RolePermission.Parameters {
+
+    struct AuthRolePermissionRoleIdParameter: PathParameterRepresentable {
+        var openAPIIdentifier: String { "AuthRolePermissionRoleIdParameter" }
+        var name: String { "userRoleId" }
+        var description: String? { "User role id" }
+        var schema: any OpenAPISchemaRepresentable {
+            RolePermission.Schemas.AuthRolePermissionRoleIdField().reference()
+        }
     }
 }
 
-struct AuthRolePermissionPermissionIdParameter: PathParameterRepresentable {
-    var name: String { "systemPermissionId" }
-    var description: String? { "System permission id" }
-    var schema: any OpenAPISchemaRepresentable {
-        AuthRolePermissionPermissionIdField().reference()
+extension RolePermission.Parameters {
+
+    struct AuthRolePermissionPermissionIdParameter: PathParameterRepresentable {
+        var openAPIIdentifier: String {
+            "AuthRolePermissionPermissionIdParameter"
+        }
+        var name: String { "systemPermissionId" }
+        var description: String? { "System permission id" }
+        var schema: any OpenAPISchemaRepresentable {
+            RolePermission.Schemas.AuthRolePermissionPermissionIdField()
+                .reference()
+        }
     }
 }

@@ -1,7 +1,12 @@
 import FeatherOpenAPI
 
-struct AuthMagicLinkManagementPathItems: PathItemRepresentable {
-    var get: (any OperationRepresentable)? { AuthMagicLinkListOperation() }
-    var post: (any OperationRepresentable)? { AuthMagicLinkCreateOperation() }
-    var delete: (any OperationRepresentable)? { AuthMagicLinkRemoveOperation() }
+extension MagicLink {
+
+    struct PathItem: PathItemRepresentable {
+        var get: (any OperationRepresentable)? { MagicLink.List.Operation() }
+        var post: (any OperationRepresentable)? { MagicLink.Post.Operation() }
+        var delete: (any OperationRepresentable)? {
+            MagicLink.Delete.Operation()
+        }
+    }
 }

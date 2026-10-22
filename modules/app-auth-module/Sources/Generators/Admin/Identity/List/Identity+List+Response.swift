@@ -2,7 +2,11 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct UserIdentitySessionListResponse: JSONResponseRepresentable {
-    var description: String = "UserIdentity session list response"
-    var schema = UserAuthSessionListSchema().reference()
+extension Identity.Session.List {
+    struct UserIdentitySessionListResponse: JSONResponseRepresentable {
+        var openAPIIdentifier: String { "UserIdentitySessionListResponse" }
+        var description: String = "UserIdentity session list response"
+        var schema = Identity.Session.Schemas.UserAuthSessionListSchema()
+            .reference()
+    }
 }

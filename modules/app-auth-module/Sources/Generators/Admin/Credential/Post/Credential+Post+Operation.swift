@@ -2,14 +2,17 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthCredentialCreateOperation: AuthCredentialOperation {
-    var operationId: String? { "authCredentialCreate" }
+extension Credential.Post {
 
-    var requestBody: (any RequestBodyRepresentable)? {
-        AuthCredentialRequestBody().reference()
-    }
+    struct Operation: Credential.Operation {
+        var operationId: String? { "authCredentialCreate" }
 
-    var responseMap: ResponseMap {
-        [201: AuthCredentialDetailResponse().reference()]
+        var requestBody: (any RequestBodyRepresentable)? {
+            Credential.Post.AuthCredentialRequestBody().reference()
+        }
+
+        var responseMap: ResponseMap {
+            [201: Credential.Get.AuthCredentialDetailResponse().reference()]
+        }
     }
 }

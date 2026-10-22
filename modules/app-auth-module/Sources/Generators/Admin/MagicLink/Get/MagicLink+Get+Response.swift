@@ -2,7 +2,11 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthMagicLinkDetailResponse: JSONResponseRepresentable {
-    var description: String = "User magic link response"
-    var schema = AuthMagicLinkDetailSchema().reference()
+extension MagicLink.Get {
+
+    struct AuthMagicLinkDetailResponse: JSONResponseRepresentable {
+        var openAPIIdentifier: String { "AuthMagicLinkDetailResponse" }
+        var description: String = "User magic link response"
+        var schema = MagicLink.Schemas.AuthMagicLinkDetailSchema().reference()
+    }
 }

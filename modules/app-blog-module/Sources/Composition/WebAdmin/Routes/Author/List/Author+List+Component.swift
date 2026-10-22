@@ -277,7 +277,8 @@ extension Author.List {
                                                                                     .primary
                                                                                 ),
                                                                             permission:
-                                                                                Author.Permissions
+                                                                                Author
+                                                                                .Permissions
                                                                                 .read
                                                                         ),
                                                                         .init(
@@ -297,7 +298,8 @@ extension Author.List {
                                                                                     .secondary
                                                                                 ),
                                                                             permission:
-                                                                                Author.Permissions
+                                                                                Author
+                                                                                .Permissions
                                                                                 .update
                                                                         ),
                                                                         .init(
@@ -323,7 +325,8 @@ extension Author.List {
                                                                             style:
                                                                                 .destructive,
                                                                             permission:
-                                                                                Author.Permissions
+                                                                                Author
+                                                                                .Permissions
                                                                                 .delete
                                                                         ),
                                                                     ],

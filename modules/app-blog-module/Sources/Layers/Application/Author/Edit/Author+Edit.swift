@@ -1,6 +1,5 @@
 public import BlogModule
 
-extension Settings {
-    public enum Detail {}
+extension Author {
     public enum Edit {}
 }

@@ -1,28 +1,13 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
-
-enum Email {
-    protocol Operation: BearerProtectedOperation {}
-
-    enum Query {
-        enum Schemas {}
+public enum Email {
+    public enum Query {
+        public enum Schemas {}
     }
-    enum Post {}
-    enum Delete {}
-    enum List {}
-    enum Get {}
-    enum Patch {}
-    enum ID {}
-    enum Schemas {}
-    enum Parameters {}
-}
-
-extension Email.Operation {
-    var tags: [any TagRepresentable] { [Email.Tag()] }
-}
-
-extension Email {
-    struct Tag: TagRepresentable {
-        var name: String = "AuthEmails"
-    }
+    public enum Post {}
+    public enum Delete {}
+    public enum List {}
+    public enum Get {}
+    public enum Patch {}
+    public enum ID {}
+    public enum Schemas {}
+    public enum Parameters {}
 }

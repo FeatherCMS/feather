@@ -38,41 +38,101 @@ extension AdminAPIGateway {
             )
         }
 
-        guard let label = requiredFieldChange(
-            value: body.label,
-            shouldApply: fields.contains(.label)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: label"))))
+        guard
+            let label = requiredFieldChange(
+                value: body.label,
+                shouldApply: fields.contains(.label)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: label"
+                        )
+                    )
+                )
+            )
         }
-        guard let url = requiredFieldChange(
-            value: body.url,
-            shouldApply: fields.contains(.url)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: url"))))
+        guard
+            let url = requiredFieldChange(
+                value: body.url,
+                shouldApply: fields.contains(.url)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: url"
+                        )
+                    )
+                )
+            )
         }
-        guard let priority = requiredFieldChange(
-            value: body.priority,
-            shouldApply: fields.contains(.priority)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: priority"))))
+        guard
+            let priority = requiredFieldChange(
+                value: body.priority,
+                shouldApply: fields.contains(.priority)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: priority"
+                        )
+                    )
+                )
+            )
         }
-        guard let isBlank = requiredFieldChange(
-            value: body.isBlank,
-            shouldApply: fields.contains(.isBlank)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: isBlank"))))
+        guard
+            let isBlank = requiredFieldChange(
+                value: body.isBlank,
+                shouldApply: fields.contains(.isBlank)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: isBlank"
+                        )
+                    )
+                )
+            )
         }
-        guard let permission = requiredFieldChange(
-            value: body.permission,
-            shouldApply: fields.contains(.permission)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: permission"))))
+        guard
+            let permission = requiredFieldChange(
+                value: body.permission,
+                shouldApply: fields.contains(.permission)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: permission"
+                        )
+                    )
+                )
+            )
         }
-        guard let notes = requiredFieldChange(
-            value: body.notes,
-            shouldApply: fields.contains(.notes)
-        ) else {
-            return .badRequest(.init(body: .json(badRequestErrorEnvelope(reason: "Missing selected field: notes"))))
+        guard
+            let notes = requiredFieldChange(
+                value: body.notes,
+                shouldApply: fields.contains(.notes)
+            )
+        else {
+            return .badRequest(
+                .init(
+                    body: .json(
+                        badRequestErrorEnvelope(
+                            reason: "Missing selected field: notes"
+                        )
+                    )
+                )
+            )
         }
 
         let useCase = self.useCases.makeEditAuthorLink()

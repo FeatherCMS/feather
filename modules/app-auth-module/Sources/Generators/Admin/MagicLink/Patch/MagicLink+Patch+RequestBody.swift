@@ -1,8 +1,16 @@
 import FeatherOpenAPI
 import OpenAPIKit30
 
-struct AuthMagicLinkPatchRequestBody: RequestBodyRepresentable {
-    var contentMap: ContentMap {
-        [.json: Content(AuthMagicLinkPatchSchema().reference())]
+extension MagicLink.Patch {
+
+    struct AuthMagicLinkPatchRequestBody: RequestBodyRepresentable {
+        var openAPIIdentifier: String { "AuthMagicLinkPatchRequestBody" }
+        var contentMap: ContentMap {
+            [
+                .json: Content(
+                    MagicLink.Schemas.AuthMagicLinkPatchSchema().reference()
+                )
+            ]
+        }
     }
 }

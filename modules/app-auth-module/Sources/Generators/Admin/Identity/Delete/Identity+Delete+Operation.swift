@@ -2,8 +2,8 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct UserIdentitySessionRemoveOperation: UserIdentitySessionOperation,
-    DeleteOperation
-{
-    var operationId: String? { "userIdentitySessionRemove" }
+extension Identity.Session.Delete {
+    struct Operation: Identity.IdentifiableOperation, DeleteOperation {
+        var operationId: String? { "userIdentitySessionRemove" }
+    }
 }

@@ -1,8 +1,8 @@
+import BlogModule
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import BlogModule
 import WebModuleWebAdmin
 
 enum AdminBlogMetadataRoutes {

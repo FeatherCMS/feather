@@ -11,9 +11,10 @@ extension Tag {
             public init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
                 let tags = root.appending(pathComponent: "tags")
                 self.tags = tags
-                self.tagsBreadcrumb = breadcrumb + [
-                    .init(label: "Tags", link: tags.path)
-                ]
+                self.tagsBreadcrumb =
+                    breadcrumb + [
+                        .init(label: "Tags", link: tags.path)
+                    ]
             }
 
             func tag(_ id: RouterPath) -> RouterPath {

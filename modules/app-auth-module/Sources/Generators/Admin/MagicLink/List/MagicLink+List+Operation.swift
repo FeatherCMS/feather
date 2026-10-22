@@ -2,10 +2,13 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthMagicLinkListOperation: AuthMagicLinkOperation {
-    var operationId: String? { "authMagicLinkList" }
+extension MagicLink.List {
 
-    var responseMap: ResponseMap {
-        [200: AuthMagicLinkListResponse().reference()]
+    struct Operation: MagicLink.Operation {
+        var operationId: String? { "authMagicLinkList" }
+
+        var responseMap: ResponseMap {
+            [200: MagicLink.List.AuthMagicLinkListResponse().reference()]
+        }
     }
 }

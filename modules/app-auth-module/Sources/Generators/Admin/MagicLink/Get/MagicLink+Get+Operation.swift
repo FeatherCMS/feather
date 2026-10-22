@@ -2,13 +2,16 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthMagicLinkGetOperation: AuthMagicLinkIdOperation {
-    var operationId: String? { "authMagicLinkGet" }
+extension MagicLink.Get {
 
-    var responseMap: ResponseMap {
-        [
-            200: AuthMagicLinkDetailResponse().reference(),
-            404: CustomResponse(description: "AuthMagicLink not found"),
-        ]
+    struct Operation: MagicLink.IdentifiableOperation {
+        var operationId: String? { "authMagicLinkGet" }
+
+        var responseMap: ResponseMap {
+            [
+                200: MagicLink.Get.AuthMagicLinkDetailResponse().reference(),
+                404: CustomResponse(description: "AuthMagicLink not found"),
+            ]
+        }
     }
 }

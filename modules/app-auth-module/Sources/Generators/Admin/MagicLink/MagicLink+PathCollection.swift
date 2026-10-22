@@ -5,11 +5,11 @@ extension MagicLink {
         var pathMap: PathMap {
             [
                 "api/v1/admin/auth/magic-links":
-                    AuthMagicLinkManagementPathItems(),
+                    MagicLink.PathItem(),
                 "api/v1/admin/auth/magic-links/query":
-                    AuthMagicLinkQueryPathItems(),
+                    MagicLink.Query.PathItem(),
                 "api/v1/admin/auth/magic-links/{authMagicLinkId}":
-                    AuthMagicLinkIdPathItems(),
+                    MagicLink.ID.PathItem(),
             ]
         }
     }

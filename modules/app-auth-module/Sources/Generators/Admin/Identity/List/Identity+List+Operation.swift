@@ -2,13 +2,15 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct UserIdentitySessionListOperation: UserIdentitySessionOperation {
-    var operationId: String? { "userIdentitySessionList" }
+extension Identity.Session.List {
+    struct Operation: Identity.IdentifiableOperation {
+        var operationId: String? { "userIdentitySessionList" }
 
-    var responseMap: ResponseMap {
-        [
-            200: UserIdentitySessionListResponse().reference(),
-            404: CustomResponse(description: "UserIdentity not found"),
-        ]
+        var responseMap: ResponseMap {
+            [
+                200: UserIdentitySessionListResponse().reference(),
+                404: CustomResponse(description: "UserIdentity not found"),
+            ]
+        }
     }
 }

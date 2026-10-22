@@ -2,17 +2,20 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthMagicLinkUpdateOperation: AuthMagicLinkIdOperation {
-    var operationId: String? { "authMagicLinkUpdate" }
+extension MagicLink.Put {
 
-    var requestBody: (any RequestBodyRepresentable)? {
-        AuthMagicLinkUpdateRequestBody().reference()
-    }
+    struct Operation: MagicLink.IdentifiableOperation {
+        var operationId: String? { "authMagicLinkUpdate" }
 
-    var responseMap: ResponseMap {
-        [
-            200: AuthMagicLinkDetailResponse().reference(),
-            404: CustomResponse(description: "AuthMagicLink not found"),
-        ]
+        var requestBody: (any RequestBodyRepresentable)? {
+            MagicLink.Put.AuthMagicLinkUpdateRequestBody().reference()
+        }
+
+        var responseMap: ResponseMap {
+            [
+                200: MagicLink.Get.AuthMagicLinkDetailResponse().reference(),
+                404: CustomResponse(description: "AuthMagicLink not found"),
+            ]
+        }
     }
 }

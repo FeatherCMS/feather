@@ -1,52 +1,89 @@
 import FeatherOpenAPI
 import OpenAPIKit30
 
-struct AuthRolePermissionRoleIdField: StringSchemaRepresentable {
-    var example: String? = "role_manager"
-}
+extension RolePermission.Schemas {
 
-struct AuthRolePermissionPermissionIdField: StringSchemaRepresentable {
-    var example: String? = "user_roles.list"
-}
-
-struct AuthRolePermissionCreateSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "roleId": AuthRolePermissionRoleIdField(),
-            "permissionId": AuthRolePermissionPermissionIdField(),
-        ]
+    struct AuthRolePermissionRoleIdField: StringSchemaRepresentable {
+        var openAPIIdentifier: String { "AuthRolePermissionRoleIdField" }
+        var example: String? = "role_manager"
     }
 }
 
-struct AuthRolePermissionDetailSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "roleId": AuthRolePermissionRoleIdField().reference(),
-            "permissionId": AuthRolePermissionPermissionIdField().reference(),
-        ]
+extension RolePermission.Schemas {
+
+    struct AuthRolePermissionPermissionIdField: StringSchemaRepresentable {
+        var openAPIIdentifier: String { "AuthRolePermissionPermissionIdField" }
+        var example: String? = "user_roles.list"
     }
 }
 
-struct AuthRolePermissionListItemSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "roleId": AuthRolePermissionRoleIdField().reference(),
-            "permissionId": AuthRolePermissionPermissionIdField().reference(),
-        ]
+extension RolePermission.Schemas {
+
+    struct AuthRolePermissionCreateSchema: ObjectSchemaRepresentable {
+        var openAPIIdentifier: String { "AuthRolePermissionCreateSchema" }
+        var propertyMap: SchemaMap {
+            [
+                "roleId": RolePermission.Schemas
+                    .AuthRolePermissionRoleIdField(),
+                "permissionId": RolePermission.Schemas
+                    .AuthRolePermissionPermissionIdField(),
+            ]
+        }
     }
 }
 
-struct AuthRolePermissionQueryItemSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "roleId": AuthRolePermissionRoleIdField().reference(),
-            "permissionId": AuthRolePermissionPermissionIdField().reference(),
-        ]
+extension RolePermission.Schemas {
+
+    struct AuthRolePermissionDetailSchema: ObjectSchemaRepresentable {
+        var openAPIIdentifier: String { "AuthRolePermissionDetailSchema" }
+        var propertyMap: SchemaMap {
+            [
+                "roleId": RolePermission.Schemas.AuthRolePermissionRoleIdField()
+                    .reference(),
+                "permissionId": RolePermission.Schemas
+                    .AuthRolePermissionPermissionIdField().reference(),
+            ]
+        }
     }
 }
 
-struct AuthRolePermissionListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? {
-        AuthRolePermissionListItemSchema().reference()
+extension RolePermission.Schemas {
+
+    struct AuthRolePermissionListItemSchema: ObjectSchemaRepresentable {
+        var openAPIIdentifier: String { "AuthRolePermissionListItemSchema" }
+        var propertyMap: SchemaMap {
+            [
+                "roleId": RolePermission.Schemas.AuthRolePermissionRoleIdField()
+                    .reference(),
+                "permissionId": RolePermission.Schemas
+                    .AuthRolePermissionPermissionIdField().reference(),
+            ]
+        }
+    }
+}
+
+extension RolePermission.Query.Schemas {
+
+    struct AuthRolePermissionQueryItemSchema: ObjectSchemaRepresentable {
+        var openAPIIdentifier: String { "AuthRolePermissionQueryItemSchema" }
+        var propertyMap: SchemaMap {
+            [
+                "roleId": RolePermission.Schemas.AuthRolePermissionRoleIdField()
+                    .reference(),
+                "permissionId": RolePermission.Schemas
+                    .AuthRolePermissionPermissionIdField().reference(),
+            ]
+        }
+    }
+}
+
+extension RolePermission.Schemas {
+
+    struct AuthRolePermissionListSchema: ArraySchemaRepresentable {
+        var openAPIIdentifier: String { "AuthRolePermissionListSchema" }
+        var items: (any SchemaRepresentable)? {
+            RolePermission.Schemas.AuthRolePermissionListItemSchema()
+                .reference()
+        }
     }
 }

@@ -2,25 +2,29 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import UserOpenAPIGeneratorSupport
 
-struct AuthCredentialPatchOperation: AuthCredentialIdOperation {
-    var operationId: String? { "authCredentialPatch" }
+extension Credential.Patch {
 
-    var parameters: [any ParameterRepresentable] {
-        [
-            AuthCredentialIdParameter().reference(),
-            AuthCredentialUpdateMaskParameter().reference(),
-        ]
-    }
+    struct Operation: Credential.IdentifiableOperation {
+        var operationId: String? { "authCredentialPatch" }
 
-    var requestBody: (any RequestBodyRepresentable)? {
-        AuthCredentialPatchRequestBody().reference()
-    }
+        var parameters: [any ParameterRepresentable] {
+            [
+                Credential.Parameters.AuthCredentialIdParameter().reference(),
+                Credential.Parameters.AuthCredentialUpdateMaskParameter()
+                    .reference(),
+            ]
+        }
 
-    var responseMap: ResponseMap {
-        [
-            200: AuthCredentialDetailResponse().reference(),
-            400: CustomResponse(description: "Invalid update mask"),
-            404: CustomResponse(description: "AuthCredential not found"),
-        ]
+        var requestBody: (any RequestBodyRepresentable)? {
+            Credential.Patch.AuthCredentialPatchRequestBody().reference()
+        }
+
+        var responseMap: ResponseMap {
+            [
+                200: Credential.Get.AuthCredentialDetailResponse().reference(),
+                400: CustomResponse(description: "Invalid update mask"),
+                404: CustomResponse(description: "AuthCredential not found"),
+            ]
+        }
     }
 }
