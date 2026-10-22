@@ -1,4 +1,5 @@
 import FeatherValidation
+import WebDomain
 import FeatherWebAdmin
 import FeatherWebShared
 import HTML
@@ -173,7 +174,8 @@ struct AdminEditMenuItemDefaultController:
 
             return AdminNotificationFlash.redirect(
                 to:
-                    MenuItemRoutes.edit(
+                    WebDomain.Menu.Item.Routes
+                    .edit(
                         RouterPath(menuId),
                         RouterPath(id)
                     )

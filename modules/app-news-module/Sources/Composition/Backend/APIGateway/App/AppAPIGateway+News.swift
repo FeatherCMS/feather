@@ -23,7 +23,16 @@ extension AppAPIGateway {
             return .ok(.init(body: .json(mapArticleDetail(item))))
         }
         catch {
-            return .notFound
+            return .notFound(
+                .init(
+                    body: .json(
+                        notFoundErrorEnvelope(
+                            message: "Not Found",
+                            reason: "News article not found"
+                        )
+                    )
+                )
+            )
         }
     }
 
@@ -43,9 +52,25 @@ extension AppAPIGateway {
             return .ok(.init(body: .json(mapCategoryDetail(item))))
         }
         catch {
-            return .notFound
+            return .notFound(
+                .init(
+                    body: .json(
+                        notFoundErrorEnvelope(
+                            message: "Not Found",
+                            reason: "News category not found"
+                        )
+                    )
+                )
+            )
         }
     }
+}
+
+private func notFoundErrorEnvelope(
+    message: String,
+    reason: String
+) -> Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+    .init(error: .init(message: message, reason: reason))
 }
 
 extension AppAPIGateway {

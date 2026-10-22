@@ -1,8 +1,8 @@
 import FeatherWebAdmin
 import HTML
 import OpenAPIRuntime
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 
 struct MenuItemForm: Component {
 

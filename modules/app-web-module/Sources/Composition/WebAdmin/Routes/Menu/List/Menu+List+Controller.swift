@@ -4,7 +4,7 @@ import Hummingbird
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu.List.Controller {
+extension WebDomain.Menu.List.Controller {
     protocol Interface: Sendable {
 
         func getMenus(

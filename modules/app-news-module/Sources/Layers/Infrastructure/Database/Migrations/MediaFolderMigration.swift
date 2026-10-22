@@ -5,6 +5,7 @@ public import FeatherInfrastructure
 import FeatherModuleKit
 import MediaDomain
 import MediaInfrastructure
+import MediaModule
 
 public struct MediaFolderMigration: DatabaseMigration {
     private let platform: any DatabasePlatform
@@ -29,7 +30,7 @@ public struct MediaFolderMigration: DatabaseMigration {
             connection: connection,
             idGenerator: idGenerator
         )
-        let folders = MediaAssetNodeFolderDatabaseRepository(context: context)
+        let folders = Asset.Folder.Repository.Database(context: context)
         try await ensure(
             paths: ["news/articles", "news/categories"],
             using: folders
@@ -38,7 +39,7 @@ public struct MediaFolderMigration: DatabaseMigration {
 
     private func ensure(
         paths: [String],
-        using repository: MediaAssetNodeFolderDatabaseRepository
+        using repository: Asset.Folder.Repository.Database
     ) async throws {
         for path in paths {
             var parentId: String?
@@ -55,7 +56,7 @@ public struct MediaFolderMigration: DatabaseMigration {
                     continue
                 }
                 let folder = try await repository.insert(
-                    MediaAssetNodeFolder.create(
+                    Asset.Folder.Model.create(
                         parentId: parentId,
                         name: component,
                         slug: component.slugified,

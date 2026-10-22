@@ -1,4 +1,5 @@
 import FeatherValidation
+import WebDomain
 import FeatherWebAdmin
 import FeatherWebShared
 import HTML
@@ -140,7 +141,7 @@ struct AdminAddMenuItemDefaultController: AdminAddMenuItemController {
             try await runtime.interactor.execute(menuId: menuId, input: payload)
 
             return AdminNotificationFlash.redirect(
-                to: MenuItemRoutes.list(RouterPath(menuId)).description,
+                to: WebDomain.Menu.Item.Routes.list(RouterPath(menuId)).description,
                 notification: .init(
                     title: "Added",
                     message: "Item added successfully."

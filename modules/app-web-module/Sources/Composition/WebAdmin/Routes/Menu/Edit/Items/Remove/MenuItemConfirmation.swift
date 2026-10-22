@@ -1,3 +1,6 @@
+import WebBuilders
+import WebDomain
+import WebComponents
 import FeatherValidation
 import FeatherWebAdmin
 import HTML
@@ -5,8 +8,6 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import Builders
-import Components
 
 struct MenuItemConfirmation: Component {
 
@@ -16,7 +17,7 @@ struct MenuItemConfirmation: Component {
         let label: String
         let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String
-        let origin: MenuItemRoutes.RemoveOrigin
+        let origin: WebDomain.Menu.Item.Routes.RemoveOrigin
     }
 
     let state: State
@@ -30,7 +31,7 @@ struct MenuItemConfirmation: Component {
                 ),
                 selectedItems: [state.label],
                 action:
-                    MenuItemRoutes.itemRemove(
+                    WebDomain.Menu.Item.Routes.itemRemove(
                         RouterPath(state.menuId),
                         RouterPath(state.id),
                         origin: state.origin

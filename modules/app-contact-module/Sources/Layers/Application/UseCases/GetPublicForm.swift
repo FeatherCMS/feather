@@ -23,7 +23,7 @@ public struct GetPublicForm {
 
     public func execute(
         _ input: Input
-    ) async throws -> FormDetail {
+    ) async throws -> Form.Detail.Output {
         try await transaction.run { scope in
             guard let value = try await scope.form.findBy(key: input.key) else {
                 throw Error.formNotFound

@@ -4,5 +4,5 @@ import FeatherModuleKit
 import Hummingbird
 
 extension Dashboard {
-    enum Event {}
+    public enum Event {}
 }

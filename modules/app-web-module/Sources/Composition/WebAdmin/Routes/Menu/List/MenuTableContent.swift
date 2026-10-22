@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SGML
 import WebAdminAPI
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 import WebModule
 
 struct MenuTableContent: Component {

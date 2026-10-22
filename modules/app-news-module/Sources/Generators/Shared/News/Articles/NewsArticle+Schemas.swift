@@ -1,6 +1,6 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-public import OpenAPIKit30
+import OpenAPIKit30
 
 public struct NewsArticleIdField: StringSchemaRepresentable {
     public var example: String? = "news_1"

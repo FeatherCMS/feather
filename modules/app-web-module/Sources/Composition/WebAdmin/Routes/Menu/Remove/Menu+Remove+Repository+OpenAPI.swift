@@ -5,7 +5,7 @@ import OpenAPIRuntime
 import WebAdminAPI
 import WebDomain
 
-extension Menu.Remove.Repository {
+extension WebDomain.Menu.Remove.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 

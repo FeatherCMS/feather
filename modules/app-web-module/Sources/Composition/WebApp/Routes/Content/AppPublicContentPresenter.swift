@@ -7,7 +7,7 @@ protocol AppPublicContentPresenter: Sendable {
         content: AppPublicContentModel,
         formSubmissionNonce: String,
         formSubmissionFeedback: FormSubmissionFeedback?
-    ) async -> (response: HTMLResponse, usesFormSubmissionNonce: Bool)
+    ) async -> (response: WebAppHTMLResponse, usesFormSubmissionNonce: Bool)
 
     func renderRSS(model: AppPublicRSSModel) -> String
 

@@ -4,15 +4,15 @@ import Hummingbird
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu.List {
+extension WebDomain.Menu.List {
     struct Router {
         let controller: any Controller.Interface
-        let routes: Menu.Router.Routes
+        let routes: WebDomain.Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: Menu.Router.Routes
+            routes: WebDomain.Menu.Router.Routes
         ) {
             self.routes = routes
             self.controller = Controller.Default(

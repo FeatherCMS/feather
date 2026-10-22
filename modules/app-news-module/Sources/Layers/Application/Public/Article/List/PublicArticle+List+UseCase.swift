@@ -8,6 +8,7 @@ import FeatherApplication
 public import FeatherModuleKit
 import Foundation
 import WebApplication
+import NewsDomain
 
 public struct ListPublicArticles {
     let query: any QueryExecutor<ReadPublicNewsArticle>
@@ -37,8 +38,8 @@ public struct ListPublicArticles {
         return try await query.run { scope in
             let articles = try await scope.article.resolve(ids: ids)
             let metadataByID = Dictionary(
-                uniqueKeysWithValues: try await scope.metadata
-                    .resolveDetails(
+                uniqueKeysWithValues: try await resolveNewsMetadataDetails(
+                        metadata: scope.metadata,
                         referenceType: "news.article",
                         referenceIDs: articles.items.map(\.id)
                     )
@@ -85,8 +86,8 @@ public struct ListPublicArticles {
                 limit: limit
             )
             let metadataByID = Dictionary(
-                uniqueKeysWithValues: try await scope.metadata
-                    .resolveDetails(
+                uniqueKeysWithValues: try await resolveNewsMetadataDetails(
+                        metadata: scope.metadata,
                         referenceType: "news.article",
                         referenceIDs: articles.items.map(\.id)
                     )
@@ -133,7 +134,7 @@ public struct ListPublicArticles {
             else {
                 normalizedSearch = nil
             }
-            let baseQuery = ArticleList.Query(
+            let baseQuery = Article.List.Input.Query(
                 search: normalizedSearch
             )
             let total = try await scope.article.countPublic(
@@ -158,8 +159,8 @@ public struct ListPublicArticles {
                 categoryID: nil
             )
             let metadataByID = Dictionary(
-                uniqueKeysWithValues: try await scope.metadata
-                    .resolveDetails(
+                uniqueKeysWithValues: try await resolveNewsMetadataDetails(
+                        metadata: scope.metadata,
                         referenceType: "news.article",
                         referenceIDs: articles.items.map(\.id)
                     )

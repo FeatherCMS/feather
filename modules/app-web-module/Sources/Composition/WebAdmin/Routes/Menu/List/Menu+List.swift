@@ -4,6 +4,10 @@ import Hummingbird
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu {
+extension WebDomain.Menu {
     enum List {}
+}
+
+extension WebDomain.Menu.List {
+    enum Controller {}
 }

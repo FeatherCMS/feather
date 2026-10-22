@@ -49,7 +49,7 @@ public struct CategoryDatabaseRepository: CategoryRepository {
         var newMetadata = model.metadata
         try newMetadata.set(referenceID: saved.id)
 
-        let metadata = try await MetadataDatabaseRepository(context: context)
+        let metadata = try await Metadata.Repository.Database(context: context)
             .insert(newMetadata)
         return saved.asDomain(metadata: metadata)
     }
@@ -60,7 +60,7 @@ public struct CategoryDatabaseRepository: CategoryRepository {
         let table = CategoryTable(connection: context.connection)
         guard let category = try await table.find(id: id) else { return nil }
         guard
-            let metadata = try await MetadataDatabaseRepository(
+            let metadata = try await Metadata.Repository.Database(
                 context: context
             )
             .find(referenceType: "news.category", referenceId: id)
@@ -84,7 +84,7 @@ public struct CategoryDatabaseRepository: CategoryRepository {
                 updatedAt: model.updatedAt
             )
         )
-        _ = try await MetadataDatabaseRepository(context: context)
+        _ = try await Metadata.Repository.Database(context: context)
             .update(model.metadata)
         return updated.asDomain(metadata: model.metadata)
     }

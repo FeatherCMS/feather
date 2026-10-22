@@ -58,7 +58,7 @@ public struct ArticleDatabaseRepository: ArticleRepository {
         var newMetadata = model.metadata
         try newMetadata.set(referenceID: saved.id)
 
-        let metadata = try await MetadataDatabaseRepository(context: context)
+        let metadata = try await Metadata.Repository.Database(context: context)
             .insert(newMetadata)
 
         return saved.asDomain(
@@ -77,7 +77,7 @@ public struct ArticleDatabaseRepository: ArticleRepository {
         )
         .listCategoryIDs(articleID: id)
         guard
-            let metadata = try await MetadataDatabaseRepository(
+            let metadata = try await Metadata.Repository.Database(
                 context: context
             )
             .find(referenceType: "news.article", referenceId: id)
@@ -109,7 +109,7 @@ public struct ArticleDatabaseRepository: ArticleRepository {
                 articleID: model.id,
                 categoryIDs: model.categoryIds
             )
-        _ = try await MetadataDatabaseRepository(context: context)
+        _ = try await Metadata.Repository.Database(context: context)
             .update(model.metadata)
         return updated.asDomain(
             metadata: model.metadata,

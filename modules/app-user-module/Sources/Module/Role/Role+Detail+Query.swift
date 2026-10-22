@@ -1,5 +1,5 @@
 import FeatherModuleKit
 
 extension Role.Detail {
-    enum Query {}
+    public enum Query {}
 }

@@ -7,13 +7,14 @@ extension AdminAPIGateway {
     public func analyticsLogSearch(
         _ input: Operations.AnalyticsLogSearch.Input
     ) async throws -> Operations.AnalyticsLogSearch.Output {
-        let query: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema
+        let query:
+            Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
         }
 
-        let useCase = useCases.makeListLogs()
+        let useCase = useCases.makeLogList()
         let objectQuery = map(query)
         let subject = try await CurrentSubject.require()
 

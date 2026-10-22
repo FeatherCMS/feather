@@ -14,16 +14,17 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let overview = try await useCases.makeGetLogOverview()
+        let overviewQuery = map(query)
+        let overview = try await useCases.makeLogOverview()
             .execute(
                 subject: subject,
-                input: .init(query: map(query))
+                input: .init(query: overviewQuery)
             )
 
         return .ok(
             .init(
                 body: .json(
-                    map(overview)
+                    map(overview, query: overviewQuery)
                 )
             )
         )

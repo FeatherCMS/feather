@@ -1,6 +1,6 @@
 import ContactContracts
-import ContactModule
 import ContactDomain
+import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
@@ -32,7 +32,7 @@ public struct GetSubmission: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> SubmissionDetail {
+    ) async throws -> Submission.Detail.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)

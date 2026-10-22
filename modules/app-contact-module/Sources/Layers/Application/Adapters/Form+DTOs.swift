@@ -1,14 +1,14 @@
 import ContactDomain
 
 extension Form {
-    var asDetail: FormDetail {
+    var asDetail: Form.Detail.Output {
         asDetail(fields: [], mails: [])
     }
 
     func asDetail(
-        fields: [FormFieldDetail] = [],
-        mails: [SubmissionMailDetail] = []
-    ) -> FormDetail {
+        fields: [FormField.Detail.Output] = [],
+        mails: [SubmissionMail.Detail.Output] = []
+    ) -> Form.Detail.Output {
         .init(
             id: id,
             key: key,

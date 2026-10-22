@@ -1,7 +1,9 @@
 public import FeatherApplication
 public import FeatherModuleKit
+public import NewsDomain
 import NewsContracts
 import WebApplication
+import WebDomain
 
 //
 //  GetCategory.swift
@@ -29,20 +31,10 @@ public struct GetCategory: UseCase {
         self.query = query
     }
 
-    public struct Input: DTO {
-        public let id: String
-
-        public init(
-            id: String
-        ) {
-            self.id = id
-        }
-    }
-
     public func execute(
         subject: Subject,
-        input: Input
-    ) async throws -> CategoryDetail {
+        input: Category.Detail.Input
+    ) async throws -> Category.Detail.Output {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {

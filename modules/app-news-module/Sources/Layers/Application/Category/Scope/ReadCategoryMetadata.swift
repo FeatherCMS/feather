@@ -6,14 +6,15 @@
 
 public import FeatherModuleKit
 public import WebApplication
+public import WebDomain
 
 public struct ReadCategoryMetadata: Scope {
     public let category: any CategoryQueries
-    public let metadata: any MetadataQueries
+    public let metadata: any Metadata.Query.Interface
 
     public init(
         category: any CategoryQueries,
-        metadata: any MetadataQueries
+        metadata: any Metadata.Query.Interface
     ) {
         self.category = category
         self.metadata = metadata

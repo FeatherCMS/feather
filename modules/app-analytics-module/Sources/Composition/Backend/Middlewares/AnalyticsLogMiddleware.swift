@@ -43,7 +43,7 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
             return response
         }
 
-        let useCase = analytics.makeTrackLog()
+        let useCase = analytics.makeLogTrack()
         let accountId = await resolveAccountID(request)
         let headers = Self.storedHeaders(from: request)
         let acceptLanguage = request.headers[.acceptLanguage]
@@ -70,7 +70,9 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
                     acceptLanguage: acceptLanguage,
                     userAgent: userAgent,
                     trafficCategory:
-                        AnalyticsLogRequestMetadata.classifyUserAgent(userAgent),
+                        AnalyticsLogRequestMetadata.classifyUserAgent(
+                            userAgent
+                        ),
                     language: languageComponents.language,
                     region: languageComponents.region,
                     osName: userAgentComponents.osName,

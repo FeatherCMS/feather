@@ -3,7 +3,7 @@ import OpenAPIRuntime
 import WebAdminAPI
 import WebDomain
 
-extension Menu.List {
+extension WebDomain.Menu.List {
     struct Model: Sendable {
         let items: [Components.Schemas.MenuQueryItemSchema]
         let total: Int

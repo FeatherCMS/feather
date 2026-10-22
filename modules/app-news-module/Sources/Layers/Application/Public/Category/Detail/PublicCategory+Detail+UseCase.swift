@@ -7,7 +7,9 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import Foundation
+import NewsDomain
 import WebApplication
+import WebDomain
 
 public struct GetPublicCategory {
     public struct Error: UseCaseError {
@@ -109,7 +111,7 @@ extension GetPublicCategory {
             (total + resolvedPageSize - 1) / resolvedPageSize
         )
         let currentPage = min(requestedPage, pageCount)
-        let articles: ArticleList
+        let articles: Article.List.Output
         if currentPage == requestedPage || total == 0 {
             articles = requestedArticles
         }
@@ -128,7 +130,8 @@ extension GetPublicCategory {
         async let categoryIDsTask = context.article.categoryIDs(
             for: articles.items.map(\.id)
         )
-        async let metadataTask = context.metadata.resolveDetails(
+        async let metadataTask = resolveNewsMetadataDetails(
+            metadata: context.metadata,
             referenceType: "news.article",
             referenceIDs: articles.items.map(\.id)
         )

@@ -2,9 +2,9 @@ import FeatherWebAdmin
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu.Remove.Interactor {
+extension WebDomain.Menu.Remove.Interactor {
     struct Default: Interface {
-        let repository: any Menu.Remove.Repository.Interface
+        let repository: any WebDomain.Menu.Remove.Repository.Interface
 
     func get(
         id: String

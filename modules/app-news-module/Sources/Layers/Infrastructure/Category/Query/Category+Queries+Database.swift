@@ -8,11 +8,12 @@ import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import NewsApplication
+public import NewsDomain
 public import WebApplication
 public import WebDomain
 
 extension CategoryTable.Row {
-    var asQueryListItem: CategoryList.Item {
+    var asQueryListItem: Category.List.Output.Item {
         .init(
             id: id,
             title: title,
@@ -25,7 +26,7 @@ extension CategoryTable.Row {
 
     func asDetail(
         metadata: Metadata.Detail.Output
-    ) -> CategoryDetail {
+    ) -> Category.Detail.Output {
         .init(
             id: id,
             title: title,
@@ -42,11 +43,11 @@ extension CategoryTable.Row {
 public struct CategoryDatabaseQueries: CategoryQueries {
 
     public let context: DatabaseQueryContext
-    public var metadata: any MetadataQueries
+    public var metadata: any Metadata.Query.Interface
 
     public init(
         context: DatabaseQueryContext,
-        metadata: any MetadataQueries
+        metadata: any Metadata.Query.Interface
     ) {
         self.context = context
         self.metadata = metadata
@@ -72,7 +73,7 @@ public struct CategoryDatabaseQueries: CategoryQueries {
     }
 
     func orderByCategory(
-        _ query: CategoryList.Query
+        _ query: Category.List.Input.Query
     ) -> String {
         let sortParts = query.sort.map { category -> String in
             let column: String
@@ -93,7 +94,7 @@ public struct CategoryDatabaseQueries: CategoryQueries {
 
     public func find(
         id: String
-    ) async throws -> CategoryDetail {
+    ) async throws -> Category.Detail.Output {
         let table = CategoryTable(connection: context.connection)
         guard let row = try await table.find(id: id) else {
             throw RepositoryError.notFound
@@ -111,11 +112,12 @@ public struct CategoryDatabaseQueries: CategoryQueries {
 
     public func find(
         ids: [String]
-    ) async throws -> [CategoryDetail] {
+    ) async throws -> [Category.Detail.Output] {
         guard !ids.isEmpty else { return [] }
         let rows = try await CategoryTable(connection: context.connection)
             .list(ids: ids)
-        let details = try await metadata.resolveDetails(
+        let details = try await resolveNewsMetadataDetails(
+            metadata: metadata,
             referenceType: "news.category",
             referenceIDs: ids
         )
@@ -129,8 +131,8 @@ public struct CategoryDatabaseQueries: CategoryQueries {
     }
 
     public func list(
-        query: CategoryList.Query
-    ) async throws -> CategoryList {
+        query: Category.List.Input.Query
+    ) async throws -> Category.List.Output {
         let page = pageSizeOffset(query.page)
         let table = CategoryTable(connection: context.connection)
         let items =
@@ -146,7 +148,7 @@ public struct CategoryDatabaseQueries: CategoryQueries {
     }
 
     public func count(
-        query: CategoryList.Query
+        query: Category.List.Input.Query
     ) async throws -> Int {
         let table = CategoryTable(connection: context.connection)
         return try await table.count(search: query.search)

@@ -1,11 +1,12 @@
+import WebBuilders
+import WebDomain
 import CSS
+import WebComponents
 import FeatherWebAdmin
 import HTML
 import Hummingbird
 import SGML
 import WebAdminAPI
-import Builders
-import Components
 import WebModule
 
 struct MenuItemTableContent: Component {
@@ -21,7 +22,7 @@ struct MenuItemTableContent: Component {
 
     private var returnTo: String {
         AdminLocation.url(
-            path: MenuItemRoutes.list(RouterPath(state.menuId)).description,
+            path: WebDomain.Menu.Item.Routes.list(RouterPath(state.menuId)).description,
             page: state.pageState.page,
             search: state.search
         )
@@ -94,7 +95,8 @@ struct MenuItemTableContent: Component {
                                 AdminListInvalidPageState(
                                     pageState: state.pageState,
                                     path:
-                                        MenuItemRoutes.list(
+                                        WebDomain.Menu.Item.Routes
+                                        .list(
                                             RouterPath(state.menuId)
                                         )
                                         .description
@@ -112,7 +114,8 @@ struct MenuItemTableContent: Component {
                                                 AdminButton(
                                                     "Reset search",
                                                     href:
-                                                        MenuItemRoutes.list(
+                                                        WebDomain.Menu.Item.Routes
+                                                        .list(
                                                             RouterPath(
                                                                 state.menuId
                                                             )
@@ -139,7 +142,7 @@ struct MenuItemTableContent: Component {
                                                     AdminButton(
                                                         "Add new",
                                                         href:
-                                                            MenuItemRoutes
+                                                            WebDomain.Menu.Item.Routes
                                                             .add(
                                                                 RouterPath(
                                                                     state.menuId
@@ -159,7 +162,8 @@ struct MenuItemTableContent: Component {
                                 AdminListSelectionForm(
                                     state: .init(
                                         action:
-                                            MenuItemRoutes.remove(
+                                            WebDomain.Menu.Item.Routes
+                                            .remove(
                                                 RouterPath(state.menuId)
                                             )
                                             .description,
@@ -242,7 +246,8 @@ struct MenuItemTableContent: Component {
                             AdminListSearch(
                                 state: .init(
                                     action:
-                                        MenuItemRoutes.list(
+                                        WebDomain.Menu.Item.Routes
+                                        .list(
                                             RouterPath(state.menuId)
                                         )
                                         .description,
@@ -262,7 +267,8 @@ struct MenuItemTableContent: Component {
                                         AdminButton(
                                             "Add new",
                                             href:
-                                                MenuItemRoutes.add(
+                                                WebDomain.Menu.Item.Routes
+                                                .add(
                                                     RouterPath(state.menuId)
                                                 )
                                                 .description
@@ -277,7 +283,8 @@ struct MenuItemTableContent: Component {
                             AdminListPagination(
                                 state: .init(
                                     path:
-                                        MenuItemRoutes.list(
+                                        WebDomain.Menu.Item.Routes
+                                        .list(
                                             RouterPath(state.menuId)
                                         )
                                         .description,

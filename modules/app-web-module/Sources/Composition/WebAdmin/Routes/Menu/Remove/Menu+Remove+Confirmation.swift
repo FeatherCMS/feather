@@ -5,11 +5,11 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 import WebDomain
 
-extension Menu.Remove {
+extension WebDomain.Menu.Remove {
     struct Confirmation: Component {
 
     struct State {

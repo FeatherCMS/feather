@@ -5,20 +5,22 @@
 //  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
+public import NewsDomain
+
 public protocol CategoryQueries: Sendable {
     func find(
         id: String
-    ) async throws -> CategoryDetail
+    ) async throws -> Category.Detail.Output
 
     func find(
         ids: [String]
-    ) async throws -> [CategoryDetail]
+    ) async throws -> [Category.Detail.Output]
 
     func list(
-        query: CategoryList.Query
-    ) async throws -> CategoryList
+        query: Category.List.Input.Query
+    ) async throws -> Category.List.Output
 
     func count(
-        query: CategoryList.Query
+        query: Category.List.Input.Query
     ) async throws -> Int
 }

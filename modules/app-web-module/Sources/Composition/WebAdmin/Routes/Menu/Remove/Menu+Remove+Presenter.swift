@@ -3,11 +3,11 @@ import Hummingbird
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu.Remove {
+extension WebDomain.Menu.Remove {
     enum Presenter {}
 }
 
-extension Menu.Remove.Presenter {
+extension WebDomain.Menu.Remove.Presenter {
     protocol Interface: Sendable {
 
     func renderRemovePage(

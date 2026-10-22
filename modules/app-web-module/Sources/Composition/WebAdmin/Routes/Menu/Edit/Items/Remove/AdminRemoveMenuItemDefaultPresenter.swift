@@ -1,3 +1,6 @@
+import WebBuilders
+import WebDomain
+import WebComponents
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
@@ -5,8 +8,6 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import Builders
-import Components
 
 struct AdminRemoveMenuItemDefaultPresenter:
     AdminRemoveMenuItemPresenter
@@ -18,7 +19,7 @@ struct AdminRemoveMenuItemDefaultPresenter:
     func renderRemovePage(
         menuId: String,
         item: AdminRemoveItemContext,
-        origin: MenuItemRoutes.RemoveOrigin
+        origin: WebDomain.Menu.Item.Routes.RemoveOrigin
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -46,7 +47,7 @@ struct AdminRemoveMenuItemDefaultPresenter:
         id: String,
         info: String,
         message: String,
-        origin: MenuItemRoutes.RemoveOrigin
+        origin: WebDomain.Menu.Item.Routes.RemoveOrigin
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderAdminPage(
             request: request,

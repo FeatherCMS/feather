@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
+public import NewsDomain
 import NewsContracts
 
 //
@@ -24,20 +25,10 @@ public struct ListArticles: UseCase {
         self.query = query
     }
 
-    public struct Input: DTO {
-        public let query: ArticleList.Query
-
-        public init(
-            query: ArticleList.Query
-        ) {
-            self.query = query
-        }
-    }
-
     public func execute(
         subject: Subject,
-        input: Input
-    ) async throws -> ArticleList {
+        input: Article.List.Input
+    ) async throws -> Article.List.Output {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {
@@ -48,7 +39,7 @@ public struct ListArticles: UseCase {
 
         return try await query.run { scope in
             let articles = try await scope.article.list(query: inputQuery)
-            var items: [ArticleList.Item] = []
+            var items: [Article.List.Output.Item] = []
             items.reserveCapacity(articles.items.count)
             for item in articles.items {
                 items.append(
@@ -69,7 +60,7 @@ public struct ListArticles: UseCase {
 
     public func count(
         subject: Subject,
-        input: Input
+        input: Article.List.Input
     ) async throws -> Int {
         let action = Action()
 

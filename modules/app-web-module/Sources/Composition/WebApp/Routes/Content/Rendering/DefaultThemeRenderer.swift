@@ -24,7 +24,7 @@ public struct DefaultThemeRenderer: PublicThemeRenderer {
     public func render(
         templateIdentifier: String?,
         context: [String: any Sendable]
-    ) -> HTMLResponse {
+    ) -> WebAppHTMLResponse {
         #if DEBUG
         let renderer: any TemplateRenderer
         let templateMetadata: [String: TemplateMetadata]

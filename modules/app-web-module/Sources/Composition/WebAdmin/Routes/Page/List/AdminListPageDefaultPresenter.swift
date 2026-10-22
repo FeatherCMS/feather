@@ -5,8 +5,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 import WebModule
 
 struct AdminListPageDefaultPresenter:

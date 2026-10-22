@@ -4,7 +4,7 @@ import WebApplication
 import WebDomain
 
 extension Components.Schemas.NewsMetadataInputSchema {
-    func pageMetadata(template: String) -> Page.Add.Input.MetadataInput {
+    func pageAddMetadata(template: String) -> Page.Add.Input.MetadataInput {
         .init(
             slug: slug,
             template: template,
@@ -14,7 +14,30 @@ extension Components.Schemas.NewsMetadataInputSchema {
             expirationDate: expirationDate.map(
                 Date.init(timeIntervalSince1970:)
             ),
-            status: Metadata.Status(rawValue: status) ?? .draft,
+            status: Metadata.Model.Status(rawValue: status) ?? .draft,
+            title: title,
+            excerpt: excerpt,
+            imageURL: imageURL,
+            canonicalURL: canonicalURL,
+            noIndex: noIndex ?? false,
+            primaryKeyword: primaryKeyword ?? "",
+            cssCodeInjection: cssCodeInjection,
+            javascriptCodeInjection: javascriptCodeInjection,
+            structuredDataCodeInjection: structuredDataCodeInjection
+        )
+    }
+
+    func pageEditMetadata(template: String) -> Page.Edit.Input.MetadataInput {
+        .init(
+            slug: slug,
+            template: template,
+            publicationDate: publicationDate.map(
+                Date.init(timeIntervalSince1970:)
+            ),
+            expirationDate: expirationDate.map(
+                Date.init(timeIntervalSince1970:)
+            ),
+            status: Metadata.Model.Status(rawValue: status) ?? .draft,
             title: title,
             excerpt: excerpt,
             imageURL: imageURL,

@@ -5,7 +5,7 @@ import OpenAPIRuntime
 import WebAdminAPI
 import WebDomain
 
-extension Menu.List.Repository {
+extension WebDomain.Menu.List.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
         private let listUnauthorizedMessage =
@@ -26,7 +26,7 @@ extension Menu.List.Repository {
         func listMenus(
             page: Int,
             search: String?
-        ) async throws -> Menu.List.Model {
+        ) async throws -> WebDomain.Menu.List.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client

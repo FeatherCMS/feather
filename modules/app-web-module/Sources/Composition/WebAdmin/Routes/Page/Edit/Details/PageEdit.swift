@@ -6,8 +6,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 
 struct PageEdit: Component {
 

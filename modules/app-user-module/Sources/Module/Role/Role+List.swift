@@ -1,5 +1,3 @@
-public import FeatherModuleKit
-
 extension Role {
-    enum List {}
+    public enum List {}
 }

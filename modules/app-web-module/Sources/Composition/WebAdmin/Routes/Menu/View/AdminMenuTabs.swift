@@ -2,8 +2,8 @@ import FeatherWebAdmin
 import HTML
 import Hummingbird
 import SGML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 
 struct AdminMenuTabs: Component {
     enum Tab: Equatable {

@@ -1,9 +1,10 @@
 import FeatherWebAdmin
 import HTML
+import Hummingbird
 import OpenAPIRuntime
 import SGML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 
 struct SettingsForm: Component {
 

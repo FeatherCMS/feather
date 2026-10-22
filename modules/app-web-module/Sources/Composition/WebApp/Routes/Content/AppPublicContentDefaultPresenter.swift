@@ -12,7 +12,7 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
         content: AppPublicContentModel,
         formSubmissionNonce: String,
         formSubmissionFeedback: FormSubmissionFeedback?
-    ) async -> (response: HTMLResponse, usesFormSubmissionNonce: Bool) {
+    ) async -> (response: WebAppHTMLResponse, usesFormSubmissionNonce: Bool) {
         let results = content.results.compactMap { $0 }
         let usesFormSubmissionNonce = results.contains {
             $0.usesFormSubmissionNonce

@@ -85,7 +85,7 @@ struct AppPublicContentDefaultController: AppPublicContentController {
                 )
             ]
             : []
-        let response = HTMLResponse(
+        let response = WebAppHTMLResponse(
             content: rendered.response.content,
             status: content.status,
             cookies: cookies

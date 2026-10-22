@@ -2,11 +2,11 @@ import FeatherWebAdmin
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu.Remove {
+extension WebDomain.Menu.Remove {
     enum Repository {}
 }
 
-extension Menu.Remove.Repository {
+extension WebDomain.Menu.Remove.Repository {
     protocol Interface: Sendable {
 
     func get(

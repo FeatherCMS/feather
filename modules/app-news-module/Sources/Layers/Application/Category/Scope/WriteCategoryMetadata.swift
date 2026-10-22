@@ -12,12 +12,12 @@ public import WebDomain
 
 public struct WriteCategoryMetadata: Scope {
     public let category: any CategoryRepository
-    public let metadata: any MetadataRepository
+    public let metadata: any Metadata.Repository.Interface
     public let variable: any SystemModule.Variable.Lookup.Interface
 
     public init(
         category: any CategoryRepository,
-        metadata: any MetadataRepository,
+        metadata: any Metadata.Repository.Interface,
         variable: any SystemModule.Variable.Lookup.Interface
     ) {
         self.category = category

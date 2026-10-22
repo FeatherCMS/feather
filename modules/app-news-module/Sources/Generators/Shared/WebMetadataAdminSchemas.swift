@@ -1,6 +1,6 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-public import OpenAPIKit30
+import OpenAPIKit30
 
 struct AdminWebMetadataStatusField: StringSchemaRepresentable {
     var example: String? = "draft"

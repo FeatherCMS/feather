@@ -1,5 +1,3 @@
-public import FeatherModuleKit
-
 extension Identity {
-    enum Search {}
+    public enum Search {}
 }

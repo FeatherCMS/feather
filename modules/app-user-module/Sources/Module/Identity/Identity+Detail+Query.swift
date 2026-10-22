@@ -1,5 +1,5 @@
 import FeatherModuleKit
 
 extension Identity.Detail {
-    enum Query {}
+    public enum Query {}
 }

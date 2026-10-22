@@ -2,6 +2,7 @@ import FeatherInfrastructure
 public import NewsApplication
 import NewsInfrastructure
 import WebInfrastructure
+import WebDomain
 
 extension UseCases {
 
@@ -13,17 +14,17 @@ extension UseCases {
                     ReadPublicNewsArticle(
                         article: ArticleDatabaseQueries(
                             context: context,
-                            metadata: MetadataDatabaseQueries(
+                            metadata: Metadata.Query.Database(
                                 context: context
                             )
                         ),
                         category: CategoryDatabaseQueries(
                             context: context,
-                            metadata: MetadataDatabaseQueries(
+                            metadata: Metadata.Query.Database(
                                 context: context
                             )
                         ),
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     )

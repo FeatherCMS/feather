@@ -8,6 +8,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 import Foundation
 import WebApplication
+import WebDomain
 
 public struct GetPublicArticle {
     public struct Error: UseCaseError {

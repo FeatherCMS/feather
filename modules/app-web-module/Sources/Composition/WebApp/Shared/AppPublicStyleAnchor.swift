@@ -2,8 +2,8 @@ import CSS
 import HTML
 import OpenAPIRuntime
 import SGML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 
 struct AppPublicStyleAnchor: Component {
     func selectors() -> [any Selector] {

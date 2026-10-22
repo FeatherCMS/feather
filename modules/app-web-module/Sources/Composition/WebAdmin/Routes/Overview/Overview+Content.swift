@@ -3,8 +3,8 @@ import FeatherWebAdmin
 import HTML
 import Hummingbird
 import SGML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 
 extension Overview {
     struct Content: Component {

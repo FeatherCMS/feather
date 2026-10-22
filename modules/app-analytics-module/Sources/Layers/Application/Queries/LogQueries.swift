@@ -8,17 +8,17 @@ public protocol LogQueries: Sendable {
 
     func find(
         id: String
-    ) async throws -> LogDetail
+    ) async throws -> Log.Detail.Output
 
     func overview(
-        query: LogOverview.Query
-    ) async throws -> LogOverview
+        query: Log.Overview.Input.Query
+    ) async throws -> Log.Overview.Output
 
     func list(
-        query: LogList.Query
-    ) async throws -> LogList
+        query: Log.List.Input.Query
+    ) async throws -> Log.List.Output
 
     func count(
-        query: LogList.Query
+        query: Log.List.Input.Query
     ) async throws -> Int
 }

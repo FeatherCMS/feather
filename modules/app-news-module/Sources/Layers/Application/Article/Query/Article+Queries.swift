@@ -5,10 +5,12 @@
 //  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
+public import NewsDomain
+
 public protocol ArticleQueries: Sendable {
     func find(
         id: String
-    ) async throws -> ArticleDetail
+    ) async throws -> Article.Detail.Output
 
     func categoryIDs(
         for articleIDs: [String]
@@ -16,29 +18,29 @@ public protocol ArticleQueries: Sendable {
 
     func resolve(
         ids: [String]
-    ) async throws -> ArticleList
+    ) async throws -> Article.List.Output
 
     func list(
-        query: ArticleList.Query
-    ) async throws -> ArticleList
+        query: Article.List.Input.Query
+    ) async throws -> Article.List.Output
 
     func listPublic(
-        query: ArticleList.Query,
+        query: Article.List.Input.Query,
         categoryID: String?
-    ) async throws -> ArticleList
+    ) async throws -> Article.List.Output
 
     func listPublicRelated(
         categoryIDs: [String],
         excludingArticleID: String,
         limit: Int
-    ) async throws -> ArticleList
+    ) async throws -> Article.List.Output
 
     func count(
-        query: ArticleList.Query
+        query: Article.List.Input.Query
     ) async throws -> Int
 
     func countPublic(
-        query: ArticleList.Query,
+        query: Article.List.Input.Query,
         categoryID: String?
     ) async throws -> Int
 }

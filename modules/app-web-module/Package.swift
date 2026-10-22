@@ -311,6 +311,7 @@ let package = Package(
                 .product(name: "SGML", package: "swift-web-standards"),
                 .product(name: "Sitemap", package: "swift-web-standards"),
                 .product(name: "WebComponents", package: "swift-web-standards"),
+                .product(name: "WebBuilders", package: "swift-web-standards"),
 
                 .target(name: "WebModule"),
                 .target(name: "WebDomain"),
@@ -330,6 +331,8 @@ let package = Package(
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "SGML", package: "swift-web-standards"),
+                .product(name: "WebBuilders", package: "swift-web-standards"),
+                .product(name: "WebComponents", package: "swift-web-standards"),
                 .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "WebModule"),

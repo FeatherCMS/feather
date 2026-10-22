@@ -1,5 +1,4 @@
-public import FeatherModuleKit
 
 extension Identity.Event {
-    enum Seed {}
+    public enum Seed {}
 }

@@ -1,5 +1,5 @@
 import FeatherModuleKit
 
 extension Role {
-    enum Add {}
+    public enum Add {}
 }

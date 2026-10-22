@@ -1,6 +1,6 @@
 import HTML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 
 struct AppPublicTextBlock: Component {
     let text: String

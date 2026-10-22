@@ -4,6 +4,11 @@ import Hummingbird
 import SystemModule
 
 enum Permission {
+    enum Add {}
+    enum Edit {}
+    enum List {}
+    enum Remove {}
+    enum View {}
 
     struct Router {
         struct Routes {

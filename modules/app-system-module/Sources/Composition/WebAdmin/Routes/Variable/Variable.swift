@@ -4,6 +4,12 @@ import Hummingbird
 import SystemModule
 
 extension Variable {
+    enum Add {}
+    enum Edit {}
+    enum List {}
+    enum Remove {}
+    enum View {}
+
     struct Router {
         struct Routes {
             let list: WebRoute

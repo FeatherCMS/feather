@@ -24,10 +24,10 @@ extension AdminAPIGateway {
 
     func map(
         _ query: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema
-    ) -> LogList.Query {
+    ) -> Log.List.Input.Query {
         let sort = (query.sort ?? [])
             .map { item in
-                let field: LogList.Query.Sort.Field
+                let field: Log.List.Input.Query.Sort.Field
                 switch item.field {
                 case .id:
                     field = .id
@@ -48,7 +48,7 @@ extension AdminAPIGateway {
                 case .createdAt:
                     field = .createdAt
                 }
-                return LogList.Query.Sort(
+                return Log.List.Input.Query.Sort(
                     field: field,
                     direction: mapSortDirection(item.direction)
                 )
@@ -67,7 +67,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ item: LogList.Item
+        _ item: Log.List.Output.Item
     ) -> Components.Schemas.AnalyticsLogListItemSchema {
         .init(
             id: item.id,
@@ -84,7 +84,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: Components.Schemas.AnalyticsLogOverviewQuerySchema
-    ) -> LogOverview.Query {
+    ) -> Log.Overview.Input.Query {
         .init(
             source: query.source,
             from: query.from,
@@ -95,13 +95,13 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ item: LogOverview.BreakdownItem
+        _ item: Log.Overview.Output.BreakdownItem
     ) -> Components.Schemas.AnalyticsLogOverviewBreakdownItemSchema {
         .init(label: item.label, count: item.count, share: item.share)
     }
 
     func map(
-        _ item: LogOverview.DailyPoint
+        _ item: Log.Overview.Output.DailyPoint
     ) -> Components.Schemas.AnalyticsLogOverviewDailyPointSchema {
         .init(
             bucket: item.bucket,
@@ -113,13 +113,14 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ overview: LogOverview
+        _ overview: Log.Overview.Output,
+        query: Log.Overview.Input.Query
     ) -> Components.Schemas.AnalyticsLogOverviewSchema {
         .init(
             query: .init(
-                source: overview.query.source,
-                from: overview.query.from,
-                to: overview.query.to
+                source: query.source,
+                from: query.from,
+                to: query.to
             ),
             kpis: .init(
                 totalRequests: overview.kpis.totalRequests,
@@ -151,7 +152,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: LogDetail
+        _ detail: Log.Detail.Output
     ) -> Components.Schemas.AnalyticsLogDetailSchema {
         .init(
             id: detail.id,

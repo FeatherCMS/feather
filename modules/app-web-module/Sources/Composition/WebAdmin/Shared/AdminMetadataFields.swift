@@ -5,8 +5,8 @@ public import HTML
 import MediaWebAdmin
 import OpenAPIRuntime
 import SGML
-import Builders
-public import Components
+import WebBuilders
+public import WebComponents
 
 public struct AdminMetadataFields: Component {
 

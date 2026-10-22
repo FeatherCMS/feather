@@ -2,6 +2,7 @@ public import FeatherWebAdmin
 public import FeatherWebShared
 public import FeatherModuleKit
 public import Hummingbird
+import SystemModule
 
 public struct Router {
     public struct Routes: Sendable {

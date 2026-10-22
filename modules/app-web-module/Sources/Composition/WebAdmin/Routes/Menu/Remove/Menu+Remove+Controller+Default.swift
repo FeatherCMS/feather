@@ -5,12 +5,12 @@ import Hummingbird
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu.Remove.Controller {
+extension WebDomain.Menu.Remove.Controller {
     struct Default: Interface {
     let buildRuntime:
         AuthenticatedRuntimeBuilder<
-            any Menu.Remove.Interactor.Interface,
-            any Menu.Remove.Presenter.Interface
+            any WebDomain.Menu.Remove.Interactor.Interface,
+            any WebDomain.Menu.Remove.Presenter.Interface
         >
 
     func postRemoveMenu(

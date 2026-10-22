@@ -9,7 +9,7 @@ extension AdminAPIGateway {
     }
 
     public func map(
-        _ value: FormDetail
+        _ value: Form.Detail.Output
     ) -> Components.Schemas.ContactFormSchema {
         .init(
             key: value.key,
@@ -25,7 +25,7 @@ extension AdminAPIGateway {
     }
 
     public func map(
-        _ value: FormFieldDetail
+        _ value: FormField.Detail.Output
     ) -> Components.Schemas.FormFieldSchema {
         .init(
             id: value.id,
@@ -41,7 +41,7 @@ extension AdminAPIGateway {
     }
 
     public func map(
-        _ value: SubmissionMailDetail
+        _ value: SubmissionMail.Detail.Output
     ) -> Components.Schemas.SubmissionMailSchema {
         .init(
             id: value.id,
@@ -56,7 +56,7 @@ extension AdminAPIGateway {
     }
 
     public func map(
-        _ value: SubmissionDetail,
+        _ value: Submission.Detail.Output,
         formKey: String
     ) -> Components.Schemas.ContactFormSubmissionSchema {
         .init(

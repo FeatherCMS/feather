@@ -5,11 +5,11 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 import WebDomain
 
-extension Menu.Remove.Presenter {
+extension WebDomain.Menu.Remove.Presenter {
     struct Default: Interface {
     let request: Request
     let context: AuthenticatedRequestContext
@@ -25,7 +25,7 @@ extension Menu.Remove.Presenter {
             request: request,
             context: context,
             title: AdminRemoveConfirmation.dialogTitle,
-            content: Menu.Remove.Confirmation(
+            content: WebDomain.Menu.Remove.Confirmation(
                 state: .init(
                     id: item.id,
                     source: item.label,

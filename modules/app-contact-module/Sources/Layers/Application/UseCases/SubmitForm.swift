@@ -1,16 +1,16 @@
 import ContactDomain
 public import FeatherApplication
-public import FeatherModuleKit
 import FeatherMail
+public import FeatherModuleKit
 import Foundation
 
 import struct Foundation.Date
 
 public struct SubmitForm: UseCase {
     private struct ExecutionResult: Sendable {
-        let submission: SubmissionDetail
+        let submission: Submission.Detail.Output
         let redirectUrl: String?
-        let mails: [SubmissionMailDetail]
+        let mails: [SubmissionMail.Detail.Output]
         let mailTemplateValues: [String: String]
     }
 
@@ -48,11 +48,11 @@ public struct SubmitForm: UseCase {
     }
 
     public struct Output: DTO {
-        public let submission: SubmissionDetail
+        public let submission: Submission.Detail.Output
         public let redirectUrl: String?
 
         package init(
-            submission: SubmissionDetail,
+            submission: Submission.Detail.Output,
             redirectUrl: String?
         ) {
             self.submission = submission
@@ -69,7 +69,8 @@ public struct SubmitForm: UseCase {
                 throw Error.formNotFound
             }
             let fields = try await scope.field.listBy(formId: form.id)
-            let mails = try await scope.mail.listBy(formId: form.id).map(\.asDetail)
+            let mails = try await scope.mail.listBy(formId: form.id)
+                .map(\.asDetail)
             try validate(
                 valuesJSON: input.valuesJSON,
                 against: fields
@@ -110,7 +111,7 @@ public struct SubmitForm: UseCase {
 
     private func loadMailTemplateValues(
         formKey: String,
-        mails: [SubmissionMailDetail],
+        mails: [SubmissionMail.Detail.Output],
         context: (any TransactionContext)
     ) async throws -> [String: String] {
         guard !mails.isEmpty else { return [:] }
@@ -131,7 +132,7 @@ public struct SubmitForm: UseCase {
     }
 
     private func enqueueMailTasks(
-        mails: [SubmissionMailDetail],
+        mails: [SubmissionMail.Detail.Output],
         valuesJSON: String,
         templateValues: [String: String]
     ) async throws {

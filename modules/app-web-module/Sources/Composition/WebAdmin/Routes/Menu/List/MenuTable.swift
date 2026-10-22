@@ -2,8 +2,8 @@ import FeatherWebAdmin
 import HTML
 import SGML
 import WebAdminAPI
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 
 struct MenuTable: Component {
     struct State {

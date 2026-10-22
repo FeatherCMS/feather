@@ -21,7 +21,7 @@ struct AdminViewPage {
                                 requestContext: context
                             ),
                             mediaAPI: MediaAdminAPIClient(
-                                environment: environment.environment,
+                                environment: environment,
                                 requestContext: context
                             )
                         )

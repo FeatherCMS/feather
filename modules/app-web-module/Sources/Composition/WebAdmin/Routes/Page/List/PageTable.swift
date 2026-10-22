@@ -1,8 +1,8 @@
 import FeatherWebAdmin
 import HTML
 import SGML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 
 struct PageTable: Component {
     struct State {

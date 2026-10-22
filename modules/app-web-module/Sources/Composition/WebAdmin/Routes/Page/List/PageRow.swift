@@ -3,8 +3,8 @@ import Foundation
 import HTML
 import Hummingbird
 import SGML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 import WebModule
 
 struct PageRow: Component {

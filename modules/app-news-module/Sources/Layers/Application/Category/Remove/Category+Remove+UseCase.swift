@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsContracts
-import NewsDomain
+public import NewsDomain
 import WebDomain
 
 //
@@ -26,15 +26,9 @@ public struct RemoveCategory: UseCase {
         self.transaction = transaction
     }
 
-    public struct Input: DTO {
-        public let ids: [String]
-
-        public init(ids: [String]) { self.ids = ids }
-    }
-
     public func execute(
         subject: Subject,
-        input: Input
+        input: Category.Remove.Input
     ) async throws -> [String] {
         let action = Action()
 

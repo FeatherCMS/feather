@@ -1,7 +1,7 @@
 import ContactDomain
 
 extension FormField {
-    var asDetail: FormFieldDetail {
+    var asDetail: FormField.Detail.Output {
         .init(
             id: id,
             formId: formId,

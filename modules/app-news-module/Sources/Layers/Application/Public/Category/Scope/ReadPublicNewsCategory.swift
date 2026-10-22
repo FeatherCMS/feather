@@ -6,16 +6,17 @@
 
 public import FeatherModuleKit
 public import WebApplication
+public import WebDomain
 
 public struct ReadPublicNewsCategory: Scope {
     public let category: any CategoryQueries
     public let article: any ArticleQueries
-    public let metadata: any MetadataQueries
+    public let metadata: any Metadata.Query.Interface
 
     public init(
         category: any CategoryQueries,
         article: any ArticleQueries,
-        metadata: any MetadataQueries
+        metadata: any Metadata.Query.Interface
     ) {
         self.category = category
         self.article = article

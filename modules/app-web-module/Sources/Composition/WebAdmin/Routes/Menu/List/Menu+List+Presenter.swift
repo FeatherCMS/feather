@@ -3,11 +3,11 @@ import Hummingbird
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu.List {
+extension WebDomain.Menu.List {
     enum Presenter {
         protocol Interface: Sendable {
             func renderListPage(
-                model: Menu.List.Model,
+                model: WebDomain.Menu.List.Model,
                 permissions: Set<String>,
                 search: String?,
                 error: String?

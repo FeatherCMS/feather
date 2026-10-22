@@ -3,13 +3,13 @@ import Hummingbird
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu.List {
+extension WebDomain.Menu.List {
     enum Repository {
         protocol Interface: Sendable {
             func listMenus(
                 page: Int,
                 search: String?
-            ) async throws -> Menu.List.Model
+            ) async throws -> WebDomain.Menu.List.Model
         }
     }
 }

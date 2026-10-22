@@ -3,7 +3,7 @@ import FeatherWebShared
 import Hummingbird
 import WebDomain
 
-extension Menu {
+extension WebDomain.Menu {
     enum Add {}
     enum Edit {}
     enum Remove {}
@@ -69,23 +69,36 @@ extension Menu {
     }
 }
 
-extension Menu.View {
+extension WebDomain.Menu.View {
     struct Router {
-        let controller: any AdminViewMenuController
-        let routes: Menu.Router.Routes
+        let controller: any Controller.Interface
+        let routes: WebDomain.Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: Menu.Router.Routes
+            routes: WebDomain.Menu.Router.Routes
         ) {
             self.routes = routes
-            controller =
-                AdminViewMenu(
-                    environment: environment,
-                    renderingEngine: renderingEngine
-                )
-                .controller
+            controller = Controller.Default(
+                buildRuntime: { request, context in
+                    (
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
+                                api: API.Client(
+                                    environment: environment,
+                                    requestContext: context
+                                )
+                            )
+                        ),
+                        presenter: Presenter.Default(
+                            request: request,
+                            context: context,
+                            renderingEngine: renderingEngine
+                        )
+                    )
+                }
+            )
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
@@ -94,23 +107,36 @@ extension Menu.View {
     }
 }
 
-extension Menu.Add {
+extension WebDomain.Menu.Add {
     struct Router {
-        let controller: any AdminAddMenuController
-        let routes: Menu.Router.Routes
+        let controller: any Controller.Interface
+        let routes: WebDomain.Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: Menu.Router.Routes
+            routes: WebDomain.Menu.Router.Routes
         ) {
             self.routes = routes
-            controller =
-                AdminAddMenu(
-                    environment: environment,
-                    renderingEngine: renderingEngine
-                )
-                .controller
+            controller = Controller.Default(
+                buildRuntime: { request, context in
+                    (
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
+                                api: API.Client(
+                                    environment: environment,
+                                    requestContext: context
+                                )
+                            )
+                        ),
+                        presenter: Presenter.Default(
+                            request: request,
+                            context: context,
+                            renderingEngine: renderingEngine
+                        )
+                    )
+                }
+            )
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
@@ -126,23 +152,36 @@ extension Menu.Add {
     }
 }
 
-extension Menu.Edit {
+extension WebDomain.Menu.Edit {
     struct Router {
-        let controller: any AdminEditMenuController
-        let routes: Menu.Router.Routes
+        let controller: any Controller.Interface
+        let routes: WebDomain.Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: Menu.Router.Routes
+            routes: WebDomain.Menu.Router.Routes
         ) {
             self.routes = routes
-            controller =
-                AdminEditMenu(
-                    environment: environment,
-                    renderingEngine: renderingEngine
-                )
-                .controller
+            controller = Controller.Default(
+                buildRuntime: { request, context in
+                    (
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
+                                api: API.Client(
+                                    environment: environment,
+                                    requestContext: context
+                                )
+                            )
+                        ),
+                        presenter: Presenter.Default(
+                            request: request,
+                            context: context,
+                            renderingEngine: renderingEngine
+                        )
+                    )
+                }
+            )
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
@@ -158,15 +197,15 @@ extension Menu.Edit {
     }
 }
 
-extension Menu.Remove {
+extension WebDomain.Menu.Remove {
     struct Router {
         let controller: any Controller.Interface
-        let routes: Menu.Router.Routes
+        let routes: WebDomain.Menu.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: Menu.Router.Routes
+            routes: WebDomain.Menu.Router.Routes
         ) {
             self.routes = routes
             controller = Controller.Default(

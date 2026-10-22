@@ -3,14 +3,14 @@ import Hummingbird
 import OpenAPIRuntime
 import WebDomain
 
-extension Menu.List.Interactor {
+extension WebDomain.Menu.List.Interactor {
     struct Default: Interface {
-        let repository: any Menu.List.Repository.Interface
+        let repository: any WebDomain.Menu.List.Repository.Interface
 
         func listMenus(
             page: Int,
             search: String?
-        ) async throws -> Menu.List.Model {
+        ) async throws -> WebDomain.Menu.List.Model {
             try await repository.listMenus(page: page, search: search)
         }
 

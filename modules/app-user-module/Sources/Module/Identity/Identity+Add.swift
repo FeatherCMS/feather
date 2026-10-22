@@ -1,5 +1,5 @@
 import FeatherModuleKit
 
 extension Identity {
-    enum Add {}
+    public enum Add {}
 }

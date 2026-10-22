@@ -1,11 +1,12 @@
+import WebBuilders
+import WebDomain
 import CSS
+import WebComponents
 import FeatherWebAdmin
 import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import Builders
-import Components
 
 struct MenuItemDetails: Component {
     struct State {
@@ -104,7 +105,8 @@ struct MenuItemDetails: Component {
                             AdminButton(
                                 "Edit item",
                                 href:
-                                    MenuItemRoutes.edit(
+                                    WebDomain.Menu.Item.Routes
+                                    .edit(
                                         RouterPath(state.item.menuId),
                                         RouterPath(state.item.id)
                                     )
@@ -115,7 +117,7 @@ struct MenuItemDetails: Component {
                         context.build(
                             AdminButton(
                                 "Remove item",
-                                href: MenuItemRoutes.itemRemove(
+                                href: WebDomain.Menu.Item.Routes.itemRemove(
                                     RouterPath(state.item.menuId),
                                     RouterPath(state.item.id),
                                     origin: .view

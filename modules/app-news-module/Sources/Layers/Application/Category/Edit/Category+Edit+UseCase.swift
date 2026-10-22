@@ -1,8 +1,8 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsContracts
-import NewsDomain
-public import WebApplication
+public import NewsDomain
+import WebApplication
 import WebDomain
 
 //
@@ -31,35 +31,10 @@ public struct EditCategory: UseCase {
         self.transaction = transaction
     }
 
-    public struct Input: DTO {
-        public let id: String
-        public let title: String?
-        public let excerpt: String?
-        public let content: String?
-        public let imageAssetId: String??
-        public let metadata: Page.Edit.Input.MetadataInput?
-
-        public init(
-            id: String,
-            title: String?,
-            excerpt: String?,
-            content: String?,
-            imageAssetId: String??,
-            metadata: Page.Edit.Input.MetadataInput?
-        ) {
-            self.id = id
-            self.title = title
-            self.excerpt = excerpt
-            self.content = content
-            self.imageAssetId = imageAssetId
-            self.metadata = metadata
-        }
-    }
-
     public func execute(
         subject: Subject,
-        input: Input
-    ) async throws -> CategoryDetail {
+        input: Category.Edit.Input
+    ) async throws -> Category.Detail.Output {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {

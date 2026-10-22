@@ -4,7 +4,7 @@ import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeGetLog() -> GetLog {
+    func makeLogDetail() -> Log.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in

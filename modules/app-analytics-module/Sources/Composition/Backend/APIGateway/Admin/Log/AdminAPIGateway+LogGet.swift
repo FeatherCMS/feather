@@ -7,7 +7,7 @@ extension AdminAPIGateway {
     public func analyticsLogGet(
         _ input: Operations.AnalyticsLogGet.Input
     ) async throws -> Operations.AnalyticsLogGet.Output {
-        let useCase = useCases.makeGetLog()
+        let useCase = useCases.makeLogDetail()
         let subject = try await CurrentSubject.require()
         let detail = try await useCase.execute(
             subject: subject,

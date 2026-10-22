@@ -8,11 +8,12 @@ import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import NewsApplication
+public import NewsDomain
 public import WebApplication
 public import WebDomain
 
 extension ArticleTable.Row {
-    var asQueryListItem: ArticleList.Item {
+    var asQueryListItem: Article.List.Output.Item {
         .init(
             id: id,
             title: title,
@@ -27,7 +28,7 @@ extension ArticleTable.Row {
     func asDetail(
         metadata: Metadata.Detail.Output,
         categoryIds: [String]
-    ) -> ArticleDetail {
+    ) -> Article.Detail.Output {
         .init(
             id: id,
             title: title,
@@ -45,11 +46,11 @@ extension ArticleTable.Row {
 public struct ArticleDatabaseQueries: ArticleQueries {
 
     public let context: DatabaseQueryContext
-    public var metadata: any MetadataQueries
+    public var metadata: any Metadata.Query.Interface
 
     public init(
         context: DatabaseQueryContext,
-        metadata: any MetadataQueries
+        metadata: any Metadata.Query.Interface
     ) {
         self.context = context
         self.metadata = metadata
@@ -75,7 +76,7 @@ public struct ArticleDatabaseQueries: ArticleQueries {
     }
 
     func orderByArticle(
-        _ query: ArticleList.Query
+        _ query: Article.List.Input.Query
     ) -> String {
         let sortParts = query.sort.map { article -> String in
             let column: String
@@ -102,7 +103,7 @@ public struct ArticleDatabaseQueries: ArticleQueries {
 
     public func find(
         id: String
-    ) async throws -> ArticleDetail {
+    ) async throws -> Article.Detail.Output {
         let table = ArticleTable(connection: context.connection)
         guard let row = try await table.find(id: id) else {
             throw RepositoryError.notFound
@@ -132,7 +133,7 @@ public struct ArticleDatabaseQueries: ArticleQueries {
             .listCategoryIDs(articleIDs: articleIDs)
     }
 
-    public func resolve(ids: [String]) async throws -> ArticleList {
+    public func resolve(ids: [String]) async throws -> Article.List.Output {
         guard !ids.isEmpty else { return .init(items: []) }
         let rows = try await ArticleTable(connection: context.connection)
             .resolve(ids: ids)
@@ -143,8 +144,8 @@ public struct ArticleDatabaseQueries: ArticleQueries {
     }
 
     public func list(
-        query: ArticleList.Query
-    ) async throws -> ArticleList {
+        query: Article.List.Input.Query
+    ) async throws -> Article.List.Output {
         let page = pageSizeOffset(query.page)
         let table = ArticleTable(connection: context.connection)
         let items =
@@ -160,9 +161,9 @@ public struct ArticleDatabaseQueries: ArticleQueries {
     }
 
     public func listPublic(
-        query: ArticleList.Query,
+        query: Article.List.Input.Query,
         categoryID: String?
-    ) async throws -> ArticleList {
+    ) async throws -> Article.List.Output {
         let page = pageSizeOffset(query.page)
         let table = ArticleTable(connection: context.connection)
         let items =
@@ -182,7 +183,7 @@ public struct ArticleDatabaseQueries: ArticleQueries {
         categoryIDs: [String],
         excludingArticleID: String,
         limit: Int
-    ) async throws -> ArticleList {
+    ) async throws -> Article.List.Output {
         let categoryIDs = Array(Set(categoryIDs)).filter { !$0.isEmpty }
             .sorted()
         guard !categoryIDs.isEmpty, limit > 0 else { return .init(items: []) }
@@ -198,14 +199,14 @@ public struct ArticleDatabaseQueries: ArticleQueries {
     }
 
     public func count(
-        query: ArticleList.Query
+        query: Article.List.Input.Query
     ) async throws -> Int {
         let table = ArticleTable(connection: context.connection)
         return try await table.count(search: query.search)
     }
 
     public func countPublic(
-        query: ArticleList.Query,
+        query: Article.List.Input.Query,
         categoryID: String?
     ) async throws -> Int {
         let table = ArticleTable(connection: context.connection)

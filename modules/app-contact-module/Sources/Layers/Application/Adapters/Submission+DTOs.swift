@@ -1,7 +1,7 @@
 import ContactDomain
 
 extension Submission {
-    var asDetail: SubmissionDetail {
+    var asDetail: Submission.Detail.Output {
         .init(
             id: id,
             formId: formId,

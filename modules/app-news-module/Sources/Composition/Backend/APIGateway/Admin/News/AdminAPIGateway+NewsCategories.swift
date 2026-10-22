@@ -3,6 +3,7 @@ import FeatherModuleKit
 import Foundation
 public import NewsAdminAPI
 import NewsApplication
+import NewsDomain
 import WebApplication
 
 extension AdminAPIGateway {
@@ -43,8 +44,11 @@ extension AdminAPIGateway {
                 case .json(let value): value
                 }
         let subject = try await CurrentSubject.require()
-        let objectQuery = CategoryList.Query(
-            page: .init(size: query.page.size, number: query.page.number),
+        let objectQuery = NewsDomain.Category.List.Input.Query(
+            page: .init(
+                size: query.page?.size ?? 20,
+                number: query.page?.number ?? 1
+            ),
             search: query.filters.search
         )
         let useCase = useCases.makeListCategories()
@@ -60,7 +64,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: query,
+                        query: query.asResponse,
                         data: .init(items: result.items.map(map), total: total)
                     )
                 )
@@ -114,31 +118,31 @@ extension AdminAPIGateway {
 }
 
 extension Components.Schemas.NewsCategoryCreateSchema {
-    fileprivate func addCategoryInput() -> AddCategory.Input {
+    fileprivate func addCategoryInput() -> NewsDomain.Category.Add.Input {
         .init(
             title: title,
             excerpt: excerpt,
             content: content,
             imageAssetId: imageAssetId,
-            metadata: metadata.pageMetadata(template: "news.category")
+            metadata: metadata.pageAddMetadata(template: "news.category")
         )
     }
 
-    fileprivate func editCategoryInput(id: String) -> EditCategory.Input {
+    fileprivate func editCategoryInput(id: String) -> NewsDomain.Category.Edit.Input {
         .init(
             id: id,
             title: title,
             excerpt: excerpt,
             content: content,
             imageAssetId: .some(imageAssetId),
-            metadata: metadata.pageMetadata(template: "news.category")
+            metadata: metadata.pageEditMetadata(template: "news.category")
         )
     }
 }
 
 extension AdminAPIGateway {
     fileprivate func map(
-        _ item: CategoryDetail
+        _ item: NewsDomain.Category.Detail.Output
     ) -> Components.Schemas.NewsCategoryDetailSchema {
         .init(
             id: item.id,
@@ -153,7 +157,7 @@ extension AdminAPIGateway {
     }
 
     fileprivate func map(
-        _ item: CategoryList.Item
+        _ item: NewsDomain.Category.List.Output.Item
     ) -> Components.Schemas.NewsCategoryListItemSchema {
         .init(
             id: item.id,
@@ -165,4 +169,19 @@ extension AdminAPIGateway {
         )
     }
 
+}
+
+private extension Components.Schemas.NewsCategoryListItemSearchRequestQuerySchema {
+    var asResponse: Components.Schemas.NewsCategoryListItemSearchResponseQuerySchema {
+        .init(
+            page: .init(size: page?.size ?? 20, number: page?.number ?? 1),
+            sort: sort?.map {
+                .init(
+                    field: .init(rawValue: $0.field.rawValue) ?? .id,
+                    direction: $0.direction
+                )
+            },
+            filters: .init(search: filters.search)
+        )
+    }
 }

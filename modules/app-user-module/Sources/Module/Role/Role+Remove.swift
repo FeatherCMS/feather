@@ -1,5 +1,3 @@
-public import FeatherModuleKit
-
 extension Role {
-    enum Remove {}
+    public enum Remove {}
 }

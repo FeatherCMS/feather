@@ -5,14 +5,14 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import AnalyticsApplication
-import FeatherDBAL
 import FeatherApplication
+import FeatherDBAL
 import FeatherDatabase
 public import FeatherInfrastructure
 import Foundation
 
 extension LogTable.Row {
-    var asQueryListItem: LogList.Item {
+    var asQueryListItem: Log.List.Output.Item {
         .init(
             id: id,
             accountId: accountId,
@@ -107,7 +107,7 @@ public struct LogDatabaseQueries: LogQueries {
     }
 
     func orderByAnalyticsLog(
-        _ query: LogList.Query
+        _ query: Log.List.Input.Query
     ) -> String {
         let sortParts = query.sort.map { log -> String in
             let column: String
@@ -138,8 +138,8 @@ public struct LogDatabaseQueries: LogQueries {
     }
 
     public func list(
-        query: LogList.Query
-    ) async throws -> LogList {
+        query: Log.List.Input.Query
+    ) async throws -> Log.List.Output {
         let page = pageSizeOffset(query.page)
         let table = LogTable(connection: context.connection)
         let items =
@@ -160,7 +160,7 @@ public struct LogDatabaseQueries: LogQueries {
     }
 
     public func count(
-        query: LogList.Query
+        query: Log.List.Input.Query
     ) async throws -> Int {
         let table = LogTable(connection: context.connection)
         return try await table.count(
@@ -308,14 +308,16 @@ public struct LogDatabaseQueries: LogQueries {
             columns: columns,
             fallback: "NULL::text"
         )
-        let trafficTypeSQL = notFoundOnly
+        let trafficTypeSQL =
+            notFoundOnly
             ? "'human'::text"
             : overviewTrafficCategorySQL(source: source, columns: columns)
         let baseWhereSQL = overviewWhereSQL(
             source: source,
             columns: columns
         )
-        let whereSQL = notFoundOnly
+        let whereSQL =
+            notFoundOnly
             ? "(\(baseWhereSQL)) AND response_code = 404"
             : baseWhereSQL
         let pageViewPredicateSQL: String
@@ -500,63 +502,79 @@ public struct LogDatabaseQueries: LogQueries {
             ORDER BY category, bucket NULLS FIRST;
             """#
         return try await context.connection.run(query: query) { sequence in
-            try await sequence.collect().map { row in
-                OverviewSummaryRow(
-                    rowType: try row.decode(column: "row_type", as: String.self),
-                    category: try row.decode(column: "category", as: String.self),
-                    label: try row.decode(column: "label", as: String?.self),
-                    bucket: try row.decode(column: "bucket", as: Double?.self),
-                    totalRequests: try row.decode(
-                        column: "total_requests",
-                        as: Int?.self
-                    ),
-                    requests: try row.decode(column: "requests", as: Int?.self),
-                    authenticatedRequests: try row.decode(
-                        column: "authenticated_requests",
-                        as: Int?.self
-                    ),
-                    notFoundRequests: try row.decode(
-                        column: "not_found_requests",
-                        as: Int?.self
-                    ),
-                    clientErrorRequests: try row.decode(
-                        column: "client_error_requests",
-                        as: Int?.self
-                    ),
-                    serverErrorRequests: try row.decode(
-                        column: "server_error_requests",
-                        as: Int?.self
-                    ),
-                    pageViews: try row.decode(
-                        column: "page_views",
-                        as: Int?.self
-                    ),
-                    searchRequests: try row.decode(
-                        column: "search_requests",
-                        as: Int?.self
-                    ),
-                    botRequests: try row.decode(
-                        column: "bot_requests",
-                        as: Int?.self
-                    ),
-                    aiRequests: try row.decode(
-                        column: "ai_requests",
-                        as: Int?.self
-                    ),
-                    humanRequests: try row.decode(
-                        column: "human_requests",
-                        as: Int?.self
-                    ),
-                    uniqueVisitors: try row.decode(
-                        column: "unique_visitors",
-                        as: Int?.self
-                    ),
-                    itemCount: try row.decode(
-                        column: "item_count",
-                        as: Int?.self
+            try await sequence.collect()
+                .map { row in
+                    OverviewSummaryRow(
+                        rowType: try row.decode(
+                            column: "row_type",
+                            as: String.self
+                        ),
+                        category: try row.decode(
+                            column: "category",
+                            as: String.self
+                        ),
+                        label: try row.decode(
+                            column: "label",
+                            as: String?.self
+                        ),
+                        bucket: try row.decode(
+                            column: "bucket",
+                            as: Double?.self
+                        ),
+                        totalRequests: try row.decode(
+                            column: "total_requests",
+                            as: Int?.self
+                        ),
+                        requests: try row.decode(
+                            column: "requests",
+                            as: Int?.self
+                        ),
+                        authenticatedRequests: try row.decode(
+                            column: "authenticated_requests",
+                            as: Int?.self
+                        ),
+                        notFoundRequests: try row.decode(
+                            column: "not_found_requests",
+                            as: Int?.self
+                        ),
+                        clientErrorRequests: try row.decode(
+                            column: "client_error_requests",
+                            as: Int?.self
+                        ),
+                        serverErrorRequests: try row.decode(
+                            column: "server_error_requests",
+                            as: Int?.self
+                        ),
+                        pageViews: try row.decode(
+                            column: "page_views",
+                            as: Int?.self
+                        ),
+                        searchRequests: try row.decode(
+                            column: "search_requests",
+                            as: Int?.self
+                        ),
+                        botRequests: try row.decode(
+                            column: "bot_requests",
+                            as: Int?.self
+                        ),
+                        aiRequests: try row.decode(
+                            column: "ai_requests",
+                            as: Int?.self
+                        ),
+                        humanRequests: try row.decode(
+                            column: "human_requests",
+                            as: Int?.self
+                        ),
+                        uniqueVisitors: try row.decode(
+                            column: "unique_visitors",
+                            as: Int?.self
+                        ),
+                        itemCount: try row.decode(
+                            column: "item_count",
+                            as: Int?.self
+                        )
                     )
-                )
-            }
+                }
         }
     }
 
@@ -580,14 +598,16 @@ public struct LogDatabaseQueries: LogQueries {
             columns: columns,
             fallback: "NULL::text"
         )
-        let trafficTypeSQL = notFoundOnly
+        let trafficTypeSQL =
+            notFoundOnly
             ? "'human'::text"
             : overviewTrafficCategorySQL(source: source, columns: columns)
         let baseWhereSQL = overviewWhereSQL(
             source: source,
             columns: columns
         )
-        let whereSQL = notFoundOnly
+        let whereSQL =
+            notFoundOnly
             ? "(\(baseWhereSQL)) AND response_code = 404"
             : baseWhereSQL
 
@@ -644,7 +664,8 @@ public struct LogDatabaseQueries: LogQueries {
         where !notFoundOnly
             && source == "web_app"
             && enabled
-            && columns.contains(column) {
+            && columns.contains(column)
+        {
             let labelSQL =
                 column == "referer"
                 ? "COALESCE(NULLIF(referer, ''), '(Direct)')"
@@ -654,17 +675,20 @@ public struct LogDatabaseQueries: LogQueries {
         }
 
         guard !dimensions.isEmpty else { return [] }
-        let categoryCaseSQL = dimensions
+        let categoryCaseSQL =
+            dimensions
             .map {
                 "WHEN GROUPING(\($0.column)) = 0 THEN '\($0.category)'"
             }
             .joined(separator: "\n                    ")
-        let labelCaseSQL = dimensions
+        let labelCaseSQL =
+            dimensions
             .map {
                 "WHEN GROUPING(\($0.column)) = 0 THEN \($0.column)"
             }
             .joined(separator: "\n                    ")
-        let groupingSetsSQL = dimensions
+        let groupingSetsSQL =
+            dimensions
             .map { "(\($0.column))" }
             .joined(separator: ", ")
         let baseSelectListSQL = baseSelectSQL.joined(
@@ -685,26 +709,27 @@ public struct LogDatabaseQueries: LogQueries {
         if columns.contains("path") {
             let pathCountSQL =
                 source == "web_app" ? "page_view_count" : "total_count"
-            let errorBreakdownsSQL = dashboardOnly
+            let errorBreakdownsSQL =
+                dashboardOnly
                 ? ""
                 : """
-                    UNION ALL
-                    SELECT
-                        'notFoundPaths'::text,
-                        label,
-                        not_found_count
-                    FROM grouped
-                    WHERE category = 'paths'
+                UNION ALL
+                SELECT
+                    'notFoundPaths'::text,
+                    label,
+                    not_found_count
+                FROM grouped
+                WHERE category = 'paths'
 
-                    UNION ALL
+                UNION ALL
 
-                    SELECT
-                        'serverErrorPaths'::text,
-                        label,
-                        server_error_count
-                    FROM grouped
-                    WHERE category = 'paths'
-                    """
+                SELECT
+                    'serverErrorPaths'::text,
+                    label,
+                    server_error_count
+                FROM grouped
+                WHERE category = 'paths'
+                """
             pathBreakdownsSQL = """
                 UNION ALL
                 SELECT
@@ -820,63 +845,79 @@ public struct LogDatabaseQueries: LogQueries {
             ORDER BY category, category_rank;
             """#
         return try await context.connection.run(query: query) { sequence in
-            try await sequence.collect().map { row in
-                OverviewSummaryRow(
-                    rowType: try row.decode(column: "row_type", as: String.self),
-                    category: try row.decode(column: "category", as: String.self),
-                    label: try row.decode(column: "label", as: String?.self),
-                    bucket: try row.decode(column: "bucket", as: Double?.self),
-                    totalRequests: try row.decode(
-                        column: "total_requests",
-                        as: Int?.self
-                    ),
-                    requests: try row.decode(column: "requests", as: Int?.self),
-                    authenticatedRequests: try row.decode(
-                        column: "authenticated_requests",
-                        as: Int?.self
-                    ),
-                    notFoundRequests: try row.decode(
-                        column: "not_found_requests",
-                        as: Int?.self
-                    ),
-                    clientErrorRequests: try row.decode(
-                        column: "client_error_requests",
-                        as: Int?.self
-                    ),
-                    serverErrorRequests: try row.decode(
-                        column: "server_error_requests",
-                        as: Int?.self
-                    ),
-                    pageViews: try row.decode(
-                        column: "page_views",
-                        as: Int?.self
-                    ),
-                    searchRequests: try row.decode(
-                        column: "search_requests",
-                        as: Int?.self
-                    ),
-                    botRequests: try row.decode(
-                        column: "bot_requests",
-                        as: Int?.self
-                    ),
-                    aiRequests: try row.decode(
-                        column: "ai_requests",
-                        as: Int?.self
-                    ),
-                    humanRequests: try row.decode(
-                        column: "human_requests",
-                        as: Int?.self
-                    ),
-                uniqueVisitors: try row.decode(
-                    column: "unique_visitors",
-                    as: Int?.self
-                ),
-                    itemCount: try row.decode(
-                        column: "item_count",
-                        as: Int?.self
+            try await sequence.collect()
+                .map { row in
+                    OverviewSummaryRow(
+                        rowType: try row.decode(
+                            column: "row_type",
+                            as: String.self
+                        ),
+                        category: try row.decode(
+                            column: "category",
+                            as: String.self
+                        ),
+                        label: try row.decode(
+                            column: "label",
+                            as: String?.self
+                        ),
+                        bucket: try row.decode(
+                            column: "bucket",
+                            as: Double?.self
+                        ),
+                        totalRequests: try row.decode(
+                            column: "total_requests",
+                            as: Int?.self
+                        ),
+                        requests: try row.decode(
+                            column: "requests",
+                            as: Int?.self
+                        ),
+                        authenticatedRequests: try row.decode(
+                            column: "authenticated_requests",
+                            as: Int?.self
+                        ),
+                        notFoundRequests: try row.decode(
+                            column: "not_found_requests",
+                            as: Int?.self
+                        ),
+                        clientErrorRequests: try row.decode(
+                            column: "client_error_requests",
+                            as: Int?.self
+                        ),
+                        serverErrorRequests: try row.decode(
+                            column: "server_error_requests",
+                            as: Int?.self
+                        ),
+                        pageViews: try row.decode(
+                            column: "page_views",
+                            as: Int?.self
+                        ),
+                        searchRequests: try row.decode(
+                            column: "search_requests",
+                            as: Int?.self
+                        ),
+                        botRequests: try row.decode(
+                            column: "bot_requests",
+                            as: Int?.self
+                        ),
+                        aiRequests: try row.decode(
+                            column: "ai_requests",
+                            as: Int?.self
+                        ),
+                        humanRequests: try row.decode(
+                            column: "human_requests",
+                            as: Int?.self
+                        ),
+                        uniqueVisitors: try row.decode(
+                            column: "unique_visitors",
+                            as: Int?.self
+                        ),
+                        itemCount: try row.decode(
+                            column: "item_count",
+                            as: Int?.self
+                        )
                     )
-                )
-            }
+                }
         }
     }
 
@@ -906,7 +947,9 @@ public struct LogDatabaseQueries: LogQueries {
             : "0 AS server_error_requests"
         let botPredicateSQL = overviewBotPredicateSQL(columns: columns)
         let aiPredicateSQL = overviewAIPredicateSQL(columns: columns)
-        let otherBotPredicateSQL = overviewOtherBotPredicateSQL(columns: columns)
+        let otherBotPredicateSQL = overviewOtherBotPredicateSQL(
+            columns: columns
+        )
         let humanPredicateSQL = overviewHumanPredicateSQL(columns: columns)
         let pageViewsSQL =
             source == "web_app"
@@ -1224,7 +1267,7 @@ public struct LogDatabaseQueries: LogQueries {
     func mapOverviewBreakdown(
         _ rows: [OverviewBreakdownRow],
         total: Int
-    ) -> [LogOverview.BreakdownItem] {
+    ) -> [Log.Overview.Output.BreakdownItem] {
         rows.map { row in
             .init(
                 label: row.label,
@@ -1271,8 +1314,8 @@ public struct LogDatabaseQueries: LogQueries {
     }
 
     public func overview(
-        query: LogOverview.Query
-    ) async throws -> LogOverview {
+        query: Log.Overview.Input.Query
+    ) async throws -> Log.Overview.Output {
         let from = overviewDate(query.from)
         let to = overviewDate(query.to)
         let columns = try await analyticsLogColumns()
@@ -1304,9 +1347,10 @@ public struct LogDatabaseQueries: LogQueries {
                 from: from,
                 to: to
             )
-        let daily = summaryRows
+        let daily =
+            summaryRows
             .filter { $0.rowType == "summary" && $0.category == "daily" }
-            .compactMap { row -> LogOverview.DailyPoint? in
+            .compactMap { row -> Log.Overview.Output.DailyPoint? in
                 guard let bucket = row.bucket else { return nil }
                 return .init(
                     bucket: bucket,
@@ -1324,14 +1368,16 @@ public struct LogDatabaseQueries: LogQueries {
         func mappedBreakdown(
             _ category: String,
             total: Int
-        ) -> [LogOverview.BreakdownItem] {
-            let rows = breakdowns[category, default: []].compactMap {
-                row -> OverviewBreakdownRow? in
-                guard let label = row.label, let count = row.itemCount else {
-                    return nil
+        ) -> [Log.Overview.Output.BreakdownItem] {
+            let rows = breakdowns[category, default: []]
+                .compactMap {
+                    row -> OverviewBreakdownRow? in
+                    guard let label = row.label, let count = row.itemCount
+                    else {
+                        return nil
+                    }
+                    return .init(label: label, count: count)
                 }
-                return .init(label: label, count: count)
-            }
             return mapOverviewBreakdown(
                 rows,
                 total: total
@@ -1339,7 +1385,6 @@ public struct LogDatabaseQueries: LogQueries {
         }
 
         return .init(
-            query: query,
             kpis: .init(
                 totalRequests: total,
                 averageRequestsPerDay: averageRequestsPerDay,
@@ -1377,7 +1422,7 @@ public struct LogDatabaseQueries: LogQueries {
 
     public func find(
         id: String
-    ) async throws -> LogDetail {
+    ) async throws -> Log.Detail.Output {
         let table = LogTable(connection: context.connection)
         guard let row = try await table.find(id: id) else {
             throw RepositoryError.notFound

@@ -1,6 +1,6 @@
 import ContactContracts
-import ContactModule
 import ContactDomain
+import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
@@ -32,7 +32,7 @@ public struct CreateForm: UseCase {
         public let failureMessage: String
         public let redirectUrl: String?
         public let fieldIds: [String]
-        public let mails: [SubmissionMailInput]
+        public let mails: [SubmissionMail.Add.Input]
 
         public init(
             key: String,
@@ -41,7 +41,7 @@ public struct CreateForm: UseCase {
             failureMessage: String = "",
             redirectUrl: String? = nil,
             fieldIds: [String] = [],
-            mails: [SubmissionMailInput] = []
+            mails: [SubmissionMail.Add.Input] = []
         ) {
             self.key = key
             self.name = name
@@ -56,7 +56,7 @@ public struct CreateForm: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> FormDetail {
+    ) async throws -> Form.Detail.Output {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)

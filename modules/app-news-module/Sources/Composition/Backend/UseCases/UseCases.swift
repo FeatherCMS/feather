@@ -8,6 +8,7 @@ import SystemApplication
 import SystemInfrastructure
 import SystemModule
 import WebInfrastructure
+import WebDomain
 
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext
@@ -37,11 +38,11 @@ extension UseCases {
                 ReadArticleMetadata(
                     article: ArticleDatabaseQueries(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    metadata: MetadataDatabaseQueries(
+                    metadata: Metadata.Query.Database(
                         context: context
                     )
                 )
@@ -57,7 +58,7 @@ extension UseCases {
             scope: { context in
                 WriteArticleMetadata(
                     article: ArticleDatabaseRepository(context: context),
-                    metadata: MetadataDatabaseRepository(context: context),
+                    metadata: Metadata.Repository.Database(context: context),
                     variable: SystemModule.Variable.Lookup.Database(
                         context: context
                     )
@@ -75,11 +76,11 @@ extension UseCases {
                 ReadCategoryMetadata(
                     category: CategoryDatabaseQueries(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    metadata: MetadataDatabaseQueries(
+                    metadata: Metadata.Query.Database(
                         context: context
                     )
                 )
@@ -95,7 +96,7 @@ extension UseCases {
             scope: { context in
                 WriteCategoryMetadata(
                     category: CategoryDatabaseRepository(context: context),
-                    metadata: MetadataDatabaseRepository(context: context),
+                    metadata: Metadata.Repository.Database(context: context),
                     variable: SystemModule.Variable.Lookup.Database(
                         context: context
                     )
@@ -115,7 +116,7 @@ extension UseCases {
                 WriteCategoryArticlesMetadata(
                     article: ArticleDatabaseRepository(context: context),
                     category: CategoryDatabaseRepository(context: context),
-                    metadata: MetadataDatabaseRepository(context: context)
+                    metadata: Metadata.Repository.Database(context: context)
                 )
             }
         )

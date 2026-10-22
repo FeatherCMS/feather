@@ -1,5 +1,3 @@
-public import FeatherModuleKit
-
 extension Identity {
-    enum Remove {}
+    public enum Remove {}
 }

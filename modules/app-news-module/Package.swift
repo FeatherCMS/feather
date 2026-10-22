@@ -140,6 +140,7 @@ let package = Package(
                 .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "MediaDomain", package: "app-media-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(name: "MediaModule", package: "app-media-module"),
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
@@ -207,6 +208,7 @@ let package = Package(
                 .product(name: "WebDomain", package: "app-web-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .target(name: "NewsDomain"),
 
                 .target(name: "NewsApplication"),
                 .target(name: "NewsInfrastructure"),
@@ -249,6 +251,7 @@ let package = Package(
             name: "NewsWebApp",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),

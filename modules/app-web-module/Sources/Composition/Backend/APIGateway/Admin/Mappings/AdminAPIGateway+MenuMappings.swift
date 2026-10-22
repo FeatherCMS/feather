@@ -56,19 +56,6 @@ extension AdminAPIGateway {
         )
     }
 
-    func map(_ output: Menu.Detail.Output)
-        -> WebAdminAPI.Components.Schemas.MenuDetailSchema
-    {
-        .init(
-            id: output.id,
-            key: output.key,
-            name: output.name,
-            notes: output.notes,
-            createdAt: output.createdAt.timeIntervalSince1970,
-            updatedAt: output.updatedAt.timeIntervalSince1970
-        )
-    }
-
     func map(_ output: Menu.Add.Output)
         -> WebAdminAPI.Components.Schemas.MenuDetailSchema
     {

@@ -2,8 +2,8 @@ import FeatherWebAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import Builders
-import Components
+import WebBuilders
+import WebComponents
 import WebModule
 
 struct MetadataForm: Component {

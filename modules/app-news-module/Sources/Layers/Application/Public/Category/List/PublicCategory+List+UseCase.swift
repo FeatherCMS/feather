@@ -28,8 +28,8 @@ public struct ListPublicCategories {
                 )
             )
             let metadataByID = Dictionary(
-                uniqueKeysWithValues: try await scope.metadata
-                    .resolveDetails(
+                uniqueKeysWithValues: try await resolveNewsMetadataDetails(
+                        metadata: scope.metadata,
                         referenceType: "news.category",
                         referenceIDs: categories.items.map(\.id)
                     )

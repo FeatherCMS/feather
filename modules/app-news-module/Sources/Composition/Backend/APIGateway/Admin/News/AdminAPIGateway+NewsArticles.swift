@@ -3,6 +3,7 @@ import FeatherModuleKit
 import Foundation
 public import NewsAdminAPI
 import NewsApplication
+import NewsDomain
 import WebApplication
 
 extension AdminAPIGateway {
@@ -43,8 +44,11 @@ extension AdminAPIGateway {
                 case .json(let value): value
                 }
         let subject = try await CurrentSubject.require()
-        let objectQuery = ArticleList.Query(
-            page: .init(size: query.page.size, number: query.page.number),
+        let objectQuery = Article.List.Input.Query(
+            page: .init(
+                size: query.page?.size ?? 20,
+                number: query.page?.number ?? 1
+            ),
             search: query.filters.search
         )
         let useCase = useCases.makeListArticles()
@@ -60,7 +64,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     .init(
-                        query: query,
+                        query: query.asResponse,
                         data: .init(items: result.items.map(map), total: total)
                     )
                 )
@@ -114,18 +118,18 @@ extension AdminAPIGateway {
 }
 
 extension Components.Schemas.NewsArticleCreateSchema {
-    fileprivate func addArticleInput() -> AddArticle.Input {
+    fileprivate func addArticleInput() -> Article.Add.Input {
         .init(
             title: title,
             excerpt: excerpt,
             content: content,
             imageAssetId: imageAssetId,
             categoryIds: Array(categoryIds ?? []),
-            metadata: metadata.pageMetadata(template: "news.article")
+            metadata: metadata.pageAddMetadata(template: "news.article")
         )
     }
 
-    fileprivate func editArticleInput(id: String) -> EditArticle.Input {
+    fileprivate func editArticleInput(id: String) -> Article.Edit.Input {
         .init(
             id: id,
             title: title,
@@ -133,14 +137,29 @@ extension Components.Schemas.NewsArticleCreateSchema {
             content: content,
             imageAssetId: .some(imageAssetId),
             categoryIds: Array(categoryIds ?? []),
-            metadata: metadata.pageMetadata(template: "news.article")
+            metadata: metadata.pageEditMetadata(template: "news.article")
+        )
+    }
+}
+
+private extension Components.Schemas.NewsArticleListItemSearchRequestQuerySchema {
+    var asResponse: Components.Schemas.NewsArticleListItemSearchResponseQuerySchema {
+        .init(
+            page: .init(size: page?.size ?? 20, number: page?.number ?? 1),
+            sort: sort?.map {
+                .init(
+                    field: .init(rawValue: $0.field.rawValue) ?? .id,
+                    direction: $0.direction
+                )
+            },
+            filters: .init(search: filters.search)
         )
     }
 }
 
 extension AdminAPIGateway {
     fileprivate func map(
-        _ item: ArticleDetail
+        _ item: Article.Detail.Output
     ) -> Components.Schemas.NewsArticleDetailSchema {
         .init(
             id: item.id,
@@ -156,7 +175,7 @@ extension AdminAPIGateway {
     }
 
     fileprivate func map(
-        _ item: ArticleList.Item
+        _ item: Article.List.Output.Item
     ) -> Components.Schemas.NewsArticleListItemSchema {
         .init(
             id: item.id,
