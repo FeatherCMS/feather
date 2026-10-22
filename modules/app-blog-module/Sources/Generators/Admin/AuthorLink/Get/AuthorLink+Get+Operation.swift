@@ -6,7 +6,7 @@ extension AuthorLink.Get {
         var operationId: String? { "blogAuthorLinkGet" }
         var responseMap: ResponseMap {
             [
-                200: BlogAuthorLinkDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "Blog author link not found"),
             ]
         }

@@ -10,7 +10,7 @@ extension Profile.Edit {
         let profileImageAssetId: String?
         let profileImageAsset: AdminMediaAsset?
 
-        var accountProfile: AdminAccountProfileModel {
+        var profile: Profile.Model {
             .init(
                 firstName: firstName,
                 lastName: lastName,

@@ -6,7 +6,7 @@ extension Profile.Edit.Presenter {
     protocol Interface: Sendable {
 
         func renderPage(
-            state: AccountProfileEdit.State,
+            state: ProfileEdit.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

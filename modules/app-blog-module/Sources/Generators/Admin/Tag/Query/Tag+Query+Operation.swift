@@ -6,7 +6,7 @@ extension Tag.Query {
         var operationId: String? { "blogTagQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: BlogTagQueryItemSchema(),
+                items: ItemSchema(),
                 sortFieldKeys: ["id", "title", "createdAt", "updatedAt"],
                 filters: SearchFilterSchema()
             )

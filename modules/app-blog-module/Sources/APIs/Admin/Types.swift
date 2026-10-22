@@ -108,7 +108,7 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/post(blogAuthorPost)`.
     public func blogAuthorPost(
         headers: Operations.BlogAuthorPost.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogAuthorRequestBody
+        body: Components.RequestBodies.AuthorPostRequestBody
     ) async throws -> Operations.BlogAuthorPost.Output {
         try await blogAuthorPost(Operations.BlogAuthorPost.Input(
             headers: headers,
@@ -154,7 +154,7 @@ extension APIProtocol {
         path: Operations.BlogAuthorPatch.Input.Path,
         query: Operations.BlogAuthorPatch.Input.Query,
         headers: Operations.BlogAuthorPatch.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogAuthorPatchRequestBody
+        body: Components.RequestBodies.AuthorPatchRequestBody
     ) async throws -> Operations.BlogAuthorPatch.Output {
         try await blogAuthorPatch(Operations.BlogAuthorPatch.Input(
             path: path,
@@ -168,7 +168,7 @@ extension APIProtocol {
     public func blogAuthorPut(
         path: Operations.BlogAuthorPut.Input.Path,
         headers: Operations.BlogAuthorPut.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogAuthorUpdateRequestBody
+        body: Components.RequestBodies.AuthorPutRequestBody
     ) async throws -> Operations.BlogAuthorPut.Output {
         try await blogAuthorPut(Operations.BlogAuthorPut.Input(
             path: path,
@@ -192,7 +192,7 @@ extension APIProtocol {
     public func blogAuthorLinkPost(
         path: Operations.BlogAuthorLinkPost.Input.Path,
         headers: Operations.BlogAuthorLinkPost.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogAuthorLinkRequestBody
+        body: Components.RequestBodies.AuthorLinkPostRequestBody
     ) async throws -> Operations.BlogAuthorLinkPost.Output {
         try await blogAuthorLinkPost(Operations.BlogAuthorLinkPost.Input(
             path: path,
@@ -243,7 +243,7 @@ extension APIProtocol {
         path: Operations.BlogAuthorLinkPatch.Input.Path,
         query: Operations.BlogAuthorLinkPatch.Input.Query,
         headers: Operations.BlogAuthorLinkPatch.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogAuthorLinkPatchRequestBody
+        body: Components.RequestBodies.AuthorLinkPatchRequestBody
     ) async throws -> Operations.BlogAuthorLinkPatch.Output {
         try await blogAuthorLinkPatch(Operations.BlogAuthorLinkPatch.Input(
             path: path,
@@ -257,7 +257,7 @@ extension APIProtocol {
     public func blogAuthorLinkPut(
         path: Operations.BlogAuthorLinkPut.Input.Path,
         headers: Operations.BlogAuthorLinkPut.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogAuthorLinkUpdateRequestBody
+        body: Components.RequestBodies.AuthorLinkPutRequestBody
     ) async throws -> Operations.BlogAuthorLinkPut.Output {
         try await blogAuthorLinkPut(Operations.BlogAuthorLinkPut.Input(
             path: path,
@@ -274,7 +274,7 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/post(blogPostPost)`.
     public func blogPostPost(
         headers: Operations.BlogPostPost.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogPostRequestBody
+        body: Components.RequestBodies.PostPostRequestBody
     ) async throws -> Operations.BlogPostPost.Output {
         try await blogPostPost(Operations.BlogPostPost.Input(
             headers: headers,
@@ -320,7 +320,7 @@ extension APIProtocol {
         path: Operations.BlogPostPatch.Input.Path,
         query: Operations.BlogPostPatch.Input.Query,
         headers: Operations.BlogPostPatch.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogPostPatchRequestBody
+        body: Components.RequestBodies.PostPatchRequestBody
     ) async throws -> Operations.BlogPostPatch.Output {
         try await blogPostPatch(Operations.BlogPostPatch.Input(
             path: path,
@@ -334,7 +334,7 @@ extension APIProtocol {
     public func blogPostPut(
         path: Operations.BlogPostPut.Input.Path,
         headers: Operations.BlogPostPut.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogPostUpdateRequestBody
+        body: Components.RequestBodies.PostPutRequestBody
     ) async throws -> Operations.BlogPostPut.Output {
         try await blogPostPut(Operations.BlogPostPut.Input(
             path: path,
@@ -351,7 +351,7 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/settings/put(blogSettingsPut)`.
     public func blogSettingsPut(
         headers: Operations.BlogSettingsPut.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogSettingsUpdateRequestBody
+        body: Components.RequestBodies.SettingsPutRequestBody
     ) async throws -> Operations.BlogSettingsPut.Output {
         try await blogSettingsPut(Operations.BlogSettingsPut.Input(
             headers: headers,
@@ -367,7 +367,7 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/post(blogTagPost)`.
     public func blogTagPost(
         headers: Operations.BlogTagPost.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogTagRequestBody
+        body: Components.RequestBodies.TagPostRequestBody
     ) async throws -> Operations.BlogTagPost.Output {
         try await blogTagPost(Operations.BlogTagPost.Input(
             headers: headers,
@@ -413,7 +413,7 @@ extension APIProtocol {
         path: Operations.BlogTagPatch.Input.Path,
         query: Operations.BlogTagPatch.Input.Query,
         headers: Operations.BlogTagPatch.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogTagPatchRequestBody
+        body: Components.RequestBodies.TagPatchRequestBody
     ) async throws -> Operations.BlogTagPatch.Output {
         try await blogTagPatch(Operations.BlogTagPatch.Input(
             path: path,
@@ -427,7 +427,7 @@ extension APIProtocol {
     public func blogTagPut(
         path: Operations.BlogTagPut.Input.Path,
         headers: Operations.BlogTagPut.Input.Headers = .init(),
-        body: Components.RequestBodies.BlogTagUpdateRequestBody
+        body: Components.RequestBodies.TagPutRequestBody
     ) async throws -> Operations.BlogTagPut.Output {
         try await blogTagPut(Operations.BlogTagPut.Input(
             path: path,

@@ -13,7 +13,7 @@ extension Profile.Edit.Repository {
         let api: API.AppClient
         let mediaAPI: MediaAdminAPIClient
 
-        func get() async throws -> AdminAccountProfileModel {
+        func get() async throws -> Profile.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.accountProfileGet(
                     .init(headers: .init(accept: [.init(contentType: .json)]))
@@ -43,7 +43,7 @@ extension Profile.Edit.Repository {
         }
 
         func update(
-            profile: AdminAccountProfileModel
+            profile: Profile.Model
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.accountProfileUpdate(

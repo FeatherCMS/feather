@@ -56,6 +56,8 @@ extension Author.Search.Query {
                     return switch sort.field {
                     case .id:
                         DatabaseQueryOrder<Author.Table>(by: \.id, direction)
+                    case .key:
+                        DatabaseQueryOrder<Author.Table>(by: \.key, direction)
                     case .name:
                         DatabaseQueryOrder<Author.Table>(by: \.name, direction)
                     case .createdAt:

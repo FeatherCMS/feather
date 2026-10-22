@@ -1,4 +1,5 @@
 import AccountApplication
+import AccountModule
 public import FeatherApplication
 import FeatherDatabase
 import FeatherDomain
@@ -10,7 +11,7 @@ public struct UseCases: Sendable {
     let authorizer: any Authorizer
     let jobs: any SendMailJobController
     let events: any EventPublisher
-    let credentialWriter: any InvitationCredentialWriter
+    let credentialWriter: any Invitation.CompleteRegistration.CredentialWriter
 
     public init(
         databaseContext: DatabaseClientContext,
@@ -22,7 +23,8 @@ public struct UseCases: Sendable {
         self.authorizer = authorizer
         self.jobs = jobs
         self.events = events
-        self.credentialWriter = InvitationCredentialWriterAdapter()
+        self.credentialWriter =
+            Invitation.CompleteRegistration.CredentialWriterAdapter()
     }
 
 }

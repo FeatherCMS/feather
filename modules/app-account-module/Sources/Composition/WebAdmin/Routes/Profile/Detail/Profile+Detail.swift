@@ -25,7 +25,7 @@ extension Profile.Detail {
                 buildRuntime: { request, context in
                     (
                         interactor: Profile.Detail.Interactor.Default(
-                            accountProfileRepository:
+                            profileRepository:
                                 Profile.Detail.Repository.OpenAPI(
                                     api: API.AppClient(
                                         environment: environment,
@@ -51,7 +51,7 @@ extension Profile.Detail {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
                 routes.profile.routerPath,
-                use: controller.getAccountProfile
+                use: controller.getProfile
             )
         }
     }

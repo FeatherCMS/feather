@@ -5,11 +5,11 @@ extension Tag.Put {
     struct Operation: Tag.IdentifiableOperation {
         var operationId: String? { "blogTagPut" }
         var requestBody: (any RequestBodyRepresentable)? {
-            BlogTagUpdateRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: BlogTagDetailResponse().reference(),
+                200: Tag.Get.Response().reference(),
                 404: CustomResponse(description: "Blog tag not found"),
             ]
         }

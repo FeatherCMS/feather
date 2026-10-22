@@ -14,7 +14,7 @@ extension Profile.Edit.Presenter {
         let routes: Profile.Router.Routes
 
         func renderPage(
-            state: AccountProfileEdit.State,
+            state: ProfileEdit.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             var state = state
@@ -25,7 +25,7 @@ extension Profile.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit profile",
-                content: AccountProfileEdit(routes: routes, state: state)
+                content: ProfileEdit(routes: routes, state: state)
             )
         }
 

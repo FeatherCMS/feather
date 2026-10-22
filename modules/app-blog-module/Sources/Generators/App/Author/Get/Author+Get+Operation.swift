@@ -10,7 +10,7 @@ extension Author.Get {
         }
         var responseMap: ResponseMap {
             [
-                200: BlogAuthorDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "Blog author not found"),
             ]
         }

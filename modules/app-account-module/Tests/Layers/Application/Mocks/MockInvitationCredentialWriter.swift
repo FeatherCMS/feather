@@ -1,8 +1,11 @@
+import AccountModule
 import FeatherModuleKit
 
 @testable import AccountApplication
 
-actor MockInvitationCredentialWriter: InvitationCredentialWriter {
+actor MockInvitationCredentialWriter:
+    Invitation.CompleteRegistration.CredentialWriter
+{
     private(set) var createCallCount = 0
     private(set) var userID: String?
     private(set) var email: String?

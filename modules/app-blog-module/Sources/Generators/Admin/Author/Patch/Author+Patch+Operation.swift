@@ -11,11 +11,11 @@ extension Author.Patch {
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            BlogAuthorPatchRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: BlogAuthorDetailResponse().reference(),
+                200: Author.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),

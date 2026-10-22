@@ -175,10 +175,20 @@ extension UseCases {
     func map(
         _ query: WebAdminAPI.Components.Schemas
             .WebMetadataQueryItemSearchRequestQuerySchema
-    ) -> MetadataList.Query {
+    ) -> Metadata.Search.Input.Query {
         .init(
             page: map(query.page),
-            sort: [],
+            sort: query.sort?.compactMap { sort in
+                guard
+                    let field = Metadata.Search.Input.Query.Sort.Field(
+                        rawValue: sort.field.rawValue
+                    )
+                else { return nil }
+                return .init(
+                    field: field,
+                    direction: mapSortDirection(sort.direction)
+                )
+            } ?? [],
             search: query.filters.search,
             referenceType: query.filters.referenceType
         )
@@ -214,7 +224,7 @@ extension UseCases {
         )
     }
 
-    func map(_ item: MetadataList.Item)
+    func map(_ item: Metadata.List.Output.Item)
         -> WebAdminAPI.Components.Schemas.WebMetadataListItemSchema
     {
         .init(
@@ -233,7 +243,7 @@ extension UseCases {
         )
     }
 
-    func mapQuery(_ item: MetadataList.Item)
+    func mapQuery(_ item: Metadata.Search.Output.Item)
         -> WebAdminAPI.Components.Schemas.WebMetadataQueryItemSchema
     {
         .init(
@@ -253,7 +263,7 @@ extension UseCases {
     }
 
     func mapResolveMetadata(
-        _ item: MetadataList.Item,
+        _ item: Metadata.List.Output.Item,
         at date: Date
     ) -> WebAdminAPI.Components.Schemas.WebMetadataResolveItemSchema {
         .init(

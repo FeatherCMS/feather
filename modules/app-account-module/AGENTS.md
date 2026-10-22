@@ -17,6 +17,10 @@ WebAdmin/WebApp composition, and tests.
   their models, contracts, operations, permissions, table definitions, and
   adapters grouped by entity. Module-wide event registration extends
   `AccountModule.Event` in infrastructure.
+- Group entity namespaces and their permission declarations under
+  `Sources/Module/<Entity>/`; keep only module-wide `Event` and `Permissions`
+  at the `Module` root. Keep the seed event contract under
+  `Layers/Application/Event/Seed/`.
 - `AccountWebAdmin` owns admin routes, events, and the Admin API client.
   `AccountWebApp` owns public/app routes and its App API client. Do not make the
   backend depend on either web target, or make WebApp depend on WebAdmin.
@@ -28,6 +32,8 @@ WebAdmin/WebApp composition, and tests.
 - Model operations under entity namespaces and keep action, input, output,
   authorization scope, query/repository contracts, and use-case implementation
   in focused operation-specific files.
+- Keep backend use-case wiring under `Composition/Backend/UseCases/<Entity>/`
+  and group operation-specific adapters under their owning entity.
 - Use DBAL table, column, and migration schemas. Tables are nested below their
   owning entity (`Profile.Table`, `Invitation.Table`, `Settings.Table`).
   Keep aggregate/seed migration registration at the infrastructure root.

@@ -3,10 +3,10 @@ import AccountModule
 extension Profile.Edit.Repository {
 
     protocol Interface: Sendable {
-        func get() async throws -> AdminAccountProfileModel
+        func get() async throws -> Profile.Model
 
         func update(
-            profile: AdminAccountProfileModel
+            profile: Profile.Model
         ) async throws
     }
 }

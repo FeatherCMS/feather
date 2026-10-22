@@ -5,10 +5,10 @@ extension AuthorLink.Post {
     struct Operation: AuthorLink.Operation {
         var operationId: String? { "blogAuthorLinkPost" }
         var requestBody: (any RequestBodyRepresentable)? {
-            BlogAuthorLinkRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: BlogAuthorLinkDetailResponse().reference()]
+            [201: AuthorLink.Get.Response().reference()]
         }
     }
 }

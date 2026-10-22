@@ -6,7 +6,7 @@ extension Settings.Get {
     struct Operation: BlogOperation {
         var operationId: String? { "blogSettingsGet" }
         var responseMap: ResponseMap {
-            [200: BlogRouteSettingsResponse().reference()]
+            [200: Response().reference()]
         }
     }
 }

@@ -7,18 +7,18 @@ extension Profile.Detail.Interactor {
     struct Default:
         Profile.Detail.Interactor.Interface
     {
-        let accountProfileRepository:
+        let profileRepository:
             any Profile.Detail.Repository.Interface
 
-        func getAccountProfile() async throws -> AdminAccountProfileModel {
-            try await accountProfileRepository.get()
+        func getProfile() async throws -> Profile.Model {
+            try await profileRepository.get()
         }
 
         func getProfile(
             account: AccountModel,
-            accountProfile: AdminAccountProfileModel
+            profile: Profile.Model
         ) async throws -> Profile.Detail.Model {
-            .init(account: account, accountProfile: accountProfile)
+            .init(account: account, profile: profile)
         }
     }
 }

@@ -36,12 +36,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/blog/authors/get(blogAuthorList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorListResponse)
+            case ok(Components.Responses.AuthorListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorListResponse {
+            public var ok: Components.Responses.AuthorListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -136,12 +136,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/blog/authors/{id}/get(blogAuthorGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorDetailResponse)
+            case ok(Components.Responses.AuthorGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorDetailResponse {
+            public var ok: Components.Responses.AuthorGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -267,12 +267,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/blog/posts/get(blogPostList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogPostListResponse)
+            case ok(Components.Responses.PostListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogPostListResponse {
+            public var ok: Components.Responses.PostListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -367,12 +367,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/blog/posts/{id}/get(blogPostGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogPostDetailResponse)
+            case ok(Components.Responses.PostGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogPostDetailResponse {
+            public var ok: Components.Responses.PostGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -498,12 +498,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/blog/settings/get(blogSettingsGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogRouteSettingsResponse)
+            case ok(Components.Responses.SettingsGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogRouteSettingsResponse {
+            public var ok: Components.Responses.SettingsGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -578,12 +578,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/blog/tags/get(blogTagList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogTagListResponse)
+            case ok(Components.Responses.TagListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogTagListResponse {
+            public var ok: Components.Responses.TagListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -678,12 +678,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/blog/tags/{id}/get(blogTagGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogTagDetailResponse)
+            case ok(Components.Responses.TagGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogTagDetailResponse {
+            public var ok: Components.Responses.TagGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):

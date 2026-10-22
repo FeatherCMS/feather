@@ -25,7 +25,7 @@ extension Profile.Edit {
                 buildRuntime: { request, context in
                     (
                         interactor: Profile.Edit.Interactor.Default(
-                            accountProfileRepository:
+                            profileRepository:
                                 Profile.Edit.Repository.OpenAPI(
                                     api: API.AppClient(
                                         environment: environment,
@@ -50,8 +50,8 @@ extension Profile.Edit {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             let path = routes.profileEdit.routerPath
-            router.get(path, use: controller.getEditAccountProfile)
-            router.post(path, use: controller.postEditAccountProfile)
+            router.get(path, use: controller.getEditProfile)
+            router.post(path, use: controller.postEditProfile)
         }
     }
 }

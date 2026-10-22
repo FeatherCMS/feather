@@ -11,13 +11,13 @@ extension Invitation.CompleteRegistration {
         public let invitation: any Invitation.Repository.Interface
         public let identity: any Identity.Repository.Interface
         public let authEmail: any Email.Repository.Interface
-        public let credential: any InvitationCredentialWriter
+        public let credential: any CredentialWriter
 
         public init(
             invitation: any Invitation.Repository.Interface,
             identity: any Identity.Repository.Interface,
             authEmail: any Email.Repository.Interface,
-            credential: any InvitationCredentialWriter
+            credential: any CredentialWriter
         ) {
             self.invitation = invitation
             self.identity = identity

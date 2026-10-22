@@ -7,12 +7,12 @@ extension Profile.Edit.Controller {
 
     protocol Interface: Sendable {
 
-        func getEditAccountProfile(
+        func getEditProfile(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
 
-        func postEditAccountProfile(
+        func postEditProfile(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response

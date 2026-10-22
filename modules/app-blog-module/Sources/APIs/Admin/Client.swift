@@ -57,7 +57,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorListResponse.Body
+                    let body: Components.Responses.AuthorListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -67,7 +67,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorListSchema.self,
+                            Components.Schemas.AuthorListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -168,7 +168,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 201:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorDetailResponse.Body
+                    let body: Components.Responses.AuthorGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -178,7 +178,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorDetailSchema.self,
+                            Components.Schemas.AuthorGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -370,7 +370,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorQueryItemSearchSchemaSearchResponse.Body
+                    let body: Components.Responses.AuthorQueryItemSearchSchemaSearchResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -380,7 +380,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorQueryItemSearchSchema.self,
+                            Components.Schemas.AuthorQueryItemSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -474,7 +474,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorDetailResponse.Body
+                    let body: Components.Responses.AuthorGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -484,7 +484,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorDetailSchema.self,
+                            Components.Schemas.AuthorGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -616,7 +616,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorDetailResponse.Body
+                    let body: Components.Responses.AuthorGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -626,7 +626,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorDetailSchema.self,
+                            Components.Schemas.AuthorGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -773,7 +773,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorDetailResponse.Body
+                    let body: Components.Responses.AuthorGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -783,7 +783,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorDetailSchema.self,
+                            Components.Schemas.AuthorGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -899,7 +899,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorLinkListResponse.Body
+                    let body: Components.Responses.AuthorLinkListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -909,7 +909,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorLinkListSchema.self,
+                            Components.Schemas.AuthorLinkListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1012,7 +1012,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 201:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorLinkDetailResponse.Body
+                    let body: Components.Responses.AuthorLinkGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1022,7 +1022,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorLinkDetailSchema.self,
+                            Components.Schemas.AuthorLinkGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1218,7 +1218,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorLinkQueryItemSearchSchemaSearchResponse.Body
+                    let body: Components.Responses.AuthorLinkQueryItemSearchSchemaSearchResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1228,7 +1228,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorLinkQueryItemSearchSchema.self,
+                            Components.Schemas.AuthorLinkQueryItemSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1323,7 +1323,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorLinkDetailResponse.Body
+                    let body: Components.Responses.AuthorLinkGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1333,7 +1333,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorLinkDetailSchema.self,
+                            Components.Schemas.AuthorLinkGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1466,7 +1466,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorLinkDetailResponse.Body
+                    let body: Components.Responses.AuthorLinkGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1476,7 +1476,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorLinkDetailSchema.self,
+                            Components.Schemas.AuthorLinkGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1624,7 +1624,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogAuthorLinkDetailResponse.Body
+                    let body: Components.Responses.AuthorLinkGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1634,7 +1634,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogAuthorLinkDetailSchema.self,
+                            Components.Schemas.AuthorLinkGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1748,7 +1748,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogPostListResponse.Body
+                    let body: Components.Responses.PostListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1758,7 +1758,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogPostListSchema.self,
+                            Components.Schemas.PostListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1859,7 +1859,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 201:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogPostDetailResponse.Body
+                    let body: Components.Responses.PostGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1869,7 +1869,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogPostDetailSchema.self,
+                            Components.Schemas.PostGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2061,7 +2061,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogPostQueryItemSearchSchemaSearchResponse.Body
+                    let body: Components.Responses.PostQueryItemSearchSchemaSearchResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2071,7 +2071,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogPostQueryItemSearchSchema.self,
+                            Components.Schemas.PostQueryItemSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2165,7 +2165,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogPostDetailResponse.Body
+                    let body: Components.Responses.PostGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2175,7 +2175,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogPostDetailSchema.self,
+                            Components.Schemas.PostGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2307,7 +2307,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogPostDetailResponse.Body
+                    let body: Components.Responses.PostGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2317,7 +2317,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogPostDetailSchema.self,
+                            Components.Schemas.PostGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2464,7 +2464,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogPostDetailResponse.Body
+                    let body: Components.Responses.PostGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2474,7 +2474,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogPostDetailSchema.self,
+                            Components.Schemas.PostGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2588,7 +2588,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogSettingsDetailResponse.Body
+                    let body: Components.Responses.SettingsGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2598,7 +2598,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogSettingsDetailSchema.self,
+                            Components.Schemas.SettingsGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2699,7 +2699,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogSettingsDetailResponse.Body
+                    let body: Components.Responses.SettingsGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2709,7 +2709,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogSettingsDetailSchema.self,
+                            Components.Schemas.SettingsGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2801,7 +2801,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogTagListResponse.Body
+                    let body: Components.Responses.TagListResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2811,7 +2811,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogTagListSchema.self,
+                            Components.Schemas.TagListSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2912,7 +2912,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 201:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogTagDetailResponse.Body
+                    let body: Components.Responses.TagGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2922,7 +2922,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogTagDetailSchema.self,
+                            Components.Schemas.TagGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3114,7 +3114,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogTagQueryItemSearchSchemaSearchResponse.Body
+                    let body: Components.Responses.TagQueryItemSearchSchemaSearchResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3124,7 +3124,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogTagQueryItemSearchSchema.self,
+                            Components.Schemas.TagQueryItemSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3218,7 +3218,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogTagDetailResponse.Body
+                    let body: Components.Responses.TagGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3228,7 +3228,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogTagDetailSchema.self,
+                            Components.Schemas.TagGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3360,7 +3360,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogTagDetailResponse.Body
+                    let body: Components.Responses.TagGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3370,7 +3370,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogTagDetailSchema.self,
+                            Components.Schemas.TagGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -3517,7 +3517,7 @@ public struct Client: APIProtocol {
                 switch response.status.code {
                 case 200:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.BlogTagDetailResponse.Body
+                    let body: Components.Responses.TagGetResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3527,7 +3527,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.BlogTagDetailSchema.self,
+                            Components.Schemas.TagGetSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

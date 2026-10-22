@@ -40,7 +40,7 @@ extension Tag.Edit {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
 
-            let (model, metadata) = try await transaction.run { scope in
+            return try await transaction.run { scope in
                 guard var model = try await scope.tag.find(id: input.id) else {
                     throw Error(message: "Tag not found")
                 }
@@ -81,18 +81,17 @@ extension Tag.Edit {
 
                 let savedModel = try await scope.tag.update(model)
                 let savedMetadata = try await scope.metadata.update(metadata)
-                return (savedModel, savedMetadata)
+                return .init(
+                    id: savedModel.id,
+                    title: savedModel.title,
+                    excerpt: savedModel.excerpt,
+                    content: savedModel.content,
+                    imageAssetId: savedModel.imageAssetId,
+                    metadata: savedMetadata.asDetail,
+                    createdAt: savedModel.createdAt,
+                    updatedAt: savedModel.updatedAt
+                )
             }
-            return .init(
-                id: model.id,
-                title: model.title,
-                excerpt: model.excerpt,
-                content: model.content,
-                imageAssetId: model.imageAssetId,
-                metadata: metadata.asDetail,
-                createdAt: model.createdAt,
-                updatedAt: model.updatedAt
-            )
         }
     }
 }

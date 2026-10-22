@@ -31,17 +31,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthor list response
+            /// Blog author list response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/get(blogAuthorList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorListResponse)
+            case ok(Components.Responses.AuthorListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorListResponse {
+            public var ok: Components.Responses.AuthorListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -204,7 +204,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogAuthorPost.Input.Headers
-            public var body: Components.RequestBodies.BlogAuthorRequestBody
+            public var body: Components.RequestBodies.AuthorPostRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -212,24 +212,24 @@ public enum Operations {
             ///   - body:
             public init(
                 headers: Operations.BlogAuthorPost.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogAuthorRequestBody
+                body: Components.RequestBodies.AuthorPostRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthor response
+            /// Blog author response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/post(blogAuthorPost)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
-            case created(Components.Responses.BlogAuthorDetailResponse)
+            case created(Components.Responses.AuthorGetResponse)
             /// The associated value of the enum case if `self` is `.created`.
             ///
             /// - Throws: An error if `self` is not `.created`.
             /// - SeeAlso: `.created`.
-            public var created: Components.Responses.BlogAuthorDetailResponse {
+            public var created: Components.Responses.AuthorGetResponse {
                 get throws {
                     switch self {
                     case let .created(response):
@@ -591,7 +591,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema)
+                case json(Components.Schemas.AuthorQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.BlogAuthorQuery.Input.Body
             /// Creates a new `Input`.
@@ -613,12 +613,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/query/post(blogAuthorQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorQueryItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.AuthorQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorQueryItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.AuthorQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -810,17 +810,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthor response
+            /// Blog author response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/get(blogAuthorGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorDetailResponse)
+            case ok(Components.Responses.AuthorGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorDetailResponse {
+            public var ok: Components.Responses.AuthorGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -1064,7 +1064,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogAuthorPatch.Input.Headers
-            public var body: Components.RequestBodies.BlogAuthorPatchRequestBody
+            public var body: Components.RequestBodies.AuthorPatchRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -1076,7 +1076,7 @@ public enum Operations {
                 path: Operations.BlogAuthorPatch.Input.Path,
                 query: Operations.BlogAuthorPatch.Input.Query,
                 headers: Operations.BlogAuthorPatch.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogAuthorPatchRequestBody
+                body: Components.RequestBodies.AuthorPatchRequestBody
             ) {
                 self.path = path
                 self.query = query
@@ -1085,17 +1085,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthor response
+            /// Blog author response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/patch(blogAuthorPatch)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorDetailResponse)
+            case ok(Components.Responses.AuthorGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorDetailResponse {
+            public var ok: Components.Responses.AuthorGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -1375,7 +1375,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogAuthorPut.Input.Headers
-            public var body: Components.RequestBodies.BlogAuthorUpdateRequestBody
+            public var body: Components.RequestBodies.AuthorPutRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -1385,7 +1385,7 @@ public enum Operations {
             public init(
                 path: Operations.BlogAuthorPut.Input.Path,
                 headers: Operations.BlogAuthorPut.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogAuthorUpdateRequestBody
+                body: Components.RequestBodies.AuthorPutRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -1393,17 +1393,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthor response
+            /// Blog author response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/put(blogAuthorPut)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorDetailResponse)
+            case ok(Components.Responses.AuthorGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorDetailResponse {
+            public var ok: Components.Responses.AuthorGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -1646,17 +1646,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthorLink list response
+            /// Blog author link list response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/get(blogAuthorLinkList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorLinkListResponse)
+            case ok(Components.Responses.AuthorLinkListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorLinkListResponse {
+            public var ok: Components.Responses.AuthorLinkListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -1834,7 +1834,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogAuthorLinkPost.Input.Headers
-            public var body: Components.RequestBodies.BlogAuthorLinkRequestBody
+            public var body: Components.RequestBodies.AuthorLinkPostRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -1844,7 +1844,7 @@ public enum Operations {
             public init(
                 path: Operations.BlogAuthorLinkPost.Input.Path,
                 headers: Operations.BlogAuthorLinkPost.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogAuthorLinkRequestBody
+                body: Components.RequestBodies.AuthorLinkPostRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -1852,17 +1852,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthorLink response
+            /// Blog author link response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/post(blogAuthorLinkPost)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
-            case created(Components.Responses.BlogAuthorLinkDetailResponse)
+            case created(Components.Responses.AuthorLinkGetResponse)
             /// The associated value of the enum case if `self` is `.created`.
             ///
             /// - Throws: An error if `self` is not `.created`.
             /// - SeeAlso: `.created`.
-            public var created: Components.Responses.BlogAuthorLinkDetailResponse {
+            public var created: Components.Responses.AuthorLinkGetResponse {
                 get throws {
                     switch self {
                     case let .created(response):
@@ -2257,7 +2257,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema)
+                case json(Components.Schemas.AuthorLinkQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.BlogAuthorLinkQuery.Input.Body
             /// Creates a new `Input`.
@@ -2282,12 +2282,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/query/post(blogAuthorLinkQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorLinkQueryItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.AuthorLinkQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorLinkQueryItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.AuthorLinkQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -2488,17 +2488,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthorLink response
+            /// Blog author link response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/get(blogAuthorLinkGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorLinkDetailResponse)
+            case ok(Components.Responses.AuthorLinkGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorLinkDetailResponse {
+            public var ok: Components.Responses.AuthorLinkGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -2751,7 +2751,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogAuthorLinkPatch.Input.Headers
-            public var body: Components.RequestBodies.BlogAuthorLinkPatchRequestBody
+            public var body: Components.RequestBodies.AuthorLinkPatchRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -2763,7 +2763,7 @@ public enum Operations {
                 path: Operations.BlogAuthorLinkPatch.Input.Path,
                 query: Operations.BlogAuthorLinkPatch.Input.Query,
                 headers: Operations.BlogAuthorLinkPatch.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogAuthorLinkPatchRequestBody
+                body: Components.RequestBodies.AuthorLinkPatchRequestBody
             ) {
                 self.path = path
                 self.query = query
@@ -2772,17 +2772,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthorLink response
+            /// Blog author link response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/patch(blogAuthorLinkPatch)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorLinkDetailResponse)
+            case ok(Components.Responses.AuthorLinkGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorLinkDetailResponse {
+            public var ok: Components.Responses.AuthorLinkGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -3071,7 +3071,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogAuthorLinkPut.Input.Headers
-            public var body: Components.RequestBodies.BlogAuthorLinkUpdateRequestBody
+            public var body: Components.RequestBodies.AuthorLinkPutRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -3081,7 +3081,7 @@ public enum Operations {
             public init(
                 path: Operations.BlogAuthorLinkPut.Input.Path,
                 headers: Operations.BlogAuthorLinkPut.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogAuthorLinkUpdateRequestBody
+                body: Components.RequestBodies.AuthorLinkPutRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -3089,17 +3089,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthorLink response
+            /// Blog author link response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/put(blogAuthorLinkPut)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorLinkDetailResponse)
+            case ok(Components.Responses.AuthorLinkGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorLinkDetailResponse {
+            public var ok: Components.Responses.AuthorLinkGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -3322,17 +3322,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogPost list response
+            /// Blog post list response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/get(blogPostList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogPostListResponse)
+            case ok(Components.Responses.PostListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogPostListResponse {
+            public var ok: Components.Responses.PostListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -3495,7 +3495,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogPostPost.Input.Headers
-            public var body: Components.RequestBodies.BlogPostRequestBody
+            public var body: Components.RequestBodies.PostPostRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -3503,24 +3503,24 @@ public enum Operations {
             ///   - body:
             public init(
                 headers: Operations.BlogPostPost.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogPostRequestBody
+                body: Components.RequestBodies.PostPostRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogPost response
+            /// Blog post response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/post(blogPostPost)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
-            case created(Components.Responses.BlogPostDetailResponse)
+            case created(Components.Responses.PostGetResponse)
             /// The associated value of the enum case if `self` is `.created`.
             ///
             /// - Throws: An error if `self` is not `.created`.
             /// - SeeAlso: `.created`.
-            public var created: Components.Responses.BlogPostDetailResponse {
+            public var created: Components.Responses.PostGetResponse {
                 get throws {
                     switch self {
                     case let .created(response):
@@ -3882,7 +3882,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema)
+                case json(Components.Schemas.PostQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.BlogPostQuery.Input.Body
             /// Creates a new `Input`.
@@ -3904,12 +3904,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/query/post(blogPostQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogPostQueryItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.PostQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogPostQueryItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.PostQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -4101,17 +4101,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogPost response
+            /// Blog post response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/get(blogPostGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogPostDetailResponse)
+            case ok(Components.Responses.PostGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogPostDetailResponse {
+            public var ok: Components.Responses.PostGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -4355,7 +4355,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogPostPatch.Input.Headers
-            public var body: Components.RequestBodies.BlogPostPatchRequestBody
+            public var body: Components.RequestBodies.PostPatchRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -4367,7 +4367,7 @@ public enum Operations {
                 path: Operations.BlogPostPatch.Input.Path,
                 query: Operations.BlogPostPatch.Input.Query,
                 headers: Operations.BlogPostPatch.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogPostPatchRequestBody
+                body: Components.RequestBodies.PostPatchRequestBody
             ) {
                 self.path = path
                 self.query = query
@@ -4376,17 +4376,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogPost response
+            /// Blog post response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/patch(blogPostPatch)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogPostDetailResponse)
+            case ok(Components.Responses.PostGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogPostDetailResponse {
+            public var ok: Components.Responses.PostGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -4666,7 +4666,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogPostPut.Input.Headers
-            public var body: Components.RequestBodies.BlogPostUpdateRequestBody
+            public var body: Components.RequestBodies.PostPutRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -4676,7 +4676,7 @@ public enum Operations {
             public init(
                 path: Operations.BlogPostPut.Input.Path,
                 headers: Operations.BlogPostPut.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogPostUpdateRequestBody
+                body: Components.RequestBodies.PostPutRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -4684,17 +4684,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogPost response
+            /// Blog post response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/put(blogPostPut)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogPostDetailResponse)
+            case ok(Components.Responses.PostGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogPostDetailResponse {
+            public var ok: Components.Responses.PostGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -4917,17 +4917,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogSettings response
+            /// Blog settings response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/settings/get(blogSettingsGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogSettingsDetailResponse)
+            case ok(Components.Responses.SettingsGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogSettingsDetailResponse {
+            public var ok: Components.Responses.SettingsGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -5090,7 +5090,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogSettingsPut.Input.Headers
-            public var body: Components.RequestBodies.BlogSettingsUpdateRequestBody
+            public var body: Components.RequestBodies.SettingsPutRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -5098,24 +5098,24 @@ public enum Operations {
             ///   - body:
             public init(
                 headers: Operations.BlogSettingsPut.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogSettingsUpdateRequestBody
+                body: Components.RequestBodies.SettingsPutRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogSettings response
+            /// Blog settings response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/settings/put(blogSettingsPut)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogSettingsDetailResponse)
+            case ok(Components.Responses.SettingsGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogSettingsDetailResponse {
+            public var ok: Components.Responses.SettingsGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -5287,17 +5287,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogTag list response
+            /// Blog tag list response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/get(blogTagList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogTagListResponse)
+            case ok(Components.Responses.TagListResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogTagListResponse {
+            public var ok: Components.Responses.TagListResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -5460,7 +5460,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogTagPost.Input.Headers
-            public var body: Components.RequestBodies.BlogTagRequestBody
+            public var body: Components.RequestBodies.TagPostRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -5468,24 +5468,24 @@ public enum Operations {
             ///   - body:
             public init(
                 headers: Operations.BlogTagPost.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogTagRequestBody
+                body: Components.RequestBodies.TagPostRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogTag response
+            /// Blog tag response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/post(blogTagPost)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
-            case created(Components.Responses.BlogTagDetailResponse)
+            case created(Components.Responses.TagGetResponse)
             /// The associated value of the enum case if `self` is `.created`.
             ///
             /// - Throws: An error if `self` is not `.created`.
             /// - SeeAlso: `.created`.
-            public var created: Components.Responses.BlogTagDetailResponse {
+            public var created: Components.Responses.TagGetResponse {
                 get throws {
                     switch self {
                     case let .created(response):
@@ -5847,7 +5847,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema)
+                case json(Components.Schemas.TagQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.BlogTagQuery.Input.Body
             /// Creates a new `Input`.
@@ -5869,12 +5869,12 @@ public enum Operations {
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/query/post(blogTagQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogTagQueryItemSearchSchemaSearchResponse)
+            case ok(Components.Responses.TagQueryItemSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogTagQueryItemSearchSchemaSearchResponse {
+            public var ok: Components.Responses.TagQueryItemSearchSchemaSearchResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -6066,17 +6066,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogTag response
+            /// Blog tag response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/get(blogTagGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogTagDetailResponse)
+            case ok(Components.Responses.TagGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogTagDetailResponse {
+            public var ok: Components.Responses.TagGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -6320,7 +6320,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogTagPatch.Input.Headers
-            public var body: Components.RequestBodies.BlogTagPatchRequestBody
+            public var body: Components.RequestBodies.TagPatchRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -6332,7 +6332,7 @@ public enum Operations {
                 path: Operations.BlogTagPatch.Input.Path,
                 query: Operations.BlogTagPatch.Input.Query,
                 headers: Operations.BlogTagPatch.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogTagPatchRequestBody
+                body: Components.RequestBodies.TagPatchRequestBody
             ) {
                 self.path = path
                 self.query = query
@@ -6341,17 +6341,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogTag response
+            /// Blog tag response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/patch(blogTagPatch)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogTagDetailResponse)
+            case ok(Components.Responses.TagGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogTagDetailResponse {
+            public var ok: Components.Responses.TagGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):
@@ -6631,7 +6631,7 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogTagPut.Input.Headers
-            public var body: Components.RequestBodies.BlogTagUpdateRequestBody
+            public var body: Components.RequestBodies.TagPutRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -6641,7 +6641,7 @@ public enum Operations {
             public init(
                 path: Operations.BlogTagPut.Input.Path,
                 headers: Operations.BlogTagPut.Input.Headers = .init(),
-                body: Components.RequestBodies.BlogTagUpdateRequestBody
+                body: Components.RequestBodies.TagPutRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -6649,17 +6649,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// BlogTag response
+            /// Blog tag response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/put(blogTagPut)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogTagDetailResponse)
+            case ok(Components.Responses.TagGetResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogTagDetailResponse {
+            public var ok: Components.Responses.TagGetResponse {
                 get throws {
                     switch self {
                     case let .ok(response):

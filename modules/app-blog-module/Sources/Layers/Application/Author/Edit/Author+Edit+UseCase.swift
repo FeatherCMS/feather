@@ -39,7 +39,7 @@ extension Author.Edit {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
 
-            let (model, metadata) = try await transaction.run { scope in
+            return try await transaction.run { scope in
                 guard var model = try await scope.author.find(id: input.id)
                 else {
                     throw Error(message: "Author not found")
@@ -81,18 +81,17 @@ extension Author.Edit {
 
                 let savedModel = try await scope.author.update(model)
                 let savedMetadata = try await scope.metadata.update(metadata)
-                return (savedModel, savedMetadata)
+                return .init(
+                    id: savedModel.id,
+                    name: savedModel.name,
+                    excerpt: savedModel.excerpt,
+                    content: savedModel.content,
+                    profileImageAssetId: savedModel.profileImageAssetId,
+                    metadata: savedMetadata.asDetail,
+                    createdAt: savedModel.createdAt,
+                    updatedAt: savedModel.updatedAt
+                )
             }
-            return .init(
-                id: model.id,
-                name: model.name,
-                excerpt: model.excerpt,
-                content: model.content,
-                profileImageAssetId: model.profileImageAssetId,
-                metadata: metadata.asDetail,
-                createdAt: model.createdAt,
-                updatedAt: model.updatedAt
-            )
         }
     }
 }

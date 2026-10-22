@@ -6,23 +6,23 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorListSchema`.
-        public typealias BlogAuthorListSchema = [Components.Schemas.BlogAuthorListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema`.
-        public struct BlogAuthorListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/AuthorListSchema`.
+        public typealias AuthorListSchema = [Components.Schemas.AuthorListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/AuthorListItemSchema`.
+        public struct AuthorListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorListItemSchema/id`.
             public var id: Components.Schemas.BlogAuthorIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/name`.
+            /// - Remark: Generated from `#/components/schemas/AuthorListItemSchema/name`.
             public var name: Components.Schemas.BlogAuthorNameField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorListItemSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogAuthorExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/profileImageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/AuthorListItemSchema/profileImageAssetId`.
             public var profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorListItemSchema/createdAt`.
             public var createdAt: Components.Schemas.BlogAuthorCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorListItemSchema/updatedAt`.
             public var updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
-            /// Creates a new `BlogAuthorListItemSchema`.
+            /// Creates a new `AuthorListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -167,17 +167,17 @@ extension Components {
                 case message
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorCreateSchema`.
-        public struct BlogAuthorCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorCreateSchema/name`.
+        /// - Remark: Generated from `#/components/schemas/AuthorPostSchema`.
+        public struct AuthorPostSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorPostSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorCreateSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorPostSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogAuthorExcerptField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorCreateSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/AuthorPostSchema/content`.
             public var content: Components.Schemas.BlogAuthorContentField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorCreateSchema/profileImageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/AuthorPostSchema/profileImageAssetId`.
             public var profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdField?
-            /// Creates a new `BlogAuthorCreateSchema`.
+            /// Creates a new `AuthorPostSchema`.
             ///
             /// - Parameters:
             ///   - name:
@@ -204,25 +204,25 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/BlogAuthorContentField`.
         public typealias BlogAuthorContentField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema`.
-        public struct BlogAuthorDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/AuthorGetSchema`.
+        public struct AuthorGetSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorGetSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema/name`.
+            /// - Remark: Generated from `#/components/schemas/AuthorGetSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorGetSchema/excerpt`.
             public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/AuthorGetSchema/content`.
             public var content: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema/profileImageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/AuthorGetSchema/profileImageAssetId`.
             public var profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema/metadata`.
+            /// - Remark: Generated from `#/components/schemas/AuthorGetSchema/metadata`.
             public var metadata: Components.Schemas.WebMetadataDetailSchema
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorGetSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorGetSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `BlogAuthorDetailSchema`.
+            /// Creates a new `AuthorGetSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -407,13 +407,13 @@ extension Components {
                 case ids
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema`.
-        public struct BlogAuthorQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema`.
+        public struct AuthorQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case key = "key"
@@ -421,9 +421,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthorQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -431,7 +431,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.AuthorQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -442,13 +442,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthorQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthorQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -461,9 +461,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `BlogAuthorQueryItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthorQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `AuthorQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -471,8 +471,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.AuthorQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthorQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -522,15 +522,15 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/SearchStringField`.
         public typealias SearchStringField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchSchema`.
-        public struct BlogAuthorQueryItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchSchema/query`.
-            public var query: Components.Schemas.BlogAuthorQueryItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchSchema`.
+        public struct AuthorQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.AuthorQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.BlogAuthorQueryItemSchema]
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.AuthorQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -538,7 +538,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.BlogAuthorQueryItemSchema],
+                    items: [Components.Schemas.AuthorQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -549,16 +549,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchSchema/data`.
-            public var data: Components.Schemas.BlogAuthorQueryItemSearchSchema.DataPayload
-            /// Creates a new `BlogAuthorQueryItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.AuthorQueryItemSearchSchema.DataPayload
+            /// Creates a new `AuthorQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.BlogAuthorQueryItemSearchResponseQuerySchema,
-                data: Components.Schemas.BlogAuthorQueryItemSearchSchema.DataPayload
+                query: Components.Schemas.AuthorQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.AuthorQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -568,13 +568,13 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema`.
-        public struct BlogAuthorQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema`.
+        public struct AuthorQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case key = "key"
@@ -582,9 +582,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.BlogAuthorQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthorQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -592,7 +592,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.BlogAuthorQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.AuthorQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -603,13 +603,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.BlogAuthorQueryItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.BlogAuthorQueryItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthorQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthorQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -622,9 +622,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.BlogAuthorQueryItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `BlogAuthorQueryItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthorQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `AuthorQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -632,8 +632,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.BlogAuthorQueryItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.BlogAuthorQueryItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.AuthorQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthorQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -668,21 +668,21 @@ extension Components {
                 case number
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSchema`.
-        public struct BlogAuthorQueryItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSchema`.
+        public struct AuthorQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSchema/id`.
             public var id: Components.Schemas.BlogAuthorIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSchema/name`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSchema/name`.
             public var name: Components.Schemas.BlogAuthorNameField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogAuthorExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSchema/profileImageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSchema/profileImageAssetId`.
             public var profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSchema/createdAt`.
             public var createdAt: Components.Schemas.BlogAuthorCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorQueryItemSchema/updatedAt`.
             public var updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
-            /// Creates a new `BlogAuthorQueryItemSchema`.
+            /// Creates a new `AuthorQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -715,17 +715,17 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorPatchSchema`.
-        public struct BlogAuthorPatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorPatchSchema/name`.
+        /// - Remark: Generated from `#/components/schemas/AuthorPutSchema`.
+        public struct AuthorPutSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorPutSchema/name`.
             public var name: Components.Schemas.BlogAuthorNameField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorPatchSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorPutSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogAuthorExcerptField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorPatchSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/AuthorPutSchema/content`.
             public var content: Components.Schemas.BlogAuthorContentField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorPatchSchema/profileImageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/AuthorPutSchema/profileImageAssetId`.
             public var profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdFieldNullable?
-            /// Creates a new `BlogAuthorPatchSchema`.
+            /// Creates a new `AuthorPutSchema`.
             ///
             /// - Parameters:
             ///   - name:
@@ -754,29 +754,64 @@ extension Components {
         public typealias BlogAuthorProfileImageAssetIdFieldNullable = Swift.String
         /// - Remark: Generated from `#/components/schemas/BlogAuthorUpdateMaskField`.
         public typealias BlogAuthorUpdateMaskField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListSchema`.
-        public typealias BlogAuthorLinkListSchema = [Components.Schemas.BlogAuthorLinkListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema`.
-        public struct BlogAuthorLinkListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/AuthorPatchSchema`.
+        public struct AuthorPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorPatchSchema/name`.
+            public var name: Components.Schemas.BlogAuthorNameField?
+            /// - Remark: Generated from `#/components/schemas/AuthorPatchSchema/excerpt`.
+            public var excerpt: Components.Schemas.BlogAuthorExcerptField?
+            /// - Remark: Generated from `#/components/schemas/AuthorPatchSchema/content`.
+            public var content: Components.Schemas.BlogAuthorContentField?
+            /// - Remark: Generated from `#/components/schemas/AuthorPatchSchema/profileImageAssetId`.
+            public var profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdFieldNullable?
+            /// Creates a new `AuthorPatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - name:
+            ///   - excerpt:
+            ///   - content:
+            ///   - profileImageAssetId:
+            public init(
+                name: Components.Schemas.BlogAuthorNameField? = nil,
+                excerpt: Components.Schemas.BlogAuthorExcerptField? = nil,
+                content: Components.Schemas.BlogAuthorContentField? = nil,
+                profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdFieldNullable? = nil
+            ) {
+                self.name = name
+                self.excerpt = excerpt
+                self.content = content
+                self.profileImageAssetId = profileImageAssetId
+            }
+            public enum CodingKeys: String, CodingKey {
+                case name
+                case excerpt
+                case content
+                case profileImageAssetId
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkListSchema`.
+        public typealias AuthorLinkListSchema = [Components.Schemas.AuthorLinkListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema`.
+        public struct AuthorLinkListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema/id`.
             public var id: Components.Schemas.BlogAuthorLinkIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/menuId`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema/menuId`.
             public var menuId: Components.Schemas.BlogAuthorIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/label`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema/label`.
             public var label: Components.Schemas.BlogAuthorLinkLabelField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/url`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema/url`.
             public var url: Components.Schemas.BlogAuthorLinkURLField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/priority`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema/priority`.
             public var priority: Components.Schemas.BlogAuthorLinkPriorityField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/isBlank`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema/isBlank`.
             public var isBlank: Components.Schemas.BlogAuthorLinkIsBlankField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/permission`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema/permission`.
             public var permission: Components.Schemas.BlogAuthorLinkPermissionField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema/createdAt`.
             public var createdAt: Components.Schemas.BlogAuthorLinkCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkListItemSchema/updatedAt`.
             public var updatedAt: Components.Schemas.BlogAuthorLinkUpdatedAtField
-            /// Creates a new `BlogAuthorLinkListItemSchema`.
+            /// Creates a new `AuthorLinkListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -837,21 +872,21 @@ extension Components {
         public typealias BlogAuthorLinkCreatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkUpdatedAtField`.
         public typealias BlogAuthorLinkUpdatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreateSchema`.
-        public struct BlogAuthorLinkCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreateSchema/label`.
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkPostSchema`.
+        public struct AuthorLinkPostSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPostSchema/label`.
             public var label: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreateSchema/url`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPostSchema/url`.
             public var url: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreateSchema/priority`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPostSchema/priority`.
             public var priority: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreateSchema/isBlank`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPostSchema/isBlank`.
             public var isBlank: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreateSchema/permission`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPostSchema/permission`.
             public var permission: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreateSchema/notes`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPostSchema/notes`.
             public var notes: Components.Schemas.BlogAuthorLinkNotesField?
-            /// Creates a new `BlogAuthorLinkCreateSchema`.
+            /// Creates a new `AuthorLinkPostSchema`.
             ///
             /// - Parameters:
             ///   - label:
@@ -886,29 +921,29 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkNotesField`.
         public typealias BlogAuthorLinkNotesField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema`.
-        public struct BlogAuthorLinkDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema`.
+        public struct AuthorLinkGetSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/menuId`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/menuId`.
             public var menuId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/label`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/label`.
             public var label: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/url`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/url`.
             public var url: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/priority`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/priority`.
             public var priority: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/isBlank`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/isBlank`.
             public var isBlank: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/permission`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/permission`.
             public var permission: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/notes`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/notes`.
             public var notes: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkDetailSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkGetSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `BlogAuthorLinkDetailSchema`.
+            /// Creates a new `AuthorLinkGetSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -957,13 +992,13 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema`.
-        public struct BlogAuthorLinkQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema`.
+        public struct AuthorLinkQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case label = "label"
@@ -973,9 +1008,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthorLinkQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -983,7 +1018,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.AuthorLinkQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -994,13 +1029,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthorLinkQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthorLinkQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1013,9 +1048,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `BlogAuthorLinkQueryItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthorLinkQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `AuthorLinkQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -1023,8 +1058,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.AuthorLinkQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthorLinkQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1036,15 +1071,15 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchSchema`.
-        public struct BlogAuthorLinkQueryItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchSchema/query`.
-            public var query: Components.Schemas.BlogAuthorLinkQueryItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchSchema`.
+        public struct AuthorLinkQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.AuthorLinkQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.BlogAuthorLinkQueryItemSchema]
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.AuthorLinkQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -1052,7 +1087,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.BlogAuthorLinkQueryItemSchema],
+                    items: [Components.Schemas.AuthorLinkQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -1063,16 +1098,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchSchema/data`.
-            public var data: Components.Schemas.BlogAuthorLinkQueryItemSearchSchema.DataPayload
-            /// Creates a new `BlogAuthorLinkQueryItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.AuthorLinkQueryItemSearchSchema.DataPayload
+            /// Creates a new `AuthorLinkQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.BlogAuthorLinkQueryItemSearchResponseQuerySchema,
-                data: Components.Schemas.BlogAuthorLinkQueryItemSearchSchema.DataPayload
+                query: Components.Schemas.AuthorLinkQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.AuthorLinkQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -1082,13 +1117,13 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema`.
-        public struct BlogAuthorLinkQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema`.
+        public struct AuthorLinkQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case label = "label"
@@ -1098,9 +1133,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.BlogAuthorLinkQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AuthorLinkQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -1108,7 +1143,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.BlogAuthorLinkQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.AuthorLinkQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -1119,13 +1154,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.BlogAuthorLinkQueryItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.BlogAuthorLinkQueryItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AuthorLinkQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.AuthorLinkQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1138,9 +1173,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.BlogAuthorLinkQueryItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `BlogAuthorLinkQueryItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.AuthorLinkQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `AuthorLinkQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -1148,8 +1183,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.BlogAuthorLinkQueryItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.BlogAuthorLinkQueryItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.AuthorLinkQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AuthorLinkQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1161,27 +1196,27 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema`.
-        public struct BlogAuthorLinkQueryItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema`.
+        public struct AuthorLinkQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema/id`.
             public var id: Components.Schemas.BlogAuthorLinkIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema/menuId`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema/menuId`.
             public var menuId: Components.Schemas.BlogAuthorIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema/label`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema/label`.
             public var label: Components.Schemas.BlogAuthorLinkLabelField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema/url`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema/url`.
             public var url: Components.Schemas.BlogAuthorLinkURLField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema/priority`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema/priority`.
             public var priority: Components.Schemas.BlogAuthorLinkPriorityField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema/isBlank`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema/isBlank`.
             public var isBlank: Components.Schemas.BlogAuthorLinkIsBlankField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema/permission`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema/permission`.
             public var permission: Components.Schemas.BlogAuthorLinkPermissionField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema/createdAt`.
             public var createdAt: Components.Schemas.BlogAuthorLinkCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkQueryItemSchema/updatedAt`.
             public var updatedAt: Components.Schemas.BlogAuthorLinkUpdatedAtField
-            /// Creates a new `BlogAuthorLinkQueryItemSchema`.
+            /// Creates a new `AuthorLinkQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1226,23 +1261,70 @@ extension Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkPutSchema`.
+        public struct AuthorLinkPutSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPutSchema/label`.
+            public var label: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPutSchema/url`.
+            public var url: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPutSchema/priority`.
+            public var priority: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPutSchema/isBlank`.
+            public var isBlank: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPutSchema/permission`.
+            public var permission: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPutSchema/notes`.
+            public var notes: Components.Schemas.BlogAuthorLinkNotesField?
+            /// Creates a new `AuthorLinkPutSchema`.
+            ///
+            /// - Parameters:
+            ///   - label:
+            ///   - url:
+            ///   - priority:
+            ///   - isBlank:
+            ///   - permission:
+            ///   - notes:
+            public init(
+                label: Swift.String,
+                url: Swift.String,
+                priority: Swift.Int,
+                isBlank: Swift.Bool,
+                permission: Swift.String,
+                notes: Components.Schemas.BlogAuthorLinkNotesField? = nil
+            ) {
+                self.label = label
+                self.url = url
+                self.priority = priority
+                self.isBlank = isBlank
+                self.permission = permission
+                self.notes = notes
+            }
+            public enum CodingKeys: String, CodingKey {
+                case label
+                case url
+                case priority
+                case isBlank
+                case permission
+                case notes
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkUpdateMaskField`.
         public typealias BlogAuthorLinkUpdateMaskField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPatchSchema`.
-        public struct BlogAuthorLinkPatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPatchSchema/label`.
+        /// - Remark: Generated from `#/components/schemas/AuthorLinkPatchSchema`.
+        public struct AuthorLinkPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPatchSchema/label`.
             public var label: Components.Schemas.BlogAuthorLinkLabelField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPatchSchema/url`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPatchSchema/url`.
             public var url: Components.Schemas.BlogAuthorLinkURLField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPatchSchema/priority`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPatchSchema/priority`.
             public var priority: Components.Schemas.BlogAuthorLinkPriorityField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPatchSchema/isBlank`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPatchSchema/isBlank`.
             public var isBlank: Components.Schemas.BlogAuthorLinkIsBlankField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPatchSchema/permission`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPatchSchema/permission`.
             public var permission: Components.Schemas.BlogAuthorLinkPermissionField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPatchSchema/notes`.
+            /// - Remark: Generated from `#/components/schemas/AuthorLinkPatchSchema/notes`.
             public var notes: Components.Schemas.BlogAuthorLinkNotesField?
-            /// Creates a new `BlogAuthorLinkPatchSchema`.
+            /// Creates a new `AuthorLinkPatchSchema`.
             ///
             /// - Parameters:
             ///   - label:
@@ -1275,23 +1357,23 @@ extension Components {
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogPostListSchema`.
-        public typealias BlogPostListSchema = [Components.Schemas.BlogPostListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema`.
-        public struct BlogPostListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/PostListSchema`.
+        public typealias PostListSchema = [Components.Schemas.PostListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/PostListItemSchema`.
+        public struct PostListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PostListItemSchema/id`.
             public var id: Components.Schemas.BlogPostIdField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/PostListItemSchema/title`.
             public var title: Components.Schemas.BlogPostTitleField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/PostListItemSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogPostExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/PostListItemSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogPostImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/PostListItemSchema/createdAt`.
             public var createdAt: Components.Schemas.BlogPostCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/PostListItemSchema/updatedAt`.
             public var updatedAt: Components.Schemas.BlogPostUpdatedAtField
-            /// Creates a new `BlogPostListItemSchema`.
+            /// Creates a new `PostListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1336,21 +1418,21 @@ extension Components {
         public typealias BlogPostCreatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogPostUpdatedAtField`.
         public typealias BlogPostUpdatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogPostCreateSchema`.
-        public struct BlogPostCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostCreateSchema/title`.
+        /// - Remark: Generated from `#/components/schemas/PostPostSchema`.
+        public struct PostPostSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PostPostSchema/title`.
             public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogPostCreateSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/PostPostSchema/excerpt`.
             public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogPostCreateSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/PostPostSchema/content`.
             public var content: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogPostCreateSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/PostPostSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogPostImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostCreateSchema/authorIds`.
+            /// - Remark: Generated from `#/components/schemas/PostPostSchema/authorIds`.
             public var authorIds: Components.Schemas.BlogPostAuthorIdsField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostCreateSchema/tagIds`.
+            /// - Remark: Generated from `#/components/schemas/PostPostSchema/tagIds`.
             public var tagIds: Components.Schemas.BlogPostTagIdsField?
-            /// Creates a new `BlogPostCreateSchema`.
+            /// Creates a new `PostPostSchema`.
             ///
             /// - Parameters:
             ///   - title:
@@ -1389,29 +1471,29 @@ extension Components {
         public typealias BlogPostTagIdsField = [Components.Schemas.BlogTagIdField]
         /// - Remark: Generated from `#/components/schemas/BlogTagIdField`.
         public typealias BlogTagIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema`.
-        public struct BlogPostDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/PostGetSchema`.
+        public struct PostGetSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/title`.
             public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/excerpt`.
             public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/content`.
             public var content: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogPostImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/authorIds`.
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/authorIds`.
             public var authorIds: Components.Schemas.BlogPostAuthorIdsField
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/tagIds`.
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/tagIds`.
             public var tagIds: Components.Schemas.BlogPostTagIdsField
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/metadata`.
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/metadata`.
             public var metadata: Components.Schemas.WebMetadataDetailSchema
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/BlogPostDetailSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/PostGetSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `BlogPostDetailSchema`.
+            /// Creates a new `PostGetSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1460,22 +1542,22 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema`.
-        public struct BlogPostQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema`.
+        public struct PostQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case title = "title"
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.PostQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -1483,7 +1565,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.PostQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -1494,13 +1576,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.PostQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.PostQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1513,9 +1595,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `BlogPostQueryItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.PostQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `PostQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -1523,8 +1605,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.PostQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.PostQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1536,15 +1618,15 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchSchema`.
-        public struct BlogPostQueryItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchSchema/query`.
-            public var query: Components.Schemas.BlogPostQueryItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchSchema`.
+        public struct PostQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.PostQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.BlogPostQueryItemSchema]
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.PostQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -1552,7 +1634,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.BlogPostQueryItemSchema],
+                    items: [Components.Schemas.PostQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -1563,16 +1645,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchSchema/data`.
-            public var data: Components.Schemas.BlogPostQueryItemSearchSchema.DataPayload
-            /// Creates a new `BlogPostQueryItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.PostQueryItemSearchSchema.DataPayload
+            /// Creates a new `PostQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.BlogPostQueryItemSearchResponseQuerySchema,
-                data: Components.Schemas.BlogPostQueryItemSearchSchema.DataPayload
+                query: Components.Schemas.PostQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.PostQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -1582,22 +1664,22 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema`.
-        public struct BlogPostQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema`.
+        public struct PostQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case title = "title"
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.BlogPostQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.PostQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -1605,7 +1687,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.BlogPostQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.PostQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -1616,13 +1698,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.BlogPostQueryItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.BlogPostQueryItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.PostQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.PostQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1635,9 +1717,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.BlogPostQueryItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `BlogPostQueryItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.PostQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `PostQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -1645,8 +1727,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.BlogPostQueryItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.BlogPostQueryItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.PostQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.PostQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1658,21 +1740,21 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSchema`.
-        public struct BlogPostQueryItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/PostQueryItemSchema`.
+        public struct PostQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSchema/id`.
             public var id: Components.Schemas.BlogPostIdField
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSchema/title`.
             public var title: Components.Schemas.BlogPostTitleField
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogPostExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogPostImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSchema/createdAt`.
             public var createdAt: Components.Schemas.BlogPostCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/PostQueryItemSchema/updatedAt`.
             public var updatedAt: Components.Schemas.BlogPostUpdatedAtField
-            /// Creates a new `BlogPostQueryItemSchema`.
+            /// Creates a new `PostQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1705,21 +1787,21 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogPostPatchSchema`.
-        public struct BlogPostPatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostPatchSchema/title`.
+        /// - Remark: Generated from `#/components/schemas/PostPutSchema`.
+        public struct PostPutSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PostPutSchema/title`.
             public var title: Components.Schemas.BlogPostTitleField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostPatchSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/PostPutSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogPostExcerptField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostPatchSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/PostPutSchema/content`.
             public var content: Components.Schemas.BlogPostContentField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostPatchSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/PostPutSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogPostImageAssetIdFieldNullable?
-            /// - Remark: Generated from `#/components/schemas/BlogPostPatchSchema/authorIds`.
+            /// - Remark: Generated from `#/components/schemas/PostPutSchema/authorIds`.
             public var authorIds: Components.Schemas.BlogPostAuthorIdsField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostPatchSchema/tagIds`.
+            /// - Remark: Generated from `#/components/schemas/PostPutSchema/tagIds`.
             public var tagIds: Components.Schemas.BlogPostTagIdsField?
-            /// Creates a new `BlogPostPatchSchema`.
+            /// Creates a new `PostPutSchema`.
             ///
             /// - Parameters:
             ///   - title:
@@ -1758,21 +1840,68 @@ extension Components {
         public typealias BlogPostImageAssetIdFieldNullable = Swift.String
         /// - Remark: Generated from `#/components/schemas/BlogPostUpdateMaskField`.
         public typealias BlogPostUpdateMaskField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogSettingsDetailSchema`.
-        public struct BlogSettingsDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsDetailSchema/postListPath`.
+        /// - Remark: Generated from `#/components/schemas/PostPatchSchema`.
+        public struct PostPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PostPatchSchema/title`.
+            public var title: Components.Schemas.BlogPostTitleField?
+            /// - Remark: Generated from `#/components/schemas/PostPatchSchema/excerpt`.
+            public var excerpt: Components.Schemas.BlogPostExcerptField?
+            /// - Remark: Generated from `#/components/schemas/PostPatchSchema/content`.
+            public var content: Components.Schemas.BlogPostContentField?
+            /// - Remark: Generated from `#/components/schemas/PostPatchSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.BlogPostImageAssetIdFieldNullable?
+            /// - Remark: Generated from `#/components/schemas/PostPatchSchema/authorIds`.
+            public var authorIds: Components.Schemas.BlogPostAuthorIdsField?
+            /// - Remark: Generated from `#/components/schemas/PostPatchSchema/tagIds`.
+            public var tagIds: Components.Schemas.BlogPostTagIdsField?
+            /// Creates a new `PostPatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - title:
+            ///   - excerpt:
+            ///   - content:
+            ///   - imageAssetId:
+            ///   - authorIds:
+            ///   - tagIds:
+            public init(
+                title: Components.Schemas.BlogPostTitleField? = nil,
+                excerpt: Components.Schemas.BlogPostExcerptField? = nil,
+                content: Components.Schemas.BlogPostContentField? = nil,
+                imageAssetId: Components.Schemas.BlogPostImageAssetIdFieldNullable? = nil,
+                authorIds: Components.Schemas.BlogPostAuthorIdsField? = nil,
+                tagIds: Components.Schemas.BlogPostTagIdsField? = nil
+            ) {
+                self.title = title
+                self.excerpt = excerpt
+                self.content = content
+                self.imageAssetId = imageAssetId
+                self.authorIds = authorIds
+                self.tagIds = tagIds
+            }
+            public enum CodingKeys: String, CodingKey {
+                case title
+                case excerpt
+                case content
+                case imageAssetId
+                case authorIds
+                case tagIds
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SettingsGetSchema`.
+        public struct SettingsGetSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SettingsGetSchema/postListPath`.
             public var postListPath: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsDetailSchema/authorListPath`.
+            /// - Remark: Generated from `#/components/schemas/SettingsGetSchema/authorListPath`.
             public var authorListPath: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsDetailSchema/tagListPath`.
+            /// - Remark: Generated from `#/components/schemas/SettingsGetSchema/tagListPath`.
             public var tagListPath: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsDetailSchema/postPathPrefix`.
+            /// - Remark: Generated from `#/components/schemas/SettingsGetSchema/postPathPrefix`.
             public var postPathPrefix: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsDetailSchema/authorPathPrefix`.
+            /// - Remark: Generated from `#/components/schemas/SettingsGetSchema/authorPathPrefix`.
             public var authorPathPrefix: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsDetailSchema/tagPathPrefix`.
+            /// - Remark: Generated from `#/components/schemas/SettingsGetSchema/tagPathPrefix`.
             public var tagPathPrefix: Swift.String
-            /// Creates a new `BlogSettingsDetailSchema`.
+            /// Creates a new `SettingsGetSchema`.
             ///
             /// - Parameters:
             ///   - postListPath:
@@ -1805,21 +1934,21 @@ extension Components {
                 case tagPathPrefix
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogSettingsUpdateSchema`.
-        public struct BlogSettingsUpdateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsUpdateSchema/postListPath`.
+        /// - Remark: Generated from `#/components/schemas/SettingsPutSchema`.
+        public struct SettingsPutSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SettingsPutSchema/postListPath`.
             public var postListPath: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsUpdateSchema/authorListPath`.
+            /// - Remark: Generated from `#/components/schemas/SettingsPutSchema/authorListPath`.
             public var authorListPath: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsUpdateSchema/tagListPath`.
+            /// - Remark: Generated from `#/components/schemas/SettingsPutSchema/tagListPath`.
             public var tagListPath: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsUpdateSchema/postPathPrefix`.
+            /// - Remark: Generated from `#/components/schemas/SettingsPutSchema/postPathPrefix`.
             public var postPathPrefix: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsUpdateSchema/authorPathPrefix`.
+            /// - Remark: Generated from `#/components/schemas/SettingsPutSchema/authorPathPrefix`.
             public var authorPathPrefix: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogSettingsUpdateSchema/tagPathPrefix`.
+            /// - Remark: Generated from `#/components/schemas/SettingsPutSchema/tagPathPrefix`.
             public var tagPathPrefix: Swift.String
-            /// Creates a new `BlogSettingsUpdateSchema`.
+            /// Creates a new `SettingsPutSchema`.
             ///
             /// - Parameters:
             ///   - postListPath:
@@ -1852,23 +1981,23 @@ extension Components {
                 case tagPathPrefix
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagListSchema`.
-        public typealias BlogTagListSchema = [Components.Schemas.BlogTagListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema`.
-        public struct BlogTagListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/TagListSchema`.
+        public typealias TagListSchema = [Components.Schemas.TagListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/TagListItemSchema`.
+        public struct TagListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TagListItemSchema/id`.
             public var id: Components.Schemas.BlogTagIdField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/TagListItemSchema/title`.
             public var title: Components.Schemas.BlogTagTitleField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/TagListItemSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogTagExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/TagListItemSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogTagImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/TagListItemSchema/createdAt`.
             public var createdAt: Components.Schemas.BlogTagCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/TagListItemSchema/updatedAt`.
             public var updatedAt: Components.Schemas.BlogTagUpdatedAtField
-            /// Creates a new `BlogTagListItemSchema`.
+            /// Creates a new `TagListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1911,17 +2040,17 @@ extension Components {
         public typealias BlogTagCreatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogTagUpdatedAtField`.
         public typealias BlogTagUpdatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogTagCreateSchema`.
-        public struct BlogTagCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagCreateSchema/title`.
+        /// - Remark: Generated from `#/components/schemas/TagPostSchema`.
+        public struct TagPostSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TagPostSchema/title`.
             public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogTagCreateSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/TagPostSchema/excerpt`.
             public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogTagCreateSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/TagPostSchema/content`.
             public var content: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogTagCreateSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/TagPostSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogTagImageAssetIdField?
-            /// Creates a new `BlogTagCreateSchema`.
+            /// Creates a new `TagPostSchema`.
             ///
             /// - Parameters:
             ///   - title:
@@ -1946,25 +2075,25 @@ extension Components {
                 case imageAssetId
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema`.
-        public struct BlogTagDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/TagGetSchema`.
+        public struct TagGetSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TagGetSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/TagGetSchema/title`.
             public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/TagGetSchema/excerpt`.
             public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/TagGetSchema/content`.
             public var content: Swift.String
-            /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/TagGetSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogTagImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema/metadata`.
+            /// - Remark: Generated from `#/components/schemas/TagGetSchema/metadata`.
             public var metadata: Components.Schemas.WebMetadataDetailSchema
-            /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/TagGetSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/TagGetSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `BlogTagDetailSchema`.
+            /// Creates a new `TagGetSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -2005,22 +2134,22 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema`.
-        public struct BlogTagQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema`.
+        public struct TagQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema?
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case title = "title"
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.TagQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -2028,7 +2157,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.TagQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -2039,13 +2168,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/sort`.
-            public var sort: Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.TagQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.TagQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -2058,9 +2187,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/filters`.
-            public var filters: Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema.FiltersPayload
-            /// Creates a new `BlogTagQueryItemSearchRequestQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.TagQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `TagQueryItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -2068,8 +2197,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema? = nil,
-                sort: Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema.FiltersPayload
+                sort: Components.Schemas.TagQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.TagQueryItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -2081,15 +2210,15 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchSchema`.
-        public struct BlogTagQueryItemSearchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchSchema/query`.
-            public var query: Components.Schemas.BlogTagQueryItemSearchResponseQuerySchema
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchSchema/data`.
+        /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchSchema`.
+        public struct TagQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.TagQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.BlogTagQueryItemSchema]
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.TagQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -2097,7 +2226,7 @@ extension Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.BlogTagQueryItemSchema],
+                    items: [Components.Schemas.TagQueryItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -2108,16 +2237,16 @@ extension Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchSchema/data`.
-            public var data: Components.Schemas.BlogTagQueryItemSearchSchema.DataPayload
-            /// Creates a new `BlogTagQueryItemSearchSchema`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.TagQueryItemSearchSchema.DataPayload
+            /// Creates a new `TagQueryItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.BlogTagQueryItemSearchResponseQuerySchema,
-                data: Components.Schemas.BlogTagQueryItemSearchSchema.DataPayload
+                query: Components.Schemas.TagQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.TagQueryItemSearchSchema.DataPayload
             ) {
                 self.query = query
                 self.data = data
@@ -2127,22 +2256,22 @@ extension Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema`.
-        public struct BlogTagQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/page`.
+        /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema`.
+        public struct TagQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/page`.
             public var page: Components.Schemas.SearchResponsePageSchema
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case title = "title"
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.BlogTagQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.TagQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -2150,7 +2279,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.BlogTagQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.TagQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -2161,13 +2290,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.BlogTagQueryItemSearchResponseQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/sort`.
-            public var sort: Components.Schemas.BlogTagQueryItemSearchResponseQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.TagQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.TagQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -2180,9 +2309,9 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchResponseQuerySchema/filters`.
-            public var filters: Components.Schemas.BlogTagQueryItemSearchResponseQuerySchema.FiltersPayload
-            /// Creates a new `BlogTagQueryItemSearchResponseQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.TagQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `TagQueryItemSearchResponseQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -2190,8 +2319,8 @@ extension Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchResponsePageSchema,
-                sort: Components.Schemas.BlogTagQueryItemSearchResponseQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.BlogTagQueryItemSearchResponseQuerySchema.FiltersPayload
+                sort: Components.Schemas.TagQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.TagQueryItemSearchResponseQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -2203,21 +2332,21 @@ extension Components {
                 case filters
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSchema`.
-        public struct BlogTagQueryItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/TagQueryItemSchema`.
+        public struct TagQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSchema/id`.
             public var id: Components.Schemas.BlogTagIdField
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSchema/title`.
             public var title: Components.Schemas.BlogTagTitleField
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogTagExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogTagImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSchema/createdAt`.
             public var createdAt: Components.Schemas.BlogTagCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/TagQueryItemSchema/updatedAt`.
             public var updatedAt: Components.Schemas.BlogTagUpdatedAtField
-            /// Creates a new `BlogTagQueryItemSchema`.
+            /// Creates a new `TagQueryItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -2250,17 +2379,17 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagPatchSchema`.
-        public struct BlogTagPatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagPatchSchema/title`.
+        /// - Remark: Generated from `#/components/schemas/TagPutSchema`.
+        public struct TagPutSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TagPutSchema/title`.
             public var title: Components.Schemas.BlogTagTitleField?
-            /// - Remark: Generated from `#/components/schemas/BlogTagPatchSchema/excerpt`.
+            /// - Remark: Generated from `#/components/schemas/TagPutSchema/excerpt`.
             public var excerpt: Components.Schemas.BlogTagExcerptField?
-            /// - Remark: Generated from `#/components/schemas/BlogTagPatchSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/TagPutSchema/content`.
             public var content: Components.Schemas.BlogTagContentField?
-            /// - Remark: Generated from `#/components/schemas/BlogTagPatchSchema/imageAssetId`.
+            /// - Remark: Generated from `#/components/schemas/TagPutSchema/imageAssetId`.
             public var imageAssetId: Components.Schemas.BlogTagImageAssetIdFieldNullable?
-            /// Creates a new `BlogTagPatchSchema`.
+            /// Creates a new `TagPutSchema`.
             ///
             /// - Parameters:
             ///   - title:
@@ -2291,5 +2420,40 @@ extension Components {
         public typealias BlogTagImageAssetIdFieldNullable = Swift.String
         /// - Remark: Generated from `#/components/schemas/BlogTagUpdateMaskField`.
         public typealias BlogTagUpdateMaskField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/TagPatchSchema`.
+        public struct TagPatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/TagPatchSchema/title`.
+            public var title: Components.Schemas.BlogTagTitleField?
+            /// - Remark: Generated from `#/components/schemas/TagPatchSchema/excerpt`.
+            public var excerpt: Components.Schemas.BlogTagExcerptField?
+            /// - Remark: Generated from `#/components/schemas/TagPatchSchema/content`.
+            public var content: Components.Schemas.BlogTagContentField?
+            /// - Remark: Generated from `#/components/schemas/TagPatchSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.BlogTagImageAssetIdFieldNullable?
+            /// Creates a new `TagPatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - title:
+            ///   - excerpt:
+            ///   - content:
+            ///   - imageAssetId:
+            public init(
+                title: Components.Schemas.BlogTagTitleField? = nil,
+                excerpt: Components.Schemas.BlogTagExcerptField? = nil,
+                content: Components.Schemas.BlogTagContentField? = nil,
+                imageAssetId: Components.Schemas.BlogTagImageAssetIdFieldNullable? = nil
+            ) {
+                self.title = title
+                self.excerpt = excerpt
+                self.content = content
+                self.imageAssetId = imageAssetId
+            }
+            public enum CodingKeys: String, CodingKey {
+                case title
+                case excerpt
+                case content
+                case imageAssetId
+            }
+        }
     }
 }

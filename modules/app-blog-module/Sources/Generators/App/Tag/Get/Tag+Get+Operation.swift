@@ -10,7 +10,7 @@ extension Tag.Get {
         }
         var responseMap: ResponseMap {
             [
-                200: BlogTagDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "Blog tag not found"),
             ]
         }

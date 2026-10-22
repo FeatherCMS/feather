@@ -32,24 +32,15 @@ extension Metadata.Query {
             slug: String
         ) async throws -> MetadataDetail?
 
-        func listPublic() async throws -> [MetadataList.Item]
-
-        func list(
-            query: MetadataList.Query
-        ) async throws -> MetadataList
-
         func resolve(
             referenceType: String,
             referenceIDs: [String]
-        ) async throws -> [MetadataList.Item]
+        ) async throws -> [Metadata.List.Output.Item]
 
         func resolveDetails(
             referenceType: String,
             referenceIDs: [String]
         ) async throws -> [MetadataDetail]
 
-        func count(
-            query: MetadataList.Query
-        ) async throws -> Int
     }
 }

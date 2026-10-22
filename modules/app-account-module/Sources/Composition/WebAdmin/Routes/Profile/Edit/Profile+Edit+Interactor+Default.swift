@@ -7,27 +7,27 @@ extension Profile.Edit.Interactor {
     struct Default:
         Profile.Edit.Interactor.Interface
     {
-        let accountProfileRepository:
+        let profileRepository:
             any Profile.Edit.Repository.Interface
 
         func loadProfile(
             account: AccountModel
         ) async throws -> Profile.Edit.Model {
-            let accountProfile = try await accountProfileRepository.get()
+            let profile = try await profileRepository.get()
             return .init(
                 id: account.user.id,
-                firstName: accountProfile.firstName,
-                lastName: accountProfile.lastName,
-                profileImageAssetId: accountProfile.profileImageAssetId,
-                profileImageAsset: accountProfile.profileImageAsset
+                firstName: profile.firstName,
+                lastName: profile.lastName,
+                profileImageAssetId: profile.profileImageAssetId,
+                profileImageAsset: profile.profileImageAsset
             )
         }
 
         func execute(
             entity: Profile.Edit.Model
         ) async throws {
-            try await accountProfileRepository.update(
-                profile: entity.accountProfile
+            try await profileRepository.update(
+                profile: entity.profile
             )
         }
     }

@@ -11,11 +11,11 @@ extension Post.Patch {
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            BlogPostPatchRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: BlogPostDetailResponse().reference(),
+                200: Post.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),

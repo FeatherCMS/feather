@@ -16,7 +16,7 @@ extension Profile.Detail.Controller {
                 any Profile.Detail.Presenter.Interface
             >
 
-        func getAccountProfile(
+        func getProfile(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
@@ -24,11 +24,11 @@ extension Profile.Detail.Controller {
             let account = context.account
 
             let permissions = account.permissionSet
-            let accountProfile = try await runtime.interactor
-                .getAccountProfile()
+            let profile = try await runtime.interactor
+                .getProfile()
             let profile = try await runtime.interactor.getProfile(
                 account: account,
-                accountProfile: accountProfile
+                profile: profile
             )
             return try await runtime.presenter.renderPage(
                 state: .init(

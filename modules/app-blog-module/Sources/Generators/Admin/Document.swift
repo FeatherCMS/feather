@@ -1,7 +1,6 @@
 import BlogSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct Info: InfoRepresentable {
     var title: String { "Blog Admin API" }

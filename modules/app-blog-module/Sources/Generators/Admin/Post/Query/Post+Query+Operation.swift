@@ -6,7 +6,7 @@ extension Post.Query {
         var operationId: String? { "blogPostQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: BlogPostQueryItemSchema(),
+                items: ItemSchema(),
                 sortFieldKeys: ["id", "title", "createdAt", "updatedAt"],
                 filters: SearchFilterSchema()
             )

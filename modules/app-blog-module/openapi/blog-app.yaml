@@ -15,7 +15,7 @@ paths:
       operationId: blogAuthorList
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorListResponse'
+          $ref: '#/components/responses/AuthorListResponse'
   /api/v1/blog/authors/{id}:
     get:
       tags:
@@ -25,7 +25,7 @@ paths:
       - $ref: '#/components/parameters/BlogAuthorIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorDetailResponse'
+          $ref: '#/components/responses/AuthorGetResponse'
         404:
           description: Blog author not found
           content:
@@ -39,7 +39,7 @@ paths:
       operationId: blogPostList
       responses:
         200:
-          $ref: '#/components/responses/BlogPostListResponse'
+          $ref: '#/components/responses/PostListResponse'
   /api/v1/blog/posts/{id}:
     get:
       tags:
@@ -49,7 +49,7 @@ paths:
       - $ref: '#/components/parameters/BlogPostIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/BlogPostDetailResponse'
+          $ref: '#/components/responses/PostGetResponse'
         404:
           description: Blog post not found
           content:
@@ -63,7 +63,7 @@ paths:
       operationId: blogSettingsGet
       responses:
         200:
-          $ref: '#/components/responses/BlogRouteSettingsResponse'
+          $ref: '#/components/responses/SettingsGetResponse'
   /api/v1/blog/tags:
     get:
       tags:
@@ -71,7 +71,7 @@ paths:
       operationId: blogTagList
       responses:
         200:
-          $ref: '#/components/responses/BlogTagListResponse'
+          $ref: '#/components/responses/TagListResponse'
   /api/v1/blog/tags/{id}:
     get:
       tags:
@@ -81,7 +81,7 @@ paths:
       - $ref: '#/components/parameters/BlogTagIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/BlogTagDetailResponse'
+          $ref: '#/components/responses/TagGetResponse'
         404:
           description: Blog tag not found
           content:
@@ -527,43 +527,43 @@ components:
       type: string
       example: <p>Tag description</p>
   responses:
-    BlogAuthorListResponse:
+    AuthorListResponse:
       description: Blog author list
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogAuthorListSchema'
-    BlogAuthorDetailResponse:
+    AuthorGetResponse:
       description: Blog author detail
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogAuthorDetailSchema'
-    BlogPostListResponse:
+    PostListResponse:
       description: Blog post list
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogPostListSchema'
-    BlogPostDetailResponse:
+    PostGetResponse:
       description: Blog post detail
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogPostDetailSchema'
-    BlogRouteSettingsResponse:
+    SettingsGetResponse:
       description: Blog route settings
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogRouteSettingsSchema'
-    BlogTagListResponse:
+    TagListResponse:
       description: Blog tag list
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogTagListSchema'
-    BlogTagDetailResponse:
+    TagGetResponse:
       description: Blog tag detail
       content:
         application/json:

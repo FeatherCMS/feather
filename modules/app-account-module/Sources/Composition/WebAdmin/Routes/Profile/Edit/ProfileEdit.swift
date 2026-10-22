@@ -5,13 +5,13 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AccountProfileEdit: Component {
+struct ProfileEdit: Component {
     let routes: Profile.Router.Routes
 
     struct State {
         let id: String
         let isEdited: Bool
-        var form: AccountProfileForm.State
+        var form: ProfileForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
     }
 
@@ -34,7 +34,7 @@ struct AccountProfileEdit: Component {
             }
 
             context.build(
-                AccountProfileForm(
+                ProfileForm(
                     routes: routes,
                     state: state.form,
                     action: routes.profileEdit.path + "/",

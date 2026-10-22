@@ -16,7 +16,7 @@ extension Profile.Edit.Controller {
                 any Profile.Edit.Presenter.Interface
             >
 
-        func getEditAccountProfile(
+        func getEditProfile(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
@@ -41,7 +41,7 @@ extension Profile.Edit.Controller {
             )
         }
 
-        func postEditAccountProfile(
+        func postEditProfile(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
@@ -151,7 +151,7 @@ extension Profile.Edit.Controller {
             lastName: String?,
             profileImageAssetId: String?,
             selectedImageAsset: AdminMediaAsset? = nil
-        ) -> AccountProfileForm.State {
+        ) -> ProfileForm.State {
             .init(
                 firstName: .init(
                     key: "firstName",
@@ -183,8 +183,8 @@ extension Profile.Edit.Controller {
             lastName: String?,
             profileImageAssetId: String?,
             failures: [FeatherValidation.Failure]
-        ) -> AccountProfileEdit.State {
-            var state = AccountProfileEdit.State(
+        ) -> ProfileEdit.State {
+            var state = ProfileEdit.State(
                 id: id,
                 isEdited: false,
                 form: formState(
@@ -208,8 +208,8 @@ extension Profile.Edit.Controller {
             lastName: String?,
             profileImageAssetId: String?,
             error: OpenAPIRepositoryError
-        ) -> AccountProfileEdit.State {
-            var state = AccountProfileEdit.State(
+        ) -> ProfileEdit.State {
+            var state = ProfileEdit.State(
                 id: id,
                 isEdited: false,
                 form: formState(
@@ -229,8 +229,8 @@ extension Profile.Edit.Controller {
             lastName: String?,
             profileImageAssetId: String?,
             message: String
-        ) -> AccountProfileEdit.State {
-            var state = AccountProfileEdit.State(
+        ) -> ProfileEdit.State {
+            var state = ProfileEdit.State(
                 id: id,
                 isEdited: false,
                 form: formState(
@@ -255,7 +255,7 @@ extension Profile.Edit.Controller {
             context: AuthenticatedRequestContext,
             presenter: any Profile.Edit.Presenter.Interface,
             permissions: Set<String>,
-            state: AccountProfileEdit.State
+            state: ProfileEdit.State
         ) async throws -> Response {
             try await presenter.renderPage(
                 state: state,

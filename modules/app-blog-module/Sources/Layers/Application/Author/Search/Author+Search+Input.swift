@@ -8,6 +8,7 @@ extension Author.Search {
             public struct Sort: Sendable {
                 public enum Field: String, Sendable, CaseIterable {
                     case id
+                    case key
                     case name
                     case createdAt
                     case updatedAt

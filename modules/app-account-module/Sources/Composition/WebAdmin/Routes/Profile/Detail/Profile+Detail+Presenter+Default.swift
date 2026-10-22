@@ -14,14 +14,14 @@ extension Profile.Detail.Presenter {
         let routes: Profile.Router.Routes
 
         func renderPage(
-            state: AccountProfileDetails.State,
+            state: ProfileDetails.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Profile",
-                content: AccountProfileDetails(routes: routes, state: state)
+                content: ProfileDetails(routes: routes, state: state)
             )
         }
 

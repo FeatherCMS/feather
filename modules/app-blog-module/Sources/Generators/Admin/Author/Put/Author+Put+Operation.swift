@@ -5,11 +5,11 @@ extension Author.Put {
     struct Operation: Author.ID.Operation {
         var operationId: String? { "blogAuthorPut" }
         var requestBody: (any RequestBodyRepresentable)? {
-            BlogAuthorUpdateRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: BlogAuthorDetailResponse().reference(),
+                200: Author.Get.Response().reference(),
                 404: CustomResponse(description: "Blog author not found"),
             ]
         }

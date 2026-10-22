@@ -12,12 +12,12 @@ import WebInfrastructure
 
 extension UseCases {
 
-    func makeListMetadata() -> ListMetadata {
+    func makeListMetadata() -> Metadata.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Metadata.Query.Scope(
-                    metadata: Metadata.Query.Database(
+                Metadata.List.Scope(
+                    metadata: Metadata.List.Query.Database(
                         context: context
                     )
                 )

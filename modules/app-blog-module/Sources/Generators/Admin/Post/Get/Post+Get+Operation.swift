@@ -6,7 +6,7 @@ extension Post.Get {
         var operationId: String? { "blogPostGet" }
         var responseMap: ResponseMap {
             [
-                200: BlogPostDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "Blog post not found"),
             ]
         }

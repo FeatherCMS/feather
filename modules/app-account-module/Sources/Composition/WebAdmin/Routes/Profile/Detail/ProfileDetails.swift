@@ -5,7 +5,7 @@ import HTML
 import Hummingbird
 import WebComponents
 
-struct AccountProfileDetails: Component {
+struct ProfileDetails: Component {
     let routes: Profile.Router.Routes
     struct State {
         let profile: Profile.Detail.Model

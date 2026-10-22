@@ -6,7 +6,7 @@ import Hummingbird
 import WebBuilders
 import WebComponents
 
-struct AccountProfileForm: Component {
+struct ProfileForm: Component {
     let routes: Profile.Router.Routes
 
     struct FieldState: FeatherWebShared.Object {

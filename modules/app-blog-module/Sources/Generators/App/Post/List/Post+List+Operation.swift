@@ -6,7 +6,7 @@ extension Post.List {
     struct Operation: BlogOperation {
         var operationId: String? { "blogPostList" }
         var responseMap: ResponseMap {
-            [200: BlogPostListResponse().reference()]
+            [200: Response().reference()]
         }
     }
 }

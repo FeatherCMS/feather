@@ -5,10 +5,10 @@ extension Author.Post {
     struct Operation: Author.Operation {
         var operationId: String? { "blogAuthorPost" }
         var requestBody: (any RequestBodyRepresentable)? {
-            BlogAuthorRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: BlogAuthorDetailResponse().reference()]
+            [201: Author.Get.Response().reference()]
         }
     }
 }

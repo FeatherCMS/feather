@@ -15,20 +15,16 @@ extension AdminAPIGateway {
             query = value
         }
 
-        let useCase = useCases.makeListMetadata()
+        let useCase = useCases.makeSearchMetadata()
         let objectQuery = useCases.map(query)
         let subject = try await CurrentSubject.require()
 
-        let list = try await useCase.execute(
-            subject: subject,
-            input: .init(query: objectQuery)
-        )
-        let total = try await useCase.count(
+        let result = try await useCase.execute(
             subject: subject,
             input: .init(query: objectQuery)
         )
 
-        let items = list.items.map(useCases.mapQuery)
+        let items = result.items.map(useCases.mapQuery)
 
         return .ok(
             .init(
@@ -66,7 +62,7 @@ extension AdminAPIGateway {
                                 referenceType: objectQuery.referenceType
                             )
                         ),
-                        data: .init(items: items, total: total)
+                        data: .init(items: items, total: result.total)
                     )
                 )
             )

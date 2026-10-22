@@ -16,16 +16,16 @@ extension Profile.Detail {
 
         init(
             account: AccountModel,
-            accountProfile: AdminAccountProfileModel
+            profile: Profile.Model
         ) {
             self.id = account.user.id
             self.email = account.user.email
             self.roles = account.roles
             self.permissions = account.permissions
-            self.firstName = accountProfile.firstName
-            self.lastName = accountProfile.lastName
-            self.profileImageAssetId = accountProfile.profileImageAssetId
-            self.profileImageAsset = accountProfile.profileImageAsset
+            self.firstName = profile.firstName
+            self.lastName = profile.lastName
+            self.profileImageAssetId = profile.profileImageAssetId
+            self.profileImageAsset = profile.profileImageAsset
         }
     }
 }

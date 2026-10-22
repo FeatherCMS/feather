@@ -6,7 +6,7 @@ extension Author.Query {
         var operationId: String? { "blogAuthorQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: BlogAuthorQueryItemSchema(),
+                items: ItemSchema(),
                 sortFieldKeys: ["id", "key", "name", "createdAt", "updatedAt"],
                 filters: SearchFilterSchema()
             )

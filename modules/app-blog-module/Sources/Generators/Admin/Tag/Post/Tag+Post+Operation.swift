@@ -5,10 +5,10 @@ extension Tag.Post {
     struct Operation: Tag.Operation {
         var operationId: String? { "blogTagPost" }
         var requestBody: (any RequestBodyRepresentable)? {
-            BlogTagRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: BlogTagDetailResponse().reference()]
+            [201: Tag.Get.Response().reference()]
         }
     }
 }

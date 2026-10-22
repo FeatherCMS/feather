@@ -7,7 +7,7 @@ extension Profile.Detail.Controller {
 
     protocol Interface: Sendable {
 
-        func getAccountProfile(
+        func getProfile(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse

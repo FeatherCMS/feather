@@ -11,11 +11,11 @@ extension Tag.Patch {
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            BlogTagPatchRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: BlogTagDetailResponse().reference(),
+                200: Tag.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),

@@ -35,7 +35,7 @@ public struct ResolveMetadata: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> [MetadataList.Item] {
+    ) async throws -> [Metadata.List.Output.Item] {
         let action = Action()
 
         guard try await authorizer.can(subject: subject, perform: action) else {

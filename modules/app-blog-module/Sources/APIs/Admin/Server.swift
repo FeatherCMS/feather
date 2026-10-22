@@ -457,7 +457,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let headers: Operations.BlogAuthorPost.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogAuthorRequestBody
+                let body: Components.RequestBodies.AuthorPostRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -467,7 +467,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogAuthorCreateSchema.self,
+                        Components.Schemas.AuthorPostSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -662,7 +662,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema.self,
+                        Components.Schemas.AuthorQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -875,7 +875,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 ))
                 let headers: Operations.BlogAuthorPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogAuthorPatchRequestBody
+                let body: Components.RequestBodies.AuthorPatchRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -885,7 +885,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogAuthorPatchSchema.self,
+                        Components.Schemas.AuthorPatchSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1022,7 +1022,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 ))
                 let headers: Operations.BlogAuthorPut.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogAuthorUpdateRequestBody
+                let body: Components.RequestBodies.AuthorPutRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1032,7 +1032,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogAuthorPatchSchema.self,
+                        Components.Schemas.AuthorPutSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1239,7 +1239,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 ))
                 let headers: Operations.BlogAuthorLinkPost.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogAuthorLinkRequestBody
+                let body: Components.RequestBodies.AuthorLinkPostRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1249,7 +1249,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogAuthorLinkCreateSchema.self,
+                        Components.Schemas.AuthorLinkPostSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1456,7 +1456,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema.self,
+                        Components.Schemas.AuthorLinkQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1684,7 +1684,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 ))
                 let headers: Operations.BlogAuthorLinkPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogAuthorLinkPatchRequestBody
+                let body: Components.RequestBodies.AuthorLinkPatchRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1694,7 +1694,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogAuthorLinkPatchSchema.self,
+                        Components.Schemas.AuthorLinkPatchSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1838,7 +1838,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 )
                 let headers: Operations.BlogAuthorLinkPut.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogAuthorLinkUpdateRequestBody
+                let body: Components.RequestBodies.AuthorLinkPutRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1848,7 +1848,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogAuthorLinkCreateSchema.self,
+                        Components.Schemas.AuthorLinkPutSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2042,7 +2042,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let headers: Operations.BlogPostPost.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogPostRequestBody
+                let body: Components.RequestBodies.PostPostRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2052,7 +2052,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogPostCreateSchema.self,
+                        Components.Schemas.PostPostSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2247,7 +2247,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema.self,
+                        Components.Schemas.PostQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2460,7 +2460,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 ))
                 let headers: Operations.BlogPostPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogPostPatchRequestBody
+                let body: Components.RequestBodies.PostPatchRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2470,7 +2470,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogPostPatchSchema.self,
+                        Components.Schemas.PostPatchSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2607,7 +2607,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 ))
                 let headers: Operations.BlogPostPut.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogPostUpdateRequestBody
+                let body: Components.RequestBodies.PostPutRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2617,7 +2617,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogPostPatchSchema.self,
+                        Components.Schemas.PostPutSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2811,7 +2811,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let headers: Operations.BlogSettingsPut.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogSettingsUpdateRequestBody
+                let body: Components.RequestBodies.SettingsPutRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -2821,7 +2821,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogSettingsUpdateSchema.self,
+                        Components.Schemas.SettingsPutSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -2996,7 +2996,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let headers: Operations.BlogTagPost.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogTagRequestBody
+                let body: Components.RequestBodies.TagPostRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -3006,7 +3006,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogTagCreateSchema.self,
+                        Components.Schemas.TagPostSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -3201,7 +3201,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema.self,
+                        Components.Schemas.TagQueryItemSearchRequestQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -3414,7 +3414,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 ))
                 let headers: Operations.BlogTagPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogTagPatchRequestBody
+                let body: Components.RequestBodies.TagPatchRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -3424,7 +3424,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogTagPatchSchema.self,
+                        Components.Schemas.TagPatchSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -3561,7 +3561,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 ))
                 let headers: Operations.BlogTagPut.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.BlogTagUpdateRequestBody
+                let body: Components.RequestBodies.TagPutRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -3571,7 +3571,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.BlogTagPatchSchema.self,
+                        Components.Schemas.TagPutSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)

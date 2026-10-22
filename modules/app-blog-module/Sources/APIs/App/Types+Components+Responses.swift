@@ -6,10 +6,10 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
     public enum Responses {
-        public struct BlogAuthorListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogAuthorListResponse/content`.
+        public struct AuthorListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AuthorListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogAuthorListResponse/content/application\/json`.
+                /// - Remark: Generated from `#/components/responses/AuthorListResponse/content/application\/json`.
                 case json(Components.Schemas.BlogAuthorListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
@@ -25,19 +25,19 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogAuthorListResponse.Body
-            /// Creates a new `BlogAuthorListResponse`.
+            public var body: Components.Responses.AuthorListResponse.Body
+            /// Creates a new `AuthorListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BlogAuthorListResponse.Body) {
+            public init(body: Components.Responses.AuthorListResponse.Body) {
                 self.body = body
             }
         }
-        public struct BlogAuthorDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogAuthorDetailResponse/content`.
+        public struct AuthorGetResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AuthorGetResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogAuthorDetailResponse/content/application\/json`.
+                /// - Remark: Generated from `#/components/responses/AuthorGetResponse/content/application\/json`.
                 case json(Components.Schemas.BlogAuthorDetailSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
@@ -53,19 +53,19 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogAuthorDetailResponse.Body
-            /// Creates a new `BlogAuthorDetailResponse`.
+            public var body: Components.Responses.AuthorGetResponse.Body
+            /// Creates a new `AuthorGetResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BlogAuthorDetailResponse.Body) {
+            public init(body: Components.Responses.AuthorGetResponse.Body) {
                 self.body = body
             }
         }
-        public struct BlogPostListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogPostListResponse/content`.
+        public struct PostListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/PostListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogPostListResponse/content/application\/json`.
+                /// - Remark: Generated from `#/components/responses/PostListResponse/content/application\/json`.
                 case json(Components.Schemas.BlogPostListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
@@ -81,19 +81,19 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogPostListResponse.Body
-            /// Creates a new `BlogPostListResponse`.
+            public var body: Components.Responses.PostListResponse.Body
+            /// Creates a new `PostListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BlogPostListResponse.Body) {
+            public init(body: Components.Responses.PostListResponse.Body) {
                 self.body = body
             }
         }
-        public struct BlogPostDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogPostDetailResponse/content`.
+        public struct PostGetResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/PostGetResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogPostDetailResponse/content/application\/json`.
+                /// - Remark: Generated from `#/components/responses/PostGetResponse/content/application\/json`.
                 case json(Components.Schemas.BlogPostDetailSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
@@ -109,19 +109,19 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogPostDetailResponse.Body
-            /// Creates a new `BlogPostDetailResponse`.
+            public var body: Components.Responses.PostGetResponse.Body
+            /// Creates a new `PostGetResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BlogPostDetailResponse.Body) {
+            public init(body: Components.Responses.PostGetResponse.Body) {
                 self.body = body
             }
         }
-        public struct BlogRouteSettingsResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogRouteSettingsResponse/content`.
+        public struct SettingsGetResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/SettingsGetResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogRouteSettingsResponse/content/application\/json`.
+                /// - Remark: Generated from `#/components/responses/SettingsGetResponse/content/application\/json`.
                 case json(Components.Schemas.BlogRouteSettingsSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
@@ -137,19 +137,19 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogRouteSettingsResponse.Body
-            /// Creates a new `BlogRouteSettingsResponse`.
+            public var body: Components.Responses.SettingsGetResponse.Body
+            /// Creates a new `SettingsGetResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BlogRouteSettingsResponse.Body) {
+            public init(body: Components.Responses.SettingsGetResponse.Body) {
                 self.body = body
             }
         }
-        public struct BlogTagListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogTagListResponse/content`.
+        public struct TagListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/TagListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogTagListResponse/content/application\/json`.
+                /// - Remark: Generated from `#/components/responses/TagListResponse/content/application\/json`.
                 case json(Components.Schemas.BlogTagListSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
@@ -165,19 +165,19 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogTagListResponse.Body
-            /// Creates a new `BlogTagListResponse`.
+            public var body: Components.Responses.TagListResponse.Body
+            /// Creates a new `TagListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BlogTagListResponse.Body) {
+            public init(body: Components.Responses.TagListResponse.Body) {
                 self.body = body
             }
         }
-        public struct BlogTagDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/BlogTagDetailResponse/content`.
+        public struct TagGetResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/TagGetResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/BlogTagDetailResponse/content/application\/json`.
+                /// - Remark: Generated from `#/components/responses/TagGetResponse/content/application\/json`.
                 case json(Components.Schemas.BlogTagDetailSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
@@ -193,12 +193,12 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.BlogTagDetailResponse.Body
-            /// Creates a new `BlogTagDetailResponse`.
+            public var body: Components.Responses.TagGetResponse.Body
+            /// Creates a new `TagGetResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.BlogTagDetailResponse.Body) {
+            public init(body: Components.Responses.TagGetResponse.Body) {
                 self.body = body
             }
         }

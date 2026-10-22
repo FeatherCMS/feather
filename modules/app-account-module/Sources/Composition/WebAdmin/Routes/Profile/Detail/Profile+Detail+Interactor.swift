@@ -5,11 +5,11 @@ import FeatherWebShared
 extension Profile.Detail.Interactor {
 
     protocol Interface: Sendable {
-        func getAccountProfile() async throws -> AdminAccountProfileModel
+        func getProfile() async throws -> Profile.Model
 
         func getProfile(
             account: AccountModel,
-            accountProfile: AdminAccountProfileModel
+            profile: Profile.Model
         ) async throws -> Profile.Detail.Model
     }
 }

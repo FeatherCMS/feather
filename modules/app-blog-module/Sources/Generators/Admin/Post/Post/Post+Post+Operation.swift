@@ -5,10 +5,10 @@ extension Post.Post {
     struct Operation: Post.Operation {
         var operationId: String? { "blogPostPost" }
         var requestBody: (any RequestBodyRepresentable)? {
-            BlogPostRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: BlogPostDetailResponse().reference()]
+            [201: Post.Get.Response().reference()]
         }
     }
 }
