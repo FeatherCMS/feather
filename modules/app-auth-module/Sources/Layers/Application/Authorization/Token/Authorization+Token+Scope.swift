@@ -4,7 +4,7 @@ public import FeatherModuleKit
 public import UserDomain
 public import UserModule
 
-extension AuthModule.Authorization.TokenAuth {
+extension AuthModule.Authorization.Token {
     public struct Scope: FeatherModuleKit.Scope {
         public let identity: any Identity.Repository.Interface
         public let authorization: any AuthModule.Authorization.Query.Interface

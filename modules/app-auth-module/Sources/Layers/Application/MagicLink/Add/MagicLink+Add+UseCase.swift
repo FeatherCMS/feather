@@ -32,7 +32,7 @@ extension MagicLink.Add {
                 try await scope.magicLink.insert(
                     MagicLink.Model.create(
                         authEmailId: input.authEmailId,
-                        token: AuthModule.Authorization.TokenAuth.generateToken(),
+                        token: AuthModule.Authorization.Token.generateToken(),
                         isPersistent: input.isPersistent
                     )
                 )

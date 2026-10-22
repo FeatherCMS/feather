@@ -1,6 +1,6 @@
 import AuthModule
 
-extension AuthModule.Authorization.TokenAuth {
+extension AuthModule.Authorization.Token {
     static func generateToken(byteCount: Int = 32) -> String {
         precondition(byteCount > 0)
 

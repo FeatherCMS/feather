@@ -25,13 +25,13 @@ extension Post.List.Presenter {
                 content: Post.List.Component(
                     state: .init(
                         canAccess: permissions.contains(
-                            BlogModule.Permissions.Posts.list.rawValue
+                            Post.Permissions.list.rawValue
                         ),
                         canEdit: permissions.contains(
-                            BlogModule.Permissions.Posts.update.rawValue
+                            Post.Permissions.update.rawValue
                         ),
                         canAdd: permissions.contains(
-                            BlogModule.Permissions.Posts.create.rawValue
+                            Post.Permissions.create.rawValue
                         ),
                         items: model.items,
                         pageState: .init(

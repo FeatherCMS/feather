@@ -1,5 +1,7 @@
 import BlogAdminAPI
+import BlogAppAPI
 import BlogBackend
+import FeatherApplication
 import FeatherDBALTesting
 import FeatherDatabase
 import FeatherDatabaseTesting
@@ -17,13 +19,13 @@ import MediaApplication
 import MediaBackend
 import MediaModule
 import OpenAPIHummingbird
-import OpenAPIRuntime
 import Testing
 
 @Suite
 struct BlogAPIHTTPTestSuite {
     private enum QueryKey: DatabaseQueryKey {
         case authorList
+        case publicPostList
     }
 
     @Test
@@ -40,8 +42,46 @@ struct BlogAPIHTTPTestSuite {
         try await CurrentSubject.set(subject: Subject(id: "admin-1")) {
             try await executor.withOperation(request: request) { response in
                 #expect(response.status.code == 200)
-                #expect(try await response.plainTextBody() == "[]")
+                let body = try await response.plainTextBody()
+                let items =
+                    try JSONSerialization.jsonObject(
+                        with: Data(body.utf8)
+                    ) as? [Any]
+                #expect(items?.isEmpty == true)
             }
+        }
+
+        try await connection.assertAllResponsesConsumed()
+    }
+
+    @Test
+    func appPostListUsesGeneratedRouterAndPublicQuery() async throws {
+        let connection = MockDatabaseConnection<QueryKey>(
+            responses: [.init(key: .publicPostList)]
+        )
+        let databaseContext = makeDatabaseContext(connection: connection)
+        let gateway = AppAPIGateway(
+            useCases: makeUseCases(databaseContext: databaseContext)
+        )
+        let router = Router()
+        try gateway.registerHandlers(on: router)
+        let executor = HummingbirdTestingHTTPExecutor(
+            app: Application(router: router),
+            testingSetup: .router
+        )
+        let request = FeatherHTTP.Request(
+            method: .get,
+            path: "/api/v1/blog/posts/"
+        )
+
+        try await executor.withOperation(request: request) { response in
+            #expect(response.status.code == 200)
+            let body = try await response.plainTextBody()
+            let items =
+                try JSONSerialization.jsonObject(
+                    with: Data(body.utf8)
+                ) as? [Any]
+            #expect(items?.isEmpty == true)
         }
 
         try await connection.assertAllResponsesConsumed()
@@ -50,13 +90,33 @@ struct BlogAPIHTTPTestSuite {
     private func makeExecutor<Key: DatabaseQueryKey>(
         connection: MockDatabaseConnection<Key>
     ) throws -> HummingbirdTestingHTTPExecutor {
-        let databaseContext = DatabaseClientContext(
+        let databaseContext = makeDatabaseContext(connection: connection)
+        let gateway = AdminAPIGateway(
+            useCases: makeUseCases(databaseContext: databaseContext)
+        )
+        let router = Router()
+        try gateway.registerHandlers(on: router)
+        return HummingbirdTestingHTTPExecutor(
+            app: Application(router: router),
+            testingSetup: .router
+        )
+    }
+
+    private func makeDatabaseContext<Key: DatabaseQueryKey>(
+        connection: MockDatabaseConnection<Key>
+    ) -> DatabaseClientContext {
+        DatabaseClientContext(
             database: FeatherTesting.DatabaseClient.Mock(
                 connection: connection
             ),
             idGenerator: FeatherTesting.IDGenerator.Mock(id: "blog-test-id"),
             platform: MockDatabasePlatform()
         )
+    }
+
+    private func makeUseCases(
+        databaseContext: DatabaseClientContext
+    ) -> BlogBackend.UseCases {
         let storageContext = StorageClientContext(
             storage: UnusedStorageClient(),
             objectKeyGenerator: TestObjectKeyGenerator()
@@ -67,21 +127,13 @@ struct BlogAPIHTTPTestSuite {
             authorizer: FeatherTesting.Authorizer.Mock(result: true),
             jobs: UnusedJobController()
         )
-        let gateway = AdminAPIGateway(
-            useCases: BlogBackend.UseCases(
-                databaseContext: databaseContext,
-                authorizer: FeatherTesting.Authorizer.Mock(result: true),
-                media: mediaUseCases,
-                mediaResolver: MediaResolver(
-                    mediaBaseURL: URL(string: "https://media.test")!
-                )
+        return BlogBackend.UseCases(
+            databaseContext: databaseContext,
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
+            media: mediaUseCases,
+            mediaResolver: MediaResolver(
+                mediaBaseURL: URL(string: "https://media.test")!
             )
-        )
-        let router = Router()
-        try gateway.registerHandlers(on: router)
-        return HummingbirdTestingHTTPExecutor(
-            app: Application(router: router),
-            testingSetup: .router
         )
     }
 }

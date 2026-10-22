@@ -7,5 +7,4 @@ extension Tag {
     public enum List {}
     public enum Remove {}
     public enum Search {}
-    public enum Query {}
 }

@@ -23,7 +23,7 @@ extension AuthorLink.List.Controller {
             let search = request.querySearch()
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
-                to: BlogModule.Permissions.AuthorLinks.list
+                to: AuthorLink.Permissions.list
             )
             let emptyModel = AuthorLink.List.Model(
                 items: [],

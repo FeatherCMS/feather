@@ -7,5 +7,4 @@ extension Post {
     public enum List {}
     public enum Remove {}
     public enum Search {}
-    public enum Query {}
 }

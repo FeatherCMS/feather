@@ -3,6 +3,6 @@ public import FeatherModuleKit
 
 extension Author.Remove {
     public struct Action: PermissionAction {
-        public let key = BlogModule.Permissions.Authors.delete
+        public let key = Author.Permissions.delete
     }
 }

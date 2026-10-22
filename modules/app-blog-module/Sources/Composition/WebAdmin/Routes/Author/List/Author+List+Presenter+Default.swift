@@ -22,10 +22,10 @@ extension Author.List.Presenter {
             error: String?
         ) async throws -> HTMLResponse {
             let canAccess = permissions.contains(
-                BlogModule.Permissions.Authors.list.rawValue
+                Author.Permissions.list.rawValue
             )
             let canEdit = permissions.contains(
-                BlogModule.Permissions.Authors.update.rawValue
+                Author.Permissions.update.rawValue
             )
             return try await renderingEngine.renderAdminPage(
                 request: request,
@@ -36,7 +36,7 @@ extension Author.List.Presenter {
                         canAccess: canAccess,
                         canEdit: canEdit,
                         canAdd: permissions.contains(
-                            BlogModule.Permissions.Authors.create.rawValue
+                            Author.Permissions.create.rawValue
                         ),
                         items: model.items,
                         pageState: .init(

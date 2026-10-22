@@ -96,6 +96,10 @@ let package = Package(
             url: "https://github.com/feather-framework/feather-http",
             exact: "1.0.0-beta.1"
         ),
+        .package(
+            url: "https://github.com/feather-framework/feather-storage",
+            exact: "1.0.0-rc.2"
+        ),
         .package(path: "../../feather-core"),
         .package(
             url: "https://github.com/feather-framework/feather-dbal",
@@ -347,6 +351,7 @@ let package = Package(
                     package: "feather-database"
                 ),
                 .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherHTTP", package: "feather-http"),
                 .product(
@@ -355,7 +360,7 @@ let package = Package(
                 ),
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
-                .product(name: "FeatherStorage", package: "feather-core"),
+                .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "FeatherTesting", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(
@@ -369,11 +374,8 @@ let package = Package(
                     name: "OpenAPIHummingbird",
                     package: "swift-openapi-hummingbird"
                 ),
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                ),
                 .target(name: "BlogAdminAPI"),
+                .target(name: "BlogAppAPI"),
                 .target(name: "BlogBackend"),
             ],
             path: "Tests/Composition/Backend",

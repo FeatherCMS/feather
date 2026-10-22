@@ -6,12 +6,12 @@ public import FeatherInfrastructure
 extension UseCases {
 
     public func makeGetPublicSettings() -> DatabaseQueryExecutor<
-        Settings.Get.Scope
+        Settings.Detail.Scope
     > {
         DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Settings.Get.Scope(
+                Settings.Detail.Scope(
                     settings: Settings.Repository.Database(context: context)
                 )
             }

@@ -5,7 +5,7 @@ public import FeatherModuleKit
 import Foundation
 import UserDomain
 
-extension AuthModule.Authorization.TokenAuth {
+extension AuthModule.Authorization.Token {
     public struct UseCase: FeatherApplication.UseCase {
         let transaction: any TransactionExecutor<Scope>
 

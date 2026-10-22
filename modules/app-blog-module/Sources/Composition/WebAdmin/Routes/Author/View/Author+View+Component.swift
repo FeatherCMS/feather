@@ -58,7 +58,7 @@ extension Author.View {
                     )
                 )
                 if state.permissions.contains(
-                    BlogModule.Permissions.Authors.update.rawValue
+                    Author.Permissions.update.rawValue
                 ) {
                     let formID = "blog-author-status-\(state.author.id)"
                     Div {
@@ -98,7 +98,7 @@ extension Author.View {
                     )
                 )
                 if state.permissions.contains(
-                    BlogModule.Permissions.AuthorLinks.create.rawValue
+                    AuthorLink.Permissions.create.rawValue
                 ) {
                     context.build(
                         AdminButton(
@@ -117,7 +117,7 @@ extension Author.View {
                         state: .init(
                             authorID: state.author.id,
                             canAdd: state.permissions.contains(
-                                BlogModule.Permissions.AuthorLinks.create
+                                AuthorLink.Permissions.create
                                     .rawValue
                             ),
                             items: state.author.items,
@@ -141,7 +141,7 @@ extension Author.View {
         private var actions: [AdminDetailView.Action] {
             var result: [AdminDetailView.Action] = []
             if state.permissions.contains(
-                BlogModule.Permissions.Authors.update.rawValue
+                Author.Permissions.update.rawValue
             ) {
                 result.append(
                     .init(
@@ -155,7 +155,7 @@ extension Author.View {
                 )
             }
             if state.permissions.contains(
-                BlogModule.Permissions.Authors.delete.rawValue
+                Author.Permissions.delete.rawValue
             ) {
                 result.append(
                     .init(

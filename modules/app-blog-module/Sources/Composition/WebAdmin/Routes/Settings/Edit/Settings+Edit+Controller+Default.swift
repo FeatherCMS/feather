@@ -30,7 +30,7 @@ extension Settings.Edit.Controller {
             let (interactor, presenter) = buildRuntime((request, context))
             let permissions = context.currentUserPermissions
             let canRead = context.isCurrentUserAllowed(
-                to: BlogModule.Permissions.Settings.read
+                to: Settings.Permissions.read
             )
 
             guard canRead else {
@@ -156,7 +156,7 @@ extension Settings.Edit.Controller {
             permissions: Set<String>
         ) -> Bool {
             permissions.contains(
-                BlogModule.Permissions.Settings.update.rawValue
+                Settings.Permissions.update.rawValue
             )
         }
 

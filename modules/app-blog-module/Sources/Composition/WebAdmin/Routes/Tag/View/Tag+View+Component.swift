@@ -54,7 +54,7 @@ extension Tag.View {
                     )
                 )
                 if state.permissions.contains(
-                    BlogModule.Permissions.Tags.update.rawValue
+                    Tag.Permissions.update.rawValue
                 ) {
                     let formID = "blog-tag-status-\(state.model.id)"
                     Div {
@@ -86,7 +86,7 @@ extension Tag.View {
         private var actions: [AdminDetailView.Action] {
             var result: [AdminDetailView.Action] = []
             if state.permissions.contains(
-                BlogModule.Permissions.Tags.update.rawValue
+                Tag.Permissions.update.rawValue
             ) {
                 result.append(
                     .init(
@@ -99,7 +99,7 @@ extension Tag.View {
                 )
             }
             if state.permissions.contains(
-                BlogModule.Permissions.Tags.delete.rawValue
+                Tag.Permissions.delete.rawValue
             ) {
                 result.append(
                     .init(

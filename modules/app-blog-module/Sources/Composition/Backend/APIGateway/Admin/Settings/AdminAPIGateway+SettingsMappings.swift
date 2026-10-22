@@ -4,7 +4,7 @@ import BlogModule
 
 extension AdminAPIGateway {
     func mapGetSettings(
-        _ output: Settings.Get.Output
+        _ output: Settings.Detail.Output
     ) -> BlogAdminAPI.Components.Schemas.BlogSettingsDetailSchema {
         .init(
             postListPath: output.postListPath,

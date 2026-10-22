@@ -54,7 +54,7 @@ extension AuthorLink.View {
         private var actions: [AdminDetailView.Action] {
             var result: [AdminDetailView.Action] = []
             if state.permissions.contains(
-                BlogModule.Permissions.AuthorLinks.update.rawValue
+                AuthorLink.Permissions.update.rawValue
             ) {
                 result.append(
                     .init(
@@ -70,7 +70,7 @@ extension AuthorLink.View {
                 )
             }
             if state.permissions.contains(
-                BlogModule.Permissions.AuthorLinks.delete.rawValue
+                AuthorLink.Permissions.delete.rawValue
             ) {
                 result.append(
                     .init(

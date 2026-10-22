@@ -3,7 +3,7 @@ public import BlogModule
 public import FeatherApplication
 public import FeatherModuleKit
 
-extension Settings.Get {
+extension Settings.Detail {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
         let query: any QueryExecutor<Scope>

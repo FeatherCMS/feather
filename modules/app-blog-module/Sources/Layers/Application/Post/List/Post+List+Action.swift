@@ -3,6 +3,6 @@ public import FeatherModuleKit
 
 extension Post.List {
     public struct Action: PermissionAction {
-        public let key = BlogModule.Permissions.Posts.list
+        public let key = Post.Permissions.list
     }
 }

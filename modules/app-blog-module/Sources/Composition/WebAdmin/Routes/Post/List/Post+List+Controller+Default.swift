@@ -20,7 +20,7 @@ extension Post.List.Controller {
             let search = request.querySearch()
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
-                to: BlogModule.Permissions.Posts.list
+                to: Post.Permissions.list
             )
             let emptyModel = Post.List.Model(
                 items: [],

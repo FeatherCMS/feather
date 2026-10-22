@@ -31,7 +31,7 @@ extension Tag.List.Controller {
             let search = request.querySearch()
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
-                to: BlogModule.Permissions.Tags.list
+                to: Tag.Permissions.list
             )
             let emptyModel = Tag.List.Model(
                 items: [],

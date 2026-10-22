@@ -87,7 +87,7 @@ extension AuthorLink.List {
         let state: State
         func html(context: inout BuilderContext) -> Div {
             let canDelete = state.permissions.allows(
-                BlogModule.Permissions.AuthorLinks.delete
+                AuthorLink.Permissions.delete
             )
             let links = state.routes.authorLinks(
                 RouterPath(state.authorID)

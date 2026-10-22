@@ -70,7 +70,7 @@ extension Post.View.Details {
                     )
                 )
                 if state.permissions.contains(
-                    BlogModule.Permissions.Posts.update.rawValue
+                    Post.Permissions.update.rawValue
                 ) {
                     let formID = "blog-post-status-\(state.rule.id)"
                     Div {
@@ -106,7 +106,7 @@ extension Post.View.Details {
         private var actions: [AdminDetailView.Action] {
             var result: [AdminDetailView.Action] = []
             if state.permissions.contains(
-                BlogModule.Permissions.Posts.update.rawValue
+                Post.Permissions.update.rawValue
             ) {
                 result.append(
                     .init(
@@ -119,7 +119,7 @@ extension Post.View.Details {
                 )
             }
             if state.permissions.contains(
-                BlogModule.Permissions.Posts.delete.rawValue
+                Post.Permissions.delete.rawValue
             ) {
                 result.append(
                     .init(

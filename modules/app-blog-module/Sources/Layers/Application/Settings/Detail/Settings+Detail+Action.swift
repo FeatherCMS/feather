@@ -1,8 +1,8 @@
 public import BlogModule
 public import FeatherModuleKit
 
-extension Settings.Get {
+extension Settings.Detail {
     public struct Action: PermissionAction {
-        public let key = BlogModule.Permissions.Settings.read
+        public let key = Settings.Permissions.read
     }
 }

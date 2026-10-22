@@ -2,7 +2,7 @@ public import BlogDomain
 public import BlogModule
 public import FeatherModuleKit
 
-extension Settings.Get {
+extension Settings.Detail {
     public struct Scope: FeatherModuleKit.Scope {
         public let settings: any Settings.Repository.Interface
 

@@ -25,7 +25,7 @@ extension Author.List.Controller {
             let search = request.querySearch()
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
-                to: BlogModule.Permissions.Authors.list
+                to: Author.Permissions.list
             )
             let emptyModel = Author.List.Model(
                 items: [],
@@ -68,7 +68,7 @@ extension Author.List.Controller {
         ) async throws -> Response {
             guard
                 context.isCurrentUserAllowed(
-                    to: BlogModule.Permissions.Authors.update
+                    to: Author.Permissions.update
                 )
             else {
                 return Response(status: .forbidden)

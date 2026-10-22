@@ -68,7 +68,7 @@ extension Post.List {
 
         func html(context: inout BuilderContext) -> Div {
             let canDelete = state.permissions.allows(
-                BlogModule.Permissions.Posts.delete
+                Post.Permissions.delete
             )
             return context.build(
                 AdminList(

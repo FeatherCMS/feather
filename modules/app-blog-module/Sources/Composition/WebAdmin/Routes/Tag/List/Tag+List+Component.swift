@@ -68,7 +68,7 @@ extension Tag.List {
         let state: Component.State
         func html(context: inout BuilderContext) -> Div {
             let canDelete = state.permissions.allows(
-                BlogModule.Permissions.Tags.delete
+                Tag.Permissions.delete
             )
             return context.build(
                 AdminList(

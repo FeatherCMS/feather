@@ -30,10 +30,10 @@ extension AuthorLink.List.Presenter {
                     state: .init(
                         authorID: authorID,
                         canAccess: permissions.contains(
-                            BlogModule.Permissions.AuthorLinks.list.rawValue
+                            AuthorLink.Permissions.list.rawValue
                         ),
                         canAdd: permissions.contains(
-                            BlogModule.Permissions.AuthorLinks.create.rawValue
+                            AuthorLink.Permissions.create.rawValue
                         ),
                         items: model.items,
                         pageState: .init(

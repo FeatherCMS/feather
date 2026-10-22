@@ -1,6 +1,6 @@
 public import BlogModule
 
 extension Settings {
-    public enum Get {}
+    public enum Detail {}
     public enum Edit {}
 }

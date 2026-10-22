@@ -3,6 +3,6 @@ public import FeatherModuleKit
 
 extension AuthorLink.Edit {
     public struct Action: PermissionAction {
-        public let key = BlogModule.Permissions.AuthorLinks.update
+        public let key = AuthorLink.Permissions.update
     }
 }

@@ -26,10 +26,10 @@ extension Tag.List.Presenter {
             error: String?
         ) async throws -> HTMLResponse {
             let canAccess = permissions.contains(
-                BlogModule.Permissions.Tags.list.rawValue
+                Tag.Permissions.list.rawValue
             )
             let canEdit = permissions.contains(
-                BlogModule.Permissions.Tags.update.rawValue
+                Tag.Permissions.update.rawValue
             )
             return try await renderEngine.renderAdminPage(
                 request: request,
@@ -40,7 +40,7 @@ extension Tag.List.Presenter {
                         canAccess: canAccess,
                         canEdit: canEdit,
                         canAdd: permissions.contains(
-                            BlogModule.Permissions.Tags.create.rawValue
+                            Tag.Permissions.create.rawValue
                         ),
                         items: model.items,
                         pageState: .init(

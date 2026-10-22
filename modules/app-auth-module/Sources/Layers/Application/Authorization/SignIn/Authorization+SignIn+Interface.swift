@@ -24,7 +24,7 @@ extension AuthModule.Authorization.SignIn {
             : Session.Model.Lifetimes.regular
         let session = try await userSessionRepository.insert(
             Session.Model.create(
-                token: AuthModule.Authorization.TokenAuth.generateToken(),
+                token: AuthModule.Authorization.Token.generateToken(),
                 identityId: user.id,
                 authenticationType: authenticationType,
                 authenticationReference: authenticationReference,

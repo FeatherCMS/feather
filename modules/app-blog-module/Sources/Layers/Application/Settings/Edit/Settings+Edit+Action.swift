@@ -3,6 +3,6 @@ public import FeatherModuleKit
 
 extension Settings.Edit {
     public struct Action: PermissionAction {
-        public let key = BlogModule.Permissions.Settings.update
+        public let key = Settings.Permissions.update
     }
 }

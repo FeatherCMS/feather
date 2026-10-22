@@ -1,7 +1,7 @@
 public import AuthModule
 public import FeatherApplication
 
-extension AuthModule.Authorization.TokenAuth {
+extension AuthModule.Authorization.Token {
     public struct Output: DTO, Sendable {
         public let identityId: String
         public let roles: [String]
