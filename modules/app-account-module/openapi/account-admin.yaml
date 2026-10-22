@@ -89,6 +89,51 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
+  /api/v1/admin/account/profile:
+    get:
+      tags:
+      - Account
+      operationId: accountCurrentUserProfileGet
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Account
+      operationId: accountCurrentUserProfileUpdate
+      requestBody:
+        $ref: '#/components/requestBodies/AccountProfileUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
   /api/v1/admin/account/settings:
     get:
       tags:

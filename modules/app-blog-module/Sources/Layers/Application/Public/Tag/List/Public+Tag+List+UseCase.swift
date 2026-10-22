@@ -4,17 +4,17 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
+public import FeatherApplication
 public import FeatherModuleKit
 import Foundation
 import WebApplication
 
 extension Public.Tag.List {
-    public struct UseCase {
-        let query: any QueryExecutor<Public.Query.Scope>
+    public struct UseCase: FeatherApplication.UseCase {
+        let query: any QueryExecutor<Scope>
 
         public init(
-            query: any QueryExecutor<Public.Query.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.query = query
         }

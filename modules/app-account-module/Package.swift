@@ -259,8 +259,6 @@ let package = Package(
                 .product(name: "WebBuilders", package: "swift-web-standards"),
                 .product(name: "WebComponents", package: "swift-web-standards"),
 
-                .product(name: "AuthAdminAPI", package: "app-auth-module"),
-                .product(name: "AuthAppAPI", package: "app-auth-module"),
                 .product(name: "MediaWebAdmin", package: "app-media-module"),
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
@@ -271,7 +269,6 @@ let package = Package(
 
                 .target(name: "AccountModule"),
                 .target(name: "AccountAdminAPI"),
-                .target(name: "AccountAppAPI"),
             ],
             path: "Sources/Composition/WebAdmin",
             swiftSettings: swiftSettings
@@ -310,6 +307,7 @@ let package = Package(
             name: "AccountApplicationTests",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "FeatherTesting", package: "feather-core"),
                 .target(name: "AccountModule"),
                 .product(name: "AuthModule", package: "app-auth-module"),
                 .product(name: "AuthDomain", package: "app-auth-module"),
@@ -355,6 +353,7 @@ let package = Package(
 
                 .target(name: "AccountBackend"),
                 .target(name: "AccountAdminAPI"),
+                .target(name: "AccountAppAPI"),
                 .target(name: "AccountModule"),
             ],
             path: "Tests/Composition/Backend",

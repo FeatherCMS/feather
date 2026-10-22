@@ -1,5 +1,3 @@
-public import FeatherModuleKit
-
 public enum Asset {
     public enum File {
         public enum Repository {}

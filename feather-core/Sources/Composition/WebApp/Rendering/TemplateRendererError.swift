@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 public enum TemplateRendererError: Error, LocalizedError, Sendable {
     case missingTemplate(String)

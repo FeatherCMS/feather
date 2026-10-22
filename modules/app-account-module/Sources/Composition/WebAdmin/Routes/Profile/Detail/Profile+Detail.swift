@@ -27,7 +27,7 @@ extension Profile.Detail {
                         interactor: Profile.Detail.Interactor.Default(
                             profileRepository:
                                 Profile.Detail.Repository.OpenAPI(
-                                    api: API.AppClient(
+                                    api: API.Client(
                                         environment: environment,
                                         requestContext: context
                                     ),

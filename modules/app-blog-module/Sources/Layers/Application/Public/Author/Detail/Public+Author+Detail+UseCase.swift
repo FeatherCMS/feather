@@ -10,7 +10,7 @@ import Foundation
 import WebApplication
 
 extension Public.Author.Detail {
-    public struct UseCase {
+    public struct UseCase: FeatherApplication.UseCase {
         public struct Error: UseCaseError {
             public let message: String
 
@@ -19,10 +19,10 @@ extension Public.Author.Detail {
             }
         }
 
-        let query: any QueryExecutor<Public.Query.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
-            query: any QueryExecutor<Public.Query.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.query = query
         }
@@ -78,7 +78,7 @@ extension Public.Author.Detail.UseCase {
     fileprivate static func publicPosts(
         matchingAuthorID authorID: String,
         now: Date,
-        context: Public.Query.Scope
+        context: Public.Author.Detail.Scope
     ) async throws -> [Public.Post.Summary.Output] {
         let posts = try await context.post.list(
             query: .init(

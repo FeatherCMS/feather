@@ -10,7 +10,7 @@ import Foundation
 import WebApplication
 
 extension Public.Tag.Detail {
-    public struct UseCase {
+    public struct UseCase: FeatherApplication.UseCase {
         public struct Error: UseCaseError {
             public let message: String
 
@@ -19,10 +19,10 @@ extension Public.Tag.Detail {
             }
         }
 
-        let query: any QueryExecutor<Public.Query.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
-            query: any QueryExecutor<Public.Query.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.query = query
         }
@@ -68,7 +68,7 @@ extension Public.Tag.Detail.UseCase {
     fileprivate static func publicPosts(
         matchingTagID tagID: String,
         now: Date,
-        context: Public.Query.Scope
+        context: Public.Tag.Detail.Scope
     ) async throws -> [Public.Post.Summary.Output] {
         let posts = try await context.post.list(
             query: .init(

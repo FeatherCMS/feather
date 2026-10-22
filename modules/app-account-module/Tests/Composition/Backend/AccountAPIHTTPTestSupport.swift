@@ -1,4 +1,5 @@
 import AccountAdminAPI
+import AccountAppAPI
 import AccountBackend
 import AccountModule
 import FeatherApplication
@@ -29,6 +30,33 @@ enum AccountAPIHTTPTestSupport {
             platform: MockDatabasePlatform()
         )
         let gateway = AdminAPIGateway(
+            useCases: UseCases(
+                databaseContext: databaseContext,
+                authorizer: FeatherTesting.Authorizer.Mock(result: true),
+                jobs: NoOpSendMailJobController(),
+                events: EventRegistry()
+            )
+        )
+        let router = Router()
+        router.addMiddleware { HTTPErrorStatusMiddleware() }
+        try gateway.registerHandlers(on: router)
+        return HummingbirdTestingHTTPExecutor(
+            app: Application(router: router),
+            testingSetup: .router
+        )
+    }
+
+    static func makeAppExecutor<Key: DatabaseQueryKey>(
+        connection: MockDatabaseConnection<Key>
+    ) throws -> HummingbirdTestingHTTPExecutor {
+        let databaseContext = DatabaseClientContext(
+            database: FeatherTesting.DatabaseClient.Mock(
+                connection: connection
+            ),
+            idGenerator: FeatherTesting.IDGenerator.Mock(id: "created-1"),
+            platform: MockDatabasePlatform()
+        )
+        let gateway = AppAPIGateway(
             useCases: UseCases(
                 databaseContext: databaseContext,
                 authorizer: FeatherTesting.Authorizer.Mock(result: true),

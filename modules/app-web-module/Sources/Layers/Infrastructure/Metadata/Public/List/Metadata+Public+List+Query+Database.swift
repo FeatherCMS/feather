@@ -1,5 +1,6 @@
 import FeatherDBAL
-import FeatherInfrastructure
+public import FeatherInfrastructure
+public import WebApplication
 import WebDomain
 
 import struct Foundation.Date

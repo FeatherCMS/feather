@@ -5,6 +5,10 @@ enum Account {
 enum Profile {
     enum Get {}
     enum Put {}
+    enum CurrentUser {
+        enum Get {}
+        enum Put {}
+    }
     enum Parameters {}
     enum Fields {}
 }

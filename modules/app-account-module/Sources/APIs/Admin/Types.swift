@@ -14,6 +14,12 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PUT /api/v1/admin/account/users/{userId}/profile`.
     /// - Remark: Generated from `#/paths//api/v1/admin/account/users/{userId}/profile/put(accountProfileUpdate)`.
     func accountProfileUpdate(_ input: Operations.AccountProfileUpdate.Input) async throws -> Operations.AccountProfileUpdate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/account/profile`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/profile/get(accountCurrentUserProfileGet)`.
+    func accountCurrentUserProfileGet(_ input: Operations.AccountCurrentUserProfileGet.Input) async throws -> Operations.AccountCurrentUserProfileGet.Output
+    /// - Remark: HTTP `PUT /api/v1/admin/account/profile`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/profile/put(accountCurrentUserProfileUpdate)`.
+    func accountCurrentUserProfileUpdate(_ input: Operations.AccountCurrentUserProfileUpdate.Input) async throws -> Operations.AccountCurrentUserProfileUpdate.Output
     /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
     func accountSettingsGet(_ input: Operations.AccountSettingsGet.Input) async throws -> Operations.AccountSettingsGet.Output
@@ -85,6 +91,22 @@ extension APIProtocol {
     ) async throws -> Operations.AccountProfileUpdate.Output {
         try await accountProfileUpdate(Operations.AccountProfileUpdate.Input(
             path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/account/profile`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/profile/get(accountCurrentUserProfileGet)`.
+    public func accountCurrentUserProfileGet(headers: Operations.AccountCurrentUserProfileGet.Input.Headers = .init()) async throws -> Operations.AccountCurrentUserProfileGet.Output {
+        try await accountCurrentUserProfileGet(Operations.AccountCurrentUserProfileGet.Input(headers: headers))
+    }
+    /// - Remark: HTTP `PUT /api/v1/admin/account/profile`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/profile/put(accountCurrentUserProfileUpdate)`.
+    public func accountCurrentUserProfileUpdate(
+        headers: Operations.AccountCurrentUserProfileUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.AccountProfileUpdateRequestBody
+    ) async throws -> Operations.AccountCurrentUserProfileUpdate.Output {
+        try await accountCurrentUserProfileUpdate(Operations.AccountCurrentUserProfileUpdate.Input(
             headers: headers,
             body: body
         ))

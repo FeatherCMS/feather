@@ -1,4 +1,4 @@
-import AccountAppAPI
+import AccountAdminAPI
 import AccountModule
 import FeatherWebAdmin
 import FeatherWebShared
@@ -10,13 +10,13 @@ extension Profile.Detail.Repository {
     struct OpenAPI:
         Profile.Detail.Repository.Interface
     {
-        let api: API.AppClient
+        let api: API.Client
         let mediaAPI: MediaAdminAPIClient
 
         func get() async throws -> Profile.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.accountProfileGet(
-                    .init(headers: .init(accept: [.init(contentType: .json)]))
+                let response = try await client.accountCurrentUserProfileGet(
+                    headers: .init(accept: [.init(contentType: .json)])
                 )
                 switch response {
                 case .ok(let value):

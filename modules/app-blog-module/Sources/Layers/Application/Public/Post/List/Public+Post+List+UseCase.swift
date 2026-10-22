@@ -4,17 +4,17 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
+public import FeatherApplication
 public import FeatherModuleKit
 import Foundation
 import WebApplication
 
 extension Public.Post.List {
-    public struct UseCase {
-        let query: any QueryExecutor<Public.Query.Scope>
+    public struct UseCase: FeatherApplication.UseCase {
+        let query: any QueryExecutor<Scope>
 
         public init(
-            query: any QueryExecutor<Public.Query.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.query = query
         }
@@ -76,7 +76,7 @@ extension Public.Post.List.UseCase {
     fileprivate static func publicAuthors(
         _ ids: [String],
         now: Date,
-        context: Public.Query.Scope
+        context: Public.Post.List.Scope
     ) async throws -> [Public.Author.Summary.Output] {
         var result: [Public.Author.Summary.Output] = []
         for id in ids {
@@ -107,7 +107,7 @@ extension Public.Post.List.UseCase {
     fileprivate static func publicTags(
         _ ids: [String],
         now: Date,
-        context: Public.Query.Scope
+        context: Public.Post.List.Scope
     ) async throws -> [Public.Tag.Summary.Output] {
         var result: [Public.Tag.Summary.Output] = []
         for id in ids {

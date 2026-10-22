@@ -7,24 +7,21 @@ import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
-import WebInfrastructure
 import WebDomain
+import WebInfrastructure
 
 extension UseCases {
 
-    func makeGetPublicPageByID() -> GetPublicPageByID {
+    func makeGetPublicPageByID() -> Public.Page.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadPageMetadata(
-                    page: Page.Query.Database(
+                Public.Page.Detail.Scope(
+                    page: Page.Detail.Query.Database(
                         context: context,
                         metadata: Metadata.Query.Database(
                             context: context
                         )
-                    ),
-                    metadata: Metadata.Query.Database(
-                        context: context
                     )
                 )
             }

@@ -11,3 +11,11 @@ extension Profile.Operation {
         [Profile.Parameters.UserID().reference()]
     }
 }
+
+extension Profile.CurrentUser {
+    protocol Operation: BearerProtectedOperation {}
+}
+
+extension Profile.CurrentUser.Operation {
+    var tags: [any TagRepresentable] { [Account.Tag()] }
+}

@@ -1,4 +1,5 @@
-import FeatherWebApp
+public import FeatherWebApp
+import Mustache
 
 public struct DefaultThemeRenderer: PublicThemeRenderer {
 

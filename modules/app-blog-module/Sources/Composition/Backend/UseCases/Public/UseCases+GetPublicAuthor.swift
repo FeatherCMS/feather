@@ -10,7 +10,7 @@ extension UseCases {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Public.Query.Scope(
+                Public.Author.Detail.Scope(
                     post: Public.Query.PostContent.Database(
                         context: context,
                         metadata: Metadata.Query.Database(
@@ -18,12 +18,6 @@ extension UseCases {
                         )
                     ),
                     author: Public.Query.AuthorContent.Database(
-                        context: context,
-                        metadata: Metadata.Query.Database(
-                            context: context
-                        )
-                    ),
-                    tag: Public.Query.TagContent.Database(
                         context: context,
                         metadata: Metadata.Query.Database(
                             context: context

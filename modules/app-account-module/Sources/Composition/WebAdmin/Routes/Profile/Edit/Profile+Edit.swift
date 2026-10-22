@@ -27,7 +27,7 @@ extension Profile.Edit {
                         interactor: Profile.Edit.Interactor.Default(
                             profileRepository:
                                 Profile.Edit.Repository.OpenAPI(
-                                    api: API.AppClient(
+                                    api: API.Client(
                                         environment: environment,
                                         requestContext: context
                                     ),

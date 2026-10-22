@@ -2,6 +2,7 @@ import AccountModule
 import FeatherApplication
 import FeatherMail
 import FeatherModuleKit
+import FeatherTesting
 import Foundation
 import SystemApplication
 import Testing
@@ -25,10 +26,8 @@ struct AccountApplicationTestSuite {
     func listInvitationsUsesUnfilteredListQuery() async throws {
         let queries = MockInvitationQueries(listResult: .init(items: []))
         let useCase = Invitation.List.UseCase(
-            authorizer: MockPermissionAuthorizer(
-                permissions: [Invitation.Permissions.list]
-            ),
-            query: MockQueryExecutor(
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
+            query: FeatherTesting.QueryExecutor.Mock(
                 context: Invitation.List.Scope(query: queries)
             )
         )
@@ -50,10 +49,8 @@ struct AccountApplicationTestSuite {
             searchResult: .init(items: [], total: 7)
         )
         let useCase = Invitation.Search.UseCase(
-            authorizer: MockPermissionAuthorizer(
-                permissions: [Invitation.Permissions.list]
-            ),
-            query: MockQueryExecutor(
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
+            query: FeatherTesting.QueryExecutor.Mock(
                 context: Invitation.Search.Scope(query: queries)
             )
         )
@@ -108,7 +105,7 @@ struct AccountApplicationTestSuite {
             tokenResult: invitation
         )
         let useCase = Invitation.Validate.UseCase(
-            query: MockQueryExecutor(
+            query: FeatherTesting.QueryExecutor.Mock(
                 context: Invitation.Detail.Scope(query: queries)
             )
         )
@@ -137,7 +134,7 @@ struct AccountApplicationTestSuite {
             tokenResult: invitation
         )
         let useCase = Invitation.Validate.UseCase(
-            query: MockQueryExecutor(
+            query: FeatherTesting.QueryExecutor.Mock(
                 context: Invitation.Detail.Scope(query: queries)
             )
         )
@@ -232,9 +229,7 @@ struct AccountApplicationTestSuite {
             )
         )
         let useCase = Invitation.Add.UseCase(
-            authorizer: MockPermissionAuthorizer(
-                permissions: [Invitation.Permissions.create]
-            ),
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
             transaction: transaction,
             events: MockEventPublisher(),
             jobs: MockSendMailJobController()
@@ -286,9 +281,7 @@ struct AccountApplicationTestSuite {
         )
         let jobs = MockSendMailJobController()
         let useCase = Invitation.Add.UseCase(
-            authorizer: MockPermissionAuthorizer(
-                permissions: [Invitation.Permissions.create]
-            ),
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
             transaction: transaction,
             events: MockEventPublisher(),
             jobs: jobs
@@ -333,7 +326,7 @@ struct AccountApplicationTestSuite {
             identityId: invitation.userId,
             email: invitation.email
         )
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Invitation.Remove.Scope(
                 invitation: MockInvitationRepository(
                     result: invitation,
@@ -352,9 +345,7 @@ struct AccountApplicationTestSuite {
             )
         )
         let useCase = Invitation.Remove.UseCase(
-            authorizer: MockPermissionAuthorizer(
-                permissions: [Invitation.Permissions.delete]
-            ),
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
             transaction: transaction
         )
 
@@ -381,7 +372,7 @@ struct AccountApplicationTestSuite {
             updatedAt: Date()
         )
         let repository = MockInvitationRepository(result: invitation)
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Invitation.Resend.Scope(
                 invitation: repository,
                 variable: MockVariableLookup(
@@ -393,9 +384,7 @@ struct AccountApplicationTestSuite {
         )
         let jobs = MockSendMailJobController()
         let useCase = Invitation.Resend.UseCase(
-            authorizer: MockPermissionAuthorizer(
-                permissions: [Invitation.Permissions.create]
-            ),
+            authorizer: FeatherTesting.Authorizer.Mock(result: true),
             transaction: transaction,
             jobs: jobs
         )
@@ -486,14 +475,14 @@ struct AccountApplicationTestSuite {
                 updatedAt: Date()
             )
         )
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Invitation.Resend.Scope(
                 invitation: repository,
                 variable: MockVariableLookup(value: "https://example.test")
             )
         )
         let useCase = Invitation.Resend.UseCase(
-            authorizer: MockPermissionAuthorizer(permissions: []),
+            authorizer: FeatherTesting.Authorizer.Mock(result: false),
             transaction: transaction,
             jobs: MockSendMailJobController()
         )
@@ -512,12 +501,10 @@ struct AccountApplicationTestSuite {
     func getAccountProfileReturnsOwnProfile() async throws {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
-        let query = MockQueryExecutor(
+        let query = FeatherTesting.QueryExecutor.Mock(
             context: Profile.Detail.Scope(query: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Profile.Detail.UseCase(
             authorizer: authorizer,
             query: query
@@ -538,15 +525,13 @@ struct AccountApplicationTestSuite {
     }
 
     @Test
-    func getAccountProfileAllowsOwnProfileWithoutPermission() async throws {
+    func getAccountProfileAllowsOwnProfileWhenAuthorized() async throws {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
-        let query = MockQueryExecutor(
+        let query = FeatherTesting.QueryExecutor.Mock(
             context: Profile.Detail.Scope(query: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Profile.Detail.UseCase(
             authorizer: authorizer,
             query: query
@@ -566,12 +551,10 @@ struct AccountApplicationTestSuite {
     func getAccountProfileReadsTargetUserWithReadPermission() async throws {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
-        let query = MockQueryExecutor(
+        let query = FeatherTesting.QueryExecutor.Mock(
             context: Profile.Detail.Scope(query: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: [Profile.Permissions.read]
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Profile.Detail.UseCase(
             authorizer: authorizer,
             query: query
@@ -591,12 +574,10 @@ struct AccountApplicationTestSuite {
     {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
-        let query = MockQueryExecutor(
+        let query = FeatherTesting.QueryExecutor.Mock(
             context: Profile.Detail.Scope(query: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: false)
         let useCase = Profile.Detail.UseCase(
             authorizer: authorizer,
             query: query
@@ -615,16 +596,46 @@ struct AccountApplicationTestSuite {
     }
 
     @Test
+    func profileActionsAllowOwnerAndRequirePermissionForOtherUsers()
+        async throws
+    {
+        let owner = Subject(id: "user-1")
+        let ownRead = try await Profile.Detail.Action(userID: owner.id)
+            .authorize(subject: owner, permissions: [])
+        let otherRead = try await Profile.Detail.Action(userID: "user-2")
+            .authorize(subject: owner, permissions: [])
+        let permittedRead = try await Profile.Detail.Action(userID: "user-2")
+            .authorize(
+                subject: owner,
+                permissions: [Profile.Permissions.read]
+            )
+        let ownEdit = try await Profile.Edit.Action(userID: owner.id)
+            .authorize(subject: owner, permissions: [])
+        let otherEdit = try await Profile.Edit.Action(userID: "user-2")
+            .authorize(subject: owner, permissions: [])
+        let permittedEdit = try await Profile.Edit.Action(userID: "user-2")
+            .authorize(
+                subject: owner,
+                permissions: [Profile.Permissions.update]
+            )
+
+        #expect(ownRead)
+        #expect(!otherRead)
+        #expect(permittedRead)
+        #expect(ownEdit)
+        #expect(!otherEdit)
+        #expect(permittedEdit)
+    }
+
+    @Test
     func editAccountProfilePersistsTargetUserWithUpdatePermission() async throws
     {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Profile.Edit.Scope(profile: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: [Profile.Permissions.update]
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Profile.Edit.UseCase(
             authorizer: authorizer,
             transaction: transaction
@@ -648,17 +659,15 @@ struct AccountApplicationTestSuite {
     }
 
     @Test
-    func editAccountProfileDoesNotWriteTargetUserWithOwnPermission()
+    func editAccountProfileDoesNotWriteTargetUserWhenForbidden()
         async throws
     {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Profile.Edit.Scope(profile: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: false)
         let useCase = Profile.Edit.UseCase(
             authorizer: authorizer,
             transaction: transaction
@@ -684,12 +693,10 @@ struct AccountApplicationTestSuite {
     func editAccountProfilePersistsValidatedChanges() async throws {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Profile.Edit.Scope(profile: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Profile.Edit.UseCase(
             authorizer: authorizer,
             transaction: transaction
@@ -714,15 +721,13 @@ struct AccountApplicationTestSuite {
     }
 
     @Test
-    func editAccountProfileAllowsOwnProfileWithoutPermission() async throws {
+    func editAccountProfileAllowsOwnProfileWhenAuthorized() async throws {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Profile.Edit.Scope(profile: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Profile.Edit.UseCase(
             authorizer: authorizer,
             transaction: transaction
@@ -748,12 +753,10 @@ struct AccountApplicationTestSuite {
         let repository = MockAccountProfileRepository(
             result: makeAccountProfile()
         )
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Profile.Edit.Scope(profile: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: [Profile.Permissions.update]
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Profile.Edit.UseCase(
             authorizer: authorizer,
             transaction: transaction
@@ -798,12 +801,10 @@ struct AccountApplicationTestSuite {
     func getSettingsReadsTargetUserWithReadPermission() async throws {
         let settings = makeSettings()
         let repository = MockSettingsRepository(result: settings)
-        let query = MockQueryExecutor(
+        let query = FeatherTesting.QueryExecutor.Mock(
             context: Settings.Detail.Scope(query: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: [Settings.Permissions.read]
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Settings.Detail.UseCase(
             authorizer: authorizer,
             query: query
@@ -822,12 +823,10 @@ struct AccountApplicationTestSuite {
     func getSettingsReturnsMappedDetailForAuthorizedSubject() async throws {
         let settings = makeSettings()
         let repository = MockSettingsRepository(result: settings)
-        let query = MockQueryExecutor(
+        let query = FeatherTesting.QueryExecutor.Mock(
             context: Settings.Detail.Scope(query: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Settings.Detail.UseCase(
             authorizer: authorizer,
             query: query
@@ -851,12 +850,10 @@ struct AccountApplicationTestSuite {
     func getSettingsDoesNotQueryForForbiddenSubject() async throws {
         let settings = makeSettings()
         let repository = MockSettingsRepository(result: settings)
-        let query = MockQueryExecutor(
+        let query = FeatherTesting.QueryExecutor.Mock(
             context: Settings.Detail.Scope(query: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: false)
         let useCase = Settings.Detail.UseCase(
             authorizer: authorizer,
             query: query
@@ -880,12 +877,10 @@ struct AccountApplicationTestSuite {
     {
         let settings = makeSettings()
         let repository = MockSettingsRepository(result: settings)
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Settings.Edit.Scope(settings: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: true)
         let useCase = Settings.Edit.UseCase(
             authorizer: authorizer,
             transaction: transaction
@@ -916,12 +911,10 @@ struct AccountApplicationTestSuite {
     func editSettingsDoesNotWriteForForbiddenSubject() async throws {
         let settings = makeSettings()
         let repository = MockSettingsRepository(result: settings)
-        let transaction = MockTransactionExecutor(
+        let transaction = FeatherTesting.TransactionExecutor.Mock(
             context: Settings.Edit.Scope(settings: repository)
         )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: []
-        )
+        let authorizer = FeatherTesting.Authorizer.Mock(result: false)
         let useCase = Settings.Edit.UseCase(
             authorizer: authorizer,
             transaction: transaction

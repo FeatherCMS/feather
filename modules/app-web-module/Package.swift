@@ -265,6 +265,7 @@ let package = Package(
                 ),
 
                 .target(name: "WebDomain"),
+                .target(name: "WebApplication"),
                 .target(name: "WebInfrastructure"),
                 .target(name: "WebAdminAPI"),
                 .target(name: "WebAppAPI"),

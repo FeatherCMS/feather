@@ -1,5 +1,5 @@
 {
-  "originHash" : "fda8de9e7977729a61f1854a2a40aa424ec3461f4fd657e1df0750204a078b1f",
+  "originHash" : "c012c7e66f4411ac8a9cd2525f3476f85477fc73c3ae80d95950fc48dc5173d9",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -20,29 +20,11 @@
       }
     },
     {
-      "identity" : "feather-database-postgres",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-database-postgres",
-      "state" : {
-        "revision" : "078c8ad1a781d5606d6c3646ab1f127b28914f18",
-        "version" : "1.0.0-rc.3"
-      }
-    },
-    {
       "identity" : "feather-dbal",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-dbal",
       "state" : {
         "revision" : "3507e6b8933425e02e823ce74db7c5a98907c93b",
-        "version" : "1.0.0-alpha.1"
-      }
-    },
-    {
-      "identity" : "feather-dbal-postgres",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-dbal-postgres",
-      "state" : {
-        "revision" : "2291ae9f07aacb48b12fbe83fd00a909444cb4e7",
         "version" : "1.0.0-alpha.1"
       }
     },
@@ -92,15 +74,6 @@
       }
     },
     {
-      "identity" : "feather-sql-postgres",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-sql-postgres",
-      "state" : {
-        "revision" : "a2190dfa726aab9b0519084cf7ec05b0161bd271",
-        "version" : "1.0.0-alpha.1"
-      }
-    },
-    {
       "identity" : "feather-storage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-storage",
@@ -143,15 +116,6 @@
       "state" : {
         "revision" : "2cabbac1d08b25c5d22960cc9554f7960a3824cf",
         "version" : "7.0.0"
-      }
-    },
-    {
-      "identity" : "postgres-nio",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/postgres-nio",
-      "state" : {
-        "revision" : "39ce38a93408937bcd27f521f3cdf88266136b80",
-        "version" : "1.33.1"
       }
     },
     {
@@ -206,15 +170,6 @@
       "state" : {
         "revision" : "ff86b924ead66f853b8baf91f3c41926a8f36177",
         "version" : "1.21.0"
-      }
-    },
-    {
-      "identity" : "swift-cmark",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swiftlang/swift-cmark.git",
-      "state" : {
-        "revision" : "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
-        "version" : "0.9.0"
       }
     },
     {
@@ -296,15 +251,6 @@
       "state" : {
         "revision" : "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
         "version" : "1.16.1"
-      }
-    },
-    {
-      "identity" : "swift-markdown",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-markdown",
-      "state" : {
-        "revision" : "25cb61d3482054b09ae76ca4f281b1bfe7fe5a43",
-        "version" : "0.9.0"
       }
     },
     {

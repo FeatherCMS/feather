@@ -8,7 +8,7 @@ extension AppAPIGateway {
         do {
             let detail = try await useCases.makeGetPublicPageByID()
                 .execute(
-                    id: input.path.id
+                    input: .init(id: input.path.id)
                 )
             let media = await useCases.publicMedia(assetId: detail.imageAssetId)
             return .ok(
@@ -32,7 +32,7 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is GetPublicPageByID.Error {
+        catch is Public.Page.Detail.UseCase.Error {
             return .notFound(
                 .init(
                     body: .json(
