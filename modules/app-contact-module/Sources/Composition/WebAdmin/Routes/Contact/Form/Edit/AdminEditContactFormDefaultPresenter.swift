@@ -41,13 +41,13 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
                 state: .init(
                     key: item.key,
                     isReadOnly: !permissions.contains(
-                        ContactModule.Permissions.Forms.update.rawValue
+                        Form.Permissions.update.rawValue
                     ),
                     canAddField: permissions.contains(
-                        ContactModule.Permissions.Forms.update.rawValue
+                        Form.Permissions.update.rawValue
                     )
                         && permissions.contains(
-                            ContactModule.Permissions.Fields.create.rawValue
+                            FormField.Permissions.create.rawValue
                         ),
                     form: .init(
                         key: item.key,
@@ -81,7 +81,7 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
                 state: .init(
                     key: key,
                     isReadOnly: !permissions.contains(
-                        ContactModule.Permissions.Forms.update.rawValue
+                        Form.Permissions.update.rawValue
                     ),
                     form: .init(
                         key: item.key,

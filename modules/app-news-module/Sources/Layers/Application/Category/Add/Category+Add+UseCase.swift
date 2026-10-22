@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsModule
-public import NewsDomain
+public import NewsModule
+import NewsDomain
 import SystemApplication
 import WebApplication
 
@@ -13,7 +13,7 @@ import WebApplication
 
 public struct AddCategory: UseCase {
     struct Action: PermissionAction {
-        let key = NewsPermissions.Categories.create
+        let key = Category.Permissions.create
     }
 
     let authorizer: any Authorizer
@@ -43,7 +43,7 @@ public struct AddCategory: UseCase {
                     "news.category.path_prefix"
                 ) ?? "news/categories"
             let model = try await scope.category.insert(
-                Category.create(
+                Category.Model.create(
                     title: input.title,
                     excerpt: input.excerpt,
                     content: input.content,

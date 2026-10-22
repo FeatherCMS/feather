@@ -1,12 +1,11 @@
-import ContactModule
-public import ContactDomain
-import ContactModule
+import ContactDomain
+public import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
 public struct ListFormFields: UseCase {
     struct Action: PermissionAction {
-        let key = ContactModule.Permissions.Fields.list
+        let key = FormField.Permissions.list
     }
 
     let authorizer: any Authorizer
@@ -35,7 +34,7 @@ public struct ListFormFields: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            if input.formKey == FormFieldListFilter.unassigned {
+            if input.formKey == FormField.List.Filter.unassigned {
                 return try await scope.field.listUnassigned().map(\.asDetail)
             }
             if let formKey = input.formKey {

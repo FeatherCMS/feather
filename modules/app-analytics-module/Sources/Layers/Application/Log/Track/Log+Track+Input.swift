@@ -1,10 +1,11 @@
 public import AnalyticsDomain
+public import AnalyticsModule
 public import FeatherApplication
 
 extension Log.Track {
     public struct Input: DTO {
         public let accountId: String?
-        public let source: Log.Source
+        public let source: Log.Model.Source
         public let method: String
         public let url: String
         public let headers: String
@@ -14,7 +15,7 @@ extension Log.Track {
         public let origin: String?
         public let acceptLanguage: String?
         public let userAgent: String?
-        public let trafficCategory: Log.TrafficCategory
+        public let trafficCategory: Log.Model.TrafficCategory
         public let language: String?
         public let region: String?
         public let osName: String?
@@ -31,7 +32,7 @@ extension Log.Track {
 
         public init(
             accountId: String?,
-            source: Log.Source,
+            source: Log.Model.Source,
             method: String,
             url: String,
             headers: String,
@@ -41,7 +42,7 @@ extension Log.Track {
             origin: String?,
             acceptLanguage: String?,
             userAgent: String?,
-            trafficCategory: Log.TrafficCategory = .human,
+            trafficCategory: Log.Model.TrafficCategory = .human,
             language: String?,
             region: String?,
             osName: String?,

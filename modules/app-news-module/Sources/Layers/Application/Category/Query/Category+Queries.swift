@@ -5,7 +5,8 @@
 //  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
-public import NewsDomain
+import NewsDomain
+public import NewsModule
 
 public protocol CategoryQueries: Sendable {
     func find(

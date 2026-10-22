@@ -1,24 +1,29 @@
 public import FeatherDomain
+public import ContactModule
 
-public protocol SubmissionRepository: Repository {
+extension Submission {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
     func listBy(
         formId: String
-    ) async throws -> [Submission]
+    ) async throws -> [Model]
 
     func findBy(
         id: String
-    ) async throws -> Submission?
+    ) async throws -> Model?
 
     func insert(
-        _ model: Submission.New
-    ) async throws -> Submission
+        _ model: Model.New
+    ) async throws -> Model
 
     func update(
-        _ model: Submission
-    ) async throws -> Submission
+        _ model: Model
+    ) async throws -> Model
 
     func delete(
         ids: [String]
     ) async throws -> [String]
+        }
+    }
 }

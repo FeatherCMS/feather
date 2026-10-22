@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
+import NewsModule
 public import FeatherModuleKit
 import Foundation
 import WebApplication

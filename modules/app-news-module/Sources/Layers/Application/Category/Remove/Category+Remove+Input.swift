@@ -1,5 +1,6 @@
 public import FeatherApplication
-public import NewsDomain
+public import NewsModule
+import NewsDomain
 
 extension Category {
     public enum Remove {}

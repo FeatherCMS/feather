@@ -1,12 +1,11 @@
-import ContactModule
+public import ContactModule
 public import ContactDomain
-import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
 public struct CreateFormField: UseCase {
     struct Action: PermissionAction {
-        let key = ContactModule.Permissions.Fields.create
+        let key = FormField.Permissions.create
     }
 
     let authorizer: any Authorizer
@@ -22,18 +21,18 @@ public struct CreateFormField: UseCase {
     public struct Input: DTO {
         public let formId: String?
         public let key: String
-        public let type: FormField.ItemType
+        public let type: FormField.Model.ItemType
         public let label: String
-        public let allowedValues: [FormField.Option]
+        public let allowedValues: [FormField.Model.Option]
         public let isRequired: Bool
         public let position: Int
 
         public init(
             formId: String?,
             key: String,
-            type: FormField.ItemType,
+            type: FormField.Model.ItemType,
             label: String,
-            allowedValues: [FormField.Option] = [],
+            allowedValues: [FormField.Model.Option] = [],
             isRequired: Bool = false,
             position: Int = 0
         ) {
@@ -56,7 +55,7 @@ public struct CreateFormField: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            let model = try FormField.create(
+            let model = try FormField.Model.create(
                 formId: input.formId ?? "",
                 key: input.key,
                 type: input.type,

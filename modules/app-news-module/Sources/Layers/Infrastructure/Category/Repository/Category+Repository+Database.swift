@@ -8,11 +8,12 @@ import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 public import NewsDomain
+public import NewsModule
 import WebDomain
 import WebInfrastructure
 
 extension CategoryTable.Row {
-    func asDomain(metadata: WebDomain.Metadata.Model) -> Category {
+    func asDomain(metadata: WebDomain.Metadata.Model) -> Category.Model {
         .init(
             id: id,
             title: title,
@@ -26,7 +27,7 @@ extension CategoryTable.Row {
     }
 }
 
-public struct CategoryDatabaseRepository: CategoryRepository {
+public struct CategoryDatabaseRepository: Category.Repository.Interface {
 
     public let context: DatabaseTransactionContext
     public init(context: DatabaseTransactionContext) {
@@ -34,8 +35,8 @@ public struct CategoryDatabaseRepository: CategoryRepository {
     }
 
     public func insert(
-        _ model: Category.New
-    ) async throws -> Category {
+        _ model: Category.Model.New
+    ) async throws -> Category.Model {
         let table = CategoryTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
@@ -56,7 +57,7 @@ public struct CategoryDatabaseRepository: CategoryRepository {
 
     public func find(
         id: String
-    ) async throws -> Category? {
+    ) async throws -> Category.Model? {
         let table = CategoryTable(connection: context.connection)
         guard let category = try await table.find(id: id) else { return nil }
         guard
@@ -69,8 +70,8 @@ public struct CategoryDatabaseRepository: CategoryRepository {
     }
 
     public func update(
-        _ model: Category
-    ) async throws -> Category {
+        _ model: Category.Model
+    ) async throws -> Category.Model {
         let table = CategoryTable(connection: context.connection)
         let updated = try await table.update(
             id: model.id,

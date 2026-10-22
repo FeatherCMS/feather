@@ -41,7 +41,7 @@ struct AdminNewsArticleDetailsPage: Component {
 
     private var actions: [AdminDetailView.Action] {
         var result: [AdminDetailView.Action] = []
-        if permissions.allows(NewsPermissions.Articles.update) {
+        if permissions.allows(Article.Permissions.update) {
             result.append(
                 .init(
                     label: "Edit",
@@ -52,7 +52,7 @@ struct AdminNewsArticleDetailsPage: Component {
                 )
             )
         }
-        if permissions.allows(NewsPermissions.Articles.delete) {
+        if permissions.allows(Article.Permissions.delete) {
             result.append(
                 .init(
                     label: "Remove",

@@ -1,6 +1,7 @@
 import ContactDomain
+import ContactModule
 
-extension Form {
+extension Form.Model {
     var asDetail: Form.Detail.Output {
         asDetail(fields: [], mails: [])
     }

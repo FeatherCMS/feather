@@ -98,6 +98,7 @@ let package = Package(
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
 
+                .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -110,6 +111,7 @@ let package = Package(
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "SystemModule", package: "app-system-module"),
 
+                .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsApplication"),
                 .target(name: "AnalyticsDomain"),
             ],

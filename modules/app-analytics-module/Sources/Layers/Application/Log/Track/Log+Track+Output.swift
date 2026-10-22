@@ -1,4 +1,5 @@
-public import AnalyticsDomain
+import AnalyticsDomain
+public import AnalyticsModule
 public import FeatherApplication
 
 extension Log {

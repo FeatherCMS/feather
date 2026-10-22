@@ -1,30 +1,35 @@
 //
-//  ArticleRepository.swift
+//  Article.Repository.Interface.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherDomain
+public import NewsModule
 
-public protocol ArticleRepository: Repository {
+extension NewsModule.Article {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
-    func find(
-        id: String
-    ) async throws -> Article?
+            func find(
+                id: String
+            ) async throws -> Model?
 
-    func insert(
-        _ model: Article.New
-    ) async throws -> Article
+            func insert(
+                _ model: Model.New
+            ) async throws -> Model
 
-    func update(
-        _ model: Article
-    ) async throws -> Article
+            func update(
+                _ model: Model
+            ) async throws -> Model
 
-    func removeCategory(
-        id: String
-    ) async throws
+            func removeCategory(
+                id: String
+            ) async throws
 
-    func delete(
-        ids: [String]
-    ) async throws -> [String]
+            func delete(
+                ids: [String]
+            ) async throws -> [String]
+        }
+    }
 }

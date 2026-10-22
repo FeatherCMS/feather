@@ -10,7 +10,7 @@ public enum EventHandlers {
         registry.register(
             event: Permission.Event.Seed.self
         ) { _ in
-            AnalyticsPermissions.allPermissions()
+            AnalyticsModule.Permissions.allPermissions()
                 .map {
                     .init(permission: $0)
                 }

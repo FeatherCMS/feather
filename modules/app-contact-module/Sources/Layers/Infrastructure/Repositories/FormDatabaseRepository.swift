@@ -1,10 +1,11 @@
 public import ContactDomain
+public import ContactModule
 import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 
 extension FormTable.Row {
-    var asDomain: Form {
+    var asDomain: Form.Model {
         .init(
             id: id,
             key: key,
@@ -18,21 +19,21 @@ extension FormTable.Row {
     }
 }
 
-public struct FormDatabaseRepository: FormRepository {
+public struct FormDatabaseRepository: Form.Repository.Interface {
 
     public let context: DatabaseTransactionContext
     public init(context: DatabaseTransactionContext) {
         self.context = context
     }
 
-    public func list() async throws -> [Form] {
+    public func list() async throws -> [Form.Model] {
         try await FormTable(connection: context.connection).list()
             .map(\.asDomain)
     }
 
     public func insert(
-        _ model: Form.New
-    ) async throws -> Form {
+        _ model: Form.Model.New
+    ) async throws -> Form.Model {
         let table = FormTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
@@ -49,21 +50,21 @@ public struct FormDatabaseRepository: FormRepository {
 
     public func findBy(
         id: String
-    ) async throws -> Form? {
+    ) async throws -> Form.Model? {
         let table = FormTable(connection: context.connection)
         return try await table.find(id: id)?.asDomain
     }
 
     public func findBy(
         key: String
-    ) async throws -> Form? {
+    ) async throws -> Form.Model? {
         let table = FormTable(connection: context.connection)
         return try await table.find(key: key)?.asDomain
     }
 
     public func update(
-        _ model: Form
-    ) async throws -> Form {
+        _ model: Form.Model
+    ) async throws -> Form.Model {
         let table = FormTable(connection: context.connection)
         let updated = try await table.update(
             id: model.id,

@@ -1,8 +1,10 @@
 public import FeatherDomain
+public import ContactModule
 
 public import struct Foundation.Date
 
-public struct SubmissionMail: Model {
+extension SubmissionMail {
+    public struct Model: FeatherDomain.Model {
     public struct New: Sendable {
         public let formId: String
         public let mailFrom: String
@@ -58,5 +60,6 @@ public struct SubmissionMail: Model {
         self.messageBody = messageBody
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+    }
     }
 }

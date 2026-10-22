@@ -112,7 +112,7 @@ struct ContactFormDetailsView: Component {
 
     private var actions: [AdminDetailView.Action] {
         var result: [AdminDetailView.Action] = []
-        if permissions.allows(ContactModule.Permissions.Forms.update) {
+        if permissions.allows(Form.Permissions.update) {
             result.append(
                 .init(
                     label: "Edit",
@@ -122,7 +122,7 @@ struct ContactFormDetailsView: Component {
                 )
             )
         }
-        if permissions.allows(ContactModule.Permissions.Forms.delete) {
+        if permissions.allows(Form.Permissions.delete) {
             result.append(
                 .init(
                     label: "Remove",

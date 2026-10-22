@@ -5,9 +5,10 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import AnalyticsDomain
+public import AnalyticsModule
 import Foundation
 
-extension Log {
+extension Log.Model {
     public var asListItem: Log.List.Output.Item {
         .init(
             id: id,

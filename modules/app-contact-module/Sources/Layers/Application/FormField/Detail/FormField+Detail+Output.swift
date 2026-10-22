@@ -1,4 +1,5 @@
 public import ContactDomain
+public import ContactModule
 public import FeatherApplication
 
 public import struct Foundation.Date
@@ -12,9 +13,9 @@ extension FormField.Detail {
         public let id: String
         public let formId: String
         public let key: String
-        public let type: FormField.ItemType
+        public let type: FormField.Model.ItemType
         public let label: String
-        public let allowedValues: [FormField.Option]
+        public let allowedValues: [FormField.Model.Option]
         public let isRequired: Bool
         public let position: Int
         public let createdAt: Date
@@ -24,9 +25,9 @@ extension FormField.Detail {
             id: String,
             formId: String,
             key: String,
-            type: FormField.ItemType,
+            type: FormField.Model.ItemType,
             label: String,
-            allowedValues: [FormField.Option],
+            allowedValues: [FormField.Model.Option],
             isRequired: Bool,
             position: Int,
             createdAt: Date,

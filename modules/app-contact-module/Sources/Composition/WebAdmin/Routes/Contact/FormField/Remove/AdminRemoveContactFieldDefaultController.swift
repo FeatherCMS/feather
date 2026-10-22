@@ -25,7 +25,7 @@ struct AdminRemoveContactFieldDefaultController:
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: ContactModule.Permissions.Fields.delete)
+        guard context.isCurrentUserAllowed(to: FormField.Permissions.delete)
         else {
             return
                 try await presenter
@@ -67,7 +67,7 @@ struct AdminRemoveContactFieldDefaultController:
             context: context
         )
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: ContactModule.Permissions.Fields.delete)
+        guard context.isCurrentUserAllowed(to: FormField.Permissions.delete)
         else {
             return
                 try await presenter

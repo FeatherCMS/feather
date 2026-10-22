@@ -23,7 +23,7 @@ struct AdminListAnalyticsLogDefaultPresenter:
         error: String?
     ) async throws -> HTMLResponse {
         let canAccess = permissions.contains(
-            AnalyticsPermissions.Logs.list.rawValue
+            Log.Permissions.list.rawValue
         )
         return try await renderEngine.renderAdminPage(
             request: request,

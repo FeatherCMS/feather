@@ -43,10 +43,10 @@ public struct AdminNews: Sendable {
             title: "News",
             content: NewsHomePage(
                 canViewArticles: context.isCurrentUserAllowed(
-                    to: NewsPermissions.Articles.list
+                    to: Article.Permissions.list
                 ),
                 canViewCategories: context.isCurrentUserAllowed(
-                    to: NewsPermissions.Categories.list
+                    to: Category.Permissions.list
                 )
             )
         )

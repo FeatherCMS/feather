@@ -19,7 +19,7 @@ struct ContactFormSubmissionDetailsView: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         let canUpdate = state.permissions.allows(
-            ContactModule.Permissions.Submissions.update
+            Submission.Permissions.update
         )
         return Section {
             context.build(AdminBreadcrumb(links: state.breadcrumb))

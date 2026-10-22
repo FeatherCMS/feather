@@ -127,6 +127,7 @@ let package = Package(
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
 
+                .target(name: "NewsModule"),
                 .target(name: "NewsDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -145,6 +146,7 @@ let package = Package(
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
 
+                .target(name: "NewsModule"),
                 .target(name: "NewsApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -208,6 +210,7 @@ let package = Package(
                 .product(name: "WebDomain", package: "app-web-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .target(name: "NewsModule"),
                 .target(name: "NewsDomain"),
 
                 .target(name: "NewsApplication"),

@@ -3,6 +3,7 @@ public import FeatherDatabase
 public import FeatherInfrastructure
 import FeatherModuleKit
 import NewsDomain
+import NewsModule
 import WebDomain
 
 public struct TableSeedMigration: DatabaseMigration {
@@ -25,7 +26,7 @@ public struct TableSeedMigration: DatabaseMigration {
             context: context
         )
         .insert(
-            Category.create(
+            Category.Model.create(
                 title: "Getting Started",
                 excerpt: "Starter category for seeded news content.",
                 content: "Starter category for seeded news content.",
@@ -42,7 +43,7 @@ public struct TableSeedMigration: DatabaseMigration {
             context: context
         )
         .insert(
-            Article.create(
+            Article.Model.create(
                 title: "Welcome to the News",
                 excerpt:
                     "A sample news article for local content verification.",

@@ -28,7 +28,7 @@ struct AdminAddContactFieldDefaultController:
         let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
-                to: ContactModule.Permissions.Fields.create
+                to: FormField.Permissions.create
             )
         else {
             return try await presenter.renderForbiddenPage()
@@ -37,7 +37,7 @@ struct AdminAddContactFieldDefaultController:
         guard
             formKey == nil
                 || context.isCurrentUserAllowed(
-                    to: ContactModule.Permissions.Forms.update
+                    to: Form.Permissions.update
                 )
         else {
             return try await presenter.renderForbiddenPage()
@@ -56,7 +56,7 @@ struct AdminAddContactFieldDefaultController:
         let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
-                to: ContactModule.Permissions.Fields.create
+                to: FormField.Permissions.create
             )
         else {
             return
@@ -68,7 +68,7 @@ struct AdminAddContactFieldDefaultController:
         guard
             formKey == nil
                 || context.isCurrentUserAllowed(
-                    to: ContactModule.Permissions.Forms.update
+                    to: Form.Permissions.update
                 )
         else {
             return

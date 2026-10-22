@@ -5,10 +5,12 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherDomain
+public import AnalyticsModule
 
 public import struct Foundation.Date
 
-public struct Log: Model {
+extension Log {
+    public struct Model: FeatherDomain.Model {
 
     public enum TrafficCategory: String, Sendable {
         case human
@@ -148,8 +150,9 @@ public struct Log: Model {
         self.updatedAt = updatedAt
     }
     }
+}
 
-    extension Log {
+extension Log.Model {
 
     private static func validate(
         method: String

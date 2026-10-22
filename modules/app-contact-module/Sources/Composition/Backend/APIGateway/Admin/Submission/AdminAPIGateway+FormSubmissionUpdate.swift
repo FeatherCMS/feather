@@ -1,4 +1,5 @@
 public import ContactAdminAPI
+import ContactModule
 import ContactApplication
 import ContactDomain
 import FeatherApplication
@@ -13,7 +14,7 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        guard let status = Submission.Status(rawValue: body.status)
+        guard let status = Submission.Model.Status(rawValue: body.status)
         else { throw HTTPError(.badRequest) }
         let result = try await self.useCases.makeUpdateContactFormSubmission()
             .execute(

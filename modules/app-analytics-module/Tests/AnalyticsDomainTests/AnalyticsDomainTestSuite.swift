@@ -19,7 +19,7 @@ struct AnalyticsDomainTestSuite {
     @Test
     func logRejectsInvalidResponseCode() {
         #expect(throws: Log.Error.invalidResponseCode) {
-            try Log.create(
+            try Log.Model.create(
                 accountId: nil,
                 source: .backendAPI,
                 method: "GET",

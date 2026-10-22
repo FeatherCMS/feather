@@ -1,4 +1,5 @@
-public import ContactDomain
+import ContactDomain
+public import ContactModule
 public import FeatherApplication
 
 extension SubmissionMail {

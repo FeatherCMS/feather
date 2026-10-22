@@ -1,17 +1,18 @@
 public import ContactDomain
+public import ContactModule
 public import FeatherModuleKit
 
 public struct WriteForm: Scope {
-    public let form: any FormRepository
-    public let field: any FormFieldRepository
-    public let mail: any SubmissionMailRepository
-    public let submission: any SubmissionRepository
+    public let form: any Form.Repository.Interface
+    public let field: any FormField.Repository.Interface
+    public let mail: any SubmissionMail.Repository.Interface
+    public let submission: any Submission.Repository.Interface
 
     public init(
-        form: any FormRepository,
-        field: any FormFieldRepository,
-        mail: any SubmissionMailRepository,
-        submission: any SubmissionRepository
+        form: any Form.Repository.Interface,
+        field: any FormField.Repository.Interface,
+        mail: any SubmissionMail.Repository.Interface,
+        submission: any Submission.Repository.Interface
     ) {
         self.form = form
         self.field = field

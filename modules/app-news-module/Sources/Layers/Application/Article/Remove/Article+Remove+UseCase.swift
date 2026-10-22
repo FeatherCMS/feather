@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsModule
-public import NewsDomain
+public import NewsModule
+import NewsDomain
 import WebDomain
 
 //
@@ -12,7 +12,7 @@ import WebDomain
 
 public struct RemoveArticle: UseCase {
     struct Action: PermissionAction {
-        let key = NewsPermissions.Articles.delete
+        let key = Article.Permissions.delete
     }
 
     let authorizer: any Authorizer

@@ -1,5 +1,6 @@
 public import FeatherApplication
-public import NewsDomain
+public import NewsModule
+import NewsDomain
 
 public import struct Foundation.Date
 

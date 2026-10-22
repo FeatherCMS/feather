@@ -1,5 +1,5 @@
-import AnalyticsModule
-public import AnalyticsDomain
+public import AnalyticsModule
+import AnalyticsDomain
 public import FeatherApplication
 public import FeatherModuleKit
 

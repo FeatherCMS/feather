@@ -9,11 +9,11 @@ public import Hummingbird
 public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
 
     public let apiBaseURL: URL
-    private let logFilter: any AnalyticsLogFilter
+    private let logFilter: any Log.Filter.Interface
 
     public init(
         apiBaseURL: URL,
-        logFilter: any AnalyticsLogFilter
+        logFilter: any Log.Filter.Interface
     ) {
         self.apiBaseURL = apiBaseURL
         self.logFilter = logFilter

@@ -1,6 +1,7 @@
 public import FeatherApplication
+public import NewsModule
 public import WebApplication
-public import NewsDomain
+import NewsDomain
 public import WebDomain
 
 extension Category {

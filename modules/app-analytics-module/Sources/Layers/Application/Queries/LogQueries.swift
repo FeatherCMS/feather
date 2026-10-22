@@ -4,7 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import AnalyticsDomain
+import AnalyticsDomain
+public import AnalyticsModule
 
 public protocol LogQueries: Sendable {
 

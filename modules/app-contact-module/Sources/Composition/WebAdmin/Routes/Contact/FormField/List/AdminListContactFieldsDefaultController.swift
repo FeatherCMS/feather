@@ -28,7 +28,7 @@ struct AdminListContactFieldsDefaultController:
         let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
-                to: ContactModule.Permissions.Fields.list
+                to: FormField.Permissions.list
             )
         else {
             return try await presenter.renderForbiddenPage()

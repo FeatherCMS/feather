@@ -6,12 +6,14 @@
 
 public import FeatherDomain
 import FeatherModuleKit
+public import NewsModule
 public import Foundation
 public import WebDomain
 
 public import struct Foundation.Date
 
-public struct Category: Model {
+extension NewsModule.Category {
+    public struct Model: FeatherDomain.Model {
 
     public enum Error: DomainError {
         case titleTooShort
@@ -56,9 +58,10 @@ public struct Category: Model {
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
+    }
 }
 
-extension Category {
+extension NewsModule.Category.Model {
 
     private static func validate(
         title: String

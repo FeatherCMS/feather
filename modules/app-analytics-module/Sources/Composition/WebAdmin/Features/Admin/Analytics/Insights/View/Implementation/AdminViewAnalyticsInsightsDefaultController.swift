@@ -21,7 +21,7 @@ struct AdminViewAnalyticsInsightsDefaultController:
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: AnalyticsPermissions.Insights.list
+            to: Insight.Permissions.list
         )
         if !canAccess {
             return try await presenter.renderDenied(

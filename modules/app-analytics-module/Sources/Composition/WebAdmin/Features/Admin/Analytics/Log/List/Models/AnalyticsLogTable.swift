@@ -350,8 +350,7 @@ struct AnalyticsLogTable: Component {
                                                                 .primary
                                                             ),
                                                             permission:
-                                                                AnalyticsPermissions
-                                                                .Logs.list
+                                                                Log.Permissions.list
                                                         )
                                                     ],
                                                     permissions: state

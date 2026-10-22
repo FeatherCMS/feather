@@ -1,8 +1,10 @@
 public import FeatherDomain
+public import ContactModule
 
 public import struct Foundation.Date
 
-public struct FormField: Model {
+extension FormField {
+    public struct Model: FeatherDomain.Model {
 
     public enum ItemType: String, Sendable, CaseIterable, Codable {
         case text
@@ -80,8 +82,9 @@ public struct FormField: Model {
         self.updatedAt = updatedAt
     }
     }
+}
 
-    extension FormField {
+extension FormField.Model {
 
     private static func validate(
         key: String,

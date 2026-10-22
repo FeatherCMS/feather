@@ -1,6 +1,7 @@
 import ContactDomain
+import ContactModule
 
-extension SubmissionMail {
+extension SubmissionMail.Model {
     var asDetail: SubmissionMail.Detail.Output {
         .init(
             id: id,

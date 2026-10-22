@@ -1,4 +1,5 @@
 import ContactDomain
+import ContactModule
 import FeatherDBAL
 import FeatherDatabase
 import FeatherInfrastructure
@@ -245,16 +246,16 @@ struct FormFieldTable {
     }
 
     extension FormFieldTable.Row {
-    func allowedValues() throws -> [FormField.Option] {
+    func allowedValues() throws -> [FormField.Model.Option] {
         try JSONDecoder()
             .decode(
-                [FormField.Option].self,
+                [FormField.Model.Option].self,
                 from: Data(allowedValuesJSON.utf8)
             )
     }
     }
 
-    extension FormField.Option {
+    extension FormField.Model.Option {
     static func jsonString(
         _ values: [Self]
     ) throws -> String {

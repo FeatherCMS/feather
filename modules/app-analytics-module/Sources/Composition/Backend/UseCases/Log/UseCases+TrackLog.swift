@@ -1,6 +1,7 @@
 import AnalyticsApplication
 import AnalyticsDomain
 import AnalyticsInfrastructure
+import AnalyticsModule
 import FeatherInfrastructure
 
 extension UseCases {

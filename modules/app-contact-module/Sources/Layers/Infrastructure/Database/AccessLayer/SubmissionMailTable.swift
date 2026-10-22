@@ -1,4 +1,5 @@
 import ContactDomain
+import ContactModule
 import FeatherDatabase
 import FeatherInfrastructure
 
@@ -57,7 +58,7 @@ struct SubmissionMailTable {
     }
 
     func create(
-        model: SubmissionMail.New,
+        model: SubmissionMail.Model.New,
         id: String
     ) async throws -> Row {
         let additionalHeadersJSON = String(

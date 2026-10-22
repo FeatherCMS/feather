@@ -1,12 +1,11 @@
-import ContactModule
+public import ContactModule
 public import ContactDomain
-import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
 public struct UpdateSubmission: UseCase {
     struct Action: PermissionAction {
-        let key = ContactModule.Permissions.Submissions.update
+        let key = Submission.Permissions.update
     }
 
     let authorizer: any Authorizer
@@ -21,11 +20,11 @@ public struct UpdateSubmission: UseCase {
     public struct Input: DTO {
         public let formKey: String
         public let id: String
-        public let status: Submission.Status
+        public let status: Submission.Model.Status
         public init(
             formKey: String,
             id: String,
-            status: Submission.Status
+            status: Submission.Model.Status
         ) {
             self.formKey = formKey
             self.id = id

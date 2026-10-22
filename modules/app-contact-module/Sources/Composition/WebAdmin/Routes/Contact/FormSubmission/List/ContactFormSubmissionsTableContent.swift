@@ -56,7 +56,7 @@ struct ContactFormSubmissionsTableContent: Component {
                     }
                     else {
                         let canDelete = permissions.allows(
-                            ContactModule.Permissions.Submissions.delete
+                            Submission.Permissions.delete
                         )
                         context.build(
                             AdminListSelectionForm(
@@ -156,8 +156,7 @@ struct ContactFormSubmissionsTableContent: Component {
                                                                                 .primary
                                                                             ),
                                                                         permission:
-                                                                            ContactModule.Permissions
-                                                                            .Submissions
+                                                                            Submission.Permissions
                                                                             .read
                                                                     ),
                                                                 ],

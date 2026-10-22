@@ -1,12 +1,13 @@
 public import ContactDomain
+public import ContactModule
 import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 
 extension SubmissionTable.Row {
-    var asDomain: Submission {
+    var asDomain: Submission.Model {
         get throws {
-            guard let status = Submission.Status(rawValue: status)
+            guard let status = Submission.Model.Status(rawValue: status)
             else {
                 throw RepositoryError.invalidEnumValue(status)
             }
@@ -25,7 +26,7 @@ extension SubmissionTable.Row {
 }
 
 public struct SubmissionDatabaseRepository:
-    SubmissionRepository
+    Submission.Repository.Interface
 {
 
     public let context: DatabaseTransactionContext
@@ -35,14 +36,14 @@ public struct SubmissionDatabaseRepository:
 
     public func listBy(
         formId: String
-    ) async throws -> [Submission] {
+    ) async throws -> [Submission.Model] {
         let table = SubmissionTable(connection: context.connection)
         return try await table.list(formId: formId).map { try $0.asDomain }
     }
 
     public func insert(
-        _ model: Submission.New
-    ) async throws -> Submission {
+        _ model: Submission.Model.New
+    ) async throws -> Submission.Model {
         let table = SubmissionTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
@@ -59,14 +60,14 @@ public struct SubmissionDatabaseRepository:
 
     public func findBy(
         id: String
-    ) async throws -> Submission? {
+    ) async throws -> Submission.Model? {
         let table = SubmissionTable(connection: context.connection)
         return try await table.find(id: id).map { try $0.asDomain }
     }
 
     public func update(
-        _ model: Submission
-    ) async throws -> Submission {
+        _ model: Submission.Model
+    ) async throws -> Submission.Model {
         let table = SubmissionTable(connection: context.connection)
         return
             try await table.update(id: model.id, status: model.status.rawValue)

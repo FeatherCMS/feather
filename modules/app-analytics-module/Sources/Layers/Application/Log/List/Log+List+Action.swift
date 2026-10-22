@@ -4,6 +4,6 @@ import FeatherModuleKit
 
 extension Log.List {
     struct Action: PermissionAction {
-        let key = AnalyticsPermissions.Logs.list
+        let key = Log.Permissions.list
     }
 }

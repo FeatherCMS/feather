@@ -18,7 +18,7 @@ struct ContactFieldsTableContent: Component {
     let permissions: AdminListActions
 
     private var emptyStateMessage: String {
-        if formKey == FormFieldListFilter.unassigned {
+        if formKey == FormField.List.Filter.unassigned {
             return search.isEmpty
                 ? "No unassigned contact form fields."
                 : "No unassigned fields match your search."
@@ -61,7 +61,7 @@ struct ContactFieldsTableContent: Component {
                                 action: {
                                     if search.isEmpty && formKey == nil {
                                         if permissions.allows(
-                                            ContactModule.Permissions.Fields
+                                            FormField.Permissions
                                                 .create
                                         ) {
                                             context.build(
@@ -89,7 +89,7 @@ struct ContactFieldsTableContent: Component {
                     }
                     else {
                         let canDelete = permissions.allows(
-                            ContactModule.Permissions.Fields.delete
+                            FormField.Permissions.delete
                         )
                         context.build(
                             AdminListSelectionForm(
@@ -197,9 +197,7 @@ struct ContactFieldsTableContent: Component {
                                                                                 .secondary
                                                                             ),
                                                                         permission:
-                                                                            ContactModule
-                                                                            .Permissions
-                                                                            .Fields
+                                                                            FormField.Permissions
                                                                             .update
                                                                     )
                                                                 ],
@@ -243,11 +241,11 @@ struct ContactFieldsTableContent: Component {
                                             }
                                         Option("No form assigned")
                                             .value(
-                                                FormFieldListFilter.unassigned
+                                                FormField.List.Filter.unassigned
                                             )
                                             .if(
                                                 formKey
-                                                    == FormFieldListFilter
+                                                    == FormField.List.Filter
                                                     .unassigned
                                             ) {
                                                 $0.selected()
@@ -271,7 +269,7 @@ struct ContactFieldsTableContent: Component {
                 },
                 toolbar: {
                     if permissions.allows(
-                        ContactModule.Permissions.Fields.create
+                        FormField.Permissions.create
                     ) {
                         context.build(
                             AdminListToolbar {

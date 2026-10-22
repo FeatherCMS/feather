@@ -1,4 +1,5 @@
 public import ContactAdminAPI
+import ContactModule
 import ContactApplication
 import ContactDomain
 import FeatherApplication
@@ -12,8 +13,8 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        guard let type = FormField.ItemType(rawValue: body._type) else {
-            throw FormField.Error.optionsNotAllowed
+        guard let type = FormField.Model.ItemType(rawValue: body._type) else {
+            throw FormField.Model.Error.optionsNotAllowed
         }
         let result = try await self.useCases.makeCreateFormField()
             .execute(

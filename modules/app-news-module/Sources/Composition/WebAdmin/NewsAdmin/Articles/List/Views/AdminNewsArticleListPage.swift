@@ -104,8 +104,8 @@ struct AdminNewsArticleListPage: Component {
                                                                                 .primary
                                                                             ),
                                                                         permission:
-                                                                            NewsPermissions
-                                                                            .Articles
+                                                                            Article
+                                                                            .Permissions
                                                                             .read
                                                                     ),
                                                                     .init(
@@ -125,8 +125,8 @@ struct AdminNewsArticleListPage: Component {
                                                                                 .secondary
                                                                             ),
                                                                         permission:
-                                                                            NewsPermissions
-                                                                            .Articles
+                                                                            Article
+                                                                            .Permissions
                                                                             .update
                                                                     ),
                                                                 ],
@@ -156,7 +156,7 @@ struct AdminNewsArticleListPage: Component {
                         },
                         toolbar: {
                             if permissions.allows(
-                                NewsPermissions.Articles.create
+                                Article.Permissions.create
                             ) {
                                 context.build(
                                     AdminListToolbar {

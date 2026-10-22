@@ -4,7 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import AnalyticsDomain
+import AnalyticsDomain
+public import AnalyticsModule
 public import FeatherApplication
 public import FeatherModuleKit
 
@@ -24,7 +25,7 @@ extension Log.Track {
         ) async throws -> Log.Track.Output {
             let model = try await transaction.run { scope in
                 try await scope.log.insert(
-                    Log.create(
+                    Log.Model.create(
                         accountId: input.accountId,
                         source: input.source,
                         method: input.method,

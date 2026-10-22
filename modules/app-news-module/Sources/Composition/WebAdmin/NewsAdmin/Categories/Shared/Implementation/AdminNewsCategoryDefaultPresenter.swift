@@ -27,7 +27,7 @@ struct AdminNewsCategoryDefaultPresenter: AdminNewsCategoryPresenter {
                 error: error,
                 permissions: context.currentUserAdminListActions,
                 canAccess: context.isCurrentUserAllowed(
-                    to: NewsPermissions.Categories.list
+                    to: Category.Permissions.list
                 )
             )
         )

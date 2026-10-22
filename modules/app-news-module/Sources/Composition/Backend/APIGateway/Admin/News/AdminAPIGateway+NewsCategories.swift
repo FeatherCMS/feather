@@ -4,6 +4,7 @@ import Foundation
 public import NewsAdminAPI
 import NewsApplication
 import NewsDomain
+import NewsModule
 import WebApplication
 
 extension AdminAPIGateway {
@@ -44,7 +45,7 @@ extension AdminAPIGateway {
                 case .json(let value): value
                 }
         let subject = try await CurrentSubject.require()
-        let objectQuery = NewsDomain.Category.List.Input.Query(
+        let objectQuery = NewsModule.Category.List.Input.Query(
             page: .init(
                 size: query.page?.size ?? 20,
                 number: query.page?.number ?? 1
@@ -118,7 +119,7 @@ extension AdminAPIGateway {
 }
 
 extension Components.Schemas.NewsCategoryCreateSchema {
-    fileprivate func addCategoryInput() -> NewsDomain.Category.Add.Input {
+    fileprivate func addCategoryInput() -> NewsModule.Category.Add.Input {
         .init(
             title: title,
             excerpt: excerpt,
@@ -128,7 +129,7 @@ extension Components.Schemas.NewsCategoryCreateSchema {
         )
     }
 
-    fileprivate func editCategoryInput(id: String) -> NewsDomain.Category.Edit.Input {
+    fileprivate func editCategoryInput(id: String) -> NewsModule.Category.Edit.Input {
         .init(
             id: id,
             title: title,
@@ -142,7 +143,7 @@ extension Components.Schemas.NewsCategoryCreateSchema {
 
 extension AdminAPIGateway {
     fileprivate func map(
-        _ item: NewsDomain.Category.Detail.Output
+        _ item: NewsModule.Category.Detail.Output
     ) -> Components.Schemas.NewsCategoryDetailSchema {
         .init(
             id: item.id,
@@ -157,7 +158,7 @@ extension AdminAPIGateway {
     }
 
     fileprivate func map(
-        _ item: NewsDomain.Category.List.Output.Item
+        _ item: NewsModule.Category.List.Output.Item
     ) -> Components.Schemas.NewsCategoryListItemSchema {
         .init(
             id: item.id,

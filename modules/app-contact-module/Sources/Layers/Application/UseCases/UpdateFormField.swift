@@ -1,13 +1,12 @@
-import ContactModule
+public import ContactModule
 public import ContactDomain
-import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
 public struct UpdateFormField: UseCase {
     struct Error: UseCaseError { let message: String }
     struct Action: PermissionAction {
-        let key = ContactModule.Permissions.Fields.update
+        let key = FormField.Permissions.update
     }
 
     let authorizer: any Authorizer
@@ -23,18 +22,18 @@ public struct UpdateFormField: UseCase {
         public let id: String
         public let formId: String?
         public let key: String?
-        public let type: FormField.ItemType?
+        public let type: FormField.Model.ItemType?
         public let label: String?
-        public let allowedValues: [FormField.Option]?
+        public let allowedValues: [FormField.Model.Option]?
         public let isRequired: Bool?
         public let position: Int?
         public init(
             id: String,
             formId: String?,
             key: String? = nil,
-            type: FormField.ItemType? = nil,
+            type: FormField.Model.ItemType? = nil,
             label: String? = nil,
-            allowedValues: [FormField.Option]? = nil,
+            allowedValues: [FormField.Model.Option]? = nil,
             isRequired: Bool? = nil,
             position: Int? = nil
         ) {

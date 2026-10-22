@@ -60,7 +60,7 @@ struct AdminListAnalyticsLogDefaultController:
         let toValue = toDate == nil ? "" : requestedToValue ?? ""
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: AnalyticsPermissions.Logs.list
+            to: Log.Permissions.list
         )
         let emptyModel = AdminListAnalyticsLogModel(
             items: [],

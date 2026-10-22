@@ -104,8 +104,8 @@ struct AdminNewsCategoryListPage: Component {
                                                                                 .primary
                                                                             ),
                                                                         permission:
-                                                                            NewsPermissions
-                                                                            .Categories
+                                                                            Category
+                                                                            .Permissions
                                                                             .read
                                                                     ),
                                                                     .init(
@@ -125,8 +125,8 @@ struct AdminNewsCategoryListPage: Component {
                                                                                 .secondary
                                                                             ),
                                                                         permission:
-                                                                            NewsPermissions
-                                                                            .Categories
+                                                                            Category
+                                                                            .Permissions
                                                                             .update
                                                                     ),
                                                                 ],
@@ -157,7 +157,7 @@ struct AdminNewsCategoryListPage: Component {
                         },
                         toolbar: {
                             if permissions.allows(
-                                NewsPermissions.Categories.create
+                                Category.Permissions.create
                             ) {
                                 context.build(
                                     AdminListToolbar {

@@ -16,7 +16,7 @@ struct AdminListNewsCategoryDefaultController:
         let runtime = buildRuntime(request, context)
         let page = request.queryPage()
         let search = request.querySearch() ?? ""
-        guard context.isCurrentUserAllowed(to: NewsPermissions.Categories.list)
+        guard context.isCurrentUserAllowed(to: Category.Permissions.list)
         else {
             return try await runtime.presenter.renderList(
                 model: .init(items: [], total: 0, page: page, pageSize: 20),

@@ -9,14 +9,14 @@ struct ContactDomainTestSuite {
 
     @Test
     func formRejectsEmptyName() {
-        #expect(throws: Form.Error.nameTooShort) {
-            try Form.create(key: "contact", name: "")
+        #expect(throws: Form.Model.Error.nameTooShort) {
+            try Form.Model.create(key: "contact", name: "")
         }
     }
 
     @Test
     func formCreatePreservesMessagesAndRedirect() throws {
-        let form = try Form.create(
+        let form = try Form.Model.create(
             key: "contact",
             name: "Contact",
             successMessage: "Thanks",
@@ -31,7 +31,7 @@ struct ContactDomainTestSuite {
 
     @Test
     func formItemRequiresOptionsForChoiceControls() throws {
-        let item = try FormField.create(
+        let item = try FormField.Model.create(
             formId: "form-1",
             key: "department",
             type: .select,
@@ -45,7 +45,7 @@ struct ContactDomainTestSuite {
 
     @Test
     func hiddenFieldCanBeCreatedWithoutAllowedValues() throws {
-        let field = try FormField.create(
+        let field = try FormField.Model.create(
             formId: "form-1",
             key: "patient",
             type: .hidden,
@@ -60,7 +60,7 @@ struct ContactDomainTestSuite {
 
     @Test
     func submissionPreservesPayloadAndSnapshot() {
-        let submission = Submission.create(
+        let submission = Submission.Model.create(
             formId: "form-1",
             valuesJSON: #"{"name":"Jane"}"#,
             itemsSnapshotJSON: #"[{"key":"name","type":"text"}]"#

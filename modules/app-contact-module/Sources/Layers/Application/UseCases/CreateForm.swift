@@ -1,18 +1,17 @@
-import ContactModule
-public import ContactDomain
-import ContactModule
+import ContactDomain
+public import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
 public struct CreateForm: UseCase {
     struct Action: PermissionAction {
-        let key = ContactModule.Permissions.Forms.create
+        let key = Form.Permissions.create
     }
     struct MailCreateAction: PermissionAction {
-        let key = ContactModule.Permissions.Mails.create
+        let key = SubmissionMail.Permissions.create
     }
     struct MailListAction: PermissionAction {
-        let key = ContactModule.Permissions.Mails.list
+        let key = SubmissionMail.Permissions.list
     }
 
     let authorizer: any Authorizer
@@ -88,7 +87,7 @@ public struct CreateForm: UseCase {
             }
         }
         return try await transaction.run { scope in
-            let model = try Form.create(
+            let model = try Form.Model.create(
                 key: input.key,
                 name: input.name,
                 successMessage: input.successMessage,

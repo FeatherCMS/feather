@@ -1,4 +1,5 @@
 public import ContactAdminAPI
+import ContactModule
 import ContactApplication
 import ContactDomain
 import FeatherApplication
@@ -21,7 +22,7 @@ extension AdminAPIGateway {
                         formId: nil,
                         key: body.key,
                         type: body._type.flatMap(
-                            FormField.ItemType.init(rawValue:)
+                            FormField.Model.ItemType.init(rawValue:)
                         ),
                         label: body.label,
                         allowedValues: body.allowedValues.map {

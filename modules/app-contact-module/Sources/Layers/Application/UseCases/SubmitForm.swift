@@ -1,4 +1,5 @@
-public import ContactDomain
+import ContactDomain
+public import ContactModule
 public import FeatherApplication
 import FeatherMail
 public import FeatherModuleKit
@@ -76,7 +77,7 @@ public struct SubmitForm: UseCase {
                 against: fields
             )
 
-            let model = Submission.create(
+            let model = Submission.Model.create(
                 formId: form.id,
                 valuesJSON: input.valuesJSON,
                 itemsSnapshotJSON: input.itemsSnapshotJSON,
@@ -237,7 +238,7 @@ public struct SubmitForm: UseCase {
 
     private func validate(
         valuesJSON: String,
-        against fields: [FormField]
+        against fields: [FormField.Model]
     ) throws {
         guard
             let data = valuesJSON.data(using: .utf8),

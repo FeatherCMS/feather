@@ -1,8 +1,10 @@
 public import FeatherDomain
+public import ContactModule
 
 public import struct Foundation.Date
 
-public struct Form: Model {
+extension Form {
+    public struct Model: FeatherDomain.Model {
 
     public enum Error: DomainError {
         case keyTooShort
@@ -48,8 +50,9 @@ public struct Form: Model {
         self.updatedAt = updatedAt
     }
     }
+}
 
-    extension Form {
+extension Form.Model {
 
     private static func validate(
         key: String

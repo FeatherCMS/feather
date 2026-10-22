@@ -27,7 +27,7 @@ struct AdminNewsArticleDefaultPresenter: AdminNewsArticlePresenter {
                 error: error,
                 permissions: context.currentUserAdminListActions,
                 canAccess: context.isCurrentUserAllowed(
-                    to: NewsPermissions.Articles.list
+                    to: Article.Permissions.list
                 )
             )
         )

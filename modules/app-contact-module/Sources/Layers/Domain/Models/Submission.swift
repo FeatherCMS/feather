@@ -1,8 +1,10 @@
 public import FeatherDomain
+public import ContactModule
 
 public import struct Foundation.Date
 
-public struct Submission: Model {
+extension Submission {
+    public struct Model: FeatherDomain.Model {
 
     public enum Status: String, Sendable, CaseIterable {
         case received
@@ -48,8 +50,9 @@ public struct Submission: Model {
         self.updatedAt = updatedAt
     }
     }
+}
 
-    extension Submission {
+extension Submission.Model {
     public static func create(
         formId: String,
         valuesJSON: String,

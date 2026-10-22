@@ -20,7 +20,7 @@ struct AdminViewAnalyticsNotFoundDefaultController:
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: AnalyticsPermissions.NotFound.list
+            to: NotFound.Permissions.list
         )
         if !canAccess {
             return try await presenter.renderDenied(permissions: permissions)

@@ -1,6 +1,7 @@
 import ContactDomain
+import ContactModule
 
-extension FormField {
+extension FormField.Model {
     var asDetail: FormField.Detail.Output {
         .init(
             id: id,

@@ -121,6 +121,7 @@ let package = Package(
         .target(
             name: "ContactDomain",
             dependencies: [
+                .target(name: "ContactModule"),
                 .product(name: "FeatherDomain", package: "feather-core")
             ],
             path: "Sources/Layers/Domain",

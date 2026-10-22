@@ -1,4 +1,5 @@
 public import ContactDomain
+public import ContactModule
 public import FeatherApplication
 
 public import struct Foundation.Date
@@ -14,7 +15,7 @@ extension Submission.Detail {
         public let valuesJSON: String
         public let itemsSnapshotJSON: String
         public let metadataJSON: String?
-        public let status: Submission.Status
+        public let status: Submission.Model.Status
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -24,7 +25,7 @@ extension Submission.Detail {
             valuesJSON: String,
             itemsSnapshotJSON: String,
             metadataJSON: String?,
-            status: Submission.Status,
+            status: Submission.Model.Status,
             createdAt: Date,
             updatedAt: Date
         ) {

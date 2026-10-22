@@ -10,7 +10,7 @@ struct ContactApplicationTestSuite {
     @Test
     func formDetailMappingPreservesConfiguredValues() {
         let date = Date(timeIntervalSince1970: 1_000)
-        let form = Form(
+        let form = Form.Model(
             id: "form-1",
             key: "contact",
             name: "Contact",

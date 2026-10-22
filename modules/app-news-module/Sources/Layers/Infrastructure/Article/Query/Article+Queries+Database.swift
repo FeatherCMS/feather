@@ -8,7 +8,8 @@ import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import NewsApplication
-public import NewsDomain
+import NewsDomain
+public import NewsModule
 public import WebApplication
 public import WebDomain
 

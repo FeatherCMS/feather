@@ -1,12 +1,13 @@
 public import ContactDomain
+public import ContactModule
 import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 
 extension FormFieldTable.Row {
-    var asDomain: FormField {
+    var asDomain: FormField.Model {
         get throws {
-            guard let type = FormField.ItemType(rawValue: type) else {
+            guard let type = FormField.Model.ItemType(rawValue: type) else {
                 throw RepositoryError.invalidEnumValue(type)
             }
             return .init(
@@ -25,7 +26,7 @@ extension FormFieldTable.Row {
     }
 }
 
-public struct FormFieldDatabaseRepository: FormFieldRepository {
+public struct FormFieldDatabaseRepository: FormField.Repository.Interface {
 
     public let context: DatabaseTransactionContext
     public init(context: DatabaseTransactionContext) {
@@ -33,8 +34,8 @@ public struct FormFieldDatabaseRepository: FormFieldRepository {
     }
 
     public func insert(
-        _ model: FormField.New
-    ) async throws -> FormField {
+        _ model: FormField.Model.New
+    ) async throws -> FormField.Model {
         let table = FormFieldTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
@@ -43,7 +44,7 @@ public struct FormFieldDatabaseRepository: FormFieldRepository {
                 key: model.key,
                 type: model.type.rawValue,
                 label: model.label,
-                allowedValuesJSON: try FormField.Option.jsonString(
+                allowedValuesJSON: try FormField.Model.Option.jsonString(
                     model.allowedValues
                 ),
                 isRequired: model.isRequired,
@@ -56,7 +57,7 @@ public struct FormFieldDatabaseRepository: FormFieldRepository {
     public func findBy(
         id: String,
         formId: String?
-    ) async throws -> FormField? {
+    ) async throws -> FormField.Model? {
         let table = FormFieldTable(connection: context.connection)
         return try await table.find(id: id, formId: formId)
             .map { try $0.asDomain }
@@ -64,12 +65,12 @@ public struct FormFieldDatabaseRepository: FormFieldRepository {
 
     public func listBy(
         formId: String?
-    ) async throws -> [FormField] {
+    ) async throws -> [FormField.Model] {
         let table = FormFieldTable(connection: context.connection)
         return try await table.list(formId: formId).map { try $0.asDomain }
     }
 
-    public func listUnassigned() async throws -> [FormField] {
+    public func listUnassigned() async throws -> [FormField.Model] {
         try await FormFieldTable(connection: context.connection)
             .listUnassigned()
             .map { try $0.asDomain }
@@ -100,8 +101,8 @@ public struct FormFieldDatabaseRepository: FormFieldRepository {
     }
 
     public func update(
-        _ model: FormField
-    ) async throws -> FormField {
+        _ model: FormField.Model
+    ) async throws -> FormField.Model {
         let table = FormFieldTable(connection: context.connection)
         let updated = try await table.update(
             id: model.id,
@@ -111,7 +112,7 @@ public struct FormFieldDatabaseRepository: FormFieldRepository {
                 key: model.key,
                 type: model.type.rawValue,
                 label: model.label,
-                allowedValuesJSON: try FormField.Option.jsonString(
+                allowedValuesJSON: try FormField.Model.Option.jsonString(
                     model.allowedValues
                 ),
                 isRequired: model.isRequired,

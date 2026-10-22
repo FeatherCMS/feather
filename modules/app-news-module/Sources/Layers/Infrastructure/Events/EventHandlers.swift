@@ -11,7 +11,7 @@ public enum EventHandlers {
         registry.register(
             event: Permission.Event.Seed.self
         ) { _ in
-            NewsPermissions.allPermissions()
+            NewsModule.Permissions.allPermissions()
                 .map {
                     .init(permission: $0)
                 }

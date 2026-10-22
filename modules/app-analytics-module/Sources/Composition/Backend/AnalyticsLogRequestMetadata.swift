@@ -1,4 +1,5 @@
 public import AnalyticsDomain
+public import AnalyticsModule
 import FeatherModuleKit
 import Foundation
 
@@ -11,7 +12,7 @@ public enum AnalyticsLogRequestMetadata {
 
     public static func classifyUserAgent(
         _ value: String?
-    ) -> Log.TrafficCategory {
+    ) -> Log.Model.TrafficCategory {
         guard let value, !value.isEmpty else { return .human }
         let userAgent = value.lowercased()
         if userAgent.range(

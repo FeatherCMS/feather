@@ -15,7 +15,7 @@ struct NewsModuleTestSuite {
 
     @Test
     func articleCreateBuildsDefaultMetadata() throws {
-        let article = try Article.create(
+        let article = try Article.Model.create(
             title: "Swift News",
             excerpt: "A short update",
             content: "Article content",
@@ -29,7 +29,7 @@ struct NewsModuleTestSuite {
     @Test
     func articleRejectsEmptyTitle() {
         #expect(throws: Article.Error.titleTooShort) {
-            try Article.create(
+            try Article.Model.create(
                 title: "",
                 excerpt: "A short update",
                 content: "Article content",

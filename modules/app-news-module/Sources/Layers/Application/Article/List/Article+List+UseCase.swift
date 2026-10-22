@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-public import NewsDomain
-import NewsModule
+import NewsDomain
+public import NewsModule
 
 //
 //  ListArticles.swift
@@ -11,7 +11,7 @@ import NewsModule
 
 public struct ListArticles: UseCase {
     struct Action: PermissionAction {
-        let key = NewsPermissions.Articles.list
+        let key = Article.Permissions.list
     }
 
     let authorizer: any Authorizer

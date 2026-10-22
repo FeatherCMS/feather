@@ -1,17 +1,20 @@
 public import FeatherDomain
+public import ContactModule
 
-public protocol FormFieldRepository: Repository {
+extension FormField {
+    public enum Repository {
+        public protocol Interface: FeatherDomain.Repository {
 
     func findBy(
         id: String,
         formId: String?
-    ) async throws -> FormField?
+    ) async throws -> Model?
 
     func listBy(
         formId: String?
-    ) async throws -> [FormField]
+    ) async throws -> [Model]
 
-    func listUnassigned() async throws -> [FormField]
+    func listUnassigned() async throws -> [Model]
 
     func assign(
         formId: String,
@@ -25,15 +28,17 @@ public protocol FormFieldRepository: Repository {
     ) async throws
 
     func insert(
-        _ model: FormField.New
-    ) async throws -> FormField
+        _ model: Model.New
+    ) async throws -> Model
 
     func update(
-        _ model: FormField
-    ) async throws -> FormField
+        _ model: Model
+    ) async throws -> Model
 
     func delete(
         ids: [String],
         formId: String?
     ) async throws -> [String]
+        }
+    }
 }

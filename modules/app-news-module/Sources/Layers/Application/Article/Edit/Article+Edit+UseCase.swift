@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsModule
-public import NewsDomain
+public import NewsModule
+import NewsDomain
 import WebApplication
 import WebDomain
 
@@ -13,7 +13,7 @@ import WebDomain
 
 public struct EditArticle: UseCase {
     struct Action: PermissionAction {
-        let key = NewsPermissions.Articles.update
+        let key = Article.Permissions.update
     }
 
     struct Error: UseCaseError {

@@ -5,11 +5,12 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import AnalyticsDomain
+public import AnalyticsModule
 import FeatherDomain
 public import FeatherInfrastructure
 
 extension LogTable.Row {
-    var asDomain: Log {
+    var asDomain: Log.Model {
         .init(
             id: id,
             accountId: accountId,
@@ -23,7 +24,7 @@ extension LogTable.Row {
             origin: origin,
             acceptLanguage: acceptLanguage,
             userAgent: userAgent,
-            trafficCategory: Log.TrafficCategory(rawValue: trafficCategory) ?? .human,
+            trafficCategory: Log.Model.TrafficCategory(rawValue: trafficCategory) ?? .human,
             language: language,
             region: region,
             osName: osName,
@@ -43,7 +44,7 @@ extension LogTable.Row {
     }
 }
 
-public struct LogDatabaseRepository: LogRepository {
+public struct LogDatabaseRepository: Log.Repository.Interface {
 
     public let context: DatabaseTransactionContext
     public init(context: DatabaseTransactionContext) {
@@ -51,8 +52,8 @@ public struct LogDatabaseRepository: LogRepository {
     }
 
     public func insert(
-        _ model: Log.New
-    ) async throws -> Log {
+        _ model: Log.Model.New
+    ) async throws -> Log.Model {
         let table = LogTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(

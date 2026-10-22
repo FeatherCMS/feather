@@ -1,4 +1,5 @@
 import ContactDomain
+import ContactModule
 import FeatherDBAL
 public import FeatherDatabase
 public import FeatherInfrastructure
@@ -29,7 +30,7 @@ public struct TableSeedMigration: DatabaseMigration {
         let fields:
             [(
                 key: String,
-                type: FormField.ItemType,
+                type: FormField.Model.ItemType,
                 label: String,
                 isRequired: Bool
             )] = [
@@ -41,7 +42,7 @@ public struct TableSeedMigration: DatabaseMigration {
 
         for field in fields where !existingKeys.contains(field.key) {
             _ = try await repository.insert(
-                FormField.create(
+                FormField.Model.create(
                     formId: "",
                     key: field.key,
                     type: field.type,

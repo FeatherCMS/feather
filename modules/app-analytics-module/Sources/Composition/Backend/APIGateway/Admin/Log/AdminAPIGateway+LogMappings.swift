@@ -1,5 +1,6 @@
 import AnalyticsAdminAPI
 import AnalyticsApplication
+import AnalyticsModule
 import AnalyticsDomain
 import FeatherApplication
 import FeatherModuleKit

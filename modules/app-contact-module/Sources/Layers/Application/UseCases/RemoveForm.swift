@@ -6,7 +6,7 @@ public import FeatherModuleKit
 
 public struct RemoveForm: UseCase {
     struct Action: PermissionAction {
-        let key = ContactModule.Permissions.Forms.delete
+        let key = Form.Permissions.delete
     }
 
     let authorizer: any Authorizer

@@ -42,7 +42,7 @@ struct ContactFormTableContent: Component {
                                 action: {
                                     if search.isEmpty {
                                         if permissions.allows(
-                                            ContactModule.Permissions.Forms.create
+                                            Form.Permissions.create
                                         ) {
                                             context.build(
                                                 AdminButton(
@@ -69,7 +69,7 @@ struct ContactFormTableContent: Component {
                     }
                     else {
                         let canDelete = permissions.allows(
-                            ContactModule.Permissions.Forms.delete
+                            Form.Permissions.delete
                         )
                         context.build(
                             AdminListSelectionForm(
@@ -176,8 +176,7 @@ struct ContactFormTableContent: Component {
                                                                                 .primary
                                                                             ),
                                                                         permission:
-                                                                            ContactModule.Permissions
-                                                                            .Forms
+                                                                            Form.Permissions
                                                                             .read
                                                                     ),
                                                                     .init(
@@ -196,8 +195,7 @@ struct ContactFormTableContent: Component {
                                                                                 .secondary
                                                                             ),
                                                                         permission:
-                                                                            ContactModule.Permissions
-                                                                            .Forms
+                                                                            Form.Permissions
                                                                             .update
                                                                     ),
                                                                 ],
@@ -231,7 +229,7 @@ struct ContactFormTableContent: Component {
                     )
                 },
                 toolbar: {
-                    if permissions.allows(ContactModule.Permissions.Forms.create) {
+                    if permissions.allows(Form.Permissions.create) {
                         context.build(
                             AdminListToolbar {
                                 context.build(
@@ -264,7 +262,7 @@ struct ContactFormTableContent: Component {
         Td {
             Span {
                 Span(item.key)
-                if permissions.allows(ContactModule.Permissions.Forms.read) {
+                if permissions.allows(Form.Permissions.read) {
                     Button {
                         FeatherIcons.clipboard()
                     }

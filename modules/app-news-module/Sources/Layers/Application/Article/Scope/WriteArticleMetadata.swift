@@ -1,4 +1,5 @@
 public import FeatherModuleKit
+public import NewsModule
 public import NewsDomain
 public import SystemApplication
 public import SystemModule
@@ -11,12 +12,12 @@ public import WebDomain
 //  Created by Binary Birds on 2026. 06. 18.
 
 public struct WriteArticleMetadata: Scope {
-    public let article: any ArticleRepository
+    public let article: any Article.Repository.Interface
     public let metadata: any Metadata.Repository.Interface
     public let variable: any SystemModule.Variable.Lookup.Interface
 
     public init(
-        article: any ArticleRepository,
+        article: any Article.Repository.Interface,
         metadata: any Metadata.Repository.Interface,
         variable: any SystemModule.Variable.Lookup.Interface
     ) {

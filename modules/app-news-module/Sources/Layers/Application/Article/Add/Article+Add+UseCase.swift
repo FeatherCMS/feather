@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsModule
-public import NewsDomain
+public import NewsModule
+import NewsDomain
 import SystemApplication
 import WebApplication
 
@@ -13,7 +13,7 @@ import WebApplication
 
 public struct AddArticle: UseCase {
     struct Action: PermissionAction {
-        let key = NewsPermissions.Articles.create
+        let key = Article.Permissions.create
     }
 
     let authorizer: any Authorizer
@@ -43,7 +43,7 @@ public struct AddArticle: UseCase {
                     "news.article.path_prefix"
                 ) ?? "news"
             let model = try await scope.article.insert(
-                Article.create(
+                Article.Model.create(
                     title: input.title,
                     excerpt: input.excerpt,
                     content: input.content,

@@ -10,12 +10,12 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
     private static let forwardedFor = HTTPField.Name("x-forwarded-for")!
     private let analytics: AnalyticsBackend.UseCases
     private let resolveAccountID: @Sendable (Request) async -> String?
-    private let logFilter: any AnalyticsLogFilter
+    private let logFilter: any Log.Filter.Interface
 
     public init(
         analytics: AnalyticsBackend.UseCases,
         resolveAccountID: @escaping @Sendable (Request) async -> String?,
-        logFilter: any AnalyticsLogFilter
+        logFilter: any Log.Filter.Interface
     ) {
         self.analytics = analytics
         self.resolveAccountID = resolveAccountID

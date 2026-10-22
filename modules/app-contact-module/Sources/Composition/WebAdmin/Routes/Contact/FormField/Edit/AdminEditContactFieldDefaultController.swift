@@ -24,7 +24,7 @@ struct AdminEditContactFieldDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: ContactModule.Permissions.Fields.update)
+        guard context.isCurrentUserAllowed(to: FormField.Permissions.update)
         else {
             return try await presenter.renderForbiddenPage()
         }
@@ -47,7 +47,7 @@ struct AdminEditContactFieldDefaultController:
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: ContactModule.Permissions.Fields.update)
+        guard context.isCurrentUserAllowed(to: FormField.Permissions.update)
         else {
             return
                 try await presenter

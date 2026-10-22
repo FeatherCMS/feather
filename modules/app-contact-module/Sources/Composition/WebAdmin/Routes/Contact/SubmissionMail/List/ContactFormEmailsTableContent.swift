@@ -29,7 +29,7 @@ struct ContactFormEmailsTableContent: Component {
                                 icon: FeatherIcons.mail(),
                                 action: {
                                     if permissions.allows(
-                                        ContactModule.Permissions.Mails.create
+                                        SubmissionMail.Permissions.create
                                     ) {
                                         context.build(
                                             AdminButton(
@@ -49,7 +49,7 @@ struct ContactFormEmailsTableContent: Component {
                     }
                     else {
                         let canDelete = permissions.allows(
-                            ContactModule.Permissions.Mails.delete
+                            SubmissionMail.Permissions.delete
                         )
                         context.build(
                             AdminListSelectionForm(
@@ -139,8 +139,7 @@ struct ContactFormEmailsTableContent: Component {
                                                                                 .secondary
                                                                             ),
                                                                         permission:
-                                                                            ContactModule.Permissions
-                                                                            .Mails
+                                                                            SubmissionMail.Permissions
                                                                             .update
                                                                     ),
                                                                 ],
@@ -163,7 +162,7 @@ struct ContactFormEmailsTableContent: Component {
                     }
                 },
                 toolbar: {
-                    if permissions.allows(ContactModule.Permissions.Mails.create) {
+                    if permissions.allows(SubmissionMail.Permissions.create) {
                         context.build(
                             AdminListToolbar {
                                 context.build(

@@ -4,6 +4,7 @@ import Foundation
 public import NewsAdminAPI
 import NewsApplication
 import NewsDomain
+import NewsModule
 import WebApplication
 
 extension AdminAPIGateway {
