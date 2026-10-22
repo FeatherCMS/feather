@@ -1,5 +1,4 @@
 import FeatherWebAdmin
-import FeatherWebShared
 import HTML
 import OpenAPIRuntime
 import WebBuilders
@@ -7,21 +6,21 @@ import WebComponents
 
 struct WebMenuItemForm: Component {
 
-    struct FieldState: FeatherWebShared.Object {
+    struct FieldState: Sendable {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct CheckboxState: FeatherWebShared.Object {
+    struct CheckboxState: Sendable {
         var key: String
         var label: String
         var value: Bool
         var error: String?
     }
 
-    struct State: FeatherWebShared.Object {
+    struct State: Sendable {
         var label: FieldState
         var url: FieldState
         var priority: FieldState

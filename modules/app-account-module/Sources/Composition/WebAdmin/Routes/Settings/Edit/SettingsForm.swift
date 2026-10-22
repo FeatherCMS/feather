@@ -1,19 +1,18 @@
 import FeatherWebAdmin
-import FeatherWebShared
 import HTML
 import WebBuilders
 import WebComponents
 
 struct SettingsForm: Component {
 
-    struct FieldState: FeatherWebShared.Object {
+    struct FieldState: Sendable {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct State: FeatherWebShared.Object {
+    struct State: Sendable {
         var language: FieldState
         var timezone: FieldState
         var pageSize: FieldState

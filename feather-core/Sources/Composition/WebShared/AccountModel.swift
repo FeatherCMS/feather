@@ -7,7 +7,7 @@
 
 public struct AccountModel: Codable, Sendable, Equatable, Hashable {
 
-    public struct UserModel: Object {
+    public struct UserModel: Codable, Sendable, Equatable, Hashable {
         public let id: String
         public let email: String
 

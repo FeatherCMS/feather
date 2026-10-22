@@ -4,7 +4,6 @@ import CSS
 import FeatherValidation
 import FeatherValidationFoundation
 import FeatherWebAdmin
-import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -19,14 +18,14 @@ import WebComponents
 extension Email.Form {
     struct Component: WebComponents.Component {
 
-        struct FieldState: FeatherWebShared.Object {
+        struct FieldState: Sendable {
             var key: String
             var label: String
             var value: String?
             var error: String?
         }
 
-        struct State: FeatherWebShared.Object {
+        struct State: Sendable {
             var identityId: FieldState
             var identityOptions: [AdminFormFieldSelectAutocomplete.Option]
             var email: FieldState

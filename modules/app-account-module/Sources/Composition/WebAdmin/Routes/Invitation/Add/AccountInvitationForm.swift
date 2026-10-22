@@ -1,19 +1,18 @@
 import FeatherWebAdmin
-import FeatherWebShared
 import HTML
 import WebBuilders
 import WebComponents
 
 struct AccountInvitationForm: Component {
 
-    struct FieldState: FeatherWebShared.Object {
+    struct FieldState: Sendable {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct State: FeatherWebShared.Object {
+    struct State: Sendable {
         var email: FieldState
         var roleIds: FieldState
         var roleOptions: [RoleOptionState]
@@ -29,7 +28,7 @@ struct AccountInvitationForm: Component {
         }
     }
 
-    struct RoleOptionState: FeatherWebShared.Object {
+    struct RoleOptionState: Sendable {
         var value: String
         var label: String
         var isSelected: Bool

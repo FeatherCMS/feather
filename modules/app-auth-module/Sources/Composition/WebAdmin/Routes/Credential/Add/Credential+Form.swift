@@ -4,7 +4,6 @@ import CSS
 import FeatherValidation
 import FeatherValidationFoundation
 import FeatherWebAdmin
-import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -24,7 +23,7 @@ private enum CredentialFormHTML {
 
 extension Credential.Form {
     struct Component: WebComponents.Component {
-        struct FieldState: FeatherWebShared.Object {
+        struct FieldState: Sendable {
             var key: String
             var label: String
             var value: String?

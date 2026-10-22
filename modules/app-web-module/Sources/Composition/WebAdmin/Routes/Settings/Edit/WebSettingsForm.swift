@@ -1,5 +1,4 @@
 import FeatherWebAdmin
-import FeatherWebShared
 import HTML
 import OpenAPIRuntime
 import SGML
@@ -8,21 +7,21 @@ import WebComponents
 
 struct WebSettingsForm: Component {
 
-    struct FieldState: FeatherWebShared.Object {
+    struct FieldState: Sendable {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct CheckboxState: FeatherWebShared.Object {
+    struct CheckboxState: Sendable {
         var key: String
         var label: String
         var value: Bool
         var error: String?
     }
 
-    struct HomePageState: FeatherWebShared.Object {
+    struct HomePageState: Sendable {
         var key: String
         var label: String
         var value: String?
@@ -30,7 +29,7 @@ struct WebSettingsForm: Component {
         var error: String?
     }
 
-    struct State: FeatherWebShared.Object {
+    struct State: Sendable {
         var logo: FieldState
         var logoDark: FieldState
         var metaImage: FieldState

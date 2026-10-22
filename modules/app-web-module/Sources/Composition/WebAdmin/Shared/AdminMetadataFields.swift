@@ -1,6 +1,5 @@
 public import CSS
 public import FeatherWebAdmin
-public import FeatherWebShared
 import Foundation
 public import HTML
 import MediaWebAdmin
@@ -11,7 +10,7 @@ public import WebComponents
 
 public struct AdminMetadataFields: Component {
 
-    public struct FieldState: FeatherWebShared.Object {
+    public struct FieldState: Sendable {
         public var key: String
         public var label: String
         public var value: String?
@@ -30,7 +29,7 @@ public struct AdminMetadataFields: Component {
         }
     }
 
-    public struct CheckboxState: FeatherWebShared.Object {
+    public struct CheckboxState: Sendable {
         public var key: String
         public var label: String
         public var value: Bool
@@ -49,7 +48,7 @@ public struct AdminMetadataFields: Component {
         }
     }
 
-    public struct State: FeatherWebShared.Object {
+    public struct State: Sendable {
         public var slug: FieldState
         public var template: FieldState
         public var slugPrefix: String?

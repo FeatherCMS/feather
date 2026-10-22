@@ -1,6 +1,5 @@
 import AccountModule
 import FeatherWebAdmin
-import FeatherWebShared
 import HTML
 import Hummingbird
 import WebBuilders
@@ -9,14 +8,14 @@ import WebComponents
 struct ProfileForm: Component {
     let routes: Profile.Router.Routes
 
-    struct FieldState: FeatherWebShared.Object {
+    struct FieldState: Sendable {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct State: FeatherWebShared.Object {
+    struct State: Sendable {
         var firstName: FieldState
         var lastName: FieldState
         var profileImageAssetId: FieldState

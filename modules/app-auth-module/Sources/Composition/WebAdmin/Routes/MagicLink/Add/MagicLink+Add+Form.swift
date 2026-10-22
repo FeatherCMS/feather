@@ -4,7 +4,6 @@ import CSS
 import FeatherValidation
 import FeatherValidationFoundation
 import FeatherWebAdmin
-import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -19,21 +18,21 @@ import WebComponents
 extension MagicLink.Add {
     struct Form: Component {
 
-        struct FieldState: FeatherWebShared.Object {
+        struct FieldState: Sendable {
             var key: String
             var label: String
             var value: String?
             var error: String?
         }
 
-        struct CheckboxState: FeatherWebShared.Object {
+        struct CheckboxState: Sendable {
             var key: String
             var label: String
             var value: Bool
             var error: String?
         }
 
-        struct State: FeatherWebShared.Object {
+        struct State: Sendable {
             var credentialId: FieldState
             var emailOptions: [AdminFormFieldSelectAutocomplete.Option]
             var isPersistent: CheckboxState
