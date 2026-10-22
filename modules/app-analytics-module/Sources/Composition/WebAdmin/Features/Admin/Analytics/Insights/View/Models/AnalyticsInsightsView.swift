@@ -278,9 +278,10 @@ struct AnalyticsInsightsView: Component {
                 (
                     "Events/day",
                     kpis.averageRequestsPerDay.formatted(
-                        .number.grouping(.automatic).precision(
-                            .fractionLength(1)
-                        )
+                        .number.grouping(.automatic)
+                            .precision(
+                                .fractionLength(1)
+                            )
                     )
                 ),
                 (
@@ -293,7 +294,10 @@ struct AnalyticsInsightsView: Component {
                     "Estimated unique visitors",
                     kpis.uniqueVisitors.formatted(.number.grouping(.automatic))
                 ),
-                ("Page views", kpis.pageViews.formatted(.number.grouping(.automatic))),
+                (
+                    "Page views",
+                    kpis.pageViews.formatted(.number.grouping(.automatic))
+                ),
                 (
                     "POST requests",
                     kpis.searchRequests.formatted(.number.grouping(.automatic))
@@ -306,10 +310,28 @@ struct AnalyticsInsightsView: Component {
                     "Bot requests",
                     kpis.botRequests.formatted(.number.grouping(.automatic))
                 ),
-                ("AI requests", kpis.aiRequests.formatted(.number.grouping(.automatic))),
-                ("404s", kpis.notFoundRequests.formatted(.number.grouping(.automatic))),
-                ("4xx", kpis.clientErrorRequests.formatted(.number.grouping(.automatic))),
-                ("5xx", kpis.serverErrorRequests.formatted(.number.grouping(.automatic))),
+                (
+                    "AI requests",
+                    kpis.aiRequests.formatted(.number.grouping(.automatic))
+                ),
+                (
+                    "404s",
+                    kpis.notFoundRequests.formatted(
+                        .number.grouping(.automatic)
+                    )
+                ),
+                (
+                    "4xx",
+                    kpis.clientErrorRequests.formatted(
+                        .number.grouping(.automatic)
+                    )
+                ),
+                (
+                    "5xx",
+                    kpis.serverErrorRequests.formatted(
+                        .number.grouping(.automatic)
+                    )
+                ),
             ]
         }
         return [
@@ -320,7 +342,8 @@ struct AnalyticsInsightsView: Component {
             (
                 "Events/day",
                 kpis.averageRequestsPerDay.formatted(
-                        .number.grouping(.automatic).precision(
+                    .number.grouping(.automatic)
+                        .precision(
                             .fractionLength(1)
                         )
                 )

@@ -1,7 +1,7 @@
 import AnalyticsAdminAPI
-public import FeatherWebShared
-import FeatherWebAdmin
 public import FeatherModuleKit
+import FeatherWebAdmin
+public import FeatherWebShared
 import OpenAPIRuntime
 import SystemModule
 import SystemWebAdmin
@@ -11,7 +11,9 @@ public enum AnalyticsAdminDashboardEventHandlers {
         in events: inout EventRegistry,
         environment: AppEnvironment
     ) {
-        let apiBuilder = AnalyticsAdminAPIBuilder(apiBaseURL: environment.apiBaseURL)
+        let apiBuilder = AnalyticsAdminAPIBuilder(
+            apiBaseURL: environment.apiBaseURL
+        )
         events.register(
             event: SystemWebAdmin.Dashboard.Event.Provider.self,
             context: SystemWebAdmin.Dashboard.Event.Context.self
@@ -76,7 +78,8 @@ public enum AnalyticsAdminDashboardEventHandlers {
                                 }
                             ),
                             .init(
-                                title: "Traffic by type (estimated from User-Agent)",
+                                title:
+                                    "Traffic by type (estimated from User-Agent)",
                                 items: [
                                     .init(
                                         label: "Human / unrecognized",
