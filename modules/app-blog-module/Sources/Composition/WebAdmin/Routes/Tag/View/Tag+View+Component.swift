@@ -16,7 +16,7 @@ extension Tag.View {
             let model: Tag.Details.Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Tag.Router.Routes
         }
 
         let state: State

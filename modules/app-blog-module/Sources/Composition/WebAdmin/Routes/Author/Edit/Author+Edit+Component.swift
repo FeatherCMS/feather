@@ -14,7 +14,7 @@ extension Author.Edit {
             let id: String
             let form: BlogAuthorForm.State
             let breadcrumb: [AdminBreadcrumb.Link]
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Author.Router.Routes
         }
 
         let state: State

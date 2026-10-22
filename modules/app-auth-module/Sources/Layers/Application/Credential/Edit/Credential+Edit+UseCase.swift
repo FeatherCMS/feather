@@ -6,7 +6,6 @@ public import FeatherModuleKit
 
 extension Credential.Edit {
     public struct UseCase: FeatherApplication.UseCase {
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Scope>
         let passwordHasher: any PasswordHasher
@@ -47,23 +46,14 @@ extension Credential.Edit {
                         id: input.id
                     )
                 else {
-                    throw UseCaseError(
-                        reason: .validation,
-                        logMessage: "Credential not found: \(input.id)",
-                        userFriendlyMessage: "Credential not found"
-                    )
+                    throw Error.credentialNotFound(id: input.id)
                 }
 
                 let currentAuthEmail = try await scope.authEmail.findBy(
                     id: model.authEmailId
                 )
                 guard let currentAuthEmail else {
-                    throw UseCaseError(
-                        reason: .validation,
-                        logMessage:
-                            "Auth email not found for credential: \(input.id)",
-                        userFriendlyMessage: "Auth email not found"
-                    )
+                    throw Error.authEmailNotFoundForCredential(id: input.id)
                 }
                 let userId = input.userId.apply(to: currentAuthEmail.identityId)
                 let email = input.email.apply(to: currentAuthEmail.email)
@@ -72,12 +62,7 @@ extension Credential.Edit {
                         email: email
                     ), authEmail.identityId == userId
                 else {
-                    throw UseCaseError(
-                        reason: .validation,
-                        logMessage:
-                            "Auth email not found for identity: \(userId)",
-                        userFriendlyMessage: "Auth email not found"
-                    )
+                    throw Error.authEmailNotFoundForIdentity(identityId: userId)
                 }
 
                 try model.update(

@@ -6,7 +6,6 @@ public import FeatherModuleKit
 
 extension Credential.Add {
     public struct UseCase: FeatherApplication.UseCase {
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Scope>
         let passwordHasher: any PasswordHasher
@@ -39,12 +38,7 @@ extension Credential.Add {
                         email: input.email
                     ), authEmail.identityId == input.userId
                 else {
-                    throw UseCaseError(
-                        reason: .validation,
-                        logMessage:
-                            "Auth email not found for identity: \(input.userId)",
-                        userFriendlyMessage: "Auth email not found"
-                    )
+                    throw Error.authEmailNotFound(identityId: input.userId)
                 }
                 return try await scope.credential.insert(
                     Credential.Model.create(

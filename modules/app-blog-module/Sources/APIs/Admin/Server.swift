@@ -26,6 +26,17 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.blogAuthorList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/authors")
+        )
+        try transport.register(
+            {
                 try await server.blogAuthorPost(
                     request: $0,
                     body: $1,
@@ -48,17 +59,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogAuthorList(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/authors/")
-        )
-        try transport.register(
-            {
                 try await server.blogAuthorQuery(
                     request: $0,
                     body: $1,
@@ -66,7 +66,7 @@ extension APIProtocol {
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/authors/search")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/authors/query")
         )
         try transport.register(
             {
@@ -103,6 +103,17 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.blogAuthorLinkList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/authors/{blogAuthorId}/links")
+        )
+        try transport.register(
+            {
                 try await server.blogAuthorLinkPost(
                     request: $0,
                     body: $1,
@@ -125,17 +136,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogAuthorLinkList(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/authors/{blogAuthorId}/links/")
-        )
-        try transport.register(
-            {
                 try await server.blogAuthorLinkQuery(
                     request: $0,
                     body: $1,
@@ -143,7 +143,7 @@ extension APIProtocol {
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/authors/{blogAuthorId}/links/search")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/authors/{blogAuthorId}/links/query")
         )
         try transport.register(
             {
@@ -180,6 +180,17 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.blogPostList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/posts")
+        )
+        try transport.register(
+            {
                 try await server.blogPostPost(
                     request: $0,
                     body: $1,
@@ -202,17 +213,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogPostList(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/posts/")
-        )
-        try transport.register(
-            {
                 try await server.blogPostQuery(
                     request: $0,
                     body: $1,
@@ -220,7 +220,7 @@ extension APIProtocol {
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/posts/search")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/posts/query")
         )
         try transport.register(
             {
@@ -279,6 +279,17 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.blogTagList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/tags")
+        )
+        try transport.register(
+            {
                 try await server.blogTagPost(
                     request: $0,
                     body: $1,
@@ -301,17 +312,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogTagList(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/tags/")
-        )
-        try transport.register(
-            {
                 try await server.blogTagQuery(
                     request: $0,
                     body: $1,
@@ -319,7 +319,7 @@ extension APIProtocol {
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/tags/search")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/blog/tags/query")
         )
         try transport.register(
             {
@@ -358,6 +358,87 @@ extension APIProtocol {
 }
 
 fileprivate extension UniversalServer where APIHandler: APIProtocol {
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/get(blogAuthorList)`.
+    func blogAuthorList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.BlogAuthorList.id,
+            using: {
+                APIHandler.blogAuthorList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.BlogAuthorList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.BlogAuthorList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/post(blogAuthorPost)`.
     func blogAuthorPost(
@@ -553,89 +634,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
-    func blogAuthorList(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.BlogAuthorList.id,
-            using: {
-                APIHandler.blogAuthorList($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogAuthorList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.BlogAuthorList.Input(headers: headers)
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/search/post(blogAuthorQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/query/post(blogAuthorQuery)`.
     func blogAuthorQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1127,6 +1127,95 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/get(blogAuthorLinkList)`.
+    func blogAuthorLinkList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.BlogAuthorLinkList.id,
+            using: {
+                APIHandler.blogAuthorLinkList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.BlogAuthorLinkList.Input.Path = .init(blogAuthorId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "blogAuthorId",
+                    as: Components.Parameters.BlogAuthorLinkAuthorIdParameter.self
+                ))
+                let headers: Operations.BlogAuthorLinkList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.BlogAuthorLinkList.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/post(blogAuthorLinkPost)`.
     func blogAuthorLinkPost(
@@ -1146,7 +1235,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 let path: Operations.BlogAuthorLinkPost.Input.Path = .init(blogAuthorId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "blogAuthorId",
-                    as: Components.Parameters.BlogAuthorLinkMenuIdParameter.self
+                    as: Components.Parameters.BlogAuthorLinkAuthorIdParameter.self
                 ))
                 let headers: Operations.BlogAuthorLinkPost.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
@@ -1256,7 +1345,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 let path: Operations.BlogAuthorLinkDelete.Input.Path = .init(blogAuthorId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "blogAuthorId",
-                    as: Components.Parameters.BlogAuthorLinkMenuIdParameter.self
+                    as: Components.Parameters.BlogAuthorLinkAuthorIdParameter.self
                 ))
                 let headers: Operations.BlogAuthorLinkDelete.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
@@ -1334,97 +1423,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
-    func blogAuthorLinkList(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.BlogAuthorLinkList.id,
-            using: {
-                APIHandler.blogAuthorLinkList($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.BlogAuthorLinkList.Input.Path = .init(blogAuthorId: try converter.getPathParameterAsURI(
-                    in: metadata.pathParameters,
-                    name: "blogAuthorId",
-                    as: Components.Parameters.BlogAuthorLinkMenuIdParameter.self
-                ))
-                let headers: Operations.BlogAuthorLinkList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.BlogAuthorLinkList.Input(
-                    path: path,
-                    headers: headers
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/search/post(blogAuthorLinkQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/query/post(blogAuthorLinkQuery)`.
     func blogAuthorLinkQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1442,7 +1442,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 let path: Operations.BlogAuthorLinkQuery.Input.Path = .init(blogAuthorId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "blogAuthorId",
-                    as: Components.Parameters.BlogAuthorLinkMenuIdParameter.self
+                    as: Components.Parameters.BlogAuthorLinkAuthorIdParameter.self
                 ))
                 let headers: Operations.BlogAuthorLinkQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
@@ -1553,7 +1553,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     blogAuthorId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "blogAuthorId",
-                        as: Components.Parameters.BlogAuthorLinkMenuIdParameter.self
+                        as: Components.Parameters.BlogAuthorLinkAuthorIdParameter.self
                     ),
                     blogAuthorLinkId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
@@ -1667,7 +1667,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     blogAuthorId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "blogAuthorId",
-                        as: Components.Parameters.BlogAuthorLinkMenuIdParameter.self
+                        as: Components.Parameters.BlogAuthorLinkAuthorIdParameter.self
                     ),
                     blogAuthorLinkId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
@@ -1828,7 +1828,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     blogAuthorId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "blogAuthorId",
-                        as: Components.Parameters.BlogAuthorLinkMenuIdParameter.self
+                        as: Components.Parameters.BlogAuthorLinkAuthorIdParameter.self
                     ),
                     blogAuthorLinkId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
@@ -1886,6 +1886,87 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .notFound(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/blog/posts`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/get(blogPostList)`.
+    func blogPostList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.BlogPostList.id,
+            using: {
+                APIHandler.blogPostList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.BlogPostList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.BlogPostList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -2138,89 +2219,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
-    func blogPostList(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.BlogPostList.id,
-            using: {
-                APIHandler.blogPostList($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogPostList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.BlogPostList.Input(headers: headers)
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/posts/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/search/post(blogPostQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/posts/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/query/post(blogPostQuery)`.
     func blogPostQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -2897,6 +2897,87 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `GET /api/v1/admin/blog/tags`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/get(blogTagList)`.
+    func blogTagList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.BlogTagList.id,
+            using: {
+                APIHandler.blogTagList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.BlogTagList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.BlogTagList.Input(headers: headers)
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/tags`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/post(blogTagPost)`.
     func blogTagPost(
@@ -3092,89 +3173,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
-    func blogTagList(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.BlogTagList.id,
-            using: {
-                APIHandler.blogTagList($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogTagList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.BlogTagList.Input(headers: headers)
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/tags/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/search/post(blogTagQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/tags/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/query/post(blogTagQuery)`.
     func blogTagQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,

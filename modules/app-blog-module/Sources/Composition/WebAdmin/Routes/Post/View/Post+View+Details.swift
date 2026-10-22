@@ -18,7 +18,7 @@ extension Post.View.Details {
             let rule: Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Post.Router.Routes
         }
 
         let state: State

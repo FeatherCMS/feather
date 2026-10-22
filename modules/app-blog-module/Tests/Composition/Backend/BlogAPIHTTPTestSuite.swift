@@ -25,6 +25,8 @@ import Testing
 struct BlogAPIHTTPTestSuite {
     private enum QueryKey: DatabaseQueryKey {
         case authorList
+        case authorQueryItems
+        case authorQueryCount
         case publicPostList
     }
 
@@ -36,7 +38,7 @@ struct BlogAPIHTTPTestSuite {
         let executor = try makeExecutor(connection: connection)
         let request = FeatherHTTP.Request(
             method: .get,
-            path: "/api/v1/admin/blog/authors/"
+            path: "/api/v1/admin/blog/authors"
         )
 
         try await CurrentSubject.set(subject: Subject(id: "admin-1")) {
@@ -48,6 +50,39 @@ struct BlogAPIHTTPTestSuite {
                         with: Data(body.utf8)
                     ) as? [Any]
                 #expect(items?.isEmpty == true)
+            }
+        }
+
+        try await connection.assertAllResponsesConsumed()
+    }
+
+    @Test
+    func adminAuthorQueryUsesDedicatedQueryRoute() async throws {
+        let connection = MockDatabaseConnection<QueryKey>(
+            responses: [
+                .init(key: .authorQueryItems),
+                .init(key: .authorQueryCount),
+            ]
+        )
+        let executor = try makeExecutor(connection: connection)
+        let request = JSONRequest(
+            method: .post,
+            path: "/api/v1/admin/blog/authors/query",
+            body: Components.Schemas
+                .BlogAuthorQueryItemSearchRequestQuerySchema(
+                    filters: .init(search: nil)
+                )
+        )
+
+        try await CurrentSubject.set(subject: Subject(id: "admin-1")) {
+            try await executor.withOperation(request: request) { response in
+                #expect(response.status.code == 200)
+                let body = try await response.plainTextBody()
+                let payload =
+                    try JSONSerialization.jsonObject(
+                        with: Data(body.utf8)
+                    ) as? [String: Any]
+                #expect(payload?["data"] != nil)
             }
         }
 
@@ -100,9 +135,13 @@ struct BlogAPIHTTPTestSuite {
 
         try await CurrentSubject.set(subject: Subject(id: "admin-1")) {
             try await executor.withOperation(request: request) { response in
-                let body = try await response.plainTextBody()
-                print("Invalid update mask response: \(body)")
                 #expect(response.status.code == 400)
+                let body = try await response.plainTextBody()
+                let payload =
+                    try JSONSerialization.jsonObject(
+                        with: Data(body.utf8)
+                    ) as? [String: [String: String]]
+                #expect(payload?["error"]?["reason"] == "Invalid updateMask")
             }
         }
 
@@ -121,9 +160,16 @@ struct BlogAPIHTTPTestSuite {
 
         try await CurrentSubject.set(subject: Subject(id: "admin-1")) {
             try await executor.withOperation(request: request) { response in
-                let body = try await response.plainTextBody()
-                print("Missing masked value response: \(body)")
                 #expect(response.status.code == 400)
+                let body = try await response.plainTextBody()
+                let payload =
+                    try JSONSerialization.jsonObject(
+                        with: Data(body.utf8)
+                    ) as? [String: [String: String]]
+                #expect(
+                    payload?["error"]?["reason"]
+                        == "Missing selected field: name"
+                )
             }
         }
 

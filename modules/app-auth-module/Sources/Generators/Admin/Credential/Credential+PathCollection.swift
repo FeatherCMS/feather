@@ -1,7 +1,5 @@
 import FeatherOpenAPI
 
-enum Credential {}
-
 extension Credential {
     struct PathCollection: PathCollectionRepresentable {
         var pathMap: PathMap {

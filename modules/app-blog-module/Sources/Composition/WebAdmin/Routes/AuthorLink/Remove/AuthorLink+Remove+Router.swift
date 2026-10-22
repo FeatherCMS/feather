@@ -6,12 +6,12 @@ import Hummingbird
 extension AuthorLink.Remove {
     struct Router {
         let controller: any Controller.Interface
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: AuthorLink.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: BlogWebAdmin.Router.Routes = .standard
+            routes: AuthorLink.Router.Routes
         ) {
             self.routes = routes
             self.controller = Controller.Default(

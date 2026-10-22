@@ -46,7 +46,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.settings
             )
             .route(on: router)
 
@@ -54,18 +54,18 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.post
             )
             .route(on: router)
 
-        Post.Status.Router(environment: environment, routes: routes)
+        Post.Status.Router(environment: environment, routes: routes.post)
             .route(on: router)
 
         Post.View
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.post
             )
             .route(on: router)
 
@@ -73,7 +73,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.post
             )
             .route(on: router)
 
@@ -81,7 +81,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.post
             )
             .route(on: router)
 
@@ -89,7 +89,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.post
             )
             .route(on: router)
 
@@ -97,7 +97,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.author
             )
             .route(on: router)
 
@@ -105,7 +105,8 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.author,
+                authorLinkRoutes: routes.authorLink
             )
             .route(on: router)
 
@@ -113,7 +114,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.author
             )
             .route(on: router)
 
@@ -121,7 +122,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.author
             )
             .route(on: router)
 
@@ -129,7 +130,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.author
             )
             .route(on: router)
 
@@ -137,7 +138,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.authorLink
             )
             .route(on: router)
 
@@ -145,7 +146,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.authorLink
             )
             .route(on: router)
 
@@ -153,7 +154,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.authorLink
             )
             .route(on: router)
 
@@ -161,7 +162,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.authorLink
             )
             .route(on: router)
 
@@ -169,7 +170,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.authorLink
             )
             .route(on: router)
 
@@ -177,7 +178,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.tag
             )
             .route(on: router)
 
@@ -185,7 +186,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.tag
             )
             .route(on: router)
 
@@ -193,7 +194,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.tag
             )
             .route(on: router)
 
@@ -201,7 +202,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.tag
             )
             .route(on: router)
 
@@ -209,7 +210,7 @@ public struct Router {
             .Router(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: routes.tag
             )
             .route(on: router)
 
@@ -218,7 +219,9 @@ public struct Router {
             environment: environment,
             renderingEngine: renderingEngine,
             events: adminEvents,
-            routes: routes
+            postRoutes: routes.post,
+            authorRoutes: routes.author,
+            tagRoutes: routes.tag
         )
     }
 }

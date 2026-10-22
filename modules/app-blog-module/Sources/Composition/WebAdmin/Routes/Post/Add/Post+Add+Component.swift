@@ -18,7 +18,7 @@ extension Post.Add {
         struct State {
             let form: BlogPostForm.State
             let breadcrumb: [AdminBreadcrumb.Link]
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Post.Router.Routes
         }
 
         let state: State

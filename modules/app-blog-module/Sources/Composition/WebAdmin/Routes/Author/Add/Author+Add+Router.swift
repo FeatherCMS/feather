@@ -8,12 +8,12 @@ import Hummingbird
 extension Author.Add {
     struct Router {
         let controller: any Controller.Interface
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Author.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: BlogWebAdmin.Router.Routes = .standard
+            routes: Author.Router.Routes
         ) {
             self.routes = routes
             self.controller = Controller.Default(

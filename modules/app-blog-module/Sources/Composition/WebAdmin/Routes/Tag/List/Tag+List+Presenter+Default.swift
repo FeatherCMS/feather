@@ -17,7 +17,7 @@ extension Tag.List.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Tag.Router.Routes
 
         func render(
             model: Tag.List.Model,

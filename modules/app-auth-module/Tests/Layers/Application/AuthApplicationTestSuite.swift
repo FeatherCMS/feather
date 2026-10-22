@@ -245,7 +245,9 @@ struct AuthApplicationTestSuite {
             transaction: transaction
         )
 
-        await #expect(throws: UseCaseError.self) {
+        await #expect(
+            throws: AuthModule.Authorization.SignIn.MagicLink.UseCase.Error.self
+        ) {
             _ = try await useCase.execute(.init(token: "used-token"))
         }
     }

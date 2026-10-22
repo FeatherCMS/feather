@@ -14,7 +14,7 @@ extension Settings.Edit {
             let breadcrumb: [AdminBreadcrumb.Link]
         }
         let state: State
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Settings.Router.Routes
 
         func html(context: inout BuilderContext) -> some BasicTag {
             Section {

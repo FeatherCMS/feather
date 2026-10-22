@@ -6,11 +6,11 @@ import Hummingbird
 extension Post.Status {
     struct Router {
         let controller: any Controller.Interface
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Post.Router.Routes
 
         init(
             environment: AppEnvironment,
-            routes: BlogWebAdmin.Router.Routes = .standard
+            routes: Post.Router.Routes
         ) {
             self.routes = routes
             self.controller = Controller.Default(

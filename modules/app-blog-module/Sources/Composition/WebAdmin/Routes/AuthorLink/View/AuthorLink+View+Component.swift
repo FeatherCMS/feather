@@ -13,7 +13,7 @@ extension AuthorLink.View {
             let model: AuthorLink.Details.Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: AuthorLink.Router.Routes
         }
 
         let state: State

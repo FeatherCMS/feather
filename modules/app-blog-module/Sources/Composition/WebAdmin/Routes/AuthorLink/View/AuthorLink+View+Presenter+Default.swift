@@ -14,7 +14,7 @@ extension AuthorLink.View.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: AuthorLink.Router.Routes
 
         func renderDetailsPage(
             model: AuthorLink.Details.Model,

@@ -9,7 +9,7 @@ import WebModuleWebAdmin
 extension Author.List.Controller {
     struct Default: Interface {
         let environment: AppEnvironment
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Author.Router.Routes
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any Author.List.Interactor.Interface,

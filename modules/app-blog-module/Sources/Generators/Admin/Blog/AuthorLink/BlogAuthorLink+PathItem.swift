@@ -1,7 +1,8 @@
 import FeatherOpenAPI
 
-extension BlogAuthorLink.Menu {
+extension BlogAuthorLink {
     struct PathItem: PathItemRepresentable {
+        var get: (any OperationRepresentable)? { List.Operation() }
         var post: (any OperationRepresentable)? {
             BlogAuthorLink.Post.Operation()
         }

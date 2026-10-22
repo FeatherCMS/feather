@@ -270,8 +270,23 @@ extension UseCases {
     func map(
         _ query: WebAdminAPI.Components.Schemas
             .WebPageQueryItemSearchRequestQuerySchema
-    ) -> PageList.Query {
-        .init(page: map(query.page), sort: [], search: query.filters.search)
+    ) -> Page.Search.Input.Query {
+        .init(
+            page: map(query.page),
+            sort: query.sort?
+                .compactMap { sort in
+                    guard
+                        let field = Page.Search.Input.Query.Sort.Field(
+                            rawValue: sort.field.rawValue
+                        )
+                    else { return nil }
+                    return .init(
+                        field: field,
+                        direction: sort.direction == .asc ? .asc : .desc
+                    )
+                } ?? [],
+            search: query.filters.search
+        )
     }
 
     func map(_ detail: PageDetail)
@@ -289,7 +304,22 @@ extension UseCases {
         )
     }
 
-    func map(_ item: PageList.Item)
+    func map(_ detail: Page.Detail.Output)
+        -> WebAdminAPI.Components.Schemas.WebPageDetailSchema
+    {
+        .init(
+            id: detail.id,
+            title: detail.title,
+            excerpt: detail.excerpt,
+            content: detail.content,
+            imageAssetId: detail.imageAssetId,
+            metadata: map(detail.metadata),
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func map(_ item: Page.Search.Output.Item)
         -> WebAdminAPI.Components.Schemas.WebPageListItemSchema
     {
         .init(
@@ -302,8 +332,21 @@ extension UseCases {
         )
     }
 
-    func mapQuery(_ item: PageList.Item)
+    func mapQuery(_ item: Page.Search.Output.Item)
         -> WebAdminAPI.Components.Schemas.WebPageQueryItemSchema
+    {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            imageAssetId: item.imageAssetId,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func mapList(_ item: Page.List.Output.Item)
+        -> WebAdminAPI.Components.Schemas.WebPageListItemSchema
     {
         .init(
             id: item.id,

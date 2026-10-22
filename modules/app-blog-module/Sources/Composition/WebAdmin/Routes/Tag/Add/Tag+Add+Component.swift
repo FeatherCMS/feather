@@ -14,7 +14,7 @@ extension Tag.Add {
         struct State {
             let form: BlogTagForm.State
             let breadcrumb: [AdminBreadcrumb.Link]
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Tag.Router.Routes
         }
 
         let state: State

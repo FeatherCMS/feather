@@ -14,15 +14,11 @@ extension AdminAPIGateway {
             query = value
         }
 
-        let useCase = useCases.makeListPages()
+        let useCase = useCases.makeSearchPages()
         let objectQuery = useCases.map(query)
         let subject = try await CurrentSubject.require()
 
-        let list = try await useCase.execute(
-            subject: subject,
-            input: .init(query: objectQuery)
-        )
-        let total = try await useCase.count(
+        let result = try await useCase.execute(
             subject: subject,
             input: .init(query: objectQuery)
         )
@@ -56,8 +52,8 @@ extension AdminAPIGateway {
                             filters: .init(search: objectQuery.search)
                         ),
                         data: .init(
-                            items: list.items.map(useCases.mapQuery),
-                            total: total
+                            items: result.items.map(useCases.mapQuery),
+                            total: result.total
                         )
                     )
                 )

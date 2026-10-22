@@ -1,5 +1,4 @@
 enum BlogAuthorLink {
-    enum Menu {}
     enum Post {}
     enum Delete {}
     enum List {}

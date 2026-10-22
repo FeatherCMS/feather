@@ -1,7 +1,5 @@
 import FeatherOpenAPI
 
-enum MagicLink {}
-
 extension MagicLink {
     struct PathCollection: PathCollectionRepresentable {
         var pathMap: PathMap {

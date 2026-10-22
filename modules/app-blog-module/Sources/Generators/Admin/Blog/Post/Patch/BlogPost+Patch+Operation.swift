@@ -16,7 +16,9 @@ extension BlogPost.Patch {
         var responseMap: ResponseMap {
             [
                 200: BlogPostDetailResponse().reference(),
-                400: CustomResponse(description: "Bad Request"),
+                400: DefaultHTTPErrorContentResponse(
+                    description: "Bad Request"
+                ),
                 404: CustomResponse(description: "Blog post not found"),
             ]
         }

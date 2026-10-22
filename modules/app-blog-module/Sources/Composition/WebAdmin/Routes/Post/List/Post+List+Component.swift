@@ -22,7 +22,7 @@ extension Post.List {
             let search: String
             let permissions: AdminListActions
             let breadcrumb: [AdminBreadcrumb.Link]
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Post.Router.Routes
             let error: String?
         }
 

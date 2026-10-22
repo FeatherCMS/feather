@@ -18,7 +18,7 @@ extension Post.View.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Post.Router.Routes
 
         func renderDetailsPage(
             rule: Post.View.Details.Model,

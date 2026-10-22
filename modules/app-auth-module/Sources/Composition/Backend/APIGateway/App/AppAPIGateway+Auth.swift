@@ -1,6 +1,7 @@
 public import AuthAppAPI
 import AuthApplication
 import AuthDomain
+import AuthModule
 import FeatherModuleKit
 import UserApplication
 import UserDomain
@@ -145,7 +146,7 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is AuthApplication.UseCaseError {
+        catch is AuthModule.Authorization.SignIn.MagicLink.UseCase.Error {
             return .unauthorized(
                 .init(
                     body: .json(

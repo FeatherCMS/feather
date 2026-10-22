@@ -12,21 +12,21 @@ struct RouterRoutesTestSuite {
             root: WebRoute.root.appending(pathComponent: "console")
         )
 
-        #expect(routes.posts.path == "/console/blog/posts/")
+        #expect(routes.post.posts.path == "/console/blog/posts/")
         #expect(
-            routes.postEditMetadataRoute().description
+            routes.post.postEditMetadataRoute().description
                 == "/console/blog/posts/{id}/edit/metadata/{metadataID}"
         )
         #expect(
-            routes.authorEditMetadataRoute().description
+            routes.author.authorEditMetadataRoute().description
                 == "/console/blog/authors/{id}/edit/metadata/{metadataID}"
         )
         #expect(
-            routes.tagEditMetadataRoute().description
+            routes.tag.tagEditMetadataRoute().description
                 == "/console/blog/tags/{id}/edit/metadata/{metadataID}"
         )
         #expect(
-            routes.authorLinkEdit(
+            routes.authorLink.authorLinkEdit(
                 RouterPath("author id"),
                 RouterPath("link/id")
             )

@@ -347,7 +347,7 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .testTarget(
-            name: "WebApplicationLayerTests",
+            name: "WebApplicationTests",
             dependencies: [
                 .product(name: "FeatherTesting", package: "feather-core"),
                 .target(name: "WebApplication"),
@@ -358,7 +358,7 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .testTarget(
-            name: "WebAppTests",
+            name: "WebModuleWebAppTests",
             dependencies: [
                 .target(name: "WebModuleWebApp"),
                 .product(name: "Hummingbird", package: "hummingbird"),

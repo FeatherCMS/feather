@@ -6,7 +6,7 @@ extension BlogAuthorLink.Patch {
         var operationId: String? { "blogAuthorLinkPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                BlogAuthorLinkMenuIdParameter().reference(),
+                BlogAuthorLinkAuthorIdParameter().reference(),
                 BlogAuthorLinkIdParameter().reference(),
                 BlogAuthorLink.Parameters.UpdateMask().reference(),
             ]
@@ -17,7 +17,9 @@ extension BlogAuthorLink.Patch {
         var responseMap: ResponseMap {
             [
                 200: BlogAuthorLinkDetailResponse().reference(),
-                400: CustomResponse(description: "Bad Request"),
+                400: DefaultHTTPErrorContentResponse(
+                    description: "Bad Request"
+                ),
                 404: CustomResponse(description: "Blog author link not found"),
             ]
         }

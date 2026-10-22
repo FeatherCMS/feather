@@ -1,0 +1,8 @@
+import FeatherOpenAPI
+import FeatherOpenAPIGenerator
+import UserOpenAPIGeneratorSupport
+
+struct AuthMagicLinkDetailResponse: JSONResponseRepresentable {
+    var description: String = "User magic link response"
+    var schema = AuthMagicLinkDetailSchema().reference()
+}

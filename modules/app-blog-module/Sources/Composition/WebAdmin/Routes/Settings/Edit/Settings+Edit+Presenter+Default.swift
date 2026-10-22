@@ -18,7 +18,7 @@ extension Settings.Edit.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Settings.Router.Routes
 
         func renderPage(
             state: Settings.Edit.Component.State,

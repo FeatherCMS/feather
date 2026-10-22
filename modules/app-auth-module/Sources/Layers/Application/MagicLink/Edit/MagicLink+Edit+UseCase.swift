@@ -6,7 +6,6 @@ public import FeatherModuleKit
 
 extension MagicLink.Edit {
     public struct UseCase: FeatherApplication.UseCase {
-
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Scope>
 
@@ -35,11 +34,7 @@ extension MagicLink.Edit {
                         id: input.id
                     )
                 else {
-                    throw UseCaseError(
-                        reason: .validation,
-                        logMessage: "Magic link not found: \(input.id)",
-                        userFriendlyMessage: "Magic link not found"
-                    )
+                    throw Error.notFound(id: input.id)
                 }
 
                 let updated = MagicLink.Model(

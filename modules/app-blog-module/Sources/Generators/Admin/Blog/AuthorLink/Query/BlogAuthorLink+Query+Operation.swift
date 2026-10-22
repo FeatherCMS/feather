@@ -2,7 +2,7 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 extension BlogAuthorLink.Query {
-    struct Operation: BlogAuthorLink.Menu.Operation {
+    struct Operation: BlogAuthorLink.Operation {
         var operationId: String? { "blogAuthorLinkQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(

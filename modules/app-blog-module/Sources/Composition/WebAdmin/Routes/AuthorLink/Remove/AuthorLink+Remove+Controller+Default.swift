@@ -6,7 +6,7 @@ import Hummingbird
 
 extension AuthorLink.Remove.Controller {
     struct Default: Interface {
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: AuthorLink.Router.Routes
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any AuthorLink.Remove.Interactor.Interface,

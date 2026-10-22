@@ -29,7 +29,7 @@ extension AuthModule.Authorization.SignIn.MagicLink {
                         ),
                         user.status == .active
                     else {
-                        throw UseCaseError.authentication()
+                        throw Error.authenticationFailed
                     }
                     return try await AuthModule.Authorization.SignIn.makeAuthResponse(
                         authorization: scope.authorization,
@@ -42,7 +42,7 @@ extension AuthModule.Authorization.SignIn.MagicLink {
                     )
                 }
                 catch {
-                    throw UseCaseError.authentication()
+                    throw Error.authenticationFailed
                 }
             }
         }

@@ -19,7 +19,7 @@ extension Post.Edit {
             let id: String
             let form: BlogPostForm.State
             let breadcrumb: [AdminBreadcrumb.Link]
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Post.Router.Routes
         }
 
         let state: State

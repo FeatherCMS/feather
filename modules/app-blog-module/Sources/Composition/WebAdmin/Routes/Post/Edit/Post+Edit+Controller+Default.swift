@@ -15,7 +15,7 @@ import WebModuleWebAdmin
 
 extension Post.Edit.Controller {
     struct Default: Interface {
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Post.Router.Routes
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any Post.Edit.Interactor.Interface,

@@ -23,7 +23,7 @@ extension Author.List {
             let search: String
             let permissions: AdminListActions
             let breadcrumb: [AdminBreadcrumb.Link]
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Author.Router.Routes
             let error: String?
         }
 

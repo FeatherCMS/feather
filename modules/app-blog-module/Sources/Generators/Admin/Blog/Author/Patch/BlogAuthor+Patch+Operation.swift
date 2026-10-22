@@ -16,7 +16,9 @@ extension BlogAuthor.Patch {
         var responseMap: ResponseMap {
             [
                 200: BlogAuthorDetailResponse().reference(),
-                400: CustomResponse(description: "Bad Request"),
+                400: DefaultHTTPErrorContentResponse(
+                    description: "Bad Request"
+                ),
                 404: CustomResponse(description: "Blog author not found"),
             ]
         }

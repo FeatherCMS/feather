@@ -7,7 +7,7 @@ extension AdminAPIGateway {
     public func webPageGet(
         _ input: Operations.WebPageGet.Input
     ) async throws -> Operations.WebPageGet.Output {
-        let useCase = useCases.makeGetPage()
+        let useCase = useCases.makePageDetail()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(
             subject: subject,

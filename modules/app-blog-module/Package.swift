@@ -25,7 +25,6 @@ let swiftSettings =
         .treatAllWarnings(as: .error)
     ]
 
-
 let package = Package(
     name: "app-blog-module",
     platforms: [
@@ -73,7 +72,8 @@ let package = Package(
             from: "2.26.0"
         ),
         .package(
-            url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
         ),
         .package(
@@ -81,7 +81,8 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            url:
+                "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
         ),
         .package(
@@ -89,7 +90,8 @@ let package = Package(
             exact: "1.0.0-beta.4"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            url:
+                "https://github.com/feather-framework/feather-http-hummingbird-testing",
             exact: "1.0.0-beta.1"
         ),
         .package(
@@ -138,7 +140,10 @@ let package = Package(
             name: "BlogApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
@@ -153,13 +158,22 @@ let package = Package(
             name: "BlogInfrastructure",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "MediaDomain", package: "app-media-module"),
                 .product(name: "MediaModule", package: "app-media-module"),
-                .product(name: "MediaInfrastructure", package: "app-media-module"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "MediaInfrastructure",
+                    package: "app-media-module"
+                ),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
@@ -175,7 +189,10 @@ let package = Package(
         .target(
             name: "BlogAdminAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/Admin",
             swiftSettings: sharedSwiftSettings + [
@@ -186,7 +203,10 @@ let package = Package(
         .target(
             name: "BlogAppAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/App",
             swiftSettings: sharedSwiftSettings + [
@@ -198,7 +218,10 @@ let package = Package(
         .target(
             name: "BlogSharedOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                )
             ],
             path: "Sources/Generators/Shared",
             swiftSettings: swiftSettings
@@ -206,7 +229,10 @@ let package = Package(
         .executableTarget(
             name: "BlogAdminOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
 
@@ -218,7 +244,10 @@ let package = Package(
         .executableTarget(
             name: "BlogAppOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
 
@@ -233,8 +262,14 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .product(
+                    name: "SystemInfrastructure",
+                    package: "app-system-module"
+                ),
                 .product(name: "MediaBackend", package: "app-media-module"),
 
                 .product(name: "WebAdminAPI", package: "app-web-module"),
@@ -243,7 +278,6 @@ let package = Package(
                     name: "WebInfrastructure",
                     package: "app-web-module"
                 ),
-                .product(name: "Hummingbird", package: "hummingbird"),
 
                 .target(name: "BlogInfrastructure"),
                 .target(name: "BlogModule"),
@@ -259,7 +293,10 @@ let package = Package(
             name: "BlogWebShared",
             dependencies: [
                 .product(name: "FeatherWebShared", package: "feather-core"),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
             ],
             path: "Sources/Composition/WebShared",
             swiftSettings: swiftSettings
@@ -275,7 +312,10 @@ let package = Package(
                     name: "OpenAPIAsyncHTTPClient",
                     package: "swift-openapi-async-http-client"
                 ),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
                 .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebBuilders", package: "swift-web-standards"),
@@ -299,7 +339,10 @@ let package = Package(
                     name: "OpenAPIAsyncHTTPClient",
                     package: "swift-openapi-async-http-client"
                 ),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
                 .target(name: "BlogAppAPI"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
@@ -318,7 +361,7 @@ let package = Package(
         .testTarget(
             name: "BlogDomainTests",
             dependencies: [
-                .target(name: "BlogDomain"),
+                .target(name: "BlogDomain")
             ],
             path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
@@ -367,7 +410,10 @@ let package = Package(
                     name: "FeatherHTTPHummingbirdTesting",
                     package: "feather-http-hummingbird-testing"
                 ),
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "FeatherTesting", package: "feather-core"),

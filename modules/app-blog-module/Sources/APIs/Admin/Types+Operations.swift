@@ -5,6 +5,188 @@ public import struct Foundation.Data
 public import struct Foundation.Date
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/get(blogAuthorList)`.
+    public enum BlogAuthorList {
+        public static let id: Swift.String = "blogAuthorList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.BlogAuthorList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            public init(headers: Operations.BlogAuthorList.Input.Headers = .init()) {
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// BlogAuthor list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/get(blogAuthorList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BlogAuthorListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BlogAuthorListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.BlogAuthorList.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.BlogAuthorList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/get(blogAuthorList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.BlogAuthorList.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.BlogAuthorList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.BlogAuthorList.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.BlogAuthorList.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/get(blogAuthorList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.BlogAuthorList.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.BlogAuthorList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/post(blogAuthorPost)`.
     public enum BlogAuthorPost {
@@ -389,194 +571,12 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
-    public enum BlogAuthorList {
-        public static let id: Swift.String = "blogAuthorList"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorList.AcceptableContentType>]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorList.AcceptableContentType>] = .defaultValues()) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.BlogAuthorList.Input.Headers
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - headers:
-            public init(headers: Operations.BlogAuthorList.Input.Headers = .init()) {
-                self.headers = headers
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthor list response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorListResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorListResponse {
-                get throws {
-                    switch self {
-                    case let .ok(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/responses/401/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/responses/401/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.BlogAuthorList.Output.Unauthorized.Body
-                /// Creates a new `Unauthorized`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.BlogAuthorList.Output.Unauthorized.Body) {
-                    self.body = body
-                }
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogAuthorList.Output.Unauthorized)
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.BlogAuthorList.Output.Unauthorized {
-                get throws {
-                    switch self {
-                    case let .unauthorized(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/responses/403/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/GET/responses/403/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.BlogAuthorList.Output.Forbidden.Body
-                /// Creates a new `Forbidden`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.BlogAuthorList.Output.Forbidden.Body) {
-                    self.body = body
-                }
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorList.Output.Forbidden)
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogAuthorList.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case let .forbidden(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case let .other(string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/search/post(blogAuthorQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/query/post(blogAuthorQuery)`.
     public enum BlogAuthorQuery {
         public static let id: Swift.String = "blogAuthorQuery"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/search/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/query/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorQuery.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -588,9 +588,9 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogAuthorQuery.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/search/POST/requestBody`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/search/POST/requestBody/content/application\/json`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/query/POST/requestBody/content/application\/json`.
                 case json(Components.Schemas.BlogAuthorQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.BlogAuthorQuery.Input.Body
@@ -610,7 +610,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/search/post(blogAuthorQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/query/post(blogAuthorQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.BlogAuthorQueryItemSearchSchemaSearchResponse)
@@ -632,9 +632,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/search/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/query/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/search/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/query/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -661,7 +661,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/search/post(blogAuthorQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/query/post(blogAuthorQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.BlogAuthorQuery.Output.Unauthorized)
@@ -683,9 +683,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/search/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/query/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/search/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/query/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -712,7 +712,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/search/post(blogAuthorQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/query/post(blogAuthorQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.BlogAuthorQuery.Output.Forbidden)
@@ -1600,6 +1600,208 @@ public enum Operations {
             }
         }
     }
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/get(blogAuthorLinkList)`.
+    public enum BlogAuthorLinkList {
+        public static let id: Swift.String = "blogAuthorLinkList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// BlogAuthor id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/path/blogAuthorId`.
+                public var blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - blogAuthorId: BlogAuthor id
+                public init(blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter) {
+                    self.blogAuthorId = blogAuthorId
+                }
+            }
+            public var path: Operations.BlogAuthorLinkList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorLinkList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorLinkList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.BlogAuthorLinkList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.BlogAuthorLinkList.Input.Path,
+                headers: Operations.BlogAuthorLinkList.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// BlogAuthorLink list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/get(blogAuthorLinkList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BlogAuthorLinkListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BlogAuthorLinkListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.BlogAuthorLinkList.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.BlogAuthorLinkList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/get(blogAuthorLinkList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.BlogAuthorLinkList.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.BlogAuthorLinkList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.BlogAuthorLinkList.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.BlogAuthorLinkList.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/get(blogAuthorLinkList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.BlogAuthorLinkList.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.BlogAuthorLinkList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/post(blogAuthorLinkPost)`.
     public enum BlogAuthorLinkPost {
@@ -1610,12 +1812,12 @@ public enum Operations {
                 /// BlogAuthor id
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/POST/path/blogAuthorId`.
-                public var blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter
+                public var blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - blogAuthorId: BlogAuthor id
-                public init(blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter) {
+                public init(blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter) {
                     self.blogAuthorId = blogAuthorId
                 }
             }
@@ -1816,12 +2018,12 @@ public enum Operations {
                 /// BlogAuthor id
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/DELETE/path/blogAuthorId`.
-                public var blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter
+                public var blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - blogAuthorId: BlogAuthor id
-                public init(blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter) {
+                public init(blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter) {
                     self.blogAuthorId = blogAuthorId
                 }
             }
@@ -2020,229 +2222,27 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
-    public enum BlogAuthorLinkList {
-        public static let id: Swift.String = "blogAuthorLinkList"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/path`.
-            public struct Path: Sendable, Hashable {
-                /// BlogAuthor id
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/path/blogAuthorId`.
-                public var blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - blogAuthorId: BlogAuthor id
-                public init(blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter) {
-                    self.blogAuthorId = blogAuthorId
-                }
-            }
-            public var path: Operations.BlogAuthorLinkList.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorLinkList.AcceptableContentType>]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorLinkList.AcceptableContentType>] = .defaultValues()) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.BlogAuthorLinkList.Input.Headers
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            public init(
-                path: Operations.BlogAuthorLinkList.Input.Path,
-                headers: Operations.BlogAuthorLinkList.Input.Headers = .init()
-            ) {
-                self.path = path
-                self.headers = headers
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// BlogAuthorLink list response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogAuthorLinkListResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogAuthorLinkListResponse {
-                get throws {
-                    switch self {
-                    case let .ok(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/responses/401/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/responses/401/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.BlogAuthorLinkList.Output.Unauthorized.Body
-                /// Creates a new `Unauthorized`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.BlogAuthorLinkList.Output.Unauthorized.Body) {
-                    self.body = body
-                }
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogAuthorLinkList.Output.Unauthorized)
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.BlogAuthorLinkList.Output.Unauthorized {
-                get throws {
-                    switch self {
-                    case let .unauthorized(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/responses/403/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/GET/responses/403/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.BlogAuthorLinkList.Output.Forbidden.Body
-                /// Creates a new `Forbidden`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.BlogAuthorLinkList.Output.Forbidden.Body) {
-                    self.body = body
-                }
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorLinkList.Output.Forbidden)
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogAuthorLinkList.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case let .forbidden(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case let .other(string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/search/post(blogAuthorLinkQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/query/post(blogAuthorLinkQuery)`.
     public enum BlogAuthorLinkQuery {
         public static let id: Swift.String = "blogAuthorLinkQuery"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/search/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/path`.
             public struct Path: Sendable, Hashable {
                 /// BlogAuthor id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/search/POST/path/blogAuthorId`.
-                public var blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/path/blogAuthorId`.
+                public var blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - blogAuthorId: BlogAuthor id
-                public init(blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter) {
+                public init(blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter) {
                     self.blogAuthorId = blogAuthorId
                 }
             }
             public var path: Operations.BlogAuthorLinkQuery.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/search/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogAuthorLinkQuery.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -2254,9 +2254,9 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogAuthorLinkQuery.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/search/POST/requestBody`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/search/POST/requestBody/content/application\/json`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/requestBody/content/application\/json`.
                 case json(Components.Schemas.BlogAuthorLinkQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.BlogAuthorLinkQuery.Input.Body
@@ -2279,7 +2279,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/search/post(blogAuthorLinkQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/query/post(blogAuthorLinkQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.BlogAuthorLinkQueryItemSearchSchemaSearchResponse)
@@ -2301,9 +2301,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/search/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/search/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2330,7 +2330,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/search/post(blogAuthorLinkQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/query/post(blogAuthorLinkQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.BlogAuthorLinkQuery.Output.Unauthorized)
@@ -2352,9 +2352,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/search/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/search/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/query/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2381,7 +2381,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/search/post(blogAuthorLinkQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/query/post(blogAuthorLinkQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.BlogAuthorLinkQuery.Output.Forbidden)
@@ -2443,7 +2443,7 @@ public enum Operations {
                 /// BlogAuthor id
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/GET/path/blogAuthorId`.
-                public var blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter
+                public var blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter
                 /// BlogAuthorLink id
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/GET/path/blogAuthorLinkId`.
@@ -2454,7 +2454,7 @@ public enum Operations {
                 ///   - blogAuthorId: BlogAuthor id
                 ///   - blogAuthorLinkId: BlogAuthorLink id
                 public init(
-                    blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter,
+                    blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter,
                     blogAuthorLinkId: Components.Parameters.BlogAuthorLinkIdParameter
                 ) {
                     self.blogAuthorId = blogAuthorId
@@ -2705,7 +2705,7 @@ public enum Operations {
                 /// BlogAuthor id
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/PATCH/path/blogAuthorId`.
-                public var blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter
+                public var blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter
                 /// BlogAuthorLink id
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/PATCH/path/blogAuthorLinkId`.
@@ -2716,7 +2716,7 @@ public enum Operations {
                 ///   - blogAuthorId: BlogAuthor id
                 ///   - blogAuthorLinkId: BlogAuthorLink id
                 public init(
-                    blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter,
+                    blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter,
                     blogAuthorLinkId: Components.Parameters.BlogAuthorLinkIdParameter
                 ) {
                     self.blogAuthorId = blogAuthorId
@@ -3040,7 +3040,7 @@ public enum Operations {
                 /// BlogAuthor id
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/PUT/path/blogAuthorId`.
-                public var blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter
+                public var blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter
                 /// BlogAuthorLink id
                 ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/PUT/path/blogAuthorLinkId`.
@@ -3051,7 +3051,7 @@ public enum Operations {
                 ///   - blogAuthorId: BlogAuthor id
                 ///   - blogAuthorLinkId: BlogAuthorLink id
                 public init(
-                    blogAuthorId: Components.Parameters.BlogAuthorLinkMenuIdParameter,
+                    blogAuthorId: Components.Parameters.BlogAuthorLinkAuthorIdParameter,
                     blogAuthorLinkId: Components.Parameters.BlogAuthorLinkIdParameter
                 ) {
                     self.blogAuthorId = blogAuthorId
@@ -3253,6 +3253,188 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.BlogAuthorLinkPut.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/blog/posts`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/get(blogPostList)`.
+    public enum BlogPostList {
+        public static let id: Swift.String = "blogPostList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogPostList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogPostList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.BlogPostList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            public init(headers: Operations.BlogPostList.Input.Headers = .init()) {
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// BlogPost list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/get(blogPostList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BlogPostListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BlogPostListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.BlogPostList.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.BlogPostList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/get(blogPostList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.BlogPostList.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.BlogPostList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.BlogPostList.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.BlogPostList.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/get(blogPostList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.BlogPostList.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.BlogPostList.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -3680,194 +3862,12 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
-    public enum BlogPostList {
-        public static let id: Swift.String = "blogPostList"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogPostList.AcceptableContentType>]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogPostList.AcceptableContentType>] = .defaultValues()) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.BlogPostList.Input.Headers
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - headers:
-            public init(headers: Operations.BlogPostList.Input.Headers = .init()) {
-                self.headers = headers
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// BlogPost list response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogPostListResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogPostListResponse {
-                get throws {
-                    switch self {
-                    case let .ok(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/responses/401/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/responses/401/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.BlogPostList.Output.Unauthorized.Body
-                /// Creates a new `Unauthorized`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.BlogPostList.Output.Unauthorized.Body) {
-                    self.body = body
-                }
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogPostList.Output.Unauthorized)
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.BlogPostList.Output.Unauthorized {
-                get throws {
-                    switch self {
-                    case let .unauthorized(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/responses/403/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/GET/responses/403/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.BlogPostList.Output.Forbidden.Body
-                /// Creates a new `Forbidden`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.BlogPostList.Output.Forbidden.Body) {
-                    self.body = body
-                }
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogPostList.Output.Forbidden)
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogPostList.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case let .forbidden(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case let .other(string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/posts/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/search/post(blogPostQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/posts/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/query/post(blogPostQuery)`.
     public enum BlogPostQuery {
         public static let id: Swift.String = "blogPostQuery"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/search/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/query/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogPostQuery.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -3879,9 +3879,9 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogPostQuery.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/search/POST/requestBody`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/search/POST/requestBody/content/application\/json`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/query/POST/requestBody/content/application\/json`.
                 case json(Components.Schemas.BlogPostQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.BlogPostQuery.Input.Body
@@ -3901,7 +3901,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/search/post(blogPostQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/query/post(blogPostQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.BlogPostQueryItemSearchSchemaSearchResponse)
@@ -3923,9 +3923,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/search/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/query/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/search/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/query/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3952,7 +3952,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/search/post(blogPostQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/query/post(blogPostQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.BlogPostQuery.Output.Unauthorized)
@@ -3974,9 +3974,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/search/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/query/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/search/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/query/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4003,7 +4003,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/search/post(blogPostQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/query/post(blogPostQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.BlogPostQuery.Output.Forbidden)
@@ -5261,6 +5261,188 @@ public enum Operations {
             }
         }
     }
+    /// - Remark: HTTP `GET /api/v1/admin/blog/tags`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/get(blogTagList)`.
+    public enum BlogTagList {
+        public static let id: Swift.String = "blogTagList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogTagList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogTagList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.BlogTagList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            public init(headers: Operations.BlogTagList.Input.Headers = .init()) {
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// BlogTag list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/get(blogTagList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.BlogTagListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.BlogTagListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.BlogTagList.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.BlogTagList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/get(blogTagList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.BlogTagList.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.BlogTagList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.BlogTagList.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.BlogTagList.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/get(blogTagList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.BlogTagList.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.BlogTagList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/tags`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/post(blogTagPost)`.
     public enum BlogTagPost {
@@ -5645,194 +5827,12 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
-    public enum BlogTagList {
-        public static let id: Swift.String = "blogTagList"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogTagList.AcceptableContentType>]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogTagList.AcceptableContentType>] = .defaultValues()) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.BlogTagList.Input.Headers
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - headers:
-            public init(headers: Operations.BlogTagList.Input.Headers = .init()) {
-                self.headers = headers
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// BlogTag list response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.BlogTagListResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.BlogTagListResponse {
-                get throws {
-                    switch self {
-                    case let .ok(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/responses/401/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/responses/401/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.BlogTagList.Output.Unauthorized.Body
-                /// Creates a new `Unauthorized`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.BlogTagList.Output.Unauthorized.Body) {
-                    self.body = body
-                }
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogTagList.Output.Unauthorized)
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.BlogTagList.Output.Unauthorized {
-                get throws {
-                    switch self {
-                    case let .unauthorized(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/responses/403/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/GET/responses/403/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.BlogTagList.Output.Forbidden.Body
-                /// Creates a new `Forbidden`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.BlogTagList.Output.Forbidden.Body) {
-                    self.body = body
-                }
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogTagList.Output.Forbidden)
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogTagList.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case let .forbidden(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case let .other(string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/tags/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/search/post(blogTagQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/tags/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/query/post(blogTagQuery)`.
     public enum BlogTagQuery {
         public static let id: Swift.String = "blogTagQuery"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/search/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/query/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.BlogTagQuery.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -5844,9 +5844,9 @@ public enum Operations {
                 }
             }
             public var headers: Operations.BlogTagQuery.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/search/POST/requestBody`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/search/POST/requestBody/content/application\/json`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/query/POST/requestBody/content/application\/json`.
                 case json(Components.Schemas.BlogTagQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.BlogTagQuery.Input.Body
@@ -5866,7 +5866,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/search/post(blogTagQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/query/post(blogTagQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.BlogTagQueryItemSearchSchemaSearchResponse)
@@ -5888,9 +5888,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/search/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/query/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/search/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/query/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -5917,7 +5917,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/search/post(blogTagQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/query/post(blogTagQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.BlogTagQuery.Output.Unauthorized)
@@ -5939,9 +5939,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/search/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/query/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/search/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/query/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -5968,7 +5968,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/search/post(blogTagQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/query/post(blogTagQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.BlogTagQuery.Output.Forbidden)

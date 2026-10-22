@@ -12,7 +12,7 @@ extension Author.Add.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Author.Router.Routes
 
         func render(
             state: BlogAuthorForm.State,

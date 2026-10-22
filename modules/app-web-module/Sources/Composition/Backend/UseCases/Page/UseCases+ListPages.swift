@@ -12,20 +12,12 @@ import WebDomain
 
 extension UseCases {
 
-    func makeListPages() -> ListPages {
+    func makeListPages() -> Page.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadPageMetadata(
-                    page: Page.Query.Database(
-                        context: context,
-                        metadata: Metadata.Query.Database(
-                            context: context
-                        )
-                    ),
-                    metadata: Metadata.Query.Database(
-                        context: context
-                    )
+                Page.List.Scope(
+                    page: Page.List.Query.Database(context: context)
                 )
             }
         )

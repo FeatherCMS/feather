@@ -16,8 +16,8 @@ extension Components {
         public typealias BlogAuthorParametersUpdateMask = Components.Schemas.BlogAuthorUpdateMaskField
         /// BlogAuthor id
         ///
-        /// - Remark: Generated from `#/components/parameters/BlogAuthorLinkMenuIdParameter`.
-        public typealias BlogAuthorLinkMenuIdParameter = Components.Schemas.BlogAuthorIdField
+        /// - Remark: Generated from `#/components/parameters/BlogAuthorLinkAuthorIdParameter`.
+        public typealias BlogAuthorLinkAuthorIdParameter = Components.Schemas.BlogAuthorIdField
         /// BlogAuthorLink id
         ///
         /// - Remark: Generated from `#/components/parameters/BlogAuthorLinkIdParameter`.

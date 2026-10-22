@@ -20,7 +20,7 @@ extension AuthorLink.List {
             let search: String
             let permissions: AdminListActions
             let breadcrumb: [AdminBreadcrumb.Link]
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: AuthorLink.Router.Routes
             let error: String?
         }
         let state: State
@@ -81,7 +81,7 @@ extension AuthorLink.List {
             let pageState: AdminListPageState
             let search: String
             let permissions: AdminListActions
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: AuthorLink.Router.Routes
         }
 
         let state: State

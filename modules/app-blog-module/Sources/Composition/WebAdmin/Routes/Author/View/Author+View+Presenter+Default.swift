@@ -18,7 +18,8 @@ extension Author.View.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Author.Router.Routes
+        let authorLinkRoutes: AuthorLink.Router.Routes
 
         func renderDetailsPage(
             rule: Author.Details.Model,
@@ -33,7 +34,8 @@ extension Author.View.Presenter {
                         author: rule,
                         breadcrumb: routes.authorsBreadcrumb,
                         permissions: permissions,
-                        routes: routes
+                        routes: routes,
+                        authorLinkRoutes: authorLinkRoutes
                     )
                 )
             )

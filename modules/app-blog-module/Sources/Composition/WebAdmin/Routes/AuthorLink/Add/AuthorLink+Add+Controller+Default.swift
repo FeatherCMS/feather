@@ -15,7 +15,7 @@ import WebModuleWebAdmin
 
 extension AuthorLink.Add.Controller {
     struct Default: Interface {
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: AuthorLink.Router.Routes
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any AuthorLink.Add.Interactor.Interface,

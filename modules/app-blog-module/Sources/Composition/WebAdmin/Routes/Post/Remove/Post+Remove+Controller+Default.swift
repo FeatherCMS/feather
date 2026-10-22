@@ -6,7 +6,7 @@ import Hummingbird
 
 extension Post.Remove.Controller {
     struct Default: Interface {
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Post.Router.Routes
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any Post.Remove.Interactor.Interface,

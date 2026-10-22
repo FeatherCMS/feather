@@ -17,7 +17,7 @@ extension Tag.View.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Tag.Router.Routes
 
         func renderDetailsPage(
             model: Tag.Details.Model,

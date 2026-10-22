@@ -13,7 +13,7 @@ extension Author.Add {
         struct State {
             let form: BlogAuthorForm.State
             let breadcrumb: [AdminBreadcrumb.Link]
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Author.Router.Routes
         }
 
         let state: State

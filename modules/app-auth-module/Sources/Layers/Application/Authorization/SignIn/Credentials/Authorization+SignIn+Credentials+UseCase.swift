@@ -38,7 +38,7 @@ extension AuthModule.Authorization.SignIn.Credentials {
                     ),
                     user.status == .active
                 else {
-                    throw UseCaseError.authentication()
+                    throw Error.authenticationFailed
                 }
                 return try await AuthModule.Authorization.SignIn.makeAuthResponse(
                     authorization: scope.authorization,

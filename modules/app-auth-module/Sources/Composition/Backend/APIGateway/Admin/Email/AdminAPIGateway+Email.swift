@@ -79,11 +79,7 @@ extension AdminAPIGateway {
                 $0.id == input.path.authEmailId
             })
         else {
-            throw UseCaseError(
-                reason: .validation,
-                logMessage: "Auth email not found",
-                userFriendlyMessage: "Auth email not found"
-            )
+            throw HTTPError(.notFound)
         }
         return .ok(
             .init(

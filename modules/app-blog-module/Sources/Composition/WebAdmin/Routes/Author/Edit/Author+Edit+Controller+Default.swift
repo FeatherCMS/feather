@@ -14,7 +14,7 @@ import WebModuleWebAdmin
 
 extension Author.Edit.Controller {
     struct Default: Interface {
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Author.Router.Routes
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any Author.Edit.Interactor.Interface,

@@ -6,6 +6,167 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorListSchema`.
+        public typealias BlogAuthorListSchema = [Components.Schemas.BlogAuthorListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema`.
+        public struct BlogAuthorListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/id`.
+            public var id: Components.Schemas.BlogAuthorIdField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/name`.
+            public var name: Components.Schemas.BlogAuthorNameField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.BlogAuthorExcerptField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/profileImageAssetId`.
+            public var profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.BlogAuthorCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
+            /// Creates a new `BlogAuthorListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - name:
+            ///   - excerpt:
+            ///   - profileImageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.BlogAuthorIdField,
+                name: Components.Schemas.BlogAuthorNameField,
+                excerpt: Components.Schemas.BlogAuthorExcerptField,
+                profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdField? = nil,
+                createdAt: Components.Schemas.BlogAuthorCreatedAtField,
+                updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
+            ) {
+                self.id = id
+                self.name = name
+                self.excerpt = excerpt
+                self.profileImageAssetId = profileImageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case name
+                case excerpt
+                case profileImageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorIdField`.
+        public typealias BlogAuthorIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorNameField`.
+        public typealias BlogAuthorNameField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorExcerptField`.
+        public typealias BlogAuthorExcerptField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorProfileImageAssetIdField`.
+        public typealias BlogAuthorProfileImageAssetIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorCreatedAtField`.
+        public typealias BlogAuthorCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorUpdatedAtField`.
+        public typealias BlogAuthorUpdatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+        public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
+            public var error: Components.Schemas.DefaultHTTPErrorContentSchema
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/trace`.
+            public var trace: Components.Schemas.ErrorTraceSchema?
+            /// Creates a new `DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+            ///
+            /// - Parameters:
+            ///   - error:
+            ///   - trace:
+            public init(
+                error: Components.Schemas.DefaultHTTPErrorContentSchema,
+                trace: Components.Schemas.ErrorTraceSchema? = nil
+            ) {
+                self.error = error
+                self.trace = trace
+            }
+            public enum CodingKeys: String, CodingKey {
+                case error
+                case trace
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema`.
+        public struct DefaultHTTPErrorContentSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/reason`.
+            public var reason: Swift.String
+            /// Creates a new `DefaultHTTPErrorContentSchema`.
+            ///
+            /// - Parameters:
+            ///   - message:
+            ///   - reason:
+            public init(
+                message: Swift.String,
+                reason: Swift.String
+            ) {
+                self.message = message
+                self.reason = reason
+            }
+            public enum CodingKeys: String, CodingKey {
+                case message
+                case reason
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema`.
+        public struct ErrorTraceSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/reasons`.
+            public var reasons: Components.Schemas.ErrorTraceReasonsSchema?
+            /// Creates a new `ErrorTraceSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            ///   - reasons:
+            public init(
+                id: Swift.String,
+                message: Swift.String,
+                reasons: Components.Schemas.ErrorTraceReasonsSchema? = nil
+            ) {
+                self.id = id
+                self.message = message
+                self.reasons = reasons
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+                case reasons
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonsSchema`.
+        public typealias ErrorTraceReasonsSchema = [Components.Schemas.ErrorTraceReasonSchema]
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema`.
+        public struct ErrorTraceReasonSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/message`.
+            public var message: Swift.String
+            /// Creates a new `ErrorTraceReasonSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            public init(
+                id: Swift.String,
+                message: Swift.String
+            ) {
+                self.id = id
+                self.message = message
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/BlogAuthorCreateSchema`.
         public struct BlogAuthorCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogAuthorCreateSchema/name`.
@@ -41,12 +202,8 @@ extension Components {
                 case profileImageAssetId
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorExcerptField`.
-        public typealias BlogAuthorExcerptField = Swift.String
         /// - Remark: Generated from `#/components/schemas/BlogAuthorContentField`.
         public typealias BlogAuthorContentField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorProfileImageAssetIdField`.
-        public typealias BlogAuthorProfileImageAssetIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema`.
         public struct BlogAuthorDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogAuthorDetailSchema/id`.
@@ -235,106 +392,6 @@ extension Components {
         public typealias AdminWebMetadataReferenceTypeField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AdminWebMetadataReferenceIDField`.
         public typealias AdminWebMetadataReferenceIDField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
-        public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
-            public var error: Components.Schemas.DefaultHTTPErrorContentSchema
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/trace`.
-            public var trace: Components.Schemas.ErrorTraceSchema?
-            /// Creates a new `DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
-            ///
-            /// - Parameters:
-            ///   - error:
-            ///   - trace:
-            public init(
-                error: Components.Schemas.DefaultHTTPErrorContentSchema,
-                trace: Components.Schemas.ErrorTraceSchema? = nil
-            ) {
-                self.error = error
-                self.trace = trace
-            }
-            public enum CodingKeys: String, CodingKey {
-                case error
-                case trace
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema`.
-        public struct DefaultHTTPErrorContentSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/message`.
-            public var message: Swift.String
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/reason`.
-            public var reason: Swift.String
-            /// Creates a new `DefaultHTTPErrorContentSchema`.
-            ///
-            /// - Parameters:
-            ///   - message:
-            ///   - reason:
-            public init(
-                message: Swift.String,
-                reason: Swift.String
-            ) {
-                self.message = message
-                self.reason = reason
-            }
-            public enum CodingKeys: String, CodingKey {
-                case message
-                case reason
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema`.
-        public struct ErrorTraceSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/message`.
-            public var message: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/reasons`.
-            public var reasons: Components.Schemas.ErrorTraceReasonsSchema?
-            /// Creates a new `ErrorTraceSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - message:
-            ///   - reasons:
-            public init(
-                id: Swift.String,
-                message: Swift.String,
-                reasons: Components.Schemas.ErrorTraceReasonsSchema? = nil
-            ) {
-                self.id = id
-                self.message = message
-                self.reasons = reasons
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case message
-                case reasons
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonsSchema`.
-        public typealias ErrorTraceReasonsSchema = [Components.Schemas.ErrorTraceReasonSchema]
-        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema`.
-        public struct ErrorTraceReasonSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/message`.
-            public var message: Swift.String
-            /// Creates a new `ErrorTraceReasonSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - message:
-            public init(
-                id: Swift.String,
-                message: Swift.String
-            ) {
-                self.id = id
-                self.message = message
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case message
-            }
-        }
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
@@ -350,63 +407,6 @@ extension Components {
                 case ids
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorListSchema`.
-        public typealias BlogAuthorListSchema = [Components.Schemas.BlogAuthorListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema`.
-        public struct BlogAuthorListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/id`.
-            public var id: Components.Schemas.BlogAuthorIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/name`.
-            public var name: Components.Schemas.BlogAuthorNameField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.BlogAuthorExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/profileImageAssetId`.
-            public var profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.BlogAuthorCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
-            /// Creates a new `BlogAuthorListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - name:
-            ///   - excerpt:
-            ///   - profileImageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.BlogAuthorIdField,
-                name: Components.Schemas.BlogAuthorNameField,
-                excerpt: Components.Schemas.BlogAuthorExcerptField,
-                profileImageAssetId: Components.Schemas.BlogAuthorProfileImageAssetIdField? = nil,
-                createdAt: Components.Schemas.BlogAuthorCreatedAtField,
-                updatedAt: Components.Schemas.BlogAuthorUpdatedAtField
-            ) {
-                self.id = id
-                self.name = name
-                self.excerpt = excerpt
-                self.profileImageAssetId = profileImageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case name
-                case excerpt
-                case profileImageAssetId
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorIdField`.
-        public typealias BlogAuthorIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorNameField`.
-        public typealias BlogAuthorNameField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorCreatedAtField`.
-        public typealias BlogAuthorCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorUpdatedAtField`.
-        public typealias BlogAuthorUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema`.
         public struct BlogAuthorQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogAuthorQueryItemSearchRequestQuerySchema/page`.
@@ -754,6 +754,89 @@ extension Components {
         public typealias BlogAuthorProfileImageAssetIdFieldNullable = Swift.String
         /// - Remark: Generated from `#/components/schemas/BlogAuthorUpdateMaskField`.
         public typealias BlogAuthorUpdateMaskField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListSchema`.
+        public typealias BlogAuthorLinkListSchema = [Components.Schemas.BlogAuthorLinkListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema`.
+        public struct BlogAuthorLinkListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/id`.
+            public var id: Components.Schemas.BlogAuthorLinkIdField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/menuId`.
+            public var menuId: Components.Schemas.BlogAuthorIdField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/label`.
+            public var label: Components.Schemas.BlogAuthorLinkLabelField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/url`.
+            public var url: Components.Schemas.BlogAuthorLinkURLField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/priority`.
+            public var priority: Components.Schemas.BlogAuthorLinkPriorityField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/isBlank`.
+            public var isBlank: Components.Schemas.BlogAuthorLinkIsBlankField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/permission`.
+            public var permission: Components.Schemas.BlogAuthorLinkPermissionField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.BlogAuthorLinkCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.BlogAuthorLinkUpdatedAtField
+            /// Creates a new `BlogAuthorLinkListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - menuId:
+            ///   - label:
+            ///   - url:
+            ///   - priority:
+            ///   - isBlank:
+            ///   - permission:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.BlogAuthorLinkIdField,
+                menuId: Components.Schemas.BlogAuthorIdField,
+                label: Components.Schemas.BlogAuthorLinkLabelField,
+                url: Components.Schemas.BlogAuthorLinkURLField,
+                priority: Components.Schemas.BlogAuthorLinkPriorityField,
+                isBlank: Components.Schemas.BlogAuthorLinkIsBlankField,
+                permission: Components.Schemas.BlogAuthorLinkPermissionField,
+                createdAt: Components.Schemas.BlogAuthorLinkCreatedAtField,
+                updatedAt: Components.Schemas.BlogAuthorLinkUpdatedAtField
+            ) {
+                self.id = id
+                self.menuId = menuId
+                self.label = label
+                self.url = url
+                self.priority = priority
+                self.isBlank = isBlank
+                self.permission = permission
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case menuId
+                case label
+                case url
+                case priority
+                case isBlank
+                case permission
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkIdField`.
+        public typealias BlogAuthorLinkIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkLabelField`.
+        public typealias BlogAuthorLinkLabelField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkURLField`.
+        public typealias BlogAuthorLinkURLField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPriorityField`.
+        public typealias BlogAuthorLinkPriorityField = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkIsBlankField`.
+        public typealias BlogAuthorLinkIsBlankField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPermissionField`.
+        public typealias BlogAuthorLinkPermissionField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreatedAtField`.
+        public typealias BlogAuthorLinkCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkUpdatedAtField`.
+        public typealias BlogAuthorLinkUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreateSchema`.
         public struct BlogAuthorLinkCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreateSchema/label`.
@@ -874,89 +957,6 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListSchema`.
-        public typealias BlogAuthorLinkListSchema = [Components.Schemas.BlogAuthorLinkListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema`.
-        public struct BlogAuthorLinkListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/id`.
-            public var id: Components.Schemas.BlogAuthorLinkIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/menuId`.
-            public var menuId: Components.Schemas.BlogAuthorIdField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/label`.
-            public var label: Components.Schemas.BlogAuthorLinkLabelField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/url`.
-            public var url: Components.Schemas.BlogAuthorLinkURLField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/priority`.
-            public var priority: Components.Schemas.BlogAuthorLinkPriorityField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/isBlank`.
-            public var isBlank: Components.Schemas.BlogAuthorLinkIsBlankField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/permission`.
-            public var permission: Components.Schemas.BlogAuthorLinkPermissionField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.BlogAuthorLinkCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.BlogAuthorLinkUpdatedAtField
-            /// Creates a new `BlogAuthorLinkListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - menuId:
-            ///   - label:
-            ///   - url:
-            ///   - priority:
-            ///   - isBlank:
-            ///   - permission:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.BlogAuthorLinkIdField,
-                menuId: Components.Schemas.BlogAuthorIdField,
-                label: Components.Schemas.BlogAuthorLinkLabelField,
-                url: Components.Schemas.BlogAuthorLinkURLField,
-                priority: Components.Schemas.BlogAuthorLinkPriorityField,
-                isBlank: Components.Schemas.BlogAuthorLinkIsBlankField,
-                permission: Components.Schemas.BlogAuthorLinkPermissionField,
-                createdAt: Components.Schemas.BlogAuthorLinkCreatedAtField,
-                updatedAt: Components.Schemas.BlogAuthorLinkUpdatedAtField
-            ) {
-                self.id = id
-                self.menuId = menuId
-                self.label = label
-                self.url = url
-                self.priority = priority
-                self.isBlank = isBlank
-                self.permission = permission
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case menuId
-                case label
-                case url
-                case priority
-                case isBlank
-                case permission
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkIdField`.
-        public typealias BlogAuthorLinkIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkLabelField`.
-        public typealias BlogAuthorLinkLabelField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkURLField`.
-        public typealias BlogAuthorLinkURLField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPriorityField`.
-        public typealias BlogAuthorLinkPriorityField = Swift.Int
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkIsBlankField`.
-        public typealias BlogAuthorLinkIsBlankField = Swift.Bool
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkPermissionField`.
-        public typealias BlogAuthorLinkPermissionField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkCreatedAtField`.
-        public typealias BlogAuthorLinkCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkUpdatedAtField`.
-        public typealias BlogAuthorLinkUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema`.
         public struct BlogAuthorLinkQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogAuthorLinkQueryItemSearchRequestQuerySchema/page`.
@@ -1275,6 +1275,67 @@ extension Components {
                 case notes
             }
         }
+        /// - Remark: Generated from `#/components/schemas/BlogPostListSchema`.
+        public typealias BlogPostListSchema = [Components.Schemas.BlogPostListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema`.
+        public struct BlogPostListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/id`.
+            public var id: Components.Schemas.BlogPostIdField
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/title`.
+            public var title: Components.Schemas.BlogPostTitleField
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.BlogPostExcerptField
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.BlogPostImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.BlogPostCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.BlogPostUpdatedAtField
+            /// Creates a new `BlogPostListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - title:
+            ///   - excerpt:
+            ///   - imageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.BlogPostIdField,
+                title: Components.Schemas.BlogPostTitleField,
+                excerpt: Components.Schemas.BlogPostExcerptField,
+                imageAssetId: Components.Schemas.BlogPostImageAssetIdField? = nil,
+                createdAt: Components.Schemas.BlogPostCreatedAtField,
+                updatedAt: Components.Schemas.BlogPostUpdatedAtField
+            ) {
+                self.id = id
+                self.title = title
+                self.excerpt = excerpt
+                self.imageAssetId = imageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case title
+                case excerpt
+                case imageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlogPostIdField`.
+        public typealias BlogPostIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogPostTitleField`.
+        public typealias BlogPostTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogPostExcerptField`.
+        public typealias BlogPostExcerptField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogPostImageAssetIdField`.
+        public typealias BlogPostImageAssetIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogPostCreatedAtField`.
+        public typealias BlogPostCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/BlogPostUpdatedAtField`.
+        public typealias BlogPostUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogPostCreateSchema`.
         public struct BlogPostCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogPostCreateSchema/title`.
@@ -1322,8 +1383,6 @@ extension Components {
                 case tagIds
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogPostImageAssetIdField`.
-        public typealias BlogPostImageAssetIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/BlogPostAuthorIdsField`.
         public typealias BlogPostAuthorIdsField = [Components.Schemas.BlogAuthorIdField]
         /// - Remark: Generated from `#/components/schemas/BlogPostTagIdsField`.
@@ -1401,65 +1460,6 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogPostListSchema`.
-        public typealias BlogPostListSchema = [Components.Schemas.BlogPostListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema`.
-        public struct BlogPostListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/id`.
-            public var id: Components.Schemas.BlogPostIdField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/title`.
-            public var title: Components.Schemas.BlogPostTitleField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.BlogPostExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.BlogPostImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.BlogPostCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogPostListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.BlogPostUpdatedAtField
-            /// Creates a new `BlogPostListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - title:
-            ///   - excerpt:
-            ///   - imageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.BlogPostIdField,
-                title: Components.Schemas.BlogPostTitleField,
-                excerpt: Components.Schemas.BlogPostExcerptField,
-                imageAssetId: Components.Schemas.BlogPostImageAssetIdField? = nil,
-                createdAt: Components.Schemas.BlogPostCreatedAtField,
-                updatedAt: Components.Schemas.BlogPostUpdatedAtField
-            ) {
-                self.id = id
-                self.title = title
-                self.excerpt = excerpt
-                self.imageAssetId = imageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case title
-                case excerpt
-                case imageAssetId
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/BlogPostIdField`.
-        public typealias BlogPostIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogPostTitleField`.
-        public typealias BlogPostTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogPostExcerptField`.
-        public typealias BlogPostExcerptField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogPostCreatedAtField`.
-        public typealias BlogPostCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogPostUpdatedAtField`.
-        public typealias BlogPostUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema`.
         public struct BlogPostQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogPostQueryItemSearchRequestQuerySchema/page`.
@@ -1852,6 +1852,65 @@ extension Components {
                 case tagPathPrefix
             }
         }
+        /// - Remark: Generated from `#/components/schemas/BlogTagListSchema`.
+        public typealias BlogTagListSchema = [Components.Schemas.BlogTagListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema`.
+        public struct BlogTagListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/id`.
+            public var id: Components.Schemas.BlogTagIdField
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/title`.
+            public var title: Components.Schemas.BlogTagTitleField
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.BlogTagExcerptField
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.BlogTagImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.BlogTagCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.BlogTagUpdatedAtField
+            /// Creates a new `BlogTagListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - title:
+            ///   - excerpt:
+            ///   - imageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.BlogTagIdField,
+                title: Components.Schemas.BlogTagTitleField,
+                excerpt: Components.Schemas.BlogTagExcerptField,
+                imageAssetId: Components.Schemas.BlogTagImageAssetIdField? = nil,
+                createdAt: Components.Schemas.BlogTagCreatedAtField,
+                updatedAt: Components.Schemas.BlogTagUpdatedAtField
+            ) {
+                self.id = id
+                self.title = title
+                self.excerpt = excerpt
+                self.imageAssetId = imageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case title
+                case excerpt
+                case imageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/BlogTagTitleField`.
+        public typealias BlogTagTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogTagExcerptField`.
+        public typealias BlogTagExcerptField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogTagImageAssetIdField`.
+        public typealias BlogTagImageAssetIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/BlogTagCreatedAtField`.
+        public typealias BlogTagCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/BlogTagUpdatedAtField`.
+        public typealias BlogTagUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogTagCreateSchema`.
         public struct BlogTagCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogTagCreateSchema/title`.
@@ -1887,8 +1946,6 @@ extension Components {
                 case imageAssetId
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagImageAssetIdField`.
-        public typealias BlogTagImageAssetIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema`.
         public struct BlogTagDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogTagDetailSchema/id`.
@@ -1948,63 +2005,6 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/BlogTagListSchema`.
-        public typealias BlogTagListSchema = [Components.Schemas.BlogTagListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema`.
-        public struct BlogTagListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/id`.
-            public var id: Components.Schemas.BlogTagIdField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/title`.
-            public var title: Components.Schemas.BlogTagTitleField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.BlogTagExcerptField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.BlogTagImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.BlogTagCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/BlogTagListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.BlogTagUpdatedAtField
-            /// Creates a new `BlogTagListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - title:
-            ///   - excerpt:
-            ///   - imageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.BlogTagIdField,
-                title: Components.Schemas.BlogTagTitleField,
-                excerpt: Components.Schemas.BlogTagExcerptField,
-                imageAssetId: Components.Schemas.BlogTagImageAssetIdField? = nil,
-                createdAt: Components.Schemas.BlogTagCreatedAtField,
-                updatedAt: Components.Schemas.BlogTagUpdatedAtField
-            ) {
-                self.id = id
-                self.title = title
-                self.excerpt = excerpt
-                self.imageAssetId = imageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case title
-                case excerpt
-                case imageAssetId
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/BlogTagTitleField`.
-        public typealias BlogTagTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogTagExcerptField`.
-        public typealias BlogTagExcerptField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/BlogTagCreatedAtField`.
-        public typealias BlogTagCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/BlogTagUpdatedAtField`.
-        public typealias BlogTagUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema`.
         public struct BlogTagQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/BlogTagQueryItemSearchRequestQuerySchema/page`.

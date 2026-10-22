@@ -6,7 +6,7 @@ import OpenAPIRuntime
 
 extension Tag.Remove.Controller {
     struct Default: Interface {
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Tag.Router.Routes
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any Tag.Remove.Interactor.Interface,

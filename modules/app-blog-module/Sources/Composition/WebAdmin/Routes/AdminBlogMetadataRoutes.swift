@@ -2,6 +2,7 @@ import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import BlogModule
 import WebModuleWebAdmin
 
 enum AdminBlogMetadataRoutes {
@@ -18,30 +19,32 @@ enum AdminBlogMetadataRoutes {
         environment: AppEnvironment,
         renderingEngine: any RenderingEngine,
         events: any EventPublisher,
-        routes: BlogWebAdmin.Router.Routes
+        postRoutes: Post.Router.Routes,
+        authorRoutes: Author.Router.Routes,
+        tagRoutes: Tag.Router.Routes
     ) {
         let apiBuilder = WebModuleWebAdmin.API.Builder(environment: environment)
         let routes = [
             Route(
-                path: routes.postEditMetadataRoute(),
+                path: postRoutes.postEditMetadataRoute(),
                 referenceType: "blog.post",
                 title: "Edit post metadata",
-                breadcrumb: routes.postsBreadcrumb,
-                editPath: routes.postEdit
+                breadcrumb: postRoutes.postsBreadcrumb,
+                editPath: postRoutes.postEdit
             ),
             Route(
-                path: routes.authorEditMetadataRoute(),
+                path: authorRoutes.authorEditMetadataRoute(),
                 referenceType: "blog.author",
                 title: "Edit author metadata",
-                breadcrumb: routes.authorsBreadcrumb,
-                editPath: routes.authorEdit
+                breadcrumb: authorRoutes.authorsBreadcrumb,
+                editPath: authorRoutes.authorEdit
             ),
             Route(
-                path: routes.tagEditMetadataRoute(),
+                path: tagRoutes.tagEditMetadataRoute(),
                 referenceType: "blog.tag",
                 title: "Edit tag metadata",
-                breadcrumb: routes.tagsBreadcrumb,
-                editPath: routes.tagEdit
+                breadcrumb: tagRoutes.tagsBreadcrumb,
+                editPath: tagRoutes.tagEdit
             ),
         ]
 

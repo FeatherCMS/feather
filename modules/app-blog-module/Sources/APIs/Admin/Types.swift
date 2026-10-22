@@ -5,17 +5,17 @@ public import struct Foundation.Data
 public import struct Foundation.Date
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/get(blogAuthorList)`.
+    func blogAuthorList(_ input: Operations.BlogAuthorList.Input) async throws -> Operations.BlogAuthorList.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/post(blogAuthorPost)`.
     func blogAuthorPost(_ input: Operations.BlogAuthorPost.Input) async throws -> Operations.BlogAuthorPost.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
     func blogAuthorDelete(_ input: Operations.BlogAuthorDelete.Input) async throws -> Operations.BlogAuthorDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
-    func blogAuthorList(_ input: Operations.BlogAuthorList.Input) async throws -> Operations.BlogAuthorList.Output
-    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/search/post(blogAuthorQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/query/post(blogAuthorQuery)`.
     func blogAuthorQuery(_ input: Operations.BlogAuthorQuery.Input) async throws -> Operations.BlogAuthorQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/get(blogAuthorGet)`.
@@ -26,17 +26,17 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PUT /api/v1/admin/blog/authors/{blogAuthorId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/put(blogAuthorPut)`.
     func blogAuthorPut(_ input: Operations.BlogAuthorPut.Input) async throws -> Operations.BlogAuthorPut.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/get(blogAuthorLinkList)`.
+    func blogAuthorLinkList(_ input: Operations.BlogAuthorLinkList.Input) async throws -> Operations.BlogAuthorLinkList.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/post(blogAuthorLinkPost)`.
     func blogAuthorLinkPost(_ input: Operations.BlogAuthorLinkPost.Input) async throws -> Operations.BlogAuthorLinkPost.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
     func blogAuthorLinkDelete(_ input: Operations.BlogAuthorLinkDelete.Input) async throws -> Operations.BlogAuthorLinkDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
-    func blogAuthorLinkList(_ input: Operations.BlogAuthorLinkList.Input) async throws -> Operations.BlogAuthorLinkList.Output
-    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/search/post(blogAuthorLinkQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/query/post(blogAuthorLinkQuery)`.
     func blogAuthorLinkQuery(_ input: Operations.BlogAuthorLinkQuery.Input) async throws -> Operations.BlogAuthorLinkQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/get(blogAuthorLinkGet)`.
@@ -47,17 +47,17 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PUT /api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}/put(blogAuthorLinkPut)`.
     func blogAuthorLinkPut(_ input: Operations.BlogAuthorLinkPut.Input) async throws -> Operations.BlogAuthorLinkPut.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/posts`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/get(blogPostList)`.
+    func blogPostList(_ input: Operations.BlogPostList.Input) async throws -> Operations.BlogPostList.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/posts`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/post(blogPostPost)`.
     func blogPostPost(_ input: Operations.BlogPostPost.Input) async throws -> Operations.BlogPostPost.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
     func blogPostDelete(_ input: Operations.BlogPostDelete.Input) async throws -> Operations.BlogPostDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
-    func blogPostList(_ input: Operations.BlogPostList.Input) async throws -> Operations.BlogPostList.Output
-    /// - Remark: HTTP `POST /api/v1/admin/blog/posts/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/search/post(blogPostQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/posts/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/query/post(blogPostQuery)`.
     func blogPostQuery(_ input: Operations.BlogPostQuery.Input) async throws -> Operations.BlogPostQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/posts/{blogPostId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/{blogPostId}/get(blogPostGet)`.
@@ -74,17 +74,17 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PUT /api/v1/admin/blog/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/settings/put(blogSettingsPut)`.
     func blogSettingsPut(_ input: Operations.BlogSettingsPut.Input) async throws -> Operations.BlogSettingsPut.Output
+    /// - Remark: HTTP `GET /api/v1/admin/blog/tags`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/get(blogTagList)`.
+    func blogTagList(_ input: Operations.BlogTagList.Input) async throws -> Operations.BlogTagList.Output
     /// - Remark: HTTP `POST /api/v1/admin/blog/tags`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/post(blogTagPost)`.
     func blogTagPost(_ input: Operations.BlogTagPost.Input) async throws -> Operations.BlogTagPost.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
     func blogTagDelete(_ input: Operations.BlogTagDelete.Input) async throws -> Operations.BlogTagDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
-    func blogTagList(_ input: Operations.BlogTagList.Input) async throws -> Operations.BlogTagList.Output
-    /// - Remark: HTTP `POST /api/v1/admin/blog/tags/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/search/post(blogTagQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/tags/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/query/post(blogTagQuery)`.
     func blogTagQuery(_ input: Operations.BlogTagQuery.Input) async throws -> Operations.BlogTagQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/tags/{blogTagId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/{blogTagId}/get(blogTagGet)`.
@@ -99,6 +99,11 @@ public protocol APIProtocol: Sendable {
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/get(blogAuthorList)`.
+    public func blogAuthorList(headers: Operations.BlogAuthorList.Input.Headers = .init()) async throws -> Operations.BlogAuthorList.Output {
+        try await blogAuthorList(Operations.BlogAuthorList.Input(headers: headers))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/post(blogAuthorPost)`.
     public func blogAuthorPost(
@@ -121,13 +126,8 @@ extension APIProtocol {
             body: body
         ))
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
-    public func blogAuthorList(headers: Operations.BlogAuthorList.Input.Headers = .init()) async throws -> Operations.BlogAuthorList.Output {
-        try await blogAuthorList(Operations.BlogAuthorList.Input(headers: headers))
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/search/post(blogAuthorQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/query/post(blogAuthorQuery)`.
     public func blogAuthorQuery(
         headers: Operations.BlogAuthorQuery.Input.Headers = .init(),
         body: Operations.BlogAuthorQuery.Input.Body
@@ -176,6 +176,17 @@ extension APIProtocol {
             body: body
         ))
     }
+    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/get(blogAuthorLinkList)`.
+    public func blogAuthorLinkList(
+        path: Operations.BlogAuthorLinkList.Input.Path,
+        headers: Operations.BlogAuthorLinkList.Input.Headers = .init()
+    ) async throws -> Operations.BlogAuthorLinkList.Output {
+        try await blogAuthorLinkList(Operations.BlogAuthorLinkList.Input(
+            path: path,
+            headers: headers
+        ))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/post(blogAuthorLinkPost)`.
     public func blogAuthorLinkPost(
@@ -202,19 +213,8 @@ extension APIProtocol {
             body: body
         ))
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
-    public func blogAuthorLinkList(
-        path: Operations.BlogAuthorLinkList.Input.Path,
-        headers: Operations.BlogAuthorLinkList.Input.Headers = .init()
-    ) async throws -> Operations.BlogAuthorLinkList.Output {
-        try await blogAuthorLinkList(Operations.BlogAuthorLinkList.Input(
-            path: path,
-            headers: headers
-        ))
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/search/post(blogAuthorLinkQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/authors/{blogAuthorId}/links/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/query/post(blogAuthorLinkQuery)`.
     public func blogAuthorLinkQuery(
         path: Operations.BlogAuthorLinkQuery.Input.Path,
         headers: Operations.BlogAuthorLinkQuery.Input.Headers = .init(),
@@ -265,6 +265,11 @@ extension APIProtocol {
             body: body
         ))
     }
+    /// - Remark: HTTP `GET /api/v1/admin/blog/posts`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/get(blogPostList)`.
+    public func blogPostList(headers: Operations.BlogPostList.Input.Headers = .init()) async throws -> Operations.BlogPostList.Output {
+        try await blogPostList(Operations.BlogPostList.Input(headers: headers))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/posts`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/post(blogPostPost)`.
     public func blogPostPost(
@@ -287,13 +292,8 @@ extension APIProtocol {
             body: body
         ))
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
-    public func blogPostList(headers: Operations.BlogPostList.Input.Headers = .init()) async throws -> Operations.BlogPostList.Output {
-        try await blogPostList(Operations.BlogPostList.Input(headers: headers))
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/posts/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/search/post(blogPostQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/posts/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/query/post(blogPostQuery)`.
     public func blogPostQuery(
         headers: Operations.BlogPostQuery.Input.Headers = .init(),
         body: Operations.BlogPostQuery.Input.Body
@@ -358,6 +358,11 @@ extension APIProtocol {
             body: body
         ))
     }
+    /// - Remark: HTTP `GET /api/v1/admin/blog/tags`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/get(blogTagList)`.
+    public func blogTagList(headers: Operations.BlogTagList.Input.Headers = .init()) async throws -> Operations.BlogTagList.Output {
+        try await blogTagList(Operations.BlogTagList.Input(headers: headers))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/blog/tags`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/post(blogTagPost)`.
     public func blogTagPost(
@@ -380,13 +385,8 @@ extension APIProtocol {
             body: body
         ))
     }
-    /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
-    public func blogTagList(headers: Operations.BlogTagList.Input.Headers = .init()) async throws -> Operations.BlogTagList.Output {
-        try await blogTagList(Operations.BlogTagList.Input(headers: headers))
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/blog/tags/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/search/post(blogTagQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/blog/tags/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/query/post(blogTagQuery)`.
     public func blogTagQuery(
         headers: Operations.BlogTagQuery.Input.Headers = .init(),
         body: Operations.BlogTagQuery.Input.Body

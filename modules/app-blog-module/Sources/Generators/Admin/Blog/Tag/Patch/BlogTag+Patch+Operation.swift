@@ -16,7 +16,9 @@ extension BlogTag.Patch {
         var responseMap: ResponseMap {
             [
                 200: BlogTagDetailResponse().reference(),
-                400: CustomResponse(description: "Bad Request"),
+                400: DefaultHTTPErrorContentResponse(
+                    description: "Bad Request"
+                ),
                 404: CustomResponse(description: "Blog tag not found"),
             ]
         }

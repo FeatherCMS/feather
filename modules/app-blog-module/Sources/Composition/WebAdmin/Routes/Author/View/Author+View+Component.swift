@@ -17,7 +17,8 @@ extension Author.View {
             let author: Author.Details.Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Author.Router.Routes
+            let authorLinkRoutes: AuthorLink.Router.Routes
         }
         let state: State
 
@@ -104,7 +105,7 @@ extension Author.View {
                         AdminButton(
                             "Add link",
                             href:
-                                state.routes
+                                    state.authorLinkRoutes
                                 .authorLinkAdd(
                                     RouterPath(state.author.id)
                                 )
@@ -130,7 +131,7 @@ extension Author.View {
                             permissions: AdminListActions(
                                 Set(state.permissions.map(PermissionKey.init))
                             ),
-                            routes: state.routes
+                            routes: state.authorLinkRoutes
                         )
                     )
                 )

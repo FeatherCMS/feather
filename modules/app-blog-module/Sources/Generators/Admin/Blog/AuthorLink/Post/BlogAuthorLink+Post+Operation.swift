@@ -2,7 +2,7 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 extension BlogAuthorLink.Post {
-    struct Operation: BlogAuthorLink.Menu.Operation {
+    struct Operation: BlogAuthorLink.Operation {
         var operationId: String? { "blogAuthorLinkPost" }
         var requestBody: (any RequestBodyRepresentable)? {
             BlogAuthorLinkRequestBody().reference()

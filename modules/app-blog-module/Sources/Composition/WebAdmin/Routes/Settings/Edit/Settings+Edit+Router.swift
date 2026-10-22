@@ -16,12 +16,12 @@ import WebModuleWebAdmin
 extension Settings.Edit {
     struct Router {
         let controller: any Controller.Interface
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Settings.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            routes: BlogWebAdmin.Router.Routes = .standard
+            routes: Settings.Router.Routes
         ) {
             self.routes = routes
             self.controller = Controller.Default(

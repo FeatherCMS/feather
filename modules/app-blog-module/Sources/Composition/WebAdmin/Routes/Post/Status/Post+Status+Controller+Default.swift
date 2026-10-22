@@ -7,7 +7,7 @@ import WebModuleWebAdmin
 extension Post.Status.Controller {
     struct Default: Interface {
         let environment: AppEnvironment
-        let routes: BlogWebAdmin.Router.Routes
+        let routes: Post.Router.Routes
 
         func post(
             request: Request,

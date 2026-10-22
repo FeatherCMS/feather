@@ -1,7 +1,5 @@
 import FeatherOpenAPI
 
-enum RolePermission {}
-
 extension RolePermission {
     struct PathCollection: PathCollectionRepresentable {
         var pathMap: PathMap {

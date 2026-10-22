@@ -24,7 +24,7 @@ extension Tag.List {
             let permissions: AdminListActions
             let breadcrumb: [AdminBreadcrumb.Link]
             let error: String?
-            let routes: BlogWebAdmin.Router.Routes
+            let routes: Tag.Router.Routes
         }
         let state: State
 
