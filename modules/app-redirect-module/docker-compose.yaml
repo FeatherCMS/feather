@@ -14,7 +14,6 @@ services:
             - '8888:8080'
         environment:
             SWAGGER_JSON: /app/redirect-app@v3_2_0.yaml
-            URL: /app/redirect-app@v3_2_0.yaml
         volumes:
             - './openapi/redirect-app@v3_2_0.yaml:/app/redirect-app@v3_2_0.yaml:ro'
 
@@ -24,6 +23,5 @@ services:
             - '8889:8080'
         environment:
             SWAGGER_JSON: /app/redirect-admin@v3_2_0.yaml
-            URL: /app/redirect-admin@v3_2_0.yaml
         volumes:
             - './openapi/redirect-admin@v3_2_0.yaml:/app/redirect-admin@v3_2_0.yaml:ro'
