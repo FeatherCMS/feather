@@ -1,4 +1,4 @@
 
 extension Variant.Processor {
-    enum Repository {}
+    public enum Repository {}
 }

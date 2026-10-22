@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 struct WebMetadataTag: TagRepresentable {
     var name: String = "WebMetadata"

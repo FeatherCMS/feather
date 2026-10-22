@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 struct WebMenuItemTag: TagRepresentable {
     var name: String = "WebMenuItems"

@@ -1,4 +1,4 @@
 
 extension Asset.Node {
-    enum SlugPath {}
+    public enum SlugPath {}
 }

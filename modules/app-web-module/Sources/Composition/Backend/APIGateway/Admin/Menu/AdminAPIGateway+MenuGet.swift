@@ -14,6 +14,6 @@ extension AdminAPIGateway {
             input: .init(id: input.path.webMenuId)
         )
 
-        return .ok(.init(body: .json(useCases.map(result))))
+        return .ok(.init(body: .json(map(result))))
     }
 }

@@ -6,13 +6,13 @@ import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
-import WebDomain
 import WebApplication
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
 
-    func makeResolveWebRoute() -> ResolveWebRoute {
+    func makeResolveWebRoute() -> WebRoute.Resolve.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in

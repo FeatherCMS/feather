@@ -12,7 +12,7 @@ extension AdminAPIGateway {
             .execute(subject: subject)
         return .ok(
             .init(
-                body: .json(result.items.map(useCases.map))
+                body: .json(result.items.map(map))
             )
         )
     }

@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 extension MenuItem.Query {
     struct PathItem: PathItemRepresentable {

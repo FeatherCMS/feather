@@ -13,7 +13,7 @@ extension AppAPIGateway {
 
         return .ok(
             .init(
-                body: .json(result.map(useCases.mapPublicMenu))
+                body: .json(result.map(mapPublicMenu))
             )
         )
     }
@@ -43,7 +43,7 @@ extension AppAPIGateway {
         }
 
         return .ok(
-            .init(body: .json(useCases.mapPublicMenu(result)))
+            .init(body: .json(mapPublicMenu(result)))
         )
     }
 }

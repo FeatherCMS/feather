@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 struct WebPageQueryItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {

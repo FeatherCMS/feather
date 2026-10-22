@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 struct WebSettingsTag: TagRepresentable {
     var name: String = "WebSettings"

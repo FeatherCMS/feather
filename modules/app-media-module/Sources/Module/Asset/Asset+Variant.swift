@@ -1,4 +1,4 @@
 
 extension Asset {
-    enum Variant {}
+    public enum Variant {}
 }

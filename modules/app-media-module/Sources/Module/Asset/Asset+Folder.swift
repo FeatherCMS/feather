@@ -1,4 +1,4 @@
 
 extension Asset {
-    enum Folder {}
+    public enum Folder {}
 }

@@ -1,4 +1,4 @@
 
 extension Asset {
-    enum ExtensionMatcher {}
+    public enum ExtensionMatcher {}
 }

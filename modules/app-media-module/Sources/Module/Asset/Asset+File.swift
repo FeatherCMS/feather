@@ -1,4 +1,4 @@
 
 extension Asset {
-    enum File {}
+    public enum File {}
 }

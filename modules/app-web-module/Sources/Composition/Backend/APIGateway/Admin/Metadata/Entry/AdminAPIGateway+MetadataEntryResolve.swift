@@ -29,7 +29,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     items.map {
-                        useCases.mapResolveMetadata($0, at: now)
+                        mapResolveMetadata($0, at: now)
                     }
                 )
             )

@@ -1,4 +1,4 @@
 
 extension Asset.File {
-    enum Repository {}
+    public enum Repository {}
 }

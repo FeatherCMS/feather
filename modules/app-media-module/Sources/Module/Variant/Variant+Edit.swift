@@ -1,4 +1,4 @@
 
 extension Variant {
-    enum Edit {}
+    public enum Edit {}
 }

@@ -1,4 +1,4 @@
 
 extension Variant {
-    enum Remove {}
+    public enum Remove {}
 }

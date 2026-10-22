@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 struct WebSettingsDetailResponse: JSONResponseRepresentable {
     var description: String = "WebSettings response"

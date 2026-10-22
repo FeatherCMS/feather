@@ -15,19 +15,3 @@ protocol AdminListWebMenuItemController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 }
-
-extension AdminListWebMenuItemController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.get(
-            "/admin/web/menus/{id}/items/",
-            use: getWebMenuItems
-        )
-        router.post(
-            "/admin/web/menus/{id}/items/{itemId}/move/",
-            use: postWebMenuItemMove
-        )
-    }
-}

@@ -1,4 +1,4 @@
 
 extension Asset.Folder {
-    enum Repository {}
+    public enum Repository {}
 }

@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import OpenAPIKit30
 
 struct WebMenuItemMoveRequestBody: RequestBodyRepresentable {

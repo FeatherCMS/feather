@@ -1,7 +1,7 @@
+import FeatherOpenAPI
+import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import WebSharedOpenAPIGenerator
-public import FeatherOpenAPI
-public import FeatherOpenAPIGenerator
 
 struct WebPagePatchOperation: WebPageIDOperation {
     var requestBody: (any RequestBodyRepresentable)? {

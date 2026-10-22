@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 struct WebPageIdParameter: PathParameterRepresentable {
     var name: String { "webPageId" }

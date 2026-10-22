@@ -7,13 +7,11 @@ import WebDomain
 extension AdminAPIGateway {
 
     /// Create web metadata
-    /*
-     curl -i -X 'POST' \
-        'http://127.0.0.1:8080/api/v1/admin/web/metadata' \
-        -H 'Accept: application/json' \
-        -H 'Content-Type: application/json' \
-        -d '{"slug":"homepage","status":"draft","title":"Homepage","excerpt":"","imageUrl":"","canonicalUrl":"","cssCodeInjection":"","javascriptCodeInjection":""}'
-    */
+    // curl -i -X 'POST' \
+    //     'http://127.0.0.1:8080/api/v1/admin/web/metadata' \
+    //     -H 'Accept: application/json' \
+    //     -H 'Content-Type: application/json' \
+    //     -d '{"slug":"homepage","status":"draft","title":"Homepage","excerpt":"","imageUrl":"","canonicalUrl":"","cssCodeInjection":"","javascriptCodeInjection":""}'
     public func webMetadataCreate(
         _ input: Operations.WebMetadataCreate.Input
     ) async throws -> Operations.WebMetadataCreate.Output {
@@ -32,7 +30,7 @@ extension AdminAPIGateway {
         )
         let expDate = body.expirationDate.map(Date.init(timeIntervalSince1970:))
 
-        let addInput = AddMetadata.Input(
+        let addInput = Metadata.Add.UseCase.Input(
             referenceType: body.referenceType ?? "",
             referenceID: body.referenceId ?? "",
             slug: body.slug,
@@ -58,7 +56,7 @@ extension AdminAPIGateway {
 
         return .created(
             .init(
-                body: .json(useCases.map(result))
+                body: .json(map(result))
             )
         )
     }

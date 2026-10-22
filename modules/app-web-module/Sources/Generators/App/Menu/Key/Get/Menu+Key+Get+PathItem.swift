@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 extension Menu.Key.Get {

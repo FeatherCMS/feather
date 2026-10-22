@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 struct WebMenuItemQueryItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {

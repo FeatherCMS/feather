@@ -16,19 +16,3 @@ protocol AdminAddWebMenuController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 }
-
-extension AdminAddWebMenuController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.get(
-            "/admin/web/menus/add/",
-            use: getAddWebMenu
-        )
-        router.post(
-            "/admin/web/menus/add/",
-            use: postAddWebMenu
-        )
-    }
-}

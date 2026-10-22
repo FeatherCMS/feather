@@ -10,7 +10,7 @@ extension AppAPIGateway {
                 .execute(
                     input: .init(id: input.path.id)
                 )
-            let media = await useCases.publicMedia(assetId: detail.imageAssetId)
+            let media = await publicMedia(assetId: detail.imageAssetId)
             return .ok(
                 .init(
                     body: .json(
@@ -20,8 +20,8 @@ extension AppAPIGateway {
                             excerpt: detail.excerpt,
                             content: detail.content,
                             imageURL: media?.defaultURL ?? detail.imageURL,
-                            media: useCases.mapPublicMedia(media),
-                            metadata: useCases.mapPublicMetadata(
+                            media: mapPublicMedia(media),
+                            metadata: mapPublicMetadata(
                                 detail.metadata,
                                 title: detail.title,
                                 excerpt: detail.excerpt,

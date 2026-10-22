@@ -1,4 +1,4 @@
 
 extension Variant {
-    enum Search {}
+    public enum Search {}
 }

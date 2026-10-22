@@ -12,11 +12,11 @@ import WebInfrastructure
 
 extension UseCases {
 
-    func makeListPublicMenus() -> ListPublicMenus {
+    func makeListPublicMenus() -> Menu.Public.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Menu.PublicScope(
+                Menu.Public.Scope(
                     menuList: Menu.List.Query.Database(
                         context: context
                     ),

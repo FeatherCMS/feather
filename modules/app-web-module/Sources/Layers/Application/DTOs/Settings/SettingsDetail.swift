@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherApplication
+import WebDomain
 
 public struct SettingsDetail: DTO {
     public let logo: String
@@ -58,5 +59,28 @@ public struct SettingsDetail: DTO {
         self.noIndex = noIndex
         self.css = css
         self.js = js
+    }
+}
+
+extension Settings.Model {
+    var asDetail: SettingsDetail {
+        .init(
+            logo: logo,
+            logoDark: logoDark,
+            metaImage: metaImage,
+            primaryColor: primaryColor,
+            secondaryColor: secondaryColor,
+            tertiaryColor: tertiaryColor,
+            primaryFont: primaryFont,
+            secondaryFont: secondaryFont,
+            homePageId: homePageId,
+            locale: locale,
+            timezone: timezone,
+            title: title,
+            excerpt: excerpt,
+            noIndex: noIndex,
+            css: css,
+            js: js
+        )
     }
 }

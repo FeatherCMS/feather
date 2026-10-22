@@ -1,4 +1,4 @@
 
 extension Asset.Folder {
-    enum Add {}
+    public enum Add {}
 }

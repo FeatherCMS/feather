@@ -1,4 +1,4 @@
 
 extension Asset.File {
-    enum Search {}
+    public enum Search {}
 }

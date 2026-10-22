@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 struct WebMenuIdParameter: PathParameterRepresentable {
     var name: String { "webMenuId" }

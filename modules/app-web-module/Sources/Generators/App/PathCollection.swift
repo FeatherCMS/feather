@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import WebSharedOpenAPIGenerator

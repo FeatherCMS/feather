@@ -72,3 +72,61 @@ public struct MetadataDetail: DTO {
         self.updatedAt = updatedAt
     }
 }
+
+extension Metadata.Model {
+    public var asDetail: MetadataDetail {
+        .init(
+            id: id,
+            referenceType: reference.type,
+            referenceID: reference.id ?? "[!!!INVALID!!!]",
+            template: template,
+            slug: slug,
+            publicationDate: publicationDate,
+            expirationDate: expirationDate,
+            status: status,
+            title: title,
+            excerpt: excerpt,
+            imageURL: imageURL,
+            canonicalURL: canonicalURL,
+            noIndex: noIndex,
+            primaryKeyword: primaryKeyword,
+            cssCodeInjection: cssCodeInjection,
+            javascriptCodeInjection: javascriptCodeInjection,
+            structuredDataCodeInjection: structuredDataCodeInjection,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
+    }
+}
+
+extension MetadataDetail {
+    public func availability(at date: Date) -> Metadata.Model.Availability {
+        .init(
+            status: status,
+            publicationDate: publicationDate,
+            expirationDate: expirationDate,
+            at: date
+        )
+    }
+
+    public func isPublic(at date: Date) -> Bool {
+        status == .published && isWithinPublicationWindow(at: date)
+    }
+
+    public func isDirectlyAccessible(at date: Date) -> Bool {
+        switch status {
+        case .draft:
+            true
+        case .published:
+            isWithinPublicationWindow(at: date)
+        case .archived:
+            false
+        }
+    }
+
+    private func isWithinPublicationWindow(at date: Date) -> Bool {
+        guard publicationDate <= date else { return false }
+        if let expirationDate, expirationDate <= date { return false }
+        return true
+    }
+}

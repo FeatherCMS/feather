@@ -1,4 +1,4 @@
 
 extension Asset.File.GenerateVariant {
-    enum JobController {}
+    public enum JobController {}
 }

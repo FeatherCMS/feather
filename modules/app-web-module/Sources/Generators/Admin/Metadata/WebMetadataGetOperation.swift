@@ -1,7 +1,7 @@
+import FeatherOpenAPI
+import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import WebSharedOpenAPIGenerator
-public import FeatherOpenAPI
-public import FeatherOpenAPIGenerator
 
 struct WebMetadataGetOperation: WebMetadataIDOperation {
     var responseMap: ResponseMap {

@@ -1,4 +1,4 @@
 
 extension Variant {
-    enum Processor {}
+    public enum Processor {}
 }

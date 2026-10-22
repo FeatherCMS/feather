@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 extension Metadata.Resolve {
     struct PathItem: PathItemRepresentable {

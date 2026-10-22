@@ -1,4 +1,4 @@
 
 extension Asset.File {
-    enum PublicResolve {}
+    public enum PublicResolve {}
 }

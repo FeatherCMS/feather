@@ -1,4 +1,4 @@
 
 extension Variant {
-    enum Detail {}
+    public enum Detail {}
 }

@@ -1,4 +1,4 @@
 
 extension Asset.File {
-    enum Remove {}
+    public enum Remove {}
 }

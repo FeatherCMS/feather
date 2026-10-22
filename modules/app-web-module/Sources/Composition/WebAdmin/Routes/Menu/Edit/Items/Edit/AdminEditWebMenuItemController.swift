@@ -16,19 +16,3 @@ protocol AdminEditWebMenuItemController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 }
-
-extension AdminEditWebMenuItemController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.get(
-            "/admin/web/menus/{id}/items/{itemId}/edit/",
-            use: getEditWebMenuItem
-        )
-        router.post(
-            "/admin/web/menus/{id}/items/{itemId}/edit/",
-            use: postEditWebMenuItem
-        )
-    }
-}

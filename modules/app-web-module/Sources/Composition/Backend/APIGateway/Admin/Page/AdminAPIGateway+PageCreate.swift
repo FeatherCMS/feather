@@ -22,13 +22,13 @@ extension AdminAPIGateway {
                 excerpt: body.excerpt,
                 content: body.content,
                 imageAssetId: body.imageAssetId,
-                metadata: useCases.defaultPageMetadata(
+                metadata: defaultPageMetadata(
                     title: body.title,
                     excerpt: body.excerpt
                 )
             )
         )
 
-        return .created(.init(body: .json(useCases.map(result))))
+        return .created(.init(body: .json(map(result))))
     }
 }

@@ -4,7 +4,7 @@ import WebApplication
 
 extension Error {
     fileprivate var isResolveWebRouteNotFound: Bool {
-        if self is ResolveWebRoute.Error {
+        if self is WebRoute.Resolve.UseCase.Error {
             return true
         }
         if let databaseError = self as? DatabaseError {
@@ -53,7 +53,7 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is ResolveWebRoute.Error {
+        catch is WebRoute.Resolve.UseCase.Error {
             return .notFound(
                 .init(
                     body: .json(

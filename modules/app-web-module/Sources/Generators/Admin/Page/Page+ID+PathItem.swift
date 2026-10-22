@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 extension Page.ID {
     struct PathItem: PathItemRepresentable {

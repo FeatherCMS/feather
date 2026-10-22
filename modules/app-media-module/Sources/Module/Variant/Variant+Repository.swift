@@ -1,4 +1,4 @@
 
 extension Variant {
-    enum Repository {}
+    public enum Repository {}
 }

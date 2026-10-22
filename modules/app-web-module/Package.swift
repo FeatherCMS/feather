@@ -259,6 +259,11 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "MediaBackend", package: "app-media-module"),
+                .product(
+                    name: "MediaApplication",
+                    package: "app-media-module"
+                ),
                 .product(
                     name: "SystemInfrastructure",
                     package: "app-system-module"
@@ -408,12 +413,22 @@ let package = Package(
             name: "WebInfrastructureTests",
             dependencies: [
                 .target(name: "WebInfrastructure"),
+                .target(name: "WebApplication"),
                 .target(name: "WebModule"),
                 .target(name: "WebDomain"),
 
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "FeatherDBALTesting", package: "feather-dbal"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(
                     name: "SystemApplication",

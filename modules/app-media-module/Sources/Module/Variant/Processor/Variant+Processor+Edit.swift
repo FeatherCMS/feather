@@ -1,4 +1,4 @@
 
 extension Variant.Processor {
-    enum Edit {}
+    public enum Edit {}
 }

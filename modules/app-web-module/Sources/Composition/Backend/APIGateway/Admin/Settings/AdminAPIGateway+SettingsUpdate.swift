@@ -37,6 +37,6 @@ extension AdminAPIGateway {
             )
         )
 
-        return .ok(.init(body: .json(useCases.map(result.settings))))
+        return .ok(.init(body: .json(map(result.settings))))
     }
 }

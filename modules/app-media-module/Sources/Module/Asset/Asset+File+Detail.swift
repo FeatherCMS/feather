@@ -1,4 +1,4 @@
 
 extension Asset.File {
-    enum Detail {}
+    public enum Detail {}
 }

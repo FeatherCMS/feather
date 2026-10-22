@@ -11,15 +11,3 @@ protocol AdminRemoveWebMenuItemController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 }
-
-extension AdminRemoveWebMenuItemController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.post(
-            "/admin/web/menus/{id}/items/remove/",
-            use: postRemoveWebMenuItem
-        )
-    }
-}

@@ -12,7 +12,7 @@ import WebInfrastructure
 
 extension UseCases {
 
-    func makeGetSettings() -> GetSettings {
+    func makeGetSettings() -> Settings.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in

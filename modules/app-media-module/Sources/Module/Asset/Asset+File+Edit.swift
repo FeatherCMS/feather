@@ -1,4 +1,4 @@
 
 extension Asset.File {
-    enum Edit {}
+    public enum Edit {}
 }

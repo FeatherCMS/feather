@@ -16,7 +16,7 @@ extension AdminAPIGateway {
         }
 
         let useCase = useCases.makeSearchMetadata()
-        let objectQuery = useCases.map(query)
+        let objectQuery = map(query)
         let subject = try await CurrentSubject.require()
 
         let result = try await useCase.execute(
@@ -24,7 +24,7 @@ extension AdminAPIGateway {
             input: .init(query: objectQuery)
         )
 
-        let items = result.items.map(useCases.mapQuery)
+        let items = result.items.map(mapQuery)
 
         return .ok(
             .init(

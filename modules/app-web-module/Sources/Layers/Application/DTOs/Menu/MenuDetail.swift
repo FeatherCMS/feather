@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherApplication
+import WebDomain
 
 public import struct Foundation.Date
 
@@ -30,5 +31,18 @@ public struct MenuDetail: DTO {
         self.notes = notes
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+    }
+}
+
+extension Menu.Model {
+    var asDetail: MenuDetail {
+        .init(
+            id: id,
+            key: key,
+            name: name,
+            notes: notes,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
     }
 }

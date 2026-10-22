@@ -1,4 +1,4 @@
 
 extension Variant.Processor {
-    enum Search {}
+    public enum Search {}
 }

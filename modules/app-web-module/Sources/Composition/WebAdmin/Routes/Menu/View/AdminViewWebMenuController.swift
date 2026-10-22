@@ -10,15 +10,3 @@ protocol AdminViewWebMenuController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
-
-extension AdminViewWebMenuController {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>
-    ) {
-        router.get(
-            "/admin/web/menus/{id}/",
-            use: getWebMenu
-        )
-    }
-}

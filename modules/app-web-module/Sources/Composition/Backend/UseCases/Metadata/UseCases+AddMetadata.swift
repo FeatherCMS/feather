@@ -12,7 +12,7 @@ import WebInfrastructure
 
 extension UseCases {
 
-    func makeAddMetadata() -> AddMetadata {
+    func makeAddMetadata() -> Metadata.Add.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in

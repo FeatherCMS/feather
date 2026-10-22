@@ -16,7 +16,7 @@ extension AdminAPIGateway {
         }
 
         let useCase = useCases.makeSearchMenuItems()
-        let objectQuery = useCases.map(query)
+        let objectQuery = map(query)
         let subject = try await CurrentSubject.require()
 
         let result = try await useCase.execute(
@@ -56,7 +56,7 @@ extension AdminAPIGateway {
                             filters: .init(search: objectQuery.search)
                         ),
                         data: .init(
-                            items: result.items.map(useCases.mapQuery),
+                            items: result.items.map(mapQuery),
                             total: result.total
                         )
                     )

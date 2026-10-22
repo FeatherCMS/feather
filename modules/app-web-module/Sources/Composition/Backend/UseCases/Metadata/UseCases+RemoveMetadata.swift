@@ -12,7 +12,7 @@ import WebInfrastructure
 
 extension UseCases {
 
-    func makeRemoveMetadata() -> RemoveMetadata {
+    func makeRemoveMetadata() -> Metadata.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in

@@ -1,4 +1,4 @@
 
 extension Variant.Processor {
-    enum Remove {}
+    public enum Remove {}
 }

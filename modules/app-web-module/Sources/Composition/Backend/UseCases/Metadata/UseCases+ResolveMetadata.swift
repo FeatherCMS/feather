@@ -6,13 +6,13 @@ import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
-import WebDomain
 import WebApplication
+import WebDomain
 import WebInfrastructure
 
 extension UseCases {
 
-    func makeResolveMetadata() -> ResolveMetadata {
+    func makeResolveMetadata() -> Metadata.Resolve.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
