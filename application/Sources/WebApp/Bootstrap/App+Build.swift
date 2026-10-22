@@ -1,9 +1,10 @@
 import FeatherWebShared
 import MediaWebAdmin
 import ContactWebAdmin
-import NewsletterFrontend
+import NewsletterWebAdmin
+import NewsletterWebApp
 import WebModuleWebAdmin
-import AnalyticsFrontend
+import AnalyticsWebApp
 import RedirectWebAdmin
 import UserWebAdmin
 import SystemWebAdmin

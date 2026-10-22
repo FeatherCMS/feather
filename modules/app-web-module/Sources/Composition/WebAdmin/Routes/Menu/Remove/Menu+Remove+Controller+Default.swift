@@ -1,0 +1,63 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import WebDomain
+
+extension Menu.Remove.Controller {
+    struct Default: Interface {
+    let buildRuntime:
+        AuthenticatedRuntimeBuilder<
+            any Menu.Remove.Interactor.Interface,
+            any Menu.Remove.Presenter.Interface
+        >
+
+    func postRemoveMenu(
+        request: Request,
+        context: AuthenticatedRequestContext
+    ) async throws -> Response {
+        let runtime = buildRuntime((request, context))
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<AdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
+        let ids = nonceRequest.input.normalizedIds
+        let location = AdminLocation.url(
+            path: MenuRoutes.list.description,
+            page: nonceRequest.input.normalizedPage,
+            search: nonceRequest.input.normalizedSearch
+        )
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        do {
+            try await runtime.interactor.delete(ids: ids)
+            return AdminNotificationFlash.redirect(
+                to: location,
+                notification: .init(
+                    title: "Removed",
+                    message: ids.count == 1
+                        ? "Menu removed successfully."
+                        : "Menus removed successfully."
+                )
+            )
+        }
+        catch let error as OpenAPIRepositoryError {
+            return try await runtime.presenter
+                .renderErrorPage(
+                    id: ids[0],
+                    info: error.errorTitle,
+                    message: error.errorDescription
+                )
+                .response(from: request, context: context)
+        }
+    }
+    }
+}

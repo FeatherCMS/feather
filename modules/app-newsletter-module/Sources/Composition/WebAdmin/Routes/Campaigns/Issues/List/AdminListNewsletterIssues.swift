@@ -1,0 +1,34 @@
+import FeatherWebAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+struct AdminListNewsletterIssues {
+    let controller: any AdminListNewsletterIssuesController
+
+    init(
+        apiBuilder: NewsletterAdminAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
+        controller = AdminListNewsletterIssuesDefaultController {
+            request,
+            context in
+            (
+                AdminListNewsletterIssuesDefaultInteractor(
+                    repository: .init(
+                        api: apiBuilder.makeNewsletterAdmin(context)
+                    )
+                ),
+                AdminListNewsletterIssuesDefaultPresenter(
+                    request: request,
+                    context: context,
+                    renderingEngine: renderingEngine
+                )
+            )
+        }
+    }
+}

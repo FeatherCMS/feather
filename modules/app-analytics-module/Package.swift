@@ -41,7 +41,8 @@ let package = Package(
         .executable(name: "AnalyticsAdminOpenAPIGenerator", targets: ["AnalyticsAdminOpenAPIGenerator"]),
         .executable(name: "AnalyticsAppOpenAPIGenerator", targets: ["AnalyticsAppOpenAPIGenerator"]),
         .library(name: "AnalyticsBackend", targets: ["AnalyticsBackend"]),
-        .library(name: "AnalyticsFrontend", targets: ["AnalyticsFrontend"]),
+        .library(name: "AnalyticsWebAdmin", targets: ["AnalyticsWebAdmin"]),
+        .library(name: "AnalyticsWebApp", targets: ["AnalyticsWebApp"]),
     ],
     dependencies: [
         .package(
@@ -174,18 +175,32 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "AnalyticsFrontend",
+            name: "AnalyticsWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
 
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .target(name: "AnalyticsContracts"),
                 .target(name: "AnalyticsAdminAPI"),
+            ],
+            path: "Sources/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "AnalyticsWebApp",
+            dependencies: [
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherWebApp", package: "feather-core"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
                 .target(name: "AnalyticsAppAPI"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebApp",
             swiftSettings: swiftSettings
         ),
         .testTarget(

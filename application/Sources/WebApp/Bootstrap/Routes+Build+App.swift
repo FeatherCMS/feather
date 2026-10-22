@@ -5,7 +5,7 @@ import FeatherModuleKit
 import FeatherWebApp
 import FeatherWebShared
 import Hummingbird
-import NewsletterFrontend
+import NewsletterWebApp
 import WebApplication
 import WebModuleWebApp
 
@@ -27,7 +27,7 @@ func buildAppRoutes(
 
     AppContactFormSubmission(apiBuilder: apiBuilder.contact).route(on: router)
 
-    AppNewsletterCampaignSubscription(apiBuilder: apiBuilder.newsletter)
+    AppNewsletterCampaignSubscription(apiBuilder: apiBuilder.newsletterApp)
         .route(on: router)
 
     AppPublicContent(

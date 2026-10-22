@@ -5,15 +5,17 @@ import FeatherModuleKit
 import WebApplication
 import BlogWebAdmin
 import BlogWebApp
-import NewsFrontend
+import NewsWebApp
+import NewsWebAdmin
 import MediaWebAdmin
 import ContactWebAdmin
 import ContactWebApp
-import NewsletterFrontend
+import NewsletterWebAdmin
+import NewsletterWebApp
 import WebModuleWebAdmin
 import WebModule
 import WebModuleWebApp
-import AnalyticsFrontend
+import AnalyticsWebAdmin
 import RedirectWebAdmin
 import RedirectWebApp
 import UserWebAdmin
@@ -65,7 +67,7 @@ func buildRouter(
     var adminEvents = EventRegistry()
     WebModuleWebApp.WebEventHandlers.register(in: &adminEvents)
     BlogWebApp.Event.Handlers.register(in: &adminEvents)
-    NewsFrontend.NewsEventHandlers.register(in: &adminEvents)
+    NewsWebApp.NewsEventHandlers.register(in: &adminEvents)
     BlogWebAdmin.Event.Handlers.registerDashboard(
         in: &adminEvents,
         environment: environment

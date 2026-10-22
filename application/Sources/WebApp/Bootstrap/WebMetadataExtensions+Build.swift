@@ -3,7 +3,7 @@ import FeatherModuleKit
 import WebApplication
 import BlogWebAdmin
 import BlogWebApp
-import NewsFrontend
+import NewsWebApp
 import WebModuleWebAdmin
 import WebModule
 import WebModuleWebApp
@@ -16,7 +16,7 @@ func buildWebMetadataExtensions() async throws -> (
     var events = EventRegistry()
     WebModuleWebApp.WebEventHandlers.register(in: &events)
     BlogWebApp.Event.Handlers.register(in: &events)
-    NewsFrontend.NewsEventHandlers.register(in: &events)
+    NewsWebApp.NewsEventHandlers.register(in: &events)
 
     let templateProviders = try await events.trigger(
         event: TemplateProviderEvent(),

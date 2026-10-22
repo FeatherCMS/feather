@@ -42,7 +42,8 @@ let package = Package(
         .executable(name: "NewsAdminOpenAPIGenerator", targets: ["NewsAdminOpenAPIGenerator"]),
         .executable(name: "NewsAppOpenAPIGenerator", targets: ["NewsAppOpenAPIGenerator"]),
         .library(name: "NewsBackend", targets: ["NewsBackend"]),
-        .library(name: "NewsFrontend", targets: ["NewsFrontend"]),
+        .library(name: "NewsWebAdmin", targets: ["NewsWebAdmin"]),
+        .library(name: "NewsWebApp", targets: ["NewsWebApp"]),
     ],
     dependencies: [
         .package(
@@ -216,10 +217,11 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "NewsFrontend",
+            name: "NewsWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
 
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "MediaWebAdmin", package: "app-media-module"),
@@ -239,9 +241,25 @@ let package = Package(
                 .product(name: "WebComponents", package: "swift-web-standards"),
                 .target(name: "NewsContracts"),
                 .target(name: "NewsAdminAPI"),
+            ],
+            path: "Sources/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "NewsWebApp",
+            dependencies: [
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .target(name: "NewsAppAPI"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebApp",
             resources: [
                 .copy("Resources/Templates")
             ],
@@ -257,12 +275,12 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .testTarget(
-            name: "NewsFrontendTests",
+            name: "NewsWebAdminTests",
             dependencies: [
-                .target(name: "NewsFrontend"),
+                .target(name: "NewsWebAdmin"),
                 .product(name: "Hummingbird", package: "hummingbird"),
             ],
-            path: "Tests/NewsFrontendTests",
+            path: "Tests/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
     ]

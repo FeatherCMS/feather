@@ -39,7 +39,8 @@ let package = Package(
         .library(name: "NewsletterAdminAPI", targets: ["NewsletterAdminAPI"]),
         .library(name: "NewsletterAppAPI", targets: ["NewsletterAppAPI"]),
         .library(name: "NewsletterBackend", targets: ["NewsletterBackend"]),
-        .library(name: "NewsletterFrontend", targets: ["NewsletterFrontend"]),
+        .library(name: "NewsletterWebAdmin", targets: ["NewsletterWebAdmin"]),
+        .library(name: "NewsletterWebApp", targets: ["NewsletterWebApp"]),
         .executable(name: "NewsletterAdminOpenAPIGenerator", targets: ["NewsletterAdminOpenAPIGenerator"]),
         .executable(name: "NewsletterAppOpenAPIGenerator", targets: ["NewsletterAppOpenAPIGenerator"]),
     ],
@@ -188,10 +189,11 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "NewsletterFrontend",
+            name: "NewsletterWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
@@ -200,9 +202,25 @@ let package = Package(
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .target(name: "NewsletterContracts"),
                 .target(name: "NewsletterAdminAPI"),
+            ],
+            path: "Sources/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "NewsletterWebApp",
+            dependencies: [
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "WebModuleWebApp", package: "app-web-module"),
+                .target(name: "NewsletterContracts"),
                 .target(name: "NewsletterAppAPI"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebApp",
             swiftSettings: swiftSettings
         ),
         // MARK: -

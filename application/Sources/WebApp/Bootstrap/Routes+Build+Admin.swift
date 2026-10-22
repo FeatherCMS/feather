@@ -5,10 +5,10 @@ import WebApplication
 import BlogWebAdmin
 import MediaWebAdmin
 import ContactWebAdmin
-import NewsletterFrontend
+import NewsletterWebAdmin
 import WebModuleWebAdmin
 import WebModuleWebApp
-import AnalyticsFrontend
+import AnalyticsWebAdmin
 import RedirectWebAdmin
 import UserWebAdmin
 import AccountWebAdmin
@@ -51,7 +51,7 @@ func buildAdminRoutes(
         )
         .route(on: router)
     AdminAnalytics(
-        apiBuilder: apiBuilder.analytics,
+        apiBuilder: apiBuilder.analyticsAdmin,
         renderingEngine: renderingEngine
     )
     .route(on: router)
@@ -80,7 +80,7 @@ func buildAdminRoutes(
     )
     .route(on: router)
     AdminNewsletter(
-        apiBuilder: apiBuilder.newsletter,
+        apiBuilder: apiBuilder.newsletterAdmin,
         renderingEngine: renderingEngine
     )
     .route(on: router)

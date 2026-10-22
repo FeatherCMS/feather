@@ -160,7 +160,7 @@ extension Menu.Edit {
 
 extension Menu.Remove {
     struct Router {
-        let controller: any AdminRemoveMenuController
+        let controller: any Controller.Interface
         let routes: Menu.Router.Routes
 
         init(
@@ -169,12 +169,25 @@ extension Menu.Remove {
             routes: Menu.Router.Routes
         ) {
             self.routes = routes
-            controller =
-                AdminRemoveMenu(
-                    environment: environment,
-                    renderingEngine: renderingEngine
-                )
-                .controller
+            controller = Controller.Default(
+                buildRuntime: { request, context in
+                    (
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
+                                api: API.Client(
+                                    environment: environment,
+                                    requestContext: context
+                                )
+                            )
+                        ),
+                        presenter: Presenter.Default(
+                            request: request,
+                            context: context,
+                            renderingEngine: renderingEngine
+                        )
+                    )
+                }
+            )
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
