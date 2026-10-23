@@ -1,3 +1,4 @@
+import ContactApplication
 import ContactModule
 import FeatherWebShared
 import FeatherWebAdmin
@@ -18,7 +19,7 @@ struct AdminListContactFieldsDefaultPresenter:
     let renderingEngine: any RenderingEngine
     func renderList(
         fields: [AdminContactFieldRow],
-        forms: [AdminContactFormFilterOption],
+        forms: [FormField.List.FormOption],
         formKey: String?,
         search: String,
         error: String?,

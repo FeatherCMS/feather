@@ -878,10 +878,14 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            formKey:
+              $ref: '#/components/schemas/ContactFormKeyField'
           minProperties: 0
       required:
       - filters
       minProperties: 1
+    ContactFormKeyField:
+      type: string
     ContactSubmissionQueryItemSearchSchema:
       type: object
       properties:
@@ -941,6 +945,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            formKey:
+              $ref: '#/components/schemas/ContactFormKeyField'
           minProperties: 0
       required:
       - page
@@ -970,8 +976,6 @@ components:
       - createdAt
       minProperties: 5
     ContactEmailField:
-      type: string
-    ContactFormKeyField:
       type: string
     FormFieldListSchema:
       type: array

@@ -150,6 +150,34 @@ extension Components {
                 self.body = body
             }
         }
+        public struct NewsletterIssueQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/NewsletterIssueQueryItemSearchSchemaSearchResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/NewsletterIssueQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.NewsletterIssueQueryItemSearchSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.NewsletterIssueQueryItemSearchSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.NewsletterIssueQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `NewsletterIssueQueryItemSearchSchemaSearchResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.NewsletterIssueQueryItemSearchSchemaSearchResponse.Body) {
+                self.body = body
+            }
+        }
         public struct NewsletterDeliveryListResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/NewsletterDeliveryListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {

@@ -26,15 +26,18 @@ extension Submission.Search {
             public let page: FeatherApplication.Search.Page
             public let sort: [Sort]
             public let search: String?
+            public let formKey: String?
 
             public init(
                 page: FeatherApplication.Search.Page = .init(),
                 sort: [Sort] = [],
-                search: String? = nil
+                search: String? = nil,
+                formKey: String? = nil
             ) {
                 self.page = page
                 self.sort = sort
                 self.search = search
+                self.formKey = formKey
             }
         }
 

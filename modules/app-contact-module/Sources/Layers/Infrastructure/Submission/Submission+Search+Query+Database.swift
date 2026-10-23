@@ -19,51 +19,73 @@ extension Submission.Search.Query {
         ) async throws -> Submission.Search.Output {
             let page = query.page.normalized()
             let pageIndex = page.number - 1
-            let offset = pageIndex > Int.max / page.size
+            let offset =
+                pageIndex > Int.max / page.size
                 ? Int.max
                 : pageIndex * page.size
-            let searchPattern: String? = query.search.flatMap { value -> String? in
+            let searchPattern: String? = query.search.flatMap {
+                value -> String? in
                 guard !value.isEmpty else { return nil }
                 return "%"
                     + value
-                        .replacingOccurrences(of: "!", with: "!!")
-                        .replacingOccurrences(of: "%", with: "!%")
-                        .replacingOccurrences(of: "_", with: "!_")
+                    .replacingOccurrences(of: "!", with: "!!")
+                    .replacingOccurrences(of: "%", with: "!%")
+                    .replacingOccurrences(of: "_", with: "!_")
                     + "%"
             }
             let items = try await context.connection.run(
                 query: itemsQuery(
                     searchPattern: searchPattern,
+                    formKey: query.formKey,
                     sort: query.sort,
                     pageSize: page.size,
                     offset: offset
                 )
             ) { rows in
-                try await rows.collect().map { row in
-                    let statusValue = try row.decode(
-                        column: "submission_status",
-                        as: String.self
-                    )
-                    guard let status = Submission.Model.Status(rawValue: statusValue)
-                    else {
-                        throw RepositoryError.invalidEnumValue(statusValue)
+                try await rows.collect()
+                    .map { row in
+                        let statusValue = try row.decode(
+                            column: "submission_status",
+                            as: String.self
+                        )
+                        guard
+                            let status = Submission.Model.Status(
+                                rawValue: statusValue
+                            )
+                        else {
+                            throw RepositoryError.invalidEnumValue(statusValue)
+                        }
+                        let valuesJSON = try row.decode(
+                            column: "submission_values",
+                            as: String.self
+                        )
+                        return Submission.Search.Output.Item(
+                            id: try row.decode(
+                                column: "submission_id",
+                                as: String.self
+                            ),
+                            formKey: try row.decode(
+                                column: "form_key",
+                                as: String.self
+                            ),
+                            formName: try row.decode(
+                                column: "form_name",
+                                as: String.self
+                            ),
+                            status: status,
+                            createdAt: try row.decode(
+                                column: "created_at",
+                                as: Date.self
+                            ),
+                            email: Self.email(from: valuesJSON)
+                        )
                     }
-                    let valuesJSON = try row.decode(
-                        column: "submission_values",
-                        as: String.self
-                    )
-                    return Submission.Search.Output.Item(
-                        id: try row.decode(column: "submission_id", as: String.self),
-                        formKey: try row.decode(column: "form_key", as: String.self),
-                        formName: try row.decode(column: "form_name", as: String.self),
-                        status: status,
-                        createdAt: try row.decode(column: "created_at", as: Date.self),
-                        email: Self.email(from: valuesJSON)
-                    )
-                }
             }
             let total = try await context.connection.run(
-                query: countQuery(searchPattern: searchPattern)
+                query: countQuery(
+                    searchPattern: searchPattern,
+                    formKey: query.formKey
+                )
             ) { rows in
                 guard let row = try await rows.first() else { return 0 }
                 return try row.decode(column: "count", as: Int.self)
@@ -73,13 +95,14 @@ extension Submission.Search.Query {
 
         private func itemsQuery(
             searchPattern: String?,
+            formKey: String?,
             sort: [Submission.Search.Input.Query.Sort],
             pageSize: Int,
             offset: Int
         ) -> DatabaseQuery {
             var sql = DatabaseQuery.StringInterpolation(
-                literalCapacity: 700,
-                interpolationCount: 5
+                literalCapacity: 760,
+                interpolationCount: 7
             )
             sql.appendLiteral(
                 """
@@ -92,6 +115,8 @@ extension Submission.Search.Query {
                 """
             )
             appendSearchFilter(searchPattern, to: &sql)
+            sql.appendLiteral(") AND ( ")
+            appendFormKeyFilter(formKey, to: &sql)
             sql.appendLiteral(") ORDER BY ")
             for (index, rule) in sort.enumerated() {
                 if index > 0 { sql.appendLiteral(", ") }
@@ -109,10 +134,13 @@ extension Submission.Search.Query {
             return .init(stringInterpolation: sql)
         }
 
-        private func countQuery(searchPattern: String?) -> DatabaseQuery {
+        private func countQuery(
+            searchPattern: String?,
+            formKey: String?
+        ) -> DatabaseQuery {
             var sql = DatabaseQuery.StringInterpolation(
-                literalCapacity: 500,
-                interpolationCount: 1
+                literalCapacity: 560,
+                interpolationCount: 5
             )
             sql.appendLiteral(
                 """
@@ -123,8 +151,22 @@ extension Submission.Search.Query {
                 """
             )
             appendSearchFilter(searchPattern, to: &sql)
+            sql.appendLiteral(") AND ( ")
+            appendFormKeyFilter(formKey, to: &sql)
             sql.appendLiteral(");")
             return .init(stringInterpolation: sql)
+        }
+
+        private func appendFormKeyFilter(
+            _ formKey: String?,
+            to sql: inout DatabaseQuery.StringInterpolation
+        ) {
+            guard let formKey else {
+                sql.appendLiteral("TRUE")
+                return
+            }
+            sql.appendLiteral("f.key = ")
+            sql.appendInterpolation(formKey)
         }
 
         private func appendSearchFilter(
@@ -165,8 +207,10 @@ extension Submission.Search.Query {
                 let object = try? JSONSerialization.jsonObject(with: data),
                 let values = object as? [String: Any],
                 let email = values.first(where: {
-                    $0.key.localizedCaseInsensitiveCompare("email") == .orderedSame
-                })?.value as? String
+                    $0.key.localizedCaseInsensitiveCompare("email")
+                        == .orderedSame
+                })?
+                .value as? String
             else {
                 return nil
             }

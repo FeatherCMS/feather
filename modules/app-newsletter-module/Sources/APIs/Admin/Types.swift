@@ -32,6 +32,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/delete(newsletterIssueRemove)`.
     func newsletterIssueRemove(_ input: Operations.NewsletterIssueRemove.Input) async throws -> Operations.NewsletterIssueRemove.Output
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/post(newsletterIssueQuery)`.
+    func newsletterIssueQuery(_ input: Operations.NewsletterIssueQuery.Input) async throws -> Operations.NewsletterIssueQuery.Output
     /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)`.
     func newsletterCampaignTestEmail(_ input: Operations.NewsletterCampaignTestEmail.Input) async throws -> Operations.NewsletterCampaignTestEmail.Output
@@ -160,6 +163,19 @@ extension APIProtocol {
         body: Components.RequestBodies.DeleteRequestBody
     ) async throws -> Operations.NewsletterIssueRemove.Output {
         try await newsletterIssueRemove(Operations.NewsletterIssueRemove.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/post(newsletterIssueQuery)`.
+    public func newsletterIssueQuery(
+        path: Operations.NewsletterIssueQuery.Input.Path,
+        headers: Operations.NewsletterIssueQuery.Input.Headers = .init(),
+        body: Operations.NewsletterIssueQuery.Input.Body
+    ) async throws -> Operations.NewsletterIssueQuery.Output {
+        try await newsletterIssueQuery(Operations.NewsletterIssueQuery.Input(
             path: path,
             headers: headers,
             body: body

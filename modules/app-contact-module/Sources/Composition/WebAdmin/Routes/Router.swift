@@ -111,11 +111,6 @@ public struct Router {
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
-        AdminListContactFormSubmissions(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
         Submission.Detail
             .Router(
                 apiBuilder: apiBuilder,
@@ -137,7 +132,8 @@ public struct Router {
         Submission.Search
             .Router(
                 apiBuilder: apiBuilder,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .route(on: router)
         Submission.Remove

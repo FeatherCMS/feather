@@ -618,6 +618,249 @@ extension Components {
                 case scheduledAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema`.
+        public struct NewsletterIssueQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case subject = "subject"
+                    case status = "status"
+                    case scheduledAt = "scheduledAt"
+                    case createdAt = "createdAt"
+                }
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.NewsletterIssueQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.NewsletterIssueQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.NewsletterIssueQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.NewsletterIssueQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                public init(search: Components.Schemas.SearchStringField? = nil) {
+                    self.search = search
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.NewsletterIssueQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `NewsletterIssueQueryItemSearchRequestQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.NewsletterIssueQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.NewsletterIssueQueryItemSearchRequestQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchSchema`.
+        public struct NewsletterIssueQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchSchema/data`.
+            public struct DataPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.NewsletterIssueQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchSchema/data/total`.
+                public var total: Swift.Int
+                /// Creates a new `DataPayload`.
+                ///
+                /// - Parameters:
+                ///   - items:
+                ///   - total:
+                public init(
+                    items: [Components.Schemas.NewsletterIssueQueryItemSchema],
+                    total: Swift.Int
+                ) {
+                    self.items = items
+                    self.total = total
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case items
+                    case total
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.NewsletterIssueQueryItemSearchSchema.DataPayload
+            /// Creates a new `NewsletterIssueQueryItemSearchSchema`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - data:
+            public init(
+                query: Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.NewsletterIssueQueryItemSearchSchema.DataPayload
+            ) {
+                self.query = query
+                self.data = data
+            }
+            public enum CodingKeys: String, CodingKey {
+                case query
+                case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema`.
+        public struct NewsletterIssueQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case subject = "subject"
+                    case status = "status"
+                    case scheduledAt = "scheduledAt"
+                    case createdAt = "createdAt"
+                }
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                public init(search: Components.Schemas.SearchStringField? = nil) {
+                    self.search = search
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `NewsletterIssueQueryItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSchema`.
+        public struct NewsletterIssueQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSchema/id`.
+            public var id: Components.Schemas.NewsletterIdField
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSchema/subject`.
+            public var subject: Components.Schemas.NewsletterSubjectField
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSchema/status`.
+            public var status: Components.Schemas.NewsletterIssueStatusField
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSchema/scheduledAt`.
+            public var scheduledAt: Components.Schemas.NewsletterTimestampField?
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.NewsletterTimestampField
+            /// Creates a new `NewsletterIssueQueryItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - subject:
+            ///   - status:
+            ///   - scheduledAt:
+            ///   - createdAt:
+            public init(
+                id: Components.Schemas.NewsletterIdField,
+                subject: Components.Schemas.NewsletterSubjectField,
+                status: Components.Schemas.NewsletterIssueStatusField,
+                scheduledAt: Components.Schemas.NewsletterTimestampField? = nil,
+                createdAt: Components.Schemas.NewsletterTimestampField
+            ) {
+                self.id = id
+                self.subject = subject
+                self.status = status
+                self.scheduledAt = scheduledAt
+                self.createdAt = createdAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case subject
+                case status
+                case scheduledAt
+                case createdAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubjectField`.
+        public typealias NewsletterSubjectField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueStatusField`.
+        public typealias NewsletterIssueStatusField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterIssueTestEmailSchema`.
         public struct NewsletterIssueTestEmailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsletterIssueTestEmailSchema/email`.
@@ -676,8 +919,6 @@ extension Components {
                 case scheduledAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/NewsletterSubjectField`.
-        public typealias NewsletterSubjectField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterContentField`.
         public typealias NewsletterContentField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterDeliveryListSchema`.

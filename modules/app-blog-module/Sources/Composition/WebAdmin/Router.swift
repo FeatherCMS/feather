@@ -214,7 +214,7 @@ public struct Router {
             )
             .route(on: router)
 
-        AdminBlogMetadataRoutes.register(
+        BlogMetadataRouter.register(
             router: router,
             environment: environment,
             renderingEngine: renderingEngine,

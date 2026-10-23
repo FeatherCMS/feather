@@ -241,6 +241,36 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query:
+    post:
+      tags:
+      - Newsletter
+      operationId: newsletterIssueQuery
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterIssueQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
   /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email:
     post:
       tags:
@@ -872,6 +902,132 @@ components:
       - subject
       - content
       minProperties: 2
+    NewsletterIssueQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - subject
+                - status
+                - scheduledAt
+                - createdAt
+                examples:
+                - subject
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - filters
+      minProperties: 1
+    NewsletterIssueQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/NewsletterIssueQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/NewsletterIssueQueryItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    NewsletterIssueQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - subject
+                - status
+                - scheduledAt
+                - createdAt
+                examples:
+                - subject
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    NewsletterIssueQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/NewsletterIdField'
+        subject:
+          $ref: '#/components/schemas/NewsletterSubjectField'
+        status:
+          $ref: '#/components/schemas/NewsletterIssueStatusField'
+        scheduledAt:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+        createdAt:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+      required:
+      - id
+      - subject
+      - status
+      - createdAt
+      minProperties: 4
+    NewsletterSubjectField:
+      type: string
+    NewsletterIssueStatusField:
+      type: string
     NewsletterIssueTestEmailSchema:
       type: object
       properties:
@@ -896,8 +1052,6 @@ components:
         scheduledAt:
           $ref: '#/components/schemas/NewsletterTimestampField'
       minProperties: 0
-    NewsletterSubjectField:
-      type: string
     NewsletterContentField:
       type: string
     NewsletterDeliveryListSchema:
@@ -1031,6 +1185,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewsletterIssueSchema'
+    NewsletterIssueQueryItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterIssueQueryItemSearchSchema'
     NewsletterDeliveryListResponse:
       description: Newsletter delivery list response
       content:

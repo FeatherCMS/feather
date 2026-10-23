@@ -10,10 +10,12 @@ extension Submission.Search.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
+        let routes: Contact.Router.Routes
 
         func render(
             model: Submission.Search.Model,
             search: String,
+            formKey: String?,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -31,10 +33,15 @@ extension Submission.Search.Presenter {
                         items: model.items,
                         pageState: pageState,
                         search: search,
+                        formKey: formKey,
                         permissions: .init(
                             Set(permissions.map(PermissionKey.init))
                         ),
-                        breadcrumb: ContactAdminRoutes.breadcrumb,
+                        breadcrumb: formKey.map(
+                            routes.formSubmissionsBreadcrumb
+                        )
+                            ?? ContactAdminRoutes.breadcrumb,
+                        routes: routes,
                         error: error
                     )
                 )

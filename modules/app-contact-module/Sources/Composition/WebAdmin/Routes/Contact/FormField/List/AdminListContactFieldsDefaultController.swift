@@ -1,5 +1,4 @@
 import ContactModule
-import ContactModule
 import FeatherModuleKit
 import FeatherValidation
 import FeatherWebAdmin

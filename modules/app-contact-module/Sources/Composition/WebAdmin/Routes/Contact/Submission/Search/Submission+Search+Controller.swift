@@ -14,11 +14,10 @@ extension Submission.Search.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
-    }
-}
 
-extension Submission.Search.Controller.Interface {
-    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-        router.get(ContactAdminRoutes.submissions, use: list)
+        func listForForm(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
     }
 }

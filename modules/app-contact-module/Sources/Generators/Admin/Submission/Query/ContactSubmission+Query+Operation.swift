@@ -8,7 +8,14 @@ extension ContactSubmission.Query {
             .init(
                 items: Schemas.Item(),
                 sortFieldKeys: ["createdAt", "formName", "status"],
-                filters: SearchFilterSchema()
+                filters: SearchFilterSchema(
+                    additionalProperties: [
+                        "formKey": ContactFormKeyField()
+                            .reference(
+                                required: false
+                            )
+                    ]
+                )
             )
         }
         var requestBody: (any RequestBodyRepresentable)? {

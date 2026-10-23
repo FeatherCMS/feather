@@ -1,3 +1,5 @@
+import ContactApplication
+import ContactModule
 import FeatherValidation
 import FeatherWebAdmin
 import HTML
@@ -9,5 +11,5 @@ import WebComponents
 
 struct AdminContactFieldsList: Sendable {
     let fields: [AdminContactFieldRow]
-    let forms: [AdminContactFormFilterOption]
+    let forms: [FormField.List.FormOption]
 }

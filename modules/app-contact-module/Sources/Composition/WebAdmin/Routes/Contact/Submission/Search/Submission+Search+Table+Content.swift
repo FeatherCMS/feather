@@ -1,6 +1,7 @@
 import ContactApplication
 import ContactModule
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import SGML
@@ -12,6 +13,8 @@ extension Submission.Search.Table {
         let items: [Submission.Search.Model.Item]
         let pageState: AdminListPageState
         let search: String
+        let formKey: String?
+        let routes: Contact.Router.Routes
         let permissions: AdminListActions
 
         private var hasEmailColumn: Bool {
@@ -19,7 +22,15 @@ extension Submission.Search.Table {
         }
 
         func html(context: inout BuilderContext) -> Div {
-            let path = ContactAdminRoutes.submissions.description
+            let path =
+                formKey.map {
+                    routes.formSubmissions.path(parameter: "formKey", value: $0)
+                } ?? routes.submissions.path
+            let removePath =
+                formKey.map {
+                    ContactAdminRoutes.formSubmissionRemove(RouterPath($0))
+                        .description
+                } ?? ContactAdminRoutes.submissionRemove.description
             return context.build(
                 AdminList(
                     table: {
@@ -59,9 +70,7 @@ extension Submission.Search.Table {
                             context.build(
                                 AdminListSelectionForm(
                                     state: .init(
-                                        action: ContactAdminRoutes
-                                            .submissionRemove
-                                            .description,
+                                        action: removePath,
                                         pageState: pageState,
                                         search: search,
                                         button: .init(
@@ -142,20 +151,15 @@ extension Submission.Search.Table {
                                                                         .init(
                                                                             "Details",
                                                                             href:
-                                                                                ContactAdminRoutes
-                                                                                .formSubmissionDetails(
-                                                                                    formID:
-                                                                                        RouterPath(
-                                                                                            item
-                                                                                                .formKey
-                                                                                        ),
-                                                                                    submissionID:
-                                                                                        RouterPath(
-                                                                                            item
-                                                                                                .id
-                                                                                        )
-                                                                                )
-                                                                                .description,
+                                                                                routes
+                                                                                .formSubmissionDetailPath(
+                                                                                    formKey:
+                                                                                        item
+                                                                                        .formKey,
+                                                                                    submissionId:
+                                                                                        item
+                                                                                        .id
+                                                                                ),
                                                                             style:
                                                                                 .ghost(
                                                                                     .primary

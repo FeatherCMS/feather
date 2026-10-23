@@ -20,9 +20,10 @@ let sharedSwiftSettings: [SwiftSetting] = [
     ),
 ]
 
-let swiftSettings = sharedSwiftSettings + [
-    .treatAllWarnings(as: .error)
-]
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
 
 let package = Package(
     name: "app-contact-module",
@@ -309,7 +310,19 @@ let package = Package(
         .testTarget(
             name: "ContactInfrastructureTests",
             dependencies: [
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .target(name: "ContactApplication"),
                 .target(name: "ContactInfrastructure"),
                 .target(name: "ContactModule"),
             ],

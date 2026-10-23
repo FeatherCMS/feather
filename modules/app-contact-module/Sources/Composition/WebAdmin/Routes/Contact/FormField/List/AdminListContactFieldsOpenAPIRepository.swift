@@ -1,4 +1,6 @@
 import ContactAdminAPI
+import ContactApplication
+import ContactModule
 import FeatherWebShared
 import FeatherWebAdmin
 import FeatherValidation
@@ -36,7 +38,7 @@ struct AdminListContactFieldsOpenAPIRepository {
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let formsResponse = try await client.contactFormList()
-            let forms: [AdminContactFormFilterOption]
+            let forms: [FormField.List.FormOption]
             switch formsResponse {
             case .ok(let value):
                 let formSchemas = try value.body.json

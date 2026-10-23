@@ -11,8 +11,9 @@ import WebComponents
 struct NewsletterIssueDetailsView: Component {
     let newsletterId: String
     let issueId: String
-    let model: AdminAddNewsletterIssueModel
+    let model: Issue.Form.Model
     let permissions: AdminListActions
+    let routes: Campaign.Router.Routes
 
     func html(context: inout BuilderContext) -> Section {
         var actions: [AdminDetailView.Action] = []
@@ -20,12 +21,10 @@ struct NewsletterIssueDetailsView: Component {
             actions.append(
                 .init(
                     label: "Edit",
-                    href:
-                        NewsletterAdminRoutes.issueEdit(
-                            newsletterID: RouterPath(newsletterId),
-                            issueID: RouterPath(issueId)
-                        )
-                        .description,
+                    href: routes.issueEditPath(
+                        newsletterId: newsletterId,
+                        issueId: issueId
+                    ),
                     style: .primary
                 )
             )
@@ -34,12 +33,10 @@ struct NewsletterIssueDetailsView: Component {
             actions.append(
                 .init(
                     label: "Remove",
-                    href:
-                        NewsletterAdminRoutes.issueRemove(
-                            newsletterID: RouterPath(newsletterId),
-                            issueID: RouterPath(issueId)
-                        )
-                        .description,
+                    href: routes.issueRemovePath(
+                        newsletterId: newsletterId,
+                        issueId: issueId
+                    ),
                     style: .destructive
                 )
             )
@@ -47,14 +44,12 @@ struct NewsletterIssueDetailsView: Component {
         return Section {
             context.build(
                 AdminBreadcrumb(
-                    links: NewsletterAdminRoutes.breadcrumb + [
+                    links: routes.breadcrumb + [
                         .init(
                             label: "Issues",
-                            link:
-                                NewsletterAdminRoutes.campaignIssues(
-                                    RouterPath(newsletterId)
-                                )
-                                .description
+                            link: routes.issuesPath(
+                                newsletterId: newsletterId
+                            )
                         )
                     ]
                 )

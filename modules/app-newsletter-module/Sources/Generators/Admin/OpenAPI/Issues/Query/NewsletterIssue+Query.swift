@@ -1,0 +1,3 @@
+enum NewsletterIssue {
+    enum Query {}
+}

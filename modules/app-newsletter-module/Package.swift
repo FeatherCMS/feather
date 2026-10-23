@@ -255,6 +255,7 @@ let package = Package(
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
+                .target(name: "NewsletterApplication"),
                 .target(name: "NewsletterWebShared"),
                 .target(name: "NewsletterModule"),
                 .target(name: "NewsletterAdminAPI"),

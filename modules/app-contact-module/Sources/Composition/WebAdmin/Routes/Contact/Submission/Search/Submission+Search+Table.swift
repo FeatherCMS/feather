@@ -1,6 +1,7 @@
 import ContactApplication
 import ContactModule
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import SGML
 import WebBuilders
@@ -12,8 +13,10 @@ extension Submission.Search {
             let items: [Submission.Search.Model.Item]
             let pageState: AdminListPageState
             let search: String
+            let formKey: String?
             let permissions: AdminListActions
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: Contact.Router.Routes
             let error: String?
         }
 
@@ -25,11 +28,23 @@ extension Submission.Search {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Submissions",
-                            description: "Review contact form submissions."
+                            title: state.formKey == nil
+                                ? "Submissions"
+                                : "Contact form submissions",
+                            description: state.formKey == nil
+                                ? "Review contact form submissions."
+                                : "Review submissions received through this contact form."
                         )
                     )
                 )
+                if let formKey = state.formKey {
+                    context.build(
+                        AdminContactFormTabs(
+                            formId: formKey,
+                            active: .submissions
+                        )
+                    )
+                }
                 if let error = state.error {
                     P(error).class("admin-form__error")
                 }
@@ -38,6 +53,8 @@ extension Submission.Search {
                         items: state.items,
                         pageState: state.pageState,
                         search: state.search,
+                        formKey: state.formKey,
+                        routes: state.routes,
                         permissions: state.permissions
                     )
                 )

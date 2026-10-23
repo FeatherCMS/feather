@@ -1,6 +1,7 @@
 public import FeatherWebAdmin
 public import FeatherWebShared
 public import Hummingbird
+import NewsletterApplication
 import NewsletterModule
 
 public struct Router {
@@ -62,32 +63,41 @@ public struct Router {
         )
         .controller.route(on: router)
 
-        AdminListNewsletterIssues(
+        Issue.Search.Router(
             environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminViewNewsletterIssue(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminAddNewsletterIssue(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminEditNewsletterIssue(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminRemoveNewsletterIssue(
-            environment: environment,
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            routes: campaignRoutes
         )
         .route(on: router)
-        AdminTestNewsletterIssueEmail(environment: environment).controller
+        Issue.View
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
+        Issue.Add
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
+        Issue.Edit
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
+        Issue.Remove
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
+        Issue.TestEmail.Router(environment: environment, routes: campaignRoutes)
             .route(on: router)
 
         AdminViewNewsletterCampaignSubscriber(

@@ -44,5 +44,85 @@ extension Campaign.Router {
         func editPath(_ id: String) -> String {
             edit.path(parameter: "newsletterId", value: id)
         }
+
+        var issues: WebRoute {
+            list.appending(parameter: "newsletterId")
+                .appending(pathComponent: "issues")
+        }
+
+        var issueAdd: WebRoute {
+            issues.appending(pathComponent: "add")
+        }
+
+        var issueDetails: WebRoute {
+            issues.appending(parameter: "issueId")
+        }
+
+        var issueEdit: WebRoute {
+            issueDetails.appending(pathComponent: "edit")
+        }
+
+        var issueRemove: WebRoute {
+            issueDetails.appending(pathComponent: "remove")
+        }
+
+        var issueTestEmail: WebRoute {
+            issues.appending(pathComponent: "test-email")
+        }
+
+        var issueDetailTestEmail: WebRoute {
+            issueDetails.appending(pathComponent: "test-email")
+        }
+
+        func issuesPath(newsletterId: String) -> String {
+            issues.path(parameter: "newsletterId", value: newsletterId)
+        }
+
+        func issueAddPath(newsletterId: String) -> String {
+            issueAdd.path(parameter: "newsletterId", value: newsletterId)
+        }
+
+        func issueEditPath(newsletterId: String, issueId: String) -> String {
+            try! issueEdit.path(
+                parameters: [
+                    "newsletterId": newsletterId,
+                    "issueId": issueId,
+                ]
+            )
+        }
+
+        func issueDetailsPath(newsletterId: String, issueId: String) -> String {
+            try! issueDetails.path(
+                parameters: [
+                    "newsletterId": newsletterId,
+                    "issueId": issueId,
+                ]
+            )
+        }
+
+        func issueRemovePath(newsletterId: String, issueId: String) -> String {
+            try! issueRemove.path(
+                parameters: [
+                    "newsletterId": newsletterId,
+                    "issueId": issueId,
+                ]
+            )
+        }
+
+        func issueTestEmailPath(newsletterId: String) -> String {
+            issueTestEmail.path(parameter: "newsletterId", value: newsletterId)
+        }
+
+        func issueDetailTestEmailPath(
+            newsletterId: String,
+            issueId: String
+        ) -> String {
+            try! issueDetailTestEmail.path(
+                parameters: [
+                    "newsletterId": newsletterId,
+                    "issueId": issueId,
+                ]
+            )
+        }
     }
 }

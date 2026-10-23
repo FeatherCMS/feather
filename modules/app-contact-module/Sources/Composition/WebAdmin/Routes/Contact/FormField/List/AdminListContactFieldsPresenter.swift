@@ -1,3 +1,5 @@
+import ContactApplication
+import ContactModule
 import FeatherWebAdmin
 import FeatherModuleKit
 import FeatherValidation
@@ -11,7 +13,7 @@ import WebComponents
 protocol AdminListContactFieldsPresenter: Sendable {
     func renderList(
         fields: [AdminContactFieldRow],
-        forms: [AdminContactFormFilterOption],
+        forms: [FormField.List.FormOption],
         formKey: String?,
         search: String,
         error: String?,

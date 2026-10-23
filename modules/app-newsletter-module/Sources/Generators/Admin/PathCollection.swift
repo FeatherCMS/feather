@@ -13,6 +13,8 @@ struct PathCollection: PathCollectionRepresentable {
                 NewsletterCampaignIDPathItems(),
             "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues":
                 NewsletterIssuePathItems(),
+            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query":
+                NewsletterIssue.Query.PathItem(),
             "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email":
                 NewsletterCampaignTestEmailPathItems(),
             "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}":

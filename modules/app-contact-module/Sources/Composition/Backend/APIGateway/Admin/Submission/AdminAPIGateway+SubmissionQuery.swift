@@ -10,23 +10,28 @@ extension AdminAPIGateway {
     public func contactSubmissionQuery(
         _ input: Operations.ContactSubmissionQuery.Input
     ) async throws -> Operations.ContactSubmissionQuery.Output {
-        let query: Components.Schemas.ContactSubmissionQueryItemSearchRequestQuerySchema
+        let query:
+            Components.Schemas
+                .ContactSubmissionQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
         }
 
         let defaults = Search.Page()
-        let page = Search.Page(
-            size: query.page?.size ?? defaults.size,
-            number: query.page?.number ?? defaults.number
-        ).normalized()
-        let sort = (query.sort ?? []).map { rule in
-            Submission.Search.Input.Query.Sort(
-                field: searchSortField(from: rule.field),
-                direction: rule.direction == .asc ? .asc : .desc
+        let page =
+            Search.Page(
+                size: query.page?.size ?? defaults.size,
+                number: query.page?.number ?? defaults.number
             )
-        }
+            .normalized()
+        let sort = (query.sort ?? [])
+            .map { rule in
+                Submission.Search.Input.Query.Sort(
+                    field: searchSortField(from: rule.field),
+                    direction: rule.direction == .asc ? .asc : .desc
+                )
+            }
         let result = try await useCases.makeSearchContactSubmissions()
             .execute(
                 subject: try await CurrentSubject.require(),
@@ -34,19 +39,21 @@ extension AdminAPIGateway {
                     query: .init(
                         page: page,
                         sort: sort,
-                        search: query.filters.search
+                        search: query.filters.search,
+                        formKey: query.filters.formKey
                     )
                 )
             )
 
-        let responseSort = query.sort?.map { rule in
-            Components.Schemas
-                .ContactSubmissionQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload(
-                    field: responseSortField(from: rule.field),
-                    direction: rule.direction
-                )
-        }
+        let responseSort = query.sort?
+            .map { rule in
+                Components.Schemas
+                    .ContactSubmissionQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload(
+                        field: responseSortField(from: rule.field),
+                        direction: rule.direction
+                    )
+            }
 
         return .ok(
             .init(
@@ -55,7 +62,10 @@ extension AdminAPIGateway {
                         query: .init(
                             page: .init(size: page.size, number: page.number),
                             sort: responseSort,
-                            filters: .init(search: query.filters.search)
+                            filters: .init(
+                                search: query.filters.search,
+                                formKey: query.filters.formKey
+                            )
                         ),
                         data: .init(
                             items: result.items.map {
@@ -64,7 +74,8 @@ extension AdminAPIGateway {
                                     formKey: $0.formKey,
                                     formName: $0.formName,
                                     status: $0.status.rawValue,
-                                    createdAt: $0.createdAt.timeIntervalSince1970,
+                                    createdAt: $0.createdAt
+                                        .timeIntervalSince1970,
                                     email: $0.email
                                 )
                             },
@@ -92,7 +103,8 @@ extension AdminAPIGateway {
         from field: Components.Schemas
             .ContactSubmissionQueryItemSearchRequestQuerySchema
             .SortPayloadPayload.FieldPayload
-    ) -> Components.Schemas
+    )
+        -> Components.Schemas
         .ContactSubmissionQueryItemSearchResponseQuerySchema
         .SortPayloadPayload.FieldPayload
     {

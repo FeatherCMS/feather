@@ -10,11 +10,14 @@ extension Submission.Search {
         static let pageSize = 20
 
         let controller: any Controller.Interface
+        let routes: Contact.Router.Routes
 
         init(
             apiBuilder: ContactAPIBuilder,
-            renderingEngine: any RenderingEngine
+            renderingEngine: any RenderingEngine,
+            routes: Contact.Router.Routes
         ) {
+            self.routes = routes
             controller = Controller.Default(
                 buildRuntime: { request, context in
                     WebAdminRuntime(
@@ -26,7 +29,8 @@ extension Submission.Search {
                         presenter: Presenter.Default(
                             request: request,
                             context: context,
-                            renderingEngine: renderingEngine
+                            renderingEngine: renderingEngine,
+                            routes: routes
                         )
                     )
                 }
@@ -34,7 +38,11 @@ extension Submission.Search {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            controller.route(on: router)
+            router.get(routes.submissions.routerPath, use: controller.list)
+            router.get(
+                routes.formSubmissions.routerPath,
+                use: controller.listForForm
+            )
         }
     }
 }

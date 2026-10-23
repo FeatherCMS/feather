@@ -1,4 +1,4 @@
-import ContactModule
+import ContactApplication
 import ContactModule
 import FeatherModuleKit
 import FeatherWebAdmin
@@ -11,7 +11,7 @@ import WebComponents
 
 struct ContactFieldsTableContent: Component {
     let fields: [AdminContactFieldRow]
-    let forms: [AdminContactFormFilterOption]
+    let forms: [FormField.List.FormOption]
     let formKey: String?
     let pageState: AdminListPageState
     let search: String

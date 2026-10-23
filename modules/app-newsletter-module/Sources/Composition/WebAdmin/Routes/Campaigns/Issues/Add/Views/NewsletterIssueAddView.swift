@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import NewsletterModule
 import HTML
 import Hummingbird
 import SGML
@@ -14,31 +15,26 @@ struct NewsletterIssueAddView: Component {
         let issueId: String?
         let error: String?
         let pageHeader: AdminPageHeader.State
+        let routes: Campaign.Router.Routes
     }
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
-        let action =
-            state.issueId.map {
-                NewsletterAdminRoutes.issueEdit(
-                    newsletterID: RouterPath(state.newsletterId),
-                    issueID: RouterPath($0)
-                )
-                .description
-            }
-            ?? NewsletterAdminRoutes.issueAdd(RouterPath(state.newsletterId))
-            .description
+        let action = state.issueId.map {
+            state.routes.issueEditPath(
+                newsletterId: state.newsletterId,
+                issueId: $0
+            )
+        } ?? state.routes.issueAddPath(newsletterId: state.newsletterId)
         return Section {
             context.build(
                 AdminBreadcrumb(
-                    links: NewsletterAdminRoutes.breadcrumb + [
+                    links: state.routes.breadcrumb + [
                         .init(
                             label: "Campaign issues",
-                            link:
-                                NewsletterAdminRoutes.campaignIssues(
-                                    RouterPath(state.newsletterId)
-                                )
-                                .description
+                            link: state.routes.issuesPath(
+                                newsletterId: state.newsletterId
+                            )
                         ),
                         .init(
                             label: state.issueId == nil ? "Add" : "Edit",
@@ -138,20 +134,13 @@ struct NewsletterIssueAddView: Component {
                     context.build(
                         AdminForm(
                             action: state.issueId.map {
-                                NewsletterAdminRoutes.issueTestEmail(
-                                    newsletterID: RouterPath(
-                                        state.newsletterId
-                                    ),
-                                    issueID: RouterPath($0)
+                                state.routes.issueDetailTestEmailPath(
+                                    newsletterId: state.newsletterId,
+                                    issueId: $0
                                 )
-                                .description
-                            }
-                                ?? NewsletterAdminRoutes.issueTestEmail(
-                                    newsletterID: RouterPath(
-                                        state.newsletterId
-                                    )
-                                )
-                                .description,
+                            } ?? state.routes.issueTestEmailPath(
+                                newsletterId: state.newsletterId
+                            ),
                             hiddenFields: [
                                 .init(name: "subject", value: state.subject),
                                 .init(name: "content", value: state.content),

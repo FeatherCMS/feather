@@ -1,5 +1,5 @@
-import ContactApplication
 import ContactAdminAPI
+import ContactApplication
 import ContactModule
 import FeatherWebAdmin
 import FeatherWebShared
@@ -9,7 +9,7 @@ extension Submission.Search.Repository {
     struct OpenAPI: Interface {
         let api: ContactAdminAPIClient
 
-        func search(page: Int, search: String?) async throws
+        func search(page: Int, search: String?, formKey: String?) async throws
             -> Submission.Search.Model
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
@@ -21,7 +21,7 @@ extension Submission.Search.Repository {
                                 size: Submission.Search.Router.pageSize,
                                 number: page
                             ),
-                            filters: .init(search: search)
+                            filters: .init(search: search, formKey: formKey)
                         )
                     )
                 )

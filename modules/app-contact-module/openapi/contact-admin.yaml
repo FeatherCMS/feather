@@ -819,8 +819,12 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            formKey:
+              $ref: '#/components/schemas/ContactFormKeyField'
       required:
       - filters
+    ContactFormKeyField:
+      type: string
     ContactSubmissionQueryItemSearchSchema:
       type: object
       properties:
@@ -871,6 +875,8 @@ components:
           properties:
             search:
               $ref: '#/components/schemas/SearchStringField'
+            formKey:
+              $ref: '#/components/schemas/ContactFormKeyField'
       required:
       - page
       - filters
@@ -897,8 +903,6 @@ components:
       - status
       - createdAt
     ContactEmailField:
-      type: string
-    ContactFormKeyField:
       type: string
     FormFieldListSchema:
       type: array

@@ -7,7 +7,7 @@ extension Submission.Search {
 
 extension Submission.Search.Interactor {
     protocol Interface: Sendable {
-        func search(page: Int, search: String?) async throws
+        func search(page: Int, search: String?, formKey: String?) async throws
             -> Submission.Search.Model
     }
 }

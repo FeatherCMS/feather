@@ -15,16 +15,38 @@ extension Submission.Search.Controller {
         func list(request: Request, context: AuthenticatedRequestContext)
             async throws -> HTMLResponse
         {
+            try await render(request: request, context: context, formKey: nil)
+        }
+
+        func listForForm(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse {
+            let formKey = try context.requiredParameter("formKey")
+            return try await render(
+                request: request,
+                context: context,
+                formKey: formKey
+            )
+        }
+
+        private func render(
+            request: Request,
+            context: AuthenticatedRequestContext,
+            formKey: String?
+        ) async throws -> HTMLResponse {
             let runtime = buildRuntime(request, context)
             let search = request.querySearch() ?? ""
             do {
                 let model = try await runtime.interactor.search(
                     page: request.queryPage(),
-                    search: search.isEmpty ? nil : search
+                    search: search.isEmpty ? nil : search,
+                    formKey: formKey
                 )
                 return try await runtime.presenter.render(
                     model: model,
                     search: search,
+                    formKey: formKey,
                     error: nil,
                     permissions: context.currentUserPermissions
                 )
@@ -33,6 +55,7 @@ extension Submission.Search.Controller {
                 return try await runtime.presenter.render(
                     model: .init(items: [], total: 0),
                     search: search,
+                    formKey: formKey,
                     error: error.displayMessage,
                     permissions: context.currentUserPermissions
                 )
