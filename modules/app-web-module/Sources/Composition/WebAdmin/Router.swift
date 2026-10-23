@@ -10,10 +10,16 @@ public struct Router {
     public struct Routes: Sendable {
         public let admin: WebRoute
         public let root: WebRoute
+        public let pages: WebRoute
+        public let menus: WebRoute
+        public let settings: WebRoute
 
         public init(admin: WebRoute, root: WebRoute) {
             self.admin = admin
             self.root = root
+            self.pages = root.appending(pathComponent: "pages")
+            self.menus = root.appending(pathComponent: "menus")
+            self.settings = root.appending(pathComponent: "settings")
         }
 
         public static let standard = Routes(
@@ -51,16 +57,30 @@ public struct Router {
     public func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
+        let menuRoutes = Menu.Router.Routes(
+            root: routes.menus,
+            breadcrumb: routes.breadcrumb
+        )
+
         Overview.Router(
             renderingEngine: renderingEngine,
-            path: routes.root
+            routes: .init(
+                root: routes.root,
+                pages: routes.pages,
+                menus: routes.menus,
+                settings: routes.settings,
+                breadcrumb: routes.breadcrumb
+            )
         )
         .route(on: router)
 
         Settings.Router(
             environment: environment,
             renderingEngine: renderingEngine,
-            root: routes.root
+            routes: .init(
+                edit: routes.settings,
+                breadcrumb: routes.breadcrumb
+            )
         )
         .route(on: router)
 
@@ -68,21 +88,24 @@ public struct Router {
             environment: environment,
             renderingEngine: renderingEngine,
             events: adminEvents,
-            root: routes.root
+            routes: .init(
+                root: routes.pages,
+                breadcrumb: routes.breadcrumb
+            )
         )
         .route(on: router)
 
         Menu.Router(
             environment: environment,
             renderingEngine: renderingEngine,
-            root: routes.root
+            routes: menuRoutes
         )
         .route(on: router)
 
         MenuItem.Router(
             environment: environment,
             renderingEngine: renderingEngine,
-            root: routes.root
+            routes: menuRoutes
         )
         .route(on: router)
     }

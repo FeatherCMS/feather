@@ -1,5 +1,6 @@
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -11,9 +12,9 @@ struct AdminTestNewsletterIssueEmail {
 
     let controller: any AdminTestNewsletterIssueEmailController
 
-    init(apiBuilder: NewsletterAdminAPIBuilder) {
+    init(environment: AppEnvironment) {
         controller = AdminTestNewsletterIssueEmailDefaultController(
-            apiBuilder: apiBuilder
+            environment: environment
         )
     }
 }

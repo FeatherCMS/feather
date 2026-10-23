@@ -14,6 +14,7 @@ struct MenuItemTable: Component {
         let pageState: AdminListPageState
         let search: String?
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -31,7 +32,11 @@ struct MenuItemTable: Component {
                 )
             )
             context.build(
-                AdminMenuTabs(menuID: state.menuId, active: .items)
+                AdminMenuTabs(
+                    active: .items,
+                    detailsPath: state.routes.editPath(state.menuId),
+                    itemsPath: state.routes.itemsPath(state.menuId)
+                )
             )
             context.build(
                 AdminRelationshipGroup(
@@ -48,7 +53,8 @@ struct MenuItemTable: Component {
                                 permissions: state.permissions,
                                 items: state.items,
                                 pageState: state.pageState,
-                                search: state.search
+                                search: state.search,
+                                routes: state.routes
                             )
                         )
                     )

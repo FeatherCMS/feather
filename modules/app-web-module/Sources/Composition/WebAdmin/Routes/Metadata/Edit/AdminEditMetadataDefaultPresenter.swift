@@ -19,9 +19,9 @@ struct AdminEditMetadataDefaultPresenter: AdminEditMetadataPresenter {
         state: MetadataForm.State,
         permissions: Set<String>,
         navigationTabs: [AdminTabBar.Link],
-        configuration: AdminMetadataEditConfiguration?
+        configuration: AdminMetadataEditConfiguration
     ) async throws -> HTMLResponse {
-        let title = configuration?.title ?? "Edit web metadata"
+        let title = configuration.title
         return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
@@ -30,13 +30,12 @@ struct AdminEditMetadataDefaultPresenter: AdminEditMetadataPresenter {
                 state: .init(
                     id: id,
                     form: state,
-                    breadcrumb: breadcrumb(for: configuration),
+                    breadcrumb: configuration.breadcrumb,
                     action: request.uri.path,
                     navigationTabs: navigationTabs,
                     pageHeader: .primary(
                         title: title,
-                        description: configuration?.description
-                            ?? "Edit the metadata used when this page is rendered and shared.",
+                        description: configuration.description,
                         preview: .init(
                             label: "Preview",
                             href: previewPath(for: state)
@@ -52,9 +51,9 @@ struct AdminEditMetadataDefaultPresenter: AdminEditMetadataPresenter {
         info: String,
         message: String,
         permissions: Set<String>,
-        configuration: AdminMetadataEditConfiguration?
+        configuration: AdminMetadataEditConfiguration
     ) async throws -> HTMLResponse {
-        let title = configuration?.title ?? "Edit web metadata"
+        let title = configuration.title
         return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
@@ -63,27 +62,10 @@ struct AdminEditMetadataDefaultPresenter: AdminEditMetadataPresenter {
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb(for: configuration)
+                    breadcrumb: configuration.breadcrumb
                 )
             )
         )
-    }
-
-    private func breadcrumb(
-        for configuration: AdminMetadataEditConfiguration?
-    ) -> [AdminBreadcrumb.Link] {
-        if let breadcrumb = configuration?.breadcrumb {
-            return breadcrumb
-        }
-        if let marker = request.uri.path.range(of: "/edit/metadata/") {
-            let detailsPath =
-                String(request.uri.path[..<marker.lowerBound]) + "/edit/"
-            return [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Details", link: detailsPath),
-            ]
-        }
-        return AdminRoutes.breadcrumb
     }
 
     private func previewPath(for state: MetadataForm.State) -> String? {

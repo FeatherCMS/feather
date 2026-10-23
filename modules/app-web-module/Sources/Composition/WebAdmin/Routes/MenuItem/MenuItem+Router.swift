@@ -8,79 +8,73 @@ extension MenuItem {
     struct Router {
         let environment: AppEnvironment
         let renderingEngine: any RenderingEngine
-        let root: WebRoute
+        let routes: Menu.Router.Routes
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            let items =
-                root
-                .appending(pathComponent: "menus")
-                .appending(parameter: "id")
-                .appending(pathComponent: "items")
-            let listPath = items
-            let addPath = items.appending(pathComponent: "add")
-            let removePath = items.appending(pathComponent: "remove")
-            let detailsPath = items.appending(parameter: "itemId")
-            let editPath = detailsPath.appending(pathComponent: "edit")
-            let movePath = detailsPath.appending(pathComponent: "move")
             let list = AdminListMenuItem(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .controller
             router.get(
-                listPath.routerPath,
+                routes.items.routerPath,
                 use: list.getMenuItems
             )
             router.post(
-                movePath.routerPath,
+                routes.itemMove.routerPath,
                 use: list.postMenuItemMove
             )
 
             let view = AdminViewMenuItem(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .controller
             router.get(
-                detailsPath.routerPath,
+                routes.itemDetails.routerPath,
                 use: view.getMenuItem
             )
 
             let add = AdminAddMenuItem(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .controller
             router.get(
-                addPath.routerPath,
+                routes.itemsAdd.routerPath,
                 use: add.getAddMenuItem
             )
             router.post(
-                addPath.routerPath,
+                routes.itemsAdd.routerPath,
                 use: add.postAddMenuItem
             )
 
             let edit = AdminEditMenuItem(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .controller
             router.get(
-                editPath.routerPath,
+                routes.itemEdit.routerPath,
                 use: edit.getEditMenuItem
             )
             router.post(
-                editPath.routerPath,
+                routes.itemEdit.routerPath,
                 use: edit.postEditMenuItem
             )
 
             let remove = AdminRemoveMenuItem(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .controller
             router.post(
-                removePath.routerPath,
+                routes.itemsRemove.routerPath,
                 use: remove.postRemoveMenuItem
             )
         }

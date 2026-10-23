@@ -13,7 +13,7 @@ import WebComponents
 struct AdminTestNewsletterIssueEmailDefaultController:
     AdminTestNewsletterIssueEmailController
 {
-    let apiBuilder: NewsletterAdminAPIBuilder
+    let environment: AppEnvironment
 
     func send(request: Request, context: AuthenticatedRequestContext)
         async throws
@@ -47,7 +47,10 @@ struct AdminTestNewsletterIssueEmailDefaultController:
                         content: form.content
                     )
                 )
-            let api = apiBuilder.makeNewsletterAdmin(context)
+            let api = API.Client(
+                environment: environment,
+                requestContext: context
+            )
 
             if let issueId {
                 let response = try await api.newsletterIssueTestEmail(

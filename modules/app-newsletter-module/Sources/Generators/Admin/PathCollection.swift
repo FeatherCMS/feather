@@ -7,6 +7,8 @@ struct PathCollection: PathCollectionRepresentable {
     var pathMap: PathMap {
         [
             "api/v1/admin/newsletter/campaign": NewsletterCampaignPathItems(),
+            "api/v1/admin/newsletter/campaign/query":
+                NewsletterCampaign.Query.PathItem(),
             "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}":
                 NewsletterCampaignIDPathItems(),
             "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues":

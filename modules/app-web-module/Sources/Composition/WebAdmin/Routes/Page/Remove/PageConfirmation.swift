@@ -7,6 +7,7 @@ import SGML
 import WebAdminAPI
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct PageConfirmation: Component {
 
@@ -15,6 +16,7 @@ struct PageConfirmation: Component {
         let source: String
         let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String
+        let routes: Page.Router.Routes
     }
 
     let state: State
@@ -27,8 +29,7 @@ struct PageConfirmation: Component {
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [state.source],
-                action: PageRoutes.details(RouterPath(state.id))
-                    .appendingPath(RouterPath("remove")).description,
+                action: state.routes.detailsRemovePath(state.id),
                 submit: .init(label: "Remove page", style: .destructive),
                 nonceToken: state.nonceToken,
                 hiddenFields: [.init(name: "ids", value: state.id)]

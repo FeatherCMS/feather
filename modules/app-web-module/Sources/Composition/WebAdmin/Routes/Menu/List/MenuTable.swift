@@ -4,6 +4,7 @@ import SGML
 import WebAdminAPI
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct MenuTable: Component {
     struct State {
@@ -12,6 +13,7 @@ struct MenuTable: Component {
         let pageState: AdminListPageState
         let search: String?
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -33,7 +35,8 @@ struct MenuTable: Component {
                     menus: state.menus,
                     permissions: state.permissions,
                     pageState: state.pageState,
-                    search: state.search
+                    search: state.search,
+                    routes: state.routes
                 )
             )
         }

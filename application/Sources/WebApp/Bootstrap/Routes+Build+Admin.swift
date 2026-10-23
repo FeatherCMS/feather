@@ -6,6 +6,7 @@ import BlogWebAdmin
 import MediaWebAdmin
 import ContactWebAdmin
 import NewsletterWebAdmin
+import NewsWebAdmin
 import WebModuleWebAdmin
 import WebModuleWebApp
 import AnalyticsWebAdmin
@@ -25,7 +26,8 @@ func buildAdminRoutes(
     adminEvents: any EventPublisher,
     apiBuilder: APIBuilder,
     systemRoutes: SystemWebAdmin.Router.Routes,
-    redirectRoutes: RedirectWebAdmin.Router.Routes
+    redirectRoutes: RedirectWebAdmin.Router.Routes,
+    newsRoutes: NewsWebAdmin.Router.Routes
 ) {
     AuthWebAdmin.Router(
         environment: environment,
@@ -78,12 +80,18 @@ func buildAdminRoutes(
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AdminNewsletter(
-        apiBuilder: apiBuilder.newsletterAdmin,
+    NewsletterWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AdminContact(
+    NewsWebAdmin.Router(
+        environment: environment,
+        renderingEngine: renderingEngine,
+        routes: newsRoutes
+    )
+    .route(on: router)
+    ContactWebAdmin.Router(
         apiBuilder: apiBuilder.contact,
         renderingEngine: renderingEngine
     )

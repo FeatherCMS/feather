@@ -6,11 +6,13 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct AdminEditMenuItemDefaultPresenter: AdminEditMenuItemPresenter {
     let request: Request
     let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
+    let routes: WebModule.Menu.Router.Routes
 
     func renderEditPage(
         menuId: String,
@@ -27,7 +29,8 @@ struct AdminEditMenuItemDefaultPresenter: AdminEditMenuItemPresenter {
                     menuId: menuId,
                     id: id,
                     form: state,
-                    breadcrumb: MenuRoutes.breadcrumb
+                    breadcrumb: routes.itemBreadcrumb(menuId),
+                    routes: routes
                 )
             )
         )
@@ -48,7 +51,7 @@ struct AdminEditMenuItemDefaultPresenter: AdminEditMenuItemPresenter {
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: MenuRoutes.breadcrumb
+                    breadcrumb: routes.itemBreadcrumb(menuId)
                 )
             )
         )

@@ -146,4 +146,3 @@ struct TestRunner {
     }
 }
 
-extension ResponseContext: @retroactive @unchecked Sendable {}

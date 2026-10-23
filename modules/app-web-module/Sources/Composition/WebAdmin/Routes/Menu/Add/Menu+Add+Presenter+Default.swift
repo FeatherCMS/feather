@@ -14,6 +14,7 @@ extension WebModule.Menu.Add.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
+        let routes: WebModule.Menu.Router.Routes
 
         func renderAddPage(
             state: MenuForm.State,
@@ -26,7 +27,8 @@ extension WebModule.Menu.Add.Presenter {
                 content: MenuAdd(
                     state: .init(
                         form: state,
-                        breadcrumb: MenuRoutes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
                     )
                 )
             )

@@ -17,6 +17,7 @@ struct MenuItemBulkConfirmation: Component {
         let search: String?
         let items: [AdminRemoveItemContext]
         let nonceToken: String
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -29,12 +30,7 @@ struct MenuItemBulkConfirmation: Component {
                     description: "This action cannot be undone."
                 ),
                 selectedItems: state.items.map(\.label),
-                action:
-                    WebModule.Menu.Item.Routes
-                    .remove(
-                        RouterPath(state.menuId)
-                    )
-                    .description,
+                action: state.routes.itemsRemovePath(state.menuId),
                 nonceToken: state.nonceToken,
                 hiddenFields: state.items.map {
                     .init(name: "ids", value: $0.id)

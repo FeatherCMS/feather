@@ -26,9 +26,9 @@ extension Asset.File.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let __runtimeBuild1 = buildRuntime(request, context)
-            let interactor = __runtimeBuild1.interactor
-            let presenter = __runtimeBuild1.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             let page = request.queryPage()
             let search = request.querySearch()
             let parentId = request.queryString("parent_id")?

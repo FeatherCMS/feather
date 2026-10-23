@@ -16,11 +16,12 @@ struct AdminRemoveMenuItemDefaultPresenter:
     let request: Request
     let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
+    let routes: WebModule.Menu.Router.Routes
 
     func renderRemovePage(
         menuId: String,
         item: AdminRemoveItemContext,
-        origin: WebModule.Menu.Item.Routes.RemoveOrigin
+        origin: WebModule.Menu.Router.Routes.RemoveOrigin
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -34,9 +35,10 @@ struct AdminRemoveMenuItemDefaultPresenter:
                     menuId: menuId,
                     id: item.id,
                     label: item.label,
-                    breadcrumb: MenuRoutes.breadcrumb,
+                    breadcrumb: routes.itemBreadcrumb(menuId),
                     nonceToken: nonceToken,
-                    origin: origin
+                    origin: origin,
+                    routes: routes
                 )
             ),
             size: .small
@@ -48,7 +50,7 @@ struct AdminRemoveMenuItemDefaultPresenter:
         id: String,
         info: String,
         message: String,
-        origin: WebModule.Menu.Item.Routes.RemoveOrigin
+        origin: WebModule.Menu.Router.Routes.RemoveOrigin
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderAdminPage(
             request: request,
@@ -58,7 +60,7 @@ struct AdminRemoveMenuItemDefaultPresenter:
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: MenuRoutes.breadcrumb
+                    breadcrumb: routes.itemBreadcrumb(menuId)
                 )
             )
         )

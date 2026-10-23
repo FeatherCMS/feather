@@ -1,5 +1,6 @@
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -11,7 +12,7 @@ struct AdminAddNewsletterIssue {
     let controller: any AdminAddNewsletterIssueController
 
     init(
-        apiBuilder: NewsletterAdminAPIBuilder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         controller = AdminAddNewsletterIssueDefaultController(
@@ -20,7 +21,10 @@ struct AdminAddNewsletterIssue {
                     interactor: AdminAddNewsletterIssueDefaultInteractor(
                         repository:
                             AdminAddNewsletterIssueOpenAPIRepository(
-                                api: apiBuilder.makeNewsletterAdmin(context)
+                                api: API.Client(
+                                    environment: environment,
+                                    requestContext: context
+                                )
                             )
                     ),
                     presenter: AdminAddNewsletterIssueDefaultPresenter(

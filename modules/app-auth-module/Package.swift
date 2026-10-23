@@ -219,6 +219,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "NIOHTTP1", package: "swift-nio"),
 

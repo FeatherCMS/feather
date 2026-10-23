@@ -4,8 +4,16 @@ import Hummingbird
 
 extension Overview {
     struct Router {
+        struct Routes: Sendable {
+            let root: WebRoute
+            let pages: WebRoute
+            let menus: WebRoute
+            let settings: WebRoute
+            let breadcrumb: [AdminBreadcrumb.Link]
+        }
+
         let renderingEngine: any RenderingEngine
-        let path: WebRoute
+        let routes: Routes
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             let controller = Controller.Default(
@@ -15,12 +23,13 @@ extension Overview {
                         presenter: Presenter.Default(
                             request: request,
                             context: context,
-                            renderingEngine: renderingEngine
+                            renderingEngine: renderingEngine,
+                            routes: routes
                         )
                     )
                 }
             )
-            router.get(path.routerPath, use: controller.getOverview)
+            router.get(routes.root.routerPath, use: controller.getOverview)
         }
     }
 }

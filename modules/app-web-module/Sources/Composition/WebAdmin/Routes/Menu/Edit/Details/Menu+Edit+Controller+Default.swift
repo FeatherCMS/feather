@@ -9,6 +9,7 @@ import WebModule
 
 extension WebModule.Menu.Edit.Controller {
     struct Default: Interface {
+        let routes: WebModule.Menu.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any WebModule.Menu.Edit.Interactor.Interface,
@@ -63,7 +64,7 @@ extension WebModule.Menu.Edit.Controller {
                 try await runtime.interactor.update(id: id, input: payload)
 
                 return AdminNotificationFlash.redirect(
-                    to: MenuRoutes.edit(RouterPath(id)).description,
+                    to: routes.editPath(id),
                     notification: .init(
                         title: "Saved",
                         message: "Menu edited successfully."

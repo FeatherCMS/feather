@@ -3,6 +3,7 @@ import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import WebAdminAPI
+import WebModule
 
 struct AdminEditSettingsOpenAPIRepository:
     AdminEditSettingsRepository
@@ -180,7 +181,7 @@ struct AdminEditSettingsOpenAPIRepository:
                 pageNumber += 1
             }
 
-            let detailsRepository = AdminListPageFormOpenAPIRepository(
+            let detailsRepository = Page.Repository.AdminAPI.OpenAPI(
                 api: api
             )
             return try await withThrowingTaskGroup(
@@ -188,7 +189,7 @@ struct AdminEditSettingsOpenAPIRepository:
             ) { group in
                 for (index, item) in items.enumerated() {
                     group.addTask {
-                        let details = try await detailsRepository.load(
+                        let details = try await detailsRepository.loadMetadata(
                             id: item.id
                         )
                         return (

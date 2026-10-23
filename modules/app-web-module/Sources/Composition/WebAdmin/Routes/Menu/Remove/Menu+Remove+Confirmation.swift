@@ -17,6 +17,7 @@ extension WebModule.Menu.Remove {
             let id: String
             let source: String
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: WebModule.Menu.Router.Routes
             let nonceToken: String
         }
 
@@ -30,8 +31,7 @@ extension WebModule.Menu.Remove {
                         description: "This action cannot be undone."
                     ),
                     selectedItems: [state.source],
-                    action: MenuRoutes.details(RouterPath(state.id))
-                        .appendingPath(RouterPath("remove")).description,
+                    action: state.routes.detailsRemovePath(state.id),
                     submit: .init(label: "Remove menu", style: .destructive),
                     nonceToken: state.nonceToken,
                     hiddenFields: [.init(name: "ids", value: state.id)]

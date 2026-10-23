@@ -14,6 +14,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)`.
     func contactFormRemove(_ input: Operations.ContactFormRemove.Input) async throws -> Operations.ContactFormRemove.Output
+    /// - Remark: HTTP `POST /api/v1/admin/contact/form/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/query/post(contactFormQuery)`.
+    func contactFormQuery(_ input: Operations.ContactFormQuery.Input) async throws -> Operations.ContactFormQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     func contactFormGet(_ input: Operations.ContactFormGet.Input) async throws -> Operations.ContactFormGet.Output
@@ -74,6 +77,17 @@ extension APIProtocol {
         body: Components.RequestBodies.DeleteRequestBody
     ) async throws -> Operations.ContactFormRemove.Output {
         try await contactFormRemove(Operations.ContactFormRemove.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/form/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/query/post(contactFormQuery)`.
+    public func contactFormQuery(
+        headers: Operations.ContactFormQuery.Input.Headers = .init(),
+        body: Operations.ContactFormQuery.Input.Body
+    ) async throws -> Operations.ContactFormQuery.Output {
+        try await contactFormQuery(Operations.ContactFormQuery.Input(
             headers: headers,
             body: body
         ))
@@ -226,14 +240,4 @@ public enum Servers {
             variables: []
         )
     }
-}
-
-// swift-openapi-generator dummy public import compatibility
-public func unsafeOpenAPIGenerationHotfixForSourcesModuleTypes(
-    _ url: Foundation.URL,
-    _ data: Foundation.Data,
-    _ date: Foundation.Date,
-    _ runtimeConfiguration: OpenAPIRuntime.Configuration
-) {
-    fatalError()
 }

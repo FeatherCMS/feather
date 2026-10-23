@@ -12,6 +12,7 @@ struct AdminEditPageMetadataDefaultController:
     let environment: AppEnvironment
     let renderingEngine: any RenderingEngine
     let adminEvents: any EventPublisher
+    let routes: Page.Router.Routes
 
     private func makeHandler() -> AdminMetadataEditHandler {
         AdminMetadataEditHandler(
@@ -35,21 +36,19 @@ struct AdminEditPageMetadataDefaultController:
             referenceType: "web.page",
             title: "Edit page",
             description: "Update the page content and publication settings.",
-            breadcrumb: PageRoutes.breadcrumb,
+            breadcrumb: routes.breadcrumb,
             navigationTabs: [
                 .init(
                     label: "Details",
-                    href: PageRoutes.edit(RouterPath(pageID)).description,
+                    href: routes.editPath(pageID),
                     isCurrent: false
                 ),
                 .init(
                     label: "Metadata",
-                    href:
-                        PageRoutes.metadata(
-                            RouterPath(pageID),
-                            RouterPath(metadataID)
-                        )
-                        .description,
+                    href: routes.metadataPath(
+                        pageID: pageID,
+                        metadataID: metadataID
+                    ),
                     isCurrent: true
                 ),
             ]

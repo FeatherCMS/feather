@@ -4,7 +4,7 @@ import NewsletterAdminAPI
 import OpenAPIRuntime
 
 struct AdminAddNewsletterCampaignOpenAPIRepository {
-    let api: NewsletterAdminAPIClient
+    let api: API.Client
 
     func createNewsletter(
         key: String,

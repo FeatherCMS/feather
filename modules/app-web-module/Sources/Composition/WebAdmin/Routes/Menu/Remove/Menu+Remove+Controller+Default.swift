@@ -8,6 +8,7 @@ import WebModule
 
 extension WebModule.Menu.Remove.Controller {
     struct Default: Interface {
+        let routes: WebModule.Menu.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any WebModule.Menu.Remove.Interactor.Interface,
@@ -31,7 +32,7 @@ extension WebModule.Menu.Remove.Controller {
             else { return Response(status: .badRequest) }
             let ids = nonceRequest.input.normalizedIds
             let location = AdminLocation.url(
-                path: MenuRoutes.list.description,
+                path: routes.list.path,
                 page: nonceRequest.input.normalizedPage,
                 search: nonceRequest.input.normalizedSearch
             )

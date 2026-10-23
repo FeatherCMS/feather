@@ -14,6 +14,7 @@ extension WebModule.Menu.Edit.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
+        let routes: WebModule.Menu.Router.Routes
 
         func renderEditPage(
             id: String,
@@ -28,7 +29,8 @@ extension WebModule.Menu.Edit.Presenter {
                     state: .init(
                         id: id,
                         form: state,
-                        breadcrumb: MenuRoutes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
                     )
                 )
             )
@@ -48,7 +50,7 @@ extension WebModule.Menu.Edit.Presenter {
                     state: .init(
                         info: info,
                         message: message,
-                        breadcrumb: MenuRoutes.breadcrumb
+                        breadcrumb: routes.breadcrumb
                     )
                 )
             )

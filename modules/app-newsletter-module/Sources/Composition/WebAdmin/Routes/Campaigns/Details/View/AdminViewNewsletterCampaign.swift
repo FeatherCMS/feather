@@ -1,5 +1,6 @@
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -10,7 +11,7 @@ import WebComponents
 struct AdminViewNewsletterCampaign {
     let controller: any AdminViewNewsletterCampaignController
     init(
-        apiBuilder: NewsletterAdminAPIBuilder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         controller = AdminViewNewsletterCampaignDefaultController {
@@ -19,7 +20,10 @@ struct AdminViewNewsletterCampaign {
             WebAdminRuntime(
                 interactor: AdminViewNewsletterCampaignDefaultInteractor(
                     repository: .init(
-                        api: apiBuilder.makeNewsletterAdmin(context)
+                        api: API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
                     )
                 ),
                 presenter: AdminViewNewsletterCampaignDefaultPresenter(

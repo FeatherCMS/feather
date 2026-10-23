@@ -10,6 +10,7 @@ import WebModule
 struct AdminEditMenuItemDefaultController:
     AdminEditMenuItemController
 {
+    let routes: WebModule.Menu.Router.Routes
     let buildRuntime:
         @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminEditMenuItemInteractor,
@@ -174,13 +175,7 @@ struct AdminEditMenuItemDefaultController:
             )
 
             return AdminNotificationFlash.redirect(
-                to:
-                    WebModule.Menu.Item.Routes
-                    .edit(
-                        RouterPath(menuId),
-                        RouterPath(id)
-                    )
-                    .description,
+                to: routes.itemEditPath(menuID: menuId, itemID: id),
                 notification: .init(
                     title: "Saved",
                     message: "Item edited successfully."

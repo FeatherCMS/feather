@@ -8,14 +8,6 @@ enum NewsletterAdminRoutes {
     static let campaignAdd = campaigns.appendingPath(RouterPath("add"))
     static let campaignRemove = newsletter.appendingPath(RouterPath("remove"))
     static let campaignRemoveSelected = campaignRemove
-    static let subscribers = newsletter.appendingPath(
-        RouterPath("subscribers")
-    )
-    static let subscriberAdd = subscribers.appendingPath(RouterPath("add"))
-    static let subscriberRemove = subscribers.appendingPath(
-        RouterPath("remove")
-    )
-
     static let breadcrumb: [AdminBreadcrumb.Link] = [
         .init(label: "Admin", link: "/admin/"),
         .init(label: "Newsletter", link: newsletter.description + "/"),
@@ -63,7 +55,6 @@ enum NewsletterAdminRoutes {
     )
     static let campaignSubscriberRemoveSelectedRoute =
         campaignSubscriberRemoveSelected(campaignID)
-    static let subscriberDetailsRoute = subscriberDetails(subscriberID)
 
     static func campaignDetails(_ id: RouterPath) -> RouterPath {
         campaigns.appendingPath(id).appendingPath(RouterPath("details"))
@@ -169,10 +160,6 @@ enum NewsletterAdminRoutes {
             subscriberID: subscriberID
         )
         .appendingPath(RouterPath("remove"))
-    }
-
-    static func subscriberDetails(_ id: RouterPath) -> RouterPath {
-        subscribers.appendingPath(id)
     }
 
 }

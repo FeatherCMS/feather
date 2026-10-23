@@ -9,6 +9,7 @@ import WebModule
 
 extension WebModule.Menu.Add.Controller {
     struct Default: Interface {
+        let routes: WebModule.Menu.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any WebModule.Menu.Add.Interactor.Interface,
@@ -44,7 +45,7 @@ extension WebModule.Menu.Add.Controller {
                 try await runtime.interactor.execute(input: payload)
 
                 return AdminNotificationFlash.redirect(
-                    to: MenuRoutes.list.description,
+                    to: routes.list.path,
                     notification: .init(
                         title: "Added",
                         message: "Menu added successfully."

@@ -178,12 +178,13 @@ struct ErrorMiddleware: ServerMiddleware {
         }
         catch let error as OpenAPIRuntime.ServerError {
             let underlyingError = error.underlyingError
+            let adaptedError = BackendErrorAdapter.adapt(underlyingError)
             let httpError =
-                (underlyingError as? any HTTPErrorRepresentable)
-                ?? (underlyingError as? any ErrorTraceRepresentable)?
+                (adaptedError as? any HTTPErrorRepresentable)
+                ?? (adaptedError as? any ErrorTraceRepresentable)?
                     .lookup((any HTTPErrorRepresentable).self)
             if let httpError {
-                let traceableError = underlyingError as? any ErrorTraceRepresentable
+                let traceableError = adaptedError as? any ErrorTraceRepresentable
                 let trace = traceableError?.trace()
                     ?? traceableError?
                         .lookup((any ErrorTraceRepresentable).self)?
@@ -207,13 +208,14 @@ struct ErrorMiddleware: ServerMiddleware {
             )
         }
         catch {
+            let adaptedError = BackendErrorAdapter.adapt(error)
             return try respond(
                 with: enrich(
                     .init(
                         code: .internalServerError,
                         message: "Unknown error.",
                         reason: "\(error)",
-                        trace: (error as? any ErrorTraceRepresentable)?.trace()
+                        trace: (adaptedError as? any ErrorTraceRepresentable)?.trace()
                     ),
                     request: request,
                     operationID: operationID

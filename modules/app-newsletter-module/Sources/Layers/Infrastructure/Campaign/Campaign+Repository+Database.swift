@@ -17,19 +17,6 @@ extension Campaign.Table.Detail {
     }
 }
 
-extension Campaign.Table.List {
-    var asDomain: Campaign.Model {
-        .init(
-            id: id,
-            key: key,
-            name: name,
-            fromEmail: fromEmail,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}
-
 extension Campaign.Repository {
     public struct Database: Interface {
         public let context: DatabaseTransactionContext
@@ -38,13 +25,6 @@ extension Campaign.Repository {
         public init(context: DatabaseTransactionContext) {
             self.context = context
             self.accessLayer = .init(context: context)
-        }
-
-        public func list() async throws -> [Campaign.Model] {
-            try await accessLayer.select {
-                $0.order(by: \.name).order(by: \.id)
-            }
-            .map(\.asDomain)
         }
 
         public func insert(_ model: Campaign.Model.New) async throws

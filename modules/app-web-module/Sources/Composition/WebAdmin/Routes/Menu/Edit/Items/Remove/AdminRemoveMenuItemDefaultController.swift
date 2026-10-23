@@ -9,6 +9,7 @@ import WebModule
 struct AdminRemoveMenuItemDefaultController:
     AdminRemoveMenuItemController
 {
+    let routes: WebModule.Menu.Router.Routes
     let buildRuntime:
         @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveMenuItemInteractor,
@@ -21,9 +22,7 @@ struct AdminRemoveMenuItemDefaultController:
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
-        let origin = WebModule.Menu.Item.Routes.removeOrigin(
-            request.queryString("origin")
-        )
+        let origin = routes.removeOrigin(request.queryString("origin"))
         let nonceRequest = try await request.decode(
             as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
@@ -36,7 +35,7 @@ struct AdminRemoveMenuItemDefaultController:
         else { return Response(status: .badRequest) }
         let ids = nonceRequest.input.normalizedIds
         let location = AdminLocation.url(
-            path: WebModule.Menu.Item.Routes.list(RouterPath(menuId)).description,
+            path: routes.itemsPath(menuId),
             page: nonceRequest.input.normalizedPage,
             search: nonceRequest.input.normalizedSearch
         )

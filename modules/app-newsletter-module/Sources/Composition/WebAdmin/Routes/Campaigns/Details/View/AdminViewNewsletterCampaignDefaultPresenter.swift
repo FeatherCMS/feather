@@ -1,9 +1,10 @@
-import FeatherWebAdmin
-import FeatherWebShared
 import FeatherModuleKit
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
+import NewsletterModule
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -16,7 +17,7 @@ struct AdminViewNewsletterCampaignDefaultPresenter:
     let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
     func render(
-        item: AdminNewsletterCampaignItem,
+        item: Campaign.Item,
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse {

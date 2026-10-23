@@ -74,7 +74,7 @@ struct SettingsForm: Component {
     }
 
     var state: State
-    var action: String = SettingsRoutes.edit.description
+    let action: String
     var submitLabel: String = "Save settings"
 
     func html(context: inout BuilderContext) -> Form {

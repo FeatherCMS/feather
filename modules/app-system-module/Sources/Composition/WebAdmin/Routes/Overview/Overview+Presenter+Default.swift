@@ -20,7 +20,7 @@ extension Overview.Presenter {
                 request: request,
                 context: context,
                 title: model.title,
-                content: AdminViewSystemOverviewComponent(routes: routes)
+                content: Overview.Component(routes: routes)
             )
         }
     }

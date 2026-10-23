@@ -1,5 +1,5 @@
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import NewsletterAdminAPI
@@ -9,7 +9,7 @@ import WebBuilders
 import WebComponents
 
 struct AdminListNewsletterCampaignSubscribersOpenAPIRepository {
-    let api: NewsletterAdminAPIClient
+    let api: API.Client
     func list(newsletterId: String) async throws
         -> [AdminNewsletterCampaignSubscriberItem]
     {

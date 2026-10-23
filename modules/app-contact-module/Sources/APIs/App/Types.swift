@@ -9,6 +9,9 @@ public import struct Foundation.URL
 public import struct Foundation.Data
 public import struct Foundation.Date
 #endif
+public import struct Foundation.URL
+public import struct Foundation.Data
+public import struct Foundation.Date
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormKey}`.

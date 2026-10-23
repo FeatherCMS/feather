@@ -15,6 +15,7 @@ extension WebModule.Menu.Remove.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
+        let routes: WebModule.Menu.Router.Routes
 
         func renderRemovePage(
             item: AdminRemoveItemContext
@@ -30,7 +31,8 @@ extension WebModule.Menu.Remove.Presenter {
                     state: .init(
                         id: item.id,
                         source: item.label,
-                        breadcrumb: MenuRoutes.breadcrumb,
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes,
                         nonceToken: nonceToken
                     )
                 ),
@@ -51,7 +53,7 @@ extension WebModule.Menu.Remove.Presenter {
                     state: .init(
                         info: info,
                         message: message,
-                        breadcrumb: MenuRoutes.breadcrumb
+                        breadcrumb: routes.breadcrumb
                     )
                 )
             )

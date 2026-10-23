@@ -9,6 +9,9 @@ public import struct Foundation.URL
 public import struct Foundation.Data
 public import struct Foundation.Date
 #endif
+public import struct Foundation.URL
+public import struct Foundation.Data
+public import struct Foundation.Date
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
     /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormKey}`.

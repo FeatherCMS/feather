@@ -15,6 +15,7 @@ struct MenuItemRow: Component {
     let permissions: AdminListActions
     let canReorder: Bool
     let returnTo: String
+    let routes: WebModule.Menu.Router.Routes
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
@@ -65,25 +66,19 @@ struct MenuItemRow: Component {
                     actions: [
                         .init(
                             "View",
-                            href:
-                                WebModule.Menu.Item.Routes
-                                .details(
-                                    RouterPath(menuId),
-                                    RouterPath(item.id)
-                                )
-                                .description,
+                            href: routes.itemDetailsPath(
+                                menuID: menuId,
+                                itemID: item.id
+                            ),
                             style: .ghost(.primary),
                             permission: WebModule.Permissions.MenuItems.read
                         ),
                         .init(
                             "Edit",
-                            href:
-                                WebModule.Menu.Item.Routes
-                                .edit(
-                                    RouterPath(menuId),
-                                    RouterPath(item.id)
-                                )
-                                .description,
+                            href: routes.itemEditPath(
+                                menuID: menuId,
+                                itemID: item.id
+                            ),
                             style: .ghost(.secondary),
                             permission: WebModule.Permissions.MenuItems.update
                         ),
@@ -96,8 +91,7 @@ struct MenuItemRow: Component {
         .data("web-menu-item", item.id)
         .data(
             "web-menu-item-move-url",
-            WebModule.Menu.Item.Routes.move(RouterPath(menuId), RouterPath(item.id))
-                .description
+            routes.itemMovePath(menuID: menuId, itemID: item.id)
         )
     }
 }

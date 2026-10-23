@@ -1,10 +1,14 @@
 public import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import SystemModule
 import SystemWebAdmin
 
 public enum NewsAdminMenuEventHandlers {
-    public static func register(in events: inout EventRegistry) {
+    public static func register(
+        in events: inout EventRegistry,
+        routes: Router.Routes = .standard
+    ) {
         events.register(
             event: SystemWebAdmin.Admin.Menu.Item.Provider.self,
             context: SystemWebAdmin.Admin.Menu.Context.self
@@ -15,14 +19,14 @@ public enum NewsAdminMenuEventHandlers {
                     menuKey: "news",
                     label: "Articles",
                     icon: "fileText",
-                    link: "/admin/news/articles/",
+                    link: routes.articles.path,
                     permission: "news:article:list"
                 ),
                 .init(
                     menuKey: "news",
                     label: "Categories",
                     icon: "tag",
-                    link: "/admin/news/categories/",
+                    link: routes.categories.path,
                     permission: "news:category:list"
                 ),
             ]

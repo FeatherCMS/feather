@@ -1,5 +1,6 @@
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -7,12 +8,14 @@ import SGML
 import WebAdminAPI
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct PageAdd: Component {
 
     struct State {
         let form: PageForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: Page.Router.Routes
     }
 
     let state: State
@@ -32,7 +35,7 @@ struct PageAdd: Component {
             context.build(
                 PageForm(
                     state: state.form,
-                    action: PageRoutes.add.description,
+                    action: state.routes.add.path,
                     submitLabel: "Add page"
                 )
             )

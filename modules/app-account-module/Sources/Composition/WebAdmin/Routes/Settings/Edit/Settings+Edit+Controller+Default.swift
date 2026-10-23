@@ -20,9 +20,9 @@ extension Settings.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
             let targetUserID = context.parameters.get("userId", as: String.self)
-            let __runtimeBuild1 = buildRuntime(request, context)
-            let interactor = __runtimeBuild1.interactor
-            let presenter = __runtimeBuild1.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             let permissions = context.currentUserPermissions
             let canRead =
                 targetUserID == nil
@@ -82,9 +82,9 @@ extension Settings.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> Response {
             let targetUserID = context.parameters.get("userId", as: String.self)
-            let __runtimeBuild2 = buildRuntime(request, context)
-            let interactor = __runtimeBuild2.interactor
-            let presenter = __runtimeBuild2.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             let permissions = context.currentUserPermissions
             let canEdit =
                 targetUserID == nil

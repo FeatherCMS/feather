@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import SGML
@@ -8,14 +9,16 @@ import WebComponents
 struct ContactFormAddPage: Component {
     struct State {
         let form: ContactFormForm.State
-        let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: Contact.Router.Routes
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(AdminBreadcrumb(links: state.breadcrumb))
+            context.build(
+                AdminBreadcrumb(links: state.routes.formsBreadcrumb)
+            )
             context.build(
                 AdminPageHeader(
                     state: .primary(
@@ -28,7 +31,7 @@ struct ContactFormAddPage: Component {
             context.build(
                 ContactFormForm(
                     state: state.form,
-                    action: ContactAdminRoutes.formAdd.description,
+                    action: state.routes.formAdd.path,
                     submitLabel: "Add form"
                 )
             )

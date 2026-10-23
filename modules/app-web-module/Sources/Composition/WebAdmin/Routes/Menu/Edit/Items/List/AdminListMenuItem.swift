@@ -2,13 +2,15 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
+import WebModule
 
 struct AdminListMenuItem {
     let controller: any AdminListMenuItemController
 
     init(
         environment: AppEnvironment,
-        renderingEngine: any RenderingEngine
+        renderingEngine: any RenderingEngine,
+        routes: Menu.Router.Routes
     ) {
         self.controller = AdminListMenuItemDefaultController(
             buildRuntime: { request, context in
@@ -24,7 +26,8 @@ struct AdminListMenuItem {
                     presenter: AdminListMenuItemDefaultPresenter(
                         request: request,
                         context: context,
-                        renderEngine: renderingEngine
+                        renderEngine: renderingEngine,
+                        routes: routes
                     )
                 )
             }

@@ -19,9 +19,9 @@ extension RedirectModule.Rule.Edit.Controller {
         )
             async throws -> HTMLResponse
         {
-            let __runtimeBuild1 = buildRuntime(request, context)
-            let interactor = __runtimeBuild1.interactor
-            let presenter = __runtimeBuild1.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: RedirectModule.Rule.Permissions.update
@@ -50,9 +50,9 @@ extension RedirectModule.Rule.Edit.Controller {
         )
             async throws -> Response
         {
-            let __runtimeBuild2 = buildRuntime(request, context)
-            let interactor = __runtimeBuild2.interactor
-            let presenter = __runtimeBuild2.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: RedirectModule.Rule.Permissions.update

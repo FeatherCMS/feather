@@ -26,7 +26,7 @@ struct MediaVariantProcessorAddPage: Component {
                 )
             )
             context.build(
-                AdminMediaVariantTabs(
+                Variant.Tabs(
                     id: variantId,
                     active: .processors,
                     routes: routes

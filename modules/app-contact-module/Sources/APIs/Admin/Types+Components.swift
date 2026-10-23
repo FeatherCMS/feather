@@ -5,13 +5,3 @@ public import struct Foundation.Data
 public import struct Foundation.Date
 /// Types generated from the components section of the OpenAPI document.
 public enum Components {}
-
-// swift-openapi-generator dummy public import compatibility
-public func unsafeOpenAPIGenerationHotfixForSourcesModuleTypesComponents(
-    _ url: Foundation.URL,
-    _ data: Foundation.Data,
-    _ date: Foundation.Date,
-    _ runtimeConfiguration: OpenAPIRuntime.Configuration
-) {
-    fatalError()
-}

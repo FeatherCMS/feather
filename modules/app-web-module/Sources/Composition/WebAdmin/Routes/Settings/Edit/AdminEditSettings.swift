@@ -1,15 +1,18 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import OpenAPIRuntime
+import WebModule
 
 struct AdminEditSettings {
     let controller: any AdminEditSettingsController
 
     init(
         environment: AppEnvironment,
-        renderingEngine: any RenderingEngine
+        renderingEngine: any RenderingEngine,
+        routes: Settings.Router.Routes
     ) {
         self.controller = AdminEditSettingsDefaultController(
+            routes: routes,
             buildRuntime: { request, context in
                 WebAdminRuntime(
                     interactor: AdminEditSettingsDefaultInteractor(

@@ -16,13 +16,14 @@ struct MenuItemTableContent: Component {
         let items: [Components.Schemas.MenuItemQueryItemSchema]
         let pageState: AdminListPageState
         let search: String?
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
 
     private var returnTo: String {
         AdminLocation.url(
-            path: WebModule.Menu.Item.Routes.list(RouterPath(state.menuId)).description,
+            path: state.routes.itemsPath(state.menuId),
             page: state.pageState.page,
             search: state.search
         )
@@ -94,12 +95,7 @@ struct MenuItemTableContent: Component {
                             context.build(
                                 AdminListInvalidPageState(
                                     pageState: state.pageState,
-                                    path:
-                                        WebModule.Menu.Item.Routes
-                                        .list(
-                                            RouterPath(state.menuId)
-                                        )
-                                        .description
+                                    path: state.routes.itemsPath(state.menuId)
                                 )
                             )
                         }
@@ -113,14 +109,10 @@ struct MenuItemTableContent: Component {
                                             context.build(
                                                 AdminButton(
                                                     "Reset search",
-                                                    href:
-                                                        WebModule.Menu.Item.Routes
-                                                        .list(
-                                                            RouterPath(
-                                                                state.menuId
-                                                            )
-                                                        )
-                                                        .description,
+                                                    href: state.routes
+                                                        .itemsPath(
+                                                            state.menuId
+                                                        ),
                                                     style: .secondary
                                                 )
                                             )
@@ -141,14 +133,10 @@ struct MenuItemTableContent: Component {
                                                 context.build(
                                                     AdminButton(
                                                         "Add new",
-                                                        href:
-                                                            WebModule.Menu.Item.Routes
-                                                            .add(
-                                                                RouterPath(
-                                                                    state.menuId
-                                                                )
+                                                        href: state.routes
+                                                            .itemsAddPath(
+                                                                state.menuId
                                                             )
-                                                            .description
                                                     )
                                                 )
                                             }
@@ -161,12 +149,8 @@ struct MenuItemTableContent: Component {
                             context.build(
                                 AdminListSelectionForm(
                                     state: .init(
-                                        action:
-                                            WebModule.Menu.Item.Routes
-                                            .remove(
-                                                RouterPath(state.menuId)
-                                            )
-                                            .description,
+                                        action: state.routes
+                                            .itemsRemovePath(state.menuId),
                                         pageState: state.pageState,
                                         search: searchValue,
                                         button: .init(
@@ -225,7 +209,9 @@ struct MenuItemTableContent: Component {
                                                                 canReorder:
                                                                     canReorder,
                                                                 returnTo:
-                                                                    returnTo
+                                                                    returnTo,
+                                                                routes:
+                                                                    state.routes
                                                             )
                                                         )
                                                     }
@@ -245,12 +231,9 @@ struct MenuItemTableContent: Component {
                         context.build(
                             AdminListSearch(
                                 state: .init(
-                                    action:
-                                        WebModule.Menu.Item.Routes
-                                        .list(
-                                            RouterPath(state.menuId)
-                                        )
-                                        .description,
+                                    action: state.routes.itemsPath(
+                                        state.menuId
+                                    ),
                                     placeholder: "Quick search items",
                                     search: searchValue
                                 )
@@ -266,12 +249,9 @@ struct MenuItemTableContent: Component {
                                     context.build(
                                         AdminButton(
                                             "Add new",
-                                            href:
-                                                WebModule.Menu.Item.Routes
-                                                .add(
-                                                    RouterPath(state.menuId)
-                                                )
-                                                .description
+                                            href: state.routes.itemsAddPath(
+                                                state.menuId
+                                            )
                                         )
                                     )
                                 }
@@ -282,12 +262,7 @@ struct MenuItemTableContent: Component {
                         context.build(
                             AdminListPagination(
                                 state: .init(
-                                    path:
-                                        WebModule.Menu.Item.Routes
-                                        .list(
-                                            RouterPath(state.menuId)
-                                        )
-                                        .description,
+                                    path: state.routes.itemsPath(state.menuId),
                                     pageState: state.pageState,
                                     search: searchValue
                                 )

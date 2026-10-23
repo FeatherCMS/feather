@@ -1,15 +1,16 @@
 import FeatherWebAdmin
+import NewsletterModule
 
 protocol AdminEditNewsletterCampaignPresenter: Sendable {
     func render(
-        item: AdminNewsletterCampaignItem,
+        item: Campaign.Item,
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse
 
     func renderEditError(
         id: String,
-        item: AdminNewsletterCampaignItem,
+        item: Campaign.Item,
         error: AdminEditNewsletterCampaignError,
         permissions: Set<String>
     ) async throws -> HTMLResponse

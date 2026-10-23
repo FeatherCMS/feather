@@ -22,9 +22,9 @@ struct AdminListContactFormSubmissionsDefaultController:
         async throws
         -> HTMLResponse
     {
-        let __runtimeBuild1 = buildRuntime(request, context)
-        let interactor = __runtimeBuild1.interactor
-        let presenter = __runtimeBuild1.presenter
+        let runtime = buildRuntime(request, context)
+        let interactor = runtime.interactor
+        let presenter = runtime.presenter
         let formId = try context.requiredParameter("formKey")
         let search = request.querySearch() ?? ""
         do {

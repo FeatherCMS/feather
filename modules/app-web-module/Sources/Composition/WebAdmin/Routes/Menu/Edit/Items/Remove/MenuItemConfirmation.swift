@@ -18,7 +18,8 @@ struct MenuItemConfirmation: Component {
         let label: String
         let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String
-        let origin: WebModule.Menu.Item.Routes.RemoveOrigin
+        let origin: WebModule.Menu.Router.Routes.RemoveOrigin
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -31,12 +32,11 @@ struct MenuItemConfirmation: Component {
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [state.label],
-                action:
-                    WebModule.Menu.Item.Routes.itemRemove(
-                        RouterPath(state.menuId),
-                        RouterPath(state.id),
-                        origin: state.origin
-                    ),
+                action: state.routes.itemRemovePath(
+                    menuID: state.menuId,
+                    itemID: state.id,
+                    origin: state.origin
+                ),
                 submit: .init(label: "Remove item", style: .destructive),
                 nonceToken: state.nonceToken,
                 hiddenFields: [.init(name: "ids", value: state.id)]

@@ -18,30 +18,31 @@ public struct Router {
     public func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        AdminViewAnalyticsOverview(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        Overview.View.Router(renderingEngine: renderingEngine)
+            .route(on: router)
 
-        AdminViewAnalyticsInsights(
-            apiBuilder: apiBuilder,
-            source: .web,
-            renderingEngine: renderingEngine
-        )
-        .route(on: router)
+        Insight.View
+            .Router(
+                apiBuilder: apiBuilder,
+                source: .web,
+                renderingEngine: renderingEngine
+            )
+            .route(on: router)
 
-        AdminViewAnalyticsInsights(
-            apiBuilder: apiBuilder,
-            source: .api,
-            renderingEngine: renderingEngine
-        )
-        .route(on: router)
+        Insight.View
+            .Router(
+                apiBuilder: apiBuilder,
+                source: .api,
+                renderingEngine: renderingEngine
+            )
+            .route(on: router)
 
-        AdminViewAnalyticsNotFound(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .route(on: router)
+        NotFound.View
+            .Router(
+                apiBuilder: apiBuilder,
+                renderingEngine: renderingEngine
+            )
+            .route(on: router)
 
         Log.List
             .Router(
@@ -50,10 +51,11 @@ public struct Router {
             )
             .route(on: router)
 
-        AdminViewAnalyticsLog(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        Log.View
+            .Router(
+                apiBuilder: apiBuilder,
+                renderingEngine: renderingEngine
+            )
+            .route(on: router)
     }
 }

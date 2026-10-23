@@ -16,9 +16,9 @@ struct AdminListNewsletterIssuesDefaultController:
         async throws
         -> HTMLResponse
     {
-        let __runtimeBuild1 = buildRuntime(request, context)
-        let interactor = __runtimeBuild1.interactor
-        let presenter = __runtimeBuild1.presenter
+        let runtime = buildRuntime(request, context)
+        let interactor = runtime.interactor
+        let presenter = runtime.presenter
         let newsletterId = try context.requiredParameter("newsletterId")
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(Issue.Permissions.list) else {

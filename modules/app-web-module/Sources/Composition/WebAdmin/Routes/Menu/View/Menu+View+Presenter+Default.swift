@@ -14,6 +14,7 @@ extension WebModule.Menu.View.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
+        let routes: WebModule.Menu.Router.Routes
 
         func renderDetailsPage(
             rule: MenuDetailsModel,
@@ -26,8 +27,9 @@ extension WebModule.Menu.View.Presenter {
                 content: MenuDetails(
                     state: .init(
                         menu: rule,
-                        breadcrumb: MenuRoutes.breadcrumb,
-                        permissions: permissions
+                        breadcrumb: routes.breadcrumb,
+                        permissions: permissions,
+                        routes: routes
                     )
                 )
             )
@@ -46,7 +48,7 @@ extension WebModule.Menu.View.Presenter {
                     state: .init(
                         info: info,
                         message: message,
-                        breadcrumb: MenuRoutes.breadcrumb
+                        breadcrumb: routes.breadcrumb
                     )
                 )
             )

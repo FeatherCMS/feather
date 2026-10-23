@@ -5,9 +5,12 @@ import Testing
 
 @Suite struct NewsWebAdminTestSuite {
     @Test func articleAndCategoryRoutesAreUnderNews() {
-        #expect(NewsAdminRoutes.articles.description.contains("news/articles"))
+        let routes = Router.Routes.standard
         #expect(
-            NewsAdminRoutes.categories.description.contains("news/categories")
+            routes.articles.routerPath.description.contains("news/articles")
+        )
+        #expect(
+            routes.categories.routerPath.description.contains("news/categories")
         )
     }
 }

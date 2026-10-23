@@ -1,5 +1,6 @@
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -7,6 +8,7 @@ import SGML
 import WebAdminAPI
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct MenuEdit: Component {
 
@@ -14,6 +16,7 @@ struct MenuEdit: Component {
         let id: String
         let form: MenuForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -29,15 +32,22 @@ struct MenuEdit: Component {
                     )
                 )
             )
-            context.build(AdminMenuTabs(menuID: state.id, active: .details))
+            context.build(
+                AdminMenuTabs(
+                    active: .details,
+                    detailsPath: state.routes.editPath(state.id),
+                    itemsPath: state.routes.items.path(
+                        parameter: "id",
+                        value: state.id
+                    )
+                )
+            )
             context.build(
                 MenuForm(
                     state: state.form,
-                    action: MenuRoutes.edit(RouterPath(state.id))
-                        .description,
+                    action: state.routes.editPath(state.id),
                     submitLabel: "Edit menu",
-                    removeHref: MenuRoutes.details(RouterPath(state.id))
-                        .appendingPath(RouterPath("remove")).description,
+                    removeHref: state.routes.detailsRemovePath(state.id),
                     removeLabel: "Remove menu"
                 )
             )

@@ -323,6 +323,16 @@ route composition namespaces.
 Avoid declaring a WebAdmin-only root namespace in a target imported by backend
 or domain code just to make frontend names shorter.
 
+Keep HTTP and trace error adaptation in the owning module's
+`Composition/Backend/Errors` target. For errors declared by a module, add
+HTTP and trace mappings there rather than in the application executable. A
+direct conformance declared in the backend target is still retroactive when
+both the error type and protocol belong to other targets; moving the extension
+file does not change that. Do not add `@retroactive` to silence the diagnostic.
+In that case, use a backend-owned adapter that wraps the source error and
+implements the backend error protocols. Keep driver-specific handling out of
+Feather Core.
+
 WebAdmin route composition owns route construction and passes its configured
 `AppEnvironment` and rendering engine to feature routers. Each feature router
 owns its route definitions and registration. Controllers handle HTTP boundary
@@ -362,6 +372,17 @@ consistent across modules that expose the same kind of WebAdmin client.
 - Feature routers own both handler construction and Hummingbird registration.
   Controllers implement handler behavior but should not be responsible for
   registering routes. The entity router composes its child feature routers.
+- Name WebAdmin declarations and files by their entity/operation namespace,
+  not by presentation prefixes such as `AdminView...`, `AdminList...`, or
+  `AdminAdd...`. For example, prefer `Submission.List.Controller.Default`
+  in `Submission+List+Controller+Default.swift`; keep `Admin` in a symbol only
+  when it is part of the domain concept itself, not merely because the code is
+  in the WebAdmin target.
+- Name the runtime constructed for the current request `runtime`. Normalize
+  compiler-generated or numbered names such as `__runtimeBuild1`, `runtime1`,
+  or `runtime2` to `runtime`, especially when those bindings occur in separate
+  functions or scopes. If genuinely distinct runtime values must coexist in
+  one scope, use names that describe their roles rather than numeric suffixes.
 - Keep route parameters in `WebRoute` templates and interpolate validated
   values through its path-building API. Do not construct paths by joining
   strings or reaching for Hummingbird `RouterPath` throughout feature code.

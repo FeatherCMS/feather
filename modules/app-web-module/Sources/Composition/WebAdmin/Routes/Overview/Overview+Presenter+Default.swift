@@ -7,6 +7,7 @@ extension Overview.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
+        let routes: Overview.Router.Routes
 
         func renderOverview(
             model: Overview.Model,
@@ -16,7 +17,7 @@ extension Overview.Presenter {
                 request: request,
                 context: context,
                 title: model.title,
-                content: Overview.Content()
+                content: Overview.Content(routes: routes)
             )
         }
     }

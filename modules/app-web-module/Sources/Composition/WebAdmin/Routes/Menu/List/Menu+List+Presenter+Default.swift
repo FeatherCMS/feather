@@ -15,6 +15,7 @@ extension WebModule.Menu.List.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine
+        let routes: WebModule.Menu.Router.Routes
 
         func renderListPage(
             model: WebModule.Menu.List.Model,
@@ -40,7 +41,7 @@ extension WebModule.Menu.List.Presenter {
                         state: .init(
                             info: "Unable to load web menus.",
                             message: error,
-                            breadcrumb: MenuRoutes.listBreadcrumb
+                            breadcrumb: routes.listBreadcrumb
                         )
                     )
                 )
@@ -54,7 +55,7 @@ extension WebModule.Menu.List.Presenter {
                         state: .init(
                             info: "Forbidden",
                             message: "Your account cannot access web menus.",
-                            breadcrumb: MenuRoutes.listBreadcrumb
+                            breadcrumb: routes.listBreadcrumb
                         )
                     )
                 )
@@ -73,7 +74,8 @@ extension WebModule.Menu.List.Presenter {
                             total: model.total
                         ),
                         search: search ?? "",
-                        breadcrumb: MenuRoutes.listBreadcrumb
+                        breadcrumb: routes.listBreadcrumb,
+                        routes: routes
                     )
                 )
             )

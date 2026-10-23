@@ -6,19 +6,35 @@ import WebModule
 
 extension Settings {
     struct Router {
+        struct Routes: Sendable {
+            let edit: WebRoute
+            let breadcrumb: [AdminBreadcrumb.Link]
+
+            init(edit: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
+                self.edit = edit
+                self.breadcrumb =
+                    breadcrumb + [
+                        .init(label: "Settings", link: edit.path)
+                    ]
+            }
+        }
+
         let environment: AppEnvironment
         let renderingEngine: any RenderingEngine
-        let root: WebRoute
+        let routes: Routes
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             let controller = AdminEditSettings(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
             .controller
-            let path = root.appending(pathComponent: "settings")
-            router.get(path.routerPath, use: controller.getEditSettings)
-            router.post(path.routerPath, use: controller.postEditSettings)
+            router.get(routes.edit.routerPath, use: controller.getEditSettings)
+            router.post(
+                routes.edit.routerPath,
+                use: controller.postEditSettings
+            )
         }
     }
 }

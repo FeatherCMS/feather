@@ -24,9 +24,9 @@ extension Invitation.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let __runtimeBuild1 = buildRuntime(request, context)
-            let interactor = __runtimeBuild1.interactor
-            let presenter = __runtimeBuild1.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             let id = try context.requiredID()
             let isEdited = request.hasQueryFlag("edited")
             let permissions = context.currentUserPermissions
@@ -60,9 +60,9 @@ extension Invitation.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let __runtimeBuild2 = buildRuntime(request, context)
-            let interactor = __runtimeBuild2.interactor
-            let presenter = __runtimeBuild2.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             let id = try context.requiredID()
             let availableRoleOptions = await roleOptions(context, selected: [])
             var lastPayload: Invitation.Edit.Form.Input?

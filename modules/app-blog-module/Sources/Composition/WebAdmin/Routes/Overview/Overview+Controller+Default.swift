@@ -14,9 +14,9 @@ extension Overview.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let __runtimeBuild1 = buildRuntime(request, context)
-            let interactor = __runtimeBuild1.interactor
-            let presenter = __runtimeBuild1.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             let model = try await interactor.execute()
             return try await presenter.render(
                 model: model,

@@ -1,10 +1,11 @@
 import FeatherWebAdmin
+import FeatherWebShared
 
 struct AdminAddNewsletterCampaign {
     let controller: any AdminAddNewsletterCampaignController
 
     init(
-        apiBuilder: NewsletterAdminAPIBuilder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         controller = AdminAddNewsletterCampaignDefaultController(
@@ -12,7 +13,10 @@ struct AdminAddNewsletterCampaign {
                 WebAdminRuntime(
                     interactor: AdminAddNewsletterCampaignDefaultInteractor(
                         repository: AdminAddNewsletterCampaignOpenAPIRepository(
-                            api: apiBuilder.makeNewsletterAdmin(context)
+                            api: API.Client(
+                                environment: environment,
+                                requestContext: context
+                            )
                         )
                     ),
                     presenter: AdminAddNewsletterCampaignDefaultPresenter(

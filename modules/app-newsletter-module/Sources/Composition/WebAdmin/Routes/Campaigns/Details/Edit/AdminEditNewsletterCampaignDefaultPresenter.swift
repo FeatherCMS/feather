@@ -1,9 +1,10 @@
-import FeatherWebAdmin
-import FeatherWebShared
 import FeatherModuleKit
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
+import NewsletterModule
 
 struct AdminEditNewsletterCampaignDefaultPresenter:
     AdminEditNewsletterCampaignPresenter
@@ -12,7 +13,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
     let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
     func render(
-        item: AdminNewsletterCampaignItem,
+        item: Campaign.Item,
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
@@ -26,7 +27,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
 
     private func render(
         id: String,
-        item: AdminNewsletterCampaignItem,
+        item: Campaign.Item,
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
@@ -59,7 +60,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
 
     func renderEditError(
         id: String,
-        item: AdminNewsletterCampaignItem,
+        item: Campaign.Item,
         error: AdminEditNewsletterCampaignError,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
@@ -137,7 +138,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
 
     private func renderFormError(
         id: String,
-        item: AdminNewsletterCampaignItem,
+        item: Campaign.Item,
         message: String,
         permissions: Set<String>,
         status: HTTPResponse.Status

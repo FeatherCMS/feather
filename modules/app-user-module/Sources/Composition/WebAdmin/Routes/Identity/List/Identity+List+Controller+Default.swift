@@ -18,9 +18,9 @@ extension Identity.List.Controller {
         )
             async throws -> HTMLResponse
         {
-            let __runtimeBuild1 = buildRuntime(request, context)
-            let interactor = __runtimeBuild1.interactor
-            let presenter = __runtimeBuild1.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Identity.Permissions.list

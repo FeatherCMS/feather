@@ -37,9 +37,9 @@ extension Login.Controller {
             request: Request,
             context: DefaultRequestContext
         ) async throws -> Response {
-            let __runtimeBuild1 = buildRuntime(request, context)
-            let interactor = __runtimeBuild1.interactor
-            let presenter = __runtimeBuild1.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             var lastPayload: Login.Form.Input?
             do {
                 let decoded = try await request.decode(

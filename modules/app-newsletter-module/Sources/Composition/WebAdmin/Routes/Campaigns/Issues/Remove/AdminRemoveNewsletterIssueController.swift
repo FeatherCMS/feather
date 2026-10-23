@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -9,9 +9,9 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveNewsletterIssueController: Sendable {
-}
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws -> HTMLResponse
 
-extension AdminRemoveNewsletterIssueController {
-    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-    }
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws -> Response
 }

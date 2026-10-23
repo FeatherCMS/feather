@@ -9,7 +9,7 @@ protocol AdminRemoveMenuItemPresenter: Sendable {
     func renderRemovePage(
         menuId: String,
         item: AdminRemoveItemContext,
-        origin: WebModule.Menu.Item.Routes.RemoveOrigin
+        origin: Menu.Router.Routes.RemoveOrigin
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
@@ -17,7 +17,7 @@ protocol AdminRemoveMenuItemPresenter: Sendable {
         id: String,
         info: String,
         message: String,
-        origin: WebModule.Menu.Item.Routes.RemoveOrigin
+        origin: Menu.Router.Routes.RemoveOrigin
     ) async throws -> HTMLResponse
 
 }

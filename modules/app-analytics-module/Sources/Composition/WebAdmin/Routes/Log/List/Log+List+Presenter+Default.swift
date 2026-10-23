@@ -1,7 +1,7 @@
 import AnalyticsModule
-import FeatherWebShared
-import FeatherWebAdmin
 import FeatherModuleKit
+import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 
 extension Log.List.Presenter {
@@ -28,7 +28,7 @@ extension Log.List.Presenter {
                 request: request,
                 context: context,
                 title: "Analytics logs",
-                content: AnalyticsLogTable(
+                content: Log.List.Component(
                     state: .init(
                         canAccess: canAccess,
                         permissions: .init(

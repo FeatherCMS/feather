@@ -13,6 +13,7 @@ struct MenuItemDetails: Component {
     struct State {
         let item: MenuItemDetailsModel
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -65,8 +66,9 @@ struct MenuItemDetails: Component {
             )
             context.build(
                 AdminMenuTabs(
-                    menuID: state.item.menuId,
-                    active: .items
+                    active: .items,
+                    detailsPath: state.routes.editPath(state.item.menuId),
+                    itemsPath: state.routes.itemsPath(state.item.menuId)
                 )
             )
             context.build(
@@ -105,22 +107,19 @@ struct MenuItemDetails: Component {
                         context.build(
                             AdminButton(
                                 "Edit item",
-                                href:
-                                    WebModule.Menu.Item.Routes
-                                    .edit(
-                                        RouterPath(state.item.menuId),
-                                        RouterPath(state.item.id)
-                                    )
-                                    .description,
+                                href: state.routes.itemEditPath(
+                                    menuID: state.item.menuId,
+                                    itemID: state.item.id
+                                ),
                                 style: .primary
                             )
                         )
                         context.build(
                             AdminButton(
                                 "Remove item",
-                                href: WebModule.Menu.Item.Routes.itemRemove(
-                                    RouterPath(state.item.menuId),
-                                    RouterPath(state.item.id),
+                                href: state.routes.itemRemovePath(
+                                    menuID: state.item.menuId,
+                                    itemID: state.item.id,
                                     origin: .view
                                 ),
                                 style: .destructive

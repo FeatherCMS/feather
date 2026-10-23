@@ -1,5 +1,6 @@
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -7,12 +8,14 @@ import SGML
 import WebAdminAPI
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct MenuAdd: Component {
 
     struct State {
         let form: MenuForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -32,7 +35,7 @@ struct MenuAdd: Component {
             context.build(
                 MenuForm(
                     state: state.form,
-                    action: MenuRoutes.add.description,
+                    action: state.routes.add.path,
                     submitLabel: "Add menu"
                 )
             )

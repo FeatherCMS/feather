@@ -78,6 +78,34 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/query:
+    post:
+      tags:
+      - Newsletter
+      operationId: newsletterCampaignQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsletterCampaignQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterCampaignQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
   /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}:
     get:
       tags:
@@ -612,7 +640,173 @@ components:
       required:
       - ids
       minProperties: 1
+    NewsletterCampaignQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - key
+                - name
+                examples:
+                - key
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - filters
+      minProperties: 1
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      minProperties: 0
+    SearchPageSizeField:
+      type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
+      examples:
+      - 20
+    SearchPageNumberField:
+      type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
+      examples:
+      - 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      examples:
+      - asc
+    SearchStringField:
+      type: string
+      examples:
+      - foo
+    NewsletterCampaignQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/NewsletterCampaignQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/NewsletterCampaignQueryItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    NewsletterCampaignQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - key
+                - name
+                examples:
+                - key
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+      minProperties: 2
+    NewsletterCampaignQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/NewsletterIdField'
+        key:
+          $ref: '#/components/schemas/NewsletterKeyField'
+        name:
+          $ref: '#/components/schemas/NewsletterNameField'
+        fromEmail:
+          $ref: '#/components/schemas/NewsletterEmailField'
+      required:
+      - id
+      - key
+      - name
+      - fromEmail
+      minProperties: 4
+    NewsletterIdField:
+      type: string
     NewsletterKeyField:
+      type: string
+    NewsletterNameField:
+      type: string
+    NewsletterEmailField:
       type: string
     NewsletterCampaignPatchSchema:
       type: object
@@ -624,10 +818,6 @@ components:
         fromEmail:
           $ref: '#/components/schemas/NewsletterEmailField'
       minProperties: 0
-    NewsletterNameField:
-      type: string
-    NewsletterEmailField:
-      type: string
     NewsletterIssueListSchema:
       type: array
       items:
@@ -696,8 +886,6 @@ components:
       - subject
       - content
       minProperties: 3
-    NewsletterIdField:
-      type: string
     NewsletterIssuePatchSchema:
       type: object
       properties:
@@ -825,6 +1013,12 @@ components:
             $ref: '#/components/schemas/NewsletterCampaignSchema'
     NoContentResponse:
       description: Delete succeeded
+    NewsletterCampaignQueryItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterCampaignQueryItemSearchSchema'
     NewsletterIssueListResponse:
       description: Newsletter issue list response
       content:

@@ -7,13 +7,3 @@ extension Components {
     /// Types generated from the `#/components/headers` section of the OpenAPI document.
     public enum Headers {}
 }
-
-// swift-openapi-generator dummy public import compatibility
-public func unsafeOpenAPIGenerationHotfixForSourcesModuleTypesComponentsHeaders(
-    _ url: Foundation.URL,
-    _ data: Foundation.Data,
-    _ date: Foundation.Date,
-    _ runtimeConfiguration: OpenAPIRuntime.Configuration
-) {
-    fatalError()
-}

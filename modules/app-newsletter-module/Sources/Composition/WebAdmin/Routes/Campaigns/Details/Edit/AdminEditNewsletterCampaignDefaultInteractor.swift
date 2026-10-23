@@ -1,11 +1,12 @@
 import FeatherWebAdmin
 import FeatherWebShared
+import NewsletterModule
 
 struct AdminEditNewsletterCampaignDefaultInteractor:
     AdminEditNewsletterCampaignInteractor
 {
     let repository: AdminEditNewsletterCampaignOpenAPIRepository
-    func get(id: String) async throws -> AdminNewsletterCampaignItem {
+    func get(id: String) async throws -> Campaign.Item {
         do {
             return try await repository.get(id: id)
         }

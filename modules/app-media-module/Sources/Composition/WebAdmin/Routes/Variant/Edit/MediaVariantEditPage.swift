@@ -27,7 +27,7 @@ struct MediaVariantEditPage: Component {
                 )
             )
             context.build(
-                AdminMediaVariantTabs(id: id, active: .details, routes: routes)
+                Variant.Tabs(id: id, active: .details, routes: routes)
             )
             context.build(form)
         }

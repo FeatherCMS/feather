@@ -19,9 +19,9 @@ extension Invitation.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let __runtimeBuild1 = buildRuntime(request, context)
-            let interactor = __runtimeBuild1.interactor
-            let presenter = __runtimeBuild1.presenter
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
             let nonceRequest = try await request.decode(
                 as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context

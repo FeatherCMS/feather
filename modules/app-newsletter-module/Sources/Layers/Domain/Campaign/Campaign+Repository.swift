@@ -5,8 +5,6 @@ extension Campaign {
     public enum Repository {
         public protocol Interface: FeatherDomain.Repository {
 
-            func list() async throws -> [Model]
-
             func findBy(
                 id: String
             ) async throws -> Model?

@@ -10,9 +10,10 @@ import WebModule
 
 struct PageDetails: Component {
     struct State {
-        let rule: PageDetailsModel
+        let rule: Page.Details.Model
         let breadcrumb: [AdminBreadcrumb.Link]
         let permissions: AdminListActions
+        let routes: Page.Router.Routes
     }
 
     let state: State
@@ -55,8 +56,7 @@ struct PageDetails: Component {
             result.append(
                 .init(
                     label: "Edit page",
-                    href: PageRoutes.edit(RouterPath(state.rule.id))
-                        .description,
+                    href: state.routes.editPath(state.rule.id),
                     style: .primary
                 )
             )
@@ -65,10 +65,7 @@ struct PageDetails: Component {
             result.append(
                 .init(
                     label: "Remove page",
-                    href:
-                        PageRoutes.details(RouterPath(state.rule.id))
-                        .appendingPath(RouterPath("remove"))
-                        .description,
+                    href: state.routes.detailsRemovePath(state.rule.id),
                     style: .destructive
                 )
             )

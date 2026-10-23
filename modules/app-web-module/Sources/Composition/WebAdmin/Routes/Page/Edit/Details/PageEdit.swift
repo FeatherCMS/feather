@@ -8,6 +8,7 @@ import SGML
 import WebAdminAPI
 import WebBuilders
 import WebComponents
+import WebModule
 
 struct PageEdit: Component {
 
@@ -15,6 +16,7 @@ struct PageEdit: Component {
         let id: String
         let form: PageForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: Page.Router.Routes
     }
 
     let state: State
@@ -36,17 +38,13 @@ struct PageEdit: Component {
             context.build(
                 PageForm(
                     state: state.form,
-                    metadataHref:
-                        PageRoutes.metadata(
-                            RouterPath(state.id),
-                            RouterPath(state.id)
-                        )
-                        .description,
-                    action: PageRoutes.edit(RouterPath(state.id))
-                        .description,
+                    metadataHref: state.routes.metadataPath(
+                        pageID: state.id,
+                        metadataID: state.id
+                    ),
+                    action: state.routes.editPath(state.id),
                     submitLabel: "Edit page",
-                    removeHref: PageRoutes.details(RouterPath(state.id))
-                        .appendingPath(RouterPath("remove")).description,
+                    removeHref: state.routes.detailsRemovePath(state.id),
                     removeLabel: "Remove page"
                 )
             )

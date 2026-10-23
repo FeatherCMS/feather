@@ -30,7 +30,8 @@ extension WebModule.Menu.List {
                         presenter: Presenter.Default(
                             request: request,
                             context: context,
-                            renderEngine: renderingEngine
+                            renderEngine: renderingEngine,
+                            routes: routes
                         )
                     )
                 }

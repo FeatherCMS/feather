@@ -8,6 +8,7 @@ import WebModule
 struct AdminEditSettingsDefaultController:
     AdminEditSettingsController
 {
+    let routes: Settings.Router.Routes
     let buildRuntime:
         @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminEditSettingsInteractor,
@@ -18,9 +19,9 @@ struct AdminEditSettingsDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let __runtimeBuild1 = buildRuntime(request, context)
-        let interactor = __runtimeBuild1.interactor
-        let presenter = __runtimeBuild1.presenter
+        let runtime = buildRuntime(request, context)
+        let interactor = runtime.interactor
+        let presenter = runtime.presenter
         let permissions = context.currentUserPermissions
         let canRead = context.isCurrentUserAllowed(
             to: WebModule.Permissions.Settings.read
@@ -47,7 +48,8 @@ struct AdminEditSettingsDefaultController:
                         canEdit: canEdit,
                         error: error.displayMessage
                     ),
-                    breadcrumb: SettingsRoutes.breadcrumb
+                    breadcrumb: routes.breadcrumb,
+                    action: routes.edit.path
                 ),
                 permissions: permissions
             )
@@ -57,7 +59,8 @@ struct AdminEditSettingsDefaultController:
             state: .init(
                 canEdit: canEdit,
                 form: makeFormState(from: settings, canEdit: canEdit),
-                breadcrumb: SettingsRoutes.breadcrumb
+                breadcrumb: routes.breadcrumb,
+                action: routes.edit.path
             ),
             permissions: permissions
         )
@@ -67,9 +70,9 @@ struct AdminEditSettingsDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let __runtimeBuild2 = buildRuntime(request, context)
-        let interactor = __runtimeBuild2.interactor
-        let presenter = __runtimeBuild2.presenter
+        let runtime = buildRuntime(request, context)
+        let interactor = runtime.interactor
+        let presenter = runtime.presenter
         let permissions = context.currentUserPermissions
         let canEdit = canEdit(permissions: permissions)
 
@@ -117,7 +120,8 @@ struct AdminEditSettingsDefaultController:
                     state: .init(
                         canEdit: canEdit,
                         form: form,
-                        breadcrumb: SettingsRoutes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        action: routes.edit.path
                     ),
                     permissions: permissions
                 )
@@ -156,14 +160,15 @@ struct AdminEditSettingsDefaultController:
                     state: .init(
                         canEdit: canEdit,
                         form: form,
-                        breadcrumb: SettingsRoutes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        action: routes.edit.path
                     ),
                     permissions: permissions
                 )
                 .response(from: request, context: context)
         }
         return AdminNotificationFlash.redirect(
-            to: SettingsRoutes.edit.description,
+            to: routes.edit.path,
             notification: .init(
                 title: "Saved",
                 message: "Settings edited successfully."

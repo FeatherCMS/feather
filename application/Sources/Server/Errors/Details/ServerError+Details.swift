@@ -1,4 +1,5 @@
 import FeatherBackend
+import Hummingbird
 import HTTPTypes
 import Foundation
 
@@ -100,10 +101,17 @@ extension ServerError {
                     trace: trace()
                 )
             }
+            let reason: String
+            if let error = underlyingError as? HTTPError {
+                reason = error.body ?? error.status.description
+            }
+            else {
+                reason = underlyingError.localizedDescription
+            }
             return .init(
                 code: .internalServerError,
                 message: "Internal server error.",
-                reason: underlyingError.localizedDescription,
+                reason: reason,
                 trace: trace()
             )
         }

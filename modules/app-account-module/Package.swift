@@ -71,6 +71,10 @@ let package = Package(
             from: "2.27.0"
         ),
         .package(
+            url: "https://github.com/apple/swift-nio",
+            from: "2.0.0"
+        ),
+        .package(
             url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
         ),
@@ -228,6 +232,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
 
                 .product(name: "AuthDomain", package: "app-auth-module"),
                 .product(name: "AuthModule", package: "app-auth-module"),
@@ -239,6 +244,9 @@ let package = Package(
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
 
                 .target(name: "AccountInfrastructure"),
+                .target(name: "AccountApplication"),
+                .target(name: "AccountDomain"),
+                .target(name: "AccountModule"),
                 .target(name: "AccountAdminAPI"),
                 .target(name: "AccountAppAPI"),
             ],

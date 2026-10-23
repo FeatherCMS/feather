@@ -5,6 +5,6 @@ import OpenAPIRuntime
 import WebDomain
 import WebModule
 
-extension Menu {
+extension WebModule.Menu {
     enum List {}
 }

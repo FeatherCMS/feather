@@ -68,6 +68,7 @@ func buildRouter(
 
     let systemRoutes = SystemWebAdmin.Router.Routes.standard
     let redirectRoutes = RedirectWebAdmin.Router.Routes.standard
+    let newsRoutes = NewsWebAdmin.Router.Routes.standard
     var adminEvents = EventRegistry()
     WebModuleWebApp.EventHandlers.register(in: &adminEvents)
     BlogWebApp.Event.Handlers.register(in: &adminEvents)
@@ -99,7 +100,11 @@ func buildRouter(
     MediaWebAdmin.Event.Handlers.register(in: &adminEvents)
     AnalyticsWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     BlogWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
-    NewsWebAdmin.NewsAdminMenuProvider.register(in: &adminEvents)
+    NewsWebAdmin.Menu.Provider.register(in: &adminEvents)
+    NewsAdminMenuEventHandlers.register(
+        in: &adminEvents,
+        routes: newsRoutes
+    )
     NewsletterRichContentEditorEventHandlers.register(in: &adminEvents)
     ContactRichContentEditorEventHandlers.register(in: &adminEvents)
     NewsletterAdminMenuEventHandlers.register(in: &adminEvents)
@@ -145,10 +150,14 @@ func buildRouter(
         }
     )
     var publicContentEvents = EventRegistry()
-    WebModuleWebApp.PublicContentEventHandlers.register(in: &publicContentEvents)
+    WebModuleWebApp.PublicContentEventHandlers.register(
+        in: &publicContentEvents
+    )
     WebModuleWebApp.MarkdownEventHandlers.register(in: &publicContentEvents)
     BlogWebApp.PublicContent.Event.Handlers.register(in: &publicContentEvents)
-    NewsWebApp.NewsWebPublicContentEventHandlers.register(in: &publicContentEvents)
+    NewsWebApp.NewsWebPublicContentEventHandlers.register(
+        in: &publicContentEvents
+    )
 
     ContactMarkdownEventHandlers.register(
         in: &publicContentEvents,
@@ -200,7 +209,8 @@ func buildRouter(
         adminEvents: adminEvents,
         apiBuilder: apiBuilder,
         systemRoutes: systemRoutes,
-        redirectRoutes: redirectRoutes
+        redirectRoutes: redirectRoutes,
+        newsRoutes: newsRoutes
     )
 
     return router

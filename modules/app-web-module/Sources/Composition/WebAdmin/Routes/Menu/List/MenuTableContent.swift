@@ -1,5 +1,6 @@
 import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import SGML
@@ -13,12 +14,13 @@ struct MenuTableContent: Component {
     let permissions: AdminListActions
     let pageState: AdminListPageState
     let search: String?
+    let routes: WebModule.Menu.Router.Routes
 
     private var searchValue: String { search ?? "" }
 
     private var returnTo: String {
         AdminLocation.url(
-            path: MenuRoutes.list.description,
+            path: routes.list.path,
             page: pageState.page,
             search: search
         )
@@ -35,7 +37,7 @@ struct MenuTableContent: Component {
                         context.build(
                             AdminListInvalidPageState(
                                 pageState: pageState,
-                                path: MenuRoutes.list.description
+                                path: routes.list.path
                             )
                         )
                     }
@@ -49,8 +51,7 @@ struct MenuTableContent: Component {
                                         context.build(
                                             AdminButton(
                                                 "Reset search",
-                                                href: MenuRoutes.list
-                                                    .description,
+                                                href: routes.list.path,
                                                 style: .secondary
                                             )
                                         )
@@ -70,8 +71,7 @@ struct MenuTableContent: Component {
                                             context.build(
                                                 AdminButton(
                                                     "Add new",
-                                                    href: MenuRoutes.add
-                                                        .description
+                                                    href: routes.add.path
                                                 )
                                             )
                                         }
@@ -84,7 +84,7 @@ struct MenuTableContent: Component {
                         context.build(
                             AdminListSelectionForm(
                                 state: .init(
-                                    action: MenuRoutes.remove.description,
+                                    action: routes.remove.path,
                                     pageState: pageState,
                                     search: searchValue,
                                     button: .init(
@@ -123,7 +123,8 @@ struct MenuTableContent: Component {
                                                             menu: menu,
                                                             permissions:
                                                                 permissions,
-                                                            returnTo: returnTo
+                                                            returnTo: returnTo,
+                                                            routes: routes
                                                         )
                                                     )
                                                 }
@@ -143,7 +144,7 @@ struct MenuTableContent: Component {
                     context.build(
                         AdminListSearch(
                             state: .init(
-                                action: MenuRoutes.list.description,
+                                action: routes.list.path,
                                 placeholder: "Quick search menus",
                                 search: searchValue
                             )
@@ -157,7 +158,7 @@ struct MenuTableContent: Component {
                                 context.build(
                                     AdminButton(
                                         "Add new",
-                                        href: MenuRoutes.add.description
+                                        href: routes.add.path
                                     )
                                 )
                             }
@@ -168,7 +169,7 @@ struct MenuTableContent: Component {
                     context.build(
                         AdminListPagination(
                             state: .init(
-                                path: MenuRoutes.list.description,
+                                path: routes.list.path,
                                 pageState: pageState,
                                 search: searchValue
                             )

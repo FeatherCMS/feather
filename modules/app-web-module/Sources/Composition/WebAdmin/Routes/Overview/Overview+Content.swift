@@ -1,5 +1,6 @@
 import CSS
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import SGML
@@ -9,6 +10,8 @@ import WebModule
 
 extension Overview {
     struct Content: Component {
+        let routes: Overview.Router.Routes
+
         struct Destination {
             let title: String
             let description: String
@@ -16,27 +19,29 @@ extension Overview {
             let icon: String
         }
 
-        private let destinations = [
-            Destination(
-                title: "Pages",
-                description:
-                    "Manage the web pages published by the application.",
-                href: PageRoutes.list.description,
-                icon: "fileText"
-            ),
-            Destination(
-                title: "Menus",
-                description: "Manage navigation menus and their items.",
-                href: MenuRoutes.list.description,
-                icon: "menu"
-            ),
-            Destination(
-                title: "Settings",
-                description: "Manage the public web settings.",
-                href: SettingsRoutes.edit.description,
-                icon: "settings"
-            ),
-        ]
+        private var destinations: [Destination] {
+            [
+                Destination(
+                    title: "Pages",
+                    description:
+                        "Manage the web pages published by the application.",
+                    href: routes.pages.path,
+                    icon: "fileText"
+                ),
+                Destination(
+                    title: "Menus",
+                    description: "Manage navigation menus and their items.",
+                    href: routes.menus.path,
+                    icon: "menu"
+                ),
+                Destination(
+                    title: "Settings",
+                    description: "Manage the public web settings.",
+                    href: routes.settings.path,
+                    icon: "settings"
+                ),
+            ]
+        }
 
         func rules() -> [any Rule] {
             Media {
@@ -80,9 +85,7 @@ extension Overview {
         func html(context: inout BuilderContext) -> Section {
             Section {
                 context.build(
-                    AdminBreadcrumb(links: [
-                        .init(label: "Admin", link: "/admin/")
-                    ])
+                    AdminBreadcrumb(links: routes.breadcrumb)
                 )
                 context.build(
                     AdminPageHeader(

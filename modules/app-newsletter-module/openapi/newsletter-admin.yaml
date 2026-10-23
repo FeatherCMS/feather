@@ -78,6 +78,34 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/query:
+    post:
+      tags:
+      - Newsletter
+      operationId: newsletterCampaignQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsletterCampaignQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterCampaignQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
   /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}:
     get:
       tags:
@@ -598,7 +626,149 @@ components:
             example: id1
       required:
       - ids
+    NewsletterCampaignQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - key
+                - name
+                example: key
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - filters
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+    SearchPageSizeField:
+      type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
+      example: 20
+    SearchPageNumberField:
+      type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
+      example: 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      example: asc
+    SearchStringField:
+      type: string
+      example: foo
+    NewsletterCampaignQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/NewsletterCampaignQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/NewsletterCampaignQueryItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    NewsletterCampaignQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - key
+                - name
+                example: key
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+    NewsletterCampaignQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/NewsletterIdField'
+        key:
+          $ref: '#/components/schemas/NewsletterKeyField'
+        name:
+          $ref: '#/components/schemas/NewsletterNameField'
+        fromEmail:
+          $ref: '#/components/schemas/NewsletterEmailField'
+      required:
+      - id
+      - key
+      - name
+      - fromEmail
+    NewsletterIdField:
+      type: string
     NewsletterKeyField:
+      type: string
+    NewsletterNameField:
+      type: string
+    NewsletterEmailField:
       type: string
     NewsletterCampaignPatchSchema:
       type: object
@@ -609,10 +779,6 @@ components:
           $ref: '#/components/schemas/NewsletterNameField'
         fromEmail:
           $ref: '#/components/schemas/NewsletterEmailField'
-    NewsletterNameField:
-      type: string
-    NewsletterEmailField:
-      type: string
     NewsletterIssueListSchema:
       type: array
       items:
@@ -676,8 +842,6 @@ components:
       - email
       - subject
       - content
-    NewsletterIdField:
-      type: string
     NewsletterIssuePatchSchema:
       type: object
       properties:
@@ -796,6 +960,12 @@ components:
             $ref: '#/components/schemas/NewsletterCampaignSchema'
     NoContentResponse:
       description: Delete succeeded
+    NewsletterCampaignQueryItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterCampaignQueryItemSearchSchema'
     NewsletterIssueListResponse:
       description: Newsletter issue list response
       content:

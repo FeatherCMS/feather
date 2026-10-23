@@ -1,6 +1,5 @@
 public import FeatherWebAdmin
 import FeatherWebShared
-import MediaModule
 import Foundation
 
 public struct MediaAssetPopupConfiguration: Sendable {

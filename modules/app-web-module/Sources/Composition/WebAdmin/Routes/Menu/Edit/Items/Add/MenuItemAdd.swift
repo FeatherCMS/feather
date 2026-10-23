@@ -16,6 +16,7 @@ struct MenuItemAdd: Component {
         let menuId: String
         let form: MenuItemForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -32,7 +33,11 @@ struct MenuItemAdd: Component {
                 )
             )
             context.build(
-                AdminMenuTabs(menuID: state.menuId, active: .items)
+                AdminMenuTabs(
+                    active: .items,
+                    detailsPath: state.routes.editPath(state.menuId),
+                    itemsPath: state.routes.itemsPath(state.menuId)
+                )
             )
             context.build(
                 AdminRelationshipGroup(
@@ -44,12 +49,7 @@ struct MenuItemAdd: Component {
                     context.build(
                         MenuItemForm(
                             state: state.form,
-                            action:
-                                WebModule.Menu.Item.Routes
-                                .add(
-                                    RouterPath(state.menuId)
-                                )
-                                .description,
+                            action: state.routes.itemsAddPath(state.menuId),
                             submitLabel: "Add item"
                         )
                     )

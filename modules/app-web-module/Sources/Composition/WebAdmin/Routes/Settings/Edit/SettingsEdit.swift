@@ -12,6 +12,7 @@ struct SettingsEdit: Component {
         let canEdit: Bool
         let form: SettingsForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
+        let action: String
     }
 
     let state: State
@@ -34,7 +35,7 @@ struct SettingsEdit: Component {
                 )
             }
 
-            context.build(SettingsForm(state: state.form))
+            context.build(SettingsForm(state: state.form, action: state.action))
         }
         .class("cms-section")
     }

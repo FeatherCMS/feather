@@ -12,67 +12,95 @@ extension Page {
             let add: WebRoute
             let remove: WebRoute
             let details: WebRoute
+            let detailsRemove: WebRoute
             let edit: WebRoute
             let metadata: WebRoute
             let status: WebRoute
+            let listBreadcrumb: [AdminBreadcrumb.Link]
+            let breadcrumb: [AdminBreadcrumb.Link]
 
-            init(root: WebRoute) {
-                let root = root.appending(pathComponent: "pages")
+            init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
                 self.list = root
                 self.add = root.appending(pathComponent: "add")
                 self.remove = root.appending(pathComponent: "remove")
                 self.details = root.appending(parameter: "id")
+                self.detailsRemove = details.appending(pathComponent: "remove")
                 self.edit = details.appending(pathComponent: "edit")
                 self.metadata =
                     edit
                     .appending(pathComponent: "metadata")
                     .appending(parameter: "metadataID")
                 self.status = details.appending(pathComponent: "status")
+                self.listBreadcrumb = breadcrumb
+                self.breadcrumb =
+                    breadcrumb + [
+                        .init(label: "Pages", link: root.path)
+                    ]
+            }
+
+            func detailsPath(_ id: String) -> String {
+                details.path(parameter: "id", value: id)
+            }
+
+            func editPath(_ id: String) -> String {
+                edit.path(parameter: "id", value: id)
+            }
+
+            func detailsRemovePath(_ id: String) -> String {
+                detailsRemove.path(parameter: "id", value: id)
+            }
+
+            func metadataPath(pageID: String, metadataID: String) -> String {
+                try! metadata.path(
+                    parameters: ["id": pageID, "metadataID": metadataID]
+                )
+            }
+
+            func statusPath(_ id: String) -> String {
+                status.path(parameter: "id", value: id)
             }
         }
 
         let environment: AppEnvironment
         let renderingEngine: any RenderingEngine
         let events: any EventPublisher
-        let root: WebRoute
+        let routes: Routes
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            let routes = Routes(root: root)
-            let list = AdminListPage(
-                environment: environment,
-                renderingEngine: renderingEngine
-            )
-            .controller
-            router.get(routes.list.routerPath, use: list.getPages)
-            router.post(routes.status.routerPath, use: list.postPageStatus)
+            Page.Search
+                .Router(
+                    environment: environment,
+                    renderingEngine: renderingEngine,
+                    routes: routes
+                )
+                .route(on: router)
 
-            let view = AdminViewPage(
+            View.Router(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
-            .controller
-            router.get(routes.details.routerPath, use: view.getPage)
+            .route(on: router)
 
-            let add = AdminAddPage(
+            Add.Router(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
-            .controller
-            router.get(routes.add.routerPath, use: add.getAddPage)
-            router.post(routes.add.routerPath, use: add.postAddPage)
+            .route(on: router)
 
-            let edit = AdminEditPage(
+            Edit.Router(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
-            .controller
-            router.get(routes.edit.routerPath, use: edit.getEditPage)
-            router.post(routes.edit.routerPath, use: edit.postEditPage)
+            .route(on: router)
 
             let metadata = AdminEditPageMetadata(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                events: events
+                events: events,
+                routes: routes
             )
             .controller
             router.get(
@@ -84,12 +112,12 @@ extension Page {
                 use: metadata.postEditPageMetadata
             )
 
-            let remove = AdminRemovePage(
+            Remove.Router(
                 environment: environment,
-                renderingEngine: renderingEngine
+                renderingEngine: renderingEngine,
+                routes: routes
             )
-            .controller
-            router.post(routes.remove.routerPath, use: remove.postRemovePage)
+            .route(on: router)
         }
     }
 }

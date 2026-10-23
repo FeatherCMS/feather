@@ -5,7 +5,8 @@ enum ContactAdminRoutes {
     static let admin = RouterPath("admin")
     static let contact = admin.appendingPath(RouterPath("contact"))
     static let forms = contact.appendingPath(RouterPath("forms"))
-    static let formFieldsDataRoute = forms
+    static let formFieldsDataRoute =
+        forms
         .appendingPath(RouterPath(":formKey"))
         .appendingPath(RouterPath("fields-data"))
     static let formAdd = forms.appendingPath(RouterPath("add"))
@@ -36,14 +37,6 @@ enum ContactAdminRoutes {
             .init(label: "Submissions", link: submissions.description + "/")
         ]
 
-    static func formEmailsBreadcrumb(_ id: RouterPath)
-        -> [AdminBreadcrumb.Link]
-    {
-        formsBreadcrumb + [
-            .init(label: "Emails", link: formEmails(id).description + "/")
-        ]
-    }
-
     static func formSubmissionsBreadcrumb(_ id: RouterPath)
         -> [AdminBreadcrumb.Link]
     {
@@ -57,19 +50,11 @@ enum ContactAdminRoutes {
 
     private static let formKey = RouterPath(":formKey")
     private static let fieldID = RouterPath(":fieldId")
-    private static let mailID = RouterPath(":mailId")
     private static let submissionID = RouterPath(":submissionId")
 
     static let formDetailsRoute = formDetails(formKey)
     static let formEditRoute = formEdit(formKey)
     static let formFieldsRoute = formFields(formKey)
-    static let formEmailsRoute = formEmails(formKey)
-    static let formEmailAddRoute = formEmailAdd(formKey)
-    static let formEmailEditRoute = formEmailEdit(
-        formID: formKey,
-        emailID: mailID
-    )
-    static let formEmailRemoveRoute = formEmailRemove(formKey)
     static let formSubmissionsRoute = formSubmissions(formKey)
     static let formSubmissionDetailsRoute = formSubmissionDetails(
         formID: formKey,
@@ -103,26 +88,6 @@ enum ContactAdminRoutes {
 
     static func fieldRemove(_ id: RouterPath) -> RouterPath {
         fields.appendingPath(id).appendingPath(RouterPath("remove"))
-    }
-
-    static func formEmails(_ id: RouterPath) -> RouterPath {
-        forms.appendingPath(id).appendingPath(RouterPath("emails"))
-    }
-
-    static func formEmailAdd(_ id: RouterPath) -> RouterPath {
-        formEmails(id).appendingPath(RouterPath("add"))
-    }
-
-    static func formEmailEdit(
-        formID: RouterPath,
-        emailID: RouterPath
-    ) -> RouterPath {
-        formEmails(formID).appendingPath(emailID)
-            .appendingPath(RouterPath("edit"))
-    }
-
-    static func formEmailRemove(_ id: RouterPath) -> RouterPath {
-        formEmails(id).appendingPath(RouterPath("remove"))
     }
 
     static func formSubmissions(_ id: RouterPath) -> RouterPath {

@@ -11,20 +11,20 @@ struct AdminMenuTabs: Component {
         case items
     }
 
-    let menuID: String
     let active: Tab
+    let detailsPath: String
+    let itemsPath: String
 
     var links: [AdminTabBar.Link] {
-        let base = MenuRoutes.details(RouterPath(menuID)).description
-        return [
+        [
             .init(
                 label: "Details",
-                href: base + "/edit/",
+                href: detailsPath,
                 isCurrent: active == .details
             ),
             .init(
                 label: "Items",
-                href: base + "/items/",
+                href: itemsPath,
                 isCurrent: active == .items
             ),
         ]

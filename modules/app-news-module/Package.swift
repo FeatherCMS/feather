@@ -286,6 +286,7 @@ let package = Package(
                 .product(name: "WebBuilders", package: "swift-web-standards"),
                 .product(name: "WebComponents", package: "swift-web-standards"),
                 .target(name: "NewsModule"),
+                .target(name: "NewsApplication"),
                 .target(name: "NewsAdminAPI"),
             ],
             path: "Sources/Composition/WebAdmin",

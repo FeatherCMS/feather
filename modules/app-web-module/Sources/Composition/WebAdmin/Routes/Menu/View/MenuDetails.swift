@@ -13,6 +13,7 @@ struct MenuDetails: Component {
         let menu: MenuDetailsModel
         let breadcrumb: [AdminBreadcrumb.Link]
         let permissions: Set<String>
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -34,16 +35,14 @@ struct MenuDetails: Component {
                     actions: [
                         .init(
                             label: "Edit menu",
-                            href: MenuRoutes.edit(RouterPath(state.menu.id))
-                                .description,
+                            href: state.routes.editPath(state.menu.id),
                             style: .primary
                         ),
                         .init(
                             label: "Remove menu",
-                            href:
-                                MenuRoutes.details(RouterPath(state.menu.id))
-                                .appendingPath(RouterPath("remove"))
-                                .description,
+                            href: state.routes.detailsRemovePath(
+                                state.menu.id
+                            ),
                             style: .destructive
                         ),
                     ]

@@ -1,6 +1,6 @@
+public import FeatherModuleKit
 public import FeatherWebAdmin
 public import FeatherWebShared
-public import FeatherModuleKit
 public import Hummingbird
 import SystemModule
 
@@ -49,10 +49,11 @@ public struct Router {
     public func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        AdminViewStyle(
-            path: routes.admin.appending(pathComponent: "style.css")
-        )
-        .route(on: router)
+        Admin.Style
+            .Router(
+                path: routes.admin.appending(pathComponent: "style.css")
+            )
+            .route(on: router)
 
         Dashboard
             .Router(

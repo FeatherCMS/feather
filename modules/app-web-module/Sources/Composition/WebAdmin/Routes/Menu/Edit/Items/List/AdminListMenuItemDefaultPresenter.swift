@@ -15,6 +15,7 @@ struct AdminListMenuItemDefaultPresenter:
     let request: Request
     let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
+    let routes: WebModule.Menu.Router.Routes
 
     func renderListPage(
         menuId: String,
@@ -40,7 +41,7 @@ struct AdminListMenuItemDefaultPresenter:
                     state: .init(
                         info: "Unable to load web menu items.",
                         message: error,
-                        breadcrumb: MenuRoutes.breadcrumb
+                        breadcrumb: routes.itemBreadcrumb(menuId)
                     )
                 )
             )
@@ -54,7 +55,7 @@ struct AdminListMenuItemDefaultPresenter:
                     state: .init(
                         info: "Forbidden",
                         message: "Your account cannot access web menu items.",
-                        breadcrumb: MenuRoutes.breadcrumb
+                        breadcrumb: routes.itemBreadcrumb(menuId)
                     )
                 )
             )
@@ -74,7 +75,8 @@ struct AdminListMenuItemDefaultPresenter:
                         total: model.total
                     ),
                     search: search,
-                    breadcrumb: MenuRoutes.breadcrumb
+                    breadcrumb: routes.itemBreadcrumb(menuId),
+                    routes: routes
                 )
             )
         )

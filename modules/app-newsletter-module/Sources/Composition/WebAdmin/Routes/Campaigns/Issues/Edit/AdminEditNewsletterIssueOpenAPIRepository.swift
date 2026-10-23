@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
@@ -11,7 +11,7 @@ import WebBuilders
 import WebComponents
 
 struct AdminEditNewsletterIssueOpenAPIRepository {
-    let api: NewsletterAdminAPIClient
+    let api: API.Client
     func get(newsletterId: String, issueId: String) async throws
         -> AdminAddNewsletterIssueModel
     {

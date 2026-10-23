@@ -1,5 +1,6 @@
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -11,7 +12,7 @@ struct AdminRemoveNewsletterIssue {
     let controller: any AdminRemoveNewsletterIssueController
 
     init(
-        apiBuilder: NewsletterAdminAPIBuilder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         controller = AdminRemoveNewsletterIssueDefaultController {
@@ -20,7 +21,10 @@ struct AdminRemoveNewsletterIssue {
             WebAdminRuntime(
                 interactor: AdminRemoveNewsletterIssueDefaultInteractor(
                     repository: .init(
-                        api: apiBuilder.makeNewsletterAdmin(context)
+                        api: API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
                     )
                 ),
                 presenter: AdminRemoveNewsletterIssueDefaultPresenter(
@@ -30,5 +34,16 @@ struct AdminRemoveNewsletterIssue {
                 )
             )
         }
+    }
+
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+        router.get(
+            NewsletterAdminRoutes.issueRemoveRoute,
+            use: controller.confirm
+        )
+        router.post(
+            NewsletterAdminRoutes.issueRemoveRoute,
+            use: controller.remove
+        )
     }
 }

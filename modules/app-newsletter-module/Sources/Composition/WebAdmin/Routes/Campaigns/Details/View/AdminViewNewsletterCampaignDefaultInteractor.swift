@@ -1,7 +1,8 @@
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
 import HTML
 import Hummingbird
+import NewsletterModule
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -11,7 +12,7 @@ struct AdminViewNewsletterCampaignDefaultInteractor:
     AdminViewNewsletterCampaignInteractor
 {
     let repository: AdminViewNewsletterCampaignOpenAPIRepository
-    func get(id: String) async throws -> AdminNewsletterCampaignItem {
+    func get(id: String) async throws -> Campaign.Item {
         try await repository.get(id: id)
     }
 }

@@ -17,6 +17,7 @@ struct MenuItemEdit: Component {
         let id: String
         let form: MenuItemForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: WebModule.Menu.Router.Routes
     }
 
     let state: State
@@ -33,7 +34,11 @@ struct MenuItemEdit: Component {
                 )
             )
             context.build(
-                AdminMenuTabs(menuID: state.menuId, active: .items)
+                AdminMenuTabs(
+                    active: .items,
+                    detailsPath: state.routes.editPath(state.menuId),
+                    itemsPath: state.routes.itemsPath(state.menuId)
+                )
             )
             context.build(
                 AdminRelationshipGroup(
@@ -45,18 +50,15 @@ struct MenuItemEdit: Component {
                     context.build(
                         MenuItemForm(
                             state: state.form,
-                            action:
-                                WebModule.Menu.Item.Routes
-                                .edit(
-                                    RouterPath(state.menuId),
-                                    RouterPath(state.id)
-                                )
-                                .description,
+                            action: state.routes.itemEditPath(
+                                menuID: state.menuId,
+                                itemID: state.id
+                            ),
                             submitLabel: "Edit item",
                             removeHref:
-                                WebModule.Menu.Item.Routes.itemRemove(
-                                    RouterPath(state.menuId),
-                                    RouterPath(state.id),
+                                state.routes.itemRemovePath(
+                                    menuID: state.menuId,
+                                    itemID: state.id,
                                     origin: .edit
                                 ),
                             removeLabel: "Remove item"

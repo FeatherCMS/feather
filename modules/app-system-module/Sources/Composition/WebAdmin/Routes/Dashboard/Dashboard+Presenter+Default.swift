@@ -16,7 +16,7 @@ extension Dashboard.Presenter {
                 request: request,
                 context: context,
                 title: model.title,
-                content: AdminViewDashboardComponent(model: model)
+                content: Dashboard.Component(model: model)
             )
         }
     }

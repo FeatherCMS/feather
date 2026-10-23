@@ -17,11 +17,32 @@ struct AdminRemoveNewsletterIssueDefaultController:
             any AdminRemoveNewsletterIssueInteractor,
             any AdminRemoveNewsletterIssuePresenter
         >
+
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws -> HTMLResponse
+    {
+        let runtime = buildRuntime(request, context)
+        let newsletterId = try context.requiredParameter("newsletterId")
+        let issueId = try context.requiredParameter("issueId")
+        guard context.isCurrentUserAllowed(to: Issue.Permissions.delete) else {
+            return HTMLResponse(content: "", status: .forbidden)
+        }
+        let item = try await runtime.interactor.get(
+            newsletterId: newsletterId,
+            issueId: issueId
+        )
+        return try await runtime.presenter.render(
+            newsletterId: newsletterId,
+            item: item
+        )
+    }
+
     func remove(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
-        let interactor = buildRuntime(request, context).interactor
+        let runtime = buildRuntime(request, context)
+        let interactor = runtime.interactor
         let newsletterId = try context.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Issue.Permissions.delete)
         else { return Response(status: .forbidden) }

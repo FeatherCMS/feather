@@ -66,6 +66,34 @@ extension Components {
             /// Creates a new `NoContentResponse`.
             public init() {}
         }
+        public struct ContactFormQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactFormQueryItemSearchSchemaSearchResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactFormQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.ContactFormQueryItemSearchSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactFormQueryItemSearchSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactFormQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `ContactFormQueryItemSearchSchemaSearchResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactFormQueryItemSearchSchemaSearchResponse.Body) {
+                self.body = body
+            }
+        }
         public struct FormFieldListResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/FormFieldListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -179,14 +207,4 @@ extension Components {
             }
         }
     }
-}
-
-// swift-openapi-generator dummy public import compatibility
-public func unsafeOpenAPIGenerationHotfixForSourcesModuleTypesComponentsResponses(
-    _ url: Foundation.URL,
-    _ data: Foundation.Data,
-    _ date: Foundation.Date,
-    _ runtimeConfiguration: OpenAPIRuntime.Configuration
-) {
-    fatalError()
 }

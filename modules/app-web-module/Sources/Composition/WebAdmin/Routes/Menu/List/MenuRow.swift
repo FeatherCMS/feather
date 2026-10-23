@@ -15,21 +15,24 @@ struct MenuRow: Component {
         let name: String
         let actions: [AdminListRowActions.Action]
 
-        init(menu: Components.Schemas.MenuQueryItemSchema, returnTo: String) {
+        init(
+            menu: Components.Schemas.MenuQueryItemSchema,
+            returnTo: String,
+            routes: WebModule.Menu.Router.Routes
+        ) {
             self.id = menu.id
             self.key = menu.key
             self.name = menu.name
             self.actions = [
                 .init(
                     "View",
-                    href: MenuRoutes.details(RouterPath(menu.id))
-                        .description,
+                    href: routes.detailsPath(menu.id),
                     style: .ghost(.primary),
                     permission: WebModule.Permissions.Menus.read
                 ),
                 .init(
                     "Edit",
-                    href: MenuRoutes.edit(RouterPath(menu.id)).description,
+                    href: routes.editPath(menu.id),
                     style: .ghost(.secondary),
                     permission: WebModule.Permissions.Menus.update
                 ),
@@ -43,9 +46,10 @@ struct MenuRow: Component {
     init(
         menu: Components.Schemas.MenuQueryItemSchema,
         permissions: AdminListActions,
-        returnTo: String
+        returnTo: String,
+        routes: WebModule.Menu.Router.Routes
     ) {
-        self.state = .init(menu: menu, returnTo: returnTo)
+        self.state = .init(menu: menu, returnTo: returnTo, routes: routes)
         self.permissions = permissions
     }
 

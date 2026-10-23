@@ -9,7 +9,7 @@ protocol AdminEditMetadataPresenter: Sendable {
         state: MetadataForm.State,
         permissions: Set<String>,
         navigationTabs: [AdminTabBar.Link],
-        configuration: AdminMetadataEditConfiguration?
+        configuration: AdminMetadataEditConfiguration
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
@@ -17,7 +17,7 @@ protocol AdminEditMetadataPresenter: Sendable {
         info: String,
         message: String,
         permissions: Set<String>,
-        configuration: AdminMetadataEditConfiguration?
+        configuration: AdminMetadataEditConfiguration
     ) async throws -> HTMLResponse
 
 }

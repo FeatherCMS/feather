@@ -19,9 +19,9 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         async throws
         -> HTMLResponse
     {
-        let __runtimeBuild1 = buildRuntime(request, context)
-        let interactor = __runtimeBuild1.interactor
-        let presenter = __runtimeBuild1.presenter
+        let runtime = buildRuntime(request, context)
+        let interactor = runtime.interactor
+        let presenter = runtime.presenter
         let formKey = try context.requiredParameter("formKey")
         do {
             return try await presenter.renderPage(
@@ -39,9 +39,9 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         async throws
         -> HTMLResponse
     {
-        let __runtimeBuild2 = buildRuntime(request, context)
-        let interactor = __runtimeBuild2.interactor
-        let presenter = __runtimeBuild2.presenter
+        let runtime = buildRuntime(request, context)
+        let interactor = runtime.interactor
+        let presenter = runtime.presenter
         let formKey = try context.requiredParameter("formKey")
         do {
             return try await presenter.renderFieldsPage(
@@ -59,9 +59,9 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         async throws
         -> Response
     {
-        let __runtimeBuild3 = buildRuntime(request, context)
-        let interactor = __runtimeBuild3.interactor
-        let presenter = __runtimeBuild3.presenter
+        let runtime = buildRuntime(request, context)
+        let interactor = runtime.interactor
+        let presenter = runtime.presenter
         let formKey = try context.requiredParameter("formKey")
         let form = try await request.decode(
             as: ContactFormEditForm.self,
@@ -123,9 +123,9 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         async throws
         -> Response
     {
-        let __runtimeBuild4 = buildRuntime(request, context)
-        let interactor = __runtimeBuild4.interactor
-        let presenter = __runtimeBuild4.presenter
+        let runtime = buildRuntime(request, context)
+        let interactor = runtime.interactor
+        let presenter = runtime.presenter
         let formKey = try context.requiredParameter("formKey")
         let form = try await request.decode(
             as: AdminEditContactFormFieldsForm.self,

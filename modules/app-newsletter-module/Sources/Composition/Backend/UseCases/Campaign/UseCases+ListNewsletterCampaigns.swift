@@ -8,17 +8,17 @@ import NewsletterModule
 extension UseCases {
 
     func makeListNewsletterCampaigns() -> Campaign.List.UseCase {
-        let transaction = DatabaseTransactionExecutor(
+        let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 Campaign.List.Scope(
-                    campaign: Campaign.Repository.Database(context: context)
+                    campaign: Campaign.List.Query.Database(context: context)
                 )
             }
         )
         return Campaign.List.UseCase(
             authorizer: authorizer,
-            transaction: transaction
+            query: query
         )
     }
 }
