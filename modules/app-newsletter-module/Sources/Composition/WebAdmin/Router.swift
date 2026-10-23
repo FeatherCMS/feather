@@ -48,23 +48,25 @@ public struct Router {
                 routes: campaignRoutes
             )
             .route(on: router)
-        AdminEditNewsletterCampaign(
+        Campaign.Edit.Router(
             environment: environment,
             renderingEngine: renderingEngine,
             routes: campaignRoutes
         )
-        .controller.route(on: router)
-        AdminRemoveNewsletterCampaign(
+        .route(on: router)
+        Campaign.Remove.Router(
             environment: environment,
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            routes: campaignRoutes
         )
-        .controller.route(on: router)
+        .route(on: router)
 
-        AdminAddNewsletterCampaign(
+        Campaign.Add.Router(
             environment: environment,
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            routes: campaignRoutes
         )
-        .controller.route(on: router)
+        .route(on: router)
 
         Issue.Search
             .Router(

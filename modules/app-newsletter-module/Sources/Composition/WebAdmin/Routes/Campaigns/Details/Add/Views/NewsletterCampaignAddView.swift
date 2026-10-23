@@ -1,6 +1,8 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
+import NewsletterModule
 import SGML
 import WebBuilders
 import WebComponents
@@ -14,19 +16,20 @@ struct NewsletterCampaignAddView: Component {
     }
 
     let state: State
+    let routes: Campaign.Router.Routes
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
                 AdminBreadcrumb(
-                    links: NewsletterAdminRoutes.breadcrumb + [
+                    links: routes.breadcrumb + [
                         .init(
                             label: "Campaigns",
-                            link: NewsletterAdminRoutes.campaigns.description
+                            link: routes.list.path
                         ),
                         .init(
                             label: "Add",
-                            link: NewsletterAdminRoutes.campaignAdd.description
+                            link: routes.add.path
                         ),
                     ]
                 )
@@ -48,7 +51,7 @@ struct NewsletterCampaignAddView: Component {
                         error: state.error,
                         success: nil
                     ),
-                    action: NewsletterAdminRoutes.campaignAdd.description,
+                    action: routes.add.path,
                     submitLabel: "Add campaign"
                 )
             )

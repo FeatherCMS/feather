@@ -57,6 +57,61 @@ extension Campaign.Router {
                 .appending(pathComponent: "subscribers")
         }
 
+        var subscriberAdd: WebRoute {
+            subscribers.appending(pathComponent: "add")
+        }
+
+        var subscriberDetails: WebRoute {
+            subscribers.appending(parameter: "subscriberId")
+        }
+
+        var subscriberEdit: WebRoute {
+            subscriberDetails.appending(pathComponent: "edit")
+        }
+
+        var subscriberRemove: WebRoute {
+            subscribers.appending(pathComponent: "remove")
+        }
+
+        func subscribersPath(newsletterId: String) -> String {
+            subscribers.path(parameter: "newsletterId", value: newsletterId)
+        }
+
+        func subscriberAddPath(newsletterId: String) -> String {
+            subscriberAdd.path(parameter: "newsletterId", value: newsletterId)
+        }
+
+        func subscriberDetailsPath(
+            newsletterId: String,
+            subscriberId: String
+        ) -> String {
+            try! subscriberDetails.path(
+                parameters: [
+                    "newsletterId": newsletterId,
+                    "subscriberId": subscriberId,
+                ]
+            )
+        }
+
+        func subscriberEditPath(
+            newsletterId: String,
+            subscriberId: String
+        ) -> String {
+            try! subscriberEdit.path(
+                parameters: [
+                    "newsletterId": newsletterId,
+                    "subscriberId": subscriberId,
+                ]
+            )
+        }
+
+        func subscriberRemovePath(newsletterId: String) -> String {
+            subscriberRemove.path(
+                parameter: "newsletterId",
+                value: newsletterId
+            )
+        }
+
         var issues: WebRoute {
             list.appending(parameter: "newsletterId")
                 .appending(pathComponent: "issues")
