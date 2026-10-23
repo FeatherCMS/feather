@@ -206,6 +206,8 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "WebBuilders", package: "swift-web-standards"),
+                .product(name: "WebComponents", package: "swift-web-standards"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
 
@@ -238,6 +240,7 @@ let package = Package(
         .testTarget(
             name: "MediaInfrastructureTests",
             dependencies: [
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(
                     name: "FeatherDatabaseTesting",

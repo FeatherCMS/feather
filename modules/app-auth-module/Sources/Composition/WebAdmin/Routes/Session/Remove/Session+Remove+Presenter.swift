@@ -2,6 +2,10 @@ import AuthModule
 import FeatherWebAdmin
 import FeatherWebShared
 
+extension Session.Remove {
+    enum Presenter {}
+}
+
 extension Session.Remove.Presenter {
     protocol Interface: Sendable {
 

@@ -1,6 +1,7 @@
 public import FeatherModuleKit
 
-public struct AdminRichContentEditorBlockDefinition: Codable, Hashable, Sendable {
+public struct AdminRichContentEditorBlockDefinition: Codable, Hashable, Sendable
+{
     public enum Editor: String, Codable, Hashable, Sendable {
         case reference
         case text
@@ -40,8 +41,8 @@ public struct AdminRichContentEditorBlockDefinition: Codable, Hashable, Sendable
     }
 }
 
-public struct AdminRichContentEditorBlockProvider: Event {
-    public typealias Output = AdminRichContentEditorBlockDefinition?
-
+public struct AdminRichContentEditorBlockProvider:
+    Event<AdminRichContentEditorBlockDefinition?>
+{
     public init() {}
 }

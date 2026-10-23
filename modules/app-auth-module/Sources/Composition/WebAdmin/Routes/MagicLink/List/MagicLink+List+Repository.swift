@@ -15,6 +15,10 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
+extension MagicLink.List {
+    enum Repository {}
+}
+
 extension MagicLink.List.Repository {
     protocol Interface: Sendable {
 
@@ -23,14 +27,7 @@ extension MagicLink.List.Repository {
             size: Int,
             search: String?,
             userID: String?
-        ) async throws -> (
-            items: [AuthAdminAPI.Components.Schemas
-                .AuthMagicLinkQueryItemSchema],
-            emailByAuthEmailId: [String: String],
-            total: Int,
-            page: Int,
-            size: Int
-        )
+        ) async throws -> MagicLink.List.Result
 
     }
 }

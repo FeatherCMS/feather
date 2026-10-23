@@ -6,7 +6,7 @@ struct AdminViewContactFormSubmissionDefaultController:
     AdminViewContactFormSubmissionController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminViewContactFormSubmissionInteractor,
             any AdminViewContactFormSubmissionPresenter
         >
@@ -15,7 +15,9 @@ struct AdminViewContactFormSubmissionDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let formId = try context.requiredParameter("formKey")
         let submissionId = try context.requiredParameter("submissionId")
         do {

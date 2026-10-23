@@ -15,3 +15,9 @@ import WebModuleWebAdmin
 extension Author.View {
     enum Interactor {}
 }
+
+extension Author.View.Interactor {
+    protocol Interface: Sendable {
+        func execute(id: String) async throws -> Author.View.Model
+    }
+}

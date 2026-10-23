@@ -1,6 +1,5 @@
 public import AnalyticsAdminAPI
 import AsyncHTTPClient
-public import FeatherWebAdmin
 public import FeatherWebShared
 public import Foundation
 import NIOCore
@@ -53,19 +52,5 @@ public struct AnalyticsAdminAPIClient: Sendable {
             statusCode: statusCode,
             responseBody: body
         )
-    }
-}
-
-public struct AnalyticsAdminAPIBuilder: Sendable {
-    private let apiBaseURL: URL
-
-    public init(apiBaseURL: URL) {
-        self.apiBaseURL = apiBaseURL
-    }
-
-    public func makeAnalyticsAdmin(
-        _ context: AuthenticatedRequestContext
-    ) -> AnalyticsAdminAPIClient {
-        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

@@ -22,7 +22,7 @@ extension Email.List.Controller {
     struct Default: Interface {
         let routes: Email.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Email.List.Interactor.Interface,
                 any Email.List.Presenter.Interface
             >
@@ -31,7 +31,9 @@ extension Email.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let permissionSet = context.currentUserPermissions
             let permissions = Email.Permissions.list
             let canAccess = context.isCurrentUserAllowed(
@@ -48,7 +50,7 @@ extension Email.List.Controller {
             }
 
             do {
-                let result =
+                let result: Email.List.Result =
                     canAccess
                     ? try await interactor.execute(
                         page: page,
@@ -56,7 +58,7 @@ extension Email.List.Controller {
                         search: search,
                         userID: userID
                     )
-                    : (
+                    : .init(
                         items: [],
                         identityNames: [:],
                         total: 0,

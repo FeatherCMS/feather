@@ -8,7 +8,7 @@
 public import FeatherBackend
 public import OpenAPIRuntime
 
-extension ServerError: ErrorTraceRepresentable {
+extension ServerError: @retroactive ErrorTraceRepresentable {
 
     public var underlyingErrors: [any Error] {
         [underlyingError]

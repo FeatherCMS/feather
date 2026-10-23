@@ -12,7 +12,7 @@ struct AdminRemovePage {
     ) {
         self.controller = AdminRemovePageDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminRemovePageDefaultInteractor(
                         repository: AdminRemovePageOpenAPIRepository(
                             api: API.Client(

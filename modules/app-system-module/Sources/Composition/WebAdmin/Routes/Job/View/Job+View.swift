@@ -18,7 +18,7 @@ extension Job.View {
             self.routes = routes
             controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(

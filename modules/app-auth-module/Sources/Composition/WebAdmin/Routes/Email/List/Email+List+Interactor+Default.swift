@@ -24,12 +24,7 @@ extension Email.List.Interactor {
             size: Int,
             search: String?,
             userID: String?
-        ) async throws -> (
-            items: [AuthAdminAPI.Components.Schemas.AuthEmailQuerySchemasItem],
-            identityNames: [String: String],
-            total: Int,
-            page: Int, size: Int
-        ) {
+        ) async throws -> Email.List.Result {
             try await repository.list(
                 page: page,
                 size: size,

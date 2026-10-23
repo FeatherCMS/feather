@@ -17,7 +17,7 @@ extension Tag.List.Controller {
         let environment: AppEnvironment
         let routes: Tag.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Tag.List.Interactor.Interface,
                 any Tag.List.Presenter.Interface
             >
@@ -26,7 +26,9 @@ extension Tag.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let page = request.queryPage()
             let search = request.querySearch()
             let permissions = context.currentUserPermissions
@@ -86,7 +88,7 @@ extension Tag.List.Controller {
                 from: payload,
                 current: details.metadata
             )
-            try await AdminWebMetadataStatusUpdater(
+            try await AdminMetadataStatusUpdater(
                 api: WebModuleWebAdmin.API.Client(
                     environment: environment,
                     requestContext: context
@@ -118,14 +120,26 @@ extension Tag.List.Controller {
 
         private func statusToastContent(
             for status: String
-        ) -> (title: String, message: String) {
+        ) -> AdminNotification.State {
             switch status {
             case "published":
-                return ("Published", "Blog tag published successfully.")
+                return .init(
+                    kind: .success,
+                    title: "Published",
+                    message: "Blog tag published successfully."
+                )
             case "archived":
-                return ("Archived", "Blog tag archived successfully.")
+                return .init(
+                    kind: .success,
+                    title: "Archived",
+                    message: "Blog tag archived successfully."
+                )
             default:
-                return ("Draft", "Blog tag moved to draft successfully.")
+                return .init(
+                    kind: .success,
+                    title: "Draft",
+                    message: "Blog tag moved to draft successfully."
+                )
             }
         }
     }

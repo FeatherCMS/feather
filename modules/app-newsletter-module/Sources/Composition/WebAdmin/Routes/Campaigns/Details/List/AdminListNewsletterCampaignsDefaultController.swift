@@ -7,7 +7,7 @@ struct AdminListNewsletterCampaignsDefaultController:
     AdminListNewsletterCampaignsController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminListNewsletterCampaignsInteractor,
             any AdminListNewsletterCampaignsPresenter
         >
@@ -16,7 +16,9 @@ struct AdminListNewsletterCampaignsDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(Campaign.Permissions.list) else {
             return try await presenter.render(

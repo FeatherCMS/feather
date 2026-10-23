@@ -13,3 +13,16 @@ import WebComponents
 extension Asset.Folder.Edit {
     enum Interactor {}
 }
+
+extension Asset.Folder.Edit.Interactor {
+    protocol Interface: Sendable {
+        func load(
+            id: String
+        ) async throws -> Asset.Folder.Edit.Model
+        func update(
+            id: String,
+            input: MediaFolderEditForm
+        ) async throws
+            -> Asset.Folder.Edit.Model
+    }
+}

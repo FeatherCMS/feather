@@ -13,7 +13,7 @@ import WebComponents
 extension Asset.File.View.Controller {
     struct Default: Asset.File.View.Controller.Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Asset.File.View.Interactor.Interface,
                 any Asset.File.View.Presenter.Interface
             >
@@ -22,7 +22,9 @@ extension Asset.File.View.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let id = try context.requiredID()
             let permissions = context.currentUserAdminListActions
             do {

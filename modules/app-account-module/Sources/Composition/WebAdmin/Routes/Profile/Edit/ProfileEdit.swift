@@ -1,5 +1,6 @@
 import AccountModule
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import SGML
 import WebBuilders

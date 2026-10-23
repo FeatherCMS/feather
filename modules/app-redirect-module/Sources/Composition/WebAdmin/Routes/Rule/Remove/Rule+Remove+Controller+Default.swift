@@ -8,7 +8,7 @@ extension Rule.Remove.Controller {
     struct Default: Interface {
         let routes: Rule.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Rule.Remove.Interactor.Interface,
                 any Rule.Remove.Presenter.Interface
             >
@@ -17,7 +17,9 @@ extension Rule.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard context.isCurrentUserAllowed(to: Rule.Permissions.delete)
             else {
                 return try await presenter.renderForbiddenPage()
@@ -68,7 +70,9 @@ extension Rule.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             guard context.isCurrentUserAllowed(to: Rule.Permissions.delete)
             else {
                 return try await presenter.renderForbiddenPage()

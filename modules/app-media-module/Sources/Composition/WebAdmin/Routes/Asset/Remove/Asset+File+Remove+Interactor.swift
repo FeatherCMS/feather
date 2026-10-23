@@ -13,3 +13,10 @@ import WebComponents
 extension Asset.File.Remove {
     enum Interactor {}
 }
+
+extension Asset.File.Remove.Interactor {
+    protocol Interface: Sendable {
+
+        func remove(ids: [String]) async throws
+    }
+}

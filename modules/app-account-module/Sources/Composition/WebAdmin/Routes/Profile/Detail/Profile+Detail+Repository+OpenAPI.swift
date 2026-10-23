@@ -13,7 +13,7 @@ extension Profile.Detail.Repository {
         let api: API.Client
         let mediaAPI: MediaAdminAPIClient
 
-        func get() async throws -> Profile.Model {
+        func get() async throws -> Profile.WebAdminModel {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.accountCurrentUserProfileGet(
                     headers: .init(accept: [.init(contentType: .json)])

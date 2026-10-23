@@ -7,7 +7,7 @@ import MediaModule
 extension Variant.Add.Controller {
     struct Default: Variant.Add.Controller.Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Variant.Add.Interactor.Interface,
                 any Variant.Add.Presenter.Interface
             >
@@ -18,7 +18,7 @@ extension Variant.Add.Controller {
         )
             async throws -> HTMLResponse
         {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard context.isCurrentUserAllowed(to: Variant.Permissions.create)
             else {
                 return try await runtime.presenter.renderAddError(
@@ -35,7 +35,7 @@ extension Variant.Add.Controller {
         )
             async throws -> Response
         {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard context.isCurrentUserAllowed(to: Variant.Permissions.create)
             else {
                 return try await runtime.presenter

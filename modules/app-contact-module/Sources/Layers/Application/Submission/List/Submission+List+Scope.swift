@@ -1,6 +1,6 @@
-import ContactDomain
-import ContactModule
-import FeatherModuleKit
+public import ContactDomain
+public import ContactModule
+public import FeatherModuleKit
 
 extension Submission.List {
     public struct Scope: FeatherModuleKit.Scope {

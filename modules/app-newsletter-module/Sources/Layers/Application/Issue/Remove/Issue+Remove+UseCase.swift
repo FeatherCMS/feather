@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 extension Issue.Remove {
     public struct UseCase: FeatherApplication.UseCase {

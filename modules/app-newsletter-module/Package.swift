@@ -33,6 +33,7 @@ let package = Package(
     products: [
         .library(name: "NewsletterDomain", targets: ["NewsletterDomain"]),
         .library(name: "NewsletterModule", targets: ["NewsletterModule"]),
+        .library(name: "NewsletterWebShared", targets: ["NewsletterWebShared"]),
         .library(
             name: "NewsletterApplication",
             targets: ["NewsletterApplication"]
@@ -87,10 +88,6 @@ let package = Package(
             exact: "1.0.0-alpha.1"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-dbal-postgres",
-            exact: "1.0.0-alpha.1"
-        ),
-        .package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
         ),
@@ -141,10 +138,6 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(
-                    name: "FeatherDBALPostgres",
-                    package: "feather-dbal-postgres"
-                ),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(
                     name: "SystemApplication",
@@ -230,6 +223,15 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
+            name: "NewsletterWebShared",
+            dependencies: [
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
             name: "NewsletterWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
@@ -244,6 +246,7 @@ let package = Package(
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
+                .target(name: "NewsletterWebShared"),
                 .target(name: "NewsletterModule"),
                 .target(name: "NewsletterAdminAPI"),
             ],
@@ -253,16 +256,14 @@ let package = Package(
         .target(
             name: "NewsletterWebApp",
             dependencies: [
-                .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .target(name: "NewsletterModule"),
                 .target(name: "NewsletterAppAPI"),
+                .target(name: "NewsletterWebShared"),
             ],
             path: "Sources/Composition/WebApp",
             swiftSettings: swiftSettings
@@ -273,6 +274,7 @@ let package = Package(
             dependencies: [
                 .target(name: "NewsletterDomain")
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
@@ -280,13 +282,17 @@ let package = Package(
             dependencies: [
                 .target(name: "NewsletterApplication")
             ],
+            path: "Tests/Layers/Application",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "NewsletterInfrastructureTests",
             dependencies: [
-                .target(name: "NewsletterInfrastructure")
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .target(name: "NewsletterInfrastructure"),
+                .target(name: "NewsletterModule"),
             ],
+            path: "Tests/Layers/Infrastructure",
             swiftSettings: swiftSettings
         ),
     ]

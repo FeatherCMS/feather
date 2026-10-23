@@ -9,7 +9,7 @@ import WebModule
 
 struct AdminAddMenuItemDefaultController: AdminAddMenuItemController {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminAddMenuItemInteractor,
             any AdminAddMenuItemPresenter
         >
@@ -18,7 +18,7 @@ struct AdminAddMenuItemDefaultController: AdminAddMenuItemController {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         do {
             let availablePermissions = try await runtime.interactor
@@ -44,7 +44,7 @@ struct AdminAddMenuItemDefaultController: AdminAddMenuItemController {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: MenuItemFormInput?

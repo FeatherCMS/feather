@@ -19,3 +19,19 @@ import WebComponents
 extension Email.View {
     enum Presenter {}
 }
+
+extension Email.View.Presenter {
+    protocol Interface: Sendable {
+
+        func renderPage(
+            link: Email.View.Detail,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+
+        func renderError(
+            id: String,
+            error: OpenAPIRepositoryError,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+    }
+}

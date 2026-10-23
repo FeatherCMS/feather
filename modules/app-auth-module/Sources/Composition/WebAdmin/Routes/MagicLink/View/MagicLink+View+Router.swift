@@ -29,7 +29,7 @@ extension MagicLink.View {
             self.routes = routes
             self.controller = MagicLink.View.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: MagicLink.View.Interactor.Default(
                             repository: MagicLink.View.Repository.OpenAPI(
                                 api: API.Client(

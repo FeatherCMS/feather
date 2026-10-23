@@ -18,3 +18,13 @@ import WebComponents
 extension Credential.List {
     enum Interactor {}
 }
+
+extension Credential.List.Interactor {
+    protocol Interface: Sendable {
+        func execute(
+            page: Int,
+            size: Int,
+            search: String?
+        ) async throws -> Credential.List.Result
+    }
+}

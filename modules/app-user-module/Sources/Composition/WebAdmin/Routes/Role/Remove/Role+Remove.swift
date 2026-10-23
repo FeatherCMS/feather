@@ -17,7 +17,7 @@ extension Role.Remove {
             self.controller = Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(
@@ -38,15 +38,8 @@ extension Role.Remove {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.post(
-                routes.remove.routerPath,
-                use: controller.postRemoveUserRoles
-            )
-            router.post(
-                routes.removeDetails.routerPath,
-                use: controller.postRemoveUserRole
-            )
+            router.post(routes.remove.routerPath, use: controller.postRemoveUserRoles)
+            router.post(routes.removeDetails.routerPath, use: controller.postRemoveUserRole)
         }
-
     }
 }

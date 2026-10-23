@@ -20,7 +20,7 @@ extension Session.Extend {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Bool {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -33,9 +33,7 @@ extension Session.Extend {
                     let session = try await scope.session.findBy(
                         token: input.token
                     )
-                else {
-                    return false
-                }
+                else { return Output(didExtend: false) }
 
                 _ = try await scope.session.update(
                     .init(
@@ -51,7 +49,7 @@ extension Session.Extend {
                         updatedAt: session.updatedAt
                     )
                 )
-                return true
+                return Output(didExtend: true)
             }
         }
 

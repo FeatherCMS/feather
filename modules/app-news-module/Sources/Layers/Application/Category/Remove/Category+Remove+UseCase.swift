@@ -26,7 +26,7 @@ extension Category.Remove {
         public func execute(
             subject: Subject,
             input: Category.Remove.Input
-        ) async throws -> [String] {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -35,7 +35,6 @@ extension Category.Remove {
             }
 
             return try await transaction.run { scope in
-                var deletedIds: [String] = []
                 for id in input.ids {
                     try await scope.article.removeCategory(id: id)
                 }
@@ -43,8 +42,8 @@ extension Category.Remove {
                     referenceType: "news.category",
                     referenceIds: input.ids
                 )
-                deletedIds = try await scope.category.delete(ids: input.ids)
-                return deletedIds
+                let deletedIds = try await scope.category.delete(ids: input.ids)
+                return Output(ids: deletedIds)
             }
         }
     }

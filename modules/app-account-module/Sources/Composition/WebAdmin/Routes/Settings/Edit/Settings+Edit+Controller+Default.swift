@@ -10,7 +10,7 @@ extension Settings.Edit.Controller {
     {
         let routes: Settings.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Settings.Edit.Interactor.Interface,
                 any Settings.Edit.Presenter.Interface
             >
@@ -20,7 +20,9 @@ extension Settings.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
             let targetUserID = context.parameters.get("userId", as: String.self)
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let permissions = context.currentUserPermissions
             let canRead =
                 targetUserID == nil
@@ -80,7 +82,9 @@ extension Settings.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> Response {
             let targetUserID = context.parameters.get("userId", as: String.self)
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             let permissions = context.currentUserPermissions
             let canEdit =
                 targetUserID == nil

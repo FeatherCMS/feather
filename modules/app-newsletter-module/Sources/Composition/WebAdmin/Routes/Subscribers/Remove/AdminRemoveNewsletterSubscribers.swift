@@ -17,13 +17,13 @@ struct AdminRemoveNewsletterSubscribers {
         controller = AdminRemoveNewsletterSubscribersDefaultController {
             request,
             context in
-            (
-                AdminRemoveNewsletterSubscribersDefaultInteractor(
+            WebAdminRuntime(
+                interactor: AdminRemoveNewsletterSubscribersDefaultInteractor(
                     repository: .init(
                         api: apiBuilder.makeNewsletterAdmin(context)
                     )
                 ),
-                AdminRemoveNewsletterSubscribersDefaultPresenter(
+                presenter: AdminRemoveNewsletterSubscribersDefaultPresenter(
                     request: request,
                     context: context,
                     renderingEngine: renderingEngine

@@ -10,18 +10,18 @@ extension Variable.List.Controller {
         Interface
     {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
-                any Variable.List.Interactor
-                    .Interface,
-                any Variable.List.Presenter
-                    .Interface
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any Variable.List.Interactor.Interface,
+                any Variable.List.Presenter.Interface
             >
 
         func getSystemVariables(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let page = request.queryPage()
             let search = request.querySearch()
             let permissions = context.currentUserPermissions

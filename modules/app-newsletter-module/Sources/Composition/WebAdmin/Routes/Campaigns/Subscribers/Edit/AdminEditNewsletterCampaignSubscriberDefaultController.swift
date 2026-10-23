@@ -12,7 +12,7 @@ struct AdminEditNewsletterCampaignSubscriberDefaultController:
     AdminEditNewsletterCampaignSubscriberController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminEditNewsletterCampaignSubscriberInteractor,
             any AdminEditNewsletterCampaignSubscriberPresenter
         >
@@ -20,7 +20,9 @@ struct AdminEditNewsletterCampaignSubscriberDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let newsletterId = try context.requiredParameter("newsletterId")
         let subscriberId = try context.requiredParameter("subscriberId")
         do {
@@ -53,7 +55,9 @@ struct AdminEditNewsletterCampaignSubscriberDefaultController:
         async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild2 = buildRuntime(request, context)
+        let interactor = __runtimeBuild2.interactor
+        let presenter = __runtimeBuild2.presenter
         let newsletterId = try context.requiredParameter("newsletterId")
         let subscriberId = try context.requiredParameter("subscriberId")
         let form = try await request.decode(

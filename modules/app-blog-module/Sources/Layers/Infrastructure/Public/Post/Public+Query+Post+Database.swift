@@ -46,7 +46,9 @@ extension BlogApplication.Public.Post {
             self.metadata = metadata
         }
 
-        public func find(id: String) async throws -> Post.Detail.Output {
+        public func find(id: String) async throws
+            -> BlogApplication.Public.Post.Detail.Query.Output
+        {
             guard
                 let row = try await DatabaseAccessLayer<Post.Table>(
                     context: context
@@ -63,7 +65,16 @@ extension BlogApplication.Public.Post {
             else {
                 throw RepositoryError.notFound
             }
-            return try row.asDetail(metadata: metadata)
+            let post = try row.asDetail(metadata: metadata)
+            return .init(
+                id: post.id,
+                title: post.title,
+                excerpt: post.excerpt,
+                content: post.content,
+                imageAssetId: post.imageAssetId,
+                authorIds: post.authorIds,
+                tagIds: post.tagIds
+            )
         }
 
         public func list(query: Post.Search.Input.Query) async throws

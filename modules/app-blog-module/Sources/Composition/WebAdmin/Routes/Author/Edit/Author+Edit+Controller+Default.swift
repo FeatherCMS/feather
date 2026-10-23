@@ -16,7 +16,7 @@ extension Author.Edit.Controller {
     struct Default: Interface {
         let routes: Author.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Author.Edit.Interactor.Interface,
                 any Author.Edit.Presenter.Interface
             >
@@ -25,7 +25,7 @@ extension Author.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             do {
@@ -57,7 +57,7 @@ extension Author.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             var payload: Author.Form.Input?

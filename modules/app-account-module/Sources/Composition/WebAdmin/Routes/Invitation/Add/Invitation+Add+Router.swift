@@ -19,7 +19,7 @@ extension Invitation.Add {
                 environment: environment,
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Invitation.Add.Interactor.Default(
                             repository: Invitation.Add.Repository.OpenAPI(
                                 api: API.Client(

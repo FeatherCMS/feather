@@ -10,7 +10,7 @@ import WebComponents
 
 struct AdminAddContactFormDefaultController: AdminAddContactFormController {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminAddContactFormInteractor,
             any AdminAddContactFormPresenter
         >
@@ -19,7 +19,9 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let availableFields = (try? await interactor.availableFields()) ?? []
         return try await presenter.renderPage(
             item: .init(
@@ -41,7 +43,9 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
         async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild2 = buildRuntime(request, context)
+        let interactor = __runtimeBuild2.interactor
+        let presenter = __runtimeBuild2.presenter
         let form = try await request.decode(
             as: ContactFormEditForm.self,
             context: context

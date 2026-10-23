@@ -11,7 +11,7 @@ extension Author.List.Controller {
         let environment: AppEnvironment
         let routes: Author.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Author.List.Interactor.Interface,
                 any Author.List.Presenter.Interface
             >
@@ -20,7 +20,9 @@ extension Author.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let page = request.queryPage()
             let search = request.querySearch()
             let permissions = context.currentUserPermissions
@@ -91,7 +93,7 @@ extension Author.List.Controller {
                 from: payload,
                 current: details.metadata
             )
-            try await AdminWebMetadataStatusUpdater(
+            try await AdminMetadataStatusUpdater(
                 api: WebModuleWebAdmin.API.Client(
                     environment: environment,
                     requestContext: context
@@ -123,14 +125,23 @@ extension Author.List.Controller {
 
         private func statusToastContent(
             for status: String
-        ) -> (title: String, message: String) {
+        ) -> AdminNotification.State {
             switch status {
             case "published":
-                return ("Published", "Blog author published successfully.")
+                return .init(
+                    title: "Published",
+                    message: "Blog author published successfully."
+                )
             case "archived":
-                return ("Archived", "Blog author archived successfully.")
+                return .init(
+                    title: "Archived",
+                    message: "Blog author archived successfully."
+                )
             default:
-                return ("Draft", "Blog author moved to draft successfully.")
+                return .init(
+                    title: "Draft",
+                    message: "Blog author moved to draft successfully."
+                )
             }
         }
     }

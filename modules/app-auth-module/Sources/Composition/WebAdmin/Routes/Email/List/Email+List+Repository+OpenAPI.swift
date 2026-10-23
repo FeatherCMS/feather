@@ -30,12 +30,7 @@ extension Email.List.Repository {
             size: Int,
             search: String?,
             userID: String?
-        ) async throws -> (
-            items: [AuthAdminAPI.Components.Schemas.AuthEmailQuerySchemasItem],
-            identityNames: [String: String],
-            total: Int,
-            page: Int, size: Int
-        ) {
+        ) async throws -> Email.List.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let query = AuthAdminAPI.Components.Schemas
                     .AuthEmailQuerySchemasItemSearchRequestQuerySchema(
@@ -72,7 +67,7 @@ extension Email.List.Repository {
                                 .name
                         }
                     }
-                    return (
+                    return .init(
                         items: body,
                         identityNames: identityNames,
                         total: result.data.total,

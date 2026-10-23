@@ -11,7 +11,7 @@ extension Profile.Detail.Controller {
     {
         let routes: Profile.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Profile.Detail.Interactor.Interface,
                 any Profile.Detail.Presenter.Interface
             >
@@ -20,7 +20,7 @@ extension Profile.Detail.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let account = context.account
 
             let permissions = account.permissionSet

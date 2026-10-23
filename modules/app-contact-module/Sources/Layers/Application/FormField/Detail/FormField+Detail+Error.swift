@@ -1,4 +1,5 @@
-import FeatherApplication
+public import FeatherApplication
+public import ContactModule
 
 extension FormField.Detail {
     public struct Error: UseCaseError {

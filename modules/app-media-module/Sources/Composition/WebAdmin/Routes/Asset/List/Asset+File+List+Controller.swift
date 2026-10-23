@@ -13,3 +13,14 @@ import WebComponents
 extension Asset.File.List {
     enum Controller {}
 }
+
+extension Asset.File.List.Controller {
+    protocol Interface: Sendable {
+
+        func getListMediaAssets(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
+
+    }
+}

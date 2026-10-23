@@ -8,7 +8,7 @@ struct AdminRemovePageDefaultController:
     AdminRemovePageController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemovePageInteractor,
             any AdminRemovePagePresenter
         >
@@ -17,7 +17,7 @@ struct AdminRemovePageDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let nonceRequest = try await request.decode(
             as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context

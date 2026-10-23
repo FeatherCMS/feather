@@ -19,13 +19,37 @@ extension BlogApplication.Public.Author {
             self.metadata = metadata
         }
 
-        public func find(id: String) async throws -> Author.Detail.Output {
-            try await Author.Detail.Query
+        public func find(id: String) async throws
+            -> BlogApplication.Public.Author.Detail.Query.Output
+        {
+            let author = try await Author.Detail.Query
                 .Database(
                     context: context,
                     metadata: metadata
                 )
                 .find(id: id)
+            return .init(
+                id: author.id,
+                name: author.name,
+                excerpt: author.excerpt,
+                content: author.content,
+                profileImageAssetId: author.profileImageAssetId
+            )
+        }
+
+        public func findAuthor(id: String) async throws -> List.Query.Author {
+            let author = try await Author.Detail.Query.Database(
+                context: context,
+                metadata: metadata
+            )
+            .find(id: id)
+            return .init(
+                id: author.id,
+                name: author.name,
+                excerpt: author.excerpt,
+                content: author.content,
+                profileImageAssetId: author.profileImageAssetId
+            )
         }
 
         public func list() async throws -> Author.List.Output {

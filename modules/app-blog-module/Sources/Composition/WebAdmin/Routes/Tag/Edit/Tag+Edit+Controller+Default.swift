@@ -16,7 +16,7 @@ extension Tag.Edit.Controller {
     struct Default: Interface {
         let routes: Tag.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Tag.Edit.Interactor.Interface,
                 any Tag.Edit.Presenter.Interface
             >
@@ -25,7 +25,7 @@ extension Tag.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             do {
                 let tag = try await runtime.interactor.load(id: id)
@@ -55,7 +55,7 @@ extension Tag.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             var payload: Tag.Form.Input?

@@ -24,7 +24,7 @@ extension Asset.Folder.Add {
             self.routes = routes
             self.controller = Asset.Folder.Add.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Asset.Folder.Add.Interactor.Default(
                             repository: Asset.Folder.Add.Repository.OpenAPI(
                                 api: MediaAdminAPIClient(

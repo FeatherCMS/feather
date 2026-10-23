@@ -18,7 +18,7 @@ extension Variant.Processor.List {
             self.routes = routes
             self.controller = Variant.Processor.List.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor:
                             Variant.Processor.List.Interactor.Default(
                                 repository:

@@ -1,4 +1,5 @@
 public import ContactApplication
+public import ContactModule
 import ContactInfrastructure
 import FeatherApplication
 import FeatherModuleKit
@@ -13,10 +14,10 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Form.Submit.Scope(
-                    form: FormDatabaseRepository(context: context),
-                    field: FormFieldDatabaseRepository(context: context),
-                    mail: SubmissionMailDatabaseRepository(context: context),
-                    submission: SubmissionDatabaseRepository(context: context)
+                    form: Form.Repository.Database(context: context),
+                    field: FormField.Repository.Database(context: context),
+                    mail: SubmissionMail.Repository.Database(context: context),
+                    submission: Submission.Repository.Database(context: context)
                 )
             }
         )

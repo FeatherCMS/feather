@@ -1,6 +1,6 @@
 import BlogModule
-import FeatherApplication
-import Foundation
+public import FeatherApplication
+public import struct Foundation.Date
 
 extension Public.AuthorLink.Search.Query {
     public struct Output: DTO {

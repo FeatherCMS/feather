@@ -6,7 +6,7 @@ import MediaModule
 extension Variant.List.Controller {
     struct Default: Variant.List.Controller.Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Variant.List.Interactor.Interface,
                 any Variant.List.Presenter.Interface
             >
@@ -15,7 +15,9 @@ extension Variant.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard context.isCurrentUserAllowed(to: Variant.Permissions.list)
             else {
                 return try await presenter.renderErrorPage(error: .forbidden)

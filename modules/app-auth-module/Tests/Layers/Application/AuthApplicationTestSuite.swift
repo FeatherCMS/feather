@@ -165,11 +165,11 @@ struct AuthApplicationTestSuite {
             jobs: jobs
         )
 
-        let sent = try await useCase.execute(
+        let output = try await useCase.execute(
             .init(email: "user@example.com", isPersistent: true)
         )
 
-        #expect(sent)
+        #expect(output.didCreateRequest)
         #expect(await magicLinkRepository.insertCallCount == 1)
         #expect(await jobs.enqueueCallCount == 1)
         #expect(
@@ -342,7 +342,7 @@ struct AuthApplicationTestSuite {
             input: .init(ids: ["m-2"])
         )
 
-        #expect(deleted == ["m-2"])
+        #expect(deleted.ids == ["m-2"])
         #expect(await repo.deleteCallCount == 1)
     }
 
@@ -440,7 +440,7 @@ struct AuthApplicationTestSuite {
             input: .init(token: "token-1", expiresAt: 999_999)
         )
 
-        #expect(extended)
+        #expect(extended.didExtend)
         #expect(await repo.updateCallCount == 1)
     }
 
@@ -532,7 +532,7 @@ struct AuthApplicationTestSuite {
             input: .init(ids: ["s-1"])
         )
 
-        #expect(deleted == ["s-1"])
+        #expect(deleted.ids == ["s-1"])
         #expect(await repo.deleteCallCount == 1)
     }
 }

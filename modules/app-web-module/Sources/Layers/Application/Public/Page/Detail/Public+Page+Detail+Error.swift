@@ -1,5 +1,4 @@
 public import FeatherApplication
-import WebModule
 
 extension Public.Page.Detail.UseCase {
     public struct Error: UseCaseError {

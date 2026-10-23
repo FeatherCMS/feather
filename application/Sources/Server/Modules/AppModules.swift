@@ -2,6 +2,7 @@ import FeatherModuleKit
 import FeatherInfrastructure
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import UserInfrastructure
 import UserModule
 import MediaBackend
@@ -54,7 +55,7 @@ struct AppModules: Sendable {
                     permissions: AuthModule.Authorization.Database(
                         context: context
                     ),
-                    rolePermissions: RolePermissionDatabaseQueries(
+                    rolePermissions: RolePermission.Lookup.Query.Database(
                         context: context
                     )
                 )

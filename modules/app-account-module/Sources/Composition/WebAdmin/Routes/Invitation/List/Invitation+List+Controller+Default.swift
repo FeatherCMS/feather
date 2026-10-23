@@ -9,7 +9,7 @@ extension Invitation.List.Controller {
         Invitation.List.Controller.Interface
     {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Invitation.List.Interactor.Interface,
                 any Invitation.List.Presenter.Interface
             >
@@ -18,7 +18,7 @@ extension Invitation.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let permissions = context.currentUserPermissions
             let permissionScope = Invitation.Permissions.list
             do {
@@ -28,14 +28,14 @@ extension Invitation.List.Controller {
                 let page = request.queryPage()
                 let pageSize = 20
                 let search = request.querySearch()
-                let result =
+                let result: Invitation.List.Result =
                     canAccess
                     ? try await runtime.interactor.execute(
                         page: page,
                         size: pageSize,
                         search: search
                     )
-                    : (
+                    : .init(
                         items: [],
                         total: 0,
                         page: page,

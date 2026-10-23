@@ -1,8 +1,8 @@
 public import FeatherInfrastructure
-import NIOHTTP1
+public import NIOHTTP1
 public import FeatherBackend
 
-extension RepositoryError: ErrorTraceRepresentable {
+extension RepositoryError: @retroactive ErrorTraceRepresentable {
 
     public func trace() -> ErrorTrace {
         .init(
@@ -13,7 +13,7 @@ extension RepositoryError: ErrorTraceRepresentable {
     }
 }
 
-extension RepositoryError: HTTPErrorRepresentable {
+extension RepositoryError: @retroactive HTTPErrorRepresentable {
 
     public var status: HTTPResponseStatus {
         switch reason {

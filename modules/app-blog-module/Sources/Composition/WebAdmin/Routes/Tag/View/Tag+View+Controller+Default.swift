@@ -15,7 +15,7 @@ import WebModuleWebAdmin
 extension Tag.View.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Tag.View.Interactor.Interface,
                 any Tag.View.Presenter.Interface
             >
@@ -24,7 +24,7 @@ extension Tag.View.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             do {

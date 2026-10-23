@@ -9,7 +9,7 @@ extension Invitation.Detail.Controller {
         Invitation.Detail.Controller.Interface
     {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Invitation.Detail.Interactor.Interface,
                 any Invitation.Detail.Presenter.Interface
             >
@@ -18,7 +18,7 @@ extension Invitation.Detail.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             do {

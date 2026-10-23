@@ -24,6 +24,11 @@ extension Asset.File.GenerateVariant {
             let variant: Variant.Model
         }
 
+        private struct ProcessorOutput: Sendable {
+            let data: Data
+            let `extension`: String
+        }
+
         private struct GeneratedObject: Sendable {
             let assetID: String
             let plan: Plan
@@ -206,9 +211,9 @@ extension Asset.File.GenerateVariant {
             )
         }
     }
-    }
+}
 
-    extension Asset.File.GenerateVariant.UseCase {
+extension Asset.File.GenerateVariant.UseCase {
     private func prepare(assetID: String) async throws -> Prepared {
         try await transaction.run { scope in
             guard let asset = try await scope.assets.find(id: assetID) else {
@@ -266,11 +271,11 @@ extension Asset.File.GenerateVariant {
         }
     }
 
-    fileprivate func runProcessor(
+    private func runProcessor(
         _ processor: Variant.Processor.Model,
         asset: Asset.File.Model,
         inputURL: URL
-    ) async throws -> (data: Data, extension: String) {
+    ) async throws -> ProcessorOutput {
         let outputURL = temporaryURL(extension: inputURL.pathExtension)
         let command = render(
             template: processor.commandTemplate,
@@ -293,9 +298,9 @@ extension Asset.File.GenerateVariant {
                 processorName: processor.name
             )
         }
-        return (
-            try Data(contentsOf: resolvedURL),
-            Asset.ExtensionMatcher.canonicalExtension(
+        return ProcessorOutput(
+            data: try Data(contentsOf: resolvedURL),
+            extension: Asset.ExtensionMatcher.canonicalExtension(
                 from: resolvedURL.pathExtension
             ) ?? inputURL.pathExtension
         )

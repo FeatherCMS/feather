@@ -18,7 +18,7 @@ extension Tag.Add.Controller {
         let environment: AppEnvironment
         let routes: Tag.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Tag.Add.Interactor.Interface,
                 any Tag.Add.Presenter.Interface
             >
@@ -27,7 +27,7 @@ extension Tag.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
             return try await runtime.presenter.renderAddPage(
                 state: formState(slugPrefix: slugPrefix),
@@ -39,7 +39,7 @@ extension Tag.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let permissions = context.currentUserPermissions
             var lastPayload: Tag.Form.Input?
 

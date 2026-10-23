@@ -2,10 +2,6 @@ import AnalyticsDomain
 public import AnalyticsModule
 public import FeatherApplication
 
-extension Log {
-    public enum Track {}
-}
-
 extension Log.Track {
     public struct Output: DTO {
         public let id: String

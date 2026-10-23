@@ -24,13 +24,7 @@ extension Credential.List.Repository {
             page: Int,
             size: Int,
             search: String?
-        ) async throws -> (
-            items: [AuthAdminAPI.Components.Schemas
-                .AuthCredentialQueryItemSchema],
-            total: Int,
-            page: Int,
-            size: Int
-        ) {
+        ) async throws -> Credential.List.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.authCredentialQuery(
                     headers: .init(accept: [.init(contentType: .json)]),
@@ -44,7 +38,7 @@ extension Credential.List.Repository {
                 switch response {
                 case .ok(let ok):
                     let body = try ok.body.json
-                    return (
+                    return .init(
                         items: body.data.items,
                         total: body.data.total,
                         page: body.query.page.number,

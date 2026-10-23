@@ -1,7 +1,5 @@
 public import FeatherModuleKit
 
-public struct PageProvider: FeatherModuleKit.Event {
-    public typealias Output = [PageDefinition]
-
+public struct PageProvider: FeatherModuleKit.Event<[PageDefinition]> {
     public init() {}
 }

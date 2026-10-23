@@ -40,7 +40,7 @@ extension Credential.Edit {
                 passwordHash = nil
             }
 
-            let model = try await transaction.run { scope in
+            return try await transaction.run { scope in
                 guard
                     var model = try await scope.credential.findBy(
                         id: input.id
@@ -71,16 +71,14 @@ extension Credential.Edit {
                 )
 
                 let updated = try await scope.credential.update(model)
-                return (model: updated, authEmail: authEmail)
+                return Output(
+                    id: updated.id,
+                    userId: authEmail.identityId,
+                    email: authEmail.email,
+                    createdAt: updated.createdAt,
+                    updatedAt: updated.updatedAt
+                )
             }
-
-            return .init(
-                id: model.model.id,
-                userId: model.authEmail.identityId,
-                email: model.authEmail.email,
-                createdAt: model.model.createdAt,
-                updatedAt: model.model.updatedAt
-            )
         }
 
     }

@@ -3,6 +3,6 @@
 //  feather-core
 //
 
-public protocol Event: Sendable {
+public protocol Event<Output>: Sendable {
     associatedtype Output: Sendable = Void
 }

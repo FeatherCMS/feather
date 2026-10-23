@@ -74,3 +74,4 @@ struct SettingsEdit: Component {
         .class("cms-section")
     }
 }
+import FeatherWebShared

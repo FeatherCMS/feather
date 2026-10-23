@@ -7,6 +7,15 @@ import Hummingbird
 import NIOCore
 
 struct AdminContactFormFieldsData {
+    private struct FormFieldsPayload: Encodable {
+        struct Item: Encodable {
+            let key: String
+            let label: String
+        }
+
+        let items: [Item]
+    }
+
     let apiBuilder: ContactAPIBuilder
 
     func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
@@ -50,13 +59,4 @@ struct AdminContactFormFieldsData {
             return Response(status: .badGateway)
         }
     }
-}
-
-private struct FormFieldsPayload: Encodable {
-    struct Item: Encodable {
-        let key: String
-        let label: String
-    }
-
-    let items: [Item]
 }

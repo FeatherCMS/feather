@@ -11,7 +11,7 @@ import WebComponents
 
 struct AdminListContactFormsDefaultController: AdminListContactFormsController {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminListContactFormsInteractor,
             any AdminListContactFormsPresenter
         >
@@ -20,7 +20,9 @@ struct AdminListContactFormsDefaultController: AdminListContactFormsController {
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let search = request.querySearch() ?? ""
         do {
             let items = try await interactor.list()

@@ -22,11 +22,11 @@ extension Session.List {
                     AdminBreadcrumb(
                         links: [
                             .init(label: "Admin", link: "/admin/"),
-                            .init(label: "User", link: "/admin/user/"),
+                            .init(label: "Auth", link: "/admin/auth/"),
                             .init(
                                 label: "Identity",
                                 link:
-                                    "/admin/user/identities/\(state.identityID)/"
+                                    "/admin/auth/identities/\(state.identityID)/"
                             ),
                         ]
                     )
@@ -45,7 +45,7 @@ extension Session.List {
                         .init(
                             label: "Sessions",
                             href:
-                                "/admin/user/identities/\(state.identityID)/sessions/",
+                                "/admin/auth/identities/\(state.identityID)/sessions/",
                             isCurrent: true
                         ),
                         .init(

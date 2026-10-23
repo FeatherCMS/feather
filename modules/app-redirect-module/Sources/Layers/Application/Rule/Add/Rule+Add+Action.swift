@@ -1,4 +1,4 @@
-public import FeatherModuleKit
+import FeatherModuleKit
 import RedirectModule
 
 extension Rule.Add {

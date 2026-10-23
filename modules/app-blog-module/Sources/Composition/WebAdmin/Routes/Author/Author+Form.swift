@@ -17,7 +17,7 @@ extension Author {
             var value: String?
             var error: String?
         }
-        struct State: Codable, Sendable, Equatable, Hashable {
+        struct State: Sendable {
             var name: FieldState
             var excerpt: FieldState
             var content: FieldState

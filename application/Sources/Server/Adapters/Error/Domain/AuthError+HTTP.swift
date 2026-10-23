@@ -1,8 +1,8 @@
 public import FeatherBackend
 public import FeatherModuleKit
-import NIOHTTP1
+public import NIOHTTP1
 
-extension AuthError: HTTPErrorRepresentable {
+extension AuthError: @retroactive HTTPErrorRepresentable {
     public var status: HTTPResponseStatus {
         switch kind {
         case .unauthorized:

@@ -13,3 +13,18 @@ import WebComponents
 extension Asset.File.Add {
     enum Controller {}
 }
+
+extension Asset.File.Add.Controller {
+    protocol Interface: Sendable {
+
+        func getAddMediaAsset(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
+
+        func postAddMediaAsset(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
+    }
+}

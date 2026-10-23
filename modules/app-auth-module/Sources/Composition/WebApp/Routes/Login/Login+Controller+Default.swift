@@ -9,7 +9,7 @@ extension Login.Controller {
         let usesSecureCookies: Bool
         let turnstileVerifier: (any AuthTurnstileVerifier)?
         let buildRuntime:
-            RuntimeBuilder<
+            @Sendable (Request, DefaultRequestContext) -> WebAppRuntime<
                 any Login.Interactor.Interface,
                 any Login.Presenter.Interface
             >
@@ -18,7 +18,7 @@ extension Login.Controller {
             request: Request,
             context: DefaultRequestContext
         ) async throws -> WebAppHTMLResponse {
-            let (_, presenter) = buildRuntime((request, context))
+            let presenter = buildRuntime(request, context).presenter
             let redirectPath =
                 request.uri.queryParameters["redirect"].map(String.init) ?? "/"
             return try presenter.renderPage(
@@ -37,7 +37,9 @@ extension Login.Controller {
             request: Request,
             context: DefaultRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             var lastPayload: Login.Form.Input?
             do {
                 let decoded = try await request.decode(

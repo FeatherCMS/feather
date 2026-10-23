@@ -8,7 +8,7 @@ struct AppPublicContentDefaultController: AppPublicContentController {
 
     let usesSecureCookies: Bool
     let buildRuntime:
-        RuntimeBuilder<
+        @Sendable (Request, DefaultRequestContext) -> WebAppRuntime<
             any AppPublicContentInteractor,
             any AppPublicContentPresenter
         >
@@ -41,7 +41,9 @@ struct AppPublicContentDefaultController: AppPublicContentController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
 
         let slug = request.uri.path.trimmingCharacters(
             in: CharacterSet(charactersIn: "/")
@@ -101,7 +103,9 @@ struct AppPublicContentDefaultController: AppPublicContentController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> String {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild2 = buildRuntime(request, context)
+        let interactor = __runtimeBuild2.interactor
+        let presenter = __runtimeBuild2.presenter
         let model = try await interactor.resolveRSS()
         return presenter.renderRSS(model: model)
     }
@@ -110,7 +114,9 @@ struct AppPublicContentDefaultController: AppPublicContentController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> String {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild3 = buildRuntime(request, context)
+        let interactor = __runtimeBuild3.interactor
+        let presenter = __runtimeBuild3.presenter
         let model = try await interactor.resolveSitemap()
         return presenter.renderSitemap(model: model)
     }

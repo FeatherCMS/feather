@@ -16,22 +16,20 @@ extension Identity.Edit {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
-                            identityRepository:
-                                Repository.OpenAPI(
-                                    api: API.Client(
-                                        apiBaseURL: environment.apiBaseURL,
-                                        requestContext: context
-                                    )
-                                ),
-                            roleRepository:
-                                Repository.Role.OpenAPI(
-                                    api: API.Client(
-                                        apiBaseURL: environment.apiBaseURL,
-                                        requestContext: context
-                                    )
+                            identityRepository: Repository.OpenAPI(
+                                api: API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
                                 )
+                            ),
+                            roleRepository: Repository.Role.OpenAPI(
+                                api: API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
+                                )
+                            )
                         ),
                         presenter: Presenter.Default(
                             request: request,
@@ -45,15 +43,8 @@ extension Identity.Edit {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.get(
-                routes.edit.routerPath,
-                use: controller.getEditUserIdentity
-            )
-            router.post(
-                routes.edit.routerPath,
-                use: controller.postEditUserIdentity
-            )
+            router.get(routes.edit.routerPath, use: controller.getEditUserIdentity)
+            router.post(routes.edit.routerPath, use: controller.postEditUserIdentity)
         }
-
     }
 }

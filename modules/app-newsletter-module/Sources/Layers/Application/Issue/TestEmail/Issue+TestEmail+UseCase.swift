@@ -2,7 +2,7 @@ public import FeatherApplication
 import FeatherMail
 public import FeatherModuleKit
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 extension Issue.TestEmail {
     public struct UseCase: FeatherApplication.UseCase {

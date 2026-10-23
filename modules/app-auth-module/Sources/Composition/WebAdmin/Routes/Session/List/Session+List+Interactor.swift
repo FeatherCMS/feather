@@ -1,5 +1,9 @@
 import AuthModule
 
+extension Session.List {
+    enum Interactor {}
+}
+
 extension Session.List.Interactor {
     protocol Interface: Sendable {
         func list(

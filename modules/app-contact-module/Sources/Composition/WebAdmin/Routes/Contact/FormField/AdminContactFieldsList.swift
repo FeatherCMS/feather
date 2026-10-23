@@ -11,8 +11,3 @@ struct AdminContactFieldsList: Sendable {
     let fields: [AdminContactFieldRow]
     let forms: [AdminContactFormFilterOption]
 }
-
-struct AdminContactFormFilterOption: Sendable {
-    let key: String
-    let name: String
-}

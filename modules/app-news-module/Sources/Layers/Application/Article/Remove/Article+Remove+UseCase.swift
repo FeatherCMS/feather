@@ -26,7 +26,7 @@ extension Article.Remove {
         public func execute(
             subject: Subject,
             input: Article.Remove.Input
-        ) async throws -> [String] {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -39,7 +39,8 @@ extension Article.Remove {
                     referenceType: "news.article",
                     referenceIds: input.ids
                 )
-                return try await scope.article.delete(ids: input.ids)
+                let ids = try await scope.article.delete(ids: input.ids)
+                return Output(ids: ids)
             }
         }
     }

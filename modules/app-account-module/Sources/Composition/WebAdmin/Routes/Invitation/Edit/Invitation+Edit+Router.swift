@@ -18,7 +18,7 @@ extension Invitation.Edit {
                 environment: environment,
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Invitation.Edit.Interactor.Default(
                             repository: Invitation.Edit.Repository.OpenAPI(
                                 api: API.Client(

@@ -1,20 +1,27 @@
 public import FeatherModuleKit
 import AccountInfrastructure
+import AccountModule
 import AnalyticsInfrastructure
+import AnalyticsModule
 import AuthInfrastructure
 import AuthModule
 import BlogInfrastructure
 import BlogModule
 import ContactInfrastructure
+import ContactModule
 public import FeatherDatabase
 public import FeatherDBAL
 public import FeatherDomain
 public import FeatherInfrastructure
 import FeatherDBALPostgres
 import MediaInfrastructure
+import MediaModule
 import NewsletterInfrastructure
+import NewsletterModule
 import NewsInfrastructure
+import NewsModule
 import RedirectInfrastructure
+import RedirectModule
 import SystemApplication
 import SystemInfrastructure
 import SystemModule
@@ -40,23 +47,29 @@ public func buildMigrations(
             connection: connection,
             platform: platform
         ),
-        AnalyticsInfrastructure.TableMigration(connection: connection),
-        MediaInfrastructure.TableMigration(connection: connection),
+        AnalyticsInfrastructure.TableMigration(connection: connection, platform: platform),
+        MediaInfrastructure.TableMigration(connection: connection, platform: platform),
         WebInfrastructure.TableMigration(
             connection: connection,
             platform: platform
         ),
-        RedirectInfrastructure.TableMigration(connection: connection),
+        RedirectInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
         BlogInfrastructure.TableMigration(
             connection: connection,
             platform: platform
         ),
-        NewsInfrastructure.TableMigration(connection: connection),
+        NewsInfrastructure.TableMigration(connection: connection, platform: platform),
         UserInfrastructure.TableMigration(
             connection: connection,
             platform: platform
         ),
-        AccountInfrastructure.TableMigration(connection: connection),
+        AccountInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
         AuthInfrastructure.TableMigration(
             connection: connection,
             platform: platform
@@ -65,7 +78,7 @@ public func buildMigrations(
             connection: connection,
             platform: platform
         ),
-        NewsletterInfrastructure.TableMigration(connection: connection),
+        NewsletterInfrastructure.TableMigration(connection: connection, platform: platform),
 
         // Media folder structure
         WebInfrastructure.MediaFolderMigration(
@@ -125,13 +138,13 @@ public func buildMigrationEventPublisher(
     AuthModule.Event.Handlers.register(in: &events)
     UserModule.Event.Handlers.register(in: &events)
     AccountModule.Event.Handlers.register(in: &events)
-    AnalyticsInfrastructure.EventHandlers.register(in: &events)
-    RedirectInfrastructure.EventHandlers.register(in: &events)
-    MediaInfrastructure.EventHandlers.register(in: &events)
-    ContactInfrastructure.EventHandlers.register(in: &events)
-    NewsletterInfrastructure.EventHandlers.register(in: &events)
+    AnalyticsModule.Event.Handlers.register(in: &events)
+    RedirectModule.Event.Handlers.register(in: &events)
+    MediaModule.Event.Handlers.register(in: &events)
+    ContactModule.Event.Handlers.register(in: &events)
+    NewsletterModule.Event.Handlers.register(in: &events)
     BlogModule.Event.Handlers.register(in: &events)
-    NewsInfrastructure.EventHandlers.register(in: &events)
+    NewsModule.Event.Handlers.register(in: &events)
     WebModule.Event.Handlers.register(
         in: &events,
         publicBaseURL: webPublicBaseURL

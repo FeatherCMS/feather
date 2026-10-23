@@ -20,7 +20,7 @@ import WebComponents
 extension Email.Remove.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Email.Remove.Interactor.Interface,
                 any Email.Remove.Presenter.Interface
             >
@@ -29,7 +29,9 @@ extension Email.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Email.Permissions.delete

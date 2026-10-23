@@ -1,5 +1,5 @@
 import AsyncHTTPClient
-public import FeatherWebAdmin
+import FeatherWebAdmin
 public import FeatherWebShared
 public import Foundation
 import NIOCore
@@ -44,7 +44,8 @@ public struct NewsletterAdminAPIClient: Sendable {
     }
 
     public func newsletterCampaignTestEmail(
-        path: NewsletterAdminAPI.Operations.NewsletterCampaignTestEmail.Input.Path,
+        path: NewsletterAdminAPI.Operations.NewsletterCampaignTestEmail.Input
+            .Path,
         body: NewsletterAdminAPI.Components.RequestBodies
             .NewsletterIssueTestEmailRequestBody
     ) async throws
@@ -61,19 +62,5 @@ public struct NewsletterAdminAPIClient: Sendable {
         -> NewsletterAdminAPI.Operations.NewsletterIssueTestEmail.Output
     {
         try await client.newsletterIssueTestEmail(path: path, body: body)
-    }
-}
-
-public struct NewsletterAdminAPIBuilder: Sendable {
-    private let apiBaseURL: URL
-
-    public init(apiBaseURL: URL) {
-        self.apiBaseURL = apiBaseURL
-    }
-
-    public func makeNewsletterAdmin(
-        _ context: AuthenticatedRequestContext
-    ) -> NewsletterAdminAPIClient {
-        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

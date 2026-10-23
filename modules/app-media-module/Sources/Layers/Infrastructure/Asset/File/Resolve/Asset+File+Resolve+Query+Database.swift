@@ -24,14 +24,17 @@ extension Asset.File.Resolve.Query {
         {
             let assets = try await Asset.File
                 .Table(
-                    connection: context.connection
+                    connection: context.connection,
+                        context: DatabaseTransactionContext(
+                            platform: context.platform,
+                            connection: context.connection,
+                            idGenerator: context.idGenerator
+                        )
                 )
                 .resolve(ids: ids)
-            let variantRows = try await Asset.File.Variant
-                .Table(
-                    connection: context.connection
-                )
-                .resolve(nodeIds: ids, variantKeys: variants)
+            let variantRows = try await AssetFileVariantResolveQuery(
+                connection: context.connection
+            ).resolve(nodeIds: ids, variantKeys: variants)
             var variantsByAsset: [String: [Asset.File.Resolve.Output.Variant]] =
                 [:]
             let assetsByID = Dictionary(

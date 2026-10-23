@@ -7,7 +7,7 @@ import SystemModule
 extension Permission.Add.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Permission.Add.Interactor.Interface,
                 any Permission.Add.Presenter.Interface
             >
@@ -16,7 +16,7 @@ extension Permission.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (_, presenter) = buildRuntime((request, context))
+            let presenter = buildRuntime(request, context).presenter
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Permission.Permissions.create
@@ -31,7 +31,9 @@ extension Permission.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Permission.Permissions.create

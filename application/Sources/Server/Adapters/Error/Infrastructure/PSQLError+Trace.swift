@@ -8,7 +8,7 @@
 public import FeatherBackend
 public import PostgresNIO
 
-extension PSQLError: ErrorTraceRepresentable {
+extension PSQLError: @retroactive ErrorTraceRepresentable {
 
     public var underlyingErrors: [any Error] {
         [underlying].compactMap { $0 }

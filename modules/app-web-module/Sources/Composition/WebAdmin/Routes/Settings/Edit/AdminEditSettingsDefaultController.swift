@@ -9,7 +9,7 @@ struct AdminEditSettingsDefaultController:
     AdminEditSettingsController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminEditSettingsInteractor,
             any AdminEditSettingsPresenter
         >
@@ -18,7 +18,9 @@ struct AdminEditSettingsDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let permissions = context.currentUserPermissions
         let canRead = context.isCurrentUserAllowed(
             to: WebModule.Permissions.Settings.read
@@ -65,7 +67,9 @@ struct AdminEditSettingsDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild2 = buildRuntime(request, context)
+        let interactor = __runtimeBuild2.interactor
+        let presenter = __runtimeBuild2.presenter
         let permissions = context.currentUserPermissions
         let canEdit = canEdit(permissions: permissions)
 

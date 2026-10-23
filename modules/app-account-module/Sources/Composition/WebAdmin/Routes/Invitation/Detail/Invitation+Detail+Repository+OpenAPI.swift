@@ -32,11 +32,7 @@ extension Invitation.Detail.Repository {
             page: Int,
             size: Int,
             search: String?
-        ) async throws -> (
-            items: [Components.Schemas.InvitationQuerySchemasItem],
-            total: Int,
-            page: Int, size: Int
-        ) {
+        ) async throws -> Invitation.List.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
@@ -52,7 +48,7 @@ extension Invitation.Detail.Repository {
                 switch response {
                 case .ok(let ok):
                     let body = try ok.body.json
-                    return (
+                    return .init(
                         items: body.data.items,
                         total: body.data.total,
                         page: body.query.page.number,

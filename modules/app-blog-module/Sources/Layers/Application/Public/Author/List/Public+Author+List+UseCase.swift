@@ -39,7 +39,9 @@ extension Public.Author.List {
                     else {
                         continue
                     }
-                    let author = try await scope.author.find(id: item.id)
+                    let author = try await scope.authorList.findAuthor(
+                        id: item.id
+                    )
                     result.append(
                         .init(
                             id: author.id,

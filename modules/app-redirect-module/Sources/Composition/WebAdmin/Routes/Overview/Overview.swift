@@ -16,7 +16,7 @@ enum Overview {
             self.path = path
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(),
                         presenter: Presenter.Default(
                             request: request,

@@ -32,6 +32,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+  /api/v1/web/routes:
+    get:
+      tags:
+      - Web
+      operationId: metadataRootGet
+      responses:
+        200:
+          $ref: '#/components/responses/MetadataResponse'
+        404:
+          description: Web metadata not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
   /api/v1/web/routes/{slug}:
     get:
       tags:
@@ -194,9 +208,6 @@ components:
       required:
       - id
       - message
-    MetadataSlugField:
-      type: string
-      example: homepage
     MetadataSchema:
       type: object
       properties:
@@ -218,6 +229,9 @@ components:
     MetadataReferenceIDField:
       type: string
       example: wp_home
+    MetadataSlugField:
+      type: string
+      example: homepage
     MetadataTemplateField:
       type: string
       example: default

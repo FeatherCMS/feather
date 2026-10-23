@@ -17,7 +17,7 @@ struct AdminAddContactFormEmail {
     ) {
         controller = AdminAddContactFormEmailDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminAddContactFormEmailDefaultInteractor(
                         repository: .init(
                             api: apiBuilder.makeContactAdmin(context)

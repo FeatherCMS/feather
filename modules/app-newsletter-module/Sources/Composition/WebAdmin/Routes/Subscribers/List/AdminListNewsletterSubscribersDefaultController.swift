@@ -8,7 +8,7 @@ struct AdminListNewsletterSubscribersDefaultController:
     AdminListNewsletterSubscribersController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminListNewsletterSubscribersInteractor,
             any AdminListNewsletterSubscribersPresenter
         >
@@ -17,7 +17,9 @@ struct AdminListNewsletterSubscribersDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let campaignId = request.queryString("campaignId")?
             .whitespaceTrimmed
         let permissions = context.currentUserAdminListActions
@@ -68,7 +70,9 @@ struct AdminListNewsletterSubscribersDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild2 = buildRuntime(request, context)
+        let interactor = __runtimeBuild2.interactor
+        let presenter = __runtimeBuild2.presenter
         guard context.isCurrentUserAllowed(to: Subscriber.Permissions.read)
         else {
             return try await presenter.renderDetailsErrorPage(

@@ -6,7 +6,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
     AdminRemoveContactFormSubmissionsController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveContactFormSubmissionsInteractor,
             any AdminRemoveContactFormSubmissionsPresenter
         >
@@ -16,7 +16,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         let formId = try context.requiredParameter("formKey")
         let submissionId = try context.requiredParameter("submissionId")
         let nonceRequest = try await request.decode(
@@ -58,7 +58,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         try await interactor.remove(
             formId: formId,
             ids: payload.input.normalizedIds

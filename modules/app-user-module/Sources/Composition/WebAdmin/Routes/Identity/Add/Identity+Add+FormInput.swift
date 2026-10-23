@@ -1,5 +1,5 @@
 import FeatherModuleKit
-public import UserModule
+import UserModule
 
 extension Identity.Add {
     public struct FormInput: Decodable, Sendable, Equatable,

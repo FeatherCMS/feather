@@ -16,13 +16,13 @@ struct AdminViewNewsletterCampaignSubscriber {
         controller = AdminViewNewsletterCampaignSubscriberDefaultController {
             request,
             context in
-            (
-                AdminViewNewsletterCampaignSubscriberDefaultInteractor(
+            WebAdminRuntime(
+                interactor: AdminViewNewsletterCampaignSubscriberDefaultInteractor(
                     repository: .init(
                         api: apiBuilder.makeNewsletterAdmin(context)
                     )
                 ),
-                AdminViewNewsletterCampaignSubscriberDefaultPresenter(
+                presenter: AdminViewNewsletterCampaignSubscriberDefaultPresenter(
                     request: request,
                     context: context,
                     renderingEngine: renderingEngine

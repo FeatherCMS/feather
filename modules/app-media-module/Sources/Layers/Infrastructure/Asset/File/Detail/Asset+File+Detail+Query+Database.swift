@@ -52,7 +52,12 @@ extension Asset.File.Detail.Query {
             guard
                 let row = try await Asset.File
                     .Table(
-                        connection: context.connection
+                        connection: context.connection,
+                        context: DatabaseTransactionContext(
+                            platform: context.platform,
+                            connection: context.connection,
+                            idGenerator: context.idGenerator
+                        )
                     )
                     .find(id: id)
             else {

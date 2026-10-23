@@ -321,7 +321,7 @@ extension AdminAPIGateway {
     }
 
     func mapResolveMetadata(
-        _ item: Metadata.List.Output.Item,
+        _ item: Metadata.Resolve.Output.Item,
         at date: Date
     ) -> WebAdminAPI.Components.Schemas.MetadataResolveItemSchema {
         .init(
@@ -330,8 +330,14 @@ extension AdminAPIGateway {
             publicationDate: item.publicationDate.timeIntervalSince1970,
             expirationDate: item.expirationDate?.timeIntervalSince1970,
             status: item.status.rawValue,
-            availability: .init(rawValue: item.availability(at: date).rawValue)
-                ?? .draft
+            availability: .init(
+                rawValue: Metadata.Model.Availability(
+                    status: item.status,
+                    publicationDate: item.publicationDate,
+                    expirationDate: item.expirationDate,
+                    at: date
+                ).rawValue
+            ) ?? .draft
         )
     }
 }

@@ -7,7 +7,7 @@ import UserModule
 extension Identity.Detail.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Identity.Detail.Interactor.Interface,
                 any Identity.Detail.Presenter.Interface
             >
@@ -16,7 +16,9 @@ extension Identity.Detail.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Identity.Permissions.read

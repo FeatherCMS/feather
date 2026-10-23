@@ -1,7 +1,9 @@
 public import WebModule
 
-extension Menu.Detail.Query {
-    public protocol Interface: Sendable {
-        func find(id: String) async throws -> Menu.Detail.Output
+extension Menu.Detail {
+    public enum Query {
+        public protocol Interface: Sendable {
+            func find(id: String) async throws -> Output
+        }
     }
 }

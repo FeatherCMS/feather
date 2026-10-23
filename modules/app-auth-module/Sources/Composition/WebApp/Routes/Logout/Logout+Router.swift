@@ -1,3 +1,5 @@
+import FeatherWebApp
+
 extension Logout {
     struct Router {
         let controller: any Logout.Controller.Interface
@@ -8,7 +10,7 @@ extension Logout {
         ) {
             self.controller = Logout.Controller.Default(
                 buildRuntime: { _, _ in
-                    (
+                    WebAppRuntime(
                         interactor: Logout.Interactor.Default(
                             repository: repository
                         ),

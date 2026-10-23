@@ -38,7 +38,7 @@ extension Menu.Public.List {
                         id: menu.id,
                         key: menu.key,
                         name: menu.name,
-                        menuItems: scope.menuItemList,
+                        menuItems: scope.menuItems,
                         subject: subject
                     )
                     guard !publicMenu.items.isEmpty else { continue }
@@ -62,7 +62,7 @@ extension Menu.Public.List {
                     id: menu.id,
                     key: menu.key,
                     name: menu.name,
-                    menuItems: scope.menuItemList,
+                    menuItems: scope.menuItems,
                     subject: subject
                 )
             }
@@ -72,16 +72,24 @@ extension Menu.Public.List {
             id: String,
             key: String,
             name: String,
-            menuItems: any MenuItem.List.Query.Interface,
+            menuItems: any Query.Interface,
             subject: Subject?
         ) async throws -> Output.Menu {
-            let menuItems = try await menuItems.list(menuId: id)
-            let items = try await filterItems(menuItems.items, subject: subject)
-            return .init(id: id, key: key, name: name, items: items)
+            let items = try await menuItems.listMenuItems(menuId: id)
+            let filteredItems = try await filterItems(
+                items,
+                subject: subject
+            )
+            return .init(
+                id: id,
+                key: key,
+                name: name,
+                items: filteredItems
+            )
         }
 
         private func filterItems(
-            _ items: [MenuItem.List.Output.Item],
+            _ items: [Query.Item],
             subject: Subject?
         ) async throws -> [Output.Menu.Item] {
             var result: [Output.Menu.Item] = []
@@ -103,7 +111,7 @@ extension Menu.Public.List {
         }
 
         private func isAvailable(
-            item: MenuItem.List.Output.Item,
+            item: Query.Item,
             subject: Subject?
         ) async throws -> Bool {
             switch item.authentication {

@@ -1,3 +1,4 @@
+import FeatherDBALTesting
 import FeatherDatabase
 import FeatherDatabaseTesting
 import Testing
@@ -18,7 +19,10 @@ struct InfrastructureDatabaseTestSuite {
                 count: 20
             )
         )
-        let migration = TableMigration(connection: connection)
+        let migration = TableMigration(
+            connection: connection,
+            platform: MockDatabasePlatform()
+        )
 
         try await migration.apply(on: connection)
         try await connection.assertAllResponsesConsumed()

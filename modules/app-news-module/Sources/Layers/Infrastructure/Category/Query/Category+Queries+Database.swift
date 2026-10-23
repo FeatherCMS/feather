@@ -14,7 +14,7 @@ public import WebApplication
 import WebDomain
 public import WebModule
 
-extension CategoryTable.Row {
+extension Category.Table.List {
     var asQueryListItem: Category.List.Output.Item {
         .init(
             id: id,
@@ -26,9 +26,10 @@ extension CategoryTable.Row {
         )
     }
 
-    func asDetail(
-        metadata: WebModule.Metadata.Snapshot
-    ) -> Category.Detail.Output {
+}
+
+extension Category.Table.Detail {
+    func asDetail(metadata: WebModule.Metadata.Snapshot) -> Category.Detail.Output {
         .init(
             id: id,
             title: title,
@@ -45,7 +46,7 @@ extension CategoryTable.Row {
 public struct CategoryDatabaseQueries: Category.Detail.Query.Interface,
     Category.List.Query.Interface,
     Category.Search.Query.Interface,
-    PublicNewsArticle.Detail.Query.Interface
+    NewsApplication.Public.Article.Detail.Query.Interface
 {
 
     public let context: DatabaseQueryContext
@@ -63,50 +64,11 @@ public struct CategoryDatabaseQueries: Category.Detail.Query.Interface,
         self.metadataResolver = metadata
     }
 
-    func pageSizeOffset(
-        _ page: Search.Page
-    ) -> (size: Int, offset: Int) {
-        let size = max(1, page.size)
-        let number = max(1, page.number)
-        return (size, (number - 1) * size)
-    }
-
-    func sortDirectionSQL(
-        _ direction: Search.SortDirection
-    ) -> String {
-        switch direction {
-        case .asc:
-            "ASC"
-        case .desc:
-            "DESC"
-        }
-    }
-
-    func orderByCategory(
-        _ query: Category.List.Input.Query
-    ) -> String {
-        let sortParts = query.sort.map { category -> String in
-            let column: String
-            switch category.field {
-            case .id:
-                column = "id"
-            case .title:
-                column = "title"
-            case .createdAt:
-                column = "created_at"
-            case .updatedAt:
-                column = "updated_at"
-            }
-            return "\(column) \(sortDirectionSQL(category.direction))"
-        }
-        return (sortParts + ["id ASC"]).joined(separator: ", ")
-    }
-
     public func find(
         id: String
     ) async throws -> Category.Detail.Output {
-        let table = CategoryTable(connection: context.connection)
-        guard let row = try await table.find(id: id) else {
+        let accessLayer = DatabaseAccessLayer<Category.Table>(context: context)
+        guard let row = try await accessLayer.selectFirst(by: \.id, equals: id) else {
             throw RepositoryError.notFound
         }
         guard
@@ -122,43 +84,78 @@ public struct CategoryDatabaseQueries: Category.Detail.Query.Interface,
 
     public func findCategories(
         ids: [String]
-    ) async throws -> PublicNewsArticle.Detail.Query.Output {
+    ) async throws -> NewsApplication.Public.Article.Detail.Query.Output {
         guard !ids.isEmpty else { return .init(items: []) }
-        let rows = try await CategoryTable(connection: context.connection)
-            .list(ids: ids)
-        let details = try await resolveNewsMetadataDetails(
-            metadata: metadataResolver,
+        let rows = try await DatabaseAccessLayer<Category.Table>(context: context)
+            .select { $0.where(\.id, in: ids).order(by: \.id) }
+        let details = try await metadataResolver.resolveDetails(
             referenceType: "news.category",
-            referenceIDs: ids
+            referenceIDs: Array(Set(ids))
         )
         let metadataByID = Dictionary(
             uniqueKeysWithValues: details.map { ($0.referenceID, $0) }
         )
-        let items = rows.compactMap { row in
+        let items: [NewsApplication.Public.Article.Detail.Query.Item] = rows
+            .compactMap {
+                row -> NewsApplication.Public.Article.Detail.Query.Item? in
             guard let detail = metadataByID[row.id] else { return nil }
-            return PublicNewsArticle.Detail.Query.Item(
+            return NewsApplication.Public.Article.Detail.Query.Item(
                 id: row.id,
                 title: row.title,
                 excerpt: row.excerpt,
                 imageAssetId: row.imageAssetId,
                 metadata: detail
             )
-        }
+            }
         return .init(items: items)
     }
 
     public func list(
         query: Category.List.Input.Query
     ) async throws -> Category.List.Output {
-        let page = pageSizeOffset(query.page)
-        let table = CategoryTable(connection: context.connection)
-        let items =
-            try await table.list(
-                search: query.search,
-                orderBy: orderByCategory(query),
-                limit: page.size,
-                offset: page.offset
-            )
+        let page = query.page.normalized()
+        let pageIndex = page.number - 1
+        let offset =
+            pageIndex > Int.max / page.size
+            ? Int.max
+            : pageIndex * page.size
+        let accessLayer = DatabaseAccessLayer<Category.Table>(context: context)
+        let items = try await accessLayer
+            .select(as: Category.Table.List.self) { initial in
+                var result = initial
+                if let search = query.search {
+                    result = result.where(
+                        searchText: search,
+                        columns: [
+                            DatabaseQueryTextColumn<Category.Table>(\.id),
+                            DatabaseQueryTextColumn<Category.Table>(\.title),
+                            DatabaseQueryTextColumn<Category.Table>(\.excerpt),
+                            DatabaseQueryTextColumn<Category.Table>(\.content),
+                        ]
+                    )
+                }
+                var orders = query.sort.map { rule in
+                    let direction: DatabaseQueryDirection =
+                        rule.direction == .asc ? .ascending : .descending
+                    return switch rule.field {
+                    case .id:
+                        DatabaseQueryOrder<Category.Table>(by: \.id, direction)
+                    case .title:
+                        DatabaseQueryOrder<Category.Table>(by: \.title, direction)
+                    case .createdAt:
+                        DatabaseQueryOrder<Category.Table>(by: \.createdAt, direction)
+                    case .updatedAt:
+                        DatabaseQueryOrder<Category.Table>(by: \.updatedAt, direction)
+                    }
+                }
+                if !query.sort.contains(where: { $0.field == .id }) {
+                    orders.append(.init(by: \.id, .ascending))
+                }
+                return result
+                    .order(by: orders)
+                    .limit(page.size)
+                    .offset(offset)
+            }
             .map(\.asQueryListItem)
 
         return .init(items: items)
@@ -197,7 +194,18 @@ public struct CategoryDatabaseQueries: Category.Detail.Query.Interface,
     public func count(
         query: Category.List.Input.Query
     ) async throws -> Int {
-        let table = CategoryTable(connection: context.connection)
-        return try await table.count(search: query.search)
+        try await DatabaseAccessLayer<Category.Table>(context: context)
+            .selectCount { initial in
+                guard let search = query.search else { return initial }
+                return initial.where(
+                    searchText: search,
+                    columns: [
+                        DatabaseQueryTextColumn<Category.Table>(\.id),
+                        DatabaseQueryTextColumn<Category.Table>(\.title),
+                        DatabaseQueryTextColumn<Category.Table>(\.excerpt),
+                        DatabaseQueryTextColumn<Category.Table>(\.content),
+                    ]
+                )
+            }
     }
 }

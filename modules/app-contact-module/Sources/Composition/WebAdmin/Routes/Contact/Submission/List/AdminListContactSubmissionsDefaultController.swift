@@ -7,7 +7,7 @@ struct AdminListContactSubmissionsDefaultController:
     AdminListContactSubmissionsController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminListContactSubmissionsInteractor,
             any AdminListContactSubmissionsPresenter
         >
@@ -15,7 +15,9 @@ struct AdminListContactSubmissionsDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let search = request.querySearch() ?? ""
         do {
             let items = try await interactor.list()

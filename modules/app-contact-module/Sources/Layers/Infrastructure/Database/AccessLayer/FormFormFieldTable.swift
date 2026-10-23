@@ -1,7 +1,16 @@
+import FeatherDBAL
 import FeatherDatabase
+import FeatherInfrastructure
 
-struct FormFormFieldTable {
+struct FormFormFieldTable: DatabaseTable, DatabaseTableWithDelete {
     static let name = "contact_form_form_field"
+    static let columns = Columns()
+
+    struct Columns: DatabaseTableColumns {
+        let formId = DatabaseTableColumn<String>(name: "form_id")
+        let fieldId = DatabaseTableColumn<String>(name: "field_id")
+        let position = DatabaseTableColumn<Int>(name: "position")
+    }
 
     enum Fields {
         static let formID = "form_id"
@@ -10,6 +19,7 @@ struct FormFormFieldTable {
     }
 
     let connection: any DatabaseConnection
+    let context: DatabaseTransactionContext
 
     func assign(
         formId: String,
@@ -37,12 +47,10 @@ struct FormFormFieldTable {
         formId: String,
         fieldId: String
     ) async throws {
-        try await connection.run(
-            query: #"""
-                DELETE FROM \#(unescaped: Self.name)
-                WHERE \#(unescaped: Fields.formID) = \#(formId)
-                    AND \#(unescaped: Fields.fieldID) = \#(fieldId);
-                """#
-        ) { _ in }
+        try await DatabaseAccessLayer<Self>(context: context).delete(
+            where: DatabaseQueryFilter<Self>()
+                .where(\.formId, equals: formId)
+                .where(\.fieldId, equals: fieldId)
+        )
     }
 }

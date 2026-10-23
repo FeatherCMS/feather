@@ -18,7 +18,7 @@ extension Profile.Detail {
             self.controller = Profile.Detail.Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Profile.Detail.Interactor.Default(
                             profileRepository:
                                 Profile.Detail.Repository.OpenAPI(

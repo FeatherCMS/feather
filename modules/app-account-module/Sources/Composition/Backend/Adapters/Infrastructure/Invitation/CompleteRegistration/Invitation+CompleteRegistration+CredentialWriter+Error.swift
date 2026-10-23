@@ -1,4 +1,5 @@
 import AccountModule
+import AccountApplication
 
 extension Invitation.CompleteRegistration {
     enum CredentialWriterError: Error {

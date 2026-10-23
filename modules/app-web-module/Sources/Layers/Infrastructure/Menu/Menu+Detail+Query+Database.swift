@@ -31,17 +31,16 @@ extension Menu.Detail.Query {
             )
         }
 
-        public func find(key: String) async throws -> Menu.Detail.Output? {
+        public func find(key: String) async throws
+            -> Menu.Lookup.Query.Output?
+        {
             try await DatabaseAccessLayer<Menu.Table>(context: context)
                 .selectFirst(by: \.key, equals: key)
                 .map { row in
                     .init(
                         id: row.id,
                         key: row.key,
-                        name: row.name,
-                        notes: row.notes,
-                        createdAt: row.createdAt,
-                        updatedAt: row.updatedAt
+                        name: row.name
                     )
                 }
         }

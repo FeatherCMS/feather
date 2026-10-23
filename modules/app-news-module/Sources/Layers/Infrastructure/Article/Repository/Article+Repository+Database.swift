@@ -13,7 +13,7 @@ import WebDomain
 import WebInfrastructure
 import WebModule
 
-extension ArticleTable.Row {
+extension Article.Table.Detail {
     func asDomain(
         metadata: WebModule.Metadata.Model,
         categoryIds: [String]
@@ -42,17 +42,19 @@ public struct ArticleDatabaseRepository: Article.Repository.Interface {
     public func insert(
         _ model: Article.Model.New
     ) async throws -> Article.Model {
-        let table = ArticleTable(connection: context.connection)
-        let saved = try await table.create(
-            row: .init(
+        let accessLayer = DatabaseAccessLayer<Article.Table>(context: context)
+        let row = Article.Table.Insert(
                 id: context.idGenerator.generate(),
                 title: model.title,
                 excerpt: model.excerpt,
                 content: model.content,
                 imageAssetId: model.imageAssetId
-            )
         )
-        try await ArticleCategoryTable(connection: context.connection)
+        try await accessLayer.insert(row)
+        guard let saved = try await accessLayer.selectFirst(by: \.id, equals: row.id) else {
+            throw RepositoryError.notFound
+        }
+        try await ArticleCategoryTable(context: context)
             .replace(
                 articleID: saved.id,
                 categoryIDs: model.categoryIds
@@ -73,11 +75,9 @@ public struct ArticleDatabaseRepository: Article.Repository.Interface {
     public func find(
         id: String
     ) async throws -> Article.Model? {
-        let table = ArticleTable(connection: context.connection)
-        guard let article = try await table.find(id: id) else { return nil }
-        let categoryIds = try await ArticleCategoryTable(
-            connection: context.connection
-        )
+        let accessLayer = DatabaseAccessLayer<Article.Table>(context: context)
+        guard let article = try await accessLayer.selectFirst(by: \.id, equals: id) else { return nil }
+        let categoryIds = try await ArticleCategoryTable(context: context)
         .listCategoryIDs(articleID: id)
         guard
             let metadata = try await WebModule.Metadata.Repository
@@ -95,20 +95,21 @@ public struct ArticleDatabaseRepository: Article.Repository.Interface {
     public func update(
         _ model: Article.Model
     ) async throws -> Article.Model {
-        let table = ArticleTable(connection: context.connection)
-        let updated = try await table.update(
-            id: model.id,
-            row: .init(
-                id: model.id,
+        let accessLayer = DatabaseAccessLayer<Article.Table>(context: context)
+        try await accessLayer.update(
+            .init(
                 title: model.title,
                 excerpt: model.excerpt,
                 content: model.content,
-                imageAssetId: model.imageAssetId,
-                createdAt: model.createdAt,
-                updatedAt: model.updatedAt
-            )
+                imageAssetId: model.imageAssetId
+            ),
+            where: \.id,
+            equals: model.id
         )
-        try await ArticleCategoryTable(connection: context.connection)
+        guard let updated = try await accessLayer.selectFirst(by: \.id, equals: model.id) else {
+            throw RepositoryError.notFound
+        }
+        try await ArticleCategoryTable(context: context)
             .replace(
                 articleID: model.id,
                 categoryIDs: model.categoryIds
@@ -124,14 +125,14 @@ public struct ArticleDatabaseRepository: Article.Repository.Interface {
     public func removeCategory(
         id: String
     ) async throws {
-        try await ArticleCategoryTable(connection: context.connection)
+        try await ArticleCategoryTable(context: context)
             .removeCategory(id: id)
     }
 
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        try await DatabaseAccessLayer<ArticleTable>(context: context)
+        try await DatabaseAccessLayer<Article.Table>(context: context)
             .delete(where: \.id, in: ids)
         return ids
     }

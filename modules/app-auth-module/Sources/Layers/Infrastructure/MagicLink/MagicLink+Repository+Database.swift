@@ -1,7 +1,6 @@
 public import AuthDomain
 public import AuthModule
 import FeatherDBAL
-import FeatherDatabase
 import FeatherDomain
 public import FeatherInfrastructure
 
@@ -30,48 +29,6 @@ extension MagicLink.Table.Detail {
 
 extension MagicLink.Repository {
     public struct Database: Interface {
-
-        private struct ConsumedRow {
-            let id: String
-            let authEmailId: String
-            let token: String
-            let expiresAt: Date
-            let isPersistent: Bool
-            let isUsed: Bool
-            let createdAt: Date
-            let updatedAt: Date
-
-            init(from row: any DatabaseRow) throws {
-                id = try row.decode(column: "id", as: String.self)
-                authEmailId = try row.decode(
-                    column: "auth_email_id",
-                    as: String.self
-                )
-                token = try row.decode(column: "token", as: String.self)
-                expiresAt = try row.decode(column: "expires_at", as: Date.self)
-                isPersistent = try row.decode(
-                    column: "is_persistent",
-                    as: Bool.self
-                )
-                isUsed = try row.decode(column: "is_used", as: Bool.self)
-                createdAt = try row.decode(column: "created_at", as: Date.self)
-                updatedAt = try row.decode(column: "updated_at", as: Date.self)
-            }
-
-            var model: MagicLink.Model {
-                .init(
-                    id: id,
-                    authEmailId: authEmailId,
-                    token: token,
-                    expiresAt: expiresAt,
-                    isPersistent: isPersistent,
-                    isUsed: isUsed,
-                    createdAt: createdAt,
-                    updatedAt: updatedAt
-                )
-            }
-        }
-
         public let context: DatabaseTransactionContext
         public init(context: DatabaseTransactionContext) {
             self.context = context
@@ -141,7 +98,10 @@ extension MagicLink.Repository {
         public func consumeByToken(
             token: String
         ) async throws -> MagicLink.Model {
-            guard let consumed = try await consume(token: token)
+            guard
+                let consumed = try await MagicLinkConsumeQuery(
+                    connection: context.connection
+                ).consume(token: token)
             else {
                 guard
                     let existing = try await DatabaseAccessLayer<
@@ -161,25 +121,7 @@ extension MagicLink.Repository {
                 }
                 throw MagicLink.Model.Error.invalidToken
             }
-            return consumed.model
-        }
-
-        private func consume(token: String) async throws -> ConsumedRow? {
-            try await context.connection.run(
-                query: #"""
-                    UPDATE auth_magic_link
-                    SET is_used=TRUE, updated_at=NOW()
-                    WHERE token=\#(token)
-                        AND is_used=FALSE
-                        AND expires_at>NOW()
-                    RETURNING *;
-                    """#
-            ) { rows in
-                guard let row = try await rows.collect().first else {
-                    return nil
-                }
-                return try ConsumedRow(from: row)
-            }
+            return consumed
         }
 
         public func delete(

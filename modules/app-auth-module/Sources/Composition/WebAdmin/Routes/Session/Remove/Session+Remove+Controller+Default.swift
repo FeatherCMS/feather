@@ -7,7 +7,7 @@ import Hummingbird
 extension Session.Remove.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Session.Remove.Interactor.Interface,
                 any Session.Remove.Presenter.Interface
             >
@@ -16,7 +16,9 @@ extension Session.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let identityId = try context.requiredID()
             let sessionId = try context.requiredParameter("sessionId")
             guard

@@ -1,5 +1,4 @@
 public import FeatherModuleKit
-import SystemModule
 public import WebModule
 
 extension Metadata.Edit {

@@ -33,9 +33,7 @@ extension Admin.Menu {
         }
     }
 
-    public struct Provider: FeatherModuleKit.Event {
-        public typealias Output = [Definition]
-
+    public struct Provider: FeatherModuleKit.Event<[Definition]> {
         public init() {}
     }
 }

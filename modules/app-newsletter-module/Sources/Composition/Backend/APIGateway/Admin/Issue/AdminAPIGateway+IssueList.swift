@@ -15,7 +15,7 @@ extension AdminAPIGateway {
         return .ok(
             .init(
                 body: .json(
-                    result.map {
+                    result.items.map {
                         map(
                             $0,
                             campaignKey: input.path.newsletterCampaignKey

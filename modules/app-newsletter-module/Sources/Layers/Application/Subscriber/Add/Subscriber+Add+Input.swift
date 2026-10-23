@@ -1,6 +1,6 @@
-import FeatherApplication
-import NewsletterDomain
-import NewsletterModule
+public import FeatherApplication
+public import NewsletterDomain
+public import NewsletterModule
 
 extension Subscriber.Add {
     public struct Input: DTO {

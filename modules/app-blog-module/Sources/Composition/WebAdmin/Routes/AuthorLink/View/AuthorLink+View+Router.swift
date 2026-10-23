@@ -18,7 +18,7 @@ extension AuthorLink.View {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: AuthorLink.View.Repository.OpenAPI(
                                 api: API.Client(

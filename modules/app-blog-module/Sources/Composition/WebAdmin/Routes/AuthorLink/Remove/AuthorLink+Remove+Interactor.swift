@@ -15,3 +15,9 @@ import WebModuleWebAdmin
 extension AuthorLink.Remove {
     enum Interactor {}
 }
+
+extension AuthorLink.Remove.Interactor {
+    protocol Interface: Sendable {
+        func delete(authorID: String, ids: [String]) async throws
+    }
+}

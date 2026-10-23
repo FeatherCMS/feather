@@ -16,6 +16,10 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
+extension MagicLink.View {
+    enum Controller {}
+}
+
 extension MagicLink.View.Controller {
     protocol Interface: Sendable {
 

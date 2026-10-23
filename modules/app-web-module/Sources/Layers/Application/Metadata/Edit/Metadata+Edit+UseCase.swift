@@ -1,6 +1,5 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import SystemModule
 import WebDomain
 public import WebModule
 

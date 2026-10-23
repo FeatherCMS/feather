@@ -27,7 +27,7 @@ public struct AppPublicContent {
                     publicOrigins: publicOrigins,
                     mediaResolver: mediaResolver
                 )
-                return (
+                return WebAppRuntime(
                     interactor: AppPublicContentDefaultInteractor(
                         repository: AppPublicContentOpenAPIRepository(
                             api: WebApp.API.Client(

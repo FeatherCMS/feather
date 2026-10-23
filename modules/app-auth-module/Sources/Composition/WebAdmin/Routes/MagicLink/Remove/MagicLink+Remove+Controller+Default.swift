@@ -20,7 +20,7 @@ import WebComponents
 extension MagicLink.Remove.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any MagicLink.Remove.Interactor.Interface,
                 any MagicLink.Remove.Presenter.Interface
             >
@@ -29,7 +29,9 @@ extension MagicLink.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: MagicLink.Permissions.delete

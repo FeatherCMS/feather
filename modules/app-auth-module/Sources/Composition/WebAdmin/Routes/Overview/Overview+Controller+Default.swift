@@ -19,7 +19,7 @@ import WebComponents
 extension Overview.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Overview.Interactor.Interface,
                 any Overview.Presenter.Interface
             >
@@ -28,7 +28,9 @@ extension Overview.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let model = try await interactor.getOverview()
             return try await presenter.renderOverview(
                 model: model,

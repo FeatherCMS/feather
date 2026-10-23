@@ -4,17 +4,6 @@ import FeatherWebShared
 import Hummingbird
 
 extension Email {
-    enum Form {}
-    enum Add {
-        enum Repository {}
-    }
-    enum Edit {
-        enum Repository {}
-    }
-    enum List {}
-    enum Remove {}
-    enum View {}
-
     struct Router {
         let routes: Routes
         private let environment: AppEnvironment

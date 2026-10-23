@@ -1,0 +1,23 @@
+public import FeatherWebAdmin
+import FeatherWebShared
+public import Hummingbird
+
+public protocol AdminViewAnalyticsNotFoundController: Sendable {
+
+    func getNotFound(
+        request: Request,
+        context: AuthenticatedRequestContext
+    ) async throws -> HTMLResponse
+}
+
+extension AdminViewAnalyticsNotFoundController {
+
+    public func route(
+        on router: any RouterMethods<AuthenticatedRequestContext>
+    ) {
+        router.get(
+            Router.Routes.notFound,
+            use: getNotFound
+        )
+    }
+}

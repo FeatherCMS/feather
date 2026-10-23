@@ -19,3 +19,18 @@ import WebComponents
 extension Email.Edit {
     enum Controller {}
 }
+
+extension Email.Edit.Controller {
+    protocol Interface: Sendable {
+
+        func getEditAuthEmail(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
+
+        func postEditAuthEmail(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
+    }
+}

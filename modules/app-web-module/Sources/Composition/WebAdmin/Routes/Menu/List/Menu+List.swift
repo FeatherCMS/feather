@@ -8,7 +8,3 @@ import WebModule
 extension Menu {
     enum List {}
 }
-
-extension WebModule.Menu.List {
-    enum Controller {}
-}

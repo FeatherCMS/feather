@@ -12,7 +12,7 @@ struct AdminRemoveContactFormEmailDefaultController:
     AdminRemoveContactFormEmailController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveContactFormEmailInteractor,
             any AdminRemoveContactFormEmailPresenter
         >
@@ -26,7 +26,7 @@ struct AdminRemoveContactFormEmailDefaultController:
             as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         let formId = try context.requiredParameter("formKey")
         guard
             await AdminNonceStore.shared.consume(

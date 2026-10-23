@@ -16,7 +16,7 @@ extension Asset.File.List.Controller {
         private static let viewCookieName = "admin_media_assets_view"
 
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Asset.File.List.Interactor.Interface,
                 any Asset.File.List.Presenter.Interface
             >
@@ -26,7 +26,9 @@ extension Asset.File.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let page = request.queryPage()
             let search = request.querySearch()
             let parentId = request.queryString("parent_id")?

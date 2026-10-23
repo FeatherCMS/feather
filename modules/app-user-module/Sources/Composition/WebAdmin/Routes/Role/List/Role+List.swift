@@ -6,7 +6,6 @@ import UserModule
 extension Role.List {
     struct Router {
         static let pageSize = 20
-
         let controller: any Controller.Interface
         let routes: Role.Router.Routes
 
@@ -18,7 +17,7 @@ extension Role.List {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(
@@ -41,6 +40,5 @@ extension Role.List {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(routes.list.routerPath, use: controller.getUserRoles)
         }
-
     }
 }

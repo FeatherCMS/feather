@@ -169,7 +169,9 @@ struct ErrorMiddleware: ServerMiddleware {
         body: HTTPBody?,
         metadata: ServerRequestMetadata,
         operationID: String,
-        next: MiddlewareNextBlock
+        next: @concurrent @Sendable (
+            HTTPRequest, HTTPBody?, ServerRequestMetadata
+        ) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         do {
             return try await next(request, body, metadata)

@@ -13,7 +13,7 @@ extension Session.List {
         ) {
             controller = Session.List.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Session.List.Interactor.Default(
                             repository: Session.List.Repository.OpenAPI(
                                 api: API.Client(

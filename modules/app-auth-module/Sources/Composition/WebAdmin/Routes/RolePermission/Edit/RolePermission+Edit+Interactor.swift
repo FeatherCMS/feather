@@ -15,6 +15,10 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
+extension RolePermission.Edit {
+    enum Interactor {}
+}
+
 extension RolePermission.Edit.Interactor {
     protocol Interface: Sendable {
 

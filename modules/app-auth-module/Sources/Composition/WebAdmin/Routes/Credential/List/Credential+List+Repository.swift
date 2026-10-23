@@ -18,3 +18,13 @@ import WebComponents
 extension Credential.List {
     enum Repository {}
 }
+
+extension Credential.List.Repository {
+    protocol Interface: Sendable {
+        func list(
+            page: Int,
+            size: Int,
+            search: String?
+        ) async throws -> Credential.List.Result
+    }
+}

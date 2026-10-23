@@ -51,3 +51,4 @@ extension Settings.Edit {
         }
     }
 }
+import FeatherWebShared

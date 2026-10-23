@@ -1,5 +1,5 @@
 //
-//  Log.Repository.Interface.swift
+//  Log.Repository.swift
 //  app-analytics-module
 //
 //  Created by Binary Birds on 2026. 06. 18.

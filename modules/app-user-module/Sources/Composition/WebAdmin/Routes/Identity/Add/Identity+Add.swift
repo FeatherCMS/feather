@@ -16,7 +16,7 @@ extension Identity.Add {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(
@@ -24,13 +24,12 @@ extension Identity.Add {
                                     requestContext: context
                                 )
                             ),
-                            roleRepository:
-                                Repository.Role.OpenAPI(
-                                    api: API.Client(
-                                        apiBaseURL: environment.apiBaseURL,
-                                        requestContext: context
-                                    )
+                            roleRepository: Repository.Role.OpenAPI(
+                                api: API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
                                 )
+                            )
                         ),
                         presenter: Presenter.Default(
                             request: request,
@@ -44,15 +43,8 @@ extension Identity.Add {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.get(
-                routes.add.routerPath,
-                use: controller.getAddUserIdentity
-            )
-            router.post(
-                routes.add.routerPath,
-                use: controller.postAddUserIdentity
-            )
+            router.get(routes.add.routerPath, use: controller.getAddUserIdentity)
+            router.post(routes.add.routerPath, use: controller.postAddUserIdentity)
         }
-
     }
 }

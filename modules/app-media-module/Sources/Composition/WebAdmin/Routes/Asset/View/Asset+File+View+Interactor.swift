@@ -13,3 +13,12 @@ import WebComponents
 extension Asset.File.View {
     enum Interactor {}
 }
+
+extension Asset.File.View.Interactor {
+    protocol Interface: Sendable {
+
+        func getMediaAsset(
+            id: String
+        ) async throws -> Asset.File.View.Model
+    }
+}

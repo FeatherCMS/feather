@@ -1,5 +1,5 @@
 import BlogModule
-import FeatherApplication
+public import FeatherApplication
 
 extension Public.Tag.List.Query {
     public struct Output: DTO {

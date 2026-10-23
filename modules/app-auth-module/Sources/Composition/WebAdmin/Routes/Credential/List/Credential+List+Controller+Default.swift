@@ -20,7 +20,7 @@ extension Credential.List.Controller {
     struct Default: Interface {
         let routes: Credential.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Credential.List.Interactor.Interface,
                 any Credential.List.Presenter.Interface
             >
@@ -29,7 +29,9 @@ extension Credential.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
                 to: Credential.Permissions.list
@@ -39,14 +41,14 @@ extension Credential.List.Controller {
             let search = request.querySearch()
 
             do {
-                let result =
+                let result: Credential.List.Result =
                     canAccess
                     ? try await interactor.execute(
                         page: page,
                         size: pageSize,
                         search: search
                     )
-                    : (items: [], total: 0, page: page, size: pageSize)
+                    : .init(items: [], total: 0, page: page, size: pageSize)
                 return try await presenter.renderPage(
                     state: .init(
                         canAccess: canAccess,

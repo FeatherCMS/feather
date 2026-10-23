@@ -32,9 +32,9 @@ public enum AnalyticsLogRequestMetadata {
 
     public static func parseAcceptLanguage(
         _ value: String?
-    ) -> (language: String?, region: String?) {
+    ) -> AnalyticsLogAcceptLanguage {
         guard let value, let first = value.split(separator: ",").first else {
-            return (nil, nil)
+            return .init(language: nil, region: nil)
         }
         let code =
             first
@@ -42,24 +42,30 @@ public enum AnalyticsLogRequestMetadata {
             .first?
             .whitespaceTrimmed
         guard let code, !code.isEmpty else {
-            return (nil, nil)
+            return .init(language: nil, region: nil)
         }
         let parts = code.split(separator: "-", maxSplits: 1).map(String.init)
         let language = parts.first?.lowercased()
         let region = parts.count > 1 ? parts[1].uppercased() : nil
-        return (language, region)
+        return .init(language: language, region: region)
     }
 
     public static func parseUserAgent(
         _ value: String?
-    ) -> (
-        osName: String?, osVersion: String?, browserName: String?,
-        browserVersion: String?, engineName: String?, engineVersion: String?,
-        deviceVendor: String?, deviceType: String?, deviceModel: String?,
-        cpu: String?
-    ) {
+    ) -> AnalyticsLogUserAgent {
         guard let value, !value.isEmpty else {
-            return (nil, nil, nil, nil, nil, nil, nil, nil, nil, nil)
+            return .init(
+                osName: nil,
+                osVersion: nil,
+                browserName: nil,
+                browserVersion: nil,
+                engineName: nil,
+                engineVersion: nil,
+                deviceVendor: nil,
+                deviceType: nil,
+                deviceModel: nil,
+                cpu: nil
+            )
         }
 
         let lowercased = value.lowercased()
@@ -112,17 +118,17 @@ public enum AnalyticsLogRequestMetadata {
             deviceType = "desktop"
         }
 
-        return (
-            osName,
-            nil,
-            browserName,
-            nil,
-            nil,
-            nil,
-            nil,
-            deviceType,
-            nil,
-            nil
+        return .init(
+            osName: osName,
+            osVersion: nil,
+            browserName: browserName,
+            browserVersion: nil,
+            engineName: nil,
+            engineVersion: nil,
+            deviceVendor: nil,
+            deviceType: deviceType,
+            deviceModel: nil,
+            cpu: nil
         )
     }
 }

@@ -17,7 +17,7 @@ struct AdminRemoveContactFormEmail {
     ) {
         controller = AdminRemoveContactFormEmailDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminRemoveContactFormEmailDefaultInteractor(
                         repository: .init(
                             api: apiBuilder.makeContactAdmin(context)

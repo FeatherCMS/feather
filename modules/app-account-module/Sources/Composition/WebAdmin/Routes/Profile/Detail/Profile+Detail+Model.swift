@@ -17,7 +17,7 @@ extension Profile.Detail {
 
         init(
             account: AccountModel,
-            profile: Profile.Model
+            profile: Profile.WebAdminModel
         ) {
             self.id = account.user.id
             self.email = account.user.email

@@ -28,7 +28,7 @@ extension AdminAPIGateway {
         return .ok(
             .init(
                 body: .json(
-                    items.map {
+                    items.items.map {
                         mapResolveMetadata($0, at: now)
                     }
                 )

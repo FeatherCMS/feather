@@ -8,7 +8,7 @@ extension AuthorLink.Remove.Controller {
     struct Default: Interface {
         let routes: AuthorLink.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any AuthorLink.Remove.Interactor.Interface,
                 any AuthorLink.Remove.Presenter.Interface
             >
@@ -17,7 +17,7 @@ extension AuthorLink.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let authorID = try context.requiredID()
             let nonceRequest = try await request.decode(
                 as: NonceRequest<AdminListRemoveFormInput>.self,

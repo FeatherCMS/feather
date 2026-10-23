@@ -21,7 +21,6 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
-
 let package = Package(
     name: "app-analytics-module",
     platforms: [
@@ -34,12 +33,24 @@ let package = Package(
     products: [
         .library(name: "AnalyticsDomain", targets: ["AnalyticsDomain"]),
         .library(name: "AnalyticsModule", targets: ["AnalyticsModule"]),
-        .library(name: "AnalyticsApplication", targets: ["AnalyticsApplication"]),
-        .library(name: "AnalyticsInfrastructure", targets: ["AnalyticsInfrastructure"]),
+        .library(
+            name: "AnalyticsApplication",
+            targets: ["AnalyticsApplication"]
+        ),
+        .library(
+            name: "AnalyticsInfrastructure",
+            targets: ["AnalyticsInfrastructure"]
+        ),
         .library(name: "AnalyticsAdminAPI", targets: ["AnalyticsAdminAPI"]),
         .library(name: "AnalyticsAppAPI", targets: ["AnalyticsAppAPI"]),
-        .executable(name: "AnalyticsAdminOpenAPIGenerator", targets: ["AnalyticsAdminOpenAPIGenerator"]),
-        .executable(name: "AnalyticsAppOpenAPIGenerator", targets: ["AnalyticsAppOpenAPIGenerator"]),
+        .executable(
+            name: "AnalyticsAdminOpenAPIGenerator",
+            targets: ["AnalyticsAdminOpenAPIGenerator"]
+        ),
+        .executable(
+            name: "AnalyticsAppOpenAPIGenerator",
+            targets: ["AnalyticsAppOpenAPIGenerator"]
+        ),
         .library(name: "AnalyticsBackend", targets: ["AnalyticsBackend"]),
         .library(name: "AnalyticsWebAdmin", targets: ["AnalyticsWebAdmin"]),
         .library(name: "AnalyticsWebApp", targets: ["AnalyticsWebApp"]),
@@ -63,6 +74,11 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/swift-server/async-http-client",
+            from: "1.0.0"
+        ),
+        .package(
+            url:
+                "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
         ),
         .package(path: "../../feather-core"),
@@ -95,7 +111,10 @@ let package = Package(
             name: "AnalyticsApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
                 .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "AnalyticsModule"),
@@ -107,7 +126,10 @@ let package = Package(
         .target(
             name: "AnalyticsInfrastructure",
             dependencies: [
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "SystemModule", package: "app-system-module"),
 
@@ -121,7 +143,10 @@ let package = Package(
         .target(
             name: "AnalyticsAdminAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/Admin",
             swiftSettings: swiftSettings
@@ -129,7 +154,10 @@ let package = Package(
         .target(
             name: "AnalyticsAppAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/App",
             swiftSettings: swiftSettings
@@ -137,7 +165,10 @@ let package = Package(
         .target(
             name: "AnalyticsSharedOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                )
             ],
             path: "Sources/Generators/Shared",
             swiftSettings: swiftSettings
@@ -196,12 +227,18 @@ let package = Package(
         .target(
             name: "AnalyticsWebApp",
             dependencies: [
-                .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
                 .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsAppAPI"),
             ],
@@ -214,21 +251,28 @@ let package = Package(
                 .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsDomain"),
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AnalyticsApplicationTests",
             dependencies: [
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .target(name: "AnalyticsDomain"),
                 .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsApplication"),
             ],
+            path: "Tests/Layers/Application",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AnalyticsInfrastructureTests",
             dependencies: [
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .target(name: "AnalyticsInfrastructure"),
+                .target(name: "AnalyticsModule"),
             ],
+            path: "Tests/Layers/Infrastructure",
             swiftSettings: swiftSettings
         ),
     ]

@@ -14,7 +14,7 @@ public struct AdminMetadataEditHandler: Sendable {
     ) {
         controller = AdminEditMetadataDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminEditMetadataDefaultInteractor(
                         repository: AdminEditMetadataOpenAPIRepository(
                             api: API.Client(

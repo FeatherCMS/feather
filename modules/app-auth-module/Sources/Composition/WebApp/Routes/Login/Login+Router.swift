@@ -14,7 +14,7 @@ extension Login {
                 usesSecureCookies: usesSecureCookies,
                 turnstileVerifier: turnstileVerifier,
                 buildRuntime: { _, _ in
-                    (
+                    WebAppRuntime(
                         interactor: Login.Interactor.Default(
                             repository: repository
                         ),

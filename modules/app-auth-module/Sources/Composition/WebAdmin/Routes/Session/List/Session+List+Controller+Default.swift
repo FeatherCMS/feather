@@ -6,7 +6,7 @@ import Hummingbird
 extension Session.List.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Session.List.Interactor.Interface,
                 any Session.List.Presenter.Interface
             >
@@ -15,7 +15,7 @@ extension Session.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let permissions = context.currentUserPermissions
             guard
                 context.isCurrentUserAllowed(

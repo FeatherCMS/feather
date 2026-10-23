@@ -1,9 +1,8 @@
 public import FeatherApplication
 import FeatherMail
 public import FeatherModuleKit
-public import Foundation
 import NewsletterDomain
-import NewsletterModule
+public import NewsletterModule
 
 extension Issue.Send {
     public struct UseCase: FeatherApplication.UseCase {

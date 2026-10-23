@@ -1,4 +1,5 @@
 public import FeatherInfrastructure
+public import FeatherModuleKit
 public import NewsletterApplication
 
 public struct UseCases: Sendable {

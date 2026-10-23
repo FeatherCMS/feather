@@ -1,0 +1,149 @@
+public import FeatherApplication
+public import FeatherModuleKit
+import Foundation
+import NewsDomain
+import NewsModule
+import WebApplication
+import WebDomain
+
+extension Public.Category.Detail {
+    public struct UseCase: FeatherApplication.UseCase {
+        let query: any QueryExecutor<Public.Category.Detail.Scope>
+
+        public init(
+            query: any QueryExecutor<Public.Category.Detail.Scope>
+        ) {
+            self.query = query
+        }
+
+        public func execute(
+            input: Input
+        ) async throws -> Public.Category.Detail.Output {
+            let now = Date()
+            return try await query.run { scope in
+                let category = try await scope.category.find(id: input.id)
+                guard category.metadata.isDirectlyAccessible(at: now) else {
+                    throw Error(message: "Category not found")
+                }
+                let articles = try await Self.publicArticles(
+                    matchingCategoryID: input.id,
+                    now: now,
+                    context: scope,
+                    pageNumber: input.pageNumber,
+                    pageSize: input.pageSize
+                )
+                return .init(
+                    id: category.id,
+                    title: category.title,
+                    excerpt: category.excerpt,
+                    content: category.content,
+                    imageAssetId: category.imageAssetId,
+                    imageURL: "",
+                    media: nil,
+                    metadata: category.metadata,
+                    articles: articles.items,
+                    total: articles.total,
+                    page: articles.page,
+                    pageSize: articles.pageSize
+                )
+            }
+        }
+    }
+}
+
+extension Public.Category.Detail.UseCase {
+    fileprivate struct PublicArticlePage: Sendable {
+        let items: [Public.Article.Summary.Item]
+        let total: Int
+        let page: Int
+        let pageSize: Int
+    }
+
+    fileprivate static func publicArticles(
+        matchingCategoryID categoryID: String,
+        now: Date,
+        context: Public.Category.Detail.Scope,
+        pageNumber: Int,
+        pageSize: Int
+    ) async throws -> PublicArticlePage {
+        let resolvedPageSize = max(1, pageSize)
+        let requestedPage = max(1, pageNumber)
+        async let totalTask = context.article.countPublic(
+            query: .init(),
+            categoryID: categoryID
+        )
+        async let requestedArticlesTask = context.article.listPublic(
+            query: .init(
+                page: .init(
+                    size: resolvedPageSize,
+                    number: requestedPage
+                ),
+                sort: []
+            ),
+            categoryID: categoryID
+        )
+        let total = try await totalTask
+        let requestedArticles = try await requestedArticlesTask
+        let pageCount = max(
+            1,
+            (total + resolvedPageSize - 1) / resolvedPageSize
+        )
+        let currentPage = min(requestedPage, pageCount)
+        let articles: Public.Article.List.Query.Output
+        if currentPage == requestedPage || total == 0 {
+            articles = requestedArticles
+        }
+        else {
+            articles = try await context.article.listPublic(
+                query: .init(
+                    page: .init(
+                        size: resolvedPageSize,
+                        number: currentPage
+                    ),
+                    sort: []
+                ),
+                categoryID: categoryID
+            )
+        }
+        async let categoryIDsTask = context.articleCategoryIDs.categoryIDs(
+            for: articles.items.map(\.id)
+        )
+        async let metadataTask = context.metadataDetails.resolveDetails(
+            referenceType: "news.article",
+            referenceIDs: Array(Set(articles.items.map(\.id)))
+        )
+        let categoryIDsByArticleID = try await categoryIDsTask
+        let metadata = try await metadataTask
+        let metadataByArticleID = Dictionary(
+            uniqueKeysWithValues: metadata.map { ($0.referenceID, $0) }
+        )
+        var result: [Public.Article.Summary.Item] = []
+        for item in articles.items {
+            guard
+                let metadata = metadataByArticleID[item.id],
+                metadata.isPublic(at: now)
+            else {
+                continue
+            }
+            result.append(
+                .init(
+                    id: item.id,
+                    title: item.title,
+                    excerpt: item.excerpt,
+                    imageAssetId: item.imageAssetId,
+                    imageURL: "",
+                    media: nil,
+                    metadata: metadata,
+                    readingTime: NewsReadingTime.minutes(for: item.content),
+                    categoryIDs: categoryIDsByArticleID[item.id] ?? []
+                )
+            )
+        }
+        return .init(
+            items: result,
+            total: total,
+            page: currentPage,
+            pageSize: resolvedPageSize
+        )
+    }
+}

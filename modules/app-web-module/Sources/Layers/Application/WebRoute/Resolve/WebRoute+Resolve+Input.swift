@@ -1,5 +1,4 @@
 public import FeatherApplication
-import WebModule
 
 extension WebRoute.Resolve {
     public struct Input: DTO {

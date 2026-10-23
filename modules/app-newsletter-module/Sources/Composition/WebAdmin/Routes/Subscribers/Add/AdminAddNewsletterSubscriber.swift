@@ -17,13 +17,13 @@ struct AdminAddNewsletterSubscriber {
         controller = AdminAddNewsletterSubscriberDefaultController {
             request,
             context in
-            (
-                AdminAddNewsletterSubscriberDefaultInteractor(
+            WebAdminRuntime(
+                interactor: AdminAddNewsletterSubscriberDefaultInteractor(
                     repository: .init(
                         api: apiBuilder.makeNewsletterAdmin(context)
                     )
                 ),
-                AdminAddNewsletterSubscriberDefaultPresenter(
+                presenter: AdminAddNewsletterSubscriberDefaultPresenter(
                     request: request,
                     context: context,
                     renderingEngine: renderingEngine

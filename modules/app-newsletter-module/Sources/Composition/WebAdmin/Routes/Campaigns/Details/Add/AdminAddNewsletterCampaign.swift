@@ -9,7 +9,7 @@ struct AdminAddNewsletterCampaign {
     ) {
         controller = AdminAddNewsletterCampaignDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminAddNewsletterCampaignDefaultInteractor(
                         repository: AdminAddNewsletterCampaignOpenAPIRepository(
                             api: apiBuilder.makeNewsletterAdmin(context)

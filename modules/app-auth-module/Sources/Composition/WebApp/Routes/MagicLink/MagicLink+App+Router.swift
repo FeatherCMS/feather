@@ -37,7 +37,7 @@ extension MagicLink.App {
                 turnstileVerifier: turnstileVerifier,
                 routes: routes,
                 buildRuntime: { _, _ in
-                    (
+                    WebAppRuntime(
                         interactor: Interactor.Default(repository: repository),
                         presenter: Presenter.Default(
                             templateRenderer: templateRenderer

@@ -1,6 +1,5 @@
 public import FeatherModuleKit
 
-
 extension Submission {
     public enum Permissions: PermissionProvider {
         public static let read = PermissionKey("contact:form-submissions:read")

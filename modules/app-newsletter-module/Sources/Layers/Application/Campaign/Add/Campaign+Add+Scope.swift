@@ -1,6 +1,6 @@
 public import FeatherModuleKit
-import NewsletterDomain
-import NewsletterModule
+public import NewsletterDomain
+public import NewsletterModule
 
 extension Campaign.Add {
     public struct Scope: FeatherModuleKit.Scope {

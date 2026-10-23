@@ -11,18 +11,18 @@ extension Variable.Remove.Controller {
     {
         let routes: Variable.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
-                any Variable.Remove.Interactor
-                    .Interface,
-                any Variable.Remove.Presenter
-                    .Interface
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any Variable.Remove.Interactor.Interface,
+                any Variable.Remove.Presenter.Interface
             >
 
         func postRemoveSystemVariables(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Variable.Permissions.delete

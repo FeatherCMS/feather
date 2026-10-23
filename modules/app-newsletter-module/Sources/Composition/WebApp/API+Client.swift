@@ -1,5 +1,4 @@
 import AsyncHTTPClient
-import FeatherWebAdmin
 public import FeatherWebShared
 public import Foundation
 import NIOCore
@@ -40,19 +39,5 @@ public struct NewsletterAppAPIClient: Sendable {
             statusCode: statusCode,
             responseBody: try await responseBody?.collectString()
         )
-    }
-}
-
-public struct NewsletterAppAPIBuilder: Sendable {
-    private let apiBaseURL: URL
-
-    public init(apiBaseURL: URL) {
-        self.apiBaseURL = apiBaseURL
-    }
-
-    public func makeNewsletterApp(
-        _ context: DefaultRequestContext
-    ) -> NewsletterAppAPIClient {
-        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

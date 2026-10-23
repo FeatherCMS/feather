@@ -1,10 +1,10 @@
-import FeatherWebAdmin
-import FeatherWebShared
 import FeatherValidation
+import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird
 import NewsletterAppAPI
+import NewsletterWebShared
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -28,10 +28,10 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
         )
         let form = decoded.data
         guard
-            WebFormSubmissionNonce.matches(
+            FormSubmissionNonce.matches(
                 formValue: form.nonce,
                 cookieValue: request.cookies[
-                    WebFormSubmissionNonce.cookieName
+                    FormSubmissionNonce.cookieName
                 ]?
                 .value
             )
@@ -107,26 +107,26 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                     var queryItems = (refererComponents.queryItems ?? [])
                         .filter {
                             ![
-                                WebFormSubmissionFeedback.sourceQueryKey,
-                                WebFormSubmissionFeedback.keyQueryKey,
-                                WebFormSubmissionFeedback.statusQueryKey,
+                                FormSubmissionFeedback.sourceQueryKey,
+                                FormSubmissionFeedback.keyQueryKey,
+                                FormSubmissionFeedback.statusQueryKey,
                             ]
                             .contains($0.name)
                         }
                     queryItems.append(
                         contentsOf: [
                             .init(
-                                name: WebFormSubmissionFeedback.sourceQueryKey,
-                                value: WebFormSubmissionFeedback.Source
+                                name: FormSubmissionFeedback.sourceQueryKey,
+                                value: FormSubmissionFeedback.Source
                                     .newsletter.rawValue
                             ),
                             .init(
-                                name: WebFormSubmissionFeedback.keyQueryKey,
+                                name: FormSubmissionFeedback.keyQueryKey,
                                 value: campaignId
                             ),
                             .init(
-                                name: WebFormSubmissionFeedback.statusQueryKey,
-                                value: WebFormSubmissionFeedback.Status.success
+                                name: FormSubmissionFeedback.statusQueryKey,
+                                value: FormSubmissionFeedback.Status.success
                                     .rawValue
                             ),
                         ]
@@ -140,17 +140,17 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                 components.path = "/"
                 components.queryItems = [
                     .init(
-                        name: WebFormSubmissionFeedback.sourceQueryKey,
-                        value: WebFormSubmissionFeedback.Source.newsletter
+                        name: FormSubmissionFeedback.sourceQueryKey,
+                        value: FormSubmissionFeedback.Source.newsletter
                             .rawValue
                     ),
                     .init(
-                        name: WebFormSubmissionFeedback.keyQueryKey,
+                        name: FormSubmissionFeedback.keyQueryKey,
                         value: campaignId
                     ),
                     .init(
-                        name: WebFormSubmissionFeedback.statusQueryKey,
-                        value: WebFormSubmissionFeedback.Status.success.rawValue
+                        name: FormSubmissionFeedback.statusQueryKey,
+                        value: FormSubmissionFeedback.Status.success.rawValue
                     ),
                 ]
                 redirectURL = components.string
@@ -193,26 +193,26 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                     var queryItems = (refererComponents.queryItems ?? [])
                         .filter {
                             ![
-                                WebFormSubmissionFeedback.sourceQueryKey,
-                                WebFormSubmissionFeedback.keyQueryKey,
-                                WebFormSubmissionFeedback.statusQueryKey,
+                                FormSubmissionFeedback.sourceQueryKey,
+                                FormSubmissionFeedback.keyQueryKey,
+                                FormSubmissionFeedback.statusQueryKey,
                             ]
                             .contains($0.name)
                         }
                     queryItems.append(
                         contentsOf: [
                             .init(
-                                name: WebFormSubmissionFeedback.sourceQueryKey,
-                                value: WebFormSubmissionFeedback.Source
+                                name: FormSubmissionFeedback.sourceQueryKey,
+                                value: FormSubmissionFeedback.Source
                                     .newsletter.rawValue
                             ),
                             .init(
-                                name: WebFormSubmissionFeedback.keyQueryKey,
+                                name: FormSubmissionFeedback.keyQueryKey,
                                 value: campaignId
                             ),
                             .init(
-                                name: WebFormSubmissionFeedback.statusQueryKey,
-                                value: WebFormSubmissionFeedback.Status.failure
+                                name: FormSubmissionFeedback.statusQueryKey,
+                                value: FormSubmissionFeedback.Status.failure
                                     .rawValue
                             ),
                         ]
@@ -226,17 +226,17 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                 components.path = "/"
                 components.queryItems = [
                     .init(
-                        name: WebFormSubmissionFeedback.sourceQueryKey,
-                        value: WebFormSubmissionFeedback.Source.newsletter
+                        name: FormSubmissionFeedback.sourceQueryKey,
+                        value: FormSubmissionFeedback.Source.newsletter
                             .rawValue
                     ),
                     .init(
-                        name: WebFormSubmissionFeedback.keyQueryKey,
+                        name: FormSubmissionFeedback.keyQueryKey,
                         value: campaignId
                     ),
                     .init(
-                        name: WebFormSubmissionFeedback.statusQueryKey,
-                        value: WebFormSubmissionFeedback.Status.failure.rawValue
+                        name: FormSubmissionFeedback.statusQueryKey,
+                        value: FormSubmissionFeedback.Status.failure.rawValue
                     ),
                 ]
                 redirectURL = components.string

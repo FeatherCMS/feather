@@ -1,5 +1,5 @@
 public import FeatherApplication
-import NewsletterModule
+public import NewsletterModule
 
 extension Campaign.Remove {
     public struct Output: DTO {

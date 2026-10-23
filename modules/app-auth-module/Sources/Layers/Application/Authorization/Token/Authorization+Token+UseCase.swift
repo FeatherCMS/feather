@@ -27,12 +27,13 @@ extension AuthModule.Authorization.Token {
                 else {
                     return nil
                 }
-                let (roles, permissions) = try await (
-                    scope.roles.getRolesBy(identityId: identity.id),
-                    scope.permissions.getPermissionsBy(
-                        identityId: identity.id
-                    )
+                async let rolesTask = scope.roles.getRolesBy(
+                    identityId: identity.id
                 )
+                async let permissionsTask = scope.permissions
+                    .getPermissionsBy(identityId: identity.id)
+                let roles = try await rolesTask
+                let permissions = try await permissionsTask
                 return Output(
                     identityId: identity.id,
                     roles: roles,

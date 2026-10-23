@@ -18,7 +18,7 @@ extension Tag.View {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Tag.View.Repository.OpenAPI(
                                 api: API.Client(

@@ -15,6 +15,10 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
+extension MagicLink.Edit {
+    enum Form {}
+}
+
 extension MagicLink.Edit.Form {
     struct Component: WebComponents.Component {
 

@@ -12,7 +12,7 @@ struct AdminAddPage {
     ) {
         self.controller = AdminAddPageDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminAddPageDefaultInteractor(
                         repository: AdminAddPageOpenAPIRepository(
                             api: API.Client(

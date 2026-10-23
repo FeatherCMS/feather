@@ -6,7 +6,7 @@ import SystemModule
 extension Job.List.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Job.List.Interactor.Interface,
                 any Job.List.Presenter.Interface
             >
@@ -15,7 +15,7 @@ extension Job.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let page = request.queryPage()
             let search = request.querySearch()
             let status = request.queryString("status").flatMap(Int.init)

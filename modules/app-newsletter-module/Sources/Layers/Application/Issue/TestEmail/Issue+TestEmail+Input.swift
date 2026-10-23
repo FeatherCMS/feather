@@ -1,5 +1,5 @@
-import FeatherApplication
-import NewsletterModule
+public import FeatherApplication
+public import NewsletterModule
 
 extension Issue.TestEmail {
     public struct Input: DTO {

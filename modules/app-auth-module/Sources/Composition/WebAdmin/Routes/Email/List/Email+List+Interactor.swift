@@ -18,3 +18,16 @@ import WebComponents
 extension Email.List {
     enum Interactor {}
 }
+
+extension Email.List.Interactor {
+    protocol Interface: Sendable {
+
+        func execute(
+            page: Int,
+            size: Int,
+            search: String?,
+            userID: String?
+        ) async throws -> Email.List.Result
+
+    }
+}

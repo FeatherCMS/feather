@@ -1,4 +1,3 @@
-import ContactDomain
 public import ContactModule
 public import FeatherApplication
 

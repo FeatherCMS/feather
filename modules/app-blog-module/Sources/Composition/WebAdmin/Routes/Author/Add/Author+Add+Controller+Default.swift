@@ -19,7 +19,7 @@ extension Author.Add.Controller {
         let environment: AppEnvironment
         let routes: Author.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Author.Add.Interactor.Interface,
                 any Author.Add.Presenter.Interface
             >
@@ -28,7 +28,7 @@ extension Author.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let permissions = context.currentUserPermissions
             let prefix = (try? await slugPrefix(context: context)) ?? "/"
             return try await runtime.presenter.render(
@@ -41,7 +41,7 @@ extension Author.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let permissions = context.currentUserPermissions
             var payload: Author.Form.Input?
 

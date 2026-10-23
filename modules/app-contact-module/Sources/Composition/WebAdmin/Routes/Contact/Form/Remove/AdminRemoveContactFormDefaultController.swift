@@ -11,7 +11,7 @@ import WebComponents
 struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveContactFormInteractor,
             any AdminRemoveContactFormPresenter
         >
@@ -31,7 +31,7 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         try await interactor.remove(keys: payload.input.normalizedIds)
         return Response(
             status: .seeOther,

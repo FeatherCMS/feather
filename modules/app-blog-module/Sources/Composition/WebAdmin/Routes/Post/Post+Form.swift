@@ -23,7 +23,7 @@ extension Post {
             var value: String
             var isSelected: Bool
         }
-        struct State: Codable, Sendable, Equatable, Hashable {
+        struct State: Sendable {
             var title: FieldState
             var excerpt: FieldState
             var content: FieldState

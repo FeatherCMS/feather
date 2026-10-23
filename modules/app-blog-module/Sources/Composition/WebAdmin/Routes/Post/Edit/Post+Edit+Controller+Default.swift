@@ -17,7 +17,7 @@ extension Post.Edit.Controller {
     struct Default: Interface {
         let routes: Post.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Post.Edit.Interactor.Interface,
                 any Post.Edit.Presenter.Interface
             >
@@ -26,7 +26,7 @@ extension Post.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             do {
@@ -64,7 +64,7 @@ extension Post.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             var lastPayload: Post.Form.Input?

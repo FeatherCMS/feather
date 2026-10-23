@@ -18,7 +18,7 @@ extension Variant.Edit {
             self.controller = Variant.Edit.Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Variant.Edit.Interactor.Default(
                             repository: Variant.Edit.Repository.OpenAPI(
                                 api: MediaAdminAPIClient(

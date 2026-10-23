@@ -11,7 +11,7 @@ struct AdminEditSettings {
     ) {
         self.controller = AdminEditSettingsDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminEditSettingsDefaultInteractor(
                         repository: AdminEditSettingsOpenAPIRepository(
                             api: API.Client(

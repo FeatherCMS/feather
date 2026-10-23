@@ -131,6 +131,10 @@ let package = Package(
             from: "1.13.2"
         ),
         .package(
+            url: "https://github.com/apple/swift-http-types",
+            from: "1.7.0"
+        ),
+        .package(
             url: "https://github.com/apple/swift-nio",
             from: "2.0.0"
         ),
@@ -232,6 +236,7 @@ let package = Package(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"
                 ),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
                 .target(name: "FeatherModuleKit"),
             ],
             path: "Sources/Composition/WebShared",

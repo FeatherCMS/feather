@@ -1,4 +1,7 @@
 import SystemModule
+import UserModule
+import RedirectModule
+import Environment
 import FeatherWebShared
 import Foundation
 import FeatherModuleKit
@@ -16,6 +19,7 @@ import WebModuleWebAdmin
 import WebModule
 import WebModuleWebApp
 import AnalyticsWebAdmin
+import AnalyticsWebApp
 import RedirectWebAdmin
 import RedirectWebApp
 import UserWebAdmin
@@ -65,23 +69,23 @@ func buildRouter(
     let systemRoutes = SystemWebAdmin.Router.Routes.standard
     let redirectRoutes = RedirectWebAdmin.Router.Routes.standard
     var adminEvents = EventRegistry()
-    WebModuleWebApp.WebEventHandlers.register(in: &adminEvents)
+    WebModuleWebApp.EventHandlers.register(in: &adminEvents)
     BlogWebApp.Event.Handlers.register(in: &adminEvents)
     NewsWebApp.NewsEventHandlers.register(in: &adminEvents)
     BlogWebAdmin.Event.Handlers.registerDashboard(
         in: &adminEvents,
         environment: environment
     )
-    WebAdminDashboardEventHandlers.register(
+    WebModuleWebAdmin.AdminDashboardEventHandlers.register(
         in: &adminEvents,
         environment: environment
     )
-    RedirectWebAdmin.Event.Handlers.register(
+    RedirectModule.Event.Handlers.register(
         in: &adminEvents,
         environment: environment,
         routes: redirectRoutes
     )
-    AnalyticsAdminDashboardEventHandlers.register(
+    AnalyticsWebAdmin.Event.Handlers.registerDashboard(
         in: &adminEvents,
         environment: environment
     )
@@ -93,14 +97,14 @@ func buildRouter(
     AuthAdminMenuEventHandlers.register(in: &adminEvents)
     UserModule.Event.Handlers.register(in: &adminEvents)
     MediaWebAdmin.Event.Handlers.register(in: &adminEvents)
-    AnalyticsAdminMenuEventHandlers.register(in: &adminEvents)
+    AnalyticsWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     BlogWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
-    NewsAdminMenuEventHandlers.register(in: &adminEvents)
+    NewsWebAdmin.NewsAdminMenuProvider.register(in: &adminEvents)
     NewsletterRichContentEditorEventHandlers.register(in: &adminEvents)
     ContactRichContentEditorEventHandlers.register(in: &adminEvents)
     NewsletterAdminMenuEventHandlers.register(in: &adminEvents)
     ContactAdminMenuEventHandlers.register(in: &adminEvents)
-    WebAdminMenuEventHandlers.register(in: &adminEvents)
+    WebModuleWebAdmin.AdminMenuEventHandlers.register(in: &adminEvents)
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(
             event: AdminRichContentEditorBlockProvider(),
@@ -141,10 +145,10 @@ func buildRouter(
         }
     )
     var publicContentEvents = EventRegistry()
-    WebPublicContentEventHandlers.register(in: &publicContentEvents)
-    WebMarkdownEventHandlers.register(in: &publicContentEvents)
+    WebModuleWebApp.PublicContentEventHandlers.register(in: &publicContentEvents)
+    WebModuleWebApp.MarkdownEventHandlers.register(in: &publicContentEvents)
     BlogWebApp.PublicContent.Event.Handlers.register(in: &publicContentEvents)
-    NewsWebPublicContentEventHandlers.register(in: &publicContentEvents)
+    NewsWebApp.NewsWebPublicContentEventHandlers.register(in: &publicContentEvents)
 
     ContactMarkdownEventHandlers.register(
         in: &publicContentEvents,

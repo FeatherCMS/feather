@@ -1,5 +1,6 @@
 public import BlogApplication
 public import BlogModule
+import FeatherDBAL
 public import FeatherInfrastructure
 public import WebApplication
 public import WebModule
@@ -18,11 +19,23 @@ extension Tag.Detail.Query {
         }
 
         public func find(id: String) async throws -> Tag.Detail.Output {
-            try await BlogApplication.Public.Tag.Database(
-                    context: context,
-                    metadata: metadata
+            guard
+                let row = try await DatabaseAccessLayer<Tag.Table>(
+                    context: context
                 )
-                .find(id: id)
+                .selectFirst(by: \.id, equals: id)
+            else {
+                throw RepositoryError.notFound
+            }
+            guard
+                let metadata = try await metadata.find(
+                    referenceType: "blog.tag",
+                    referenceID: id
+                )
+            else {
+                throw RepositoryError.notFound
+            }
+            return row.asDetail(metadata: metadata)
         }
     }
 }

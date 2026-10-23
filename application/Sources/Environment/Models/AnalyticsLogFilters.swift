@@ -1,7 +1,7 @@
 public import AnalyticsModule
 import Foundation
 
-public struct WebAppAnalyticsLogFilter: AnalyticsLogFilter {
+public struct WebAppAnalyticsLogFilter: Log.Filter.Interface {
     private let common = CommonAnalyticsLogFilter()
 
     public init() {}
@@ -25,7 +25,7 @@ public struct WebAppAnalyticsLogFilter: AnalyticsLogFilter {
     }
 }
 
-public struct BackendAPIAnalyticsLogFilter: AnalyticsLogFilter {
+public struct BackendAPIAnalyticsLogFilter: Log.Filter.Interface {
     private let common = CommonAnalyticsLogFilter()
 
     public init() {}

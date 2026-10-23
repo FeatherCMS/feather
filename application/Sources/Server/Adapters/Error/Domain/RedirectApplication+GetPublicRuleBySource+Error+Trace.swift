@@ -1,7 +1,8 @@
 public import FeatherBackend
 public import RedirectApplication
+public import RedirectModule
 
-extension GetPublicRuleBySource.Error: ErrorTraceRepresentable {
+extension RedirectModule.Rule.Resolve.UseCase.Error: @retroactive ErrorTraceRepresentable {
     public var underlyingErrors: [any Error] { [] }
 
     public func trace() -> ErrorTrace {

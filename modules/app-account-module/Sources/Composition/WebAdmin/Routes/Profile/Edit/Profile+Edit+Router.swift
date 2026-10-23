@@ -18,7 +18,7 @@ extension Profile.Edit {
             self.controller = Profile.Edit.Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Profile.Edit.Interactor.Default(
                             profileRepository:
                                 Profile.Edit.Repository.OpenAPI(

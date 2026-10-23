@@ -10,7 +10,7 @@ struct AdminRemoveMenuItemDefaultController:
     AdminRemoveMenuItemController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveMenuItemInteractor,
             any AdminRemoveMenuItemPresenter
         >
@@ -19,7 +19,7 @@ struct AdminRemoveMenuItemDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let origin = WebModule.Menu.Item.Routes.removeOrigin(
             request.queryString("origin")

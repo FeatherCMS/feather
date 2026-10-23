@@ -9,7 +9,7 @@ import WebModule
 extension WebModule.Menu.Remove.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any WebModule.Menu.Remove.Interactor.Interface,
                 any WebModule.Menu.Remove.Presenter.Interface
             >
@@ -18,7 +18,7 @@ extension WebModule.Menu.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let nonceRequest = try await request.decode(
                 as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context

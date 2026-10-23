@@ -10,7 +10,7 @@ struct AdminEditPageDefaultController:
     AdminEditPageController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminEditPageInteractor,
             any AdminEditPagePresenter
         >
@@ -19,7 +19,7 @@ struct AdminEditPageDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {
@@ -51,7 +51,7 @@ struct AdminEditPageDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: PageFormInput?

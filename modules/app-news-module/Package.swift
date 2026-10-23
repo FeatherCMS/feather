@@ -100,10 +100,6 @@ let package = Package(
             url: "https://github.com/feather-framework/feather-dbal",
             exact: "1.0.0-alpha.1"
         ),
-        .package(
-            url: "https://github.com/feather-framework/feather-dbal-postgres",
-            exact: "1.0.0-alpha.1"
-        ),
         .package(path: "../app-system-module"),
         .package(path: "../app-web-module"),
         .package(path: "../app-media-module"),
@@ -155,10 +151,6 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(
-                    name: "FeatherDBALPostgres",
-                    package: "feather-dbal-postgres"
-                ),
                 .product(name: "MediaDomain", package: "app-media-module"),
                 .product(
                     name: "MediaInfrastructure",
@@ -302,7 +294,6 @@ let package = Package(
         .target(
             name: "NewsWebApp",
             dependencies: [
-                .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
@@ -328,11 +319,11 @@ let package = Package(
         ),
         // MARK: - tests
         .testTarget(
-            name: "NewsModuleTests",
+            name: "NewsDomainTests",
             dependencies: [
-                .target(name: "NewsApplication"),
-                .target(name: "NewsDomain"),
+                .target(name: "NewsDomain")
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
@@ -342,6 +333,16 @@ let package = Package(
                 .product(name: "Hummingbird", package: "hummingbird"),
             ],
             path: "Tests/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "NewsInfrastructureTests",
+            dependencies: [
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .target(name: "NewsInfrastructure"),
+                .target(name: "NewsModule"),
+            ],
+            path: "Tests/Layers/Infrastructure",
             swiftSettings: swiftSettings
         ),
     ]

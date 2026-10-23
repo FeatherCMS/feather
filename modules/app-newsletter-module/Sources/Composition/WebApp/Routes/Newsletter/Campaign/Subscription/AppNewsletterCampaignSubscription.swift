@@ -1,8 +1,8 @@
-import FeatherWebAdmin
-public import FeatherWebShared
 import FeatherValidation
+public import FeatherWebShared
 import HTML
 public import Hummingbird
+public import NewsletterWebShared
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -12,11 +12,7 @@ public import WebModuleWebApp
 public struct AppNewsletterCampaignSubscription {
     let controller: any AppNewsletterCampaignSubscriptionController
 
-    public static let defaultRoute = NewsletterSubscriptionRoute(
-        prefix: RouterPath("api/v1/newsletter/campaigns"),
-        parameterName: "campaignKey",
-        suffix: RouterPath("subscribe")
-    )
+    public static let defaultRoute = NewsletterSubscriptionRoute.standard
 
     public init(
         apiBuilder: NewsletterAppAPIBuilder,

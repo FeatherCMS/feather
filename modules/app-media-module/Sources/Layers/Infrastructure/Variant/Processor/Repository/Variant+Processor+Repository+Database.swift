@@ -1,11 +1,25 @@
-import FeatherDBAL
+public import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
-import Foundation
 public import MediaDomain
 public import MediaModule
 
-extension Variant.Processor.Table.Row {
+extension Variant.Processor.Table.Detail {
+    var asDomain: Variant.Processor.Model {
+        .init(
+            id: id,
+            variantId: variantId,
+            name: name,
+            matchExtensions: matchExtensions,
+            commandTemplate: commandTemplate,
+            isActive: isActive,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
+    }
+}
+
+extension Variant.Processor.Table.List {
     var asDomain: Variant.Processor.Model {
         .init(
             id: id,
@@ -23,69 +37,72 @@ extension Variant.Processor.Table.Row {
 extension Variant.Processor.Repository {
     public struct Database: Interface {
         public let context: DatabaseTransactionContext
+        private let accessLayer: DatabaseAccessLayer<Variant.Processor.Table>
 
         public init(context: DatabaseTransactionContext) {
             self.context = context
+            self.accessLayer = .init(context: context)
         }
 
-        public func insert(_ model: Variant.Processor.Model.New) async throws
-            -> Variant.Processor.Model
-        {
-            try await Variant.Processor.Table(connection: context.connection)
-                .create(
-                    row: .init(
-                        id: context.idGenerator.generate(),
-                        variantId: model.variantId,
-                        name: model.name,
-                        matchExtensions: model.matchExtensions,
-                        commandTemplate: model.commandTemplate,
-                        isActive: model.isActive,
-                        createdAt: .init(),
-                        updatedAt: .init()
-                    )
-                )
-                .asDomain
+        public func insert(_ model: Variant.Processor.Model.New) async throws -> Variant.Processor.Model {
+            let row = Variant.Processor.Table.Insert(
+                id: context.idGenerator.generate(),
+                variantId: model.variantId,
+                name: model.name,
+                matchExtensions: model.matchExtensions,
+                commandTemplate: model.commandTemplate,
+                isActive: model.isActive
+            )
+            try await accessLayer.insert(row)
+            guard let saved = try await accessLayer.selectFirst(by: \.id, equals: row.id) else {
+                throw RepositoryError.notFound
+            }
+            return saved.asDomain
         }
 
-        public func update(_ model: Variant.Processor.Model) async throws
-            -> Variant.Processor.Model
-        {
-            try await Variant.Processor.Table(connection: context.connection)
-                .update(
-                    row: .init(
-                        id: model.id,
-                        variantId: model.variantId,
-                        name: model.name,
-                        matchExtensions: model.matchExtensions,
-                        commandTemplate: model.commandTemplate,
-                        isActive: model.isActive,
-                        createdAt: model.createdAt,
-                        updatedAt: model.updatedAt
-                    )
-                )
-                .asDomain
+        public func update(_ model: Variant.Processor.Model) async throws -> Variant.Processor.Model {
+            try await accessLayer.update(
+                .init(
+                    name: model.name,
+                    matchExtensions: model.matchExtensions,
+                    commandTemplate: model.commandTemplate,
+                    isActive: model.isActive
+                ),
+                where: \.id,
+                equals: model.id
+            )
+            guard let updated = try await accessLayer.selectFirst(by: \.id, equals: model.id) else {
+                throw RepositoryError.notFound
+            }
+            return updated.asDomain
         }
 
         public func find(id: String) async throws -> Variant.Processor.Model? {
-            try await Variant.Processor.Table(connection: context.connection)
-                .find(id: id)?
-                .asDomain
+            try await accessLayer.selectFirst(by: \.id, equals: id).map(\.asDomain)
         }
-        public func list(variantId: String) async throws -> [Variant.Processor
-            .Model]
-        {
-            try await Variant.Processor.Table(connection: context.connection)
-                .list(variantId: variantId).map(\.asDomain)
+
+        public func list(variantId: String) async throws -> [Variant.Processor.Model] {
+            try await accessLayer.select {
+                $0.where(\.variantId, equals: variantId).order(by: \.name)
+            }
+            .map(\.asDomain)
         }
+
         public func listActive() async throws -> [Variant.Processor.Model] {
-            try await Variant.Processor.Table(connection: context.connection)
-                .listActive().map(\.asDomain)
-        }
-        public func delete(ids: [String]) async throws -> [String] {
-            try await DatabaseAccessLayer<Variant.Processor.Table>(
-                context: context
+            let activeVariantIDs = Set(
+                try await DatabaseAccessLayer<Variant.Table>(context: context)
+                    .select { $0.where(\.isActive, equals: true) }
+                    .map(\.id)
             )
-            .delete(where: \.id, in: ids)
+            return try await accessLayer.select {
+                $0.where(\.isActive, equals: true).order(by: \.name)
+            }
+            .filter { activeVariantIDs.contains($0.variantId) }
+            .map(\.asDomain)
+        }
+
+        public func delete(ids: [String]) async throws -> [String] {
+            try await accessLayer.delete(where: \.id, in: ids)
             return ids
         }
     }

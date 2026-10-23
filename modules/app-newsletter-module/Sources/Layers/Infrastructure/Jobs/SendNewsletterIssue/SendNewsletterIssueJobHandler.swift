@@ -64,7 +64,7 @@ public enum SendNewsletterIssueJobHandler {
             guard let subscriberEmail = parameters.mail.to.first else {
                 return
             }
-            let repository = DeliveryDatabaseRepository(
+            let repository = Delivery.Repository.Database(
                 context: .init(
                     platform: databaseContext.platform,
                     connection: connection,

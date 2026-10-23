@@ -2,10 +2,6 @@ import AnalyticsDomain
 public import AnalyticsModule
 public import FeatherApplication
 
-extension Log {
-    public enum Search {}
-}
-
 extension Log.Search {
     public struct Input: DTO {
         public struct Query: Sendable {

@@ -15,3 +15,9 @@ import WebModuleWebAdmin
 extension Author.View {
     enum Repository {}
 }
+
+extension Author.View.Repository {
+    protocol Interface: Sendable {
+        func get(id: String) async throws -> Author.View.Model
+    }
+}

@@ -9,6 +9,6 @@ extension AdminAPIGateway {
         let subject = try await CurrentSubject.require()
         let result = try await self.useCases.makeListNewsletterCampaigns()
             .execute(subject: subject, input: .init())
-        return .ok(.init(body: .json(result.map(map))))
+        return .ok(.init(body: .json(result.items.map(map))))
     }
 }

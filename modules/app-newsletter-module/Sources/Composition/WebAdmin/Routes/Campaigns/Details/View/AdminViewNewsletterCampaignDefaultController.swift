@@ -13,7 +13,7 @@ struct AdminViewNewsletterCampaignDefaultController:
     AdminViewNewsletterCampaignController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminViewNewsletterCampaignInteractor,
             any AdminViewNewsletterCampaignPresenter
         >
@@ -21,7 +21,9 @@ struct AdminViewNewsletterCampaignDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let id = try context.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Campaign.Permissions.read)
         else {

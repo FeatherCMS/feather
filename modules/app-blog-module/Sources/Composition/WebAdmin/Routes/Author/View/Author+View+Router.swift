@@ -19,7 +19,7 @@ extension Author.View {
             self.authorLinkRoutes = authorLinkRoutes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Author.View.Repository.OpenAPI(
                                 api: API.Client(

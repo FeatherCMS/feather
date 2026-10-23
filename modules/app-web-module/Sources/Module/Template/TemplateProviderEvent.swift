@@ -1,7 +1,8 @@
 public import FeatherModuleKit
 
-public struct TemplateProviderEvent: FeatherModuleKit.Event {
-    public typealias Output = any TemplateProvider
-
+public struct TemplateProviderEvent: FeatherModuleKit.Event<
+    any TemplateProvider
+>
+{
     public init() {}
 }

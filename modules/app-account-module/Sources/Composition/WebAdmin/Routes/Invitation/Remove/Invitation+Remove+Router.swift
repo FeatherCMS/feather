@@ -17,7 +17,7 @@ extension Invitation.Remove {
             self.controller = Invitation.Remove.Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Invitation.Remove.Interactor.Default(
                             repository:
                                 Invitation.Remove.Repository.OpenAPI(

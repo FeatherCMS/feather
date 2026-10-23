@@ -1,6 +1,6 @@
-import ContactDomain
-import ContactModule
-import FeatherModuleKit
+public import ContactDomain
+public import ContactModule
+public import FeatherModuleKit
 
 extension FormField.Detail {
     public struct Scope: FeatherModuleKit.Scope {

@@ -29,13 +29,7 @@ extension MagicLink.List.Repository {
             size: Int,
             search: String?,
             userID: String?
-        ) async throws -> (
-            items: [AuthAdminAPI.Components.Schemas
-                .AuthMagicLinkQueryItemSchema],
-            emailByAuthEmailId: [String: String],
-            total: Int,
-            page: Int, size: Int
-        ) {
+        ) async throws -> MagicLink.List.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
@@ -52,7 +46,7 @@ extension MagicLink.List.Repository {
                 case .ok(let ok):
                     let body = try ok.body.json
                     let emails = try await listEmails()
-                    return (
+                    return .init(
                         items: body.data.items,
                         emailByAuthEmailId: Dictionary(
                             uniqueKeysWithValues: emails.map {

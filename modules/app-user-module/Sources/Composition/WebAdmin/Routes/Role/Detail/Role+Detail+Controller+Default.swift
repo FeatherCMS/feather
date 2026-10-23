@@ -6,7 +6,7 @@ import UserModule
 extension Role.Detail.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Role.Detail.Interactor.Interface,
                 any Role.Detail.Presenter.Interface
             >
@@ -15,7 +15,7 @@ extension Role.Detail.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: Role.Permissions.read

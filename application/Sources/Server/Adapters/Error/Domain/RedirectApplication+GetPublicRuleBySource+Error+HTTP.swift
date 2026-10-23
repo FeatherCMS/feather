@@ -1,8 +1,9 @@
 public import RedirectApplication
+public import RedirectModule
 public import FeatherBackend
-import NIOHTTP1
+public import NIOHTTP1
 
-extension GetPublicRuleBySource.Error: HTTPErrorRepresentable {
+extension RedirectModule.Rule.Resolve.UseCase.Error: @retroactive HTTPErrorRepresentable {
     public var status: HTTPResponseStatus { .notFound }
 
     public var content: any HTTPErrorContent {

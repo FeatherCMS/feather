@@ -15,3 +15,9 @@ import WebModuleWebAdmin
 extension Post.View {
     enum Interactor {}
 }
+
+extension Post.View.Interactor {
+    protocol Interface: Sendable {
+        func execute(id: String) async throws -> Post.View.Model
+    }
+}

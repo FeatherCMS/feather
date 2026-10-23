@@ -1,8 +1,9 @@
 public import AccountDomain
+public import AccountModule
 public import FeatherBackend
-import NIOHTTP1
+public import NIOHTTP1
 
-extension Settings.Error: ErrorTraceRepresentable {
+extension AccountModule.Settings.Model.Error: @retroactive ErrorTraceRepresentable {
 
     public var underlyingErrors: [any Error] {
         []
@@ -17,7 +18,7 @@ extension Settings.Error: ErrorTraceRepresentable {
     }
 }
 
-extension Settings.Error: HTTPErrorRepresentable {
+extension AccountModule.Settings.Model.Error: @retroactive HTTPErrorRepresentable {
 
     public var status: HTTPResponseStatus { .badRequest }
 

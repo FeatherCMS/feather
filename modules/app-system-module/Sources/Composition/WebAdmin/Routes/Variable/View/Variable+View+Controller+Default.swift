@@ -9,18 +9,16 @@ extension Variable.View.Controller {
         Interface
     {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
-                any Variable.View.Interactor
-                    .Interface,
-                any Variable.View.Presenter
-                    .Interface
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any Variable.View.Interactor.Interface,
+                any Variable.View.Presenter.Interface
             >
 
         func getSystemVariable(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Variable.Permissions.read

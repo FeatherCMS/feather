@@ -12,7 +12,7 @@ import Foundation
 #endif
 public import FeatherBackend
 
-extension DecodingError: ErrorTraceRepresentable {
+extension DecodingError: @retroactive ErrorTraceRepresentable {
 
     public var underlyingErrors: [any Error] {
         switch self {

@@ -3,7 +3,7 @@ public import FeatherModuleKit
 import NewsletterDomain
 public import NewsletterModule
 
-public import struct Foundation.Date
+import Foundation
 
 extension Issue.Schedule {
     public struct UseCase: FeatherApplication.UseCase {

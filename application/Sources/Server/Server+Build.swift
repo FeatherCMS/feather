@@ -25,8 +25,6 @@ import FoundationEssentials
 import Foundation
 #endif
 
-typealias DefaultRequestContext = BasicRequestContext
-
 func buildServer(
     config: ServerConfig
 ) async throws -> some ApplicationProtocol {

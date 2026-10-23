@@ -1,26 +1,19 @@
 public import AccountApplication
-import NIOHTTP1
+public import AccountModule
 public import FeatherBackend
+public import NIOHTTP1
 
-private protocol AccountInvitationHTTPError: ErrorTraceRepresentable,
-    HTTPErrorRepresentable
+extension AccountModule.Invitation.Resend.UseCase.Error:
+    @retroactive ErrorTraceRepresentable, @retroactive HTTPErrorRepresentable
 {
-    var message: String { get }
-}
-
-extension AccountInvitationHTTPError {
-
     public var underlyingErrors: [any Error] { [] }
 
     public func trace() -> ErrorTrace {
-        .init(
-            type: Self.self,
-            logMessage: message,
-            children: []
-        )
+        .init(type: Self.self, logMessage: message, children: [])
     }
 
     public var status: HTTPResponseStatus { .notFound }
+
     public var content: any HTTPErrorContent {
         DefaultHTTPErrorContent(
             message: message,
@@ -29,16 +22,40 @@ extension AccountInvitationHTTPError {
     }
 }
 
-extension AccountApplication.ResendInvitation.Error: AccountInvitationHTTPError
+extension AccountModule.Invitation.CompleteRegistration.UseCase.Error:
+    @retroactive ErrorTraceRepresentable, @retroactive HTTPErrorRepresentable
 {
+    public var underlyingErrors: [any Error] { [] }
+
+    public func trace() -> ErrorTrace {
+        .init(type: Self.self, logMessage: message, children: [])
+    }
+
+    public var status: HTTPResponseStatus { .notFound }
+
+    public var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
+            message: message,
+            reason: "invitation_not_found"
+        )
+    }
 }
 
-extension AccountApplication.CompleteInvitationRegistration.Error:
-    AccountInvitationHTTPError
+extension AccountModule.Invitation.Validate.UseCase.Error:
+    @retroactive ErrorTraceRepresentable, @retroactive HTTPErrorRepresentable
 {
-}
+    public var underlyingErrors: [any Error] { [] }
 
-extension AccountApplication.ValidateInvitation.Error:
-    AccountInvitationHTTPError
-{
+    public func trace() -> ErrorTrace {
+        .init(type: Self.self, logMessage: message, children: [])
+    }
+
+    public var status: HTTPResponseStatus { .notFound }
+
+    public var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
+            message: message,
+            reason: "invitation_not_found"
+        )
+    }
 }

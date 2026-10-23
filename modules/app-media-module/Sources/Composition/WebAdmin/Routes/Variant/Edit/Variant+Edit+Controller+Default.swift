@@ -9,7 +9,7 @@ extension Variant.Edit.Controller {
     struct Default: Variant.Edit.Controller.Interface {
         let routes: Variant.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Variant.Edit.Interactor.Interface,
                 any Variant.Edit.Presenter.Interface
             >
@@ -20,7 +20,7 @@ extension Variant.Edit.Controller {
         )
             async throws -> Response
         {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard context.isCurrentUserAllowed(to: Variant.Permissions.update)
             else {
                 return try await runtime.presenter
@@ -60,7 +60,7 @@ extension Variant.Edit.Controller {
         )
             async throws -> Response
         {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard context.isCurrentUserAllowed(to: Variant.Permissions.update)
             else {
                 return try await runtime.presenter
@@ -117,7 +117,7 @@ extension Variant.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: Variant.Processor.Permissions.update
@@ -152,7 +152,7 @@ extension Variant.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: Variant.Processor.Permissions.create
@@ -194,7 +194,7 @@ extension Variant.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: Variant.Processor.Permissions.update
@@ -238,7 +238,7 @@ extension Variant.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: Variant.Processor.Permissions.delete

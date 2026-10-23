@@ -1,5 +1,5 @@
-import FeatherModuleKit
-import NewsletterModule
+public import FeatherModuleKit
+public import NewsletterModule
 
 extension Subscriber.Add {
     public struct Action: PermissionAction {

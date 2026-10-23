@@ -1,7 +1,5 @@
 public import FeatherModuleKit
 
-public struct MarkdownSourceTransformerProvider: Event {
-    public typealias Output = (any MarkdownSourceTransformer)?
-
+public struct MarkdownSourceTransformerProvider: Event<(any MarkdownSourceTransformer)?> {
     public init() {}
 }

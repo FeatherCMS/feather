@@ -6,3 +6,14 @@ import Hummingbird
 extension Invitation.Remove {
     enum Controller {}
 }
+
+extension Invitation.Remove.Controller {
+
+    protocol Interface: Sendable {
+
+        func postRemoveAccountInvitation(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
+    }
+}

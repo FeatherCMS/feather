@@ -1,5 +1,5 @@
 {
-  "originHash" : "968b62c23267a88c1d54eefd7b6c3be835201d9bd991aa8e805606c164315b65",
+  "originHash" : "daf34e96b4abe9e5dabdcea4c0e39cb2eb8131bb8e26fa36c47fc35068bf32b9",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -20,29 +20,11 @@
       }
     },
     {
-      "identity" : "feather-database-postgres",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-database-postgres",
-      "state" : {
-        "revision" : "078c8ad1a781d5606d6c3646ab1f127b28914f18",
-        "version" : "1.0.0-rc.3"
-      }
-    },
-    {
       "identity" : "feather-dbal",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-dbal",
       "state" : {
         "revision" : "3507e6b8933425e02e823ce74db7c5a98907c93b",
-        "version" : "1.0.0-alpha.1"
-      }
-    },
-    {
-      "identity" : "feather-dbal-postgres",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-dbal-postgres",
-      "state" : {
-        "revision" : "2291ae9f07aacb48b12fbe83fd00a909444cb4e7",
         "version" : "1.0.0-alpha.1"
       }
     },
@@ -70,15 +52,6 @@
       "location" : "https://github.com/feather-framework/feather-sql",
       "state" : {
         "revision" : "6f9e5ef57a25d0e36e489ebc71ee8ce133e8c6ed",
-        "version" : "1.0.0-alpha.1"
-      }
-    },
-    {
-      "identity" : "feather-sql-postgres",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-sql-postgres",
-      "state" : {
-        "revision" : "a2190dfa726aab9b0519084cf7ec05b0161bd271",
         "version" : "1.0.0-alpha.1"
       }
     },
@@ -125,15 +98,6 @@
       "state" : {
         "revision" : "2cabbac1d08b25c5d22960cc9554f7960a3824cf",
         "version" : "7.0.0"
-      }
-    },
-    {
-      "identity" : "postgres-nio",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/postgres-nio",
-      "state" : {
-        "revision" : "39ce38a93408937bcd27f521f3cdf88266136b80",
-        "version" : "1.33.1"
       }
     },
     {

@@ -12,7 +12,7 @@ struct AdminViewNewsletterIssueDefaultController:
     AdminViewNewsletterIssueController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminViewNewsletterIssueInteractor,
             any AdminViewNewsletterIssuePresenter
         >
@@ -20,7 +20,9 @@ struct AdminViewNewsletterIssueDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let newsletterId = try context.requiredParameter("newsletterId")
         let issueId = try context.requiredParameter("issueId")
         do {

@@ -11,7 +11,7 @@ struct AdminEditMenuItemDefaultController:
     AdminEditMenuItemController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminEditMenuItemInteractor,
             any AdminEditMenuItemPresenter
         >
@@ -20,7 +20,7 @@ struct AdminEditMenuItemDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions
@@ -68,7 +68,7 @@ struct AdminEditMenuItemDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions

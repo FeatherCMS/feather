@@ -1,6 +1,6 @@
 import AsyncHTTPClient
 public import ContactAppAPI
-public import ContactWebShared
+import ContactWebShared
 public import FeatherWebShared
 public import Foundation
 import HTTPTypes
@@ -9,6 +9,27 @@ import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 
 public struct ContactAppAPIClient: Sendable {
+    private struct AuthMiddleware: ClientMiddleware {
+        let sessionToken: String?
+
+        func intercept(
+            _ request: HTTPRequest,
+            body: HTTPBody?,
+            baseURL: URL,
+            operationID: String,
+            next:
+                @concurrent @Sendable (HTTPRequest, HTTPBody?, URL) async throws
+                -> (HTTPResponse, HTTPBody?)
+        ) async throws -> (HTTPResponse, HTTPBody?) {
+            var authenticatedRequest = request
+            if let sessionToken {
+                authenticatedRequest.headerFields[.authorization] =
+                    "Bearer \(sessionToken)"
+            }
+            return try await next(authenticatedRequest, body, baseURL)
+        }
+    }
+
     public let client: ContactAppAPI.Client
 
     public init(apiBaseURL: URL, sessionToken: String? = nil) {
@@ -18,7 +39,7 @@ public struct ContactAppAPIClient: Sendable {
                 configuration: .init(client: .shared, timeout: .seconds(3))
             ),
             middlewares: [
-                ContactAppClientAuthMiddleware(sessionToken: sessionToken)
+                AuthMiddleware(sessionToken: sessionToken)
             ]
         )
     }
@@ -42,34 +63,5 @@ public struct ContactAppAPIClient: Sendable {
             statusCode: statusCode,
             responseBody: try await responseBody?.collectString()
         )
-    }
-}
-
-private struct ContactAppClientAuthMiddleware: ClientMiddleware {
-    let sessionToken: String?
-
-    func intercept(
-        _ request: HTTPRequest,
-        body: HTTPBody?,
-        baseURL: URL,
-        operationID: String,
-        next:
-            @concurrent @Sendable (HTTPRequest, HTTPBody?, URL) async throws
-            -> (HTTPResponse, HTTPBody?)
-    ) async throws -> (HTTPResponse, HTTPBody?) {
-        var authenticatedRequest = request
-        if let sessionToken {
-            authenticatedRequest.headerFields[.authorization] =
-                "Bearer \(sessionToken)"
-        }
-        return try await next(authenticatedRequest, body, baseURL)
-    }
-}
-
-extension ContactAPIBuilder {
-    public func makeContactApp(
-        _ context: DefaultRequestContext
-    ) -> ContactAppAPIClient {
-        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

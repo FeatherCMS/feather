@@ -5,3 +5,12 @@ import FeatherWebShared
 extension Author.Add {
     enum Presenter {}
 }
+
+extension Author.Add.Presenter {
+    protocol Interface: Sendable {
+        func render(
+            state: Author.Form.State,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+    }
+}

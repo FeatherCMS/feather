@@ -30,7 +30,7 @@ extension Post.Status.Controller {
                 from: payload,
                 current: details.metadata
             )
-            try await AdminWebMetadataStatusUpdater(
+            try await AdminMetadataStatusUpdater(
                 api: WebModuleWebAdmin.API.Client(
                     environment: environment,
                     requestContext: context
@@ -63,14 +63,23 @@ extension Post.Status.Controller {
 
         private func statusToastContent(
             for status: String
-        ) -> (title: String, message: String) {
+        ) -> AdminNotification.State {
             switch status {
             case "published":
-                return ("Published", "Blog post published successfully.")
+                return .init(
+                    title: "Published",
+                    message: "Blog post published successfully."
+                )
             case "archived":
-                return ("Archived", "Blog post archived successfully.")
+                return .init(
+                    title: "Archived",
+                    message: "Blog post archived successfully."
+                )
             default:
-                return ("Draft", "Blog post moved to draft successfully.")
+                return .init(
+                    title: "Draft",
+                    message: "Blog post moved to draft successfully."
+                )
             }
         }
     }

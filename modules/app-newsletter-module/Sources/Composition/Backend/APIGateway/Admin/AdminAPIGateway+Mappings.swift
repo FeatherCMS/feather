@@ -22,7 +22,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ value: Campaign.List.Output
+        _ value: Campaign.List.Item
     ) -> Components.Schemas.NewsletterCampaignSchema {
         map(
             key: value.key,
@@ -91,7 +91,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ value: Issue.List.Output,
+        _ value: Issue.List.Item,
         campaignKey: String
     ) -> Components.Schemas.NewsletterIssueSchema {
         map(
@@ -310,7 +310,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ value: Delivery.List.Output
+        _ value: Delivery.List.Item
     ) -> Components.Schemas.NewsletterDeliverySchema {
         .init(
             subscriberEmail: value.subscriberEmail,

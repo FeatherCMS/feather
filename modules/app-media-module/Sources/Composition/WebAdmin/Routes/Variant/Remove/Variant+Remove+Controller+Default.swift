@@ -9,7 +9,7 @@ extension Variant.Remove.Controller {
     {
         let routes: Variant.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Variant.Remove.Interactor.Interface,
                 any Variant.Remove.Presenter.Interface
             >
@@ -18,7 +18,9 @@ extension Variant.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard context.isCurrentUserAllowed(to: Variant.Permissions.delete)
             else {
                 return

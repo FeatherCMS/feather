@@ -20,7 +20,7 @@ extension Author.List {
                 environment: environment,
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(

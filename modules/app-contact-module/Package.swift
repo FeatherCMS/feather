@@ -91,18 +91,6 @@ let package = Package(
             exact: "1.0.0-alpha.1"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-dbal-postgres",
-            exact: "1.0.0-alpha.1"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-sql",
-            exact: "1.0.0-alpha.1"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-sql-postgres",
-            exact: "1.0.0-alpha.1"
-        ),
-        .package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
         ),
@@ -122,7 +110,7 @@ let package = Package(
             name: "ContactDomain",
             dependencies: [
                 .target(name: "ContactModule"),
-                .product(name: "FeatherDomain", package: "feather-core")
+                .product(name: "FeatherDomain", package: "feather-core"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -153,15 +141,6 @@ let package = Package(
                 ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(
-                    name: "FeatherDBALPostgres",
-                    package: "feather-dbal-postgres"
-                ),
-                .product(name: "FeatherSQL", package: "feather-sql"),
-                .product(
-                    name: "FeatherSQLPostgres",
-                    package: "feather-sql-postgres"
-                ),
 
                 .target(name: "ContactModule"),
                 .target(name: "ContactApplication"),
@@ -316,6 +295,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .target(name: "ContactInfrastructure"),
+                .target(name: "ContactModule"),
             ],
             path: "Tests/Layers/Infrastructure",
             swiftSettings: swiftSettings

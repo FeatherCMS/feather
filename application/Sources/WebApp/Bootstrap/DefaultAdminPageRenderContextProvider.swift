@@ -1,4 +1,5 @@
 import AccountWebAdmin
+import AccountAdminAPI
 import FeatherWebShared
 import FeatherWebAdmin
 import FeatherModuleKit
@@ -26,14 +27,16 @@ struct DefaultAdminPageRenderContextProvider:
 
         var topBarState = AdminTopBar.State()
         do {
-            let accountAPI = AccountWebAdmin.API.AppClient(
+            let accountAPI = AccountWebAdmin.API.Client(
                 environment: environment,
                 requestContext: context
             )
             let profileID =
                 try await accountAPI
                 .withOpenAPIRepositoryErrorMapping { client in
-                    let response = try await client.accountProfileGet()
+                    let response = try await client.accountProfileGet(
+                        path: .init(userId: context.account.user.id)
+                    )
                     return try response.ok.body.json.profileImageAssetId
                 }
 

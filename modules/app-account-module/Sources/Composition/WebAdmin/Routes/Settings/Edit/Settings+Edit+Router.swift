@@ -17,7 +17,7 @@ extension Settings.Edit {
             self.controller = Settings.Edit.Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Settings.Edit.Interactor.Default(
                             repository: Settings.Edit.Repository.OpenAPI(
                                 api: API.Client(

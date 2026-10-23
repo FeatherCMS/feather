@@ -12,13 +12,11 @@ extension Admin {
             request: Request,
             events: any EventPublisher
         ) async throws -> [AdminSideBar.Group] {
-            let (menuDefinitions, itemDefinitions) = try await load(
-                from: events
-            )
+            let definitions = try await load(from: events)
             let path = request.uri.path
             let permissions = context.currentUserPermissions
             let visibleMenuDefinitions =
-                menuDefinitions
+                definitions.groups
                 .filter { definition in
                     guard let permission = definition.permission else {
                         return true
@@ -34,7 +32,7 @@ extension Admin {
                     ?? FeatherIcons.helpCircle()
 
                 let children =
-                    itemDefinitions
+                    definitions.items
                     .filter { $0.menuKey == definition.key }
                     .filter { item in
                         guard let permission = item.permission else {
@@ -84,10 +82,7 @@ extension Admin {
 
         private static func load(
             from events: any EventPublisher
-        ) async throws -> (
-            groups: [Group.Definition],
-            items: [Item.Definition]
-        ) {
+        ) async throws -> Definitions {
             let context = Admin.Menu.Context(
                 path: "",
                 permissions: []
@@ -110,7 +105,7 @@ extension Admin {
                     )
                     .flatMap { $0 }
             }
-            return (groups: menus, items: items)
+            return .init(groups: menus, items: items)
         }
 
         private static func isCurrent(_ link: String, path: String) -> Bool {

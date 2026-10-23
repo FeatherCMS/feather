@@ -19,7 +19,7 @@ import WebComponents
 extension Credential.Edit.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Credential.Edit.Interactor.Interface,
                 any Credential.Edit.Presenter.Interface
             >
@@ -31,7 +31,9 @@ extension Credential.Edit.Controller {
             async throws -> HTMLResponse
         {
             let id = try context.requiredID()
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Credential.Permissions.update
@@ -73,7 +75,9 @@ extension Credential.Edit.Controller {
             async throws -> Response
         {
             let id = try context.requiredID()
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Credential.Permissions.update

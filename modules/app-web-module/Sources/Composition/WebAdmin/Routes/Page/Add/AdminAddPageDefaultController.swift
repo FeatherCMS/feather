@@ -8,7 +8,7 @@ import WebModule
 
 struct AdminAddPageDefaultController: AdminAddPageController {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminAddPageInteractor,
             any AdminAddPagePresenter
         >
@@ -17,7 +17,7 @@ struct AdminAddPageDefaultController: AdminAddPageController {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         return try await runtime.presenter.renderAddPage(
             state: formState(slugPrefix: slugPrefix(context: context)),
             permissions: context.currentUserPermissions
@@ -28,7 +28,7 @@ struct AdminAddPageDefaultController: AdminAddPageController {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         var lastPayload: PageFormInput?
 

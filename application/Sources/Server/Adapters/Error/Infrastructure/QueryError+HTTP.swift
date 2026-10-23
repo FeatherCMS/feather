@@ -1,8 +1,8 @@
 public import FeatherBackend
 public import FeatherInfrastructure
-import NIOHTTP1
+public import NIOHTTP1
 
-extension QueryError: HTTPErrorRepresentable {
+extension QueryError: @retroactive HTTPErrorRepresentable {
     public var status: HTTPResponseStatus {
         switch reason {
         case .notFound:

@@ -31,7 +31,7 @@ extension Email.Add {
             self.routes = routes
             self.controller = Email.Add.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Email.Add.Interactor.Default(
                             repository: Email.Add.Repository.OpenAPI(
                                 api: API.Client(

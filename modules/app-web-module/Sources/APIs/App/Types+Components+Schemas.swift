@@ -202,8 +202,6 @@ extension Components {
                 case message
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MetadataSlugField`.
-        public typealias MetadataSlugField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataSchema`.
         public struct MetadataSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MetadataSchema/referenceType`.
@@ -243,6 +241,8 @@ extension Components {
         public typealias MetadataReferenceTypeField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataReferenceIDField`.
         public typealias MetadataReferenceIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataSlugField`.
+        public typealias MetadataSlugField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataTemplateField`.
         public typealias MetadataTemplateField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataSlugListSchema`.

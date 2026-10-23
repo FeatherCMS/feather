@@ -17,6 +17,10 @@ import WebComponents
 
 
 
+extension Credential.Add {
+    enum Interactor {}
+}
+
 extension Credential.Add.Interactor {
     protocol Interface: Sendable {
         func listEmails() async throws -> [Credential.Form.IdentityOption]

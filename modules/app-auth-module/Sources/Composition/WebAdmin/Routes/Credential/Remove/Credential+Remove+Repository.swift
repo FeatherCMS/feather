@@ -18,3 +18,10 @@ import WebComponents
 extension Credential.Remove {
     enum Repository {}
 }
+
+extension Credential.Remove.Repository {
+    protocol Interface: Sendable {
+        func get(id: String) async throws -> Credential.Edit.Model
+        func delete(id: String) async throws
+    }
+}

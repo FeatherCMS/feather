@@ -7,12 +7,12 @@ import WebModule
 
 extension UseCases {
 
-    public func makeGetPublicArticle() -> GetPublicArticle {
-        .init(
+    public func makePublicArticleDetail() -> Public.Article.Detail.UseCase {
+        Public.Article.Detail.UseCase(
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
                 scope: { context in
-                    PublicNewsArticle.Detail.Scope(
+                    Public.Article.Detail.Scope(
                         article: ArticleDatabaseQueries(
                             context: context,
                             metadata: WebModule.Metadata.Query.Database(

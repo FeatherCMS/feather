@@ -1,4 +1,4 @@
-import BlogModule
+public import BlogModule
 
 extension Public.AuthorLink.Search {
     public enum Query {

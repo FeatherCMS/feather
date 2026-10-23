@@ -24,7 +24,6 @@ enum AdminBlogMetadataRoutes {
         authorRoutes: Author.Router.Routes,
         tagRoutes: Tag.Router.Routes
     ) {
-        let apiBuilder = WebModuleWebAdmin.API.Builder(environment: environment)
         let routes = [
             Route(
                 path: postRoutes.postEditMetadataRoute(),
@@ -58,7 +57,7 @@ enum AdminBlogMetadataRoutes {
                 let metadataID =
                     context.parameters.get("metadataID", as: String.self) ?? ""
                 let editPath = route.editPath(id)
-                let configuration = AdminWebMetadataEditConfiguration(
+                let configuration = AdminMetadataEditConfiguration(
                     referenceType: route.referenceType,
                     title: route.title,
                     description: "Update the metadata for this blog content.",
@@ -76,8 +75,8 @@ enum AdminBlogMetadataRoutes {
                         ),
                     ]
                 )
-                let handler = AdminWebMetadataEditHandler(
-                    apiBuilder: apiBuilder,
+                let handler = AdminMetadataEditHandler(
+                    environment: environment,
                     renderingEngine: renderingEngine,
                     adminEvents: events
                 )
@@ -93,7 +92,7 @@ enum AdminBlogMetadataRoutes {
                 let metadataID =
                     context.parameters.get("metadataID", as: String.self) ?? ""
                 let editPath = route.editPath(id)
-                let configuration = AdminWebMetadataEditConfiguration(
+                let configuration = AdminMetadataEditConfiguration(
                     referenceType: route.referenceType,
                     title: route.title,
                     description: "Update the metadata for this blog content.",
@@ -111,8 +110,8 @@ enum AdminBlogMetadataRoutes {
                         ),
                     ]
                 )
-                let handler = AdminWebMetadataEditHandler(
-                    apiBuilder: apiBuilder,
+                let handler = AdminMetadataEditHandler(
+                    environment: environment,
                     renderingEngine: renderingEngine,
                     adminEvents: events
                 )

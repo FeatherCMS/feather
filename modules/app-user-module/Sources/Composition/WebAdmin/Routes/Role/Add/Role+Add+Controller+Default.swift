@@ -9,7 +9,7 @@ import UserModule
 extension Role.Add.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Role.Add.Interactor.Interface,
                 any Role.Add.Presenter.Interface
             >
@@ -18,7 +18,7 @@ extension Role.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (_, presenter) = buildRuntime((request, context))
+            let presenter = buildRuntime(request, context).presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Role.Permissions.create
@@ -33,7 +33,7 @@ extension Role.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: Role.Permissions.create

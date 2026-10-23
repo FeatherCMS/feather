@@ -10,7 +10,7 @@ import WebModule
 extension WebModule.Menu.Add.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any WebModule.Menu.Add.Interactor.Interface,
                 any WebModule.Menu.Add.Presenter.Interface
             >
@@ -19,7 +19,7 @@ extension WebModule.Menu.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             return try await runtime.presenter.renderAddPage(
                 state: formState(),
                 permissions: context.currentUserPermissions
@@ -30,7 +30,7 @@ extension WebModule.Menu.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let permissions = context.currentUserPermissions
             var lastPayload: MenuFormInput?
 

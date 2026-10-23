@@ -4,7 +4,7 @@ import CSS
 import FeatherModuleKit
 import FeatherValidation
 import FeatherValidationFoundation
-public import FeatherWebAdmin
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import OpenAPIRuntime

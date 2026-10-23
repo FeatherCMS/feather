@@ -8,14 +8,11 @@ public struct AuthenticatedRequestContext:
     RequestParameterProviding,
     Sendable
 {
-
-    public typealias ParentContext = DefaultRequestContext
-
     public var coreContext: CoreRequestContextStorage
     public let sessionToken: String
     public let account: AccountModel
 
-    public init(context: ParentContext) throws {
+    public init(context: DefaultRequestContext) throws {
         guard
             let sessionToken = context.sessionToken,
             let account = context.account

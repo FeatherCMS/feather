@@ -19,3 +19,20 @@ import WebComponents
 extension Credential.Add {
     enum Presenter {}
 }
+
+extension Credential.Add.Presenter {
+    protocol Interface: Sendable {
+        func renderPage(
+            form: Credential.Form.Component.State,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+        func renderForbiddenPage() async throws -> HTMLResponse
+        func format(error: OpenAPIRepositoryError) -> String
+        func formState(
+            userId: String,
+            emails: [Credential.Form.IdentityOption],
+            email: String,
+            password: String
+        ) -> Credential.Form.Component.State
+    }
+}

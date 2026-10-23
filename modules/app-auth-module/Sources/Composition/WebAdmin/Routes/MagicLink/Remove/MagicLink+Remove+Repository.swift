@@ -15,6 +15,10 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
+extension MagicLink.Remove {
+    enum Repository {}
+}
+
 extension MagicLink.Remove.Repository {
     protocol Interface: Sendable {
 

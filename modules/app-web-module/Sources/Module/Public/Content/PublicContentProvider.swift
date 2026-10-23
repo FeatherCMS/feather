@@ -1,7 +1,8 @@
 public import FeatherModuleKit
 
-public struct PublicContentProvider: FeatherModuleKit.Event {
-    public typealias Output = PublicContentResult?
-
+public struct PublicContentProvider: FeatherModuleKit.Event<
+    PublicContentResult?
+>
+{
     public init() {}
 }

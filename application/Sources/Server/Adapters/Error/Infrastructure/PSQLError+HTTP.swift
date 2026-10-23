@@ -1,8 +1,8 @@
 public import FeatherBackend
-import NIOHTTP1
+public import NIOHTTP1
 public import PostgresNIO
 
-extension PSQLError: HTTPErrorRepresentable {
+extension PSQLError: @retroactive HTTPErrorRepresentable {
 
     private var sqlState: String? {
         serverInfo?[.sqlState]

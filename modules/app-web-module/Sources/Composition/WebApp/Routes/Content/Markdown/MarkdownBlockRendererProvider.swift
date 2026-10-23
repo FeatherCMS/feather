@@ -1,7 +1,5 @@
 public import FeatherModuleKit
 
-public struct MarkdownBlockRendererProvider: Event {
-    public typealias Output = (any MarkdownBlockRenderer)?
-
+public struct MarkdownBlockRendererProvider: Event<(any MarkdownBlockRenderer)?> {
     public init() {}
 }

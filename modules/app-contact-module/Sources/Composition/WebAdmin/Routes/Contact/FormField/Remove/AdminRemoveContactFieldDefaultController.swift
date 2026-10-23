@@ -14,7 +14,7 @@ struct AdminRemoveContactFieldDefaultController:
     AdminRemoveContactFieldController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveContactFieldInteractor,
             any AdminRemoveContactFieldPresenter
         >
@@ -24,7 +24,9 @@ struct AdminRemoveContactFieldDefaultController:
         async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         guard context.isCurrentUserAllowed(to: FormField.Permissions.delete)
         else {
             return
@@ -66,7 +68,9 @@ struct AdminRemoveContactFieldDefaultController:
             as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild2 = buildRuntime(request, context)
+        let interactor = __runtimeBuild2.interactor
+        let presenter = __runtimeBuild2.presenter
         guard context.isCurrentUserAllowed(to: FormField.Permissions.delete)
         else {
             return

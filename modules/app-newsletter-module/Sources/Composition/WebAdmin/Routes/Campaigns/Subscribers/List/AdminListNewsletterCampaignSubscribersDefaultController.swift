@@ -13,7 +13,7 @@ struct AdminListNewsletterCampaignSubscribersDefaultController:
     AdminListNewsletterCampaignSubscribersController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminListNewsletterCampaignSubscribersInteractor,
             any AdminListNewsletterCampaignSubscribersPresenter
         >
@@ -21,7 +21,9 @@ struct AdminListNewsletterCampaignSubscribersDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let newsletterId = try context.requiredParameter("newsletterId")
         let search = request.querySearch()
         let permissions = context.currentUserAdminListActions

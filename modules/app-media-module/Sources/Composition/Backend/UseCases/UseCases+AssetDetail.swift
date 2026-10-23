@@ -3,7 +3,7 @@ import FeatherDatabase
 import FeatherInfrastructure
 import FeatherModuleKit
 import FeatherStorage
-public import Foundation
+import Foundation
 public import MediaApplication
 import MediaDomain
 import MediaInfrastructure
@@ -27,9 +27,9 @@ extension UseCases {
                 .find(id: id)
         }
     }
-    public func readOriginalAssetFile(assetId: String) async throws -> (
-        data: Data, type: String, filename: String, slugPath: String
-    ) {
+    public func readOriginalAssetFile(assetId: String) async throws
+        -> OriginalAssetFile
+    {
         let asset = try await databaseContext.database.withConnection {
             connection in
             try await Asset.File.Detail.Query
@@ -56,14 +56,15 @@ extension UseCases {
         for try await buffer in sequence {
             data.append(contentsOf: buffer.readableBytesView)
         }
-        return (
-            data,
-            asset.contentType, "\(asset.name).\(asset.extension)",
-            asset.slugPath
+        return .init(
+            data: data,
+            contentType: asset.contentType,
+            filename: "\(asset.name).\(asset.extension)",
+            slugPath: asset.slugPath
         )
     }
     public func readVariantFile(assetId: String, variantName: String)
-        async throws -> (data: Data, type: String, filename: String)
+        async throws -> VariantAssetFile
     {
         let stored = try await databaseContext.database.withConnection {
             connection in
@@ -102,12 +103,16 @@ extension UseCases {
                     storageObjectId: value.storageObjectId
                 )
             else { throw RepositoryError.notFound }
-            return (value, definition, object)
+            return StoredVariantFile(
+                relation: value,
+                definition: definition,
+                object: object
+            )
         }
         let objectKey = try StorageObject.Model.storageKey(
             assetID: assetId,
-            key: stored.2.key,
-            extension: stored.2.extension,
+            key: stored.object.key,
+            extension: stored.object.extension,
             objectKeyGenerator: storageContext.objectKeyGenerator
         )
         let sequence = try await storageContext.storage.download(
@@ -118,10 +123,10 @@ extension UseCases {
         for try await buffer in sequence {
             data.append(contentsOf: buffer.readableBytesView)
         }
-        return (
-            data,
-            stored.2.contentType,
-            "\(stored.1.key).\(stored.2.extension)"
+        return .init(
+            data: data,
+            contentType: stored.object.contentType,
+            filename: "\(stored.definition.key).\(stored.object.extension)"
         )
     }
     public func listAssociatedVariantFiles(assetId: String) async throws

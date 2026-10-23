@@ -11,6 +11,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `GET /api/v1/web/menus/{key}`.
     /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(menuGetByKey)`.
     func menuGetByKey(_ input: Operations.MenuGetByKey.Input) async throws -> Operations.MenuGetByKey.Output
+    /// - Remark: HTTP `GET /api/v1/web/routes`.
+    /// - Remark: Generated from `#/paths//api/v1/web/routes/get(metadataRootGet)`.
+    func metadataRootGet(_ input: Operations.MetadataRootGet.Input) async throws -> Operations.MetadataRootGet.Output
     /// - Remark: HTTP `GET /api/v1/web/routes/{slug}`.
     /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(metadataGet)`.
     func metadataGet(_ input: Operations.MetadataGet.Input) async throws -> Operations.MetadataGet.Output
@@ -42,6 +45,11 @@ extension APIProtocol {
             path: path,
             headers: headers
         ))
+    }
+    /// - Remark: HTTP `GET /api/v1/web/routes`.
+    /// - Remark: Generated from `#/paths//api/v1/web/routes/get(metadataRootGet)`.
+    public func metadataRootGet(headers: Operations.MetadataRootGet.Input.Headers = .init()) async throws -> Operations.MetadataRootGet.Output {
+        try await metadataRootGet(Operations.MetadataRootGet.Input(headers: headers))
     }
     /// - Remark: HTTP `GET /api/v1/web/routes/{slug}`.
     /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(metadataGet)`.

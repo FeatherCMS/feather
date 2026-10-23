@@ -42,15 +42,14 @@ func buildAdminRoutes(
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    SystemWebAdmin.WebAdmin
-        .Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            adminEvents: adminEvents,
-            routes: systemRoutes
-        )
-        .route(on: router)
-    AdminAnalytics(
+    SystemWebAdmin.Router(
+        environment: environment,
+        renderingEngine: renderingEngine,
+        adminEvents: adminEvents,
+        routes: systemRoutes
+    )
+    .route(on: router)
+    AnalyticsWebAdmin.Router(
         apiBuilder: apiBuilder.analyticsAdmin,
         renderingEngine: renderingEngine
     )
@@ -68,7 +67,7 @@ func buildAdminRoutes(
     )
     .route(on: router)
 
-    Router(
+    WebModuleWebAdmin.Router(
         environment: environment,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents

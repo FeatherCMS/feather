@@ -76,14 +76,6 @@ extension Asset.File.Search.Query {
             self.objectKeyGenerator = objectKeyGenerator
         }
 
-        private func pageSizeOffset(_ page: Search.Page) -> (
-            size: Int, offset: Int
-        ) {
-            let size = max(1, page.size)
-            let number = max(1, page.number)
-            return (size, (number - 1) * size)
-        }
-
         private func orderBy(_ query: Asset.File.Search.Input.Query) -> String {
             let parts = query.sort.map { rule -> String in
                 let column: String
@@ -108,21 +100,40 @@ extension Asset.File.Search.Query {
         public func search(query: Asset.File.Search.Input.Query) async throws
             -> Asset.File.Search.Output
         {
-            let page = pageSizeOffset(query.page)
+            let page = query.page.normalized()
+            let pageIndex = page.number - 1
+            let offset =
+                pageIndex > Int.max / page.size
+                ? Int.max
+                : pageIndex * page.size
             let rows = try await Asset.Node
-                .Table(connection: context.connection)
+                .Table(
+                    connection: context.connection,
+                    context: DatabaseTransactionContext(
+                        platform: context.platform,
+                        connection: context.connection,
+                        idGenerator: context.idGenerator
+                    )
+                )
                 .search(
                     parentId: query.parentId,
                     search: query.search,
                     orderBy: orderBy(query),
                     limit: page.size,
-                    offset: page.offset
+                    offset: offset
                 )
             let items = try rows.map {
                 try $0.asItem(objectKeyGenerator: objectKeyGenerator)
             }
             let total = try await Asset.Node
-                .Table(connection: context.connection)
+                .Table(
+                    connection: context.connection,
+                    context: DatabaseTransactionContext(
+                        platform: context.platform,
+                        connection: context.connection,
+                        idGenerator: context.idGenerator
+                    )
+                )
                 .count(parentId: query.parentId, search: query.search)
             return .init(items: items, total: total)
         }

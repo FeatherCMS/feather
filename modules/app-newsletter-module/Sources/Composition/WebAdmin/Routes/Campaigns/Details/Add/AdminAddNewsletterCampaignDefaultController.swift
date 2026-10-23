@@ -7,7 +7,7 @@ struct AdminAddNewsletterCampaignDefaultController:
     AdminAddNewsletterCampaignController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminAddNewsletterCampaignInteractor,
             any AdminAddNewsletterCampaignPresenter
         >
@@ -18,7 +18,9 @@ struct AdminAddNewsletterCampaignDefaultController:
     )
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         guard context.isCurrentUserAllowed(to: Campaign.Permissions.create)
         else {
             return try await presenter.renderPage(
@@ -43,7 +45,9 @@ struct AdminAddNewsletterCampaignDefaultController:
     )
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild2 = buildRuntime(request, context)
+        let interactor = __runtimeBuild2.interactor
+        let presenter = __runtimeBuild2.presenter
         guard context.isCurrentUserAllowed(to: Campaign.Permissions.create)
         else {
             return

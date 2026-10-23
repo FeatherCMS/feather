@@ -11,18 +11,16 @@ extension Variable.Edit.Controller {
         Interface
     {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
-                any Variable.Edit.Interactor
-                    .Interface,
-                any Variable.Edit.Presenter
-                    .Interface
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any Variable.Edit.Interactor.Interface,
+                any Variable.Edit.Presenter.Interface
             >
 
         func getEditSystemVariable(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Variable.Permissions.update
@@ -54,7 +52,7 @@ extension Variable.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Variable.Permissions.update

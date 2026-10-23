@@ -20,7 +20,7 @@ extension Credential.Remove {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> [String] {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -29,7 +29,8 @@ extension Credential.Remove {
             }
 
             return try await transaction.run { scope in
-                try await scope.credential.delete(ids: input.ids)
+                let ids = try await scope.credential.delete(ids: input.ids)
+                return Output(ids: ids)
             }
         }
 

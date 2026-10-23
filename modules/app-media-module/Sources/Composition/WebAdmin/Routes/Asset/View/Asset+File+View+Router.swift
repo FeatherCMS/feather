@@ -25,7 +25,7 @@ extension Asset.File.View {
             self.routes = routes
             self.controller = Asset.File.View.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Asset.File.View.Interactor.Default(
                             repository: Asset.File.View.Repository.OpenAPI(
                                 api: MediaAdminAPIClient(

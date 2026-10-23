@@ -12,7 +12,7 @@ struct AdminRemoveMenuItem {
     ) {
         self.controller = AdminRemoveMenuItemDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminRemoveMenuItemDefaultInteractor(
                         repository: AdminRemoveMenuItemOpenAPIRepository(
                             api: API.Client(

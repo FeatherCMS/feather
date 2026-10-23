@@ -15,7 +15,7 @@ extension Invitation.Add.Controller {
         let environment: AppEnvironment
         let routes: Invitation.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Invitation.Add.Interactor.Interface,
                 any Invitation.Add.Presenter.Interface
             >
@@ -24,7 +24,7 @@ extension Invitation.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (_, presenter) = buildRuntime((request, context))
+            let presenter = buildRuntime(request, context).presenter
             return try await presenter.renderPage(
                 form: presenter.formState(
                     email: "",
@@ -39,7 +39,7 @@ extension Invitation.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             var lastPayload: Invitation.Add.Form.Input?
             let availableRoleOptions = await roleOptions(context)
             do {
@@ -70,8 +70,7 @@ extension Invitation.Add.Controller {
                 let payload = nonceRequest.input
                 lastPayload = payload
                 try await payload.validate()
-                let (interactor, _) = runtime
-                try await interactor.execute(
+                try await runtime.interactor.execute(
                     entity: .init(
                         email: payload.normalizedEmail,
                         roleIDs: payload.normalizedRoleIDs

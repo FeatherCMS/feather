@@ -1,6 +1,6 @@
-import FeatherModuleKit
-import NewsletterDomain
-import NewsletterModule
+public import FeatherModuleKit
+public import NewsletterDomain
+public import NewsletterModule
 
 extension Subscriber.Edit {
     public struct Scope: FeatherModuleKit.Scope {

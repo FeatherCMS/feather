@@ -23,13 +23,7 @@ extension Credential.List.Interactor {
             page: Int,
             size: Int,
             search: String?
-        ) async throws -> (
-            items: [AuthAdminAPI.Components.Schemas
-                .AuthCredentialQueryItemSchema],
-            total: Int,
-            page: Int,
-            size: Int
-        ) {
+        ) async throws -> Credential.List.Result {
             try await repository.list(
                 page: page,
                 size: size,

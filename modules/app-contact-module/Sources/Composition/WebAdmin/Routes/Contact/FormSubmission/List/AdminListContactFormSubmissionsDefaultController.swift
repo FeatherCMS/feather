@@ -13,7 +13,7 @@ struct AdminListContactFormSubmissionsDefaultController:
     AdminListContactFormSubmissionsController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminListContactFormSubmissionsInteractor,
             any AdminListContactFormSubmissionsPresenter
         >
@@ -22,7 +22,9 @@ struct AdminListContactFormSubmissionsDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let formId = try context.requiredParameter("formKey")
         let search = request.querySearch() ?? ""
         do {

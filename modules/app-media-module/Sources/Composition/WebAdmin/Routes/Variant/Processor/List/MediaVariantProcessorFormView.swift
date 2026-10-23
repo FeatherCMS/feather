@@ -4,11 +4,6 @@ import MediaAdminAPI
 import WebBuilders
 import WebComponents
 
-struct MediaVariantProcessorFormTokens: Sendable {
-    let edit: String
-    let remove: String
-}
-
 struct MediaVariantProcessorFormView: Component {
     let processor:
         MediaAdminAPI.Components.Schemas.MediaVariantProcessorQueryItemSchema?

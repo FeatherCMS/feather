@@ -19,14 +19,16 @@ extension Campaign.List {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> [Output] {
+        ) async throws -> Output {
             let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
             return try await transaction.run { scope in
-                try await scope.campaign.list().map(Output.init(model:))
+                let items = try await scope.campaign.list()
+                    .map(Item.init(model:))
+                return Output(items: items)
             }
         }
     }

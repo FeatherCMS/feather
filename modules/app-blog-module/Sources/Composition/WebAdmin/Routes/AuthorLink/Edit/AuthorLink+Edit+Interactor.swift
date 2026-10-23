@@ -15,3 +15,18 @@ import WebModuleWebAdmin
 extension AuthorLink.Edit {
     enum Interactor {}
 }
+
+extension AuthorLink.Edit.Interactor {
+    protocol Interface: Sendable {
+        func load(
+            authorID: String,
+            id: String
+        ) async throws -> AuthorLink.View.Model
+
+        func update(
+            authorID: String,
+            id: String,
+            input: AuthorLink.Form.Input
+        ) async throws
+    }
+}

@@ -7,7 +7,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
     AdminRemoveNewsletterCampaignController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveNewsletterCampaignInteractor,
             any AdminRemoveNewsletterCampaignPresenter
         >
@@ -16,7 +16,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         guard context.isCurrentUserAllowed(to: Campaign.Permissions.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
@@ -44,7 +44,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
     func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         guard context.isCurrentUserAllowed(to: Campaign.Permissions.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(

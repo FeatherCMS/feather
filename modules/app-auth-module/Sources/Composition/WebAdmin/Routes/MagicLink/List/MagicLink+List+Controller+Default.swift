@@ -22,7 +22,7 @@ extension MagicLink.List.Controller {
     struct Default: Interface {
         let routes: MagicLink.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any MagicLink.List.Interactor.Interface,
                 any MagicLink.List.Presenter.Interface
             >
@@ -31,7 +31,9 @@ extension MagicLink.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let permissionSet = context.currentUserPermissions
             let permissions = MagicLink.Permissions.list
             let canAccess = context.isCurrentUserAllowed(
@@ -50,7 +52,7 @@ extension MagicLink.List.Controller {
             }
 
             do {
-                let result =
+                let result: MagicLink.List.Result =
                     canAccess
                     ? try await interactor.execute(
                         page: page,
@@ -58,7 +60,7 @@ extension MagicLink.List.Controller {
                         search: search,
                         userID: userID
                     )
-                    : (
+                    : .init(
                         items: [],
                         emailByAuthEmailId: [:],
                         total: 0,

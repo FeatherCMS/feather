@@ -19,7 +19,7 @@ extension Invitation.Detail {
             self.routes = routes
             self.controller = Invitation.Detail.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Invitation.Detail.Interactor.Default(
                             repository: Invitation.Detail.Repository.OpenAPI(
                                 api: API.Client(

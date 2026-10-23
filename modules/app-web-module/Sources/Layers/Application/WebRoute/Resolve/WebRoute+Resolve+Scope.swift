@@ -1,5 +1,4 @@
 public import FeatherModuleKit
-import WebModule
 
 extension WebRoute.Resolve {
     public struct Scope: FeatherModuleKit.Scope {

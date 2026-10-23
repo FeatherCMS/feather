@@ -1,4 +1,4 @@
-public import FeatherModuleKit
+import FeatherModuleKit
 import SystemModule
 import WebDomain
 import WebModule

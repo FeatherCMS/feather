@@ -10,7 +10,7 @@ never list sources or exclude files in a package.swift files a folder path shoul
 
 never write sql code outside of a Database/AccessLayer folder. SQL code is only allowed within that folder.
 
-never write functionality on a Scope object. Always use a repository or query for managing database models, always use the table representation objects and never use direct SQL code. 
+Never put functionality on a Scope object. Use repositories or queries for database operations and table representations for standard CRUD. Use parameterized SQL only inside `Database/AccessLayer` when FeatherDBAL cannot express the required behavior.
 
 never use typealias-es. never use tuples, except if user explicitly asks for this.
 
@@ -54,7 +54,10 @@ Use the FATHOMS style described in the docs:
 - `Application`
   - `UseCase` implementations, DTOs, scopes, permissions/actions, and orchestration.
 - `Infrastructure`
-  - SQL-first table access, repository/query adapters, migration code, and technical helpers.
+  - FeatherDBAL table schemas, row representations, repository/query adapters, and migrations.
+  - Keep standard CRUD and schema creation on DBAL; partial updates should encode only the fields being changed rather than falling back to SQL.
+  - Isolate custom SQL in `Database/AccessLayer` only when DBAL cannot express the required behavior.
+  - Bind scalar and collection values through `DatabaseQuery` interpolation; reserve unescaped interpolation for trusted SQL fragments and allowlisted identifiers.
 - `Server`
   - HTTP/OpenAPI assembly, routes, middleware, adapters, and request/response mapping.
 - `Migrator`

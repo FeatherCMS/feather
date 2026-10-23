@@ -16,7 +16,7 @@ import WebModuleWebAdmin
 extension AuthorLink.View.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any AuthorLink.View.Interactor.Interface,
                 any AuthorLink.View.Presenter.Interface
             >
@@ -25,7 +25,7 @@ extension AuthorLink.View.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let authorID = try context.requiredID()
             let id = try context.requiredParameter("itemId")
             let permissions = context.currentUserPermissions

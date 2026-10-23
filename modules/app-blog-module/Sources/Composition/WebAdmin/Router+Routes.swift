@@ -1,5 +1,6 @@
 public import BlogModule
 public import FeatherWebAdmin
+public import FeatherWebShared
 
 extension Router {
     public struct Routes: Sendable {

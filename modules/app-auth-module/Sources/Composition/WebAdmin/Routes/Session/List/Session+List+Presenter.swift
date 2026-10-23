@@ -4,6 +4,10 @@ import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 
+extension Session.List {
+    enum Presenter {}
+}
+
 extension Session.List.Presenter {
     protocol Interface: Sendable {
         func render(

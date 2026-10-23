@@ -6,7 +6,7 @@ struct AdminViewContactOverview {
     init(renderingEngine: any RenderingEngine) {
         self.controller = AdminViewContactOverviewDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminViewContactOverviewDefaultInteractor(),
                     presenter: AdminViewContactOverviewDefaultPresenter(
                         request: request,

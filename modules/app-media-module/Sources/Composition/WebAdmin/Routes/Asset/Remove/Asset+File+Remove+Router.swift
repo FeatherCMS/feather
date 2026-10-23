@@ -24,7 +24,7 @@ extension Asset.File.Remove {
             self.routes = routes
             self.controller = Asset.File.Remove.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Asset.File.Remove.Interactor.Default(
                             repository: Asset.File.Remove.Repository.OpenAPI(
                                 api: MediaAdminAPIClient(

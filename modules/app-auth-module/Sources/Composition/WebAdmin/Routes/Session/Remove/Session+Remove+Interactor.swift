@@ -1,6 +1,10 @@
 import AuthModule
 import FeatherWebAdmin
 
+extension Session.Remove {
+    enum Interactor {}
+}
+
 extension Session.Remove.Interactor {
     protocol Interface: Sendable {
 

@@ -6,7 +6,7 @@ struct AdminRemoveContactSubmissionsDefaultController:
     AdminRemoveContactSubmissionsController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveContactSubmissionsInteractor,
             any AdminRemoveContactSubmissionsPresenter
         >
@@ -24,7 +24,7 @@ struct AdminRemoveContactSubmissionsDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         try await interactor.remove(ids: payload.input.normalizedIds)
         return Response(
             status: .seeOther,

@@ -1,7 +1,7 @@
 import AsyncHTTPClient
 public import ContactAdminAPI
-public import ContactWebShared
-public import FeatherWebAdmin
+import ContactWebShared
+import FeatherWebAdmin
 public import FeatherWebShared
 public import Foundation
 import NIOCore
@@ -43,13 +43,5 @@ public struct ContactAdminAPIClient: Sendable {
             statusCode: statusCode,
             responseBody: try await responseBody?.collectString()
         )
-    }
-}
-
-extension ContactAPIBuilder {
-    public func makeContactAdmin(
-        _ context: AuthenticatedRequestContext
-    ) -> ContactAdminAPIClient {
-        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

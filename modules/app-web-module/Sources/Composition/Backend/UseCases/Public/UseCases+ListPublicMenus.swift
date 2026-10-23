@@ -24,7 +24,7 @@ extension UseCases {
                     menuLookup: Menu.Detail.Query.Database(
                         context: context
                     ),
-                    menuItemList: MenuItem.List.Query.Database(
+                    menuItems: MenuItem.List.Query.Database(
                         context: context
                     )
                 )

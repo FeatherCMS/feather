@@ -31,7 +31,7 @@ extension Permission.Add {
                         renderingEngine: renderingEngine,
                         routes: routes
                     )
-                    return (
+                    return WebAdminRuntime(
                         interactor: interactor,
                         presenter: presenter
                     )

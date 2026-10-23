@@ -16,7 +16,7 @@ import WebComponents
 extension Asset.File.Add.Controller {
     struct Default: Asset.File.Add.Controller.Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Asset.File.Add.Interactor.Interface,
                 any Asset.File.Add.Presenter.Interface
             >
@@ -26,7 +26,9 @@ extension Asset.File.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let requestedParentId =
                 request.queryString("parent_id")?
                 .whitespaceTrimmed
@@ -77,7 +79,9 @@ extension Asset.File.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             let isDialog =
                 request.queryString("presentation") == "dialog"
                 && request.headers[.accept]?.contains("type=admin-dialog")

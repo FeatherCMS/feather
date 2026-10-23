@@ -8,7 +8,7 @@ extension Author.Remove.Controller {
     struct Default: Interface {
         let routes: Author.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Author.Remove.Interactor.Interface,
                 any Author.Remove.Presenter.Interface
             >
@@ -17,7 +17,7 @@ extension Author.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let nonceRequest = try await request.decode(
                 as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context

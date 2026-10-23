@@ -21,12 +21,9 @@ extension Identity.Remove {
                         apiBaseURL: environment.apiBaseURL,
                         requestContext: context
                     )
-                    return (
+                    return WebAdminRuntime(
                         interactor: Interactor.Default(
-                            repository:
-                                Repository.OpenAPI(
-                                    api: api
-                                )
+                            repository: Repository.OpenAPI(api: api)
                         ),
                         presenter: Presenter.Default(
                             request: request,
@@ -40,15 +37,8 @@ extension Identity.Remove {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.post(
-                routes.remove.routerPath,
-                use: controller.postRemoveUserIdentities
-            )
-            router.post(
-                routes.removeDetails.routerPath,
-                use: controller.postRemoveUserIdentity
-            )
+            router.post(routes.remove.routerPath, use: controller.postRemoveUserIdentities)
+            router.post(routes.removeDetails.routerPath, use: controller.postRemoveUserIdentity)
         }
-
     }
 }

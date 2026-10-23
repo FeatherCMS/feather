@@ -29,7 +29,7 @@ extension MagicLink.Remove {
             self.routes = routes
             self.controller = MagicLink.Remove.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: MagicLink.Remove.Interactor.Default(
                             repository:
                                 MagicLink.Remove.Repository.OpenAPI(

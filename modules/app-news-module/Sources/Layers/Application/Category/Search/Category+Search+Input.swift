@@ -1,7 +1,6 @@
 public import FeatherApplication
 import NewsDomain
 public import NewsModule
-import WebModule
 
 extension Category {
     public enum Search {}

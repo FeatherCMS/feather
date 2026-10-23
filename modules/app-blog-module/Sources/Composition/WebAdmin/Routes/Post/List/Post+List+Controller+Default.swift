@@ -6,7 +6,7 @@ import Hummingbird
 extension Post.List.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Post.List.Interactor.Interface,
                 any Post.List.Presenter.Interface
             >
@@ -15,7 +15,9 @@ extension Post.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let page = request.queryPage()
             let search = request.querySearch()
             let permissions = context.currentUserPermissions

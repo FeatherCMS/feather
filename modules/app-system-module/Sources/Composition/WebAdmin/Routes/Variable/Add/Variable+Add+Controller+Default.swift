@@ -9,18 +9,16 @@ import SystemModule
 extension Variable.Add.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
-                any Variable.Add.Interactor
-                    .Interface,
-                any Variable.Add.Presenter
-                    .Interface
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any Variable.Add.Interactor.Interface,
+                any Variable.Add.Presenter.Interface
             >
 
         func getAddSystemVariable(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Variable.Permissions.create
@@ -37,7 +35,7 @@ extension Variable.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Variable.Permissions.create

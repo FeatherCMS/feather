@@ -10,7 +10,7 @@ struct AdminListContactSubmissions {
     ) {
         controller = AdminListContactSubmissionsDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminListContactSubmissionsDefaultInteractor(
                         repository: .init(
                             api: apiBuilder.makeContactAdmin(context)

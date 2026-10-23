@@ -9,7 +9,7 @@ struct AdminListMenuItemDefaultController:
     AdminListMenuItemController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminListMenuItemInteractor,
             any AdminListMenuItemPresenter
         >
@@ -18,7 +18,9 @@ struct AdminListMenuItemDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let menuId = try context.requiredID()
         let page = request.queryPage()
         let search = request.querySearch()
@@ -64,7 +66,7 @@ struct AdminListMenuItemDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         let menuId = try context.requiredID()
         let itemId = try context.requiredParameter("itemId")
         let payload = try await request.decode(

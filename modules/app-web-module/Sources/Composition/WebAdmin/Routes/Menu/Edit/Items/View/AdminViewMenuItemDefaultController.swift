@@ -6,7 +6,7 @@ import OpenAPIRuntime
 
 struct AdminViewMenuItemDefaultController: AdminViewMenuItemController {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminViewMenuItemInteractor,
             any AdminViewMenuItemPresenter
         >
@@ -15,7 +15,7 @@ struct AdminViewMenuItemDefaultController: AdminViewMenuItemController {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions

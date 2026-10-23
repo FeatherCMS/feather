@@ -1,7 +1,7 @@
 public import FeatherBackend
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
-extension QueryError: ErrorTraceRepresentable {
+extension QueryError: @retroactive ErrorTraceRepresentable {
     public func trace() -> ErrorTrace {
         .init(
             type: Self.self,

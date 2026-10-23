@@ -9,7 +9,7 @@ import WebModule
 extension WebModule.Menu.View.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any WebModule.Menu.View.Interactor.Interface,
                 any WebModule.Menu.View.Presenter.Interface
             >
@@ -18,7 +18,7 @@ extension WebModule.Menu.View.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             do {

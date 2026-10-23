@@ -5,6 +5,7 @@ import FeatherModuleKit
 //
 
 import AccountInfrastructure
+import AccountModule
 
 func buildAppEventPublisher() -> any EventPublisher {
     var events = EventRegistry()

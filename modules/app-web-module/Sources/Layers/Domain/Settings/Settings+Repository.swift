@@ -1,5 +1,5 @@
 //
-//  Settings.Repository.Interface.swift
+//  Settings.Repository.swift
 //  app-web-module
 //
 //  Created by Binary Birds on 2026. 06. 18.

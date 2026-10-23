@@ -9,18 +9,18 @@ extension Permission.Edit.Controller {
         Interface
     {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
-                any Permission.Edit.Interactor
-                    .Interface,
-                any Permission.Edit.Presenter
-                    .Interface
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any Permission.Edit.Interactor.Interface,
+                any Permission.Edit.Presenter.Interface
             >
 
         func getEditSystemPermission(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let id = try context.requiredID()
             guard
                 context.isCurrentUserAllowed(
@@ -52,7 +52,9 @@ extension Permission.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             let id = try context.requiredID()
             guard
                 context.isCurrentUserAllowed(

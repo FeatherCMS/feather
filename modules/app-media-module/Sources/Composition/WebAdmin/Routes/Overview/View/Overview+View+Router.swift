@@ -30,7 +30,7 @@ extension Overview.View {
             self.routes = routes
             self.controller = Overview.View.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Overview.View.Interactor.Default(),
                         presenter: Overview.View.Presenter.Default(
                             request: request,

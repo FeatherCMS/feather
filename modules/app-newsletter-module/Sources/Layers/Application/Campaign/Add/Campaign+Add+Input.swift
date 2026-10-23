@@ -1,5 +1,5 @@
 public import FeatherApplication
-import NewsletterModule
+public import NewsletterModule
 
 extension Campaign.Add {
     public struct Input: DTO {

@@ -17,7 +17,7 @@ struct AdminRemoveContactField {
     ) {
         controller = AdminRemoveContactFieldDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminRemoveContactFieldDefaultInteractor(
                         repository: .init(
                             api: apiBuilder.makeContactAdmin(context)

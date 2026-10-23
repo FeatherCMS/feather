@@ -5,6 +5,10 @@ import OpenAPIRuntime
 import WebDomain
 import WebModule
 
+extension WebModule.Menu.List {
+    enum Controller {}
+}
+
 extension WebModule.Menu.List.Controller {
     protocol Interface: Sendable {
 

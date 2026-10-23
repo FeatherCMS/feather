@@ -9,7 +9,7 @@ import UserModule
 extension Role.Edit.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Role.Edit.Interactor.Interface,
                 any Role.Edit.Presenter.Interface
             >
@@ -20,7 +20,9 @@ extension Role.Edit.Controller {
         )
             async throws -> HTMLResponse
         {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Role.Permissions.update
@@ -49,7 +51,9 @@ extension Role.Edit.Controller {
         )
             async throws -> Response
         {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Role.Permissions.update

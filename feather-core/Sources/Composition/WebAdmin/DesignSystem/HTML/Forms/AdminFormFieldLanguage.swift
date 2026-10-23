@@ -6,34 +6,30 @@ public import WebComponents
 
 /// An autocomplete form field containing language codes and display names.
 public struct AdminFormFieldLanguage: Component {
-    public typealias Option = AdminFormFieldSelectAutocomplete.Option
-    public typealias SelectionMode =
-        AdminFormFieldSelectAutocomplete.SelectionMode
-
     public struct State: Sendable {
         public var name: String
         public var label: String
         public var values: [String]
-        public var options: [Option]?
+        public var options: [AdminFormFieldSelectAutocomplete.Option]?
         public var placeholder: String?
         public var error: String?
         public var help: String?
         public var isRequired: Bool
         public var isDisabled: Bool
-        public var selectionMode: SelectionMode
+        public var selectionMode: AdminFormFieldSelectAutocomplete.SelectionMode
         public var submitsValues: Bool
 
         public init(
             name: String,
             label: String,
             values: [String] = [],
-            options: [Option]? = nil,
+            options: [AdminFormFieldSelectAutocomplete.Option]? = nil,
             placeholder: String? = nil,
             error: String? = nil,
             help: String? = nil,
             isRequired: Bool = false,
             isDisabled: Bool = false,
-            selectionMode: SelectionMode = .single,
+            selectionMode: AdminFormFieldSelectAutocomplete.SelectionMode = .single,
             submitsValues: Bool = true
         ) {
             self.name = name
@@ -68,7 +64,7 @@ public struct AdminFormFieldLanguage: Component {
         )
         let options = (state.options ?? Self.options)
             .map {
-                Option(
+                AdminFormFieldSelectAutocomplete.Option(
                     label: $0.label,
                     value: $0.value,
                     isSelected: selectedValues.contains($0.value)
@@ -94,7 +90,7 @@ public struct AdminFormFieldLanguage: Component {
         )
     }
 
-    public static var options: [Option] {
+    public static var options: [AdminFormFieldSelectAutocomplete.Option] {
         languageOptions
     }
 
@@ -107,7 +103,7 @@ public struct AdminFormFieldLanguage: Component {
         }
     }
 
-    private static let languageOptions: [Option] =
+    private static let languageOptions: [AdminFormFieldSelectAutocomplete.Option] =
         [
             .init(label: "Afrikaans", value: "af"),
             .init(label: "Albanian - (Shqip)", value: "sq"),

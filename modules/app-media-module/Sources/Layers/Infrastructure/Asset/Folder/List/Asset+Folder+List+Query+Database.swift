@@ -32,7 +32,12 @@ extension Asset.Folder.List.Query {
         {
             let rows = try await Asset.Folder
                 .Table(
-                    connection: context.connection
+                    connection: context.connection,
+                    context: DatabaseTransactionContext(
+                        platform: context.platform,
+                        connection: context.connection,
+                        idGenerator: context.idGenerator
+                    )
                 )
                 .list(parentId: parentId)
             return .init(items: rows.map(\.asListItem))

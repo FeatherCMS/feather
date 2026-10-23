@@ -19,7 +19,7 @@ extension Variant.List {
             self.routes = routes
             self.controller = Variant.List.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Variant.List.Interactor.Default(
                             repository: Variant.List.Repository.OpenAPI(
                                 api: MediaAdminAPIClient(

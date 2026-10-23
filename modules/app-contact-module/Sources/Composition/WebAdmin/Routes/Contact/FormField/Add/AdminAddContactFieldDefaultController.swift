@@ -15,7 +15,7 @@ struct AdminAddContactFieldDefaultController:
     AdminAddContactFieldController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminAddContactFieldInteractor,
             any AdminAddContactFieldPresenter
         >
@@ -25,7 +25,9 @@ struct AdminAddContactFieldDefaultController:
     )
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         guard
             context.isCurrentUserAllowed(
                 to: FormField.Permissions.create
@@ -53,7 +55,9 @@ struct AdminAddContactFieldDefaultController:
     )
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild2 = buildRuntime(request, context)
+        let interactor = __runtimeBuild2.interactor
+        let presenter = __runtimeBuild2.presenter
         guard
             context.isCurrentUserAllowed(
                 to: FormField.Permissions.create

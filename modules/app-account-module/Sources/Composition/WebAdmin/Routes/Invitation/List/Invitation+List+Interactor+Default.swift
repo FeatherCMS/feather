@@ -12,11 +12,7 @@ extension Invitation.List.Interactor {
             page: Int,
             size: Int,
             search: String?
-        ) async throws -> (
-            items: [Components.Schemas.InvitationQuerySchemasItem],
-            total: Int,
-            page: Int, size: Int
-        ) {
+        ) async throws -> Invitation.List.Result {
             try await repository.list(
                 page: page,
                 size: size,

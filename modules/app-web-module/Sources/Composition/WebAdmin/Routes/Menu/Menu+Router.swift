@@ -5,11 +5,6 @@ import WebDomain
 import WebModule
 
 extension Menu {
-    enum Add {}
-    enum Edit {}
-    enum Remove {}
-    enum View {}
-
     struct Router {
         struct Routes: Sendable {
             let list: WebRoute
@@ -83,7 +78,7 @@ extension WebModule.Menu.View {
             self.routes = routes
             controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(
@@ -121,7 +116,7 @@ extension WebModule.Menu.Add {
             self.routes = routes
             controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(
@@ -166,7 +161,7 @@ extension WebModule.Menu.Edit {
             self.routes = routes
             controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(
@@ -211,7 +206,7 @@ extension WebModule.Menu.Remove {
             self.routes = routes
             controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(

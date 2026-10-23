@@ -8,7 +8,7 @@ extension Variant.Processor.List.Controller {
         Variant.Processor.List.Controller.Interface
     {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Variant.Processor.List.Interactor.Interface,
                 any Variant.Processor.List.Presenter.Interface
             >
@@ -17,7 +17,9 @@ extension Variant.Processor.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Variant.Processor.Permissions.list
@@ -46,7 +48,7 @@ extension Variant.Processor.List.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (_, presenter) = buildRuntime((request, context))
+            let presenter = buildRuntime(request, context).presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Variant.Processor.Permissions.create

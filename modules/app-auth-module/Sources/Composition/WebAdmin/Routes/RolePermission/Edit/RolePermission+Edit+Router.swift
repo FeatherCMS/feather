@@ -28,7 +28,7 @@ extension RolePermission.Edit {
         ) {
             self.controller = RolePermission.Edit.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: RolePermission.Edit.Interactor.Default(
                             repository: RolePermission.Edit.Repository.OpenAPI(
                                 api: API.Client(

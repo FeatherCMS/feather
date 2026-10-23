@@ -21,7 +21,7 @@ import WebComponents
 extension RolePermission.Edit.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any RolePermission.Edit.Interactor.Interface,
                 any RolePermission.Edit.Presenter.Interface
             >
@@ -30,7 +30,9 @@ extension RolePermission.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let permissions = context.currentUserPermissions
             let canList = permissions.contains(
                 RolePermission.Permissions.list.rawValue
@@ -79,7 +81,9 @@ extension RolePermission.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             let permissions = context.currentUserPermissions
             let canEdit = permissions.contains(
                 RolePermission.Permissions.update.rawValue

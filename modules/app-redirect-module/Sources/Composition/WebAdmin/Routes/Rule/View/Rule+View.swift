@@ -4,6 +4,9 @@ import Hummingbird
 import RedirectApplication
 import RedirectModule
 
+extension Rule {
+    enum View {}
+}
 
 
 extension Rule.View {
@@ -19,7 +22,7 @@ extension Rule.View {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(

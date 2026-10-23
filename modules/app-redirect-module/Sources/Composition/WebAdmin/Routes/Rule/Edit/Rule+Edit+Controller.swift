@@ -7,3 +7,18 @@ import RedirectModule
 extension Rule.Edit {
     enum Controller {}
 }
+
+extension Rule.Edit.Controller {
+    protocol Interface: Sendable {
+
+        func getEditRedirectRule(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
+
+        func postEditRedirectRule(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
+    }
+}

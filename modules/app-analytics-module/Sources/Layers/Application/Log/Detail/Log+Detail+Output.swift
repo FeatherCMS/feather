@@ -8,10 +8,6 @@ import AnalyticsDomain
 public import AnalyticsModule
 public import FeatherApplication
 
-extension Log {
-    public enum Detail {}
-}
-
 extension Log.Detail {
     public struct Output: DTO {
         public let id: String

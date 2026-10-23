@@ -6,7 +6,6 @@ import UserModule
 extension Identity.List {
     struct Router {
         static let pageSize = 20
-
         let controller: any Controller.Interface
         let routes: Identity.Router.Routes
 
@@ -18,7 +17,7 @@ extension Identity.List {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(
@@ -39,11 +38,7 @@ extension Identity.List {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.get(
-                routes.list.routerPath,
-                use: controller.getUserIdentities
-            )
+            router.get(routes.list.routerPath, use: controller.getUserIdentities)
         }
-
     }
 }

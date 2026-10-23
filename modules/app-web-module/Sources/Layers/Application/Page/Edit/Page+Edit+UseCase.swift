@@ -24,7 +24,7 @@ extension Page.Edit {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            let (model, metadata) = try await transaction.run { scope in
+            return try await transaction.run { scope in
                 guard var model = try await scope.page.find(id: input.id) else {
                     throw Error(message: "Page not found")
                 }
@@ -63,21 +63,19 @@ extension Page.Edit {
                             .structuredDataCodeInjection
                     )
                 }
-                return (
-                    try await scope.page.update(model),
-                    try await scope.metadata.update(metadata)
+                let updatedModel = try await scope.page.update(model)
+                let updatedMetadata = try await scope.metadata.update(metadata)
+                return Output(
+                    id: updatedModel.id,
+                    title: updatedModel.title,
+                    excerpt: updatedModel.excerpt,
+                    content: updatedModel.content,
+                    imageAssetId: updatedModel.imageAssetId,
+                    metadata: updatedMetadata.asSnapshot,
+                    createdAt: updatedModel.createdAt,
+                    updatedAt: updatedModel.updatedAt
                 )
             }
-            return .init(
-                id: model.id,
-                title: model.title,
-                excerpt: model.excerpt,
-                content: model.content,
-                imageAssetId: model.imageAssetId,
-                metadata: metadata.asSnapshot,
-                createdAt: model.createdAt,
-                updatedAt: model.updatedAt
-            )
         }
     }
 }

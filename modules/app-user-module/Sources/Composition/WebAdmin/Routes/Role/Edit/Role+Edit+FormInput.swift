@@ -1,6 +1,6 @@
 import FeatherModuleKit
 import FeatherWebAdmin
-public import UserModule
+import UserModule
 
 extension Role.Edit {
     public struct FormInput: Decodable, Sendable, Equatable,

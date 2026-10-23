@@ -16,6 +16,10 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
+extension MagicLink.Add {
+    enum Presenter {}
+}
+
 extension MagicLink.Add.Presenter {
     protocol Interface: Sendable {
 

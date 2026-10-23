@@ -12,7 +12,7 @@ struct AdminViewMenuItem {
     ) {
         self.controller = AdminViewMenuItemDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminViewMenuItemDefaultInteractor(
                         repository: AdminViewMenuItemOpenAPIRepository(
                             api: API.Client(

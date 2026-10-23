@@ -6,7 +6,7 @@ import SystemModule
 extension Job.View.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Job.View.Interactor.Interface,
                 any Job.View.Presenter.Interface
             >
@@ -15,7 +15,7 @@ extension Job.View.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Job.Permissions.read

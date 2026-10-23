@@ -11,16 +11,18 @@ extension AppAPIGateway {
     public func newsArticleList(
         _: Operations.NewsArticleList.Input
     ) async throws -> Operations.NewsArticleList.Output {
-        let items = try await useCases.makeListPublicArticles().execute()
-        return .ok(.init(body: .json(items.map(mapArticleSummary))))
+        let output = try await useCases.makeListPublicArticles().execute(
+            input: .init()
+        )
+        return .ok(.init(body: .json(output.items.map(mapArticleSummary))))
     }
 
     public func newsArticleGet(
         _ input: Operations.NewsArticleGet.Input
     ) async throws -> Operations.NewsArticleGet.Output {
         do {
-            let item = try await useCases.makeGetPublicArticle()
-                .execute(id: input.path.id)
+            let item = try await useCases.makePublicArticleDetail()
+                .execute(input: .init(id: input.path.id))
             return .ok(.init(body: .json(mapArticleDetail(item))))
         }
         catch {
@@ -40,16 +42,16 @@ extension AppAPIGateway {
     public func newsCategoryList(
         _: Operations.NewsCategoryList.Input
     ) async throws -> Operations.NewsCategoryList.Output {
-        let items = try await useCases.makeListPublicCategories().execute()
-        return .ok(.init(body: .json(items.map(mapCategorySummary))))
+        let output = try await useCases.makeListPublicCategories().execute()
+        return .ok(.init(body: .json(output.items.map(mapCategorySummary))))
     }
 
     public func newsCategoryGet(
         _ input: Operations.NewsCategoryGet.Input
     ) async throws -> Operations.NewsCategoryGet.Output {
         do {
-            let item = try await useCases.makeGetPublicCategory()
-                .execute(id: input.path.id)
+            let item = try await useCases.makePublicCategoryDetail()
+                .execute(input: .init(id: input.path.id))
             return .ok(.init(body: .json(mapCategoryDetail(item))))
         }
         catch {
@@ -76,7 +78,7 @@ private func notFoundErrorEnvelope(
 
 extension AppAPIGateway {
     fileprivate func mapArticleSummary(
-        _ item: PublicNewsArticle.Summary.Item
+        _ item: NewsApplication.Public.Article.Summary.Item
     ) -> Components.Schemas.NewsArticleSummarySchema {
         .init(
             id: item.id,
@@ -94,7 +96,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapArticleDetail(
-        _ item: PublicNewsArticle.Detail.Output
+        _ item: NewsApplication.Public.Article.Detail.Output
     ) -> Components.Schemas.NewsArticleDetailSchema {
         .init(
             id: item.id,
@@ -114,7 +116,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapCategorySummary(
-        _ item: PublicNewsCategory.Summary.Item
+        _ item: NewsApplication.Public.Category.Summary.Item
     ) -> Components.Schemas.NewsCategorySummarySchema {
         .init(
             id: item.id,
@@ -132,7 +134,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapCategoryDetail(
-        _ item: PublicNewsCategory.Detail.Output
+        _ item: NewsApplication.Public.Category.Detail.Output
     ) -> Components.Schemas.NewsCategoryDetailSchema {
         .init(
             id: item.id,

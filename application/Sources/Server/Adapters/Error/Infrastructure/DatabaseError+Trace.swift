@@ -8,7 +8,7 @@
 public import FeatherBackend
 public import FeatherDatabase
 
-extension DatabaseError: ErrorTraceRepresentable {
+extension DatabaseError: @retroactive ErrorTraceRepresentable {
 
     public var underlyingErrors: [any Error] {
         switch self {

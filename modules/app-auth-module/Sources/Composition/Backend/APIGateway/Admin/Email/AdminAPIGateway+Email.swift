@@ -153,7 +153,7 @@ extension AdminAPIGateway {
         _ = try await useCases.makeRemoveAuthEmails()
             .execute(
                 subject: try await CurrentSubject.require(),
-                ids: body.ids
+                input: .init(ids: body.ids)
             )
         return .noContent(.init())
     }

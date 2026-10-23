@@ -6,9 +6,6 @@ import Hummingbird
 import SystemModule
 
 extension Job {
-    enum List {}
-    enum View {}
-
     struct Router {
         struct Routes {
             let list: WebRoute

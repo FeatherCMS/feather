@@ -16,7 +16,7 @@ extension Dashboard {
             self.path = path
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(events: events),
                         presenter: Presenter.Default(
                             request: request,

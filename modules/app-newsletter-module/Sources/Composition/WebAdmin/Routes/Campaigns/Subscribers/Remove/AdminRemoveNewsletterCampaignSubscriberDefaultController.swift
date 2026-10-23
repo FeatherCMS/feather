@@ -13,7 +13,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
     AdminRemoveNewsletterCampaignSubscriberController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveNewsletterCampaignSubscriberInteractor,
             any AdminRemoveNewsletterCampaignSubscriberPresenter
         >
@@ -22,7 +22,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
         async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         let newsletterId = try context.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Subscriber.Permissions.delete)
         else { return Response(status: .forbidden) }
@@ -56,7 +56,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
     func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         let newsletterId = try context.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Subscriber.Permissions.delete)
         else { return Response(status: .forbidden) }

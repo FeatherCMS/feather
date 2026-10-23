@@ -11,7 +11,7 @@ struct AdminRemoveContactFormSubmissions {
     ) {
         controller = AdminRemoveContactFormSubmissionsDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor:
                         AdminRemoveContactFormSubmissionsDefaultInteractor(
                             repository: .init(

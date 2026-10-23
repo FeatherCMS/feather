@@ -13,7 +13,7 @@ import WebDomain
 import WebInfrastructure
 import WebModule
 
-extension CategoryTable.Row {
+extension Category.Table.Detail {
     func asDomain(metadata: WebModule.Metadata.Model) -> Category.Model {
         .init(
             id: id,
@@ -38,16 +38,18 @@ public struct CategoryDatabaseRepository: Category.Repository.Interface {
     public func insert(
         _ model: Category.Model.New
     ) async throws -> Category.Model {
-        let table = CategoryTable(connection: context.connection)
-        let saved = try await table.create(
-            row: .init(
+        let accessLayer = DatabaseAccessLayer<Category.Table>(context: context)
+        let row = Category.Table.Insert(
                 id: context.idGenerator.generate(),
                 title: model.title,
                 excerpt: model.excerpt,
                 content: model.content,
                 imageAssetId: model.imageAssetId
-            )
         )
+        try await accessLayer.insert(row)
+        guard let saved = try await accessLayer.selectFirst(by: \.id, equals: row.id) else {
+            throw RepositoryError.notFound
+        }
         var newMetadata = model.metadata
         try newMetadata.set(referenceID: saved.id)
 
@@ -60,8 +62,8 @@ public struct CategoryDatabaseRepository: Category.Repository.Interface {
     public func find(
         id: String
     ) async throws -> Category.Model? {
-        let table = CategoryTable(connection: context.connection)
-        guard let category = try await table.find(id: id) else { return nil }
+        let accessLayer = DatabaseAccessLayer<Category.Table>(context: context)
+        guard let category = try await accessLayer.selectFirst(by: \.id, equals: id) else { return nil }
         guard
             let metadata = try await WebModule.Metadata.Repository
                 .Database(
@@ -75,19 +77,20 @@ public struct CategoryDatabaseRepository: Category.Repository.Interface {
     public func update(
         _ model: Category.Model
     ) async throws -> Category.Model {
-        let table = CategoryTable(connection: context.connection)
-        let updated = try await table.update(
-            id: model.id,
-            row: .init(
-                id: model.id,
+        let accessLayer = DatabaseAccessLayer<Category.Table>(context: context)
+        try await accessLayer.update(
+            .init(
                 title: model.title,
                 excerpt: model.excerpt,
                 content: model.content,
-                imageAssetId: model.imageAssetId,
-                createdAt: model.createdAt,
-                updatedAt: model.updatedAt
-            )
+                imageAssetId: model.imageAssetId
+            ),
+            where: \.id,
+            equals: model.id
         )
+        guard let updated = try await accessLayer.selectFirst(by: \.id, equals: model.id) else {
+            throw RepositoryError.notFound
+        }
         _ = try await WebModule.Metadata.Repository.Database(context: context)
             .update(model.metadata)
         return updated.asDomain(metadata: model.metadata)
@@ -96,7 +99,7 @@ public struct CategoryDatabaseRepository: Category.Repository.Interface {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        try await DatabaseAccessLayer<CategoryTable>(context: context)
+        try await DatabaseAccessLayer<Category.Table>(context: context)
             .delete(where: \.id, in: ids)
         return ids
     }

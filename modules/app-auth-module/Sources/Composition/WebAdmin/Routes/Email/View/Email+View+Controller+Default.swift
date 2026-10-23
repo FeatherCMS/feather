@@ -19,7 +19,7 @@ import WebComponents
 extension Email.View.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Email.View.Interactor.Interface,
                 any Email.View.Presenter.Interface
             >
@@ -29,7 +29,9 @@ extension Email.View.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
             let id = try context.requiredID()
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let permissions = context.currentUserPermissions
             guard
                 context.isCurrentUserAllowed(to: Email.Permissions.read)

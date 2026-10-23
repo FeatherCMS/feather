@@ -15,9 +15,10 @@ extension Email.Remove {
             self.authorizer = authorizer
             self.transaction = transaction
         }
-        public func execute(subject: Subject, ids: [String]) async throws
-            -> [String]
-        {
+        public func execute(
+            subject: Subject,
+            input: Input
+        ) async throws -> Output {
             guard try await authorizer.can(subject: subject, perform: Action())
             else {
                 throw AuthError(
@@ -25,9 +26,10 @@ extension Email.Remove {
                     message: Action().key.rawValue
                 )
             }
-            return try await transaction.run { scope in
-                try await scope.authEmail.delete(ids: ids)
+            let ids = try await transaction.run { scope in
+                try await scope.authEmail.delete(ids: input.ids)
             }
+            return Output(ids: ids)
         }
 
     }

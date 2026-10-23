@@ -1,4 +1,3 @@
-public import FeatherApplication
 public import NewsletterDomain
 public import NewsletterModule
 

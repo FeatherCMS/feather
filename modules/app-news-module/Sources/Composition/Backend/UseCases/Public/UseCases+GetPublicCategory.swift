@@ -7,12 +7,13 @@ import WebModule
 
 extension UseCases {
 
-    public func makeGetPublicCategory() -> GetPublicCategory {
-        .init(
+    public func makePublicCategoryDetail() -> Public.Category.Detail.UseCase
+    {
+        Public.Category.Detail.UseCase(
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
                 scope: { context in
-                    PublicNewsCategory.Detail.Scope(
+                    Public.Category.Detail.Scope(
                         category: CategoryDatabaseQueries(
                             context: context,
                             metadata: WebModule.Metadata.Query.Database(

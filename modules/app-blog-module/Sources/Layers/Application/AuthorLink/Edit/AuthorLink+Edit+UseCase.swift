@@ -55,18 +55,17 @@ extension AuthorLink.Edit {
 
                 return try await scope.authorLink.update(model)
             }
-            let detail = AuthorLink.Detail.Output(model: model)
             return .init(
-                id: detail.id,
-                authorId: detail.authorId,
-                label: detail.label,
-                url: detail.url,
-                priority: detail.priority,
-                isBlank: detail.isBlank,
-                permission: detail.permission,
-                notes: detail.notes,
-                createdAt: detail.createdAt,
-                updatedAt: detail.updatedAt
+                id: model.id,
+                authorId: model.authorId,
+                label: model.label,
+                url: model.url,
+                priority: model.priority,
+                isBlank: model.isBlank,
+                permission: model.permission,
+                notes: model.notes,
+                createdAt: model.createdAt,
+                updatedAt: model.updatedAt
             )
         }
     }

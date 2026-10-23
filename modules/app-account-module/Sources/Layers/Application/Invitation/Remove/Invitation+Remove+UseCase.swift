@@ -27,7 +27,7 @@ extension Invitation.Remove {
         public func execute(
             subject: Subject,
             input: Invitation.Remove.Input
-        ) async throws -> [String] {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -57,7 +57,7 @@ extension Invitation.Remove {
                     }
                     removedIDs += try await scope.invitation.delete(ids: [id])
                 }
-                return removedIDs
+                return Output(ids: removedIDs)
             }
         }
     }

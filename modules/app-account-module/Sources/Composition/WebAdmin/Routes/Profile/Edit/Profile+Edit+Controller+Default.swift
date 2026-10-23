@@ -11,7 +11,7 @@ extension Profile.Edit.Controller {
     {
         let routes: Profile.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Profile.Edit.Interactor.Interface,
                 any Profile.Edit.Presenter.Interface
             >
@@ -20,7 +20,9 @@ extension Profile.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let account = context.account
 
             let permissions = account.permissionSet
@@ -45,7 +47,9 @@ extension Profile.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             let account = context.account
 
             let permissions = account.permissionSet

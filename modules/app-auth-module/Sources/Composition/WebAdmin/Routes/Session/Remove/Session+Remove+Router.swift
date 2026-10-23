@@ -23,7 +23,7 @@ extension Session.Remove {
                         apiBaseURL: environment.apiBaseURL,
                         requestContext: context
                     )
-                    return (
+                    return WebAdminRuntime(
                         interactor: Session.Remove.Interactor.Default(
                             repository:
                                 Session.Remove.Repository.OpenAPI(

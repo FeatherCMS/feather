@@ -2,15 +2,16 @@ import HTML
 import SGML
 import WebBuilders
 import WebModuleWebApp
+import NewsletterWebShared
 
-struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
+struct NewsletterCampaignMarkdownBlockRenderer: MarkdownBlockRenderer {
     let name = "NewsletterCampaign"
     let usesFormSubmissionNonce = true
     let submissionRoute: NewsletterSubscriptionRoute
     let turnstileSiteKey: String?
 
     func render(
-        request: WebMarkdownBlockRendererRequest
+        request: MarkdownBlockRendererRequest
     ) async -> String? {
         guard
             let identifier = request.arguments["key"],

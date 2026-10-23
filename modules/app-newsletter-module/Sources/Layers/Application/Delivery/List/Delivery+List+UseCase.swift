@@ -19,7 +19,7 @@ extension Delivery.List {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> [Delivery.List.Output] {
+        ) async throws -> Output {
             let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
             else {
@@ -33,8 +33,9 @@ extension Delivery.List {
                     let issue = try await scope.issue.findBy(id: input.issueId),
                     issue.newsletterId == campaign.id
                 else { throw Error.notFound }
-                return try await scope.delivery.list(issueId: input.issueId)
-                    .map(Delivery.List.Output.init(model:))
+                let items = try await scope.delivery.list(issueId: input.issueId)
+                    .map(Item.init(model:))
+                return Output(items: items)
             }
         }
 

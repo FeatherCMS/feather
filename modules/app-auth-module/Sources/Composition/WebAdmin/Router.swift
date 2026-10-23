@@ -100,7 +100,7 @@ public struct Router {
             routes: Session.Router.Routes(
                 identityRoot: WebRoute.root
                     .appending(pathComponent: "admin")
-                    .appending(pathComponent: "user")
+                    .appending(pathComponent: "auth")
                     .appending(pathComponent: "identities")
             ),
             environment: environment,

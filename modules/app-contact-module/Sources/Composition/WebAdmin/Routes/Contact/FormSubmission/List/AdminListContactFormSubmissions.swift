@@ -17,7 +17,7 @@ struct AdminListContactFormSubmissions {
     ) {
         controller = AdminListContactFormSubmissionsDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor:
                         AdminListContactFormSubmissionsDefaultInteractor(
                             repository: .init(

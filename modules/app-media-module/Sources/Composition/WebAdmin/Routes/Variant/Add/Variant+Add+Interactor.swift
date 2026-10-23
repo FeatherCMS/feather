@@ -6,3 +6,9 @@ import MediaModule
 extension Variant.Add {
     enum Interactor {}
 }
+
+extension Variant.Add.Interactor {
+    protocol Interface: Sendable {
+        func add(input: MediaVariantFormInput) async throws
+    }
+}

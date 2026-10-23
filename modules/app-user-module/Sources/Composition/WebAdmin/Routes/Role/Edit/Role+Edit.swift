@@ -16,7 +16,7 @@ extension Role.Edit {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(
@@ -38,11 +38,7 @@ extension Role.Edit {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(routes.edit.routerPath, use: controller.getEditUserRole)
-            router.post(
-                routes.edit.routerPath,
-                use: controller.postEditUserRole
-            )
+            router.post(routes.edit.routerPath, use: controller.postEditUserRole)
         }
-
     }
 }

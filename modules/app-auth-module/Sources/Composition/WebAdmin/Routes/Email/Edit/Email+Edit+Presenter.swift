@@ -19,3 +19,31 @@ import WebComponents
 extension Email.Edit {
     enum Presenter {}
 }
+
+extension Email.Edit.Presenter {
+    protocol Interface: Sendable {
+
+        func formState(
+            identityId: String,
+            identities: [Credential.Form.IdentityOption],
+            email: String
+        ) -> Email.Form.Component.State
+
+        func renderPage(
+            id: String,
+            isEdited: Bool,
+            form: Email.Form.Component.State,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+
+        func renderError(
+            id: String,
+            error: OpenAPIRepositoryError,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+
+        func format(
+            error: OpenAPIRepositoryError
+        ) -> String
+    }
+}

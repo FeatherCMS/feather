@@ -11,7 +11,7 @@ struct AdminEditMetadataDefaultController:
     Sendable
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminEditMetadataInteractor,
             any AdminEditMetadataPresenter
         >
@@ -45,7 +45,7 @@ struct AdminEditMetadataDefaultController:
         context: AuthenticatedRequestContext,
         configuration: AdminMetadataEditConfiguration
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let id = try metadataID(request: request, context: context)
         let permissions = context.currentUserPermissions
         do {
@@ -100,7 +100,7 @@ struct AdminEditMetadataDefaultController:
         context: AuthenticatedRequestContext,
         configuration: AdminMetadataEditConfiguration
     ) async throws -> Response {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let id = try metadataID(request: request, context: context)
         let permissions = context.currentUserPermissions
         let entry = try await loadEntry(
@@ -370,10 +370,10 @@ struct AdminEditMetadataDefaultController:
     }
 
     private func loadEntry(
-        runtime: (
-            interactor: any AdminEditMetadataInteractor,
-            presenter: any AdminEditMetadataPresenter
-        ),
+        runtime: WebAdminRuntime<
+            any AdminEditMetadataInteractor,
+            any AdminEditMetadataPresenter
+        >,
         id: String,
         context: AuthenticatedRequestContext,
         referenceType: String?

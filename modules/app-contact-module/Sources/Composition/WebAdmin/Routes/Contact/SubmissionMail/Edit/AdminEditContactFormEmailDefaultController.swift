@@ -12,7 +12,7 @@ struct AdminEditContactFormEmailDefaultController:
     AdminEditContactFormEmailController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminEditContactFormEmailInteractor,
             any AdminEditContactFormEmailPresenter
         >
@@ -21,7 +21,9 @@ struct AdminEditContactFormEmailDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let formId = try context.requiredParameter("formKey")
         let mailId = try context.requiredParameter("mailId")
         do {
@@ -62,7 +64,7 @@ struct AdminEditContactFormEmailDefaultController:
         async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         let formId = try context.requiredParameter("formKey")
         let mailId = try context.requiredParameter("mailId")
         let input = try await request.decode(

@@ -17,7 +17,7 @@ extension AuthorLink.Add.Controller {
     struct Default: Interface {
         let routes: AuthorLink.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any AuthorLink.Add.Interactor.Interface,
                 any AuthorLink.Add.Presenter.Interface
             >
@@ -26,7 +26,7 @@ extension AuthorLink.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let authorID = try context.requiredID()
             return try await runtime.presenter.render(
                 authorID: authorID,
@@ -39,7 +39,7 @@ extension AuthorLink.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let authorID = try context.requiredID()
             let permissions = context.currentUserPermissions
             var lastPayload: AuthorLink.Form.Input?

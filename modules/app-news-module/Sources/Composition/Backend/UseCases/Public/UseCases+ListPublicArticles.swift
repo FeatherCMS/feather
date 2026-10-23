@@ -7,19 +7,13 @@ import WebModule
 
 extension UseCases {
 
-    public func makeListPublicArticles() -> ListPublicArticles {
+    public func makeListPublicArticles() -> Public.Article.List.UseCase {
         .init(
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
                 scope: { context in
-                    PublicNewsArticle.List.Scope(
+                    Public.Article.List.Scope(
                         article: ArticleDatabaseQueries(
-                            context: context,
-                            metadata: WebModule.Metadata.Query.Database(
-                                context: context
-                            )
-                        ),
-                        articleResolver: ArticleDatabaseQueries(
                             context: context,
                             metadata: WebModule.Metadata.Query.Database(
                                 context: context
@@ -30,15 +24,6 @@ extension UseCases {
                             metadata: WebModule.Metadata.Query.Database(
                                 context: context
                             )
-                        ),
-                        relatedArticles: ArticleDatabaseQueries(
-                            context: context,
-                            metadata: WebModule.Metadata.Query.Database(
-                                context: context
-                            )
-                        ),
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
                         ),
                         metadataDetails: WebModule.Metadata.Query.Database(
                             context: context

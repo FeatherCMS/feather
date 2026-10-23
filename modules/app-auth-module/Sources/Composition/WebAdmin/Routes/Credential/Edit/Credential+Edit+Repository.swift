@@ -17,6 +17,10 @@ import WebComponents
 
 
 
+extension Credential.Edit {
+    enum Repository {}
+}
+
 extension Credential.Edit.Repository {
     protocol Interface: Sendable {
         func get(id: String) async throws -> Credential.Edit.Model

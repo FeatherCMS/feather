@@ -1,6 +1,6 @@
 public import ContactDomain
 public import ContactModule
-import FeatherModuleKit
+public import FeatherModuleKit
 
 extension Form.Edit {
     public struct Scope: FeatherModuleKit.Scope {

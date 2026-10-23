@@ -6,7 +6,7 @@ import OpenAPIRuntime
 
 struct AdminViewPageDefaultController: AdminViewPageController {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminViewPageInteractor,
             any AdminViewPagePresenter
         >
@@ -15,7 +15,7 @@ struct AdminViewPageDefaultController: AdminViewPageController {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
+        let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions
         do {

@@ -5,7 +5,7 @@ import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
-import ContactModule
+public import ContactModule
 
 extension UseCases {
 
@@ -14,8 +14,8 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Submission.List.Scope(
-                    form: FormDatabaseRepository(context: context),
-                    submission: SubmissionDatabaseRepository(context: context)
+                    form: Form.Repository.Database(context: context),
+                    submission: Submission.Repository.Database(context: context)
                 )
             }
         )

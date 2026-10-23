@@ -14,7 +14,7 @@ func buildWebMetadataExtensions() async throws -> (
     templatePaths: [URL]
 ) {
     var events = EventRegistry()
-    WebModuleWebApp.WebEventHandlers.register(in: &events)
+    WebModuleWebApp.EventHandlers.register(in: &events)
     BlogWebApp.Event.Handlers.register(in: &events)
     NewsWebApp.NewsEventHandlers.register(in: &events)
 

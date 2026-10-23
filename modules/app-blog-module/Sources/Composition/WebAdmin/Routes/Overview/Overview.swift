@@ -29,7 +29,7 @@ enum Overview {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(),
                         presenter: Presenter.Default(
                             request: request,

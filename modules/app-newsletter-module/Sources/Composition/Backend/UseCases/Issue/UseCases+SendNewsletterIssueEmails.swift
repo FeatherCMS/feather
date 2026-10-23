@@ -1,4 +1,5 @@
 import NewsletterApplication
+import NewsletterModule
 import NewsletterInfrastructure
 import FeatherDatabase
 import FeatherInfrastructure
@@ -10,9 +11,9 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Issue.Send.Scope(
-                    newsletter: CampaignDatabaseRepository(context: context),
-                    subscriber: SubscriberDatabaseRepository(context: context),
-                    delivery: DeliveryDatabaseRepository(context: context)
+                    newsletter: Campaign.Repository.Database(context: context),
+                    subscriber: Subscriber.Repository.Database(context: context),
+                    delivery: Delivery.Repository.Database(context: context)
                 )
             }
         )

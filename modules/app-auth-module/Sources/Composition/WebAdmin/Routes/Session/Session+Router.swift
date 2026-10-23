@@ -28,7 +28,7 @@ extension Session {
             {
                 [
                     .init(label: "Admin", link: "/admin/"),
-                    .init(label: "User", link: "/admin/user/"),
+                    .init(label: "Auth", link: "/admin/auth/"),
                     .init(label: "Identities", link: identityRoot.path),
                     .init(
                         label: "Details",

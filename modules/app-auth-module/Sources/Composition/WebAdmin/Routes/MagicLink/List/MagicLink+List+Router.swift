@@ -30,7 +30,7 @@ extension MagicLink.List {
             self.controller = MagicLink.List.Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: MagicLink.List.Interactor.Default(
                             repository: MagicLink.List.Repository.OpenAPI(
                                 api: API.Client(

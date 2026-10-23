@@ -13,7 +13,7 @@ struct AdminListPage {
         self.controller = AdminListPageDefaultController(
             environment: environment,
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminListPageDefaultInteractor(
                         repository: AdminListPageOpenAPIRepository(
                             api: API.Client(

@@ -10,7 +10,7 @@ import WebModule
 extension WebModule.Menu.Edit.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any WebModule.Menu.Edit.Interactor.Interface,
                 any WebModule.Menu.Edit.Presenter.Interface
             >
@@ -19,7 +19,7 @@ extension WebModule.Menu.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             do {
@@ -48,7 +48,7 @@ extension WebModule.Menu.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
             var lastPayload: MenuFormInput?

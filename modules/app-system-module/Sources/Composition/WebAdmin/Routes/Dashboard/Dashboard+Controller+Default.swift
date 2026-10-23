@@ -8,7 +8,7 @@ extension Dashboard.Controller {
 
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Dashboard.Interactor.Interface,
                 any Dashboard.Presenter.Interface
             >
@@ -17,7 +17,9 @@ extension Dashboard.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
 
             let now = Date().timeIntervalSince1970
             let model = try await interactor.getHome(

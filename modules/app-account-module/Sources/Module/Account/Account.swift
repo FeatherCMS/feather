@@ -1,3 +1,1 @@
-public enum Account {
-    public enum Add {}
-}
+public enum Account {}

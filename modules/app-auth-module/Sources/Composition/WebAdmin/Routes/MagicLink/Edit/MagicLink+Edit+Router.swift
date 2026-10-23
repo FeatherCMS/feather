@@ -29,7 +29,7 @@ extension MagicLink.Edit {
             self.routes = routes
             self.controller = MagicLink.Edit.Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: MagicLink.Edit.Interactor.Default(
                             repository: MagicLink.Edit.Repository.OpenAPI(
                                 api: API.Client(

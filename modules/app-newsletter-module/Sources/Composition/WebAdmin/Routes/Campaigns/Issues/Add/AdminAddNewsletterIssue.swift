@@ -16,7 +16,7 @@ struct AdminAddNewsletterIssue {
     ) {
         controller = AdminAddNewsletterIssueDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminAddNewsletterIssueDefaultInteractor(
                         repository:
                             AdminAddNewsletterIssueOpenAPIRepository(

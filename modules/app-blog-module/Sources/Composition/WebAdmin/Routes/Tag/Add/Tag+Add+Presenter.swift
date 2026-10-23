@@ -5,3 +5,12 @@ import FeatherWebShared
 extension Tag.Add {
     enum Presenter {}
 }
+
+extension Tag.Add.Presenter {
+    protocol Interface: Sendable {
+        func renderAddPage(
+            state: Tag.Form.State,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+    }
+}

@@ -9,7 +9,7 @@ struct AdminRemoveContactSubmissions {
     ) {
         controller = AdminRemoveContactSubmissionsDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminRemoveContactSubmissionsDefaultInteractor(
                         repository:
                             AdminRemoveContactSubmissionsOpenAPIRepository(

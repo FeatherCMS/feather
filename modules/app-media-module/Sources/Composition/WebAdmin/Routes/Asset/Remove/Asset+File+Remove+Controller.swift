@@ -13,3 +13,13 @@ import WebComponents
 extension Asset.File.Remove {
     enum Controller {}
 }
+
+extension Asset.File.Remove.Controller {
+    protocol Interface: Sendable {
+
+        func remove(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
+    }
+}

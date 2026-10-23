@@ -8,18 +8,18 @@ extension Permission.View.Controller {
         Interface
     {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
-                any Permission.View.Interactor
-                    .Interface,
-                any Permission.View.Presenter
-                    .Interface
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any Permission.View.Interactor.Interface,
+                any Permission.View.Presenter.Interface
             >
 
         func getSystemPermission(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: SystemModule.Permission.Permissions.read

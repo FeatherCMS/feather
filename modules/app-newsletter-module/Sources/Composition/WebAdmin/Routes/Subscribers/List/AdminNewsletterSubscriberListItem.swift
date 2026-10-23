@@ -1,5 +1,5 @@
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -12,10 +12,4 @@ struct AdminNewsletterSubscriberListItem: Sendable {
     let email: String
     let name: String
     let newsletters: [NewsletterSubscriberCampaignMembership]
-}
-
-struct NewsletterSubscriberCampaignMembership: Sendable {
-    let id: String
-    let name: String
-    let status: String
 }

@@ -1,7 +1,5 @@
 public import BlogModule
 public import FeatherApplication
-import FeatherModuleKit
-import WebModule
 
 extension Author.Search {
     public struct Input: DTO {

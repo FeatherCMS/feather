@@ -14,7 +14,7 @@ import WebComponents
 extension Asset.Folder.Edit.Controller {
     struct Default: Asset.Folder.Edit.Controller.Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Asset.Folder.Edit.Interactor.Interface,
                 any Asset.Folder.Edit.Presenter.Interface
             >
@@ -24,7 +24,7 @@ extension Asset.Folder.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserAdminListActions
             do {
@@ -48,7 +48,7 @@ extension Asset.Folder.Edit.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserAdminListActions
             let payload = try await request.decode(

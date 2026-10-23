@@ -11,13 +11,13 @@ extension Profile.Detail.Interactor {
         let profileRepository:
             any Profile.Detail.Repository.Interface
 
-        func getProfile() async throws -> Profile.Model {
+        func getProfile() async throws -> Profile.WebAdminModel {
             try await profileRepository.get()
         }
 
         func getProfile(
             account: AccountModel,
-            profile: Profile.Model
+            profile: Profile.WebAdminModel
         ) async throws -> Profile.Detail.Model {
             .init(account: account, profile: profile)
         }

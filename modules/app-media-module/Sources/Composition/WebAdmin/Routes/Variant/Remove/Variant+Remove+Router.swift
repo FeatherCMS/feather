@@ -18,7 +18,7 @@ extension Variant.Remove {
             self.controller = Variant.Remove.Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Variant.Remove.Interactor.Default(
                             repository: Variant.Remove.Repository.OpenAPI(
                                 api: MediaAdminAPIClient(

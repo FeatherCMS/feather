@@ -8,7 +8,7 @@ import RedirectModule
 extension RedirectModule.Rule.Add.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any RedirectModule.Rule.Add.Interactor.Interface,
                 any RedirectModule.Rule.Add.Presenter.Interface
             >
@@ -19,7 +19,7 @@ extension RedirectModule.Rule.Add.Controller {
         )
             async throws -> HTMLResponse
         {
-            let (_, presenter) = buildRuntime((request, context))
+            let presenter = buildRuntime(request, context).presenter
             guard
                 context.isCurrentUserAllowed(
                     to: RedirectModule.Rule.Permissions.create
@@ -37,7 +37,9 @@ extension RedirectModule.Rule.Add.Controller {
         )
             async throws -> Response
         {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: RedirectModule.Rule.Permissions.create

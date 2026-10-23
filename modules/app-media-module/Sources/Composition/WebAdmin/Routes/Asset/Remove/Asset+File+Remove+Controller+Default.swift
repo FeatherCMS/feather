@@ -13,7 +13,7 @@ import WebComponents
 extension Asset.File.Remove.Controller {
     struct Default: Asset.File.Remove.Controller.Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Asset.File.Remove.Interactor.Interface,
                 any Asset.File.Remove.Presenter.Interface
             >
@@ -23,7 +23,7 @@ extension Asset.File.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (interactor, _) = buildRuntime((request, context))
+            let interactor = buildRuntime(request, context).interactor
             guard context.isCurrentUserAllowed(to: Asset.Permissions.delete)
             else { return Response(status: .forbidden) }
             let payload = try await request.decode(

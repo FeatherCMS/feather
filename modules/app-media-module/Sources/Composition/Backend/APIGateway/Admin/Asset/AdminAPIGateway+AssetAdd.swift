@@ -6,33 +6,31 @@ import MediaModule
 import NIOCore
 import OpenAPIRuntime
 
-private enum MediaAssetUploadError: Error, Sendable {
-    case contentLengthRequired
-}
+extension AdminAPIGateway {
+    private enum MediaAssetUploadError: Error, Sendable {
+        case contentLengthRequired
+    }
 
-private struct MediaStorageSequence: Sendable, AsyncSequence {
-    typealias Element = ByteBuffer
+    private struct MediaStorageSequence: Sendable, AsyncSequence {
+        struct AsyncIterator: AsyncIteratorProtocol {
+            var iterator: HTTPBody.AsyncIterator
 
-    struct AsyncIterator: AsyncIteratorProtocol {
-        var iterator: HTTPBody.AsyncIterator
-
-        mutating func next() async throws -> ByteBuffer? {
-            let bytes = try await iterator.next(isolation: nil)
-            guard let bytes else {
-                return nil
+            mutating func next() async throws -> ByteBuffer? {
+                let bytes = try await iterator.next(isolation: nil)
+                guard let bytes else {
+                    return nil
+                }
+                return ByteBuffer(bytes: bytes)
             }
-            return ByteBuffer(bytes: bytes)
+        }
+
+        let body: HTTPBody
+
+        func makeAsyncIterator() -> AsyncIterator {
+            .init(iterator: body.makeAsyncIterator())
         }
     }
 
-    let body: HTTPBody
-
-    func makeAsyncIterator() -> AsyncIterator {
-        .init(iterator: body.makeAsyncIterator())
-    }
-}
-
-extension AdminAPIGateway {
     public func mediaAssetPost(
         _ input: Operations.MediaAssetPost.Input
     ) async throws -> Operations.MediaAssetPost.Output {

@@ -10,7 +10,7 @@ extension MagicLink.App.Controller {
         let turnstileVerifier: (any AuthTurnstileVerifier)?
         let routes: MagicLink.App.Router.Routes
         let buildRuntime:
-            RuntimeBuilder<
+            @Sendable (Request, DefaultRequestContext) -> WebAppRuntime<
                 any MagicLink.App.Interactor.Interface,
                 any MagicLink.App.Presenter.Interface
             >
@@ -19,7 +19,7 @@ extension MagicLink.App.Controller {
             request: Request,
             context: DefaultRequestContext
         ) async throws -> WebAppHTMLResponse {
-            let (_, presenter) = buildRuntime((request, context))
+            let presenter = buildRuntime(request, context).presenter
             return try presenter.render(
                 email: "",
                 isPersistent: true,
@@ -34,7 +34,9 @@ extension MagicLink.App.Controller {
             request: Request,
             context: DefaultRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let decoded = try await request.decode(
                 as: AuthTurnstileDecoded<MagicLink.App.Form.Input>.self,
                 context: context
@@ -102,7 +104,9 @@ extension MagicLink.App.Controller {
             request: Request,
             context: DefaultRequestContext
         ) async throws -> Response {
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             let token =
                 request.uri.queryParameters["token"].map(String.init) ?? ""
             do {

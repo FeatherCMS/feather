@@ -9,8 +9,6 @@ import WebBuilders
 import WebComponents
 
 struct MediaHTTPBodySequence: Sendable, AsyncSequence {
-    typealias Element = ArraySlice<UInt8>
-
     struct AsyncIterator: AsyncIteratorProtocol {
         var iterator: RequestBody.AsyncIterator
 

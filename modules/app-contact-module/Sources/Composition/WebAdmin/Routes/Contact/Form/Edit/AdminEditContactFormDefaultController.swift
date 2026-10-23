@@ -10,7 +10,7 @@ import WebComponents
 
 struct AdminEditContactFormDefaultController: AdminEditContactFormController {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminEditContactFormInteractor,
             any AdminEditContactFormPresenter
         >
@@ -19,7 +19,9 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         let formKey = try context.requiredParameter("formKey")
         do {
             return try await presenter.renderPage(
@@ -37,7 +39,9 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild2 = buildRuntime(request, context)
+        let interactor = __runtimeBuild2.interactor
+        let presenter = __runtimeBuild2.presenter
         let formKey = try context.requiredParameter("formKey")
         do {
             return try await presenter.renderFieldsPage(
@@ -55,7 +59,9 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild3 = buildRuntime(request, context)
+        let interactor = __runtimeBuild3.interactor
+        let presenter = __runtimeBuild3.presenter
         let formKey = try context.requiredParameter("formKey")
         let form = try await request.decode(
             as: ContactFormEditForm.self,
@@ -113,15 +119,16 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
                 .response(from: request, context: context)
         }
     }
-
     func updateFields(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild4 = buildRuntime(request, context)
+        let interactor = __runtimeBuild4.interactor
+        let presenter = __runtimeBuild4.presenter
         let formKey = try context.requiredParameter("formKey")
         let form = try await request.decode(
-            as: ContactFormFieldsEditForm.self,
+            as: AdminEditContactFormFieldsForm.self,
             context: context
         )
         let current: AdminContactFormDetailsItem
@@ -176,8 +183,4 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
                 .response(from: request, context: context)
         }
     }
-}
-
-private struct ContactFormFieldsEditForm: Decodable {
-    let fieldIds: [String]?
 }

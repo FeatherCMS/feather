@@ -40,7 +40,7 @@ extension Subscriber.List {
                 }
                 let items = try await scope.subscriber
                     .list(newsletterId: campaignID)
-                    .map(Output.Item.init(model:))
+                    .map(Subscriber.List.Item.init(model:))
                 return .init(items: items)
             }
         }

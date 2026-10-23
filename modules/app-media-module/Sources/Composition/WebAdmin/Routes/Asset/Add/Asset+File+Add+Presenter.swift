@@ -13,3 +13,11 @@ import WebComponents
 extension Asset.File.Add {
     enum Presenter {}
 }
+
+extension Asset.File.Add.Presenter {
+    protocol Interface: Sendable {
+        func renderPage(
+            model: Asset.File.Add.Model
+        ) async throws -> HTMLResponse
+    }
+}

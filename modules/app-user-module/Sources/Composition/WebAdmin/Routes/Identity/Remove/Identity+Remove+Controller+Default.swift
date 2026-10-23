@@ -11,7 +11,7 @@ extension Identity.Remove.Controller {
     {
         let routes: Identity.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Identity.Remove.Interactor.Interface,
                 any Identity.Remove.Presenter.Interface
             >
@@ -20,7 +20,9 @@ extension Identity.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (removeInteractor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let removeInteractor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Identity.Permissions.delete
@@ -67,7 +69,9 @@ extension Identity.Remove.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let (removeInteractor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let removeInteractor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: Identity.Permissions.delete

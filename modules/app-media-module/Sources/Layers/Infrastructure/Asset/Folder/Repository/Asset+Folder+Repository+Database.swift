@@ -34,7 +34,8 @@ extension Asset.Folder.Repository {
         {
             let row = try await Asset.Folder
                 .Table(
-                    connection: context.connection
+                    connection: context.connection,
+                    context: context
                 )
                 .create(
                     row: .init(
@@ -55,7 +56,8 @@ extension Asset.Folder.Repository {
         {
             let row = try await Asset.Folder
                 .Table(
-                    connection: context.connection
+                    connection: context.connection,
+                    context: context
                 )
                 .update(
                     row: .init(
@@ -75,20 +77,20 @@ extension Asset.Folder.Repository {
         }
 
         public func find(id: String) async throws -> Asset.Folder.Model? {
-            try await Asset.Folder.Table(connection: context.connection)
+            try await Asset.Folder.Table(connection: context.connection, context: context)
                 .find(id: id)?
                 .asDomain
         }
 
         public func find(slugPath: String) async throws -> Asset.Folder.Model? {
-            try await Asset.Folder.Table(connection: context.connection)
+            try await Asset.Folder.Table(connection: context.connection, context: context)
                 .find(slugPath: slugPath)?
                 .asDomain
         }
 
         public func list(parentId: String?) async throws -> [Asset.Folder.Model]
         {
-            try await Asset.Folder.Table(connection: context.connection)
+            try await Asset.Folder.Table(connection: context.connection, context: context)
                 .list(parentId: parentId)
                 .map(\.asDomain)
         }
@@ -96,13 +98,13 @@ extension Asset.Folder.Repository {
         public func listDescendants(slugPath: String) async throws
             -> [Asset.Folder.Model]
         {
-            try await Asset.Folder.Table(connection: context.connection)
+            try await Asset.Folder.Table(connection: context.connection, context: context)
                 .listDescendants(slugPath: slugPath)
                 .map(\.asDomain)
         }
 
         public func delete(ids: [String]) async throws -> [String] {
-            try await Asset.Folder.Table(connection: context.connection)
+            try await Asset.Folder.Table(connection: context.connection, context: context)
                 .delete(ids: ids)
         }
     }

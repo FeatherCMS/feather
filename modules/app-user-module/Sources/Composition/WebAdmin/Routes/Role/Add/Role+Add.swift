@@ -17,7 +17,7 @@ extension Role.Add {
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
-                    (
+                    WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
                                 api: API.Client(
@@ -41,6 +41,5 @@ extension Role.Add {
             router.get(routes.add.routerPath, use: controller.getAddUserRole)
             router.post(routes.add.routerPath, use: controller.postAddUserRole)
         }
-
     }
 }

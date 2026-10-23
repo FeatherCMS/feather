@@ -1,6 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
-public import NewsletterDomain
+import NewsletterDomain
 public import NewsletterModule
 
 import struct Foundation.Date

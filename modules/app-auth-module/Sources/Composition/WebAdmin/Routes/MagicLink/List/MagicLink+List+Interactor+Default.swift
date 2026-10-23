@@ -24,13 +24,7 @@ extension MagicLink.List.Interactor {
             size: Int,
             search: String?,
             userID: String?
-        ) async throws -> (
-            items: [AuthAdminAPI.Components.Schemas
-                .AuthMagicLinkQueryItemSchema],
-            emailByAuthEmailId: [String: String],
-            total: Int,
-            page: Int, size: Int
-        ) {
+        ) async throws -> MagicLink.List.Result {
             try await repository.list(
                 page: page,
                 size: size,

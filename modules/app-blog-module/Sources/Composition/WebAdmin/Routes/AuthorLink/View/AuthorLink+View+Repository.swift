@@ -15,3 +15,10 @@ import WebModuleWebAdmin
 extension AuthorLink.View {
     enum Repository {}
 }
+
+extension AuthorLink.View.Repository {
+    protocol Interface: Sendable {
+        func get(authorID: String, id: String) async throws
+            -> AuthorLink.View.Model
+    }
+}

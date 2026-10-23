@@ -7,28 +7,28 @@ import SystemModule
 import UserInfrastructure
 import UserModule
 
-private struct AuthorizationRoot: DatabaseTableRowDecodable {
-    let isRoot: Bool
-}
-
-private struct AuthorizationRoleID: DatabaseTableRowDecodable {
-    let roleId: String
-}
-
-private struct AuthorizationRoleName: DatabaseTableRowDecodable {
-    let name: String?
-}
-
-private struct AuthorizationPermissionID: DatabaseTableRowDecodable {
-    let permissionId: String
-}
-
-private struct AuthorizationPermissionName: DatabaseTableRowDecodable {
-    let name: String?
-}
-
 extension AuthModule.Authorization {
     public struct Database: Roles.Query.Interface, Permissions.Query.Interface {
+        private struct Root: DatabaseTableRowDecodable {
+            let isRoot: Bool
+        }
+
+        private struct RoleID: DatabaseTableRowDecodable {
+            let roleId: String
+        }
+
+        private struct RoleName: DatabaseTableRowDecodable {
+            let name: String?
+        }
+
+        private struct PermissionID: DatabaseTableRowDecodable {
+            let permissionId: String
+        }
+
+        private struct PermissionName: DatabaseTableRowDecodable {
+            let name: String?
+        }
+
         private let context: any DatabaseContext
 
         public init(context: any DatabaseContext) {
@@ -39,7 +39,7 @@ extension AuthModule.Authorization {
             let roleIDs = try await DatabaseAccessLayer<IdentityRole.Table>(
                 context: context
             )
-            .select(as: AuthorizationRoleID.self) {
+            .select(as: RoleID.self) {
                 $0.where(\.identityId, equals: identityId)
             }
             .map(\.roleId)
@@ -47,7 +47,7 @@ extension AuthModule.Authorization {
             guard !roleIDs.isEmpty else { return [] }
 
             return try await DatabaseAccessLayer<Role.Table>(context: context)
-                .select(as: AuthorizationRoleName.self) {
+                .select(as: RoleName.self) {
                     $0.where(\.id, in: roleIDs)
                         .order(by: [.init(by: \.name)])
                         .columns($0.table.column(\.name))
@@ -64,7 +64,7 @@ extension AuthModule.Authorization {
             .selectFirst(
                 by: \.id,
                 equals: identityId,
-                as: AuthorizationRoot.self
+                as: Root.self
             )
 
             guard let identity else { return [] }
@@ -76,7 +76,7 @@ extension AuthModule.Authorization {
             let roleIDs = try await DatabaseAccessLayer<IdentityRole.Table>(
                 context: context
             )
-            .select(as: AuthorizationRoleID.self) {
+            .select(as: RoleID.self) {
                 $0.where(\.identityId, equals: identityId)
             }
             .map(\.roleId)
@@ -86,7 +86,7 @@ extension AuthModule.Authorization {
             let permissionIDs = try await DatabaseAccessLayer<
                 RolePermission.Table
             >(context: context)
-            .select(as: AuthorizationPermissionID.self) {
+            .select(as: PermissionID.self) {
                 $0.where(\.roleId, in: roleIDs)
                     .columns($0.table.column(\.permissionId))
             }
@@ -106,7 +106,7 @@ extension AuthModule.Authorization {
             let names = try await DatabaseAccessLayer<Permission.Table>(
                 context: context
             )
-            .select(as: AuthorizationPermissionName.self) { initial in
+            .select(as: PermissionName.self) { initial in
                 apply(initial)
                     .order(by: [.init(by: \.name)])
                     .columns(initial.table.column(\.name))

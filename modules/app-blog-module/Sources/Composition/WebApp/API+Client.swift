@@ -9,6 +9,27 @@ public import OpenAPIRuntime
 import WebModuleWebApp
 
 public enum API {
+    private struct AuthMiddleware: ClientMiddleware {
+        let sessionToken: String?
+
+        func intercept(
+            _ request: HTTPRequest,
+            body: HTTPBody?,
+            baseURL: URL,
+            operationID: String,
+            next:
+                @concurrent @Sendable (HTTPRequest, HTTPBody?, URL) async throws
+                -> (HTTPResponse, HTTPBody?)
+        ) async throws -> (HTTPResponse, HTTPBody?) {
+            var authenticatedRequest = request
+            if let sessionToken {
+                authenticatedRequest.headerFields[.authorization] =
+                    "Bearer \(sessionToken)"
+            }
+            return try await next(authenticatedRequest, body, baseURL)
+        }
+    }
+
     public struct Client: Sendable {
         public let client: BlogAppAPI.Client
         public let apiBaseURL: URL
@@ -24,7 +45,7 @@ public enum API {
                     )
                 ),
                 middlewares: [
-                    APIAuthMiddleware(sessionToken: sessionToken)
+                    API.AuthMiddleware(sessionToken: sessionToken)
                 ]
             )
         }
@@ -47,25 +68,5 @@ public enum API {
                 responseBody: responseBody
             )
         }
-    }
-}
-
-private struct APIAuthMiddleware: ClientMiddleware {
-    let sessionToken: String?
-
-    func intercept(
-        _ request: HTTPRequest,
-        body: HTTPBody?,
-        baseURL: URL,
-        operationID: String,
-        next:
-            @concurrent @Sendable (HTTPRequest, HTTPBody?, URL) async throws
-            -> (HTTPResponse, HTTPBody?)
-    ) async throws -> (HTTPResponse, HTTPBody?) {
-        var request = request
-        if let sessionToken {
-            request.headerFields[.authorization] = "Bearer \(sessionToken)"
-        }
-        return try await next(request, body, baseURL)
     }
 }

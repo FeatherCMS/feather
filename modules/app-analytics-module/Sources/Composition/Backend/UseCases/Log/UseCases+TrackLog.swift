@@ -11,7 +11,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Log.Track.Scope(
-                    log: LogDatabaseRepository(context: context)
+                    log: Log.Repository.Database(context: context)
                 )
             }
         )

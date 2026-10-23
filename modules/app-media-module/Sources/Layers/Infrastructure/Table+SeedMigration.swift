@@ -65,24 +65,29 @@ public struct TableSeedMigration: DatabaseMigration {
             )
         }
 
-        let definitions: [(name: String, extensions: String, command: String)] =
-            [
-                (
-                    "ImageMagick",
-                    "png,jpg,jpeg,bmp",
-                    "convert -define jpeg:size=512x512 {input.fullname} -filter Triangle -resize 256x256^ -gravity center -background none -extent 256x256 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp"
-                ),
-                (
-                    "Ghostscript",
-                    "pdf",
-                    "gs -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha -r300 -dFirstPage=1 -dLastPage=1 -dUseCropBox -dFIXEDMEDIA -dPDFFitPage -g256x256 -sOutputFile=\"{output.dirname}/{output.basename}.png\" \"{input.fullname}\""
-                ),
-                (
-                    "FFmpeg",
-                    "mp4,mov,avi",
-                    "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=256:256:force_original_aspect_ratio=decrease,pad=256:256:(ow-iw)/2:(oh-ih)/2\" \"{output.dirname}/{output.basename}.png\""
-                ),
-            ]
+        let definitions = [
+            Variant.Processor.Model.create(
+                variantId: variant.id,
+                name: "ImageMagick",
+                matchExtensions: "png,jpg,jpeg,bmp",
+                commandTemplate: "convert -define jpeg:size=512x512 {input.fullname} -filter Triangle -resize 256x256^ -gravity center -background none -extent 256x256 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp",
+                isActive: true
+            ),
+            Variant.Processor.Model.create(
+                variantId: variant.id,
+                name: "Ghostscript",
+                matchExtensions: "pdf",
+                commandTemplate: "gs -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha -r300 -dFirstPage=1 -dLastPage=1 -dUseCropBox -dFIXEDMEDIA -dPDFFitPage -g256x256 -sOutputFile=\"{output.dirname}/{output.basename}.png\" \"{input.fullname}\"",
+                isActive: true
+            ),
+            Variant.Processor.Model.create(
+                variantId: variant.id,
+                name: "FFmpeg",
+                matchExtensions: "mp4,mov,avi",
+                commandTemplate: "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=256:256:force_original_aspect_ratio=decrease,pad=256:256:(ow-iw)/2:(oh-ih)/2\" \"{output.dirname}/{output.basename}.png\"",
+                isActive: true
+            ),
+        ]
 
         let existingProcessors = try await processorRepository.list(
             variantId: variant.id
@@ -91,38 +96,34 @@ public struct TableSeedMigration: DatabaseMigration {
             if var existing = existingProcessors.first(where: {
                 $0.name == definition.name
             }) {
-                existing.matchExtensions = definition.extensions
-                existing.commandTemplate = definition.command
+                existing.matchExtensions = definition.matchExtensions
+                existing.commandTemplate = definition.commandTemplate
                 existing.isActive = true
                 _ = try await processorRepository.update(existing)
             }
             else {
                 _ = try await processorRepository.insert(
-                    Variant.Processor.Model.create(
-                        variantId: variant.id,
-                        name: definition.name,
-                        matchExtensions: definition.extensions,
-                        commandTemplate: definition.command,
-                        isActive: true
-                    )
+                    definition
                 )
             }
         }
 
-        let coverDefinitions:
-            [(name: String, extensions: String, command: String)] =
-                [
-                    (
-                        "ImageMagick",
-                        "png,jpg,jpeg,bmp",
-                        "convert -define jpeg:size=2560x1280 {input.fullname} -filter Triangle -resize 1920x960^ -gravity center -background none -extent 1920x960 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp"
-                    ),
-                    (
-                        "FFmpeg",
-                        "mp4,mov,avi",
-                        "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=1920:960:force_original_aspect_ratio=increase,crop=1920:960\" \"{output.dirname}/{output.basename}.png\""
-                    ),
-                ]
+        let coverDefinitions = [
+            Variant.Processor.Model.create(
+                variantId: coverVariant.id,
+                name: "ImageMagick",
+                matchExtensions: "png,jpg,jpeg,bmp",
+                commandTemplate: "convert -define jpeg:size=2560x1280 {input.fullname} -filter Triangle -resize 1920x960^ -gravity center -background none -extent 1920x960 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp",
+                isActive: true
+            ),
+            Variant.Processor.Model.create(
+                variantId: coverVariant.id,
+                name: "FFmpeg",
+                matchExtensions: "mp4,mov,avi",
+                commandTemplate: "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=1920:960:force_original_aspect_ratio=increase,crop=1920:960\" \"{output.dirname}/{output.basename}.png\"",
+                isActive: true
+            ),
+        ]
 
         let existingCoverProcessors = try await processorRepository.list(
             variantId: coverVariant.id
@@ -131,20 +132,14 @@ public struct TableSeedMigration: DatabaseMigration {
             if var existing = existingCoverProcessors.first(where: {
                 $0.name == definition.name
             }) {
-                existing.matchExtensions = definition.extensions
-                existing.commandTemplate = definition.command
+                existing.matchExtensions = definition.matchExtensions
+                existing.commandTemplate = definition.commandTemplate
                 existing.isActive = true
                 _ = try await processorRepository.update(existing)
             }
             else {
                 _ = try await processorRepository.insert(
-                    Variant.Processor.Model.create(
-                        variantId: coverVariant.id,
-                        name: definition.name,
-                        matchExtensions: definition.extensions,
-                        commandTemplate: definition.command,
-                        isActive: true
-                    )
+                    definition
                 )
             }
         }

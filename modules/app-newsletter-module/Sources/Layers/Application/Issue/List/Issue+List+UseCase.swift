@@ -19,7 +19,7 @@ extension Issue.List {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> [Issue.List.Output] {
+        ) async throws -> Output {
             let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
             else {
@@ -31,8 +31,9 @@ extension Issue.List {
                         key: input.campaignKey
                     )
                 else { throw Error.campaignNotFound }
-                return try await scope.issue.list(newsletterId: campaign.id)
-                    .map(Issue.List.Output.init(model:))
+                let items = try await scope.issue.list(newsletterId: campaign.id)
+                    .map(Item.init(model:))
+                return Output(items: items)
             }
         }
     }

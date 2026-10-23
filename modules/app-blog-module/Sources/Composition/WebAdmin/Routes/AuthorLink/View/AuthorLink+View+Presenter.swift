@@ -15,3 +15,19 @@ import WebModuleWebAdmin
 extension AuthorLink.View {
     enum Presenter {}
 }
+
+extension AuthorLink.View.Presenter {
+    protocol Interface: Sendable {
+        func renderDetailsPage(
+            model: AuthorLink.View.Model,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+
+        func renderErrorPage(
+            authorID: String,
+            info: String,
+            message: String,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+    }
+}

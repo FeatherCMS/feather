@@ -16,7 +16,7 @@ struct AdminListContactFieldsDefaultController:
     AdminListContactFieldsController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminListContactFieldsInteractor,
             any AdminListContactFieldsPresenter
         >
@@ -25,7 +25,9 @@ struct AdminListContactFieldsDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime((request, context))
+        let __runtimeBuild1 = buildRuntime(request, context)
+        let interactor = __runtimeBuild1.interactor
+        let presenter = __runtimeBuild1.presenter
         guard
             context.isCurrentUserAllowed(
                 to: FormField.Permissions.list

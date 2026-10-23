@@ -8,7 +8,7 @@
 public import FeatherBackend
 public import FeatherDatabasePostgres
 
-extension DatabaseTransactionErrorPostgres: ErrorTraceRepresentable {
+extension DatabaseTransactionErrorPostgres: @retroactive ErrorTraceRepresentable {
 
     private var logMessage: String {
         if beginError != nil { return "Begin" }

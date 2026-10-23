@@ -19,7 +19,7 @@ import WebComponents
 extension MagicLink.Edit.Controller {
     struct Default: Interface {
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any MagicLink.Edit.Interactor.Interface,
                 any MagicLink.Edit.Presenter.Interface
             >
@@ -30,7 +30,9 @@ extension MagicLink.Edit.Controller {
         ) async throws -> HTMLResponse {
             let id = try context.requiredID()
             let isEdited = request.hasQueryFlag("edited")
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild1 = buildRuntime(request, context)
+            let interactor = __runtimeBuild1.interactor
+            let presenter = __runtimeBuild1.presenter
             let permissions = context.currentUserPermissions
             guard
                 context.isCurrentUserAllowed(
@@ -71,7 +73,9 @@ extension MagicLink.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> Response {
             let id = try context.requiredID()
-            let (interactor, presenter) = buildRuntime((request, context))
+            let __runtimeBuild2 = buildRuntime(request, context)
+            let interactor = __runtimeBuild2.interactor
+            let presenter = __runtimeBuild2.presenter
             guard
                 context.isCurrentUserAllowed(
                     to: MagicLink.Permissions.update

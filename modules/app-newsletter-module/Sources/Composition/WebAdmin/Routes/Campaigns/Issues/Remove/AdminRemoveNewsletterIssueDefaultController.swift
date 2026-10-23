@@ -13,7 +13,7 @@ struct AdminRemoveNewsletterIssueDefaultController:
     AdminRemoveNewsletterIssueController
 {
     let buildRuntime:
-        AuthenticatedRuntimeBuilder<
+        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
             any AdminRemoveNewsletterIssueInteractor,
             any AdminRemoveNewsletterIssuePresenter
         >
@@ -21,7 +21,7 @@ struct AdminRemoveNewsletterIssueDefaultController:
         async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime((request, context))
+        let interactor = buildRuntime(request, context).interactor
         let newsletterId = try context.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Issue.Permissions.delete)
         else { return Response(status: .forbidden) }

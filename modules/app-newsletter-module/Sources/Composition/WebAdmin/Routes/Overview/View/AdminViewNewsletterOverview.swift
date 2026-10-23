@@ -7,7 +7,7 @@ struct AdminViewNewsletterOverview {
     init(renderingEngine: any RenderingEngine) {
         self.controller = AdminViewNewsletterOverviewDefaultController(
             buildRuntime: { request, context in
-                (
+                WebAdminRuntime(
                     interactor: AdminViewNewsletterOverviewDefaultInteractor(),
                     presenter: AdminViewNewsletterOverviewDefaultPresenter(
                         request: request,

@@ -19,7 +19,7 @@ extension Post.Add.Controller {
         let environment: AppEnvironment
         let routes: Post.Router.Routes
         let buildRuntime:
-            AuthenticatedRuntimeBuilder<
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Post.Add.Interactor.Interface,
                 any Post.Add.Presenter.Interface
             >
@@ -28,7 +28,7 @@ extension Post.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
             let options =
                 (try? await runtime.interactor.loadOptions())
@@ -43,7 +43,7 @@ extension Post.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
-            let runtime = buildRuntime((request, context))
+            let runtime = buildRuntime(request, context)
             let permissions = context.currentUserPermissions
             var lastPayload: Post.Form.Input?
 

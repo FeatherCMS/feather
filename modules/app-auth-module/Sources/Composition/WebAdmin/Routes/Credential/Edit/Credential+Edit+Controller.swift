@@ -19,3 +19,16 @@ import WebComponents
 extension Credential.Edit {
     enum Controller {}
 }
+
+extension Credential.Edit.Controller {
+    protocol Interface: Sendable {
+        func getEditCredential(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
+        func postEditCredential(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
+    }
+}

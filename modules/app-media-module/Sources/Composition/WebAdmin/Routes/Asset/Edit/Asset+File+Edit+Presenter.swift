@@ -1,3 +1,4 @@
+import FeatherModuleKit
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
@@ -12,4 +13,20 @@ import WebComponents
 
 extension Asset.File.Edit {
     enum Presenter {}
+}
+
+extension Asset.File.Edit.Presenter {
+    protocol Interface: Sendable {
+        func renderEditPage(
+            model: Asset.File.Edit.Model,
+            permissions: AdminListActions
+        ) async throws -> HTMLResponse
+
+        func renderErrorPage(
+            id: String,
+            info: String,
+            message: String,
+            permissions: AdminListActions
+        ) async throws -> HTMLResponse
+    }
 }

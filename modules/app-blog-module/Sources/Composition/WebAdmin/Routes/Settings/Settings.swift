@@ -1,5 +1,6 @@
 public import BlogModule
 public import FeatherWebAdmin
+public import FeatherWebShared
 
 extension Settings {
     public enum Router {

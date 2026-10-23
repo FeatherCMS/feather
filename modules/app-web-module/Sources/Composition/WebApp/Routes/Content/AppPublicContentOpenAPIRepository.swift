@@ -16,19 +16,35 @@ public struct AppPublicContentOpenAPIRepository: AppPublicContentRepository {
         slug: String
     ) async throws -> WebAppAPI.Components.Schemas.MetadataSchema? {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.metadataGet(
-                .init(path: .init(slug: slug))
-            )
-            switch response {
-            case .ok(let value):
-                return try value.body.json
-            case .notFound:
-                return nil
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
+            if slug.isEmpty {
+                let response = try await client.metadataRootGet(.init())
+                switch response {
+                case .ok(let value):
+                    return try value.body.json
+                case .notFound:
+                    return nil
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+            else {
+                let response = try await client.metadataGet(
+                    .init(path: .init(slug: slug))
                 )
+                switch response {
+                case .ok(let value):
+                    return try value.body.json
+                case .notFound:
+                    return nil
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
             }
         }
     }

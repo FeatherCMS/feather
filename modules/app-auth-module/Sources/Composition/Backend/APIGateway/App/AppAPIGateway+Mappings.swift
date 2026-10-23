@@ -35,6 +35,20 @@ extension AdminAPIGateway {
     }
 
     public func map(
+        _ item: Session.ListByIdentity.Output.Item
+    ) -> AuthAdminAPI.Components.Schemas.UserAuthSessionListItemSchema {
+        .init(
+            id: item.id,
+            authenticationType: item.authenticationType,
+            authenticationReference: item.authenticationReference,
+            expiresAt: item.expiresAt,
+            isPersistent: item.isPersistent,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    public func map(
         _ query: AuthAdminAPI.Components.Schemas
             .AuthEmailQuerySchemasItemSearchRequestQuerySchema
     ) -> Email.Search.Input.Query {

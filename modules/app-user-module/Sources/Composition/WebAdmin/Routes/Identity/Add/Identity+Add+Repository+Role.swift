@@ -1,9 +1,12 @@
 import UserModule
 
-extension Identity.Add {
-    enum Repository {}
-}
-
 extension Identity.Add.Repository {
     enum Role {}
+}
+
+extension Identity.Add.Repository.Role {
+    protocol Interface: Sendable {
+
+        func list() async throws -> [Identity.Add.RoleOption]
+    }
 }

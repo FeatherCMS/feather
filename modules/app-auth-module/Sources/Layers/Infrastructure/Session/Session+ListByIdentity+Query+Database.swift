@@ -2,6 +2,7 @@ public import AuthApplication
 public import AuthModule
 import FeatherDBAL
 public import FeatherInfrastructure
+import Foundation
 
 extension Session.ListByIdentity.Query {
     public struct Database: Interface {
@@ -11,7 +12,9 @@ extension Session.ListByIdentity.Query {
             self.context = context
         }
 
-        public func list(identityId: String) async throws -> Output {
+        public func list(identityId: String) async throws
+            -> Session.ListByIdentity.Output
+        {
             let accessLayer = DatabaseAccessLayer<Session.Table>(
                 context: context
             )

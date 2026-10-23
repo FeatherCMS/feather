@@ -29,7 +29,7 @@ extension MagicLink.Request {
 
         public func execute(
             _ input: Input
-        ) async throws -> Bool {
+        ) async throws -> Output {
             let result: MailContext? =
                 try await transaction.run { scope in
                     guard
@@ -87,7 +87,7 @@ extension MagicLink.Request {
                 }
 
             guard let result else {
-                return false
+                return Output(didCreateRequest: false)
             }
 
             let template =
@@ -123,7 +123,7 @@ extension MagicLink.Request {
                     body: .plainText(body)
                 )
             )
-            return true
+            return Output(didCreateRequest: true)
         }
 
     }

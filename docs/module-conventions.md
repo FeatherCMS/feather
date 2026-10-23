@@ -186,13 +186,35 @@ Within a route feature, keep its files together under
   the abstraction they bind to only when the scope is genuinely shared. Use
   operation-specific scopes for
   use-cases (`Identity.Add.Scope`, `Identity.Edit.Scope`, etc.) and include
-  only the repositories/query interfaces that operation needs. Name files to
-  match, e.g.
-  `Identity+Repository+Interface.swift` and `Identity+Query+Database.swift`.
+  only the repositories/query interfaces that operation needs. Do not add an
+  `Interface` suffix to filenames: keep the `Interface` type in the
+  responsibility-named file, e.g. `Identity+Repository.swift`, alongside
+  `Identity+Query+Database.swift`.
 - Put database tables below the entity (`Identity.Table`) and name cross-entity
   infrastructure files by responsibility (`Table+Migration.swift`,
   `Table+SeedMigration.swift`). Avoid `Database/` subfolders that merely repeat
   the infrastructure layer name.
+- Use FeatherDBAL for standard persistence operations in every module's
+  Infrastructure target, not only in the reference modules: table-backed
+  insert, select-by-key/detail, update, and delete should use the shared
+  `DatabaseAccessLayer` table/row abstractions rather than hand-written SQL.
+  Define table columns and row representations with the module's entity table,
+  and describe table creation, ordinary constraints, and indexes with DBAL
+  schema objects and migrations instead of embedding DDL in migration code.
+  This applies to new and existing infrastructure code during module migrations.
+  For partial updates, encode only the fields
+  being changed in the DBAL update value; do not use custom SQL just to avoid
+  updating unrelated nullable columns. Keep custom SQL only for behavior the DBAL
+  cannot express cleanly (for example, complex/vendor-specific queries); put it
+  in the relevant Infrastructure database/access-layer file and bind scalar
+  and collection values through `DatabaseQuery` interpolation. Reserve
+  unescaped interpolation for trusted SQL fragments and allowlisted identifiers.
+  Do not replace a simple CRUD operation with custom SQL merely to avoid
+  defining its table/row representation. If a DBAL schema capability is
+  missing (for example, PostgreSQL `CHECK` constraints or partial/expression
+  indexes), keep only that unsupported schema fragment as SQL in the module's
+  Infrastructure database/access-layer; keep table creation, ordinary
+  constraints, indexes, and CRUD on DBAL.
 - Keep authorization scopes/actions close to the operation or query that uses
   them. Check generic executor scope types and their composition construction;
   don't leave flat `ReadIdentity`/`WriteRole` types behind after moving the
@@ -205,7 +227,9 @@ Within a route feature, keep its files together under
   context under `UserModule.Event.Context`. Keep event and seed responsibilities
   with their owner instead of adding competing flat `User...Event` names. This
   applies to publishers, registry keys, migrations, mocks, and downstream
-  modules—not only the event declaration. For example, all consumers of the
+  modules—not only the event declaration. Specify event output types through
+  the `FeatherModuleKit.Event<Output>` primary associated type rather than an
+  explicit `typealias Output`. For example, all consumers of the
   identity-created event use `Identity.Event.DidInsert`, and role seed
   consumers use `Role.Event.Seed.Provider`.
 - Put persistence implementations under the corresponding abstraction, for
@@ -219,8 +243,11 @@ Within a route feature, keep its files together under
   collaborators and register the route.
 - Prefer one source file per meaningful nested declaration, with filename
   segments matching its namespace, e.g. `Identity+Add+Input.swift` and
-  `Identity+Repository.swift`. Do not add `Typealias` compatibility shims for
-  a deliberate rename.
+  `Identity+Repository.swift`. Do not use `typealias` in handwritten module
+  or composition code, including compatibility shims for deliberate renames;
+  generated OpenAPI sources are exempt. Do not use tuples for domain,
+  application, or composition data contracts—introduce a named value type
+  instead. This includes helper results and closure context/result contracts.
 - Inside an extension of a namespace, refer to its immediate nested types
   directly instead of repeating the full qualified path. For example, within
   the Identity.Search.Query extension, write Database: Interface rather than

@@ -21,7 +21,7 @@ extension Post.Edit {
                         environment: environment,
                         requestContext: context
                     )
-                    return (
+                    return WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(api: api),
                             optionRepository: Post.Add.OptionRepository.OpenAPI(

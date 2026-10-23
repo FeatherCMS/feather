@@ -18,3 +18,12 @@ import WebComponents
 extension Email.View {
     enum Repository {}
 }
+
+extension Email.View.Repository {
+    protocol Interface: Sendable {
+
+        func get(
+            id: String
+        ) async throws -> Email.View.Detail
+    }
+}
