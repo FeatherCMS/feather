@@ -1,6 +1,8 @@
 import SystemModule
 import UserModule
 import RedirectModule
+import AuthModule
+import ContactModule
 import Environment
 import FeatherWebShared
 import Foundation
@@ -95,7 +97,7 @@ func buildRouter(
         routes: systemRoutes
     )
     AccountWebAdmin.Event.Handlers.register(in: &adminEvents)
-    AuthWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    AuthModule.Event.Handlers.registerMenu(in: &adminEvents)
     UserModule.Event.Handlers.register(in: &adminEvents)
     MediaWebAdmin.Event.Handlers.register(in: &adminEvents)
     AnalyticsWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
@@ -108,11 +110,11 @@ func buildRouter(
     NewsletterWebAdmin.Event.Handlers.registerRichContentEditor(
         in: &adminEvents
     )
-    ContactWebAdmin.Event.Handlers.registerRichContentEditor(
+    ContactModule.Event.Handlers.registerRichContentEditor(
         in: &adminEvents
     )
     NewsletterWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
-    ContactWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    ContactModule.Event.Handlers.registerMenu(in: &adminEvents)
     WebModule.Event.Handlers.registerMenu(in: &adminEvents)
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(

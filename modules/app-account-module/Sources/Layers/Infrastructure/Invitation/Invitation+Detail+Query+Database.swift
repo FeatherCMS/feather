@@ -27,7 +27,20 @@ extension Invitation.Detail.Query {
             else {
                 throw RepositoryError.notFound
             }
-            return try detail.asDetail()
+            return Invitation.Detail.Output(
+                id: detail.id,
+                userId: detail.userId,
+                email: detail.email,
+                token: detail.token,
+                roleIDs: try JSONDecoder()
+                    .decode(
+                        [String].self,
+                        from: Data(detail.roleIds.utf8)
+                    ),
+                expiresAt: detail.expiresAt,
+                createdAt: detail.createdAt,
+                updatedAt: detail.updatedAt
+            )
         }
 
     }

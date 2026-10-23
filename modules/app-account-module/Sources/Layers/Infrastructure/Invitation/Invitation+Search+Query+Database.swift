@@ -3,6 +3,7 @@ public import AccountModule
 import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
+import Foundation
 
 extension Invitation.Search.Query {
     public struct Database: Interface {
@@ -28,7 +29,22 @@ extension Invitation.Search.Query {
                 applyFilters(query, to: $0)
             }
             return .init(
-                items: try items.map { try $0.asSearchItem() },
+                items: try items.map { item in
+                    Invitation.Search.Output.Item(
+                        id: item.id,
+                        userId: item.userId,
+                        email: item.email,
+                        token: item.token,
+                        roleIDs: try JSONDecoder()
+                            .decode(
+                                [String].self,
+                                from: Data(item.roleIds.utf8)
+                            ),
+                        expiresAt: item.expiresAt,
+                        createdAt: item.createdAt,
+                        updatedAt: item.updatedAt
+                    )
+                },
                 total: total
             )
         }

@@ -3,6 +3,7 @@ public import AccountModule
 import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
+import Foundation
 
 extension Invitation.Validate.Query {
     public struct Database: Interface {
@@ -12,9 +13,13 @@ extension Invitation.Validate.Query {
             self.context = context
         }
 
-        public func getBy(token: String) async throws -> Invitation.Validate.Output {
+        public func getBy(token: String) async throws
+            -> Invitation.Validate.Output
+        {
             guard
-                let invitation = try await DatabaseAccessLayer<Invitation.Table>(
+                let invitation = try await DatabaseAccessLayer<
+                    Invitation.Table
+                >(
                     context: context
                 )
                 .selectFirst(
@@ -25,16 +30,19 @@ extension Invitation.Validate.Query {
             else {
                 throw RepositoryError.notFound
             }
-            let detail = try invitation.asDetail()
-            return .init(
-                id: detail.id,
-                userId: detail.userId,
-                email: detail.email,
-                token: detail.token,
-                roleIDs: detail.roleIDs,
-                expiresAt: detail.expiresAt,
-                createdAt: detail.createdAt,
-                updatedAt: detail.updatedAt
+            return Invitation.Validate.Output(
+                id: invitation.id,
+                userId: invitation.userId,
+                email: invitation.email,
+                token: invitation.token,
+                roleIDs: try JSONDecoder()
+                    .decode(
+                        [String].self,
+                        from: Data(invitation.roleIds.utf8)
+                    ),
+                expiresAt: invitation.expiresAt,
+                createdAt: invitation.createdAt,
+                updatedAt: invitation.updatedAt
             )
         }
     }

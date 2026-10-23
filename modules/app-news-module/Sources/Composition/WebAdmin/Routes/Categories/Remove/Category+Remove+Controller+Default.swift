@@ -1,8 +1,8 @@
-import NewsApplication
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import NewsApplication
 import NewsModule
 
 extension Category.Remove.Controller {
@@ -43,7 +43,7 @@ extension Category.Remove.Controller {
             let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let payload = try await request.decode(
-                as: NonceRequest<NewsAdminRemoveInput>.self,
+                as: NonceRequest<RemoveInput>.self,
                 context: context
             )
             guard
