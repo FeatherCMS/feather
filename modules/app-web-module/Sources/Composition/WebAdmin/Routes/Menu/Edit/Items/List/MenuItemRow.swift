@@ -15,7 +15,7 @@ struct MenuItemRow: Component {
     let permissions: AdminListActions
     let canReorder: Bool
     let returnTo: String
-    let routes: WebModule.Menu.Router.Routes
+    let routes: MenuItem.Router.Routes
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {

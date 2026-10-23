@@ -16,7 +16,7 @@ struct MenuItemAdd: Component {
         let menuId: String
         let form: MenuItemForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
-        let routes: WebModule.Menu.Router.Routes
+        let routes: MenuItem.Router.Routes
     }
 
     let state: State

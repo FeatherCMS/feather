@@ -16,7 +16,7 @@ struct MenuItemTableContent: Component {
         let items: [Components.Schemas.MenuItemQueryItemSchema]
         let pageState: AdminListPageState
         let search: String?
-        let routes: WebModule.Menu.Router.Routes
+        let routes: MenuItem.Router.Routes
     }
 
     let state: State

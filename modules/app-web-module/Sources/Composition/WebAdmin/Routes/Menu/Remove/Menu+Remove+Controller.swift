@@ -13,6 +13,11 @@ extension WebModule.Menu.Remove {
 extension WebModule.Menu.Remove.Controller {
     protocol Interface: Sendable {
 
+        func getRemoveMenu(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
+
         func postRemoveMenu(
             request: Request,
             context: AuthenticatedRequestContext

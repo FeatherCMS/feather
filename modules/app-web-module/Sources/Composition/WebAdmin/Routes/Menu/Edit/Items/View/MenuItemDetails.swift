@@ -11,9 +11,9 @@ import WebModule
 
 struct MenuItemDetails: Component {
     struct State {
-        let item: MenuItemDetailsModel
+        let item: MenuItem.View.Model
         let breadcrumb: [AdminBreadcrumb.Link]
-        let routes: WebModule.Menu.Router.Routes
+        let routes: MenuItem.Router.Routes
     }
 
     let state: State

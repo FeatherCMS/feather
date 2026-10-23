@@ -1,7 +1,9 @@
 import FeatherWebAdmin
 import OpenAPIRuntime
+import WebModule
 
-struct AdminEditSettingsModel: Sendable {
+extension Settings.Edit {
+    struct Model: Sendable {
     let logo: String
     let logoDark: String
     let metaImage: String
@@ -11,8 +13,8 @@ struct AdminEditSettingsModel: Sendable {
     let primaryFont: String
     let secondaryFont: String
     let homePageId: String?
-    let homePage: AdminEditSettingsHomePageModel?
-    let homePageOptions: [AdminEditSettingsHomePageModel]
+    let homePage: Settings.Edit.Model.HomePage?
+    let homePageOptions: [Settings.Edit.Model.HomePage]
     let locale: String
     let timezone: String
     let title: String
@@ -21,4 +23,5 @@ struct AdminEditSettingsModel: Sendable {
     let css: String
     let js: String
     let hasMissingVariables: Bool
+    }
 }

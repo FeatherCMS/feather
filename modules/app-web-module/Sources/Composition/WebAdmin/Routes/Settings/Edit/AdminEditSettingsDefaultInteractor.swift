@@ -1,18 +1,18 @@
 import FeatherWebAdmin
 import OpenAPIRuntime
 
-struct AdminEditSettingsDefaultInteractor:
-    AdminEditSettingsInteractor
-{
-    let repository: any AdminEditSettingsRepository
+extension Settings.Edit.Interactor {
+    struct Default: Interface {
+    let repository: any Settings.Edit.Repository.Interface
 
-    func loadSettings() async throws -> AdminEditSettingsModel {
+    func loadSettings() async throws -> Settings.Edit.Model {
         try await repository.loadSettings()
     }
 
     func saveSettings(
-        input: AdminEditSettingsFormInput
+        input: Settings.Edit.FormInput
     ) async throws {
         try await repository.saveSettings(input: input)
     }
+}
 }

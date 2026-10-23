@@ -5,22 +5,21 @@ import Hummingbird
 import OpenAPIRuntime
 import WebModule
 
-struct AdminEditSettingsDefaultPresenter:
-    AdminEditSettingsPresenter
-{
+extension Settings.Edit.Presenter {
+    struct Default: Interface {
     let request: Request
     let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(
-        state: SettingsEdit.State,
+        state: Settings.Edit.Page.State,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Settings",
-            content: SettingsEdit(state: state)
+            content: Settings.Edit.Page(state: state)
         )
     }
 
@@ -40,4 +39,5 @@ struct AdminEditSettingsDefaultPresenter:
         )
     }
 
+}
 }

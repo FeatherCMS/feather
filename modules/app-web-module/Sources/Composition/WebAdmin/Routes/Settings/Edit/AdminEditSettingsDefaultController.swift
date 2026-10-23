@@ -5,14 +5,13 @@ import Hummingbird
 import OpenAPIRuntime
 import WebModule
 
-struct AdminEditSettingsDefaultController:
-    AdminEditSettingsController
-{
+extension Settings.Edit.Controller {
+    struct Default: Interface {
     let routes: Settings.Router.Routes
     let buildRuntime:
         @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
-            any AdminEditSettingsInteractor,
-            any AdminEditSettingsPresenter
+            any Settings.Edit.Interactor.Interface,
+            any Settings.Edit.Presenter.Interface
         >
 
     func getEditSettings(
@@ -35,7 +34,7 @@ struct AdminEditSettingsDefaultController:
             )
         }
 
-        let settings: AdminEditSettingsModel
+        let settings: Settings.Edit.Model
         do {
             settings = try await interactor.loadSettings()
         }
@@ -87,7 +86,7 @@ struct AdminEditSettingsDefaultController:
         }
 
         let input = try await request.decode(
-            as: AdminEditSettingsFormInput.self,
+            as: Settings.Edit.FormInput.self,
             context: context
         )
         let errors = input.validationErrors()
@@ -183,9 +182,9 @@ struct AdminEditSettingsDefaultController:
     }
 
     private func makeFormState(
-        from settings: AdminEditSettingsModel,
+        from settings: Settings.Edit.Model,
         canEdit: Bool
-    ) -> SettingsForm.State {
+    ) -> Settings.Edit.Form.State {
         makeFormState(
             logo: settings.logo,
             logoDark: settings.logoDark,
@@ -219,7 +218,7 @@ struct AdminEditSettingsDefaultController:
         primaryFont: String,
         secondaryFont: String,
         homePageId: String?,
-        homePageOptions: [AdminEditSettingsHomePageModel],
+        homePageOptions: [Settings.Edit.Model.HomePage],
         locale: String,
         timezone: String,
         title: String,
@@ -229,59 +228,59 @@ struct AdminEditSettingsDefaultController:
         js: String,
         canEdit: Bool,
         error: String?
-    ) -> SettingsForm.State {
+    ) -> Settings.Edit.Form.State {
         .init(
             logo: .init(
-                key: SettingsVariableKey.logo.fieldKey,
-                label: SettingsVariableKey.logo.label,
+                key: Settings.Edit.VariableKey.logo.fieldKey,
+                label: Settings.Edit.VariableKey.logo.label,
                 value: logo,
                 error: nil
             ),
             logoDark: .init(
-                key: SettingsVariableKey.logoDark.fieldKey,
-                label: SettingsVariableKey.logoDark.label,
+                key: Settings.Edit.VariableKey.logoDark.fieldKey,
+                label: Settings.Edit.VariableKey.logoDark.label,
                 value: logoDark,
                 error: nil
             ),
             metaImage: .init(
-                key: SettingsVariableKey.metaImage.fieldKey,
-                label: SettingsVariableKey.metaImage.label,
+                key: Settings.Edit.VariableKey.metaImage.fieldKey,
+                label: Settings.Edit.VariableKey.metaImage.label,
                 value: metaImage,
                 error: nil
             ),
             primaryColor: .init(
-                key: SettingsVariableKey.primaryColor.fieldKey,
-                label: SettingsVariableKey.primaryColor.label,
+                key: Settings.Edit.VariableKey.primaryColor.fieldKey,
+                label: Settings.Edit.VariableKey.primaryColor.label,
                 value: primaryColor,
                 error: nil
             ),
             secondaryColor: .init(
-                key: SettingsVariableKey.secondaryColor.fieldKey,
-                label: SettingsVariableKey.secondaryColor.label,
+                key: Settings.Edit.VariableKey.secondaryColor.fieldKey,
+                label: Settings.Edit.VariableKey.secondaryColor.label,
                 value: secondaryColor,
                 error: nil
             ),
             tertiaryColor: .init(
-                key: SettingsVariableKey.tertiaryColor.fieldKey,
-                label: SettingsVariableKey.tertiaryColor.label,
+                key: Settings.Edit.VariableKey.tertiaryColor.fieldKey,
+                label: Settings.Edit.VariableKey.tertiaryColor.label,
                 value: tertiaryColor,
                 error: nil
             ),
             primaryFont: .init(
-                key: SettingsVariableKey.primaryFont.fieldKey,
-                label: SettingsVariableKey.primaryFont.label,
+                key: Settings.Edit.VariableKey.primaryFont.fieldKey,
+                label: Settings.Edit.VariableKey.primaryFont.label,
                 value: primaryFont,
                 error: nil
             ),
             secondaryFont: .init(
-                key: SettingsVariableKey.secondaryFont.fieldKey,
-                label: SettingsVariableKey.secondaryFont.label,
+                key: Settings.Edit.VariableKey.secondaryFont.fieldKey,
+                label: Settings.Edit.VariableKey.secondaryFont.label,
                 value: secondaryFont,
                 error: nil
             ),
             homePage: .init(
-                key: SettingsVariableKey.homePageId.fieldKey,
-                label: SettingsVariableKey.homePageId.label,
+                key: Settings.Edit.VariableKey.homePageId.fieldKey,
+                label: Settings.Edit.VariableKey.homePageId.label,
                 value: homePageId,
                 options: homePageOptions.map {
                     .init(
@@ -293,44 +292,44 @@ struct AdminEditSettingsDefaultController:
                 error: nil
             ),
             locale: .init(
-                key: SettingsVariableKey.locale.fieldKey,
-                label: SettingsVariableKey.locale.label,
+                key: Settings.Edit.VariableKey.locale.fieldKey,
+                label: Settings.Edit.VariableKey.locale.label,
                 value: Self.normalizeLocale(locale),
                 error: nil
             ),
             timezone: .init(
-                key: SettingsVariableKey.timezone.fieldKey,
-                label: SettingsVariableKey.timezone.label,
+                key: Settings.Edit.VariableKey.timezone.fieldKey,
+                label: Settings.Edit.VariableKey.timezone.label,
                 value: timezone,
                 error: nil
             ),
             title: .init(
-                key: SettingsVariableKey.title.fieldKey,
-                label: SettingsVariableKey.title.label,
+                key: Settings.Edit.VariableKey.title.fieldKey,
+                label: Settings.Edit.VariableKey.title.label,
                 value: title,
                 error: nil
             ),
             excerpt: .init(
-                key: SettingsVariableKey.excerpt.fieldKey,
-                label: SettingsVariableKey.excerpt.label,
+                key: Settings.Edit.VariableKey.excerpt.fieldKey,
+                label: Settings.Edit.VariableKey.excerpt.label,
                 value: excerpt,
                 error: nil
             ),
             noIndex: .init(
-                key: SettingsVariableKey.noIndex.fieldKey,
-                label: SettingsVariableKey.noIndex.label,
+                key: Settings.Edit.VariableKey.noIndex.fieldKey,
+                label: Settings.Edit.VariableKey.noIndex.label,
                 value: noIndex,
                 error: nil
             ),
             css: .init(
-                key: SettingsVariableKey.css.fieldKey,
-                label: SettingsVariableKey.css.label,
+                key: Settings.Edit.VariableKey.css.fieldKey,
+                label: Settings.Edit.VariableKey.css.label,
                 value: css,
                 error: nil
             ),
             js: .init(
-                key: SettingsVariableKey.js.fieldKey,
-                label: SettingsVariableKey.js.label,
+                key: Settings.Edit.VariableKey.js.fieldKey,
+                label: Settings.Edit.VariableKey.js.label,
                 value: js,
                 error: nil
             ),
@@ -352,7 +351,7 @@ struct AdminEditSettingsDefaultController:
     private func makeFormState(
         canEdit: Bool,
         error: String?
-    ) -> SettingsForm.State {
+    ) -> Settings.Edit.Form.State {
         makeFormState(
             logo: "",
             logoDark: "",
@@ -364,8 +363,8 @@ struct AdminEditSettingsDefaultController:
             secondaryFont: "",
             homePageId: nil,
             homePageOptions: [],
-            locale: SettingsVariableKey.locale.defaultValue,
-            timezone: SettingsVariableKey.timezone.defaultValue,
+            locale: Settings.Edit.VariableKey.locale.defaultValue,
+            timezone: Settings.Edit.VariableKey.timezone.defaultValue,
             title: "",
             excerpt: "",
             noIndex: false,
@@ -377,8 +376,9 @@ struct AdminEditSettingsDefaultController:
     }
 
     private func loadHomePageOptions(
-        using interactor: any AdminEditSettingsInteractor
-    ) async -> [AdminEditSettingsHomePageModel] {
+        using interactor: any Settings.Edit.Interactor.Interface
+    ) async -> [Settings.Edit.Model.HomePage] {
         (try? await interactor.loadSettings().homePageOptions) ?? []
     }
+}
 }

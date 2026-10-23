@@ -5,9 +5,8 @@ import OpenAPIRuntime
 import WebAdminAPI
 import WebModule
 
-struct AdminEditSettingsOpenAPIRepository:
-    AdminEditSettingsRepository
-{
+extension Settings.Edit.Repository {
+    struct OpenAPI: Interface {
     let api: API.Client
     private let loadUnauthorizedMessage =
         "Please sign in again to load web settings."
@@ -18,7 +17,7 @@ struct AdminEditSettingsOpenAPIRepository:
     private let saveForbiddenMessage =
         "Your account cannot update web settings."
 
-    func loadSettings() async throws -> AdminEditSettingsModel {
+    func loadSettings() async throws -> Settings.Edit.Model {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.settingsGet(
                 headers: .init(accept: [.init(contentType: .json)])
@@ -61,7 +60,7 @@ struct AdminEditSettingsOpenAPIRepository:
     }
 
     func saveSettings(
-        input: AdminEditSettingsFormInput
+        input: Settings.Edit.FormInput
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.settingsUpdate(
@@ -106,7 +105,7 @@ struct AdminEditSettingsOpenAPIRepository:
 
     private func loadHomePage(
         id: String?
-    ) async throws -> AdminEditSettingsHomePageModel? {
+    ) async throws -> Settings.Edit.Model.HomePage? {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             guard let id, !id.isEmpty else {
                 return nil
@@ -139,7 +138,7 @@ struct AdminEditSettingsOpenAPIRepository:
     }
 
     private func loadHomePageOptions() async throws
-        -> [AdminEditSettingsHomePageModel]
+        -> [Settings.Edit.Model.HomePage]
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let pageSize = 100
@@ -185,7 +184,7 @@ struct AdminEditSettingsOpenAPIRepository:
                 api: api
             )
             return try await withThrowingTaskGroup(
-                of: (Int, AdminEditSettingsHomePageModel).self
+                of: (Int, Settings.Edit.Model.HomePage).self
             ) { group in
                 for (index, item) in items.enumerated() {
                     group.addTask {
@@ -203,7 +202,7 @@ struct AdminEditSettingsOpenAPIRepository:
                     }
                 }
 
-                var options = [AdminEditSettingsHomePageModel?](
+                var options = [Settings.Edit.Model.HomePage?](
                     repeating: nil,
                     count: items.count
                 )
@@ -214,4 +213,5 @@ struct AdminEditSettingsOpenAPIRepository:
             }
         }
     }
+}
 }

@@ -14,7 +14,7 @@ struct MenuItemTable: Component {
         let pageState: AdminListPageState
         let search: String?
         let breadcrumb: [AdminBreadcrumb.Link]
-        let routes: WebModule.Menu.Router.Routes
+        let routes: MenuItem.Router.Routes
     }
 
     let state: State

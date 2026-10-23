@@ -1,10 +1,10 @@
 import FeatherModuleKit
 public import FeatherWebAdmin
 import OpenAPIRuntime
+import WebModule
 
-public struct AdminEditSettingsFormInput: Codable, Sendable, Equatable,
-    Hashable
-{
+extension Settings.Edit {
+    public struct FormInput: Codable, Sendable, Equatable, Hashable {
     enum CodingKeys: String, CodingKey {
         case logo
         case logoDark
@@ -75,7 +75,7 @@ public struct AdminEditSettingsFormInput: Codable, Sendable, Equatable,
             try container.decodeIfPresent(
                 String.self,
                 forKey: .locale
-            ) ?? SettingsVariableKey.locale.defaultValue
+            ) ?? Settings.Edit.VariableKey.locale.defaultValue
         self.timezone = try container.decode(String.self, forKey: .timezone)
         self.title = try container.decode(String.self, forKey: .title)
         self.excerpt = try container.decode(String.self, forKey: .excerpt)
@@ -163,5 +163,6 @@ public struct AdminEditSettingsFormInput: Codable, Sendable, Equatable,
         _ value: String
     ) -> String {
         value.whitespaceTrimmed
+    }
     }
 }

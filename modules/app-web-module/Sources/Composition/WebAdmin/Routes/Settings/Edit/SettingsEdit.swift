@@ -6,11 +6,12 @@ import WebBuilders
 import WebComponents
 import WebModule
 
-struct SettingsEdit: Component {
+extension Settings.Edit {
+    struct Page: Component {
 
     struct State {
         let canEdit: Bool
-        let form: SettingsForm.State
+        let form: Settings.Edit.Form.State
         let breadcrumb: [AdminBreadcrumb.Link]
         let action: String
     }
@@ -35,8 +36,9 @@ struct SettingsEdit: Component {
                 )
             }
 
-            context.build(SettingsForm(state: state.form, action: state.action))
+            context.build(Settings.Edit.Form(state: state.form, action: state.action))
         }
         .class("cms-section")
+    }
     }
 }

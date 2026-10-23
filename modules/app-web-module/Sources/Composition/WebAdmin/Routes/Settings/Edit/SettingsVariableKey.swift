@@ -1,7 +1,9 @@
 import FeatherWebAdmin
 import OpenAPIRuntime
+import WebModule
 
-enum SettingsVariableKey: String, CaseIterable, Sendable {
+extension Settings.Edit {
+    enum VariableKey: String, CaseIterable, Sendable {
     case logo = "web.site.logo"
     case logoDark = "web.site.logo_dark"
     case metaImage = "web.site.meta_image"
@@ -150,5 +152,6 @@ enum SettingsVariableKey: String, CaseIterable, Sendable {
         case .js:
             "Web settings: global JavaScript injection."
         }
+    }
     }
 }

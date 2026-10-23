@@ -5,8 +5,10 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
 
-struct SettingsForm: Component {
+extension Settings.Edit {
+    struct Form: Component {
 
     struct FieldState: Sendable {
         var key: String
@@ -328,5 +330,6 @@ struct SettingsForm: Component {
                 isDisabled: !state.canEdit
             )
         )
+    }
     }
 }

@@ -1,9 +1,17 @@
 import FeatherWebAdmin
 import OpenAPIRuntime
+import WebModule
 
-protocol AdminEditSettingsRepository: Sendable {
-    func loadSettings() async throws -> AdminEditSettingsModel
-    func saveSettings(
-        input: AdminEditSettingsFormInput
-    ) async throws
+extension Settings.Edit {
+    enum Repository {}
+}
+
+extension Settings.Edit.Repository {
+    protocol Interface: Sendable {
+        func loadSettings() async throws -> Settings.Edit.Model
+
+        func saveSettings(
+            input: Settings.Edit.FormInput
+        ) async throws
+    }
 }
