@@ -1,6 +1,6 @@
 import AnalyticsModule
 public import FeatherWebAdmin
-import FeatherWebShared
+public import FeatherWebShared
 public import Hummingbird
 
 public struct Router {

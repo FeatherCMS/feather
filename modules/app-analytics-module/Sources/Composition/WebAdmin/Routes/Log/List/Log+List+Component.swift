@@ -227,7 +227,8 @@ extension Log.List {
                     Div {
                         context.build(
                             AdminBreadcrumb(
-                                links: AnalyticsWebAdmin.Router.Routes.breadcrumb
+                                links: AnalyticsWebAdmin.Router.Routes
+                                    .breadcrumb
                             )
                         )
                         context.build(
@@ -279,7 +280,8 @@ extension Log.List {
                                         context.build(
                                             AdminButton(
                                                 "Reset search",
-                                                href: AnalyticsWebAdmin.Router.Routes.logs
+                                                href: AnalyticsWebAdmin.Router
+                                                    .Routes.logs
                                                     .description,
                                                 style: .secondary
                                             )

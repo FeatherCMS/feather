@@ -170,7 +170,7 @@ extension Insight.View {
                         )
                     )
                     context.build(
-                        AnalyticsDateRangeFilter(
+                        DateRangeFilter(
                             state: .init(
                                 action: page.source.pagePath,
                                 from: page.from,

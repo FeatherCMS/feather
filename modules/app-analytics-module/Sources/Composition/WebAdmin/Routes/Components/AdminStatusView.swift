@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AnalyticsAdminStatusView: Component {
+struct StatusView: WebComponents.Component {
     let breadcrumb: [AdminBreadcrumb.Link]
     let title: String
     let message: String
@@ -13,7 +13,7 @@ struct AnalyticsAdminStatusView: Component {
         Section {
             context.build(AdminBreadcrumb(links: breadcrumb))
             context.build(
-                AdminStatusView(
+                FeatherWebAdmin.AdminStatusView(
                     state: .init(title: title, message: message),
                     icon: FeatherIcons.alertCircle()
                 )

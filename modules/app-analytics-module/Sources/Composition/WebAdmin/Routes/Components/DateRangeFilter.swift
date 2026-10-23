@@ -5,7 +5,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AnalyticsDateRangeFilter: Component {
+struct DateRangeFilter: Component {
     struct QueryItem: Sendable {
         let name: String
         let value: String

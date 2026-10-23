@@ -48,7 +48,7 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
         let userAgent = request.headers[.userAgent]
         let headers = Self.storedHeaders(from: request)
         Task.detached {
-            let api = AnalyticsAppAPIClient(
+            let api = API.Client(
                 apiBaseURL: apiBaseURL,
                 sessionToken: sessionToken
             )

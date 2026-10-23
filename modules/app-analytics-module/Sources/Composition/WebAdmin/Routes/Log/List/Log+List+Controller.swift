@@ -1,7 +1,7 @@
+import AnalyticsModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import AnalyticsModule
 
 extension Log.List {
     enum Controller {}

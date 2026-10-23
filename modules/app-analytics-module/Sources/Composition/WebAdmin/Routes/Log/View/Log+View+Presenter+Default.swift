@@ -33,7 +33,7 @@ extension Log.View.Presenter {
                 request: request,
                 context: context,
                 title: "Analytics log details",
-                content: AnalyticsAdminStatusView(
+                content: StatusView(
                     breadcrumb: AnalyticsWebAdmin.Router.Routes.breadcrumb,
                     title: "Unable to load analytics log.",
                     message: error.errorDescription

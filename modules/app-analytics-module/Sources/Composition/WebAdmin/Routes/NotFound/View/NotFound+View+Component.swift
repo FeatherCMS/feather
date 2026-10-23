@@ -134,7 +134,7 @@ extension NotFound.View {
                         )
                     )
                     context.build(
-                        AnalyticsDateRangeFilter(
+                        DateRangeFilter(
                             state: .init(
                                 action: AnalyticsWebAdmin.Router.Routes.notFound
                                     .description,

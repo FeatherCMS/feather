@@ -62,7 +62,9 @@ extension Overview.View {
                         .variable(TokenKey.Colors.Materials.Tertiary.border)
                     )
                     BorderRadius(12.px)
-                    Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Tertiary.tint)
+                    )
                 }
                 Custom(
                     ".analytics-overview-destination h2, .analytics-overview-destination p"
@@ -99,7 +101,9 @@ extension Overview.View {
                 Div {
                     for destination in destinations {
                         Div {
-                            if let icon = FeatherIcons.get(named: destination.icon) {
+                            if let icon = FeatherIcons.get(
+                                named: destination.icon
+                            ) {
                                 icon
                             }
                             H2(destination.title)
