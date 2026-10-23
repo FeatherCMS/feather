@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import NewsletterModule
@@ -9,6 +10,7 @@ import WebComponents
 struct NewsletterCampaignEditPage: Component {
     struct State {
         let id: String
+        let routes: Campaign.Router.Routes
         let form: NewsletterCampaignForm.State
         let isDetails: Bool
         let permissions: AdminListActions
@@ -17,22 +19,25 @@ struct NewsletterCampaignEditPage: Component {
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
-        let editPath = NewsletterAdminRoutes.campaignEdit(RouterPath(state.id))
-            .description
+        let editPath = state.routes.editPath(state.id)
         return Section {
             context.build(
                 AdminBreadcrumb(
-                    links: NewsletterAdminRoutes.breadcrumb + [
+                    links: state.routes.breadcrumb + [
                         .init(
                             label: "Campaigns",
-                            link: NewsletterAdminRoutes.campaigns.description
+                            link: state.routes.list.path
                         )
                     ]
                 )
             )
             context.build(AdminPageHeader(state: state.pageHeader))
             context.build(
-                NewsletterCampaignTabs(id: state.id, active: .details)
+                NewsletterCampaignTabs(
+                    id: state.id,
+                    active: .details,
+                    routes: state.routes
+                )
             )
             if state.isDetails {
                 context.build(
@@ -83,16 +88,12 @@ struct NewsletterCampaignEditPage: Component {
                                     AdminButton(
                                         "Remove",
                                         href: AdminLocation.remove(
-                                            path: NewsletterAdminRoutes
-                                                .campaignRemove
-                                                .description,
+                                            path: state.routes.removeSelected
+                                                .path,
                                             ids: [state.id],
-                                            returnTo:
-                                                NewsletterAdminRoutes
-                                                .campaignDetails(
-                                                    RouterPath(state.id)
-                                                )
-                                                .description
+                                            returnTo: state.routes.detailsPath(
+                                                state.id
+                                            )
                                         ),
                                         style: .destructive
                                     )

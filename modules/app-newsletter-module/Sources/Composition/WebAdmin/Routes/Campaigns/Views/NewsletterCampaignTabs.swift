@@ -1,6 +1,8 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
+import NewsletterModule
 import WebComponents
 
 struct NewsletterCampaignTabs: Component {
@@ -12,28 +14,39 @@ struct NewsletterCampaignTabs: Component {
 
     let id: String
     let active: Tab
+    let routes: Campaign.Router.Routes
+
+    init(
+        id: String,
+        active: Tab,
+        routes: Campaign.Router.Routes = .standard
+    ) {
+        self.id = id
+        self.active = active
+        self.routes = routes
+    }
 
     var links: [AdminTabBar.Link] {
         [
             .init(
                 label: "Details",
                 href:
-                    NewsletterAdminRoutes.campaignDetails(RouterPath(id))
-                    .description,
+                    routes.detailsPath(id),
                 isCurrent: active == .details
             ),
             .init(
                 label: "Subscribers",
                 href:
-                    NewsletterAdminRoutes.campaignSubscribers(RouterPath(id))
-                    .description,
+                    routes.subscribers.path(
+                        parameter: "newsletterId",
+                        value: id
+                    ),
                 isCurrent: active == .subscribers
             ),
             .init(
                 label: "Issues",
                 href:
-                    NewsletterAdminRoutes.campaignIssues(RouterPath(id))
-                    .description,
+                    routes.issuesPath(newsletterId: id),
                 isCurrent: active == .issues
             ),
         ]

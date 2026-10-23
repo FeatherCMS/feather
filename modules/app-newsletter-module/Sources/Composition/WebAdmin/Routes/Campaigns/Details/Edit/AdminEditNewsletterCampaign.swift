@@ -1,11 +1,13 @@
 import FeatherWebAdmin
 import FeatherWebShared
+import NewsletterModule
 
 struct AdminEditNewsletterCampaign {
     let controller: any AdminEditNewsletterCampaignController
     init(
         environment: AppEnvironment,
-        renderingEngine: any RenderingEngine
+        renderingEngine: any RenderingEngine,
+        routes: Campaign.Router.Routes
     ) {
         controller = AdminEditNewsletterCampaignDefaultController {
             request,
@@ -22,7 +24,8 @@ struct AdminEditNewsletterCampaign {
                 presenter: AdminEditNewsletterCampaignDefaultPresenter(
                     request: request,
                     context: context,
-                    renderingEngine: renderingEngine
+                    renderingEngine: renderingEngine,
+                    routes: routes
                 )
             )
         }

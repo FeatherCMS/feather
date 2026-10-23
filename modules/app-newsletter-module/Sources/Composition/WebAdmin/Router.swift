@@ -41,14 +41,17 @@ public struct Router {
                 routes: campaignRoutes
             )
             .route(on: router)
-        AdminViewNewsletterCampaign(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        Campaign.Detail
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
         AdminEditNewsletterCampaign(
             environment: environment,
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            routes: campaignRoutes
         )
         .controller.route(on: router)
         AdminRemoveNewsletterCampaign(
@@ -63,12 +66,13 @@ public struct Router {
         )
         .controller.route(on: router)
 
-        Issue.Search.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: campaignRoutes
-        )
-        .route(on: router)
+        Issue.Search
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
         Issue.View
             .Router(
                 environment: environment,

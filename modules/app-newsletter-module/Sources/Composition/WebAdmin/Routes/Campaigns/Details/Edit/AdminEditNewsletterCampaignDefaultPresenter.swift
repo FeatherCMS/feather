@@ -12,6 +12,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
     let request: Request
     let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
+    let routes: Campaign.Router.Routes
     func render(
         item: Campaign.Item,
         error: String?,
@@ -38,6 +39,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
             content: NewsletterCampaignEditPage(
                 state: .init(
                     id: id,
+                    routes: routes,
                     form: .init(
                         key: item.id,
                         name: item.name,

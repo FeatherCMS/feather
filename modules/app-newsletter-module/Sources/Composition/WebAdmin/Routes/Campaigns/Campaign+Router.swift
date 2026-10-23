@@ -17,6 +17,13 @@ extension Campaign.Router {
         let edit: WebRoute
         let breadcrumb: [AdminBreadcrumb.Link]
 
+        static let standard = Routes(
+            admin: WebRoute.root.appending(pathComponent: "admin"),
+            root: WebRoute.root
+                .appending(pathComponent: "admin")
+                .appending(pathComponent: "newsletter")
+        )
+
         init(admin: WebRoute, root: WebRoute) {
             self.admin = admin
             self.root = root
@@ -43,6 +50,11 @@ extension Campaign.Router {
 
         func editPath(_ id: String) -> String {
             edit.path(parameter: "newsletterId", value: id)
+        }
+
+        var subscribers: WebRoute {
+            list.appending(parameter: "newsletterId")
+                .appending(pathComponent: "subscribers")
         }
 
         var issues: WebRoute {

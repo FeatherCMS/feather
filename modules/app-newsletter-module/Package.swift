@@ -84,6 +84,10 @@ let package = Package(
             url: "https://github.com/hummingbird-project/swift-jobs",
             from: "1.1.0"
         ),
+        .package(
+            url: "https://github.com/feather-framework/feather-validation",
+            exact: "1.0.0-beta.1"
+        ),
 
         .package(path: "../../feather-core"),
         .package(
@@ -266,6 +270,10 @@ let package = Package(
         .target(
             name: "NewsletterWebApp",
             dependencies: [
+                .product(
+                    name: "FeatherValidation",
+                    package: "feather-validation"
+                ),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
