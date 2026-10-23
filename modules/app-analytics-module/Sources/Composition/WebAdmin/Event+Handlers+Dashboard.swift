@@ -11,9 +11,6 @@ extension Event.Handlers {
         in events: inout EventRegistry,
         environment: AppEnvironment
     ) {
-        let apiBuilder = AnalyticsAdminAPIBuilder(
-            apiBaseURL: environment.apiBaseURL
-        )
         events.register(
             event: SystemWebAdmin.Dashboard.Event.Provider.self,
             context: SystemWebAdmin.Dashboard.Event.Context.self
@@ -25,7 +22,10 @@ extension Event.Handlers {
             else {
                 return []
             }
-            let api = apiBuilder.makeAnalyticsAdmin(context.requestContext)
+            let api = API.Client(
+                environment: environment,
+                requestContext: context.requestContext
+            )
             do {
                 let overview = try await api.withOpenAPIRepositoryErrorMapping {
                     client in

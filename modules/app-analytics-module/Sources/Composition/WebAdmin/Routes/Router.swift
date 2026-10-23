@@ -4,14 +4,14 @@ import FeatherWebShared
 public import Hummingbird
 
 public struct Router {
-    private let apiBuilder: AnalyticsAdminAPIBuilder
+    private let environment: AppEnvironment
     public let renderingEngine: any RenderingEngine
 
     public init(
-        apiBuilder: AnalyticsAdminAPIBuilder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
-        self.apiBuilder = apiBuilder
+        self.environment = environment
         self.renderingEngine = renderingEngine
     }
 
@@ -23,7 +23,7 @@ public struct Router {
 
         Insight.View
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 source: .web,
                 renderingEngine: renderingEngine
             )
@@ -31,7 +31,7 @@ public struct Router {
 
         Insight.View
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 source: .api,
                 renderingEngine: renderingEngine
             )
@@ -39,21 +39,21 @@ public struct Router {
 
         NotFound.View
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine
             )
             .route(on: router)
 
         Log.List
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine
             )
             .route(on: router)
 
         Log.View
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine
             )
             .route(on: router)

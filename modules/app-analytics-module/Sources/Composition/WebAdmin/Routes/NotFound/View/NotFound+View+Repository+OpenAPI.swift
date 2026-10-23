@@ -6,7 +6,7 @@ import OpenAPIRuntime
 
 extension NotFound.View.Repository {
     struct OpenAPI: Interface {
-        let api: AnalyticsAdminAPIClient
+        let api: API.Client
 
         func getOverview(
             from: Double,

@@ -6,7 +6,7 @@ import OpenAPIRuntime
 
 extension Log.View.Repository {
     struct OpenAPI: Interface {
-        let api: AnalyticsAdminAPIClient
+        let api: API.Client
 
         func get(
             id: String

@@ -1,19 +1,18 @@
 import AnalyticsAdminAPI
-import FeatherWebShared
-import FeatherWebAdmin
-import OpenAPIRuntime
-
 import AnalyticsModule
+import FeatherWebAdmin
+import FeatherWebShared
+import OpenAPIRuntime
 
 extension Log.List.Repository {
     struct OpenAPI: Interface {
-        let api: AnalyticsAdminAPIClient
+        let api: API.Client
         private let unauthorizedMessage =
             "Please sign in again to view analytics logs."
         private let forbiddenMessage =
             "Your account cannot access analytics logs."
 
-        init(api: AnalyticsAdminAPIClient) {
+        init(api: API.Client) {
             self.api = api
         }
 
@@ -30,46 +29,46 @@ extension Log.List.Repository {
                 let response =
                     try await client
                     .analyticsLogSearch(
-                    headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(
-                        .init(
-                            page: .init(size: 20, number: page),
-                            filters: .init(
-                                search: search ?? "",
-                                source: source ?? "",
-                                method: method ?? "",
-                                responseCode: responseCode,
-                                from: from,
-                                to: to
+                        headers: .init(accept: [.init(contentType: .json)]),
+                        body: .json(
+                            .init(
+                                page: .init(size: 20, number: page),
+                                filters: .init(
+                                    search: search ?? "",
+                                    source: source ?? "",
+                                    method: method ?? "",
+                                    responseCode: responseCode,
+                                    from: from,
+                                    to: to
+                                )
                             )
                         )
                     )
-                    )
 
                 switch response {
-            case .ok(let okResponse):
-                let body = try okResponse.body.json
-                return .init(
-                    items: body.data.items,
-                    total: body.data.total,
-                    page: body.query.page.number,
-                    pageSize: body.query.page.size,
-                    source: body.query.filters.source ?? "",
-                    method: body.query.filters.method ?? "",
-                    responseCode: body.query.filters.responseCode.map(
-                        String.init
+                case .ok(let okResponse):
+                    let body = try okResponse.body.json
+                    return .init(
+                        items: body.data.items,
+                        total: body.data.total,
+                        page: body.query.page.number,
+                        pageSize: body.query.page.size,
+                        source: body.query.filters.source ?? "",
+                        method: body.query.filters.method ?? "",
+                        responseCode: body.query.filters.responseCode.map(
+                            String.init
+                        )
+                            ?? ""
                     )
-                        ?? ""
-                )
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
                 }
             }
         }

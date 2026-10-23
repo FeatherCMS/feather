@@ -9,7 +9,7 @@ extension NotFound.View {
         let controller: any Controller.Interface
 
         init(
-            apiBuilder: AnalyticsAdminAPIBuilder,
+            environment: AppEnvironment,
             renderingEngine: any RenderingEngine
         ) {
             self.controller = Controller.Default(
@@ -17,7 +17,10 @@ extension NotFound.View {
                     WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
-                                api: apiBuilder.makeAnalyticsAdmin(context)
+                                api: API.Client(
+                                    environment: environment,
+                                    requestContext: context
+                                )
                             )
                         ),
                         presenter: Presenter.Default(
