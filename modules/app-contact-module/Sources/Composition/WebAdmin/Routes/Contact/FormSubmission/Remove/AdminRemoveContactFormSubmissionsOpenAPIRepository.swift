@@ -1,11 +1,13 @@
+import ContactApplication
+import ContactModule
 import ContactAdminAPI
 
 struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
     let api: ContactAdminAPIClient
     func get(formId: String, id: String) async throws
-        -> AdminContactFormSubmissionItem
+        -> Submission.Item
     {
-        try await AdminViewContactFormSubmissionOpenAPIRepository(api: api)
+        try await Submission.Detail.Repository.OpenAPI(api: api)
             .get(formId: formId, id: id)
     }
     func remove(formId: String, id: String) async throws {

@@ -1,3 +1,4 @@
+import ContactApplication
 import ContactModule
 import ContactWebShared
 import FeatherWebShared

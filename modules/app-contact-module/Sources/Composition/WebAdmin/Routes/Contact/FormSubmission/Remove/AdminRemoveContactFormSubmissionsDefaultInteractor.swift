@@ -1,9 +1,10 @@
+import ContactModule
 struct AdminRemoveContactFormSubmissionsDefaultInteractor:
     AdminRemoveContactFormSubmissionsInteractor
 {
     let repository: AdminRemoveContactFormSubmissionsOpenAPIRepository
     func get(formId: String, id: String) async throws
-        -> AdminContactFormSubmissionItem
+        -> Submission.Item
     { try await repository.get(formId: formId, id: id) }
     func remove(formId: String, id: String) async throws {
         try await repository.remove(formId: formId, id: id)

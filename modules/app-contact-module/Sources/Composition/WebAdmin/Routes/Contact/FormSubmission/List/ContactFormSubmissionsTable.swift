@@ -10,7 +10,7 @@ import WebComponents
 struct ContactFormSubmissionsTable: Component {
     struct State {
         let formId: String
-        let items: [AdminContactFormSubmissionItem]
+        let items: [Submission.Item]
         let pageState: AdminListPageState
         let search: String
         let error: String?

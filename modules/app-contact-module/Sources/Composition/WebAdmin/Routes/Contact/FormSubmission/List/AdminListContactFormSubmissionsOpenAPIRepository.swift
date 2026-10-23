@@ -1,3 +1,4 @@
+import ContactModule
 import ContactAdminAPI
 import FeatherWebShared
 import FeatherWebAdmin
@@ -11,7 +12,7 @@ import WebComponents
 
 struct AdminListContactFormSubmissionsOpenAPIRepository {
     let api: ContactAdminAPIClient
-    func list(formId: String) async throws -> [AdminContactFormSubmissionItem] {
+    func list(formId: String) async throws -> [Submission.Item] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactFormSubmissionList(
                 path: .init(contactFormKey: formId)
@@ -31,7 +32,7 @@ struct AdminListContactFormSubmissionsOpenAPIRepository {
         }
     }
     private func map(_ item: Components.Schemas.ContactFormSubmissionSchema)
-        -> AdminContactFormSubmissionItem
+        -> Submission.Item
     {
         let values = item.values.additionalProperties
         return .init(

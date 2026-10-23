@@ -3,7 +3,7 @@ public import FeatherWebShared
 public import Hummingbird
 public import SystemModule
 
-public struct AdminAuthMiddleware: RouterMiddleware {
+public struct AuthMiddleware: RouterMiddleware {
 
     private let loginPath: String
     private let unauthorizedPath: String

@@ -1,7 +1,9 @@
-import FeatherWebAdmin
-import FeatherWebShared
+import ContactApplication
+import ContactModule
 import FeatherModuleKit
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -15,6 +17,7 @@ struct AdminEditContactFormSubmissionDefaultPresenter:
     let request: Request
     let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
+    let routes: Contact.Router.Routes
 
     func renderError(
         formId: String,
@@ -26,7 +29,7 @@ struct AdminEditContactFormSubmissionDefaultPresenter:
             request: request,
             context: context,
             title: "Contact form submission",
-            content: ContactFormSubmissionDetailsView(
+            content: Submission.Detail.DetailsView(
                 state: .init(
                     formId: formId,
                     item: .init(
@@ -38,7 +41,8 @@ struct AdminEditContactFormSubmissionDefaultPresenter:
                         values: [:]
                     ),
                     error: message,
-                    breadcrumb: ContactAdminRoutes.breadcrumb,
+                    breadcrumb: routes.formSubmissionsBreadcrumb(formId),
+                    routes: routes,
                     permissions: .init(Set(permissions.map(PermissionKey.init)))
                 )
             )

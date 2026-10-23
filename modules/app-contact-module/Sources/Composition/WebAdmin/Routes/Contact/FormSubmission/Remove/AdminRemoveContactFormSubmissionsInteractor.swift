@@ -1,3 +1,4 @@
+import ContactModule
 import FeatherWebAdmin
 import FeatherValidation
 import HTML
@@ -9,7 +10,7 @@ import WebComponents
 
 protocol AdminRemoveContactFormSubmissionsInteractor: Sendable {
     func get(formId: String, id: String) async throws
-        -> AdminContactFormSubmissionItem
+        -> Submission.Item
     func remove(formId: String, id: String) async throws
     func remove(formId: String, ids: [String]) async throws
 }

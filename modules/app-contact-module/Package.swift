@@ -280,6 +280,7 @@ let package = Package(
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
 
                 .target(name: "ContactModule"),
+                .target(name: "ContactApplication"),
                 .target(name: "ContactAdminAPI"),
                 .target(name: "ContactWebShared"),
             ],

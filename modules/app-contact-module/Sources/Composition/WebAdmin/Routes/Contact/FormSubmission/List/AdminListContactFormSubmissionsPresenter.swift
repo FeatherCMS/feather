@@ -1,3 +1,4 @@
+import ContactModule
 import FeatherWebAdmin
 import FeatherValidation
 import HTML
@@ -10,7 +11,7 @@ import WebComponents
 protocol AdminListContactFormSubmissionsPresenter: Sendable {
     func renderList(
         formId: String,
-        items: [AdminContactFormSubmissionItem],
+        items: [Submission.Item],
         search: String,
         error: String?,
         permissions: Set<String>

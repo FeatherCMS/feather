@@ -1,3 +1,4 @@
+import ContactModule
 import FeatherWebAdmin
 import FeatherWebShared
 import FeatherModuleKit
@@ -18,7 +19,7 @@ struct AdminListContactFormSubmissionsDefaultPresenter:
 
     func renderList(
         formId: String,
-        items: [AdminContactFormSubmissionItem],
+        items: [Submission.Item],
         search: String,
         error: String?,
         permissions: Set<String>

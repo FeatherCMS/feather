@@ -1,3 +1,4 @@
+import ContactApplication
 import ContactAdminAPI
 import ContactModule
 import FeatherWebAdmin

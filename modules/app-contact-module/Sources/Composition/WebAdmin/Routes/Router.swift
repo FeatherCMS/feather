@@ -1,3 +1,4 @@
+import ContactApplication
 import ContactModule
 public import ContactWebShared
 public import FeatherWebAdmin
@@ -115,14 +116,17 @@ public struct Router {
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
-        AdminViewContactFormSubmission(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        Submission.Detail
+            .Router(
+                apiBuilder: apiBuilder,
+                renderingEngine: renderingEngine,
+                routes: routes
+            )
+            .route(on: router)
         AdminEditContactFormSubmission(
             apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
+            renderingEngine: renderingEngine,
+            routes: routes
         )
         .controller.route(on: router)
         AdminRemoveContactFormSubmissions(

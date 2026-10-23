@@ -93,6 +93,26 @@ extension Contact {
                 root.appending(pathComponent: "submissions")
             }
 
+            public var formSubmissions: WebRoute {
+                formDetails.appending(pathComponent: "submissions")
+            }
+
+            public var formSubmissionDetail: WebRoute {
+                formSubmissions.appending(parameter: "submissionId")
+            }
+
+            public func formSubmissionDetailPath(
+                formKey: String,
+                submissionId: String
+            ) -> String {
+                try! formSubmissionDetail.path(
+                    parameters: [
+                        "formKey": formKey,
+                        "submissionId": submissionId,
+                    ]
+                )
+            }
+
             var breadcrumb: [AdminBreadcrumb.Link] {
                 [
                     .init(label: "Admin", link: admin.path),
@@ -111,6 +131,20 @@ extension Contact {
             {
                 formsBreadcrumb + [
                     .init(label: "Emails", link: formEmailsPath(key))
+                ]
+            }
+
+            func formSubmissionsBreadcrumb(_ key: String)
+                -> [AdminBreadcrumb.Link]
+            {
+                formsBreadcrumb + [
+                    .init(
+                        label: "Submissions",
+                        link: formSubmissions.path(
+                            parameter: "formKey",
+                            value: key
+                        )
+                    )
                 ]
             }
         }

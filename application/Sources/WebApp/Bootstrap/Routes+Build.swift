@@ -196,7 +196,7 @@ func buildRouter(
     let adminRouter =
         authRouter
         .add(
-            middleware: AdminAuthMiddleware(
+            middleware: AuthMiddleware(
                 loginPath: "/login/",
                 unauthorizedPath: "/"
             )

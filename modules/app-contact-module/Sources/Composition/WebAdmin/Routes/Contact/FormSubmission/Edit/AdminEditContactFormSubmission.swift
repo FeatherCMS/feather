@@ -1,6 +1,6 @@
 import ContactWebShared
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -13,7 +13,8 @@ struct AdminEditContactFormSubmission {
 
     init(
         apiBuilder: ContactAPIBuilder,
-        renderingEngine: any RenderingEngine
+        renderingEngine: any RenderingEngine,
+        routes: Contact.Router.Routes
     ) {
         controller = AdminEditContactFormSubmissionDefaultController(
             buildRuntime: { request, context in
@@ -26,7 +27,8 @@ struct AdminEditContactFormSubmission {
                     presenter: AdminEditContactFormSubmissionDefaultPresenter(
                         request: request,
                         context: context,
-                        renderingEngine: renderingEngine
+                        renderingEngine: renderingEngine,
+                        routes: routes
                     )
                 )
             }

@@ -10,7 +10,7 @@ import WebComponents
 
 struct ContactFormSubmissionsTableContent: Component {
     let formId: String
-    let items: [AdminContactFormSubmissionItem]
+    let items: [Submission.Item]
     let pageState: AdminListPageState
     let search: String
     let permissions: AdminListActions

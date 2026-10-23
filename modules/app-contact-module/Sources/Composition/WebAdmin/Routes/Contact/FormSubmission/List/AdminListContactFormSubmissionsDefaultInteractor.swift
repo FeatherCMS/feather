@@ -1,3 +1,4 @@
+import ContactModule
 import FeatherWebAdmin
 import FeatherValidation
 import HTML
@@ -11,7 +12,7 @@ struct AdminListContactFormSubmissionsDefaultInteractor:
     AdminListContactFormSubmissionsInteractor
 {
     let repository: AdminListContactFormSubmissionsOpenAPIRepository
-    func list(formId: String) async throws -> [AdminContactFormSubmissionItem] {
+    func list(formId: String) async throws -> [Submission.Item] {
         try await repository.list(formId: formId)
     }
 }

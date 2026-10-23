@@ -1,3 +1,4 @@
+import ContactModule
 import FeatherWebAdmin
 import FeatherValidation
 import HTML
@@ -8,5 +9,5 @@ import WebBuilders
 import WebComponents
 
 protocol AdminListContactFormSubmissionsInteractor: Sendable {
-    func list(formId: String) async throws -> [AdminContactFormSubmissionItem]
+    func list(formId: String) async throws -> [Submission.Item]
 }
