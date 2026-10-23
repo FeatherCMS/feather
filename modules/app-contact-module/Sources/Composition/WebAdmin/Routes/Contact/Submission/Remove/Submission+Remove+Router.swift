@@ -1,6 +1,6 @@
 import ContactApplication
 import ContactModule
-import ContactWebShared
+import FeatherWebShared
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
@@ -10,7 +10,7 @@ extension Submission.Remove {
         let controller: any Controller.Interface
 
         init(
-            apiBuilder: ContactAPIBuilder,
+            environment: AppEnvironment,
             renderingEngine: any RenderingEngine
         ) {
             controller = Controller.Default(
@@ -18,7 +18,10 @@ extension Submission.Remove {
                     WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
-                                api: apiBuilder.makeContactAdmin(context)
+                                api: API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
+                                )
                             )
                         ),
                         presenter: Presenter.Default(

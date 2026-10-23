@@ -1,4 +1,4 @@
-import ContactModule
+import ContactApplication
 import ContactModule
 import FeatherModuleKit
 import FeatherValidation
@@ -11,20 +11,19 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AdminAddContactFieldDefaultController:
-    AdminAddContactFieldController
-{
-    let buildRuntime:
-        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
-            any AdminAddContactFieldInteractor,
-            any AdminAddContactFieldPresenter
-        >
-    func getAddContactField(
-        request: Request,
-        context: AuthenticatedRequestContext
-    )
-        async throws -> HTMLResponse
-    {
+extension FormField.Add.Controller {
+    struct Default: Interface {
+        let routes: Contact.Router.Routes
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any FormField.Add.Interactor.Interface,
+                any FormField.Add.Presenter.Interface
+            >
+
+        func getAddContactField(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let interactor = runtime.interactor
         let presenter = runtime.presenter
@@ -49,12 +48,10 @@ struct AdminAddContactFieldDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func postAddContactField(
-        request: Request,
-        context: AuthenticatedRequestContext
-    )
-        async throws -> Response
-    {
+        func postAddContactField(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let interactor = runtime.interactor
         let presenter = runtime.presenter
@@ -90,11 +87,8 @@ struct AdminAddContactFieldDefaultController:
                 formKey: formKey
             )
             if model.fieldErrors.isEmpty {
-                let successPath =
-                    formKey.map {
-                        ContactAdminRoutes.formFields(RouterPath($0))
-                            .description
-                    } ?? "/admin/contact/fields/"
+                let successPath = formKey.map(routes.formFieldsPath)
+                    ?? routes.fields.path
                 return Response(
                     status: .seeOther,
                     headers: [
@@ -115,17 +109,13 @@ struct AdminAddContactFieldDefaultController:
                 )
                 .response(from: request, context: context)
         }
-        catch let error as AdminAddContactFieldError {
+        catch let error as FormField.Add.Error {
             if case .createdButNotAssigned = error, let formKey {
                 return Response(
                     status: .seeOther,
                     headers: [
                         .location: AdminNotificationRedirect.location(
-                            defaultPath:
-                                ContactAdminRoutes.formFields(
-                                    RouterPath(formKey)
-                                )
-                                .description,
+                            defaultPath: routes.formFieldsPath(formKey),
                             title: "Field created, not assigned",
                             message:
                                 "The field was created, but could not be assigned. Add it from this form's Fields tab."

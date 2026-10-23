@@ -1,12 +1,13 @@
-import ContactWebShared
-import FeatherWebAdmin
+import FeatherWebShared
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 
 struct AdminRemoveContactFormSubmissions {
     let controller: any AdminRemoveContactFormSubmissionsController
 
     init(
-        apiBuilder: ContactAPIBuilder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         controller = AdminRemoveContactFormSubmissionsDefaultController(
@@ -15,7 +16,10 @@ struct AdminRemoveContactFormSubmissions {
                     interactor:
                         AdminRemoveContactFormSubmissionsDefaultInteractor(
                             repository: .init(
-                                api: apiBuilder.makeContactAdmin(context)
+                                api: API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
+                                )
                             )
                         ),
                     presenter:

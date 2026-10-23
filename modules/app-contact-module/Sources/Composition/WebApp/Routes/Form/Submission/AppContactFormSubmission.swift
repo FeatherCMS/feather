@@ -1,4 +1,3 @@
-public import ContactWebShared
 import FeatherValidation
 public import FeatherWebShared
 import HTML
@@ -13,11 +12,11 @@ public struct AppContactFormSubmission {
     let controller: any AppContactFormSubmissionController
 
     public init(
-        apiBuilder: ContactAPIBuilder,
+        environment: AppEnvironment,
         turnstileVerifier: (any TurnstileVerifier)? = nil
     ) {
         self.controller = AppContactFormSubmissionDefaultController(
-            apiBuilder: apiBuilder,
+            environment: environment,
             turnstileVerifier: turnstileVerifier
         )
     }

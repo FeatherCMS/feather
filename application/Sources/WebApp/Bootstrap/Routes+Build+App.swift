@@ -25,7 +25,7 @@ func buildAppRoutes(
     )
     .route(on: router)
 
-    AppContactFormSubmission(apiBuilder: apiBuilder.contact).route(on: router)
+    AppContactFormSubmission(environment: environment).route(on: router)
 
     AppNewsletterCampaignSubscription(apiBuilder: apiBuilder.newsletterApp)
         .route(on: router)

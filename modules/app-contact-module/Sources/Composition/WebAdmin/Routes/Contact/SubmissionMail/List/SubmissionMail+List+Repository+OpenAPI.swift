@@ -1,5 +1,5 @@
-import ContactApplication
 import ContactAdminAPI
+import ContactApplication
 import ContactModule
 import FeatherValidation
 import FeatherWebAdmin
@@ -20,7 +20,7 @@ extension SubmissionMail.List.Repository {
     }
 
     struct OpenAPI: Interface {
-        let api: ContactAdminAPIClient
+        let api: API.Client
         func get(id: String) async throws -> AdminContactFormDetailsItem {
             try await AdminViewContactFormOpenAPIRepository(api: api)
                 .get(key: id)

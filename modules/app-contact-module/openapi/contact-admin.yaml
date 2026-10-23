@@ -265,6 +265,34 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
+  /api/v1/admin/contact/field/query:
+    post:
+      tags:
+      - ContactForms
+      operationId: contactFieldQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/ContactFieldQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
   /api/v1/admin/contact/field/{formFieldId}:
     get:
       tags:
@@ -931,6 +959,115 @@ components:
       type: boolean
     FormFieldPositionField:
       type: integer
+    ContactFieldQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - key
+                - label
+                - type
+                - isRequired
+                example: key
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            form:
+              $ref: '#/components/schemas/ContactFormKeyField'
+      required:
+      - filters
+    ContactFieldQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/ContactFieldQueryItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    ContactFieldQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - key
+                - label
+                - type
+                - isRequired
+                example: key
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            form:
+              $ref: '#/components/schemas/ContactFormKeyField'
+      required:
+      - page
+      - filters
+    ContactFieldQueryItemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        key:
+          type: string
+        type:
+          type: string
+        label:
+          type: string
+        isRequired:
+          type: boolean
+      required:
+      - id
+      - key
+      - type
+      - label
+      - isRequired
     ContactIdField:
       type: string
     FormFieldPatchSchema:
@@ -1040,6 +1177,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/FormFieldSchema'
+    ContactFieldQueryItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactFieldQueryItemSearchSchema'
     ContactFormSubmissionListResponse:
       description: Contact form submission list response
       content:

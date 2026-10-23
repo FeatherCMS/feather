@@ -1,13 +1,13 @@
-import ContactApplication
 import ContactAdminAPI
+import ContactApplication
 import ContactModule
-import ContactWebShared
+import FeatherWebShared
 import FeatherWebShared
 import OpenAPIRuntime
 
 extension Form.Add.Repository {
     struct OpenAPI: Interface {
-        let api: ContactAdminAPIClient
+        let api: API.Client
 
         func availableFields() async throws -> [AdminContactFormFieldOption] {
             try await api.withOpenAPIRepositoryErrorMapping { client in

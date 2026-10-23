@@ -1,6 +1,6 @@
 import ContactApplication
 import ContactModule
-import ContactWebShared
+import FeatherWebShared
 
 extension Form.Add {
     enum Repository {}

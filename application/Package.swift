@@ -293,7 +293,6 @@ let package = Package(
                 .product(name: "NewsletterWebApp", package: "app-newsletter-module"),
                 .product(name: "ContactWebAdmin", package: "app-contact-module"),
                 .product(name: "ContactWebApp", package: "app-contact-module"),
-                .product(name: "ContactWebShared", package: "app-contact-module"),
                 .product(name: "MediaWebAdmin", package: "app-media-module"),
                 .product(name: "BlogWebAdmin", package: "app-blog-module"),
                 .product(name: "BlogWebApp", package: "app-blog-module"),

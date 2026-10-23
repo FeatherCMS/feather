@@ -1,3 +1,5 @@
+import ContactApplication
+import ContactModule
 import FeatherWebAdmin
 import FeatherWebShared
 import FeatherValidation
@@ -8,16 +10,17 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AdminAddContactFieldDefaultPresenter:
-    AdminAddContactFieldPresenter
-{
-    let request: Request
-    let context: AuthenticatedRequestContext
-    let renderingEngine: any RenderingEngine
-    func renderPage(
-        model: AdminAddContactFieldModel,
-        permissions: Set<String>
-    ) async throws -> HTMLResponse {
+extension FormField.Add.Presenter {
+    struct Default: Interface {
+        let request: Request
+        let context: AuthenticatedRequestContext
+        let renderingEngine: any RenderingEngine
+        let routes: Contact.Router.Routes
+
+        func renderPage(
+            model: FormField.Add.Model,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse {
         try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
@@ -33,35 +36,19 @@ struct AdminAddContactFieldDefaultPresenter:
                     formKey: request.queryString("form"),
                     error: model.error,
                     fieldErrors: model.fieldErrors,
-                    breadcrumb: request.queryString("form")
-                        .map { formKey in
-                            ContactAdminRoutes.formsBreadcrumb
-                                + [
-                                    .init(
-                                        label: formKey,
-                                        link:
-                                            ContactAdminRoutes.formFields(
-                                                RouterPath(formKey)
-                                            )
-                                            .description
-                                    ),
-                                    .init(
-                                        label: "Add field",
-                                        link: ContactAdminRoutes.fieldAdd
-                                            .description
-                                    ),
-                                ]
-                        } ?? ContactAdminRoutes.fieldsBreadcrumb
+                    breadcrumb: routes.fieldAddBreadcrumb(
+                        request.queryString("form")?.whitespaceTrimmed.emptyToNil
+                    )
                 )
             )
         )
     }
 
-    func renderAddError(
-        input: ContactFieldFormInput,
-        error: AdminAddContactFieldError,
-        permissions: Set<String>
-    ) async throws -> HTMLResponse {
+        func renderAddError(
+            input: ContactFieldFormInput,
+            error: FormField.Add.Error,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse {
         switch error {
         case .unauthorized:
             return try await renderStatusPage(
@@ -97,7 +84,7 @@ struct AdminAddContactFieldDefaultPresenter:
         }
     }
 
-    func renderForbiddenPage() async throws -> HTMLResponse {
+        func renderForbiddenPage() async throws -> HTMLResponse {
         try await renderStatusPage(
             title: "Forbidden",
             message: "Your account cannot create contact form fields.",
@@ -105,12 +92,12 @@ struct AdminAddContactFieldDefaultPresenter:
         )
     }
 
-    private func renderFormError(
-        input: ContactFieldFormInput,
-        message: String,
-        permissions: Set<String>,
-        status: HTTPResponse.Status
-    ) async throws -> HTMLResponse {
+        private func renderFormError(
+            input: ContactFieldFormInput,
+            message: String,
+            permissions: Set<String>,
+            status: HTTPResponse.Status
+        ) async throws -> HTMLResponse {
         let page = try await renderPage(
             model: .init(
                 key: input.key,
@@ -127,11 +114,11 @@ struct AdminAddContactFieldDefaultPresenter:
         return HTMLResponse(content: page.content, status: status)
     }
 
-    private func renderStatusPage(
-        title: String,
-        message: String,
-        status: HTTPResponse.Status
-    ) async throws -> HTMLResponse {
+        private func renderStatusPage(
+            title: String,
+            message: String,
+            status: HTTPResponse.Status
+        ) async throws -> HTMLResponse {
         let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,

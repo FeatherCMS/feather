@@ -1,7 +1,8 @@
 import ContactAdminAPI
-import FeatherWebShared
-import FeatherWebAdmin
+import ContactModule
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -10,10 +11,10 @@ import WebBuilders
 import WebComponents
 
 struct AdminRemoveContactFieldOpenAPIRepository {
-    let api: ContactAdminAPIClient
+    let api: API.Client
 
     func get(id: String) async throws -> AdminContactFieldRow {
-        try await AdminListContactFieldsOpenAPIRepository(api: api)
+        try await FormField.List.Repository.OpenAPI(api: api)
             .list().first { $0.id == id }
             ?? {
                 throw OpenAPIRepositoryError.notFound

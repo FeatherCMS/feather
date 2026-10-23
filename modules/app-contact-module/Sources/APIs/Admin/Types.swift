@@ -35,6 +35,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)`.
     func contactFieldRemove(_ input: Operations.ContactFieldRemove.Input) async throws -> Operations.ContactFieldRemove.Output
+    /// - Remark: HTTP `POST /api/v1/admin/contact/field/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/query/post(contactFieldQuery)`.
+    func contactFieldQuery(_ input: Operations.ContactFieldQuery.Input) async throws -> Operations.ContactFieldQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/field/{formFieldId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/get(contactFieldGet)`.
     func contactFieldGet(_ input: Operations.ContactFieldGet.Input) async throws -> Operations.ContactFieldGet.Output
@@ -159,6 +162,17 @@ extension APIProtocol {
         body: Components.RequestBodies.DeleteRequestBody
     ) async throws -> Operations.ContactFieldRemove.Output {
         try await contactFieldRemove(Operations.ContactFieldRemove.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/field/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/query/post(contactFieldQuery)`.
+    public func contactFieldQuery(
+        headers: Operations.ContactFieldQuery.Input.Headers = .init(),
+        body: Operations.ContactFieldQuery.Input.Body
+    ) async throws -> Operations.ContactFieldQuery.Output {
+        try await contactFieldQuery(Operations.ContactFieldQuery.Input(
             headers: headers,
             body: body
         ))

@@ -1,6 +1,7 @@
-import ContactWebShared
-import FeatherWebAdmin
+import FeatherWebShared
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -12,7 +13,7 @@ struct AdminEditContactForm {
     let controller: any AdminEditContactFormController
 
     init(
-        apiBuilder: ContactAPIBuilder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine
     ) {
         controller = AdminEditContactFormDefaultController(
@@ -20,7 +21,10 @@ struct AdminEditContactForm {
                 WebAdminRuntime(
                     interactor: AdminEditContactFormDefaultInteractor(
                         repository: .init(
-                            api: apiBuilder.makeContactAdmin(context)
+                            api: API.Client(
+                                apiBaseURL: environment.apiBaseURL,
+                                requestContext: context
+                            )
                         )
                     ),
                     presenter: AdminEditContactFormDefaultPresenter(

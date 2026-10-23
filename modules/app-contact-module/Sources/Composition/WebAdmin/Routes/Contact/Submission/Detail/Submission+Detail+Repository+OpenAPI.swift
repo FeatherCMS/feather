@@ -17,7 +17,7 @@ extension Submission.Detail.Repository {
 
 extension Submission.Detail.Repository {
     struct OpenAPI: Interface {
-        let api: ContactAdminAPIClient
+        let api: API.Client
 
         func get(formId: String, id: String) async throws
             -> Submission.Item

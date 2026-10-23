@@ -178,6 +178,34 @@ extension Components {
                 self.body = body
             }
         }
+        public struct ContactFieldQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/ContactFieldQueryItemSearchSchemaSearchResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/ContactFieldQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.ContactFieldQueryItemSearchSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.ContactFieldQueryItemSearchSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.ContactFieldQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `ContactFieldQueryItemSearchSchemaSearchResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.ContactFieldQueryItemSearchSchemaSearchResponse.Body) {
+                self.body = body
+            }
+        }
         public struct ContactFormSubmissionListResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/ContactFormSubmissionListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {

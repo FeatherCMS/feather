@@ -9,7 +9,10 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AdminContactFieldsList: Sendable {
-    let fields: [AdminContactFieldRow]
-    let forms: [FormField.List.FormOption]
+extension FormField.List {
+    struct Model: Sendable {
+        let fields: [AdminContactFieldRow]
+        let forms: [FormOption]
+        let total: Int
+    }
 }

@@ -1,7 +1,7 @@
 import ContactAdminAPI
-import FeatherWebShared
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -10,7 +10,7 @@ import WebBuilders
 import WebComponents
 
 struct AdminEditContactFormOpenAPIRepository {
-    let api: ContactAdminAPIClient
+    let api: API.Client
     func get(key: String) async throws -> AdminContactFormDetailsItem {
         try await AdminViewContactFormOpenAPIRepository(api: api).get(key: key)
     }

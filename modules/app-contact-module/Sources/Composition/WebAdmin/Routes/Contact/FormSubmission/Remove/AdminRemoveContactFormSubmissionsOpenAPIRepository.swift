@@ -1,9 +1,9 @@
+import ContactAdminAPI
 import ContactApplication
 import ContactModule
-import ContactAdminAPI
 
 struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
-    let api: ContactAdminAPIClient
+    let api: API.Client
     func get(formId: String, id: String) async throws
         -> Submission.Item
     {

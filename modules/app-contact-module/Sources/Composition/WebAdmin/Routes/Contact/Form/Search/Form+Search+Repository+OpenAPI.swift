@@ -1,12 +1,12 @@
-import ContactApplication
 import ContactAdminAPI
+import ContactApplication
 import ContactModule
 import FeatherWebShared
 import OpenAPIRuntime
 
 extension Form.Search.Repository {
     struct OpenAPI: Interface {
-        let api: ContactAdminAPIClient
+        let api: API.Client
 
         func search(
             page: Int,

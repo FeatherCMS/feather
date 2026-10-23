@@ -89,6 +89,38 @@ extension Contact {
                 root.appending(pathComponent: "fields")
             }
 
+            public var fieldAdd: WebRoute {
+                fields.appending(pathComponent: "add")
+            }
+
+            public var formFields: WebRoute {
+                formDetails.appending(pathComponent: "fields")
+            }
+
+            public func formFieldsPath(_ key: String) -> String {
+                formFields.path(parameter: "formKey", value: key)
+            }
+
+            func fieldAddBreadcrumb(_ formKey: String?)
+                -> [AdminBreadcrumb.Link]
+            {
+                if let formKey {
+                    return formsBreadcrumb + [
+                        .init(label: formKey, link: formFieldsPath(formKey)),
+                        .init(label: "Add field", link: fieldAdd.path),
+                    ]
+                }
+                return fieldsBreadcrumb + [
+                    .init(label: "Add field", link: fieldAdd.path)
+                ]
+            }
+
+            var fieldsBreadcrumb: [AdminBreadcrumb.Link] {
+                breadcrumb + [
+                    .init(label: "Fields", link: fields.path)
+                ]
+            }
+
             public var submissions: WebRoute {
                 root.appending(pathComponent: "submissions")
             }

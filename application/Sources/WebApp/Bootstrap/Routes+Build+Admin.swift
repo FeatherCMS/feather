@@ -92,7 +92,7 @@ func buildAdminRoutes(
     )
     .route(on: router)
     ContactWebAdmin.Router(
-        apiBuilder: apiBuilder.contact,
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)

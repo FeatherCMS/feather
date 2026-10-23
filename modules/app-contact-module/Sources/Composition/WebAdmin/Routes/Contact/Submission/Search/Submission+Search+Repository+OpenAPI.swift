@@ -7,7 +7,7 @@ import OpenAPIRuntime
 
 extension Submission.Search.Repository {
     struct OpenAPI: Interface {
-        let api: ContactAdminAPIClient
+        let api: API.Client
 
         func search(page: Int, search: String?, formKey: String?) async throws
             -> Submission.Search.Model

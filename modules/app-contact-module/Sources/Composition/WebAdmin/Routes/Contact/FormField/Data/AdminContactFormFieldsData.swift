@@ -1,5 +1,5 @@
 import ContactAdminAPI
-import ContactWebShared
+import FeatherWebShared
 import FeatherWebAdmin
 import FeatherWebShared
 import Foundation
@@ -16,7 +16,7 @@ struct AdminContactFormFieldsData {
         let items: [Item]
     }
 
-    let apiBuilder: ContactAPIBuilder
+    let environment: AppEnvironment
 
     func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(ContactAdminRoutes.formFieldsDataRoute, use: get)
@@ -27,7 +27,12 @@ struct AdminContactFormFieldsData {
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let formKey = try context.requiredParameter("formKey")
-        let client = apiBuilder.makeContactAdmin(context).client
+        let client =
+            API.Client(
+                apiBaseURL: environment.apiBaseURL,
+                requestContext: context
+            )
+            .client
         let result = try await client.contactFormGet(
             path: .init(contactFormKey: formKey)
         )

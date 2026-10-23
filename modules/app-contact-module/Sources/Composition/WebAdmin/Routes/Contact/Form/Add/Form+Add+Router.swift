@@ -1,6 +1,6 @@
 import ContactApplication
 import ContactModule
-import ContactWebShared
+import FeatherWebShared
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
@@ -11,7 +11,7 @@ extension Form.Add {
         let routes: Contact.Router.Routes
 
         init(
-            apiBuilder: ContactAPIBuilder,
+            environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             routes: Contact.Router.Routes
         ) {
@@ -22,7 +22,10 @@ extension Form.Add {
                     WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
-                                api: apiBuilder.makeContactAdmin(context)
+                                api: API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
+                                )
                             )
                         ),
                         presenter: Presenter.Default(

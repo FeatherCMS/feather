@@ -1,21 +1,20 @@
 import ContactApplication
 import ContactModule
-public import ContactWebShared
 public import FeatherWebAdmin
-import FeatherWebShared
+public import FeatherWebShared
 public import Hummingbird
 
 public struct Router {
-    private let apiBuilder: ContactAPIBuilder
+    private let environment: AppEnvironment
     private let routes: Contact.Router.Routes
     public let renderingEngine: any RenderingEngine
 
     public init(
-        apiBuilder: ContactAPIBuilder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine,
         routes: Contact.Router.Routes = .standard
     ) {
-        self.apiBuilder = apiBuilder
+        self.environment = environment
         self.renderingEngine = renderingEngine
         self.routes = routes
     }
@@ -32,113 +31,117 @@ public struct Router {
 
         Form.Search
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
         Form.Add
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
-        AdminContactFormFieldsData(apiBuilder: apiBuilder)
+        AdminContactFormFieldsData(environment: environment)
             .route(on: router)
         AdminEditContactForm(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
         AdminViewContactForm(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
         AdminRemoveContactForm(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         SubmissionMail.List
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
         SubmissionMail.Add
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
         SubmissionMail.Edit
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
         SubmissionMail.Remove
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
 
-        AdminListContactFields(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminAddContactField(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        FormField.List
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
+            )
+            .route(on: router)
+        FormField.Add
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
+            )
+            .route(on: router)
         AdminEditContactField(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
         AdminRemoveContactField(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
         Submission.Detail
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
         AdminEditContactFormSubmission(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine,
             routes: routes
         )
         .controller.route(on: router)
         AdminRemoveContactFormSubmissions(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
         Submission.Search
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
         Submission.Remove
             .Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine
             )
             .route(on: router)

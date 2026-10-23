@@ -1,5 +1,4 @@
 import ContactAppAPI
-import ContactWebShared
 import FeatherValidation
 import FeatherWebShared
 import Foundation
@@ -14,7 +13,7 @@ import WebModuleWebApp
 struct AppContactFormSubmissionDefaultController:
     AppContactFormSubmissionController
 {
-    let apiBuilder: ContactAPIBuilder
+    let environment: AppEnvironment
     let turnstileVerifier: (any TurnstileVerifier)?
 
     func submit(
@@ -46,7 +45,7 @@ struct AppContactFormSubmissionDefaultController:
             {
                 throw HTTPError(.forbidden)
             }
-            let response = try await apiBuilder.makeContactApp(context)
+            let response = try await API.Client(environment: environment, requestContext: context)
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.appContactFormSubmission(
                         path: .init(contactFormKey: formKey),

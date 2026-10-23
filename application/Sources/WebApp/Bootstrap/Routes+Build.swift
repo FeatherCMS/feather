@@ -101,7 +101,7 @@ func buildRouter(
     AnalyticsWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     BlogWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     NewsWebAdmin.Menu.Provider.register(in: &adminEvents)
-    NewsAdminMenuEventHandlers.register(
+    NewsWebAdmin.Event.Handlers.registerMenu(
         in: &adminEvents,
         routes: newsRoutes
     )
@@ -161,7 +161,7 @@ func buildRouter(
 
     ContactMarkdownEventHandlers.register(
         in: &publicContentEvents,
-        api: ContactAppAPIClient(apiBaseURL: environment.apiBaseURL)
+        api: ContactWebApp.API.Client(environment: environment)
     )
     NewsletterMarkdownEventHandlers.register(in: &publicContentEvents)
 

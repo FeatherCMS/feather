@@ -4,7 +4,7 @@ import WebModuleWebApp
 public enum ContactMarkdownEventHandlers {
     public static func register(
         in registry: inout EventRegistry,
-        api: ContactAppAPIClient,
+        api: API.Client,
         turnstileSiteKey: String? = nil
     ) {
         registry.register(

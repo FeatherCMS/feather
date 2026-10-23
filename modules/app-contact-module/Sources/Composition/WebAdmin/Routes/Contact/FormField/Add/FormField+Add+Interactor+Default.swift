@@ -1,18 +1,12 @@
+import ContactApplication
+import ContactModule
 import FeatherWebAdmin
-import FeatherWebShared
-import FeatherValidation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
-struct AdminAddContactFieldDefaultInteractor:
-    AdminAddContactFieldInteractor
-{
-    let repository: AdminAddContactFieldOpenAPIRepository
-    func getAddContactField() async throws -> AdminAddContactFieldModel {
+extension FormField.Add.Interactor {
+    struct Default: Interface {
+        let repository: any FormField.Add.Repository.Interface
+
+        func getAddContactField() async throws -> FormField.Add.Model {
         .init(
             key: "",
             type: "text",
@@ -24,12 +18,10 @@ struct AdminAddContactFieldDefaultInteractor:
             fieldErrors: [:]
         )
     }
-    func postAddContactField(
-        payload: ContactFieldFormInput,
-        formKey: String?
-    )
-        async throws -> AdminAddContactFieldModel
-    {
+        func postAddContactField(
+            payload: ContactFieldFormInput,
+            formKey: String?
+        ) async throws -> FormField.Add.Model {
         if let error = payload.allowedValuesValidationError {
             return .init(
                 key: payload.key,
@@ -61,16 +53,16 @@ struct AdminAddContactFieldDefaultInteractor:
         catch let error as OpenAPIRepositoryError {
             switch error {
             case .unauthorized:
-                throw AdminAddContactFieldError.unauthorized
+                throw FormField.Add.Error.unauthorized
             case .forbidden:
-                throw AdminAddContactFieldError.forbidden
+                throw FormField.Add.Error.forbidden
             case .conflict:
-                throw AdminAddContactFieldError.conflict
+                throw FormField.Add.Error.conflict
             case .notFound, .failure, .transport:
-                throw AdminAddContactFieldError.unavailable
+                throw FormField.Add.Error.unavailable
             }
         }
-        catch let error as AdminAddContactFieldError {
+        catch let error as FormField.Add.Error {
             throw error
         }
     }

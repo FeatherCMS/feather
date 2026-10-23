@@ -1020,6 +1020,261 @@ extension Components {
         public typealias ContactRequiredField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/FormFieldPositionField`.
         public typealias FormFieldPositionField = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema`.
+        public struct ContactFieldQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case key = "key"
+                    case label = "label"
+                    case _type = "type"
+                    case isRequired = "isRequired"
+                }
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.ContactFieldQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.ContactFieldQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.ContactFieldQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.ContactFieldQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/filters/form`.
+                public var form: Components.Schemas.ContactFormKeyField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - form:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    form: Components.Schemas.ContactFormKeyField? = nil
+                ) {
+                    self.search = search
+                    self.form = form
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case form
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.ContactFieldQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `ContactFieldQueryItemSearchRequestQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.ContactFieldQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.ContactFieldQueryItemSearchRequestQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchSchema`.
+        public struct ContactFieldQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.ContactFieldQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchSchema/data`.
+            public struct DataPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.ContactFieldQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchSchema/data/total`.
+                public var total: Swift.Int
+                /// Creates a new `DataPayload`.
+                ///
+                /// - Parameters:
+                ///   - items:
+                ///   - total:
+                public init(
+                    items: [Components.Schemas.ContactFieldQueryItemSchema],
+                    total: Swift.Int
+                ) {
+                    self.items = items
+                    self.total = total
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case items
+                    case total
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.ContactFieldQueryItemSearchSchema.DataPayload
+            /// Creates a new `ContactFieldQueryItemSearchSchema`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - data:
+            public init(
+                query: Components.Schemas.ContactFieldQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.ContactFieldQueryItemSearchSchema.DataPayload
+            ) {
+                self.query = query
+                self.data = data
+            }
+            public enum CodingKeys: String, CodingKey {
+                case query
+                case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema`.
+        public struct ContactFieldQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case key = "key"
+                    case label = "label"
+                    case _type = "type"
+                    case isRequired = "isRequired"
+                }
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.ContactFieldQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.ContactFieldQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.ContactFieldQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.ContactFieldQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/filters/form`.
+                public var form: Components.Schemas.ContactFormKeyField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - form:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    form: Components.Schemas.ContactFormKeyField? = nil
+                ) {
+                    self.search = search
+                    self.form = form
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case form
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.ContactFieldQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `ContactFieldQueryItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.ContactFieldQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.ContactFieldQueryItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSchema`.
+        public struct ContactFieldQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSchema/key`.
+            public var key: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSchema/type`.
+            public var _type: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSchema/label`.
+            public var label: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFieldQueryItemSchema/isRequired`.
+            public var isRequired: Swift.Bool
+            /// Creates a new `ContactFieldQueryItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - key:
+            ///   - _type:
+            ///   - label:
+            ///   - isRequired:
+            public init(
+                id: Swift.String,
+                key: Swift.String,
+                _type: Swift.String,
+                label: Swift.String,
+                isRequired: Swift.Bool
+            ) {
+                self.id = id
+                self.key = key
+                self._type = _type
+                self.label = label
+                self.isRequired = isRequired
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case key
+                case _type = "type"
+                case label
+                case isRequired
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/ContactIdField`.
         public typealias ContactIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/FormFieldPatchSchema`.

@@ -1,7 +1,7 @@
 import ContactAdminAPI
-import FeatherWebShared
-import FeatherWebAdmin
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -10,7 +10,7 @@ import WebBuilders
 import WebComponents
 
 struct AdminEditContactFormSubmissionOpenAPIRepository {
-    let api: ContactAdminAPIClient
+    let api: API.Client
     func update(formId: String, id: String, status: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactFormSubmissionUpdate(

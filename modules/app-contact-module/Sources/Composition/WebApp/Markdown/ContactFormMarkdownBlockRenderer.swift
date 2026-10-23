@@ -10,7 +10,7 @@ import WebModuleWebApp
 struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
     let name = "ContactForm"
     let usesFormSubmissionNonce = true
-    let api: ContactAppAPIClient
+    let api: API.Client
     let turnstileSiteKey: String?
 
     func render(

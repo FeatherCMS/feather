@@ -45,7 +45,6 @@ let package = Package(
         .library(name: "ContactAdminAPI", targets: ["ContactAdminAPI"]),
         .library(name: "ContactAppAPI", targets: ["ContactAppAPI"]),
         .library(name: "ContactBackend", targets: ["ContactBackend"]),
-        .library(name: "ContactWebShared", targets: ["ContactWebShared"]),
         .library(name: "ContactWebApp", targets: ["ContactWebApp"]),
         .library(name: "ContactWebAdmin", targets: ["ContactWebAdmin"]),
         .executable(
@@ -226,12 +225,6 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "ContactWebShared",
-            dependencies: [],
-            path: "Sources/Composition/WebShared",
-            swiftSettings: swiftSettings
-        ),
-        .target(
             name: "ContactWebApp",
             dependencies: [
                 .product(name: "FeatherWebApp", package: "feather-core"),
@@ -254,7 +247,6 @@ let package = Package(
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
 
                 .target(name: "ContactAppAPI"),
-                .target(name: "ContactWebShared"),
             ],
             path: "Sources/Composition/WebApp",
             swiftSettings: swiftSettings
@@ -283,7 +275,6 @@ let package = Package(
                 .target(name: "ContactModule"),
                 .target(name: "ContactApplication"),
                 .target(name: "ContactAdminAPI"),
-                .target(name: "ContactWebShared"),
             ],
             path: "Sources/Composition/WebAdmin",
             swiftSettings: swiftSettings
@@ -310,6 +301,7 @@ let package = Package(
         .testTarget(
             name: "ContactInfrastructureTests",
             dependencies: [
+                .product(name: "FeatherApplication", package: "feather-core"),
                 .product(
                     name: "FeatherDatabaseTesting",
                     package: "feather-database"

@@ -1,12 +1,12 @@
-import ContactApplication
 import ContactAdminAPI
+import ContactApplication
 import ContactModule
 import FeatherWebAdmin
 import FeatherWebShared
 
 extension Submission.Remove.Repository {
     struct OpenAPI: Interface {
-        let api: ContactAdminAPIClient
+        let api: API.Client
 
         func remove(ids: [String]) async throws {
             let grouped = Dictionary(grouping: ids) { token in
