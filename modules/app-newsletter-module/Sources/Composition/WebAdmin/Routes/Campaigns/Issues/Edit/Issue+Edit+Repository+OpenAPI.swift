@@ -66,7 +66,7 @@ extension Issue.Edit.Repository {
         func edit(
             newsletterId: String,
             issueId: String,
-            form: NewsletterIssueAddForm
+            form: Issue.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterIssueUpdate(

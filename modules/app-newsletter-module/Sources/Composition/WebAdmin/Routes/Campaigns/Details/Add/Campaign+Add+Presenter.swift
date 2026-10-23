@@ -14,7 +14,7 @@ extension Campaign.Add.Presenter {
         ) async throws -> HTMLResponse
 
         func renderAddError(
-            input: NewsletterCampaignAddForm,
+            input: Campaign.Add.Form,
             error: Campaign.Add.WebError,
             permissions: Set<String>
         ) async throws -> HTMLResponse

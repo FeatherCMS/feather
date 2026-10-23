@@ -1,17 +1,14 @@
-import FeatherWebAdmin
-import FeatherValidation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-struct AdminAddNewsletterCampaignSubscriberDefaultInteractor:
-    AdminAddNewsletterCampaignSubscriberInteractor
-{
-    let repository: AdminAddNewsletterCampaignSubscriberOpenAPIRepository
-    func create(newsletterId: String, form: NewsletterCampaignSubscriberForm)
-        async throws
-    { try await repository.create(newsletterId: newsletterId, form: form) }
+extension Campaign.Subscriber.Add.Interactor {
+    struct Default: Interface {
+        let repository: any Campaign.Subscriber.Add.Repository.Interface
+
+        func create(
+            newsletterId: String,
+            form: Campaign.Subscriber.Form
+        ) async throws {
+            try await repository.create(newsletterId: newsletterId, form: form)
+        }
+    }
 }

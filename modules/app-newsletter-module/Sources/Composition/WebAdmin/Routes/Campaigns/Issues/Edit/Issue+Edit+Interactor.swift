@@ -15,7 +15,7 @@ extension Issue.Edit.Interactor {
         func edit(
             newsletterId: String,
             issueId: String,
-            form: NewsletterIssueAddForm
+            form: Issue.Form.Input
         ) async throws
     }
 }

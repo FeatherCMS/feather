@@ -1,47 +1,44 @@
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-struct AdminAddNewsletterCampaignSubscriberDefaultPresenter:
-    AdminAddNewsletterCampaignSubscriberPresenter
-{
-    let request: Request
-    let context: AuthenticatedRequestContext
-    let renderingEngine: any RenderingEngine
+extension Campaign.Subscriber.Add.Presenter {
+    struct Default: Interface {
+        let request: Request
+        let context: AuthenticatedRequestContext
+        let renderingEngine: any RenderingEngine
+        let routes: Campaign.Router.Routes
 
-    func render(
-        newsletterId: String,
-        form: NewsletterCampaignSubscriberForm,
-        error: String?,
-        permissions: Set<String>
-    ) async throws -> HTMLResponse {
-        let view = NewsletterCampaignSubscriberFormView(
-            state: .init(
-                newsletterId: newsletterId,
-                email: form.email,
-                firstName: form.firstName,
-                lastName: form.lastName,
-                status: form.status,
-                isEdit: false,
-                error: error,
-                editAction: nil,
-                pageHeader: .primary(
-                    title: "Add campaign subscriber",
-                    description: "Manage this campaign subscription."
+        func render(
+            newsletterId: String,
+            form: Campaign.Subscriber.Form,
+            error: String?,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse {
+            let content = Campaign.Subscriber.FormView(
+                state: .init(
+                    newsletterId: newsletterId,
+                    email: form.email,
+                    firstName: form.firstName,
+                    lastName: form.lastName,
+                    status: form.status,
+                    isEdit: false,
+                    error: error,
+                    editAction: nil,
+                    pageHeader: .primary(
+                        title: "Add campaign subscriber",
+                        description: "Manage this campaign subscription."
+                    ),
+                    routes: routes
                 )
             )
-        )
-        return try await renderingEngine.renderAdminPage(
-            request: request,
-            context: context,
-            title: "Add campaign subscriber",
-            content: view
-        )
+            return try await renderingEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Add campaign subscriber",
+                content: content
+            )
+        }
     }
 }

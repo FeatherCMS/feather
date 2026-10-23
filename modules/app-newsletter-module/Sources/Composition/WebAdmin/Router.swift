@@ -26,7 +26,8 @@ public struct Router {
         )
         let subscriberRoutes = Subscriber.Router.Routes(
             admin: adminRoute,
-            root: newsletterRoute
+            root: newsletterRoute,
+            campaigns: campaignRoutes
         )
         Overview.Router(
             renderingEngine: renderingEngine,
@@ -48,25 +49,28 @@ public struct Router {
                 routes: campaignRoutes
             )
             .route(on: router)
-        Campaign.Edit.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: campaignRoutes
-        )
-        .route(on: router)
-        Campaign.Remove.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: campaignRoutes
-        )
-        .route(on: router)
+        Campaign.Edit
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
+        Campaign.Remove
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
 
-        Campaign.Add.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: campaignRoutes
-        )
-        .route(on: router)
+        Campaign.Add
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
 
         Issue.Search
             .Router(
@@ -106,31 +110,40 @@ public struct Router {
         Issue.TestEmail.Router(environment: environment, routes: campaignRoutes)
             .route(on: router)
 
-        AdminViewNewsletterCampaignSubscriber(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminListNewsletterCampaignSubscribers(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminAddNewsletterCampaignSubscriber(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminEditNewsletterCampaignSubscriber(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminRemoveNewsletterCampaignSubscriber(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        Campaign.Subscriber.View
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
+        Campaign.Subscriber.List
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
+        Campaign.Subscriber.Add
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
+        Campaign.Subscriber.Edit
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: campaignRoutes
+            )
+            .route(on: router)
+        Campaign.Subscriber.Remove
+            .Router(
+                environment: environment,
+                routes: campaignRoutes
+            )
+            .route(on: router)
         Subscriber.List
             .Router(
                 environment: environment,

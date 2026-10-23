@@ -52,7 +52,7 @@ func buildAdminRoutes(
     )
     .route(on: router)
     AnalyticsWebAdmin.Router(
-        apiBuilder: apiBuilder.analyticsAdmin,
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)

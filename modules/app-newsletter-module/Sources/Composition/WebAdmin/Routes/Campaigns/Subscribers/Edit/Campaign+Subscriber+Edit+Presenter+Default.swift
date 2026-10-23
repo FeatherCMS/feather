@@ -1,47 +1,47 @@
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-struct AdminEditNewsletterCampaignSubscriberDefaultPresenter:
-    AdminEditNewsletterCampaignSubscriberPresenter
-{
-    let request: Request
-    let context: AuthenticatedRequestContext
-    let renderingEngine: any RenderingEngine
+extension Campaign.Subscriber.Edit.Presenter {
+    struct Default: Interface {
+        let request: Request
+        let context: AuthenticatedRequestContext
+        let renderingEngine: any RenderingEngine
+        let routes: Campaign.Router.Routes
 
-    func render(
-        newsletterId: String,
-        item: AdminNewsletterCampaignSubscriberItem,
-        error: String?,
-        permissions: Set<String>
-    ) async throws -> HTMLResponse {
-        let view = NewsletterCampaignSubscriberFormView(
-            state: .init(
-                newsletterId: newsletterId,
-                email: item.email,
-                firstName: item.firstName,
-                lastName: item.lastName,
-                status: item.status,
-                isEdit: true,
-                error: error,
-                editAction: nil,
-                pageHeader: .primary(
-                    title: "Edit campaign subscriber",
-                    description: "Manage this campaign subscription."
+        func render(
+            newsletterId: String,
+            subscriberId: String,
+            form: Campaign.Subscriber.Form,
+            error: String?
+        ) async throws -> HTMLResponse {
+            let content = Campaign.Subscriber.FormView(
+                state: .init(
+                    newsletterId: newsletterId,
+                    email: form.email,
+                    firstName: form.firstName,
+                    lastName: form.lastName,
+                    status: form.status,
+                    isEdit: true,
+                    error: error,
+                    editAction: routes.subscriberEditPath(
+                        newsletterId: newsletterId,
+                        subscriberId: subscriberId
+                    ),
+                    pageHeader: .primary(
+                        title: "Edit campaign subscriber",
+                        description: "Manage this campaign subscription."
+                    ),
+                    routes: routes
                 )
             )
-        )
-        return try await renderingEngine.renderAdminPage(
-            request: request,
-            context: context,
-            title: "Edit campaign subscriber",
-            content: view
-        )
+            return try await renderingEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Edit campaign subscriber",
+                content: content
+            )
+        }
     }
 }

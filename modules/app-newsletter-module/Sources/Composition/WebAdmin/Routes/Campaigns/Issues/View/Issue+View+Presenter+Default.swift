@@ -20,7 +20,7 @@ extension Issue.View.Presenter {
                 request: request,
                 context: context,
                 title: "Campaign issue details",
-                content: NewsletterIssueDetailsView(
+                content: Issue.View.Details(
                     newsletterId: model.newsletterId,
                     issueId: issueId,
                     model: model,

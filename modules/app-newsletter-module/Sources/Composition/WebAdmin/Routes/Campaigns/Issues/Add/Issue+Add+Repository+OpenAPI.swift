@@ -19,7 +19,7 @@ extension Issue.Add.Repository {
     struct OpenAPI {
         let api: API.Client
 
-        func createIssue(newsletterId: String, form: NewsletterIssueAddForm)
+        func createIssue(newsletterId: String, form: Issue.Form.Input)
             async throws
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in

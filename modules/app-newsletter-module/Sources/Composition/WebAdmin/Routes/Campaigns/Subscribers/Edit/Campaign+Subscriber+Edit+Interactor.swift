@@ -1,18 +1,20 @@
-import FeatherWebAdmin
-import FeatherValidation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-protocol AdminEditNewsletterCampaignSubscriberInteractor: Sendable {
-    func get(newsletterId: String, subscriberId: String) async throws
-        -> AdminNewsletterCampaignSubscriberItem
-    func update(
-        newsletterId: String,
-        subscriberId: String,
-        form: NewsletterCampaignSubscriberForm
-    ) async throws
+extension Campaign.Subscriber.Edit {
+    enum Interactor {}
+}
+
+extension Campaign.Subscriber.Edit.Interactor {
+    protocol Interface: Sendable {
+        func get(
+            newsletterId: String,
+            subscriberId: String
+        ) async throws -> Campaign.Subscriber.Item
+
+        func update(
+            newsletterId: String,
+            subscriberId: String,
+            form: Campaign.Subscriber.Form
+        ) async throws
+    }
 }

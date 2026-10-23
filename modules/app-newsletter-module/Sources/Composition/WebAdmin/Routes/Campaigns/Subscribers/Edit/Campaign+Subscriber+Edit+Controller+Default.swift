@@ -1,103 +1,94 @@
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-struct AdminEditNewsletterCampaignSubscriberDefaultController:
-    AdminEditNewsletterCampaignSubscriberController
-{
-    let buildRuntime:
-        @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
-            any AdminEditNewsletterCampaignSubscriberInteractor,
-            any AdminEditNewsletterCampaignSubscriberPresenter
-        >
-    func edit(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    {
-        let runtime = buildRuntime(request, context)
-        let interactor = runtime.interactor
-        let presenter = runtime.presenter
-        let newsletterId = try context.requiredParameter("newsletterId")
-        let subscriberId = try context.requiredParameter("subscriberId")
-        do {
-            return try await presenter.render(
-                newsletterId: newsletterId,
-                item: try await interactor.get(
+extension Campaign.Subscriber.Edit.Controller {
+    struct Default: Interface {
+        let routes: Campaign.Router.Routes
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any Campaign.Subscriber.Edit.Interactor.Interface,
+                any Campaign.Subscriber.Edit.Presenter.Interface
+            >
+
+        func get(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse {
+            let runtime = buildRuntime(request, context)
+            let newsletterId = try context.requiredParameter("newsletterId")
+            let subscriberId = try context.requiredParameter("subscriberId")
+            do {
+                let item = try await runtime.interactor.get(
                     newsletterId: newsletterId,
                     subscriberId: subscriberId
-                ),
-                error: nil,
-                permissions: context.currentUserPermissions
-            )
-        }
-        catch {
-            return try await presenter.render(
-                newsletterId: newsletterId,
-                item: .init(
-                    id: subscriberId,
-                    email: "",
-                    firstName: "",
-                    lastName: "",
-                    status: "subscribed"
-                ),
-                error: error.displayMessage,
-                permissions: context.currentUserPermissions
-            )
-        }
-    }
-    func update(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> Response
-    {
-        let runtime = buildRuntime(request, context)
-        let interactor = runtime.interactor
-        let presenter = runtime.presenter
-        let newsletterId = try context.requiredParameter("newsletterId")
-        let subscriberId = try context.requiredParameter("subscriberId")
-        let form = try await request.decode(
-            as: NewsletterCampaignSubscriberForm.self,
-            context: context
-        )
-        do {
-            try await interactor.update(
-                newsletterId: newsletterId,
-                subscriberId: subscriberId,
-                form: form
-            )
-            return AdminNotificationFlash.redirect(
-                to:
-                    NewsletterAdminRoutes.campaignSubscriberEdit(
-                        newsletterID: RouterPath(newsletterId),
-                        subscriberID: RouterPath(subscriberId)
-                    )
-                    .description,
-                notification: .init(
-                    title: "Updated",
-                    message: "Subscriber updated successfully."
                 )
-            )
-        }
-        catch {
-            return
-                try await presenter.render(
+                return try await runtime.presenter.render(
                     newsletterId: newsletterId,
-                    item: .init(
-                        id: subscriberId,
-                        email: form.email,
-                        firstName: form.firstName,
-                        lastName: form.lastName,
-                        status: form.status
+                    subscriberId: subscriberId,
+                    form: .init(
+                        email: item.email,
+                        firstName: item.firstName,
+                        lastName: item.lastName,
+                        status: item.status
                     ),
-                    error: error.displayMessage,
-                    permissions: context.currentUserPermissions
+                    error: nil
                 )
-                .response(from: request, context: context)
+            }
+            catch {
+                return try await runtime.presenter.render(
+                    newsletterId: newsletterId,
+                    subscriberId: subscriberId,
+                    form: .init(
+                        email: "",
+                        firstName: "",
+                        lastName: "",
+                        status: "subscribed"
+                    ),
+                    error: error.displayMessage
+                )
+            }
+        }
+
+        func post(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let runtime = buildRuntime(request, context)
+            let newsletterId = try context.requiredParameter("newsletterId")
+            let subscriberId = try context.requiredParameter("subscriberId")
+            let form = try await request.decode(
+                as: Campaign.Subscriber.Form.self,
+                context: context
+            )
+            do {
+                try await runtime.interactor.update(
+                    newsletterId: newsletterId,
+                    subscriberId: subscriberId,
+                    form: form
+                )
+                return AdminNotificationFlash.redirect(
+                    to: routes.subscriberEditPath(
+                        newsletterId: newsletterId,
+                        subscriberId: subscriberId
+                    ),
+                    notification: .init(
+                        title: "Updated",
+                        message: "Subscriber updated successfully."
+                    )
+                )
+            }
+            catch {
+                return try await runtime.presenter
+                    .render(
+                        newsletterId: newsletterId,
+                        subscriberId: subscriberId,
+                        form: form,
+                        error: error.displayMessage
+                    )
+                    .response(from: request, context: context)
+            }
         }
     }
 }

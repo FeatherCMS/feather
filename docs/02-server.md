@@ -316,19 +316,37 @@ public struct ErrorTrace: Encodable {
 }
 ```
 
-To plug an error into tracing, conform it to `ErrorTraceRepresentable`.
+Do not add a conformance extension when both the error type and
+`ErrorTraceRepresentable` are declared in other modules. That is a retroactive
+conformance, even when the extension is placed in a backend target. Instead,
+define a backend-owned adapter that stores the source error and implements the
+backend error protocols. Keep these adapters in the owning module's
+`Composition/Backend/Errors/` directory.
 
-Example from this codebase (`Variable.Error`):
+Example (`Variable.Error` adapted by a backend-owned wrapper):
 
 ```swift
-extension Variable.Error: ErrorTraceRepresentable {
-    public var underlyingErrors: [any Error] { [] }
+struct VariableModelErrorAdapter: ErrorTraceRepresentable,
+    HTTPErrorRepresentable
+{
+    let error: Variable.Model.Error
 
-    public func trace() -> ErrorTrace {
+    var underlyingErrors: [any Error] { [] }
+
+    func trace() -> ErrorTrace {
         .init(
-            type: type(of: self),
-            logMessage: String(describing: self),
+            type: type(of: error),
+            logMessage: String(describing: error),
             children: underlyingTraces()
+        )
+    }
+
+    var status: HTTPResponseStatus { .badRequest }
+
+    var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
+            message: String(describing: error),
+            reason: String(describing: error)
         )
     }
 }
@@ -350,27 +368,15 @@ protocol HTTPErrorRepresentable: Error {
 }
 ```
 
-Example adaptation for `Variable.Error`:
-
-```swift
-extension Variable.Error: HTTPErrorRepresentable {
-    var status: HTTPResponseStatus { .badRequest }
-
-    var content: ServerError.Details? {
-        .init(
-            code: .badRequest,
-            message: "\(self)",
-            reason: "\(self)"
-        )
-    }
-}
-```
+The same wrapper provides the HTTP response mapping through its `status`,
+`headers`, and `content` properties, as shown above.
 
 How both pieces work together:
 
-1. Your use-case or repository throws `Variable.Error`.
-2. `ErrorTraceRepresentable` provides a trace tree for debug output.
-3. `HTTPErrorRepresentable` provides response status/body mapping.
+1. Your use-case or repository throws `Variable.Model.Error`.
+2. The module's `ErrorAdapter` wraps recognized errors in its backend-owned adapter.
+3. The adapter provides trace and HTTP response mappings without retroactive
+   conformance on the source error.
 4. `ErrorMiddleware` returns JSON or plain text based on request headers.
 
 ### 5.6 `Adapters/`

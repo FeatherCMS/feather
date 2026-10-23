@@ -1,30 +1,22 @@
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-protocol AdminAddNewsletterCampaignSubscriberController: Sendable {
-    func add(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    func create(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> Response
+extension Campaign.Subscriber.Add {
+    enum Controller {}
 }
-extension AdminAddNewsletterCampaignSubscriberController {
-    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-        router.get(
-            NewsletterAdminRoutes.campaignSubscriberAddRoute,
-            use: add
-        )
-        router.post(
-            NewsletterAdminRoutes.campaignSubscriberAddRoute,
-            use: create
-        )
+
+extension Campaign.Subscriber.Add.Controller {
+    protocol Interface: Sendable {
+        func get(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse
+
+        func post(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
     }
 }

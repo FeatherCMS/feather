@@ -1,22 +1,16 @@
-import FeatherWebAdmin
-import FeatherValidation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-struct AdminViewNewsletterCampaignSubscriberDefaultInteractor:
-    AdminViewNewsletterCampaignSubscriberInteractor
-{
-    let repository: AdminViewNewsletterCampaignSubscriberOpenAPIRepository
-    func get(newsletterId: String, subscriberId: String) async throws
-        -> AdminNewsletterCampaignSubscriberItem
-    {
-        try await repository.get(
-            newsletterId: newsletterId,
-            subscriberId: subscriberId
-        )
+extension Campaign.Subscriber.View.Interactor {
+    struct Default: Interface {
+        let repository: Campaign.Subscriber.View.Repository.OpenAPI
+
+        func get(newsletterId: String, subscriberId: String) async throws
+            -> Campaign.Subscriber.Item
+        {
+            try await repository.get(
+                newsletterId: newsletterId,
+                subscriberId: subscriberId
+            )
+        }
     }
 }

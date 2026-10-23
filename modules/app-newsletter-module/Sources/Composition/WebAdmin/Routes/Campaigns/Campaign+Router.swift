@@ -85,7 +85,8 @@ extension Campaign.Router {
             newsletterId: String,
             subscriberId: String
         ) -> String {
-            try! subscriberDetails.path(
+            resolvedPath(
+                for: subscriberDetails,
                 parameters: [
                     "newsletterId": newsletterId,
                     "subscriberId": subscriberId,
@@ -97,7 +98,8 @@ extension Campaign.Router {
             newsletterId: String,
             subscriberId: String
         ) -> String {
-            try! subscriberEdit.path(
+            resolvedPath(
+                for: subscriberEdit,
                 parameters: [
                     "newsletterId": newsletterId,
                     "subscriberId": subscriberId,
@@ -150,7 +152,8 @@ extension Campaign.Router {
         }
 
         func issueEditPath(newsletterId: String, issueId: String) -> String {
-            try! issueEdit.path(
+            resolvedPath(
+                for: issueEdit,
                 parameters: [
                     "newsletterId": newsletterId,
                     "issueId": issueId,
@@ -159,7 +162,8 @@ extension Campaign.Router {
         }
 
         func issueDetailsPath(newsletterId: String, issueId: String) -> String {
-            try! issueDetails.path(
+            resolvedPath(
+                for: issueDetails,
                 parameters: [
                     "newsletterId": newsletterId,
                     "issueId": issueId,
@@ -168,7 +172,8 @@ extension Campaign.Router {
         }
 
         func issueRemovePath(newsletterId: String, issueId: String) -> String {
-            try! issueRemove.path(
+            resolvedPath(
+                for: issueRemove,
                 parameters: [
                     "newsletterId": newsletterId,
                     "issueId": issueId,
@@ -184,12 +189,25 @@ extension Campaign.Router {
             newsletterId: String,
             issueId: String
         ) -> String {
-            try! issueDetailTestEmail.path(
+            resolvedPath(
+                for: issueDetailTestEmail,
                 parameters: [
                     "newsletterId": newsletterId,
                     "issueId": issueId,
                 ]
             )
+        }
+
+        private func resolvedPath(
+            for route: WebRoute,
+            parameters: [String: String]
+        ) -> String {
+            do {
+                return try route.path(parameters: parameters)
+            }
+            catch {
+                preconditionFailure("A Campaign route is missing a parameter.")
+            }
         }
     }
 }

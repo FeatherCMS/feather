@@ -19,9 +19,13 @@ extension Issue.TestEmail.Controller {
             else { return Response(status: .forbidden) }
             let newsletterKey = try context.requiredParameter("newsletterId")
             let issueId = context.parameters.get("issueId", as: String.self)
-            let location = issueId.map {
-                routes.issueEditPath(newsletterId: newsletterKey, issueId: $0)
-            } ?? routes.issueAddPath(newsletterId: newsletterKey)
+            let location =
+                issueId.map {
+                    routes.issueEditPath(
+                        newsletterId: newsletterKey,
+                        issueId: $0
+                    )
+                } ?? routes.issueAddPath(newsletterId: newsletterKey)
 
             do {
                 let form = try await request.decode(
@@ -64,7 +68,8 @@ extension Issue.TestEmail.Controller {
                             responseBody: response.body
                         )
                     }
-                } else {
+                }
+                else {
                     let response = try await api.newsletterCampaignTestEmail(
                         path: .init(newsletterCampaignKey: newsletterKey),
                         body: body
@@ -91,7 +96,8 @@ extension Issue.TestEmail.Controller {
                         message: "Test email queued successfully."
                     )
                 )
-            } catch {
+            }
+            catch {
                 return AdminNotificationFlash.redirect(
                     to: location,
                     notification: .init(

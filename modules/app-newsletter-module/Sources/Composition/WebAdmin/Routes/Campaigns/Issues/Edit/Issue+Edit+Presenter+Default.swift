@@ -20,7 +20,7 @@ extension Issue.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit campaign issue",
-                content: NewsletterIssueAddView(
+                content: Issue.Form.View(
                     state: .init(
                         subject: model.subject,
                         content: model.content,

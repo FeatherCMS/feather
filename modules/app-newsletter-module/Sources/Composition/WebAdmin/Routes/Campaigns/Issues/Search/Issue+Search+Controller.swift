@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import HTML
 import Hummingbird
 import NewsletterApplication

@@ -37,7 +37,7 @@ extension Subscriber.List.Presenter {
                 request: request,
                 context: context,
                 title: "Subscribers",
-                content: NewsletterSubscribersTable(
+                content: Subscriber.List.Table(
                     model: model,
                     permissions: actions,
                     routes: routes
@@ -53,7 +53,7 @@ extension Subscriber.List.Presenter {
                 request: request,
                 context: context,
                 title: "Subscriber details",
-                content: NewsletterSubscriberDetails(
+                content: Subscriber.List.Details(
                     item: item,
                     permissions: AdminListActions(
                         Set(permissions.map(PermissionKey.init))

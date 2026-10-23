@@ -44,7 +44,8 @@ extension Issue.Search.Controller {
                     permissions: permissions,
                     search: request.querySearch()
                 )
-            } catch {
+            }
+            catch {
                 return try await presenter.render(
                     newsletterId: newsletterId,
                     model: .init(

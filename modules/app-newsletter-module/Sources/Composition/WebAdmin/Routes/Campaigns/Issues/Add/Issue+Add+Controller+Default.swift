@@ -57,7 +57,7 @@ extension Issue.Add.Controller {
                 return Response(status: .badRequest)
             }
             let payload = try await request.decode(
-                as: NewsletterIssueAddForm.self,
+                as: Issue.Form.Input.self,
                 context: context
             )
             let model = try await runtime.interactor.add(

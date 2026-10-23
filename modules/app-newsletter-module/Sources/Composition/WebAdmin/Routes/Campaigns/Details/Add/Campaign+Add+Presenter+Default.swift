@@ -19,7 +19,7 @@ extension Campaign.Add.Presenter {
                 request: request,
                 context: context,
                 title: "Add campaign",
-                content: NewsletterCampaignAddView(
+                content: Campaign.Add.View(
                     state: .init(
                         key: model.key,
                         name: model.name,
@@ -32,7 +32,7 @@ extension Campaign.Add.Presenter {
         }
 
         func renderAddError(
-            input: NewsletterCampaignAddForm,
+            input: Campaign.Add.Form,
             error: Campaign.Add.WebError,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -70,7 +70,7 @@ extension Campaign.Add.Presenter {
         }
 
         private func renderFormError(
-            input: NewsletterCampaignAddForm,
+            input: Campaign.Add.Form,
             message: String,
             permissions: Set<String>,
             status: HTTPResponse.Status

@@ -1,13 +1,12 @@
-import FeatherWebAdmin
-import FeatherValidation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-protocol AdminViewNewsletterCampaignSubscriberInteractor: Sendable {
-    func get(newsletterId: String, subscriberId: String) async throws
-        -> AdminNewsletterCampaignSubscriberItem
+extension Campaign.Subscriber.View {
+    enum Interactor {}
+}
+
+extension Campaign.Subscriber.View.Interactor {
+    protocol Interface: Sendable {
+        func get(newsletterId: String, subscriberId: String) async throws
+            -> Campaign.Subscriber.Item
+    }
 }

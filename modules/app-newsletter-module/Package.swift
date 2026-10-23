@@ -20,9 +20,10 @@ let sharedSwiftSettings: [SwiftSetting] = [
     ),
 ]
 
-let swiftSettings = sharedSwiftSettings + [
-    .treatAllWarnings(as: .error)
-]
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
 
 let package = Package(
     name: "app-newsletter-module",
@@ -257,7 +258,6 @@ let package = Package(
                 ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .target(name: "NewsletterApplication"),
                 .target(name: "NewsletterWebShared"),

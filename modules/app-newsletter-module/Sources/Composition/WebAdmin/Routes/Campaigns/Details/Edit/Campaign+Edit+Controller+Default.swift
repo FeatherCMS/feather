@@ -52,7 +52,7 @@ extension Campaign.Edit.Controller {
             }
 
             let form = try await request.decode(
-                as: NewsletterEditForm.self,
+                as: Campaign.Edit.Form.self,
                 context: context
             )
             do {

@@ -11,7 +11,7 @@ extension Campaign.Add.Interactor {
             .init(key: "", name: "", fromEmail: "", error: nil)
         }
 
-        func add(payload: NewsletterCampaignAddForm) async throws
+        func add(payload: Campaign.Add.Form) async throws
             -> Campaign.Add.Model
         {
             do {

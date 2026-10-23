@@ -22,7 +22,7 @@ extension Campaign.Detail.Presenter {
                 request: request,
                 context: context,
                 title: "Campaign details",
-                content: NewsletterCampaignEditPage(
+                content: Campaign.Edit.View(
                     state: .init(
                         id: id,
                         routes: routes,

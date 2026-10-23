@@ -1,16 +1,11 @@
-import FeatherWebAdmin
-import FeatherValidation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-struct AdminNewsletterCampaignSubscriberItem: Sendable {
-    let id: String
-    let email: String
-    let firstName: String
-    let lastName: String
-    let status: String
+extension Campaign.Subscriber {
+    struct Item: Sendable {
+        let id: String
+        let email: String
+        let firstName: String
+        let lastName: String
+        let status: String
+    }
 }

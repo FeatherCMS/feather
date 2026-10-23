@@ -1,17 +1,17 @@
 import FeatherWebAdmin
-import FeatherValidation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-protocol AdminAddNewsletterCampaignSubscriberPresenter: Sendable {
-    func render(
-        newsletterId: String,
-        form: NewsletterCampaignSubscriberForm,
-        error: String?,
-        permissions: Set<String>
-    ) async throws -> HTMLResponse
+extension Campaign.Subscriber.Add {
+    enum Presenter {}
+}
+
+extension Campaign.Subscriber.Add.Presenter {
+    protocol Interface: Sendable {
+        func render(
+            newsletterId: String,
+            form: Campaign.Subscriber.Form,
+            error: String?,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+    }
 }

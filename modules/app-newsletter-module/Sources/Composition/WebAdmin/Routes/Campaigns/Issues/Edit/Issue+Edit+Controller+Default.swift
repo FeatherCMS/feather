@@ -55,7 +55,7 @@ extension Issue.Edit.Controller {
             let newsletterId = try context.requiredParameter("newsletterId")
             let issueId = try context.requiredParameter("issueId")
             let form = try await request.decode(
-                as: NewsletterIssueAddForm.self,
+                as: Issue.Form.Input.self,
                 context: context
             )
 

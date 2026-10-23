@@ -105,9 +105,11 @@ func buildRouter(
         in: &adminEvents,
         routes: newsRoutes
     )
-    NewsletterRichContentEditorEventHandlers.register(in: &adminEvents)
+    NewsletterWebAdmin.Event.Handlers.registerRichContentEditor(
+        in: &adminEvents
+    )
     ContactRichContentEditorEventHandlers.register(in: &adminEvents)
-    NewsletterAdminMenuEventHandlers.register(in: &adminEvents)
+    NewsletterWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     ContactAdminMenuEventHandlers.register(in: &adminEvents)
     WebModuleWebAdmin.AdminMenuEventHandlers.register(in: &adminEvents)
     let richContentEditorBlocks =
@@ -163,7 +165,7 @@ func buildRouter(
         in: &publicContentEvents,
         api: ContactWebApp.API.Client(environment: environment)
     )
-    NewsletterMarkdownEventHandlers.register(in: &publicContentEvents)
+    NewsletterWebApp.Event.Handlers.registerMarkdown(in: &publicContentEvents)
 
     let authRouter = router.add(
         middleware: DefaultAuthMiddleware(

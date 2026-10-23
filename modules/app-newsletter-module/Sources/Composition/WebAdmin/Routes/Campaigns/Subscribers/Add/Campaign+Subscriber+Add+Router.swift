@@ -1,38 +1,45 @@
-import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import NewsletterModule
 
-struct AdminAddNewsletterCampaignSubscriber {
-    let controller: any AdminAddNewsletterCampaignSubscriberController
-    init(
-        environment: AppEnvironment,
-        renderingEngine: any RenderingEngine
-    ) {
-        controller = AdminAddNewsletterCampaignSubscriberDefaultController {
-            request,
-            context in
-            WebAdminRuntime(
-                interactor:
-                    AdminAddNewsletterCampaignSubscriberDefaultInteractor(
-                        repository: .init(
-                            api: API.Client(
-                                environment: environment,
-                                requestContext: context
+extension Campaign.Subscriber.Add {
+    struct Router {
+        let controller: any Controller.Interface
+        let routes: Campaign.Router.Routes
+
+        init(
+            environment: AppEnvironment,
+            renderingEngine: any RenderingEngine,
+            routes: Campaign.Router.Routes
+        ) {
+            self.routes = routes
+            controller = Controller.Default(
+                routes: routes,
+                buildRuntime: { request, context in
+                    WebAdminRuntime(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
+                                api: API.Client(
+                                    environment: environment,
+                                    requestContext: context
+                                )
                             )
+                        ),
+                        presenter: Presenter.Default(
+                            request: request,
+                            context: context,
+                            renderingEngine: renderingEngine,
+                            routes: routes
                         )
-                    ),
-                presenter: AdminAddNewsletterCampaignSubscriberDefaultPresenter(
-                    request: request,
-                    context: context,
-                    renderingEngine: renderingEngine
-                )
+                    )
+                }
             )
+        }
+
+        func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+            router.get(routes.subscriberAdd.routerPath, use: controller.get)
+            router.post(routes.subscriberAdd.routerPath, use: controller.post)
         }
     }
 }

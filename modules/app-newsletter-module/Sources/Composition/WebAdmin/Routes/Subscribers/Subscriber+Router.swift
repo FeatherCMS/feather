@@ -15,10 +15,16 @@ extension Subscriber.Router {
         let remove: WebRoute
         let details: WebRoute
         let breadcrumb: [AdminBreadcrumb.Link]
+        let campaigns: Campaign.Router.Routes
 
-        init(admin: WebRoute, root: WebRoute) {
+        init(
+            admin: WebRoute,
+            root: WebRoute,
+            campaigns: Campaign.Router.Routes
+        ) {
             self.admin = admin
             self.root = root
+            self.campaigns = campaigns
             self.list = root.appending(pathComponent: "subscribers")
             self.add = list.appending(pathComponent: "add")
             self.remove = list.appending(pathComponent: "remove")

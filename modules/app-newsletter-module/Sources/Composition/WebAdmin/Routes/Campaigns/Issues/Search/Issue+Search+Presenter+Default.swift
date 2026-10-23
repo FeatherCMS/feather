@@ -36,7 +36,7 @@ extension Issue.Search.Presenter {
                 request: request,
                 context: context,
                 title: "Campaign issues",
-                content: NewsletterIssuesTable(
+                content: Issue.Search.Table(
                     state: .init(
                         newsletterId: newsletterId,
                         items: model.items,

@@ -60,7 +60,7 @@ extension Campaign.Add.Controller {
             }
 
             let payload = try await request.decode(
-                as: NewsletterCampaignAddForm.self,
+                as: Campaign.Add.Form.self,
                 context: context
             )
 
