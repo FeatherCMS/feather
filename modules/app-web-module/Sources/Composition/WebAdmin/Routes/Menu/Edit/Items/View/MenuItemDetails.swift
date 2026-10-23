@@ -65,7 +65,7 @@ struct MenuItemDetails: Component {
                 )
             )
             context.build(
-                AdminMenuTabs(
+                MenuItem.TabBar(
                     active: .items,
                     detailsPath: state.routes.editPath(state.item.menuId),
                     itemsPath: state.routes.itemsPath(state.item.menuId)

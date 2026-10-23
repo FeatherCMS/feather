@@ -71,7 +71,7 @@ extension ContactModule.Form.Edit.Controller {
                 as: ContactFormEditForm.self,
                 context: context
             )
-            let current: AdminContactFormDetailsItem
+            let current: ContactForm.Details.Item
             do {
                 current = try await interactor.get(key: formKey)
             }
@@ -139,7 +139,7 @@ extension ContactModule.Form.Edit.Controller {
                 as: ContactModule.Form.Edit.FieldsForm.self,
                 context: context
             )
-            let current: AdminContactFormDetailsItem
+            let current: ContactForm.Details.Item
             do {
                 current = try await interactor.get(key: formKey)
             }
@@ -172,7 +172,7 @@ extension ContactModule.Form.Edit.Controller {
                 )
             }
             catch {
-                let attempted = AdminContactFormDetailsItem(
+                let attempted = ContactForm.Details.Item(
                     key: current.key,
                     name: current.name,
                     successMessage: current.successMessage,

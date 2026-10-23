@@ -96,20 +96,19 @@ extension Page {
             )
             .route(on: router)
 
-            let metadata = AdminEditPageMetadata(
+            let metadata = Edit.Metadata.Controller.Default(
                 environment: environment,
                 renderingEngine: renderingEngine,
                 events: events,
                 routes: routes
             )
-            .controller
             router.get(
                 routes.metadata.routerPath,
-                use: metadata.getEditPageMetadata
+                use: metadata.get
             )
             router.post(
                 routes.metadata.routerPath,
-                use: metadata.postEditPageMetadata
+                use: metadata.post
             )
 
             Remove.Router(

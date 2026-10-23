@@ -19,7 +19,7 @@ extension SubmissionMail.List.Presenter {
         let routes: Contact.Router.Routes
 
         func renderPage(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {

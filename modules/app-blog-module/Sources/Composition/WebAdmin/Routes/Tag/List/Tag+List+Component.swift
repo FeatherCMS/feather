@@ -3,11 +3,13 @@ import BlogAppAPI
 import BlogModule
 import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 import protocol SGML.BasicTag
@@ -357,10 +359,11 @@ extension Tag.List {
         }
         private func format(_ value: String) -> String {
             guard
-                let timestamp = AdminMetadataSchemaBuilder.parseTimestamp(value)
+                let timestamp = WebModule.Metadata.SchemaBuilder.parseTimestamp(
+                    value
+                )
             else { return "-" }
             return DateFormatting.formatUnixTimestamp(timestamp)
         }
     }
 }
-import FeatherWebShared

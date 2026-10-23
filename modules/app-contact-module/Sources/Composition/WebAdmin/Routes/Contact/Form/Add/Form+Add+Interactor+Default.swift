@@ -1,18 +1,17 @@
 import ContactApplication
 import ContactModule
 import FeatherWebShared
-import FeatherWebShared
 
 extension Form.Add.Interactor {
     struct Default: Interface {
         let repository: any Form.Add.Repository.Interface
 
-        func availableFields() async throws -> [AdminContactFormFieldOption] {
+        func availableFields() async throws -> [ContactForm.Field.Option] {
             try await repository.availableFields()
         }
 
         func create(entity: Form.Add.Model) async throws
-            -> AdminContactFormDetailsItem
+            -> ContactForm.Details.Item
         {
             do {
                 return try await repository.create(entity: entity)

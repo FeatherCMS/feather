@@ -4,6 +4,7 @@ import MediaWebAdmin
 import NewsModule
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension NewsModule.Category.Form {
@@ -90,7 +91,7 @@ extension NewsModule.Category.Form {
                         )
                     )
                     context.build(
-                        AdminMetadataFields(
+                        WebModule.Metadata.Fields(
                             state: input.metadata.adminFields(
                                 template: "news.category"
                             ),

@@ -1,5 +1,5 @@
-import ContactApplication
 import ContactAdminAPI
+import ContactApplication
 import ContactModule
 
 extension Form.Search.Interactor {

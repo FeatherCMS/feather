@@ -10,6 +10,7 @@ import Hummingbird
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Post.View {
@@ -124,7 +125,9 @@ extension Post.View {
 
         private func format(_ value: String) -> String {
             guard
-                let timestamp = AdminMetadataSchemaBuilder.parseTimestamp(value)
+                let timestamp = WebModule.Metadata.SchemaBuilder.parseTimestamp(
+                    value
+                )
             else { return "-" }
             return DateFormatting.formatUnixTimestamp(timestamp)
         }

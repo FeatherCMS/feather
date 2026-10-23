@@ -11,7 +11,7 @@ struct ContactFormEditForm: Decodable {
     public let additionalHeaders: [[String]]?
     public let messageBody: [String]?
 
-    var mails: [AdminContactFormEmail] {
+    var mails: [ContactForm.Email] {
         let count = max(
             mailFrom?.count ?? 0,
             mailTo?.count ?? 0,
@@ -26,7 +26,7 @@ struct ContactFormEditForm: Decodable {
                 let title = subject?.dropFirst(index).first ?? ""
                 let headers = additionalHeaders?.dropFirst(index).first ?? []
                 let body = messageBody?.dropFirst(index).first ?? ""
-                let mail = AdminContactFormEmail(
+                let mail = ContactForm.Email(
                     id: "",
                     mailFrom: from,
                     mailTo: to,

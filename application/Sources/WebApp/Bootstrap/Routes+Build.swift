@@ -77,7 +77,7 @@ func buildRouter(
         in: &adminEvents,
         environment: environment
     )
-    WebModuleWebAdmin.AdminDashboardEventHandlers.register(
+    WebModule.Event.Handlers.registerDashboard(
         in: &adminEvents,
         environment: environment
     )
@@ -95,7 +95,7 @@ func buildRouter(
         routes: systemRoutes
     )
     AccountWebAdmin.Event.Handlers.register(in: &adminEvents)
-    AuthAdminMenuEventHandlers.register(in: &adminEvents)
+    AuthWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     UserModule.Event.Handlers.register(in: &adminEvents)
     MediaWebAdmin.Event.Handlers.register(in: &adminEvents)
     AnalyticsWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
@@ -108,10 +108,12 @@ func buildRouter(
     NewsletterWebAdmin.Event.Handlers.registerRichContentEditor(
         in: &adminEvents
     )
-    ContactRichContentEditorEventHandlers.register(in: &adminEvents)
+    ContactWebAdmin.Event.Handlers.registerRichContentEditor(
+        in: &adminEvents
+    )
     NewsletterWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
-    ContactAdminMenuEventHandlers.register(in: &adminEvents)
-    WebModuleWebAdmin.AdminMenuEventHandlers.register(in: &adminEvents)
+    ContactWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    WebModule.Event.Handlers.registerMenu(in: &adminEvents)
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(
             event: AdminRichContentEditorBlockProvider(),

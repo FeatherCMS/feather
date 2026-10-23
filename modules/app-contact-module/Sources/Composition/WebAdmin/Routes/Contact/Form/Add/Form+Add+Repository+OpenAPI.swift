@@ -2,14 +2,13 @@ import ContactAdminAPI
 import ContactApplication
 import ContactModule
 import FeatherWebShared
-import FeatherWebShared
 import OpenAPIRuntime
 
 extension Form.Add.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func availableFields() async throws -> [AdminContactFormFieldOption] {
+        func availableFields() async throws -> [ContactForm.Field.Option] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.contactFieldList(
                     .init(query: .init(form: nil))
@@ -17,7 +16,7 @@ extension Form.Add.Repository {
                 switch response {
                 case .ok(let value):
                     return try value.body.json.map {
-                        AdminContactFormFieldOption(
+                        ContactForm.Field.Option(
                             id: $0.id,
                             key: $0.key,
                             label: $0.label
@@ -37,7 +36,7 @@ extension Form.Add.Repository {
         }
 
         func create(entity: Form.Add.Model) async throws
-            -> AdminContactFormDetailsItem
+            -> ContactForm.Details.Item
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.contactFormCreate(
@@ -50,7 +49,7 @@ extension Form.Add.Repository {
                             redirectUrl: entity.redirectUrl,
                             fieldIds: entity.fieldIDs,
                             mails: entity.mails.map {
-                                (mail: AdminContactFormEmail)
+                                (mail: ContactForm.Email)
                                     -> Components.Schemas
                                     .SubmissionMailInputSchema in
                                 .init(

@@ -47,8 +47,14 @@ public func buildMigrations(
             connection: connection,
             platform: platform
         ),
-        AnalyticsInfrastructure.TableMigration(connection: connection, platform: platform),
-        MediaInfrastructure.TableMigration(connection: connection, platform: platform),
+        AnalyticsInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
+        MediaInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
         WebInfrastructure.TableMigration(
             connection: connection,
             platform: platform
@@ -61,7 +67,10 @@ public func buildMigrations(
             connection: connection,
             platform: platform
         ),
-        NewsInfrastructure.TableMigration(connection: connection, platform: platform),
+        NewsInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
         UserInfrastructure.TableMigration(
             connection: connection,
             platform: platform
@@ -78,7 +87,10 @@ public func buildMigrations(
             connection: connection,
             platform: platform
         ),
-        NewsletterInfrastructure.TableMigration(connection: connection, platform: platform),
+        NewsletterInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
 
         // Media folder structure
         WebInfrastructure.MediaFolderMigration(

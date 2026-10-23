@@ -10,6 +10,7 @@ import MediaWebAdmin
 import OpenAPIRuntime
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Tag.Edit.Repository {
@@ -32,7 +33,7 @@ extension Tag.Edit.Repository {
                         content: page.content,
                         imageAsset: try await api.mediaAdminAPI()
                             .loadImageAsset(assetId: page.imageAssetId),
-                        metadata: AdminMetadataSchemaBuilder.formValue(
+                        metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: page.metadata,
                             fallbackTitle: page.title,
                             fallbackExcerpt: page.excerpt

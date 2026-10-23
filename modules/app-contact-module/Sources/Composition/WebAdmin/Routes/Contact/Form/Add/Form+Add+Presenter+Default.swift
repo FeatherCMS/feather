@@ -1,6 +1,5 @@
 import ContactApplication
 import ContactModule
-import FeatherWebShared
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
@@ -13,7 +12,7 @@ extension Form.Add.Presenter {
         let routes: Contact.Router.Routes
 
         func renderPage(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -42,7 +41,7 @@ extension Form.Add.Presenter {
         }
 
         func renderAddError(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: Form.Add.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -78,7 +77,7 @@ extension Form.Add.Presenter {
         }
 
         private func renderFormError(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             message: String,
             permissions: Set<String>,
             status: HTTPResponse.Status

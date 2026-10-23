@@ -8,7 +8,7 @@ extension ContactModule.Form.View {
 extension ContactModule.Form.View.Presenter {
     protocol Interface: Sendable {
         func renderDetailsPage(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse

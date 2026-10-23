@@ -13,8 +13,8 @@ struct ContactFormForm: Component {
         var failureMessage: String
         var redirectUrl: String?
         var fieldIDs: [String]
-        var availableFields: [AdminContactFormFieldOption]
-        var mails: [AdminContactFormEmail]
+        var availableFields: [ContactForm.Field.Option]
+        var mails: [ContactForm.Email]
         var error: String?
         var success: String?
     }
@@ -234,20 +234,20 @@ struct ContactFormForm: Component {
         return context.build(form)
     }
 
-    private var selectedFields: [AdminContactFormFieldOption] {
+    private var selectedFields: [ContactForm.Field.Option] {
         let fieldsByID = Dictionary(
             uniqueKeysWithValues: state.availableFields.map { ($0.id, $0) }
         )
         return state.fieldIDs.compactMap { fieldsByID[$0] }
     }
 
-    private var availableUnselectedFields: [AdminContactFormFieldOption] {
+    private var availableUnselectedFields: [ContactForm.Field.Option] {
         let selectedIDs = Set(state.fieldIDs)
         return state.availableFields.filter { !selectedIDs.contains($0.id) }
     }
 
     private func fieldRow(
-        field: AdminContactFormFieldOption,
+        field: ContactForm.Field.Option,
         isSelected: Bool,
         context: inout BuilderContext
     ) -> some FlowContent {
@@ -276,7 +276,7 @@ struct ContactFormForm: Component {
     }
 
     private func fieldCheckbox(
-        field: AdminContactFormFieldOption,
+        field: ContactForm.Field.Option,
         isSelected: Bool
     ) -> AdminCheckbox {
         .init(

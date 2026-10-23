@@ -2,6 +2,7 @@ import BlogModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import WebModule
 import WebModuleWebAdmin
 
 extension Post.Status.Controller {
@@ -30,17 +31,18 @@ extension Post.Status.Controller {
                 from: payload,
                 current: details.metadata
             )
-            try await AdminMetadataStatusUpdater(
-                api: WebModuleWebAdmin.API.Client(
-                    environment: environment,
-                    requestContext: context
+            try await WebModule.Metadata
+                .StatusUpdater(
+                    api: WebModuleWebAdmin.API.Client(
+                        environment: environment,
+                        requestContext: context
+                    )
                 )
-            )
-            .update(
-                referenceType: "blog.post",
-                referenceID: id,
-                status: targetStatus
-            )
+                .update(
+                    referenceType: "blog.post",
+                    referenceID: id,
+                    status: targetStatus
+                )
 
             let toast = statusToastContent(for: targetStatus)
             return AdminNotificationFlash.redirect(

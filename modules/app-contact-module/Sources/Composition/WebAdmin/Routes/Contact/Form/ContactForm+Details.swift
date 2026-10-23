@@ -1,0 +1,3 @@
+extension ContactForm {
+    enum Details {}
+}

@@ -12,6 +12,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Post.Add.Controller {
@@ -173,7 +174,7 @@ extension Post.Add.Controller {
                     error: nil
                 ),
                 selectedImageAsset: nil,
-                metadata: AdminMetadataFieldStateFactory.make(
+                metadata: WebModule.Metadata.FieldStateFactory.make(
                     metadata,
                     slugPrefix: slugPrefix
                 ),

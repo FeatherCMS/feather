@@ -7,6 +7,6 @@ extension ContactModule.Form.View {
 
 extension ContactModule.Form.View.Interactor {
     protocol Interface: Sendable {
-        func get(key: String) async throws -> AdminContactFormDetailsItem
+        func get(key: String) async throws -> ContactForm.Details.Item
     }
 }

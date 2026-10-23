@@ -21,7 +21,7 @@ extension Page.Repository.AdminAPI {
                 switch response {
                 case .ok(let okResponse):
                     let page = try okResponse.body.json
-                    return AdminMetadataSchemaBuilder.formValue(
+                    return WebModule.Metadata.SchemaBuilder.formValue(
                         from: page.metadata,
                         fallbackTitle: page.title,
                         fallbackExcerpt: page.excerpt

@@ -7,7 +7,7 @@ extension ContactModule.Form.Edit {
 
 extension ContactModule.Form.Edit.Interactor {
     protocol Interface: Sendable {
-        func get(key: String) async throws -> AdminContactFormDetailsItem
+        func get(key: String) async throws -> ContactForm.Details.Item
         func update(
             key: String,
             newKey: String,
@@ -16,7 +16,7 @@ extension ContactModule.Form.Edit.Interactor {
             failureMessage: String,
             redirectUrl: String?,
             fieldIDs: [String],
-            mails: [AdminContactFormEmail]
+            mails: [ContactForm.Email]
         ) async throws
     }
 }

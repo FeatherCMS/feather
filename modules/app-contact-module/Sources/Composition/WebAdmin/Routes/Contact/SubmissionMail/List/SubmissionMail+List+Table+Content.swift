@@ -11,7 +11,7 @@ import WebComponents
 extension SubmissionMail.List.Table {
     struct Content: Component {
         let id: String
-        let mails: [AdminContactFormEmail]
+        let mails: [ContactForm.Email]
         let permissions: AdminListActions
         let routes: Contact.Router.Routes
 

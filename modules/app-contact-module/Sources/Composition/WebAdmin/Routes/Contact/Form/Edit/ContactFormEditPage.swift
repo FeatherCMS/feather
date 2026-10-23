@@ -32,7 +32,7 @@ struct ContactFormEditPage: Component {
                 )
             )
             context.build(
-                AdminContactFormTabs(formId: state.key, active: .details)
+                ContactForm.TabBar(formId: state.key, active: .details)
             )
             context.build(
                 AdminRelationshipGroup(

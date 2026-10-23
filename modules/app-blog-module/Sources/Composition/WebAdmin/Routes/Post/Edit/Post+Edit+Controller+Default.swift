@@ -11,6 +11,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Post.Edit.Controller {
@@ -189,7 +190,7 @@ extension Post.Edit.Controller {
                     error: nil
                 ),
                 selectedImageAsset: imageAsset,
-                metadata: AdminMetadataFieldStateFactory.make(metadata),
+                metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
                 authorOptions: optionStates(
                     key: "authorIds[]",
                     selectedIDs: selectedAuthorIds,

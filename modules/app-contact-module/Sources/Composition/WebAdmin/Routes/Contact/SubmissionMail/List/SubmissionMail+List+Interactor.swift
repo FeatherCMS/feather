@@ -15,6 +15,6 @@ extension SubmissionMail.List {
 
 extension SubmissionMail.List.Interactor {
     protocol Interface: Sendable {
-        func get(id: String) async throws -> AdminContactFormDetailsItem
+        func get(id: String) async throws -> ContactForm.Details.Item
     }
 }

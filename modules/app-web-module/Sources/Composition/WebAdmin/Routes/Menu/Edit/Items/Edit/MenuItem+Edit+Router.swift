@@ -28,7 +28,7 @@ extension MenuItem.Edit {
                                 )
                             ),
                             permissionRepository:
-                                AdminSystemPermissionOpenAPIRepository(
+                                MenuItem.Permission.Repository.OpenAPI(
                                     api: SystemWebAdmin.API.Client(
                                         apiBaseURL: environment.apiBaseURL,
                                         requestContext: context

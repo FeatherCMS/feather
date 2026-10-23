@@ -7,6 +7,7 @@ import Hummingbird
 import MediaWebAdmin
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Author {
@@ -22,7 +23,7 @@ extension Author {
             var excerpt: FieldState
             var content: FieldState
             var profileImageAssetId: FieldState
-            var metadata: AdminMetadataFields.State
+            var metadata: WebModule.Metadata.Fields.State
             var selectedProfileImage: AdminMediaAsset?
             var canSelectProfileImage: Bool
             var canUploadProfileImage: Bool

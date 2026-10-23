@@ -10,6 +10,7 @@ import MediaWebAdmin
 import OpenAPIRuntime
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Tag.List.Controller {
@@ -88,17 +89,18 @@ extension Tag.List.Controller {
                 from: payload,
                 current: details.metadata
             )
-            try await AdminMetadataStatusUpdater(
-                api: WebModuleWebAdmin.API.Client(
-                    environment: environment,
-                    requestContext: context
+            try await WebModule.Metadata
+                .StatusUpdater(
+                    api: WebModuleWebAdmin.API.Client(
+                        environment: environment,
+                        requestContext: context
+                    )
                 )
-            )
-            .update(
-                referenceType: "blog.tag",
-                referenceID: id,
-                status: targetStatus
-            )
+                .update(
+                    referenceType: "blog.tag",
+                    referenceID: id,
+                    status: targetStatus
+                )
             let toast = statusToastContent(for: targetStatus)
             return AdminNotificationFlash.redirect(
                 to: payload.normalizedReturnTo ?? routes.tags.path

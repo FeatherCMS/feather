@@ -2,6 +2,7 @@ import FeatherModuleKit
 import FeatherWebAdmin
 import Foundation
 import NewsAdminAPI
+import WebModule
 import WebModuleWebAdmin
 
 struct NewsMetadataFormInput: Codable, Sendable {
@@ -68,13 +69,13 @@ struct NewsMetadataFormInput: Codable, Sendable {
         )
     }
 
-    var fields: AdminMetadataFields.State {
+    var fields: WebModule.Metadata.Fields.State {
         adminFields(template: "news.article")
     }
 
     func adminFields(
         template: String
-    ) -> AdminMetadataFields.State {
+    ) -> WebModule.Metadata.Fields.State {
         let value = AdminMetadataFormValue(
             slug: slug,
             template: template,
@@ -91,7 +92,7 @@ struct NewsMetadataFormInput: Codable, Sendable {
             javascriptCodeInjection: javascriptCodeInjection,
             structuredDataCodeInjection: structuredDataCodeInjection
         )
-        var state = AdminMetadataFieldStateFactory.make(value)
+        var state = WebModule.Metadata.FieldStateFactory.make(value)
         state.title.key = "metaTitle"
         state.excerpt.key = "metaExcerpt"
         state.imageUrl.key = "imageURL"
@@ -103,10 +104,10 @@ struct NewsMetadataFormInput: Codable, Sendable {
         .init(
             slug: slug.trimmingCharacters(in: .whitespacesAndNewlines),
             status: status,
-            publicationDate: AdminMetadataSchemaBuilder.parseTimestamp(
+            publicationDate: WebModule.Metadata.SchemaBuilder.parseTimestamp(
                 publicationDate
             ),
-            expirationDate: AdminMetadataSchemaBuilder.parseTimestamp(
+            expirationDate: WebModule.Metadata.SchemaBuilder.parseTimestamp(
                 expirationDate
             ),
             title: metaTitle.emptyToNil,

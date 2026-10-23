@@ -15,7 +15,7 @@ extension SubmissionMail.Edit {
 
 extension SubmissionMail.Edit.Repository {
     protocol Interface: Sendable {
-        func get(id: String) async throws -> AdminContactFormDetailsItem
+        func get(id: String) async throws -> ContactForm.Details.Item
         func update(
             id: String,
             name: String,
@@ -23,15 +23,15 @@ extension SubmissionMail.Edit.Repository {
             failureMessage: String,
             redirectUrl: String?,
             fieldIDs: [String],
-            mails: [AdminContactFormEmail]
-        ) async throws -> AdminContactFormDetailsItem
+            mails: [ContactForm.Email]
+        ) async throws -> ContactForm.Details.Item
     }
 }
 
 extension SubmissionMail.Edit.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
-        func get(id: String) async throws -> AdminContactFormDetailsItem {
+        func get(id: String) async throws -> ContactForm.Details.Item {
             try await ContactModule.Form.View.Repository.OpenAPI(api: api)
                 .get(key: id)
         }
@@ -42,8 +42,8 @@ extension SubmissionMail.Edit.Repository {
             failureMessage: String,
             redirectUrl: String?,
             fieldIDs: [String],
-            mails: [AdminContactFormEmail]
-        ) async throws -> AdminContactFormDetailsItem {
+            mails: [ContactForm.Email]
+        ) async throws -> ContactForm.Details.Item {
             try await ContactModule.Form.Edit.Repository.OpenAPI(api: api)
                 .update(
                     key: id,

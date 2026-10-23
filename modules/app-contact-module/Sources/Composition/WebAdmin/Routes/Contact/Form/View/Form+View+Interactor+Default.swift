@@ -6,7 +6,7 @@ extension ContactModule.Form.View.Interactor {
     struct Default: Interface {
         let repository: any ContactModule.Form.View.Repository.Interface
 
-        func get(key: String) async throws -> AdminContactFormDetailsItem {
+        func get(key: String) async throws -> ContactForm.Details.Item {
             try await repository.get(key: key)
         }
     }

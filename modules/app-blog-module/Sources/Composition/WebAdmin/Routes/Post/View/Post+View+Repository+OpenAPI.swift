@@ -5,6 +5,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import MediaWebAdmin
 import OpenAPIRuntime
+import WebModule
 import WebModuleWebAdmin
 
 extension Post.View.Repository {
@@ -29,7 +30,7 @@ extension Post.View.Repository {
                         content: page.content,
                         imageAsset: try await api.mediaAdminAPI()
                             .loadImageAsset(assetId: page.imageAssetId),
-                        metadata: AdminMetadataSchemaBuilder.formValue(
+                        metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: page.metadata,
                             fallbackTitle: page.title,
                             fallbackExcerpt: page.excerpt

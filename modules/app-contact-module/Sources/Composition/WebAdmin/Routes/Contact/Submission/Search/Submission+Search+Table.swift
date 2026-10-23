@@ -39,7 +39,7 @@ extension Submission.Search {
                 )
                 if let formKey = state.formKey {
                     context.build(
-                        AdminContactFormTabs(
+                        ContactForm.TabBar(
                             formId: formKey,
                             active: .submissions
                         )

@@ -7,6 +7,7 @@ import Hummingbird
 import MediaWebAdmin
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension BlogModule.Tag {
@@ -23,7 +24,7 @@ extension BlogModule.Tag {
             var content: FieldState
             var imageAssetId: FieldState
             var selectedImageAsset: AdminMediaAsset?
-            var metadata: AdminMetadataFields.State
+            var metadata: WebModule.Metadata.Fields.State
             var error: String?
 
             mutating func apply(errors: [String: String]) {

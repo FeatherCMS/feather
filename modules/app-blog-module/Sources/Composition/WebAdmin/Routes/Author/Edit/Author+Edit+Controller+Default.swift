@@ -10,6 +10,7 @@ import MediaModule
 import MediaWebAdmin
 import OpenAPIRuntime
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Author.Edit.Controller {
@@ -169,7 +170,7 @@ extension Author.Edit.Controller {
                     value: profileImageAssetId,
                     error: nil
                 ),
-                metadata: AdminMetadataFieldStateFactory.make(metadata),
+                metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
                 selectedProfileImage: selectedProfileImage,
                 canSelectProfileImage: permissions.contains(
                     Asset.Permissions.read.rawValue

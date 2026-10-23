@@ -9,7 +9,7 @@ import WebBuilders
 import WebComponents
 
 struct ContactFormDetailsView: Component {
-    let item: AdminContactFormDetailsItem
+    let item: ContactForm.Details.Item
     let permissions: AdminListActions
     let breadcrumb: [AdminBreadcrumb.Link]
     let routes: Contact.Router.Routes
@@ -27,7 +27,7 @@ struct ContactFormDetailsView: Component {
                 )
             )
             context.build(
-                AdminContactFormTabs(formId: item.key, active: .details)
+                ContactForm.TabBar(formId: item.key, active: .details)
             )
             context.build(
                 AdminRelationshipGroup(

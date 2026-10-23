@@ -31,7 +31,7 @@ extension Page.Edit.Repository {
                             assetId: page.imageAssetId,
                             variants: ["cover", "preview"]
                         ),
-                        metadata: AdminMetadataSchemaBuilder.formValue(
+                        metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: page.metadata,
                             fallbackTitle: page.title,
                             fallbackExcerpt: page.excerpt

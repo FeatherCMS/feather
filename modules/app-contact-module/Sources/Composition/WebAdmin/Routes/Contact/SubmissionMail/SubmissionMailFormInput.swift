@@ -5,7 +5,7 @@ public struct SubmissionMailFormInput: Decodable {
     public let additionalHeaders: [String]?
     public let messageBody: String
 
-    var mail: AdminContactFormEmail {
+    var mail: ContactForm.Email {
         .init(
             id: "",
             mailFrom: mailFrom,

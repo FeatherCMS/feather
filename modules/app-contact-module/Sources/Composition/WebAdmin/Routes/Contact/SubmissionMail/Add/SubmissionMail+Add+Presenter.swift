@@ -17,7 +17,7 @@ extension SubmissionMail.Add.Presenter {
     protocol Interface: Sendable {
         func renderPage(
             formId: String,
-            availableFields: [AdminContactFormFieldOption],
+            availableFields: [ContactForm.Field.Option],
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse

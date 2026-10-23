@@ -5,7 +5,7 @@ import WebBuilders
 import WebComponents
 
 struct SubmissionMailForm: Component {
-    let mail: AdminContactFormEmail
+    let mail: ContactForm.Email
     let action: String
     let submitLabel: String
     let error: String?

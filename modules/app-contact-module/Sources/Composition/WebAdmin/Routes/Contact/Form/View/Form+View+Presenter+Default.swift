@@ -15,7 +15,7 @@ extension ContactModule.Form.View.Presenter {
         let routes: Contact.Router.Routes
 
         func renderDetailsPage(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {

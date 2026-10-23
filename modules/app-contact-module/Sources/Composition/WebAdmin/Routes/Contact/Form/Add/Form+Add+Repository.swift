@@ -8,9 +8,9 @@ extension Form.Add {
 
 extension Form.Add.Repository {
     protocol Interface: Sendable {
-        func availableFields() async throws -> [AdminContactFormFieldOption]
+        func availableFields() async throws -> [ContactForm.Field.Option]
 
         func create(entity: Form.Add.Model) async throws
-            -> AdminContactFormDetailsItem
+            -> ContactForm.Details.Item
     }
 }

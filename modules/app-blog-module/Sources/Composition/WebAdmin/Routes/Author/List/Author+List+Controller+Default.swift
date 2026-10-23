@@ -4,6 +4,7 @@ import BlogModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import WebModule
 import WebModuleWebAdmin
 
 extension Author.List.Controller {
@@ -93,17 +94,18 @@ extension Author.List.Controller {
                 from: payload,
                 current: details.metadata
             )
-            try await AdminMetadataStatusUpdater(
-                api: WebModuleWebAdmin.API.Client(
-                    environment: environment,
-                    requestContext: context
+            try await WebModule.Metadata
+                .StatusUpdater(
+                    api: WebModuleWebAdmin.API.Client(
+                        environment: environment,
+                        requestContext: context
+                    )
                 )
-            )
-            .update(
-                referenceType: "blog.author",
-                referenceID: id,
-                status: targetStatus
-            )
+                .update(
+                    referenceType: "blog.author",
+                    referenceID: id,
+                    status: targetStatus
+                )
             let toast = statusToastContent(for: targetStatus)
             return AdminNotificationFlash.redirect(
                 to: payload.normalizedReturnTo ?? routes.authors.path

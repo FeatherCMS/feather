@@ -12,7 +12,7 @@ import WebComponents
 extension SubmissionMail.List.Interactor {
     struct Default: Interface {
         let repository: any SubmissionMail.List.Repository.Interface
-        func get(id: String) async throws -> AdminContactFormDetailsItem {
+        func get(id: String) async throws -> ContactForm.Details.Item {
             try await repository.get(id: id)
         }
     }

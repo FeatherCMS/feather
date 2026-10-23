@@ -14,11 +14,11 @@ extension SubmissionMail.Edit.Interactor {
     struct Default: Interface {
         let repository: any SubmissionMail.Edit.Repository.Interface
 
-        func get(id: String) async throws -> AdminContactFormDetailsItem {
+        func get(id: String) async throws -> ContactForm.Details.Item {
             try await repository.get(id: id)
         }
 
-        func update(id: String, email: AdminContactFormEmail) async throws {
+        func update(id: String, email: ContactForm.Email) async throws {
             let current = try await repository.get(id: id)
             guard current.mails.contains(where: { $0.id == email.id }) else {
                 throw OpenAPIRepositoryError.notFound

@@ -21,7 +21,7 @@ struct PageForm: Component {
         var content: FieldState
         var imageAssetId: FieldState
         var selectedImageAsset: AdminMediaAsset?
-        var metadata: AdminMetadataFields.State
+        var metadata: WebModule.Metadata.Fields.State
         var error: String?
         var success: String?
 

@@ -33,7 +33,7 @@ struct MenuEdit: Component {
                 )
             )
             context.build(
-                AdminMenuTabs(
+                MenuItem.TabBar(
                     active: .details,
                     detailsPath: state.routes.editPath(state.id),
                     itemsPath: state.routes.items.path(

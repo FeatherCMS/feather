@@ -4,6 +4,7 @@ import MediaWebAdmin
 import NewsModule
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension NewsModule.Article.Form {
@@ -109,7 +110,7 @@ extension NewsModule.Article.Form {
                         )
                     )
                     context.build(
-                        AdminMetadataFields(
+                        WebModule.Metadata.Fields(
                             state: input.metadata.fields,
                             showTitle: true
                         )

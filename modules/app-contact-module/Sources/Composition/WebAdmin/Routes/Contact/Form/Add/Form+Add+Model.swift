@@ -9,6 +9,6 @@ extension Form.Add {
         let failureMessage: String
         let redirectUrl: String?
         let fieldIDs: [String]
-        let mails: [AdminContactFormEmail]
+        let mails: [ContactForm.Email]
     }
 }

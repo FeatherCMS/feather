@@ -161,7 +161,7 @@ extension Page.Edit.Controller {
                     error: nil
                 ),
                 selectedImageAsset: imageAsset,
-                metadata: AdminMetadataFieldStateFactory.make(metadata),
+                metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
                 error: nil,
                 success: nil
             )

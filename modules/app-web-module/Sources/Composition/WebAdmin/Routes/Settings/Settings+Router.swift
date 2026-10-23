@@ -24,17 +24,13 @@ extension Settings {
         let routes: Routes
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            let controller = AdminEditSettings(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .controller
-            router.get(routes.edit.routerPath, use: controller.getEditSettings)
-            router.post(
-                routes.edit.routerPath,
-                use: controller.postEditSettings
-            )
+            Settings.Edit
+                .Router(
+                    environment: environment,
+                    renderingEngine: renderingEngine,
+                    routes: routes
+                )
+                .route(on: router)
         }
     }
 }

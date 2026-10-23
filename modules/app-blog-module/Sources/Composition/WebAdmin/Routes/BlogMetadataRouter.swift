@@ -3,6 +3,7 @@ import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import WebModule
 import WebModuleWebAdmin
 
 enum BlogMetadataRouter {
@@ -57,7 +58,7 @@ enum BlogMetadataRouter {
                 let metadataID =
                     context.parameters.get("metadataID", as: String.self) ?? ""
                 let editPath = route.editPath(id)
-                let configuration = AdminMetadataEditConfiguration(
+                let configuration = WebModule.Metadata.Edit.Configuration(
                     referenceType: route.referenceType,
                     title: route.title,
                     description: "Update the metadata for this blog content.",
@@ -75,7 +76,7 @@ enum BlogMetadataRouter {
                         ),
                     ]
                 )
-                let handler = AdminMetadataEditHandler(
+                let handler = WebModule.Metadata.Edit.Handler(
                     environment: environment,
                     renderingEngine: renderingEngine,
                     adminEvents: events
@@ -92,7 +93,7 @@ enum BlogMetadataRouter {
                 let metadataID =
                     context.parameters.get("metadataID", as: String.self) ?? ""
                 let editPath = route.editPath(id)
-                let configuration = AdminMetadataEditConfiguration(
+                let configuration = WebModule.Metadata.Edit.Configuration(
                     referenceType: route.referenceType,
                     title: route.title,
                     description: "Update the metadata for this blog content.",
@@ -110,7 +111,7 @@ enum BlogMetadataRouter {
                         ),
                     ]
                 )
-                let handler = AdminMetadataEditHandler(
+                let handler = WebModule.Metadata.Edit.Handler(
                     environment: environment,
                     renderingEngine: renderingEngine,
                     adminEvents: events

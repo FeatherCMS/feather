@@ -79,17 +79,18 @@ extension Page.Search.Controller {
                 from: payload,
                 current: metadata
             )
-            try await AdminMetadataStatusUpdater(
-                api: API.Client(
-                    environment: environment,
-                    requestContext: context
+            try await WebModule.Metadata
+                .StatusUpdater(
+                    api: API.Client(
+                        environment: environment,
+                        requestContext: context
+                    )
                 )
-            )
-            .update(
-                referenceType: "web.page",
-                referenceID: id,
-                status: targetStatus
-            )
+                .update(
+                    referenceType: "web.page",
+                    referenceID: id,
+                    status: targetStatus
+                )
             return AdminNotificationFlash.redirect(
                 to: payload.normalizedReturnTo ?? routes.list.path,
                 notification: statusNotification(for: targetStatus)

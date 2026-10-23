@@ -5,7 +5,7 @@ import WebModule
 extension MenuItem.Add.Interactor {
     struct Default: Interface {
         let repository: any MenuItem.Add.Repository.Interface
-        let permissionRepository: any AdminSystemPermissionRepository
+        let permissionRepository: any MenuItem.Permission.Repository.Interface
 
         func loadPermissions() async throws -> [String] {
             try await permissionRepository.listNames()

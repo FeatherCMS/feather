@@ -10,6 +10,7 @@ import MediaWebAdmin
 import OpenAPIRuntime
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Tag.Edit.Controller {
@@ -165,7 +166,7 @@ extension Tag.Edit.Controller {
                     error: nil
                 ),
                 selectedImageAsset: imageAsset,
-                metadata: AdminMetadataFieldStateFactory.make(metadata),
+                metadata: WebModule.Metadata.FieldStateFactory.make(metadata),
                 error: nil
             )
         }

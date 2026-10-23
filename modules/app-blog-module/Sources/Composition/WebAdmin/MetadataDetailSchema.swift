@@ -1,6 +1,7 @@
 import BlogAdminAPI
+import WebModule
 public import WebModuleWebAdmin
 
 extension BlogAdminAPI.Components.Schemas.WebMetadataDetailSchema:
-    AdminMetadataDetailSchema
+    WebModule.Metadata.DetailSchema
 {}

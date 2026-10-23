@@ -11,6 +11,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Post.Edit.Repository {
@@ -35,7 +36,7 @@ extension Post.Edit.Repository {
                         content: page.content,
                         imageAsset: try await api.mediaAdminAPI()
                             .loadImageAsset(assetId: page.imageAssetId),
-                        metadata: AdminMetadataSchemaBuilder.formValue(
+                        metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: page.metadata,
                             fallbackTitle: page.title,
                             fallbackExcerpt: page.excerpt

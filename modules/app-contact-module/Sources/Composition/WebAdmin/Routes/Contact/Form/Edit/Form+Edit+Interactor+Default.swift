@@ -14,7 +14,7 @@ extension ContactModule.Form.Edit.Interactor {
     struct Default: Interface {
         let repository: ContactModule.Form.Edit.Repository.OpenAPI
 
-        func get(key: String) async throws -> AdminContactFormDetailsItem {
+        func get(key: String) async throws -> ContactForm.Details.Item {
             do {
                 return try await repository.get(key: key)
             }
@@ -31,7 +31,7 @@ extension ContactModule.Form.Edit.Interactor {
             failureMessage: String,
             redirectUrl: String?,
             fieldIDs: [String],
-            mails: [AdminContactFormEmail]
+            mails: [ContactForm.Email]
         ) async throws {
             do {
                 _ = try await repository.update(

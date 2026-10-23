@@ -10,20 +10,20 @@ extension ContactModule.Form.Edit {
 extension ContactModule.Form.Edit.Presenter {
     protocol Interface: Sendable {
         func renderPage(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 
         func renderFieldsPage(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 
         func renderEditError(
             key: String,
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: ContactModule.Form.Edit.Repository.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse

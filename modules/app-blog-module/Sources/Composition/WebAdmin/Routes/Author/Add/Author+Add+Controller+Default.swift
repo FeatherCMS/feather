@@ -12,6 +12,7 @@ import MediaWebAdmin
 import OpenAPIRuntime
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Author.Add.Controller {
@@ -153,7 +154,7 @@ extension Author.Add.Controller {
                     value: profileImageAssetId,
                     error: nil
                 ),
-                metadata: AdminMetadataFieldStateFactory.make(
+                metadata: WebModule.Metadata.FieldStateFactory.make(
                     metadata,
                     slugPrefix: slugPrefix
                 ),

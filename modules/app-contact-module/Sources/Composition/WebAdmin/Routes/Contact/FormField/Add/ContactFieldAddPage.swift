@@ -40,7 +40,7 @@ struct ContactFieldAddPage: Component {
             )
             if let formKey = state.formKey {
                 context.build(
-                    AdminContactFormTabs(formId: formKey, active: .fields)
+                    ContactForm.TabBar(formId: formKey, active: .fields)
                 )
                 context.build(
                     AdminRelationshipGroup(

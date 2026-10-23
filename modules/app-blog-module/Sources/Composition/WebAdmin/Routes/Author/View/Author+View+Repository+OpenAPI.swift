@@ -11,6 +11,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Author.View.Repository {
@@ -65,7 +66,7 @@ extension Author.View.Repository {
                         profileImageAssetId: author.profileImageAssetId,
                         profileImage: try await api.mediaAdminAPI()
                             .loadImageAsset(assetId: author.profileImageAssetId),
-                        metadata: AdminMetadataSchemaBuilder.formValue(
+                        metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: author.metadata,
                             fallbackTitle: author.name,
                             fallbackExcerpt: author.excerpt

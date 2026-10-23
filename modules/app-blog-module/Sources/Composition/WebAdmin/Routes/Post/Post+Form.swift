@@ -7,6 +7,7 @@ import Hummingbird
 import MediaWebAdmin
 import WebBuilders
 import WebComponents
+import WebModule
 import WebModuleWebAdmin
 
 extension Post {
@@ -29,7 +30,7 @@ extension Post {
             var content: FieldState
             var imageAssetId: FieldState
             var selectedImageAsset: AdminMediaAsset?
-            var metadata: AdminMetadataFields.State
+            var metadata: WebModule.Metadata.Fields.State
             var authorOptions: [OptionState]
             var tagOptions: [OptionState]
             var authorIdsError: String?

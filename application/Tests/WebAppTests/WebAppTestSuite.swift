@@ -23,7 +23,7 @@ struct WebAppTestSuite {
     @Test
     func authCredentialsMenuItemUsesRegisteredPermission() async throws {
         var events = EventRegistry()
-        AuthAdminMenuEventHandlers.register(in: &events)
+        AuthWebAdmin.Event.Handlers.registerMenu(in: &events)
 
         let items = try await events.trigger(
             event: SystemWebAdmin.Admin.Menu.Item.Provider(

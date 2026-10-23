@@ -19,7 +19,7 @@ extension ContactModule.Form.Edit.Presenter {
         let routes: Contact.Router.Routes
 
         func renderPage(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -32,7 +32,7 @@ extension ContactModule.Form.Edit.Presenter {
         }
 
         func renderFieldsPage(
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -73,7 +73,7 @@ extension ContactModule.Form.Edit.Presenter {
 
         private func renderPage(
             key: String,
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -108,7 +108,7 @@ extension ContactModule.Form.Edit.Presenter {
 
         func renderEditError(
             key: String,
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             error: ContactModule.Form.Edit.Repository.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -187,7 +187,7 @@ extension ContactModule.Form.Edit.Presenter {
 
         private func renderFormError(
             key: String,
-            item: AdminContactFormDetailsItem,
+            item: ContactForm.Details.Item,
             message: String,
             permissions: Set<String>,
             status: HTTPResponse.Status

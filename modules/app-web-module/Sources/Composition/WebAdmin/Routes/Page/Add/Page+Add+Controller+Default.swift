@@ -139,7 +139,7 @@ extension Page.Add.Controller {
                     error: nil
                 ),
                 selectedImageAsset: nil,
-                metadata: AdminMetadataFieldStateFactory.make(
+                metadata: WebModule.Metadata.FieldStateFactory.make(
                     metadata,
                     slugPrefix: slugPrefix
                 ),

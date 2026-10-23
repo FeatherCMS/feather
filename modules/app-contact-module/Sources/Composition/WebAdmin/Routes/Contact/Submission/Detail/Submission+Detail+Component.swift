@@ -36,7 +36,7 @@ extension Submission.Detail {
                     )
                 )
                 context.build(
-                    AdminContactFormTabs(
+                    ContactForm.TabBar(
                         formId: state.formId,
                         active: .submissions
                     )
