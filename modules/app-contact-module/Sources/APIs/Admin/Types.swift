@@ -17,6 +17,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `POST /api/v1/admin/contact/form/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/query/post(contactFormQuery)`.
     func contactFormQuery(_ input: Operations.ContactFormQuery.Input) async throws -> Operations.ContactFormQuery.Output
+    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
+    func contactSubmissionQuery(_ input: Operations.ContactSubmissionQuery.Input) async throws -> Operations.ContactSubmissionQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     func contactFormGet(_ input: Operations.ContactFormGet.Input) async throws -> Operations.ContactFormGet.Output
@@ -88,6 +91,17 @@ extension APIProtocol {
         body: Operations.ContactFormQuery.Input.Body
     ) async throws -> Operations.ContactFormQuery.Output {
         try await contactFormQuery(Operations.ContactFormQuery.Input(
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
+    public func contactSubmissionQuery(
+        headers: Operations.ContactSubmissionQuery.Input.Headers = .init(),
+        body: Operations.ContactSubmissionQuery.Input.Body
+    ) async throws -> Operations.ContactSubmissionQuery.Output {
+        try await contactSubmissionQuery(Operations.ContactSubmissionQuery.Input(
             headers: headers,
             body: body
         ))

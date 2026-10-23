@@ -1,4 +1,5 @@
 import ContactDomain
+import ContactModule
 import Testing
 
 import struct Foundation.Date

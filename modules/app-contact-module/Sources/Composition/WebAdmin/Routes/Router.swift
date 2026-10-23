@@ -130,15 +130,17 @@ public struct Router {
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
-        AdminListContactSubmissions(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminRemoveContactSubmissions(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        Submission.Search
+            .Router(
+                apiBuilder: apiBuilder,
+                renderingEngine: renderingEngine
+            )
+            .route(on: router)
+        Submission.Remove
+            .Router(
+                apiBuilder: apiBuilder,
+                renderingEngine: renderingEngine
+            )
+            .route(on: router)
     }
 }

@@ -11,14 +11,20 @@ struct HTTPErrorMappingTests {
 
     @Test
     func authorizationErrorsMapTo401And403() {
-        let unauthorized = AuthError(
-            kind: .unauthorized,
-            message: "Missing subject."
-        ) as any HTTPErrorRepresentable
-        let forbidden = AuthError(
-            kind: .forbidden,
-            message: "Permission denied."
-        ) as any HTTPErrorRepresentable
+        let unauthorized =
+            BackendErrorAdapter.adapt(
+                AuthError(
+                    kind: .unauthorized,
+                    message: "Missing subject."
+                )
+            ) as! any HTTPErrorRepresentable
+        let forbidden =
+            BackendErrorAdapter.adapt(
+                AuthError(
+                    kind: .forbidden,
+                    message: "Permission denied."
+                )
+            ) as! any HTTPErrorRepresentable
 
         #expect(unauthorized.status == .unauthorized)
         #expect(forbidden.status == .forbidden)
@@ -26,18 +32,23 @@ struct HTTPErrorMappingTests {
 
     @Test
     func queryNotFoundMapsTo404() {
-        let error = QueryError.notFound as any HTTPErrorRepresentable
+        let error =
+            BackendErrorAdapter.adapt(QueryError.notFound)
+            as! any HTTPErrorRepresentable
 
         #expect(error.status == .notFound)
     }
 
     @Test
     func duplicateRepositoryKeysMapTo409() {
-        let error = RepositoryError(
-            reason: .database(.duplicateKey),
-            logMessage: "duplicate key",
-            userFriendlyMessage: "Duplicate value."
-        ) as any HTTPErrorRepresentable
+        let error =
+            BackendErrorAdapter.adapt(
+                RepositoryError(
+                    reason: .database(.duplicateKey),
+                    logMessage: "duplicate key",
+                    userFriendlyMessage: "Duplicate value."
+                )
+            ) as! any HTTPErrorRepresentable
 
         #expect(error.status == .conflict)
     }

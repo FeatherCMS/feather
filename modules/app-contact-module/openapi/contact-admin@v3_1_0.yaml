@@ -106,6 +106,34 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
+  /api/v1/admin/contact/submission/query:
+    post:
+      tags:
+      - ContactForms
+      operationId: contactSubmissionQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactSubmissionQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/ContactSubmissionQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
   /api/v1/admin/contact/form/{contactFormKey}:
     get:
       tags:
@@ -817,6 +845,132 @@ components:
       - key
       - name
       minProperties: 3
+    ContactSubmissionQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - createdAt
+                - formName
+                - status
+                examples:
+                - createdAt
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - filters
+      minProperties: 1
+    ContactSubmissionQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/ContactSubmissionQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/ContactSubmissionQueryItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    ContactSubmissionQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - createdAt
+                - formName
+                - status
+                examples:
+                - createdAt
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    ContactSubmissionQueryItemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        formKey:
+          type: string
+        formName:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: number
+          format: double
+        email:
+          $ref: '#/components/schemas/ContactEmailField'
+      required:
+      - id
+      - formKey
+      - formName
+      - status
+      - createdAt
+      minProperties: 5
+    ContactEmailField:
+      type: string
     ContactFormKeyField:
       type: string
     FormFieldListSchema:
@@ -948,6 +1102,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ContactFormQueryItemSearchSchema'
+    ContactSubmissionQueryItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ContactSubmissionQueryItemSearchSchema'
     FormFieldListResponse:
       description: Contact form field list response
       content:

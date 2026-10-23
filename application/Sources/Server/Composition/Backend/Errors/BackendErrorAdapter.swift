@@ -2,6 +2,7 @@ import FeatherBackend
 import FeatherDatabase
 import FeatherDatabasePostgres
 import FeatherInfrastructure
+import FeatherModuleKit
 import NIOHTTP1
 import OpenAPIRuntime
 import PostgresNIO
@@ -14,6 +15,9 @@ import UserBackend
 enum BackendErrorAdapter {
 
     static func adapt(_ error: any Error) -> any Error {
+        if let error = error as? AuthError {
+            return AuthorizationErrorAdapter(error: error)
+        }
         if let error = error as? QueryError {
             return QueryErrorAdapter(error: error)
         }

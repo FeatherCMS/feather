@@ -8,6 +8,8 @@ struct PathCollection: PathCollectionRepresentable {
         [
             "api/v1/admin/contact/form": ContactFormPathItems(),
             "api/v1/admin/contact/form/query": ContactForm.Query.PathItem(),
+            "api/v1/admin/contact/submission/query":
+                ContactSubmission.Query.PathItem(),
             "api/v1/admin/contact/form/{contactFormKey}":
                 ContactFormIDPathItems(),
             "api/v1/admin/contact/field": ContactFieldPathItems(),

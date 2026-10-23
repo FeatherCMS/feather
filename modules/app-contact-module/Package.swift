@@ -94,6 +94,10 @@ let package = Package(
             exact: "1.0.0-alpha.1"
         ),
         .package(
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
+        ),
+        .package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
         ),
@@ -144,6 +148,7 @@ let package = Package(
                 ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
 
                 .target(name: "ContactModule"),
                 .target(name: "ContactApplication"),
@@ -295,6 +300,7 @@ let package = Package(
             dependencies: [
                 .target(name: "ContactApplication"),
                 .target(name: "ContactDomain"),
+                .target(name: "ContactModule"),
             ],
             path: "Tests/Layers/Application",
             swiftSettings: swiftSettings

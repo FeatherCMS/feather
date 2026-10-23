@@ -14,7 +14,8 @@ struct AccountErrorMappingTests {
     func repositoryNotFoundIsTraceableAsHTTPError() {
         let error = RepositoryError.notFound
 
-        let mapped = error as any HTTPErrorRepresentable
+        let mapped =
+            BackendErrorAdapter.adapt(error) as! any HTTPErrorRepresentable
 
         #expect(mapped.status == .notFound)
     }
@@ -34,7 +35,8 @@ struct AccountErrorMappingTests {
         ]
 
         for error in errors {
-            let mapped = error as! any HTTPErrorRepresentable
+            let mapped =
+                BackendErrorAdapter.adapt(error) as! any HTTPErrorRepresentable
             #expect(mapped.status == .notFound)
         }
     }
@@ -42,7 +44,8 @@ struct AccountErrorMappingTests {
     @Test
     func publicRedirectRuleNotFoundIsMappedToNotFound() {
         let error = GetPublicRuleBySource.Error.notFound
-        let mapped = error as any HTTPErrorRepresentable
+        let mapped =
+            BackendErrorAdapter.adapt(error) as! any HTTPErrorRepresentable
 
         #expect(mapped.status == .notFound)
     }

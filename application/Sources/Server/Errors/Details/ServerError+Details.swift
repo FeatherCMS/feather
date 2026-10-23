@@ -75,7 +75,7 @@ extension ServerError {
                 code: .badRequest,
                 message: error.message,
                 reason: error.reason,
-                trace: trace()
+                trace: ServerErrorAdapter(error: self).trace()
             )
         default:
             let errorDescription = "\(underlyingError)"
@@ -89,7 +89,7 @@ extension ServerError {
                     code: .unsupportedMediaType,
                     message: "Unsupported media type.",
                     reason: "Unsupported Content-Type header: `\(key)`.",
-                    trace: trace()
+                    trace: ServerErrorAdapter(error: self).trace()
                 )
             }
             if errorDescription.contains("Accept header") {
@@ -98,7 +98,7 @@ extension ServerError {
                     code: .unsupportedMediaType,
                     message: "Not acceptable.",
                     reason: "Unsupported Accept header value: `\(key)`.",
-                    trace: trace()
+                    trace: ServerErrorAdapter(error: self).trace()
                 )
             }
             let reason: String
@@ -112,7 +112,7 @@ extension ServerError {
                 code: .internalServerError,
                 message: "Internal server error.",
                 reason: reason,
-                trace: trace()
+                trace: ServerErrorAdapter(error: self).trace()
             )
         }
     }
