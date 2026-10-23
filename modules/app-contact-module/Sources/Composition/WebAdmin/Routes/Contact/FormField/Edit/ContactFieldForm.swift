@@ -1,3 +1,4 @@
+import ContactModule
 import FeatherWebAdmin
 import HTML
 import SGML
@@ -5,13 +6,13 @@ import WebBuilders
 import WebComponents
 
 struct ContactFieldForm: Component {
-    let field: AdminContactFieldRow
+    let field: FormField.Model
     let action: String
     let submitLabel: String
     let error: String?
     let fieldErrors: [String: String]
 
-    func html(context: inout BuilderContext) -> Form {
+    func html(context: inout BuilderContext) -> HTML.Form {
         let form = AdminForm(action: action) {
             if let error {
                 P(error).class("admin-form__error")

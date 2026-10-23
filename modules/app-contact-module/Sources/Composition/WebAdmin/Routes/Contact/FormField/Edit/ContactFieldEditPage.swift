@@ -1,3 +1,5 @@
+import ContactApplication
+import ContactModule
 import FeatherWebAdmin
 import HTML
 import Hummingbird
@@ -7,10 +9,11 @@ import WebComponents
 
 struct ContactFieldEditPage: Component {
     struct State {
-        let field: AdminContactFieldRow
+        let field: FormField.Model
         let error: String?
         let fieldErrors: [String: String]
         let breadcrumb: [AdminBreadcrumb.Link]
+        let action: String
     }
 
     let state: State
@@ -29,9 +32,7 @@ struct ContactFieldEditPage: Component {
             context.build(
                 ContactFieldForm(
                     field: state.field,
-                    action: ContactAdminRoutes.fields
-                        .appendingPath(RouterPath(state.field.id))
-                        .appendingPath(RouterPath("edit")).description,
+                    action: state.action,
                     submitLabel: "Save changes",
                     error: state.error,
                     fieldErrors: state.fieldErrors

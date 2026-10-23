@@ -1,4 +1,6 @@
+import ContactModule
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import SGML
@@ -12,6 +14,7 @@ struct ContactFormFieldsPage: Component {
         let canAddField: Bool
         let form: ContactFormForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: Contact.Router.Routes
     }
 
     let state: State
@@ -46,8 +49,7 @@ struct ContactFormFieldsPage: Component {
                                     AdminButton(
                                         "Add field",
                                         href: AdminLocation.url(
-                                            path: ContactAdminRoutes.fieldAdd
-                                                .description,
+                                            path: state.routes.fieldAdd.path,
                                             queryItems: [("form", state.key)]
                                         )
                                     )
@@ -58,11 +60,7 @@ struct ContactFormFieldsPage: Component {
                     context.build(
                         ContactFormForm(
                             state: state.form,
-                            action:
-                                ContactAdminRoutes.formFields(
-                                    RouterPath(state.key)
-                                )
-                                .description,
+                            action: state.routes.formFieldsPath(state.key),
                             submitLabel: "Save fields",
                             isReadOnly: state.isReadOnly,
                             mode: .fields

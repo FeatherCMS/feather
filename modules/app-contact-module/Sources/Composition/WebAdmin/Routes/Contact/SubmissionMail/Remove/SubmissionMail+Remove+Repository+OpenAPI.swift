@@ -3,7 +3,6 @@ import ContactApplication
 import ContactModule
 import FeatherValidation
 import FeatherWebAdmin
-import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
@@ -33,7 +32,7 @@ extension SubmissionMail.Remove.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
         func get(id: String) async throws -> AdminContactFormDetailsItem {
-            try await AdminViewContactFormOpenAPIRepository(api: api)
+            try await ContactModule.Form.View.Repository.OpenAPI(api: api)
                 .get(key: id)
         }
         func update(
@@ -45,7 +44,7 @@ extension SubmissionMail.Remove.Repository {
             fieldIDs: [String],
             mails: [AdminContactFormEmail]
         ) async throws -> AdminContactFormDetailsItem {
-            try await AdminEditContactFormOpenAPIRepository(api: api)
+            try await ContactModule.Form.Edit.Repository.OpenAPI(api: api)
                 .update(
                     key: id,
                     newKey: id,

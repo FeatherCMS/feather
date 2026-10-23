@@ -1,3 +1,4 @@
+import ContactModule
 import FeatherWebAdmin
 import HTML
 import Hummingbird
@@ -11,6 +12,7 @@ struct ContactFormEditPage: Component {
         let isReadOnly: Bool
         let form: ContactFormForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: Contact.Router.Routes
     }
 
     let state: State
@@ -43,11 +45,7 @@ struct ContactFormEditPage: Component {
                     context.build(
                         ContactFormForm(
                             state: state.form,
-                            action:
-                                ContactAdminRoutes.formEdit(
-                                    RouterPath(state.key)
-                                )
-                                .description,
+                            action: state.routes.formEditPath(state.key),
                             submitLabel: "Save changes",
                             isReadOnly: state.isReadOnly
                         )

@@ -9,6 +9,7 @@ extension FormField.List {
         static let pageSize = 20
 
         let controller: any Controller.Interface
+        let environment: AppEnvironment
         let routes: Contact.Router.Routes
 
         init(
@@ -16,6 +17,7 @@ extension FormField.List {
             renderingEngine: any RenderingEngine,
             routes: Contact.Router.Routes
         ) {
+            self.environment = environment
             self.routes = routes
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
@@ -41,6 +43,7 @@ extension FormField.List {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(routes.fields.routerPath, use: controller.list)
+            Data(environment: environment, routes: routes).route(on: router)
         }
     }
 }

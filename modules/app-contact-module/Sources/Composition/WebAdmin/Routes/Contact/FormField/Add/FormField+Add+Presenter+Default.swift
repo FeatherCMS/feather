@@ -1,8 +1,9 @@
 import ContactApplication
 import ContactModule
+import FeatherModuleKit
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -21,76 +22,80 @@ extension FormField.Add.Presenter {
             model: FormField.Add.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
-        try await renderingEngine.renderAdminPage(
-            request: request,
-            context: context,
-            title: "Add contact form field",
-            content: ContactFieldAddPage(
-                state: .init(
-                    key: model.key,
-                    type: model.type,
-                    label: model.label,
-                    allowedValues: model.allowedValues,
-                    isRequired: model.isRequired,
-                    position: model.position,
-                    formKey: request.queryString("form"),
-                    error: model.error,
-                    fieldErrors: model.fieldErrors,
-                    breadcrumb: routes.fieldAddBreadcrumb(
-                        request.queryString("form")?.whitespaceTrimmed.emptyToNil
+            try await renderingEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Add contact form field",
+                content: ContactFieldAddPage(
+                    state: .init(
+                        key: model.key,
+                        type: model.type,
+                        label: model.label,
+                        allowedValues: model.allowedValues,
+                        isRequired: model.isRequired,
+                        position: model.position,
+                        formKey: request.queryString("form"),
+                        error: model.error,
+                        fieldErrors: model.fieldErrors,
+                        breadcrumb: routes.fieldAddBreadcrumb(
+                            request.queryString("form")?.whitespaceTrimmed
+                                .emptyToNil
+                        ),
+                        addPath: routes.fieldAdd.path
                     )
                 )
             )
-        )
-    }
+        }
 
         func renderAddError(
             input: ContactFieldFormInput,
             error: FormField.Add.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
-        switch error {
-        case .unauthorized:
-            return try await renderStatusPage(
-                title: "Session expired",
-                message: "Please sign in again to create contact form fields.",
-                status: .unauthorized
-            )
-        case .forbidden:
-            return try await renderForbiddenPage()
-        case .conflict:
-            return try await renderFormError(
-                input: input,
-                message: "A contact form field with this key already exists.",
-                permissions: permissions,
-                status: .conflict
-            )
-        case .unavailable:
-            return try await renderFormError(
-                input: input,
-                message:
-                    "The contact form field could not be created. Please try again.",
-                permissions: permissions,
-                status: .serviceUnavailable
-            )
-        case .createdButNotAssigned:
-            return try await renderFormError(
-                input: input,
-                message:
-                    "The field was created, but could not be assigned to the form. Open the form's Fields tab and add the existing field.",
-                permissions: permissions,
-                status: .serviceUnavailable
-            )
+            switch error {
+            case .unauthorized:
+                return try await renderStatusPage(
+                    title: "Session expired",
+                    message:
+                        "Please sign in again to create contact form fields.",
+                    status: .unauthorized
+                )
+            case .forbidden:
+                return try await renderForbiddenPage()
+            case .conflict:
+                return try await renderFormError(
+                    input: input,
+                    message:
+                        "A contact form field with this key already exists.",
+                    permissions: permissions,
+                    status: .conflict
+                )
+            case .unavailable:
+                return try await renderFormError(
+                    input: input,
+                    message:
+                        "The contact form field could not be created. Please try again.",
+                    permissions: permissions,
+                    status: .serviceUnavailable
+                )
+            case .createdButNotAssigned:
+                return try await renderFormError(
+                    input: input,
+                    message:
+                        "The field was created, but could not be assigned to the form. Open the form's Fields tab and add the existing field.",
+                    permissions: permissions,
+                    status: .serviceUnavailable
+                )
+            }
         }
-    }
 
         func renderForbiddenPage() async throws -> HTMLResponse {
-        try await renderStatusPage(
-            title: "Forbidden",
-            message: "Your account cannot create contact form fields.",
-            status: .forbidden
-        )
-    }
+            try await renderStatusPage(
+                title: "Forbidden",
+                message: "Your account cannot create contact form fields.",
+                status: .forbidden
+            )
+        }
 
         private func renderFormError(
             input: ContactFieldFormInput,
@@ -98,36 +103,37 @@ extension FormField.Add.Presenter {
             permissions: Set<String>,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
-        let page = try await renderPage(
-            model: .init(
-                key: input.key,
-                type: input.type,
-                label: input.label,
-                allowedValues: input.allowedValues,
-                isRequired: input.isRequiredValue,
-                position: input.position,
-                error: message,
-                fieldErrors: [:]
-            ),
-            permissions: permissions
-        )
-        return HTMLResponse(content: page.content, status: status)
-    }
+            let page = try await renderPage(
+                model: .init(
+                    key: input.key,
+                    type: input.type,
+                    label: input.label,
+                    allowedValues: input.allowedValues,
+                    isRequired: input.isRequiredValue,
+                    position: input.position,
+                    error: message,
+                    fieldErrors: [:]
+                ),
+                permissions: permissions
+            )
+            return HTMLResponse(content: page.content, status: status)
+        }
 
         private func renderStatusPage(
             title: String,
             message: String,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderAdminPage(
-            request: request,
-            context: context,
-            title: "Add contact form field",
-            content: AdminStatusView(
-                state: .init(title: title, message: message),
-                icon: FeatherIcons.alertCircle()
+            let page = try await renderingEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Add contact form field",
+                content: AdminStatusView(
+                    state: .init(title: title, message: message),
+                    icon: FeatherIcons.alertCircle()
+                )
             )
-        )
-        return HTMLResponse(content: page.content, status: status)
+            return HTMLResponse(content: page.content, status: status)
+        }
     }
 }

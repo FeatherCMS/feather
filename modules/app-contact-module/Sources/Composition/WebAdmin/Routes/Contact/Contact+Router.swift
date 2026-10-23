@@ -35,6 +35,10 @@ extension Contact {
                 forms.appending(parameter: "formKey")
             }
 
+            public var formDetailsPage: WebRoute {
+                formDetails.appending(pathComponent: "details")
+            }
+
             public var formEdit: WebRoute {
                 formDetails.appending(pathComponent: "edit")
             }
@@ -58,6 +62,10 @@ extension Contact {
 
             public func formDetailsPath(_ key: String) -> String {
                 formDetails.path(parameter: "formKey", value: key)
+            }
+
+            public func formDetailsPagePath(_ key: String) -> String {
+                formDetailsPage.path(parameter: "formKey", value: key)
             }
 
             public func formEditPath(_ key: String) -> String {
@@ -93,12 +101,39 @@ extension Contact {
                 fields.appending(pathComponent: "add")
             }
 
+            public var fieldEdit: WebRoute {
+                fields.appending(parameter: "fieldId")
+                    .appending(pathComponent: "edit")
+            }
+
+            public func fieldEditPath(_ id: String) -> String {
+                fieldEdit.path(parameter: "fieldId", value: id)
+            }
+
+            public var fieldRemove: WebRoute {
+                fields.appending(parameter: "fieldId")
+                    .appending(pathComponent: "remove")
+            }
+
+            public func fieldRemovePath(_ id: String) -> String {
+                fieldRemove.path(parameter: "fieldId", value: id)
+            }
+
+            public var fieldsRemove: WebRoute {
+                fields.appending(pathComponent: "remove")
+            }
+
             public var formFields: WebRoute {
                 formDetails.appending(pathComponent: "fields")
             }
 
             public func formFieldsPath(_ key: String) -> String {
                 formFields.path(parameter: "formKey", value: key)
+            }
+
+            public var formFieldsData: WebRoute {
+                forms.appending(parameter: "formKey")
+                    .appending(pathComponent: "fields-data")
             }
 
             func fieldAddBreadcrumb(_ formKey: String?)
@@ -125,12 +160,24 @@ extension Contact {
                 root.appending(pathComponent: "submissions")
             }
 
+            public var submissionsRemove: WebRoute {
+                submissions.appending(pathComponent: "remove")
+            }
+
             public var formSubmissions: WebRoute {
                 formDetails.appending(pathComponent: "submissions")
             }
 
             public var formSubmissionDetail: WebRoute {
                 formSubmissions.appending(parameter: "submissionId")
+            }
+
+            public var formSubmissionEdit: WebRoute {
+                formSubmissionDetail.appending(pathComponent: "edit")
+            }
+
+            public var formSubmissionRemoveSelected: WebRoute {
+                formSubmissions.appending(pathComponent: "remove")
             }
 
             public func formSubmissionDetailPath(
@@ -145,6 +192,27 @@ extension Contact {
                 )
             }
 
+            public func formSubmissionEditPath(
+                formKey: String,
+                submissionId: String
+            ) -> String {
+                try! formSubmissionEdit.path(
+                    parameters: [
+                        "formKey": formKey,
+                        "submissionId": submissionId,
+                    ]
+                )
+            }
+
+            public func formSubmissionRemoveSelectedPath(
+                _ formKey: String
+            ) -> String {
+                formSubmissionRemoveSelected.path(
+                    parameter: "formKey",
+                    value: formKey
+                )
+            }
+
             var breadcrumb: [AdminBreadcrumb.Link] {
                 [
                     .init(label: "Admin", link: admin.path),
@@ -155,6 +223,14 @@ extension Contact {
             var formsBreadcrumb: [AdminBreadcrumb.Link] {
                 breadcrumb + [
                     .init(label: "Forms", link: forms.path)
+                ]
+            }
+
+            func formDetailsBreadcrumb(_ key: String)
+                -> [AdminBreadcrumb.Link]
+            {
+                formsBreadcrumb + [
+                    .init(label: key, link: formDetailsPagePath(key))
                 ]
             }
 

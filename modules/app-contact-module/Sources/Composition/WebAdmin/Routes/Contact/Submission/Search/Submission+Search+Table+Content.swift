@@ -28,9 +28,8 @@ extension Submission.Search.Table {
                 } ?? routes.submissions.path
             let removePath =
                 formKey.map {
-                    ContactAdminRoutes.formSubmissionRemove(RouterPath($0))
-                        .description
-                } ?? ContactAdminRoutes.submissionRemove.description
+                    routes.formSubmissionRemoveSelectedPath($0)
+                } ?? routes.submissionsRemove.path
             return context.build(
                 AdminList(
                     table: {
@@ -114,7 +113,11 @@ extension Submission.Search.Table {
                                                                 context.build(
                                                                     AdminListRowCheckbox(
                                                                         id:
-                                                                            "\(item.formKey):\(item.id)"
+                                                                            formKey
+                                                                            == nil
+                                                                            ? "\(item.formKey):\(item.id)"
+                                                                            : item
+                                                                                .id
                                                                     )
                                                                 )
                                                             }

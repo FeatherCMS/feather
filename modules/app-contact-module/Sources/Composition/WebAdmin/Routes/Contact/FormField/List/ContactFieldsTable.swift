@@ -10,7 +10,7 @@ import WebComponents
 
 struct ContactFieldsTable: Component {
     struct State {
-        let fields: [AdminContactFieldRow]
+        let fields: [FormField.Model]
         let forms: [FormField.List.FormOption]
         let formKey: String?
         let pageState: AdminListPageState
@@ -18,6 +18,7 @@ struct ContactFieldsTable: Component {
         let error: String?
         let permissions: AdminListActions
         let breadcrumb: [AdminBreadcrumb.Link]
+        let routes: Contact.Router.Routes
     }
 
     let state: State
@@ -43,7 +44,8 @@ struct ContactFieldsTable: Component {
                     formKey: state.formKey,
                     pageState: state.pageState,
                     search: state.search,
-                    permissions: state.permissions
+                    permissions: state.permissions,
+                    routes: state.routes
                 )
             )
         }

@@ -27,5 +27,15 @@ extension Submission.Remove.Repository {
                 }
             }
         }
+
+        func remove(formId: String, ids: [String]) async throws {
+            guard !ids.isEmpty else { return }
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                _ = try await client.contactFormSubmissionRemove(
+                    path: .init(contactFormKey: formId),
+                    body: .json(.init(ids: ids))
+                )
+            }
+        }
     }
 }

@@ -3,7 +3,6 @@ import ContactApplication
 import ContactModule
 import FeatherValidation
 import FeatherWebAdmin
-import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
@@ -22,7 +21,7 @@ extension SubmissionMail.List.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
         func get(id: String) async throws -> AdminContactFormDetailsItem {
-            try await AdminViewContactFormOpenAPIRepository(api: api)
+            try await ContactModule.Form.View.Repository.OpenAPI(api: api)
                 .get(key: id)
         }
     }

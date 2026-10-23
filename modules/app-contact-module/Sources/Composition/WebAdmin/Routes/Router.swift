@@ -43,23 +43,27 @@ public struct Router {
                 routes: routes
             )
             .route(on: router)
-        AdminContactFormFieldsData(environment: environment)
+        Form.Edit
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
+            )
             .route(on: router)
-        AdminEditContactForm(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminViewContactForm(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminRemoveContactForm(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        Form.View
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
+            )
+            .route(on: router)
+        Form.Remove
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
+            )
+            .route(on: router)
 
         SubmissionMail.List
             .Router(
@@ -104,16 +108,20 @@ public struct Router {
                 routes: routes
             )
             .route(on: router)
-        AdminEditContactField(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminRemoveContactField(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        FormField.Edit
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
+            )
+            .route(on: router)
+        FormField.Remove
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
+            )
+            .route(on: router)
         Submission.Detail
             .Router(
                 environment: environment,
@@ -121,17 +129,13 @@ public struct Router {
                 routes: routes
             )
             .route(on: router)
-        AdminEditContactFormSubmission(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: routes
-        )
-        .controller.route(on: router)
-        AdminRemoveContactFormSubmissions(
-            environment: environment,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        Submission.Edit
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes
+            )
+            .route(on: router)
         Submission.Search
             .Router(
                 environment: environment,
@@ -142,7 +146,7 @@ public struct Router {
         Submission.Remove
             .Router(
                 environment: environment,
-                renderingEngine: renderingEngine
+                routes: routes
             )
             .route(on: router)
     }

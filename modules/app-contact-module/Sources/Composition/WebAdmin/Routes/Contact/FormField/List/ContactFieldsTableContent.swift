@@ -2,6 +2,7 @@ import ContactApplication
 import ContactModule
 import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird
@@ -10,12 +11,13 @@ import WebBuilders
 import WebComponents
 
 struct ContactFieldsTableContent: Component {
-    let fields: [AdminContactFieldRow]
+    let fields: [FormField.Model]
     let forms: [FormField.List.FormOption]
     let formKey: String?
     let pageState: AdminListPageState
     let search: String
     let permissions: AdminListActions
+    let routes: Contact.Router.Routes
 
     private var emptyStateMessage: String {
         if formKey == Filter.unassigned {
@@ -35,7 +37,7 @@ struct ContactFieldsTableContent: Component {
 
     func html(context: inout BuilderContext) -> Div {
         let returnTo = AdminLocation.url(
-            path: ContactAdminRoutes.fields.description,
+            path: routes.fields.path,
             page: pageState.page,
             search: search,
             queryItems: formKey.map { [("form", $0)] } ?? []
@@ -47,7 +49,7 @@ struct ContactFieldsTableContent: Component {
                         context.build(
                             AdminListInvalidPageState(
                                 pageState: pageState,
-                                path: ContactAdminRoutes.fields.description
+                                path: routes.fields.path
                             )
                         )
                     }
@@ -67,8 +69,7 @@ struct ContactFieldsTableContent: Component {
                                             context.build(
                                                 AdminButton(
                                                     "Add field",
-                                                    href: ContactAdminRoutes
-                                                        .fieldAdd.description
+                                                    href: routes.fieldAdd.path
                                                 )
                                             )
                                         }
@@ -77,8 +78,7 @@ struct ContactFieldsTableContent: Component {
                                         context.build(
                                             AdminButton(
                                                 "Reset search",
-                                                href: ContactAdminRoutes.fields
-                                                    .description,
+                                                href: routes.fields.path,
                                                 style: .secondary
                                             )
                                         )
@@ -95,8 +95,7 @@ struct ContactFieldsTableContent: Component {
                             AdminListSelectionForm(
                                 state: .init(
                                     action: AdminLocation.remove(
-                                        path: ContactAdminRoutes.fieldRemove
-                                            .description,
+                                        path: routes.fieldsRemove.path,
                                         ids: [],
                                         returnTo: returnTo
                                     ),
@@ -178,26 +177,18 @@ struct ContactFieldsTableContent: Component {
                                                                     .init(
                                                                         "Edit",
                                                                         href:
-                                                                            ContactAdminRoutes
-                                                                            .fields
-                                                                            .appendingPath(
-                                                                                RouterPath(
-                                                                                    field
-                                                                                        .id
-                                                                                )
-                                                                            )
-                                                                            .appendingPath(
-                                                                                RouterPath(
-                                                                                    "edit"
-                                                                                )
-                                                                            )
-                                                                            .description,
+                                                                            routes
+                                                                            .fieldEditPath(
+                                                                                field
+                                                                                    .id
+                                                                            ),
                                                                         style:
                                                                             .ghost(
                                                                                 .secondary
                                                                             ),
                                                                         permission:
-                                                                            FormField.Permissions
+                                                                            FormField
+                                                                            .Permissions
                                                                             .update
                                                                     )
                                                                 ],
@@ -223,11 +214,11 @@ struct ContactFieldsTableContent: Component {
                     context.build(
                         AdminListSearch(
                             state: .init(
-                                action: ContactAdminRoutes.fields.description,
+                                action: routes.fields.path,
                                 placeholder: "Quick search contact fields",
                                 search: search,
                                 resetPath: AdminLocation.url(
-                                    path: ContactAdminRoutes.fields.description,
+                                    path: routes.fields.path,
                                     queryItems: formKey.map { [("form", $0)] }
                                         ?? []
                                 )
@@ -275,8 +266,7 @@ struct ContactFieldsTableContent: Component {
                                 context.build(
                                     AdminButton(
                                         "Add field",
-                                        href: ContactAdminRoutes.fieldAdd
-                                            .description
+                                        href: routes.fieldAdd.path
                                     )
                                 )
                             }
@@ -287,7 +277,7 @@ struct ContactFieldsTableContent: Component {
                     context.build(
                         AdminListPagination(
                             state: .init(
-                                path: ContactAdminRoutes.fields.description,
+                                path: routes.fields.path,
                                 pageState: pageState,
                                 search: search,
                                 queryItems: formKey.map {

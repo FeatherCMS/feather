@@ -17,7 +17,7 @@ extension FormField.List {
 extension FormField.List.Presenter {
     protocol Interface: Sendable {
         func renderList(
-            fields: [AdminContactFieldRow],
+            fields: [FormField.Model],
             forms: [FormField.List.FormOption],
             total: Int,
             formKey: String?,

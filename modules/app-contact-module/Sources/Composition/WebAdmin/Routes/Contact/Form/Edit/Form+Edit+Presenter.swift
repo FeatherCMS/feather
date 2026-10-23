@@ -1,0 +1,35 @@
+import ContactApplication
+import ContactModule
+import FeatherWebAdmin
+import FeatherWebShared
+
+extension ContactModule.Form.Edit {
+    enum Presenter {}
+}
+
+extension ContactModule.Form.Edit.Presenter {
+    protocol Interface: Sendable {
+        func renderPage(
+            item: AdminContactFormDetailsItem,
+            error: String?,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+
+        func renderFieldsPage(
+            item: AdminContactFormDetailsItem,
+            error: String?,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+
+        func renderEditError(
+            key: String,
+            item: AdminContactFormDetailsItem,
+            error: ContactModule.Form.Edit.Repository.Error,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse
+
+        func renderErrorPage(
+            error: ContactModule.Form.Edit.Repository.Error
+        ) async throws -> HTMLResponse
+    }
+}

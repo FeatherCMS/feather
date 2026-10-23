@@ -8,5 +8,6 @@ extension Submission.Remove {
 extension Submission.Remove.Repository {
     protocol Interface: Sendable {
         func remove(ids: [String]) async throws
+        func remove(formId: String, ids: [String]) async throws
     }
 }

@@ -1,7 +1,7 @@
 import ContactModule
-import ContactModule
 import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import SGML
@@ -12,6 +12,7 @@ struct ContactFormDetailsView: Component {
     let item: AdminContactFormDetailsItem
     let permissions: AdminListActions
     let breadcrumb: [AdminBreadcrumb.Link]
+    let routes: Contact.Router.Routes
     let error: String?
 
     func html(context: inout BuilderContext) -> some BasicTag {
@@ -116,8 +117,7 @@ struct ContactFormDetailsView: Component {
             result.append(
                 .init(
                     label: "Edit",
-                    href: ContactAdminRoutes.formEdit(RouterPath(item.key))
-                        .description,
+                    href: routes.formEditPath(item.key),
                     style: .primary
                 )
             )
@@ -127,11 +127,10 @@ struct ContactFormDetailsView: Component {
                 .init(
                     label: "Remove",
                     href: AdminLocation.remove(
-                        path: ContactAdminRoutes.formRemove.description,
+                        path: routes.formRemove.path,
                         ids: [item.key],
                         returnTo:
-                            ContactAdminRoutes.formDetails(RouterPath(item.key))
-                            .description
+                            routes.formDetailsPagePath(item.key)
                     ),
                     style: .destructive
                 )

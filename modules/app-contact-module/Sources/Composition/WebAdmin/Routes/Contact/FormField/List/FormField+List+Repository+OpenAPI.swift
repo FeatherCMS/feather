@@ -71,7 +71,7 @@ extension FormField.List.Repository {
                 case .ok(let value):
                     let result = try value.body.json
                     let fields = result.data.items.map {
-                        AdminContactFieldRow(
+                        FormField.Model(
                             id: $0.id,
                             key: $0.key,
                             type: $0._type,
@@ -99,8 +99,7 @@ extension FormField.List.Repository {
             }
         }
 
-        func list(formKey: String? = nil) async throws -> [AdminContactFieldRow]
-        {
+        func list(formKey: String? = nil) async throws -> [FormField.Model] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 switch try await client.contactFieldList(
                     .init(query: .init(form: formKey))
@@ -122,7 +121,7 @@ extension FormField.List.Repository {
 
         private static func mapField(
             _ field: ContactAdminAPI.Components.Schemas.FormFieldSchema
-        ) -> AdminContactFieldRow {
+        ) -> FormField.Model {
             .init(
                 id: field.id,
                 key: field.key,

@@ -17,6 +17,7 @@ struct ContactFieldAddPage: Component {
         let error: String?
         let fieldErrors: [String: String]
         let breadcrumb: [AdminBreadcrumb.Link]
+        let addPath: String
     }
 
     let state: State
@@ -62,7 +63,7 @@ struct ContactFieldAddPage: Component {
 
     private func fieldForm(context: inout BuilderContext) -> Form {
         let action = AdminLocation.url(
-            path: ContactAdminRoutes.fieldAdd.description,
+            path: state.addPath,
             queryItems: state.formKey.map { [("form", $0)] } ?? []
         )
         let form = AdminForm(action: action) {

@@ -39,8 +39,7 @@ extension Submission.Search.Presenter {
                         ),
                         breadcrumb: formKey.map(
                             routes.formSubmissionsBreadcrumb
-                        )
-                            ?? ContactAdminRoutes.breadcrumb,
+                        ) ?? routes.breadcrumb,
                         routes: routes,
                         error: error
                     )

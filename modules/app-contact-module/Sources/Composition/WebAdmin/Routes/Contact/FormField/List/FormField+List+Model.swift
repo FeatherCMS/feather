@@ -11,7 +11,7 @@ import WebComponents
 
 extension FormField.List {
     struct Model: Sendable {
-        let fields: [AdminContactFieldRow]
+        let fields: [FormField.Model]
         let forms: [FormOption]
         let total: Int
     }

@@ -19,7 +19,7 @@ extension FormField.List.Presenter {
         let routes: Contact.Router.Routes
 
         func renderList(
-            fields: [AdminContactFieldRow],
+            fields: [FormField.Model],
             forms: [FormField.List.FormOption],
             total: Int,
             formKey: String?,
@@ -48,7 +48,8 @@ extension FormField.List.Presenter {
                         permissions: .init(
                             Set(permissions.map(PermissionKey.init))
                         ),
-                        breadcrumb: routes.fieldsBreadcrumb
+                        breadcrumb: routes.fieldsBreadcrumb,
+                        routes: routes
                     )
                 )
             )
