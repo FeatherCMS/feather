@@ -6,6 +6,7 @@ import NewsApplication
 import NewsDomain
 import NewsModule
 import WebApplication
+import WebDomain
 import WebModule
 
 extension AdminAPIGateway {

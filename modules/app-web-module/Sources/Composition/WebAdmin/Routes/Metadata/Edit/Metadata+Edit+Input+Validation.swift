@@ -3,8 +3,8 @@ import FeatherWebAdmin
 import OpenAPIRuntime
 import WebModule
 
-extension WebModule.Metadata.Edit {
-    enum FormFieldValidator {
+extension WebModule.Metadata.Edit.Input {
+    private enum FieldValidator {
 
         static func slug(
             _ value: String?,
@@ -52,21 +52,18 @@ extension WebModule.Metadata.Edit {
         }
 
     }
-}
-
-extension WebModule.Metadata.Edit.Input {
 
     private var validator: GroupValidator {
         GroupValidator {
-            WebModule.Metadata.Edit.FormFieldValidator.slug(
+            FieldValidator.slug(
                 slug,
                 required: true
             )
-            WebModule.Metadata.Edit.FormFieldValidator.template(
+            FieldValidator.template(
                 template,
                 required: true
             )
-            WebModule.Metadata.Edit.FormFieldValidator.status(
+            FieldValidator.status(
                 status,
                 required: true
             )

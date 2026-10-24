@@ -7,7 +7,7 @@ extension Campaign.Detail.Repository {
         let api: API.Client
 
         func get(id: String) async throws -> Campaign.Item {
-            try await Campaign.APIClient(api: api).get(id: id)
+            try await Campaign.API.Client(api: api).get(id: id)
         }
     }
 }

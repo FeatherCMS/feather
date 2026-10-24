@@ -18,7 +18,7 @@ extension Subscriber.List.Repository {
         let api: API.Client
 
         func campaigns() async throws -> [Subscriber.List.Model.Campaign] {
-            try await APIClient(api: api).campaigns()
+            try await Client(api: api).campaigns()
         }
 
         func search(
@@ -26,19 +26,20 @@ extension Subscriber.List.Repository {
             campaignKey: String?,
             page: Int
         ) async throws -> SearchResult {
-            try await APIClient(api: api).search(
-                search: search,
-                campaignKey: campaignKey,
-                page: page
-            )
+            try await Client(api: api)
+                .search(
+                    search: search,
+                    campaignKey: campaignKey,
+                    page: page
+                )
         }
 
         func list() async throws -> [Subscriber.List.Model.Item] {
-            try await APIClient(api: api).list()
+            try await Client(api: api).list()
         }
 
         func get(id: String) async throws -> Subscriber.List.Model.Item {
-            try await APIClient(api: api).get(id: id)
+            try await Client(api: api).get(id: id)
         }
     }
 }

@@ -68,13 +68,13 @@ extension Page.Search.Controller {
                 as: AdminStatusActionFormInput.self,
                 context: context
             )
-            let repository = Page.Repository.AdminAPI.OpenAPI(
+            let repository = Page.Metadata.Repository.OpenAPI(
                 api: API.Client(
                     environment: environment,
                     requestContext: context
                 )
             )
-            let metadata = try await repository.loadMetadata(id: id)
+            let metadata = try await repository.load(id: id)
             let targetStatus = resolvedStatus(
                 from: payload,
                 current: metadata

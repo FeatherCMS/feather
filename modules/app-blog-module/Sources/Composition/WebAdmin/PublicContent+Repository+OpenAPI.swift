@@ -3,9 +3,9 @@ import OpenAPIRuntime
 
 extension PublicContent.Repository {
     public struct OpenAPI: Sendable {
-        public let api: AppAPI.Client
+        public let api: API.App.Client
 
-        public init(api: AppAPI.Client) {
+        public init(api: API.App.Client) {
             self.api = api
         }
 

@@ -1,6 +1,7 @@
 public import ContactAdminAPI
 import ContactApplication
 import ContactDomain
+import ContactModule
 import FeatherApplication
 import FeatherModuleKit
 import Foundation

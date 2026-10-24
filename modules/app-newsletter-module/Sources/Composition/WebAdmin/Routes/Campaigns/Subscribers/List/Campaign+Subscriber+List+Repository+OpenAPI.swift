@@ -7,7 +7,7 @@ extension Campaign.Subscriber.List.Repository {
         func list(newsletterId: String) async throws
             -> [Campaign.Subscriber.Item]
         {
-            try await Campaign.Subscriber.APIClient(api: api)
+            try await Campaign.Subscriber.API.Client(api: api)
                 .list(
                     newsletterId: newsletterId
                 )

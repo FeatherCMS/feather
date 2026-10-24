@@ -37,7 +37,7 @@ public struct DefaultRedirectRuleResolver: RedirectRuleResolver {
     public func resolveRedirect(
         source: String
     ) async throws -> ResolvedRedirect? {
-        let api = API.AppClient(apiBaseURL: apiBaseURL)
+        let api = API.Client(apiBaseURL: apiBaseURL)
         let response = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             try await client.redirectRuleGet(

@@ -13,7 +13,7 @@ import WebBuilders
 import WebComponents
 
 extension Subscriber.List.Repository {
-    struct APIClient {
+    struct Client {
         let api: API.Client
 
         func campaigns() async throws -> [Subscriber.List.Model.Campaign] {

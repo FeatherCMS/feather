@@ -10,7 +10,7 @@ extension Campaign.Edit.Repository {
         let api: API.Client
 
         func get(id: String) async throws -> Campaign.Item {
-            try await Campaign.APIClient(api: api).get(id: id)
+            try await Campaign.API.Client(api: api).get(id: id)
         }
 
         func update(
@@ -19,7 +19,7 @@ extension Campaign.Edit.Repository {
             name: String,
             fromEmail: String
         ) async throws {
-            _ = try await Campaign.APIClient(api: api)
+            _ = try await Campaign.API.Client(api: api)
                 .update(
                     id: id,
                     newKey: newKey,

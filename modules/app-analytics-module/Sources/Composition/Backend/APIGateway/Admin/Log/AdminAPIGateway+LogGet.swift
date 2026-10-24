@@ -1,5 +1,6 @@
 public import AnalyticsAdminAPI
 import AnalyticsApplication
+import AnalyticsModule
 import FeatherModuleKit
 
 extension AdminAPIGateway {

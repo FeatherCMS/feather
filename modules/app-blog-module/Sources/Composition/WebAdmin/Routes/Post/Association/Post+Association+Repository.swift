@@ -13,11 +13,11 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Post.Add {
-    enum OptionRepository {}
+extension Post.Association {
+    enum Repository {}
 }
 
-extension Post.Add.OptionRepository {
+extension Post.Association.Repository {
     protocol Interface: Sendable {
         func loadOptions() async throws -> Post.Association.Options
     }

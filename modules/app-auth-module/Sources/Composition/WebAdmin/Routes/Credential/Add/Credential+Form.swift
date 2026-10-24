@@ -15,8 +15,8 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
-private enum CredentialFormHTML {
-    static func input() -> HTML.Input {
+extension Credential.Form {
+    private static func hiddenInput() -> HTML.Input {
         HTML.Input()
     }
 }
@@ -62,7 +62,7 @@ extension Credential.Form {
                 if let error = state.error {
                     P(error).class("admin-form__error")
                 }
-                CredentialFormHTML.input()
+                Credential.Form.hiddenInput()
                     .type(.hidden)
                     .name("userId")
                     .value(state.identity.value)

@@ -1,5 +1,6 @@
 public import AccountAdminAPI
 import AccountApplication
+import AccountModule
 import FeatherModuleKit
 import Foundation
 

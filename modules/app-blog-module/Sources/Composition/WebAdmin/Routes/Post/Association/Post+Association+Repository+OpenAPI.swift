@@ -13,7 +13,7 @@ import WebBuilders
 import WebComponents
 import WebModuleWebAdmin
 
-extension Post.Add.OptionRepository {
+extension Post.Association.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 

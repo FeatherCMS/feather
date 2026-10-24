@@ -7,7 +7,7 @@ extension Campaign.Subscriber.Edit.Repository {
         func get(newsletterId: String, subscriberId: String) async throws
             -> Campaign.Subscriber.Item
         {
-            try await Campaign.Subscriber.APIClient(api: api)
+            try await Campaign.Subscriber.API.Client(api: api)
                 .get(
                     newsletterId: newsletterId,
                     subscriberId: subscriberId
@@ -19,7 +19,7 @@ extension Campaign.Subscriber.Edit.Repository {
             subscriberId: String,
             form: Campaign.Subscriber.Form.Input
         ) async throws {
-            try await Campaign.Subscriber.APIClient(api: api)
+            try await Campaign.Subscriber.API.Client(api: api)
                 .update(
                     newsletterId: newsletterId,
                     subscriberId: subscriberId,

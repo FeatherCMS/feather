@@ -3,6 +3,7 @@ import UserModule
 import RedirectModule
 import AuthModule
 import ContactModule
+import AnalyticsModule
 import Environment
 import FeatherWebShared
 import Foundation
@@ -50,7 +51,7 @@ func buildRouter(
 
     router.addMiddleware {
         LogRequestsMiddleware(Logger.current.logLevel)
-        WebAppAnalyticsLogMiddleware(
+        Log.Middleware(
             apiBaseURL: environment.apiBaseURL,
             logFilter: WebAppAnalyticsLogFilter()
         )

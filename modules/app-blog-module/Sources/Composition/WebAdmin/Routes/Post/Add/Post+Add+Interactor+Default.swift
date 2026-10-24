@@ -15,7 +15,7 @@ import WebModuleWebAdmin
 extension Post.Add.Interactor {
     struct Default: Interface {
         let repository: any Post.Add.Repository.Interface
-        let optionRepository: any Post.Add.OptionRepository.Interface
+        let optionRepository: any Post.Association.Repository.Interface
 
         func loadOptions() async throws -> Post.Association.Options {
             try await optionRepository.loadOptions()

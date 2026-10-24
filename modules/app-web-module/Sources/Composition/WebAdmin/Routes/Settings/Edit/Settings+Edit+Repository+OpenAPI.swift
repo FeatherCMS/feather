@@ -164,7 +164,7 @@ extension Settings.Edit.Repository {
                     )
                 }
 
-                let detailsRepository = Page.Repository.AdminAPI.OpenAPI(
+                let detailsRepository = Page.Metadata.Repository.OpenAPI(
                     api: api
                 )
                 return try await withThrowingTaskGroup(
@@ -173,9 +173,7 @@ extension Settings.Edit.Repository {
                     for (index, item) in items.enumerated() {
                         group.addTask {
                             let details =
-                                try await detailsRepository.loadMetadata(
-                                    id: item.id
-                                )
+                                try await detailsRepository.load(id: item.id)
                             return IndexedHomePage(
                                 index: index,
                                 page: .init(

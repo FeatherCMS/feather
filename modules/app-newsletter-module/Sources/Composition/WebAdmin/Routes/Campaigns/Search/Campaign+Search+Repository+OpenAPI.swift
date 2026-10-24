@@ -12,7 +12,7 @@ extension Campaign.Search.Repository {
             page: Int,
             search: String?
         ) async throws -> Campaign.Search.Model {
-            try await Campaign.APIClient(api: api)
+            try await Campaign.API.Client(api: api)
                 .search(
                     page: page,
                     search: search

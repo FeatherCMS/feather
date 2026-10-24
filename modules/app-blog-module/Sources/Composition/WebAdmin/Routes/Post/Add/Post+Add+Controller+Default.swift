@@ -241,7 +241,7 @@ extension Post.Add.Controller {
         ) async throws -> String {
             let schema = try await PublicContent.Repository
                 .OpenAPI(
-                    api: AppAPI.Client(
+                    api: API.App.Client(
                         environment: environment,
                         requestContext: context
                     )

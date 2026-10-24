@@ -18,7 +18,7 @@ extension Subscriber.Remove.Repository {
         let api: API.Client
 
         func remove(ids: [String], campaignId: String?) async throws {
-            try await Subscriber.List.Repository.APIClient(api: api)
+            try await Subscriber.List.Repository.Client(api: api)
                 .remove(subscriberIds: ids, campaignId: campaignId)
         }
     }

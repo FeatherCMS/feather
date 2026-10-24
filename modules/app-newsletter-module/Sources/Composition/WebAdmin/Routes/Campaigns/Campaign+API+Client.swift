@@ -5,8 +5,8 @@ import NewsletterAdminAPI
 import NewsletterModule
 import OpenAPIRuntime
 
-extension Campaign {
-    struct APIClient {
+extension Campaign.API {
+    struct Client {
         let api: API.Client
 
         func search(

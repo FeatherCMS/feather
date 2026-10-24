@@ -15,7 +15,7 @@ import WebModuleWebAdmin
 extension Post.Edit.Interactor {
     struct Default: Interface {
         let repository: any Post.Edit.Repository.Interface
-        let optionRepository: any Post.Add.OptionRepository.Interface
+        let optionRepository: any Post.Association.Repository.Interface
 
         func load(
             id: String

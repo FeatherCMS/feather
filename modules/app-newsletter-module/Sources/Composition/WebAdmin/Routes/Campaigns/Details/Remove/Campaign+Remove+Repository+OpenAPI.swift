@@ -10,11 +10,11 @@ extension Campaign.Remove.Repository {
         let api: API.Client
 
         func remove(id: String) async throws {
-            try await Campaign.APIClient(api: api).remove(id: id)
+            try await Campaign.API.Client(api: api).remove(id: id)
         }
 
         func remove(ids: [String]) async throws {
-            try await Campaign.APIClient(api: api).remove(ids: ids)
+            try await Campaign.API.Client(api: api).remove(ids: ids)
         }
     }
 }

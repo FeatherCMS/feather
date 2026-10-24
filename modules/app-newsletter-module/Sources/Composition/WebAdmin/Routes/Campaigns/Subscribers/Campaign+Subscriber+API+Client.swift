@@ -11,11 +11,13 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension Campaign.Subscriber {
-    struct APIClient {
+extension Campaign.Subscriber.API {
+    struct Client {
         let api: API.Client
 
-        func list(newsletterId: String) async throws -> [Item] {
+        func list(newsletterId: String) async throws -> [Campaign.Subscriber
+            .Item]
+        {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterSubscriberList(
                     path: .init(newsletterCampaignKey: newsletterId)
@@ -23,7 +25,7 @@ extension Campaign.Subscriber {
                 switch response {
                 case .ok(let value):
                     return try value.body.json.map {
-                        Item(
+                        Campaign.Subscriber.Item(
                             id: $0.id,
                             email: $0.email,
                             firstName: $0.firstName ?? "",
@@ -44,7 +46,10 @@ extension Campaign.Subscriber {
             }
         }
 
-        func create(newsletterId: String, form: Form.Input) async throws {
+        func create(
+            newsletterId: String,
+            form: Campaign.Subscriber.Form.Input
+        ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterSubscriberCreate(
                     path: .init(newsletterCampaignKey: newsletterId),
@@ -73,7 +78,7 @@ extension Campaign.Subscriber {
         }
 
         func get(newsletterId: String, subscriberId: String) async throws
-            -> Item
+            -> Campaign.Subscriber.Item
         {
             let email = try await email(
                 newsletterId: newsletterId,
@@ -89,7 +94,7 @@ extension Campaign.Subscriber {
                 switch response {
                 case .ok(let value):
                     let item = try value.body.json
-                    return Item(
+                    return Campaign.Subscriber.Item(
                         id: item.id,
                         email: item.email,
                         firstName: item.firstName ?? "",
@@ -114,7 +119,7 @@ extension Campaign.Subscriber {
         func update(
             newsletterId: String,
             subscriberId: String,
-            form: Form.Input
+            form: Campaign.Subscriber.Form.Input
         ) async throws {
             let email = try await email(
                 newsletterId: newsletterId,

@@ -7,7 +7,7 @@ extension Campaign.Subscriber.Add.Repository {
         func create(newsletterId: String, form: Campaign.Subscriber.Form.Input)
             async throws
         {
-            try await Campaign.Subscriber.APIClient(api: api)
+            try await Campaign.Subscriber.API.Client(api: api)
                 .create(
                     newsletterId: newsletterId,
                     form: form

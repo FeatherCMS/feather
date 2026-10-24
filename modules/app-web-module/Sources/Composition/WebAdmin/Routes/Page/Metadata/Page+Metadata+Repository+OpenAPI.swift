@@ -6,13 +6,11 @@ import WebAdminAPI
 import WebDomain
 import WebModule
 
-extension Page.Repository.AdminAPI {
+extension Page.Metadata.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func loadMetadata(
-            id: String
-        ) async throws -> AdminMetadataFormValue {
+        func load(id: String) async throws -> AdminMetadataFormValue {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.pageGet(
                     path: .init(pageId: id),
@@ -40,6 +38,5 @@ extension Page.Repository.AdminAPI {
                 }
             }
         }
-
     }
 }

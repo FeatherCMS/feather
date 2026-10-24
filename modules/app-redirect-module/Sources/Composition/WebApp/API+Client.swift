@@ -7,10 +7,8 @@ import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import RedirectAppAPI
 
-enum API {}
-
 extension API {
-    struct AppClient: Sendable {
+    struct Client: Sendable {
         let client: RedirectAppAPI.Client
 
         init(apiBaseURL: URL) {

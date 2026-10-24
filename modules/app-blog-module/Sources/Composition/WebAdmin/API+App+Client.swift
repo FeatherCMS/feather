@@ -6,7 +6,7 @@ public import FeatherWebShared
 import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 
-public enum AppAPI {
+extension API.App {
     public struct Client: Sendable {
         public let client: BlogAppAPI.Client
 

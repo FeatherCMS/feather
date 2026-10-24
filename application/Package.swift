@@ -411,6 +411,10 @@ let package = Package(
                     name: "AnalyticsWebApp",
                     package: "app-analytics-module"
                 ),
+                .product(
+                    name: "AnalyticsModule",
+                    package: "app-analytics-module"
+                ),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
