@@ -160,7 +160,8 @@ actor MockSessionQueries: Session.Detail.Query.Interface,
         return listResult
     }
 
-    func list(identityId: String) async throws -> Session.ListByIdentity.Output {
+    func list(identityId: String) async throws -> Session.ListByIdentity.Output
+    {
         listCallCount += 1
         lastQuery = .init(identityId: identityId)
         return .init(
