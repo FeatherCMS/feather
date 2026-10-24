@@ -1,6 +1,8 @@
 import FeatherModuleKit
+import Foundation
 public import NewsletterAdminAPI
 import NewsletterApplication
+import NewsletterModule
 
 extension AdminAPIGateway {
     public func newsletterCampaignCreate(
@@ -23,5 +25,17 @@ extension AdminAPIGateway {
             )
 
         return .created(.init(body: .json(map(result))))
+    }
+
+    private func map(
+        _ value: Campaign.Add.Output
+    ) -> Components.Schemas.NewsletterCampaignSchema {
+        .init(
+            key: value.key,
+            name: value.name,
+            fromEmail: value.fromEmail,
+            createdAt: value.createdAt.timeIntervalSince1970,
+            updatedAt: value.updatedAt.timeIntervalSince1970
+        )
     }
 }

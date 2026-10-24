@@ -1,6 +1,7 @@
 public import AccountAdminAPI
 import AccountApplication
 import AccountModule
+import Foundation
 import FeatherDomain
 import FeatherModuleKit
 
@@ -30,6 +31,18 @@ extension AdminAPIGateway {
             .init(
                 body: .json(invitationDetailSchema(from: result))
             )
+        )
+    }
+
+    private func invitationDetailSchema(
+        from output: Invitation.Edit.Output
+    ) -> Components.Schemas.InvitationSchemasDetail {
+        .init(
+            id: output.id,
+            email: output.email,
+            token: output.token,
+            roleIds: output.roleIDs,
+            expiresAt: output.expiresAt.timeIntervalSince1970
         )
     }
 }

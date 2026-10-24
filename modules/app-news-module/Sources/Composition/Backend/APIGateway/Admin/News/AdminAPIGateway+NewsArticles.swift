@@ -6,6 +6,7 @@ import NewsApplication
 import NewsDomain
 import NewsModule
 import WebApplication
+import WebModule
 
 extension AdminAPIGateway {
     public func newsArticlePost(
@@ -125,7 +126,27 @@ extension Components.Schemas.NewsArticleCreateSchema {
             content: content,
             imageAssetId: imageAssetId,
             categoryIds: Array(categoryIds ?? []),
-            metadata: metadata.pageAddMetadata(template: "news.article")
+            metadata: .init(
+                slug: metadata.slug,
+                template: "news.article",
+                publicationDate: metadata.publicationDate.map(
+                    Date.init(timeIntervalSince1970:)
+                ),
+                expirationDate: metadata.expirationDate.map(
+                    Date.init(timeIntervalSince1970:)
+                ),
+                status: WebModule.Metadata.Model.Status(rawValue: metadata.status)
+                    ?? .draft,
+                title: metadata.title,
+                excerpt: metadata.excerpt,
+                imageURL: metadata.imageURL,
+                canonicalURL: metadata.canonicalURL,
+                noIndex: metadata.noIndex ?? false,
+                primaryKeyword: metadata.primaryKeyword ?? "",
+                cssCodeInjection: metadata.cssCodeInjection,
+                javascriptCodeInjection: metadata.javascriptCodeInjection,
+                structuredDataCodeInjection: metadata.structuredDataCodeInjection
+            )
         )
     }
 
@@ -137,7 +158,27 @@ extension Components.Schemas.NewsArticleCreateSchema {
             content: content,
             imageAssetId: .some(imageAssetId),
             categoryIds: Array(categoryIds ?? []),
-            metadata: metadata.pageEditMetadata(template: "news.article")
+            metadata: .init(
+                slug: metadata.slug,
+                template: "news.article",
+                publicationDate: metadata.publicationDate.map(
+                    Date.init(timeIntervalSince1970:)
+                ),
+                expirationDate: metadata.expirationDate.map(
+                    Date.init(timeIntervalSince1970:)
+                ),
+                status: WebModule.Metadata.Model.Status(rawValue: metadata.status)
+                    ?? .draft,
+                title: metadata.title,
+                excerpt: metadata.excerpt,
+                imageURL: metadata.imageURL,
+                canonicalURL: metadata.canonicalURL,
+                noIndex: metadata.noIndex ?? false,
+                primaryKeyword: metadata.primaryKeyword ?? "",
+                cssCodeInjection: metadata.cssCodeInjection,
+                javascriptCodeInjection: metadata.javascriptCodeInjection,
+                structuredDataCodeInjection: metadata.structuredDataCodeInjection
+            )
         )
     }
 }
@@ -171,7 +212,7 @@ extension AdminAPIGateway {
             content: item.content,
             imageAssetId: item.imageAssetId,
             categoryIds: item.categoryIds,
-            metadata: map(item.metadata),
+            metadata: mapMetadata(item.metadata),
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
         )
@@ -187,7 +228,7 @@ extension AdminAPIGateway {
             content: item.content,
             imageAssetId: item.imageAssetId,
             categoryIds: item.categoryIds,
-            metadata: map(item.metadata),
+            metadata: mapMetadata(item.metadata),
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
         )
@@ -216,7 +257,7 @@ extension AdminAPIGateway {
             content: item.content,
             imageAssetId: item.imageAssetId,
             categoryIds: item.categoryIds,
-            metadata: map(item.metadata),
+            metadata: mapMetadata(item.metadata),
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
         )
@@ -230,6 +271,32 @@ extension AdminAPIGateway {
             title: item.title,
             excerpt: item.excerpt,
             imageAssetId: item.imageAssetId,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    private func mapMetadata(
+        _ item: WebModule.Metadata.Snapshot
+    ) -> Components.Schemas.NewsMetadataDetailSchema {
+        .init(
+            id: item.id,
+            referenceType: item.referenceType,
+            referenceID: item.referenceID,
+            slug: item.slug,
+            template: item.template,
+            publicationDate: item.publicationDate.timeIntervalSince1970,
+            expirationDate: item.expirationDate?.timeIntervalSince1970,
+            status: item.status.rawValue,
+            title: item.title,
+            excerpt: item.excerpt,
+            imageURL: item.imageURL,
+            canonicalURL: item.canonicalURL,
+            noIndex: item.noIndex,
+            primaryKeyword: item.primaryKeyword,
+            cssCodeInjection: item.cssCodeInjection,
+            javascriptCodeInjection: item.javascriptCodeInjection,
+            structuredDataCodeInjection: item.structuredDataCodeInjection,
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
         )

@@ -124,7 +124,27 @@ extension Components.Schemas.NewsCategoryCreateSchema {
             excerpt: excerpt,
             content: content,
             imageAssetId: imageAssetId,
-            metadata: metadata.pageAddMetadata(template: "news.category")
+            metadata: .init(
+                slug: metadata.slug,
+                template: "news.category",
+                publicationDate: metadata.publicationDate.map(
+                    Date.init(timeIntervalSince1970:)
+                ),
+                expirationDate: metadata.expirationDate.map(
+                    Date.init(timeIntervalSince1970:)
+                ),
+                status: WebModule.Metadata.Model.Status(rawValue: metadata.status)
+                    ?? .draft,
+                title: metadata.title,
+                excerpt: metadata.excerpt,
+                imageURL: metadata.imageURL,
+                canonicalURL: metadata.canonicalURL,
+                noIndex: metadata.noIndex ?? false,
+                primaryKeyword: metadata.primaryKeyword ?? "",
+                cssCodeInjection: metadata.cssCodeInjection,
+                javascriptCodeInjection: metadata.javascriptCodeInjection,
+                structuredDataCodeInjection: metadata.structuredDataCodeInjection
+            )
         )
     }
 
@@ -137,7 +157,27 @@ extension Components.Schemas.NewsCategoryCreateSchema {
             excerpt: excerpt,
             content: content,
             imageAssetId: .some(imageAssetId),
-            metadata: metadata.pageEditMetadata(template: "news.category")
+            metadata: .init(
+                slug: metadata.slug,
+                template: "news.category",
+                publicationDate: metadata.publicationDate.map(
+                    Date.init(timeIntervalSince1970:)
+                ),
+                expirationDate: metadata.expirationDate.map(
+                    Date.init(timeIntervalSince1970:)
+                ),
+                status: WebModule.Metadata.Model.Status(rawValue: metadata.status)
+                    ?? .draft,
+                title: metadata.title,
+                excerpt: metadata.excerpt,
+                imageURL: metadata.imageURL,
+                canonicalURL: metadata.canonicalURL,
+                noIndex: metadata.noIndex ?? false,
+                primaryKeyword: metadata.primaryKeyword ?? "",
+                cssCodeInjection: metadata.cssCodeInjection,
+                javascriptCodeInjection: metadata.javascriptCodeInjection,
+                structuredDataCodeInjection: metadata.structuredDataCodeInjection
+            )
         )
     }
 }
@@ -152,7 +192,7 @@ extension AdminAPIGateway {
             excerpt: item.excerpt,
             content: item.content,
             imageAssetId: item.imageAssetId,
-            metadata: map(item.metadata),
+            metadata: mapMetadata(item.metadata),
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
         )
@@ -167,7 +207,7 @@ extension AdminAPIGateway {
             excerpt: item.excerpt,
             content: item.content,
             imageAssetId: item.imageAssetId,
-            metadata: map(item.metadata),
+            metadata: mapMetadata(item.metadata),
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
         )
@@ -195,7 +235,7 @@ extension AdminAPIGateway {
             excerpt: item.excerpt,
             content: item.content,
             imageAssetId: item.imageAssetId,
-            metadata: map(item.metadata),
+            metadata: mapMetadata(item.metadata),
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
         )
@@ -209,6 +249,32 @@ extension AdminAPIGateway {
             title: item.title,
             excerpt: item.excerpt,
             imageAssetId: item.imageAssetId,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    private func mapMetadata(
+        _ item: WebModule.Metadata.Snapshot
+    ) -> Components.Schemas.NewsMetadataDetailSchema {
+        .init(
+            id: item.id,
+            referenceType: item.referenceType,
+            referenceID: item.referenceID,
+            slug: item.slug,
+            template: item.template,
+            publicationDate: item.publicationDate.timeIntervalSince1970,
+            expirationDate: item.expirationDate?.timeIntervalSince1970,
+            status: item.status.rawValue,
+            title: item.title,
+            excerpt: item.excerpt,
+            imageURL: item.imageURL,
+            canonicalURL: item.canonicalURL,
+            noIndex: item.noIndex,
+            primaryKeyword: item.primaryKeyword,
+            cssCodeInjection: item.cssCodeInjection,
+            javascriptCodeInjection: item.javascriptCodeInjection,
+            structuredDataCodeInjection: item.structuredDataCodeInjection,
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
         )

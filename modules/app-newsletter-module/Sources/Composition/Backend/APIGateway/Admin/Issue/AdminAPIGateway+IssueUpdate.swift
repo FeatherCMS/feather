@@ -2,10 +2,10 @@ import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
 import Foundation
+import Hummingbird
 public import NewsletterAdminAPI
 import NewsletterApplication
 import NewsletterDomain
-import Hummingbird
 
 extension AdminAPIGateway {
     private enum UpdateMaskFields: String, Sendable {
@@ -80,6 +80,23 @@ extension AdminAPIGateway {
                     map(result, campaignKey: input.path.newsletterCampaignKey)
                 )
             )
+        )
+    }
+
+    private func map(
+        _ value: Issue.Edit.Output,
+        campaignKey: String
+    ) -> Components.Schemas.NewsletterIssueSchema {
+        .init(
+            id: value.id,
+            campaignKey: campaignKey,
+            subject: value.subject,
+            content: value.content,
+            status: value.status.rawValue,
+            scheduledAt: value.scheduledDate?.timeIntervalSince1970,
+            sentAt: value.sentDate?.timeIntervalSince1970,
+            createdAt: value.createdAt.timeIntervalSince1970,
+            updatedAt: value.updatedAt.timeIntervalSince1970
         )
     }
 }

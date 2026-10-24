@@ -116,6 +116,10 @@ Keep entity-specific files in that entity's directory. Put cross-entity
 infrastructure such as the aggregate migration at the infrastructure root.
 Within a route feature, keep its files together under
 `Composition/WebAdmin/Routes/<Entity>/<Operation>/`.
+Name namespace-extension files after the namespace path, using dots between
+namespace components and no `+Namespace.swift` suffix. For example,
+`Invitation.Add.swift` declares `Invitation.Add`, and
+`Tag.Add.Controller.swift` declares `Tag.Add.Controller`.
 
 ## Namespaces and symbols
 
@@ -319,8 +323,10 @@ Within a route feature, keep its files together under
 ## Composition and WebAdmin
 
 Backend gateways adapt generated HTTP operations to application use cases;
-use-case factories are grouped under `UseCases/<Entity>/`. Keep API mapping
-helpers close to the operation or in a narrowly scoped entity mapping file.
+use-case factories are grouped under `UseCases/<Entity>/`. Put request and
+response mapping functions directly in the gateway operation file that invokes
+the corresponding use case. Do not create standalone mapping files (including
+entity-scoped `*Mappings.swift` files); keep each adapter beside its operation.
 The backend composition target owns backend gateway/factory namespaces;
 WebShared, WebApp, and WebAdmin own their corresponding shared, app, and admin
 composition namespaces. Keep app routes and middleware out of WebAdmin and

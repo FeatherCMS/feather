@@ -1,9 +1,11 @@
 import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
+import Foundation
+import Hummingbird
 public import NewsletterAdminAPI
 import NewsletterApplication
-import Hummingbird
+import NewsletterModule
 
 extension AdminAPIGateway {
     private enum UpdateMaskFields: String, Sendable {
@@ -50,5 +52,17 @@ extension AdminAPIGateway {
                 )
             )
         return .ok(.init(body: .json(map(result))))
+    }
+
+    private func map(
+        _ value: Campaign.Edit.Output
+    ) -> Components.Schemas.NewsletterCampaignSchema {
+        .init(
+            key: value.key,
+            name: value.name,
+            fromEmail: value.fromEmail,
+            createdAt: value.createdAt.timeIntervalSince1970,
+            updatedAt: value.updatedAt.timeIntervalSince1970
+        )
     }
 }

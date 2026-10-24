@@ -1,49 +1,11 @@
 import BlogAdminAPI
 import BlogApplication
-import FeatherApplication
-import FeatherModuleKit
 import Foundation
 import WebAdminAPI
-import WebApplication
 import WebDomain
 import WebModule
 
 extension AdminAPIGateway {
-    func timestamp(
-        _ date: Date
-    ) -> Double {
-        date.timeIntervalSince1970
-    }
-
-    func timestamp(
-        _ date: Date?
-    ) -> Double? {
-        date.map(timestamp)
-    }
-
-    func mapSortDirection(
-        _ direction: BlogAdminAPI.Components.Schemas.SortDirection
-    ) -> Search.SortDirection {
-        switch direction {
-        case .asc:
-            .asc
-        case .desc:
-            .desc
-        }
-    }
-
-    func map(
-        _ page: BlogAdminAPI.Components.Schemas.SearchPageSchema?
-    ) -> Search.Page {
-        let defaults = Search.Page()
-        return
-            Search.Page(
-                size: page?.size ?? defaults.size,
-                number: page?.number ?? defaults.number
-            )
-            .normalized()
-    }
-
     func mapMetadataStatus(
         _ value: String?
     ) -> WebModule.Metadata.Model.Status {
@@ -111,15 +73,13 @@ extension AdminAPIGateway {
         let canonicalURL = patch.canonicalUrl ?? detail.canonicalUrl
         let noIndex = patch.noIndex ?? detail.noIndex
         let primaryKeyword = patch.primaryKeyword ?? detail.primaryKeyword
-        let cssCodeInjection =
-            patch.cssCodeInjection
-            ?? detail.cssCodeInjection
+        let cssCodeInjection = patch.cssCodeInjection ?? detail.cssCodeInjection
         let javascriptCodeInjection =
-            patch.javascriptCodeInjection
-            ?? detail.javascriptCodeInjection
+            patch.javascriptCodeInjection ?? detail.javascriptCodeInjection
         let structuredDataCodeInjection =
             patch.structuredDataCodeInjection
             ?? detail.structuredDataCodeInjection
+
         return .init(
             slug: patch.slug ?? detail.slug,
             template: patch.template ?? detail.template,

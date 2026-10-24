@@ -47,4 +47,23 @@ extension AppAPIGateway {
             .init(body: .json(mapPublicMenu(result)))
         )
     }
+
+    private func mapPublicMenu(
+        _ menu: Menu.Public.List.Output.Menu
+    ) -> WebAppAPI.Components.Schemas.MenuSchema {
+        .init(
+            id: menu.id,
+            key: menu.key,
+            name: menu.name,
+            items: menu.items.map {
+                .init(
+                    id: $0.id,
+                    label: $0.label,
+                    url: $0.url,
+                    priority: $0.priority,
+                    isBlank: $0.isBlank
+                )
+            }
+        )
+    }
 }

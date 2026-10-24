@@ -1,9 +1,10 @@
 public import ContactAdminAPI
-import ContactModule
 import ContactApplication
 import ContactDomain
+import ContactModule
 import FeatherApplication
 import FeatherModuleKit
+import Foundation
 
 extension AdminAPIGateway {
     public func contactFieldUpdate(
@@ -33,5 +34,21 @@ extension AdminAPIGateway {
                     )
             )
         return .ok(.init(body: .json(map(result))))
+    }
+
+    private func map(
+        _ value: FormField.Edit.Output
+    ) -> Components.Schemas.FormFieldSchema {
+        .init(
+            id: value.id,
+            key: value.key,
+            _type: value.type.rawValue,
+            label: value.label,
+            allowedValues: value.allowedValues.map(\.value),
+            isRequired: value.isRequired,
+            position: value.position,
+            createdAt: value.createdAt.timeIntervalSince1970,
+            updatedAt: value.updatedAt.timeIntervalSince1970
+        )
     }
 }
