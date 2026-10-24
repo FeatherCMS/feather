@@ -793,11 +793,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/media/assets/{mediaAssetId}/variants`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantQuery)`.
-    public func mediaAssetVariantQuery(_ input: Operations.MediaAssetVariantQuery.Input) async throws -> Operations.MediaAssetVariantQuery.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantList)`.
+    public func mediaAssetVariantList(_ input: Operations.MediaAssetVariantList.Input) async throws -> Operations.MediaAssetVariantList.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.MediaAssetVariantQuery.id,
+            forOperation: Operations.MediaAssetVariantList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/media/assets/{}/variants",
@@ -842,7 +842,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.MediaAssetVariantQuery.Output.NotFound.Body
+                    let body: Operations.MediaAssetVariantList.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -864,7 +864,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.MediaAssetVariantQuery.Output.Unauthorized.Body
+                    let body: Operations.MediaAssetVariantList.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -886,7 +886,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.MediaAssetVariantQuery.Output.Forbidden.Body
+                    let body: Operations.MediaAssetVariantList.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [

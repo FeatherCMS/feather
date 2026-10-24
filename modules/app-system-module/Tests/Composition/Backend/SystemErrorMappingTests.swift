@@ -28,11 +28,11 @@ struct SystemErrorMappingTests {
     func missingEditedRecordsMapToNotFound() {
         let variable =
             SystemBackend.ErrorAdapter.adapt(
-                SystemModule.Variable.Edit.UseCase.Error.notFound
+                SystemModule.Variable.Edit.Error.notFound
             ) as? any HTTPErrorRepresentable
         let permission =
             SystemBackend.ErrorAdapter.adapt(
-                SystemModule.Permission.Edit.UseCase.Error.notFound
+                SystemModule.Permission.Edit.Error.notFound
             ) as? any HTTPErrorRepresentable
 
         #expect(variable?.status == .notFound)

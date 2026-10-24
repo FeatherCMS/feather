@@ -1,6 +1,5 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import Foundation
 import MediaDomain
 public import MediaModule
 
@@ -8,11 +7,11 @@ extension Asset.Folder.Add {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Asset.Folder.Add.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Asset.Folder.Add.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -26,35 +25,35 @@ extension Asset.Folder.Add {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            let name = input.name.whitespaceTrimmed
-            let slug = normalizedSlug(name)
-            guard !name.isEmpty, !slug.isEmpty else {
-                throw Asset.Folder.Add.Error.invalidName
-            }
             return try await transaction.run { scope in
                 let parent: Asset.Folder.Model?
                 if let parentId = input.parentId {
                     parent = try await scope.folders.find(id: parentId)
                     if parent == nil {
-                        throw Asset.Folder.Add.Error.parentNotFound
+                        throw Error.parentNotFound
                     }
                 }
                 else {
                     parent = nil
                 }
-                let slugPath = parent.map { "\($0.slugPath)/\(slug)" } ?? slug
-                if try await scope.folders.find(slugPath: slugPath) != nil {
-                    throw Asset.Folder.Add.Error.duplicatePath
-                }
-                let folder = try await scope.folders
-                    .insert(
-                        Asset.Folder.Model.create(
-                            parentId: parent?.id,
-                            name: name,
-                            slug: slug,
-                            slugPath: slugPath
-                        )
+                let newFolder: Asset.Folder.Model.New
+                do {
+                    newFolder = try Asset.Folder.Model.create(
+                        parentId: parent?.id,
+                        name: input.name,
+                        parentPath: parent?.slugPath
                     )
+                }
+                catch {
+                    throw Error.invalidName
+                }
+                let existing = try await scope.folders.find(
+                    slugPath: newFolder.slugPath
+                )
+                if existing != nil {
+                    throw Error.duplicatePath
+                }
+                let folder = try await scope.folders.insert(newFolder)
                 return .init(
                     id: folder.id,
                     parentId: folder.parentId,
@@ -69,14 +68,4 @@ extension Asset.Folder.Add {
             }
         }
     }
-}
-
-private func normalizedSlug(_ value: String) -> String {
-    value.lowercased()
-        .replacingOccurrences(
-            of: "[^a-z0-9]+",
-            with: "-",
-            options: .regularExpression
-        )
-        .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
 }

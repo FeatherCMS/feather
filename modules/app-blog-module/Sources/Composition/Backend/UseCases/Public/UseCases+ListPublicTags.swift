@@ -18,13 +18,8 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Public.Tag.List.Scope(
-                    tag: Public.Tag.Database(
-                        context: context,
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
-                    ),
-                    metadata: WebModule.Metadata.Query.Database(
+                    tag: Public.Tag.List.Query.Database(context: context),
+                    metadata: WebModule.Metadata.Reference.Query.Database(
                         context: context
                     )
                 )

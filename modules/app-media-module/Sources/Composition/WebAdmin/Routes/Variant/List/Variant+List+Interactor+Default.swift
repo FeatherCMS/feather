@@ -7,7 +7,7 @@ extension Variant.List.Interactor {
     struct Default: Interface {
         let repository: any Variant.List.Repository.Interface
 
-        func listMediaVariants(
+        func list(
             page: Int,
             search: String?
         ) async throws -> AdminListModel<
@@ -16,7 +16,7 @@ extension Variant.List.Interactor {
             do {
                 let body =
                     try await repository
-                    .listMediaVariants(page: page, search: search)
+                    .search(page: page, search: search)
                     .body.json
                 return .init(
                     items: body.data.items,

@@ -5,7 +5,7 @@ extension Rule {
     struct PathCollection: PathCollectionRepresentable {
         var pathMap: PathMap {
             [
-                "api/v1/redirect/rules": Get.PathItem()
+                "api/v1/redirect/rules": PathItem()
             ]
         }
     }

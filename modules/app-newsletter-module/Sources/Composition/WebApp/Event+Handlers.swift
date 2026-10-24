@@ -1,13 +1,12 @@
 public import FeatherModuleKit
 import NewsletterModule
-public import NewsletterWebShared
 import WebModuleWebApp
 
 extension Event {
     public enum Handlers {
         public static func registerMarkdown(
             in registry: inout EventRegistry,
-            submissionRoute: NewsletterSubscriptionRoute = .standard,
+            submissionRoute: Campaign.Subscription.Route = .standard,
             turnstileSiteKey: String? = nil
         ) {
             registry.register(

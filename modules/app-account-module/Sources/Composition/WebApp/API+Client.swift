@@ -1,10 +1,6 @@
 public import AccountAppAPI
-import AsyncHTTPClient
+import AccountWebShared
 public import FeatherWebShared
-import Foundation
-import Hummingbird
-import NIOCore
-import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 
 extension API {
@@ -15,72 +11,33 @@ extension API {
             environment: AppEnvironment,
             requestContext: DefaultRequestContext
         ) {
+            let configuration = AccountAPIClientSupport.configuration(
+                sessionToken: requestContext.sessionToken
+            )
             self.client = .init(
                 serverURL: environment.apiBaseURL,
-                transport: AsyncHTTPClientTransport(
-                    configuration: .init(client: .shared, timeout: .seconds(3))
-                ),
-                middlewares: [
-                    ClientAPIAuthMiddleware(
-                        sessionToken: requestContext.sessionToken
-                    )
-                ]
+                transport: configuration.transport,
+                middlewares: configuration.middlewares
             )
         }
 
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (AccountAppAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            do {
-                return try await operation(client)
-            }
-            catch let error as OpenAPIRepositoryError {
-                throw error
-            }
-            catch {
-                throw OpenAPIRepositoryError.transport(
-                    description: String(describing: error)
-                )
-            }
+            try await AccountAPIClientSupport.withOpenAPIRepositoryErrorMapping(
+                operation,
+                using: client
+            )
         }
 
         public func failure(
             statusCode: Int,
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
-            OpenAPIRepositoryError.parsedFailure(
+            try await AccountAPIClientSupport.failure(
                 statusCode: statusCode,
-                responseBody: try await responseBody?.collectString()
+                responseBody: responseBody
             )
         }
-    }
-    }
-
-    private struct ClientAPIAuthMiddleware: OpenAPIRuntime.ClientMiddleware {
-    let sessionToken: String?
-
-    func intercept(
-        _ request: HTTPRequest,
-        body: HTTPBody?,
-        baseURL: URL,
-        operationID: String,
-        next:
-            @concurrent @Sendable (HTTPRequest, HTTPBody?, URL) async throws ->
-            (HTTPResponse, HTTPBody?)
-    ) async throws -> (HTTPResponse, HTTPBody?) {
-        var authenticatedRequest = request
-        if let sessionToken {
-            authenticatedRequest.headerFields[.authorization] =
-                "Bearer \(sessionToken)"
-        }
-        return try await next(authenticatedRequest, body, baseURL)
-    }
-    }
-
-    extension HTTPBody {
-    fileprivate func collectString() async throws -> String? {
-        var buffer = ByteBuffer()
-        try await collect(upTo: .max, into: &buffer)
-        return buffer.getString(at: 0, length: buffer.readableBytes)
     }
 }

@@ -27,15 +27,15 @@ struct UserErrorMappingTests {
     func missingRecordsMapToNotFound() {
         let identity =
             UserBackend.ErrorAdapter.adapt(
-                Identity.Edit.UseCase.Error.identityNotFound
+                Identity.Edit.Error.identityNotFound
             ) as? any HTTPErrorRepresentable
         let missingRoleDuringIdentityEdit =
             UserBackend.ErrorAdapter.adapt(
-                Identity.Edit.UseCase.Error.roleNotFound
+                Identity.Edit.Error.roleNotFound
             ) as? any HTTPErrorRepresentable
         let role =
             UserBackend.ErrorAdapter.adapt(
-                Role.Edit.UseCase.Error.notFound
+                Role.Edit.Error.notFound
             ) as? any HTTPErrorRepresentable
 
         #expect(identity?.status == .notFound)

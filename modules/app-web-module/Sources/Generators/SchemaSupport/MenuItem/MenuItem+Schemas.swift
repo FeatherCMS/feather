@@ -1,6 +1,5 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 public struct MenuItemIdField: StringSchemaRepresentable {
     public var example: String? = "wmi_home"

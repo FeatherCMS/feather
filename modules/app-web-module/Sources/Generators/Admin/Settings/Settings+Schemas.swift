@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-import OpenAPIKit30
 
 struct SettingsIdField: StringSchemaRepresentable {
     var example: String? = "web-settings"

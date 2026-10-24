@@ -8,8 +8,9 @@ WebAdmin/WebApp composition, and tests.
 
 - `AccountModule`, `AccountDomain`, `AccountApplication`,
   `AccountInfrastructure`, `AccountAdminAPI`, `AccountAppAPI`,
-  `AccountBackend`, `AccountWebAdmin`, and `AccountWebApp` are separate Swift
-  targets. Keep declarations in the target that owns their responsibility.
+  `AccountBackend`, `AccountWebShared`, `AccountWebAdmin`, and
+  `AccountWebApp` are separate Swift targets. Keep declarations in the target
+  that owns their responsibility.
 - `AccountModule` is the Swift target namespace, not a declared enum. Keep
   module-level `Event` and `Permissions` beside the entity namespaces, matching
   the User and System modules.
@@ -49,7 +50,9 @@ WebAdmin/WebApp composition, and tests.
 ## Backend and API
 
 - Backend gateways adapt generated API operations to application use-cases.
-  Keep entity-specific factories and mappings grouped by entity/operation.
+  Keep entity-specific factories grouped by entity. Put each request/response
+  mapping function in the gateway operation file that uses it; do not create
+  standalone mapping/helper files.
 - Keep App and Admin API schemas and generators separate. Shared schemas are
   duplicated at the API boundary unless another module genuinely consumes a
   dedicated generator-support product.
@@ -74,7 +77,9 @@ WebAdmin/WebApp composition, and tests.
   authorization, nonce, and error-boundary concerns; presenters prepare
   display state; repositories map generated API models.
 - Keep App and Admin composition independent. Shared helpers belong in a
-  WebShared target only when both surfaces genuinely use them.
+  WebShared target only when both surfaces genuinely use them. Account's
+  shared API transport, authentication middleware, and OpenAPI error handling
+  belong in `AccountWebShared`.
 
 ## Validation
 
@@ -84,5 +89,6 @@ WebAdmin/WebApp composition, and tests.
 - Keep test targets under `Tests/Layers` and `Tests/Composition`, matching the
   layer they exercise. HTTP tests should use the real generated router/gateway
   with mock database and authorization dependencies.
-- Before handoff, run Swift formatting, package build/tests, generator
-  validation, and Docker test configuration when those surfaces changed.
+- Repository-level `AGENTS.md` forbids running tests or validations in agent
+  workflows. Keep the appropriate formatting, package, generator, and Docker
+  checks in the contributor's handoff checklist, but do not execute them here.

@@ -13,7 +13,7 @@ extension MenuItem.List.Repository {
             self.api = api
         }
 
-        func listMenuItems(
+        func search(
             menuId: String,
             page: Int,
             search: String?

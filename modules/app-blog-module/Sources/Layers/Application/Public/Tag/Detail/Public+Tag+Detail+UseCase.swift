@@ -1,5 +1,5 @@
 //
-//  GetPublicTag.swift
+//  Public+Tag+Detail+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -30,7 +30,7 @@ extension Public.Tag.Detail {
                     ),
                     metadata.isDirectlyAccessible(at: now)
                 else {
-                    throw Error(message: "Tag not found")
+                    throw Public.Tag.Detail.Error(message: "Tag not found")
                 }
 
                 let tagID = id
@@ -56,18 +56,13 @@ extension Public.Tag.Detail {
     }
 }
 
-extension Public.Tag.Detail.UseCase {
+extension UseCase {
     fileprivate static func publicPosts(
         matchingTagID tagID: String,
         now: Date,
-        context: Public.Tag.Detail.Scope
+        context: Scope
     ) async throws -> [Public.Post.Summary.Item] {
-        let posts = try await context.postList.list(
-            query: .init(
-                page: .init(size: 10_000, number: 1),
-                sort: [.init(field: .createdAt, direction: .desc)]
-            )
-        )
+        let posts = try await context.postList.list()
         var result: [Public.Post.Summary.Item] = []
         for item in posts.items {
             let post = try await context.postDetail.find(id: item.id)

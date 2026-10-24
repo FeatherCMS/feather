@@ -11,7 +11,7 @@ import WebComponents
 
 extension Asset.File.List {
     struct Infrastructure: Sendable {
-        let repository: Asset.File.List.Repository.OpenAPI
+        let repository: any Asset.File.List.Repository.Interface
 
         init(api: API.Client) {
             self.repository = .init(api: api)

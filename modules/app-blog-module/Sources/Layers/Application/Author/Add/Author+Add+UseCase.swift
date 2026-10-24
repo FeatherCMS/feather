@@ -6,7 +6,7 @@ import SystemApplication
 import WebApplication
 
 //
-//  Author.Add.UseCase.swift
+//  Author+Add+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -14,11 +14,11 @@ import WebApplication
 extension Author.Add {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Author.Add.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Author.Add.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction

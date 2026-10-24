@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 extension Contact.Form.Post {
     struct Operation: Contact.Form.Operation {

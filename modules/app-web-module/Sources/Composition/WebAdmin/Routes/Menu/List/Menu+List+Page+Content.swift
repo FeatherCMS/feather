@@ -29,7 +29,7 @@ extension WebModule.Menu.List.Page {
 
         func html(context: inout BuilderContext) -> Div {
             let canDelete = permissions.allows(
-                WebModule.Permissions.Menus.delete
+                Menu.Permissions.delete
             )
             let hasActiveQuery = !(search?.isEmpty ?? true)
 
@@ -69,7 +69,7 @@ extension WebModule.Menu.List.Page {
                                         icon: FeatherIcons.inbox(),
                                         action: {
                                             if permissions.allows(
-                                                WebModule.Permissions.Menus
+                                                Menu.Permissions
                                                     .create
                                             ) {
                                                 context.build(
@@ -158,7 +158,7 @@ extension WebModule.Menu.List.Page {
                     },
                     toolbar: {
                         if permissions.allows(
-                            WebModule.Permissions.Menus.create
+                            Menu.Permissions.create
                         ) {
                             context.build(
                                 AdminListToolbar {

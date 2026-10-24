@@ -16,7 +16,7 @@ extension Submission.List {
             public let createdAt: Date
             public let updatedAt: Date
 
-            init(model: Submission.Model) {
+            package init(model: Submission.Model) {
                 id = model.id
                 formId = model.formId
                 valuesJSON = model.valuesJSON

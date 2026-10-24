@@ -1,5 +1,5 @@
 //
-//  Post.List.Output.swift
+//  Post+List+Output.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.

@@ -1,5 +1,6 @@
 import AnalyticsAdminAPI
 import AnalyticsModule
+import AnalyticsApplication
 import CSS
 import FeatherWebAdmin
 import HTML
@@ -7,6 +8,10 @@ import Hummingbird
 import SGML
 import WebBuilders
 import WebComponents
+
+private func analyticsLogSearchInput() -> HTML.Input {
+    HTML.Input()
+}
 
 extension Log.List {
     struct Component: WebComponents.Component {
@@ -480,7 +485,7 @@ extension Log.List {
                 .class("analytics-logs__filters-row")
                 Div {
                     Div {
-                        Input()
+                        analyticsLogSearchInput()
                             .type(.search)
                             .name("search")
                             .value(state.search)

@@ -2,6 +2,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import MediaWebAdmin
+import MediaModule
 import OpenAPIRuntime
 import WebAdminAPI
 import WebModule
@@ -29,9 +30,9 @@ extension Page.View.Repository {
                         title: page.title,
                         excerpt: page.excerpt,
                         content: page.content,
-                        imageAsset: try await mediaAPI.loadImageAsset(
-                            assetId: page.imageAssetId
-                        )
+                        imageAsset: try await Asset.File.View.Repository.OpenAPI(
+                            api: mediaAPI
+                        ).loadImageAsset(assetId: page.imageAssetId)
                     )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound

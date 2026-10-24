@@ -59,8 +59,7 @@ public struct MediaFolderMigration: DatabaseMigration {
                     Asset.Folder.Model.create(
                         parentId: parentId,
                         name: component,
-                        slug: component.slugified,
-                        slugPath: currentPath
+                        parentPath: currentPath.isEmpty ? nil : currentPath
                     )
                 )
                 parentId = folder.id

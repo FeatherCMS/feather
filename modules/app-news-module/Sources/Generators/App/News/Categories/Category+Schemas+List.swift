@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-import OpenAPIKit30
 
 public extension Category.Schemas {
     struct List: ArraySchemaRepresentable {

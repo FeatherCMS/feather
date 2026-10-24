@@ -1,5 +1,5 @@
 //
-//  Article.swift
+//  Article+Model.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -127,15 +127,17 @@ extension Article.Model {
     }
 
     public mutating func update(
-        title: String? = nil,
-        excerpt: String? = nil,
-        content: String? = nil,
-        imageAssetId: String?? = nil,
-        categoryIds: [String]? = nil
+        title: FieldChange<String> = .unchanged,
+        excerpt: FieldChange<String> = .unchanged,
+        content: FieldChange<String> = .unchanged,
+        imageAssetId: OptionalFieldChange<String> = .unchanged,
+        categoryIds: FieldChange<[String]> = .unchanged
     ) throws(Self.Error) {
-        let newTitle = title ?? self.title
-        let newExcerpt = excerpt ?? self.excerpt
-        let newContent = content ?? self.content
+        let newTitle = title.apply(to: self.title)
+        let newExcerpt = excerpt.apply(to: self.excerpt)
+        let newContent = content.apply(to: self.content)
+        let newImageAssetId = imageAssetId.apply(to: self.imageAssetId)
+        let newCategoryIds = categoryIds.apply(to: self.categoryIds)
 
         try Self.validate(title: newTitle)
         try Self.validate(excerpt: newExcerpt)
@@ -144,7 +146,7 @@ extension Article.Model {
         self.title = newTitle
         self.excerpt = newExcerpt
         self.content = newContent
-        self.imageAssetId = imageAssetId ?? self.imageAssetId
-        self.categoryIds = categoryIds ?? self.categoryIds
+        self.imageAssetId = newImageAssetId
+        self.categoryIds = newCategoryIds
     }
 }

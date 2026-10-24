@@ -5,8 +5,8 @@ public import struct Foundation.Data
 public import struct Foundation.Date
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/get(analyticsLogList)`.
     func analyticsLogList(_ input: Operations.AnalyticsLogList.Input) async throws -> Operations.AnalyticsLogList.Output
     /// - Remark: HTTP `POST /api/v1/admin/analytics/logs/overview`.
     /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/overview/post(analyticsLogOverview)`.
@@ -21,8 +21,8 @@ public protocol APIProtocol: Sendable {
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/get(analyticsLogList)`.
     public func analyticsLogList(headers: Operations.AnalyticsLogList.Input.Headers = .init()) async throws -> Operations.AnalyticsLogList.Output {
         try await analyticsLogList(Operations.AnalyticsLogList.Input(headers: headers))
     }

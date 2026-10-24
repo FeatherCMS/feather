@@ -33,7 +33,7 @@ extension APIProtocol {
                 )
             },
             method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/analytics/logs/")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/analytics/logs")
         )
         try transport.register(
             {
@@ -72,8 +72,8 @@ extension APIProtocol {
 }
 
 fileprivate extension UniversalServer where APIHandler: APIProtocol {
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/get(analyticsLogList)`.
     func analyticsLogList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,

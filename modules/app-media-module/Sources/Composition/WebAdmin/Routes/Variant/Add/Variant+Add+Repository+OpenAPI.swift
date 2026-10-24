@@ -5,7 +5,7 @@ import MediaModule
 import OpenAPIRuntime
 
 extension Variant.Add.Repository {
-    struct OpenAPI: Variant.Add.Repository.Interface {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func create(

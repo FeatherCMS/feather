@@ -84,6 +84,6 @@ module's current implementation.
   concrete driver. Composition tests exercise the generated API router and
   gateway with the mock database and authorizer; assert the HTTP contract and
   consume mock responses.
-- Before handoff, run formatting, `swift test --parallel`, package build, and
-  generator validation when the corresponding sources changed. Build/test
-  downstream consumers after public namespace or API changes.
+- Repository-level `AGENTS.md` forbids running tests or validations in agent
+  workflows. Record formatting, package, generator, and downstream-consumer
+  checks in the handoff notes when relevant, but do not execute them here.

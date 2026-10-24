@@ -15,7 +15,7 @@ extension UseCases {
                 Post.Detail.Scope(
                     post: Post.Detail.Query.Database(
                         context: context,
-                        metadata: WebModule.Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Reference.Query.Database(
                             context: context
                         )
                     )

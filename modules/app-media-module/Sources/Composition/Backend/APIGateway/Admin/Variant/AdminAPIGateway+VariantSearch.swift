@@ -2,6 +2,7 @@ import FeatherApplication
 import FeatherModuleKit
 public import MediaAdminAPI
 import MediaApplication
+import MediaModule
 
 extension AdminAPIGateway {
     public func mediaVariantQuery(_ input: Operations.MediaVariantQuery.Input)

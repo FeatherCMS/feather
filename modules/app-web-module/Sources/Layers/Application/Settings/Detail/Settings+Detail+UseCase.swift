@@ -1,6 +1,5 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import WebDomain
 public import WebModule
 
 extension Settings.Detail {
@@ -19,7 +18,7 @@ extension Settings.Detail {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Settings.Detail.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -28,7 +27,7 @@ extension Settings.Detail {
             }
 
             return try await query.run { scope in
-                try await scope.settings.get().asDetail
+                try await scope.settings.get()
             }
         }
     }

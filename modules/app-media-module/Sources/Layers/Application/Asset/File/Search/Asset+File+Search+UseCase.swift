@@ -3,7 +3,7 @@ public import FeatherModuleKit
 public import MediaModule
 
 //
-//  Asset.File.Search.UseCase.swift
+//  Asset+File+Search+UseCase.swift
 //  app-media-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -12,11 +12,11 @@ extension Asset.File.Search {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Asset.File.Search.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Asset.File.Search.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query

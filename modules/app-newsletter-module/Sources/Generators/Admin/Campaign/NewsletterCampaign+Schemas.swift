@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 struct NewsletterIdField: StringSchemaRepresentable {}
 struct NewsletterKeyField: StringSchemaRepresentable {}

@@ -1,19 +1,18 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterDomain
 public import NewsletterModule
 
 extension Delivery.List {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Delivery.List.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Delivery.List.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
-            self.transaction = transaction
+            self.query = query
         }
 
         public func execute(
@@ -25,17 +24,8 @@ extension Delivery.List {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            return try await transaction.run { scope in
-                guard
-                    let campaign = try await scope.newsletter.findBy(
-                        key: input.campaignKey
-                    ),
-                    let issue = try await scope.issue.findBy(id: input.issueId),
-                    issue.newsletterId == campaign.id
-                else { throw Error.notFound }
-                let items = try await scope.delivery.list(issueId: input.issueId)
-                    .map(Item.init(model:))
-                return Output(items: items)
+            return try await query.run { scope in
+                try await scope.delivery.list(input: input)
             }
         }
 

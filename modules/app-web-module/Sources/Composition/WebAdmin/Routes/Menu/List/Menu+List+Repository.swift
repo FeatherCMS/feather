@@ -7,7 +7,7 @@ import WebModule
 extension WebModule.Menu.List {
     enum Repository {
         protocol Interface: Sendable {
-            func listMenus(
+            func search(
                 page: Int,
                 search: String?
             ) async throws -> WebModule.Menu.List.Model

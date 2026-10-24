@@ -20,7 +20,7 @@ extension UseCases {
                 Page.Detail.Scope(
                     page: Page.Detail.Query.Database(
                         context: context,
-                        metadata: Metadata.Query.Database(
+                        metadata: Metadata.Reference.Query.Database(
                             context: context
                         )
                     )

@@ -1,4 +1,3 @@
-import ContactDomain
 public import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
@@ -6,14 +5,14 @@ public import FeatherModuleKit
 extension Submission.Detail {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
-            self.transaction = transaction
+            self.query = query
         }
 
         public func execute(
@@ -25,18 +24,11 @@ extension Submission.Detail {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            return try await transaction.run { scope in
-                guard let form = try await scope.form.findBy(key: input.formKey)
-                else {
-                    throw Error.formNotFound
-                }
-                guard
-                    let value = try await scope.submission.findBy(id: input.id),
-                    value.formId == form.id
-                else {
-                    throw Error.submissionNotFound
-                }
-                return value.asDetail
+            return try await query.run { scope in
+                try await scope.submission.find(
+                    formKey: input.formKey,
+                    id: input.id
+                )
             }
         }
     }

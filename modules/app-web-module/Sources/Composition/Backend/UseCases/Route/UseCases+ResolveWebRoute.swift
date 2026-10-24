@@ -18,7 +18,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 WebRoute.Resolve.Scope(
-                    metadata: Metadata.Query.Database(
+                    metadata: WebRoute.Resolve.Query.Database(
                         context: context
                     )
                 )

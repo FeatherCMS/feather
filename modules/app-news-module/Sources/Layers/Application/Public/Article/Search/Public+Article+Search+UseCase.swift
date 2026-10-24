@@ -13,21 +13,17 @@ extension Public.Article.Search {
         }
 
         public func execute(input: Input) async throws -> Output {
-            let rawSearch = input.query.search?.trimmingCharacters(
-                in: .whitespacesAndNewlines
-            )
+            let rawSearch = input.query.search?
+                .trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
             let search = rawSearch?.isEmpty == false ? rawSearch : nil
             let pageSize = max(1, input.query.pageSize)
             let now = Date()
 
             return try await query.run { scope in
-                let countInput = Input.Query(
-                    search: search,
-                    pageNumber: 1,
-                    pageSize: pageSize
-                )
                 let total = try await scope.article.countPublic(
-                    query: countInput
+                    search: search
                 )
                 let pageCount = max(1, (total + pageSize - 1) / pageSize)
                 let page = min(max(1, input.query.pageNumber), pageCount)
@@ -53,22 +49,26 @@ extension Public.Article.Search {
                 let categoryIDsByArticleID = try await scope.articleCategoryIDs
                     .categoryIDs(for: publicArticles.map(\.id))
 
-                let items: [Public.Article.Summary.Item] = publicArticles
+                let items: [Public.Article.Summary.Item] =
+                    publicArticles
                     .compactMap { article -> Public.Article.Summary.Item? in
-                    guard let metadata = metadataByID[article.id] else {
-                        return nil
-                    }
-                    return Public.Article.Summary.Item(
-                        id: article.id,
-                        title: article.title,
-                        excerpt: article.excerpt,
-                        imageAssetId: article.imageAssetId,
-                        imageURL: "",
-                        media: nil,
-                        metadata: metadata,
-                        readingTime: NewsReadingTime.minutes(for: article.content),
-                        categoryIDs: categoryIDsByArticleID[article.id] ?? []
-                    )
+                        guard let metadata = metadataByID[article.id] else {
+                            return nil
+                        }
+                        return Public.Article.Summary.Item(
+                            id: article.id,
+                            title: article.title,
+                            excerpt: article.excerpt,
+                            imageAssetId: article.imageAssetId,
+                            imageURL: "",
+                            media: nil,
+                            metadata: metadata,
+                            readingTime: Public.Article.ReadingTime.minutes(
+                                for: article.content
+                            ),
+                            categoryIDs: categoryIDsByArticleID[article.id]
+                                ?? []
+                        )
                     }
                 return .init(
                     items: items,

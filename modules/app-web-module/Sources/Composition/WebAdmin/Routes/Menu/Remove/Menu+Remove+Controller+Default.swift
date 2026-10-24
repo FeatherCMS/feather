@@ -23,7 +23,7 @@ extension WebModule.Menu.Remove.Controller {
             let id = try context.requiredID()
             guard
                 context.isCurrentUserAllowed(
-                    to: WebModule.Permissions.Menus.delete
+                    to: Menu.Permissions.delete
                 )
             else {
                 return HTMLResponse(content: "", status: .forbidden)
@@ -50,7 +50,7 @@ extension WebModule.Menu.Remove.Controller {
             let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
-                    to: WebModule.Permissions.Menus.delete
+                    to: Menu.Permissions.delete
                 )
             else { return Response(status: .forbidden) }
             let routeMenuID = context.parameters.get("id")

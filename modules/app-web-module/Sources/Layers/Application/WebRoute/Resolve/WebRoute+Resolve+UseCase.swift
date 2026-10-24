@@ -1,5 +1,5 @@
 //
-//  ResolveWebRoute.swift
+//  WebRoute+Resolve+UseCase.swift
 //  app-web-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -27,7 +27,7 @@ extension WebRoute.Resolve {
                     ),
                     metadata.isDirectlyAccessible(at: now)
                 else {
-                    throw Error(message: "Route not found")
+                    throw WebRoute.Resolve.Error(message: "Route not found")
                 }
                 let referenceType = metadata.referenceType
                 let referenceID = metadata.referenceID

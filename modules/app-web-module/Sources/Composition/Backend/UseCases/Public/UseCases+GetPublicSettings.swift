@@ -18,7 +18,9 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Settings.Public.Detail.Scope(
-                    settings: Settings.Repository.Database(context: context)
+                    settings: Settings.Public.Detail.Query.Database(
+                        context: context
+                    )
                 )
             }
         )

@@ -4,7 +4,7 @@ import NewsDomain
 public import NewsModule
 
 //
-//  Category.List.UseCase.swift
+//  Category+List+UseCase.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -24,8 +24,8 @@ extension Category.List {
 
         public func execute(
             subject: Subject,
-            input: Category.List.Input
-        ) async throws -> Category.List.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -39,7 +39,7 @@ extension Category.List {
                 let categories = try await scope.category.list(
                     query: inputQuery
                 )
-                var items: [Category.List.Output.Item] = []
+                var items: [Output.Item] = []
                 items.reserveCapacity(categories.items.count)
                 for item in categories.items {
                     items.append(
@@ -59,7 +59,7 @@ extension Category.List {
 
         public func count(
             subject: Subject,
-            input: Category.List.Input
+            input: Input
         ) async throws -> Int {
             let action = Action()
 

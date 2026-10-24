@@ -1,7 +1,6 @@
 import FeatherWebShared
 import Hummingbird
 import NewsletterModule
-import NewsletterWebShared
 import WebModuleWebApp
 
 extension Campaign.Subscription {
@@ -10,7 +9,7 @@ extension Campaign.Subscription {
 
 extension Campaign.Subscription.Controller {
     protocol Interface: Sendable {
-        var route: NewsletterSubscriptionRoute { get }
+        var route: Campaign.Subscription.Route { get }
 
         func subscribe(
             request: Request,

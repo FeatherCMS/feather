@@ -17,7 +17,7 @@ extension Page.Search.Table {
 
         func html(context: inout BuilderContext) -> Tr {
             Tr {
-                if permissions.allows(WebModule.Permissions.Pages.delete) {
+                if permissions.allows(Page.Permissions.delete) {
                     context.build(AdminListRowCheckbox(id: page.id))
                 }
                 titleCell(context: &context)
@@ -45,13 +45,13 @@ extension Page.Search.Table {
                                 "View",
                                 href: routes.detailsPath(page.id),
                                 style: .ghost(.primary),
-                                permission: WebModule.Permissions.Pages.read
+                                permission: Page.Permissions.read
                             ),
                             .init(
                                 "Edit",
                                 href: routes.editPath(page.id),
                                 style: .ghost(.secondary),
-                                permission: WebModule.Permissions.Pages.update
+                                permission: Page.Permissions.update
                             ),
                         ],
                         permissions: permissions

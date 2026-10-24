@@ -6,6 +6,34 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
     public enum Responses {
+        public struct NewsArticleListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/NewsArticleListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/NewsArticleListResponse/content/application\/json`.
+                case json(Components.Schemas.NewsArticleListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.NewsArticleListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.NewsArticleListResponse.Body
+            /// Creates a new `NewsArticleListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.NewsArticleListResponse.Body) {
+                self.body = body
+            }
+        }
         public struct NewsArticleDetailResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/NewsArticleDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -38,34 +66,6 @@ extension Components {
             /// Creates a new `NoContentResponse`.
             public init() {}
         }
-        public struct NewsArticleListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/NewsArticleListResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/NewsArticleListResponse/content/application\/json`.
-                case json(Components.Schemas.NewsArticleListSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.NewsArticleListSchema {
-                    get throws {
-                        switch self {
-                        case let .json(body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.NewsArticleListResponse.Body
-            /// Creates a new `NewsArticleListResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.NewsArticleListResponse.Body) {
-                self.body = body
-            }
-        }
         public struct NewsArticleQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/NewsArticleQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -94,34 +94,6 @@ extension Components {
                 self.body = body
             }
         }
-        public struct NewsCategoryDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/NewsCategoryDetailResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/NewsCategoryDetailResponse/content/application\/json`.
-                case json(Components.Schemas.NewsCategoryDetailSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.NewsCategoryDetailSchema {
-                    get throws {
-                        switch self {
-                        case let .json(body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.NewsCategoryDetailResponse.Body
-            /// Creates a new `NewsCategoryDetailResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.NewsCategoryDetailResponse.Body) {
-                self.body = body
-            }
-        }
         public struct NewsCategoryListResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/NewsCategoryListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -147,6 +119,34 @@ extension Components {
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.NewsCategoryListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct NewsCategoryDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/NewsCategoryDetailResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/NewsCategoryDetailResponse/content/application\/json`.
+                case json(Components.Schemas.NewsCategoryDetailSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.NewsCategoryDetailSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.NewsCategoryDetailResponse.Body
+            /// Creates a new `NewsCategoryDetailResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.NewsCategoryDetailResponse.Body) {
                 self.body = body
             }
         }

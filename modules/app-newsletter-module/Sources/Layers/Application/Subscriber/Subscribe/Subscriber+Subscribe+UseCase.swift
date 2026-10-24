@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
+import FeatherDomain
 import NewsletterDomain
 public import NewsletterModule
 
@@ -7,17 +8,17 @@ import struct Foundation.Date
 
 extension Subscriber.Subscribe {
     public struct UseCase: FeatherApplication.UseCase {
-        let transaction: any TransactionExecutor<Subscriber.Subscribe.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
-            transaction: any TransactionExecutor<Subscriber.Subscribe.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.transaction = transaction
         }
 
         public func execute(
             input: Input
-        ) async throws -> Subscriber.Subscribe.Output {
+        ) async throws -> Output {
             let now = Date()
             return try await transaction.run { scope in
                 guard
@@ -29,9 +30,13 @@ extension Subscriber.Subscribe {
                     newsletterId: campaign.id,
                     email: input.email
                 ) {
+                    model.update(
+                        firstName: .set(input.firstName),
+                        lastName: .set(input.lastName),
+                        status: .unchanged,
+                        at: now
+                    )
                     model.subscribe(at: now)
-                    model.firstName = input.firstName
-                    model.lastName = input.lastName
                     return .init(
                         model: try await scope.subscriber.update(model)
                     )

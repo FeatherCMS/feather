@@ -4,6 +4,6 @@ import WebModule
 
 extension Page.Add {
     struct Action: PermissionAction {
-        let key = WebModule.Permissions.Pages.create
+        let key = Page.Permissions.create
     }
 }

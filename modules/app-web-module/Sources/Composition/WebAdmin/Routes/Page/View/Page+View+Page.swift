@@ -53,7 +53,7 @@ extension Page.View {
 
         private var actions: [AdminDetailView.Action] {
             var result: [AdminDetailView.Action] = []
-            if state.permissions.allows(WebModule.Permissions.Pages.update) {
+            if state.permissions.allows(Page.Permissions.update) {
                 result.append(
                     .init(
                         label: "Edit page",
@@ -62,7 +62,7 @@ extension Page.View {
                     )
                 )
             }
-            if state.permissions.allows(WebModule.Permissions.Pages.delete) {
+            if state.permissions.allows(Page.Permissions.delete) {
                 result.append(
                     .init(
                         label: "Remove page",

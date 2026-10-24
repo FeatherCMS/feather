@@ -11,7 +11,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Log.Detail.Scope(
-                    query: LogDatabaseQueries(
+                    query: Log.Detail.Query.Database(
                         context: context
                     )
                 )

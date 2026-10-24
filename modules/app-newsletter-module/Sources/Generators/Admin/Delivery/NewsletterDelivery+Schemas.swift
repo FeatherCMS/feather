@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 struct NewsletterDeliveryStatusField: StringSchemaRepresentable {
     var enumValues: [String]? = ["pending", "sent", "failed", "bounced"]

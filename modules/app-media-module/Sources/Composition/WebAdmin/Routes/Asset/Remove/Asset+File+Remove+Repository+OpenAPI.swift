@@ -10,7 +10,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.Remove.Repository {
-    struct OpenAPI {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func deleteAsset(

@@ -2,6 +2,7 @@ public import BlogAppAPI
 import BlogApplication
 import Foundation
 import WebApplication
+import WebDomain
 import WebModule
 
 extension AppAPIGateway {
@@ -47,7 +48,7 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is BlogApplication.Public.Tag.Detail.UseCase.Error {
+        catch is BlogApplication.Public.Tag.Detail.Error {
             return .notFound(
                 .init(
                     body: .json(
@@ -88,7 +89,7 @@ extension AppAPIGateway {
         return .init(
             slug: metadata.slug,
             template: template,
-            publicationDate: metadata.publicationDate?.timeIntervalSince1970,
+            publicationDate: metadata.publicationDate.timeIntervalSince1970,
             expirationDate: metadata.expirationDate?.timeIntervalSince1970,
             status: metadata.status.rawValue,
             title: resolved.title,

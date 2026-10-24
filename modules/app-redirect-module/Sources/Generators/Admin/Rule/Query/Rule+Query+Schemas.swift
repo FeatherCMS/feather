@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 extension Rule.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {

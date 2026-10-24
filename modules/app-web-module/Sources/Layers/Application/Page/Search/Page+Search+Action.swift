@@ -4,6 +4,6 @@ import WebModule
 
 extension Page.Search {
     struct Action: PermissionAction {
-        let key = WebModule.Permissions.Pages.list
+        let key = Page.Permissions.list
     }
 }

@@ -11,10 +11,10 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.List.Repository {
-    struct OpenAPI {
+    struct OpenAPI: Interface {
         let api: API.Client
 
-        func listAssets(
+        func search(
             page: Int,
             search: String?,
             parentId: String?,
@@ -26,7 +26,7 @@ extension Asset.File.List.Repository {
                         .filter { !$0.isEmpty }
                 )
                 if normalizedExtensions.isEmpty {
-                    let response = try await searchAssets(
+                    let response = try await queryAssets(
                         page: page,
                         size: 20,
                         search: search,
@@ -121,7 +121,29 @@ extension Asset.File.List.Repository {
             ids: [String],
             variants: [String]? = nil
         ) async throws -> [Components.Schemas.MediaAssetResolveItemSchema] {
-            try await api.resolveAssets(ids: ids, variants: variants)
+            guard !ids.isEmpty else { return [] }
+
+            return try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.mediaAssetResolve(
+                    .init(
+                        headers: .init(accept: [.init(contentType: .json)]),
+                        body: .json(.init(ids: ids, variants: variants))
+                    )
+                )
+                switch response {
+                case .ok(let ok):
+                    return try ok.body.json
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
         }
 
         func getFolder(
@@ -156,7 +178,7 @@ extension Asset.File.List.Repository {
 
 extension Asset.File.List.Repository.OpenAPI {
 
-    fileprivate func searchAssets(
+    fileprivate func queryAssets(
         page: Int,
         size: Int,
         search: String?,

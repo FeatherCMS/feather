@@ -24,7 +24,7 @@ extension Credential.List.Interactor {
             size: Int,
             search: String?
         ) async throws -> Credential.List.Result {
-            try await repository.list(
+            try await repository.search(
                 page: page,
                 size: size,
                 search: search

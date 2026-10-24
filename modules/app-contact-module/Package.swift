@@ -45,6 +45,7 @@ let package = Package(
         .library(name: "ContactAdminAPI", targets: ["ContactAdminAPI"]),
         .library(name: "ContactAppAPI", targets: ["ContactAppAPI"]),
         .library(name: "ContactBackend", targets: ["ContactBackend"]),
+        .library(name: "ContactWebShared", targets: ["ContactWebShared"]),
         .library(name: "ContactWebApp", targets: ["ContactWebApp"]),
         .library(name: "ContactWebAdmin", targets: ["ContactWebAdmin"]),
         .executable(
@@ -239,24 +240,30 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
+            name: "ContactWebShared",
+            dependencies: [
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
             name: "ContactWebApp",
             dependencies: [
+                .target(name: "ContactWebShared"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(
                     name: "FeatherValidation",
                     package: "feather-validation"
                 ),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"
                 ),
-                .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "HTTPTypes", package: "swift-http-types"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
 
@@ -269,19 +276,14 @@ let package = Package(
         .target(
             name: "ContactWebAdmin",
             dependencies: [
+                .target(name: "ContactWebShared"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"
                 ),
-                .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
@@ -306,6 +308,9 @@ let package = Package(
         .testTarget(
             name: "ContactApplicationTests",
             dependencies: [
+                .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
                 .target(name: "ContactApplication"),
                 .target(name: "ContactDomain"),
                 .target(name: "ContactModule"),

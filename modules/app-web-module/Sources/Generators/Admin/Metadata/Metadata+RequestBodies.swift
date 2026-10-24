@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-import OpenAPIKit30
 import WebOpenAPIGeneratorSupport
 
 struct MetadataRequestBody: RequestBodyRepresentable {

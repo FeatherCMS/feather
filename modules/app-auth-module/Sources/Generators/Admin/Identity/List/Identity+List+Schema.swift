@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 import UserOpenAPIGeneratorSupport
 
 extension Identity.Session.List {

@@ -136,7 +136,9 @@ extension Components.Schemas.NewsArticleCreateSchema {
                 expirationDate: metadata.expirationDate.map(
                     Date.init(timeIntervalSince1970:)
                 ),
-                status: WebModule.Metadata.Model.Status(rawValue: metadata.status)
+                status: WebModule.Metadata.Model.Status(
+                    rawValue: metadata.status
+                )
                     ?? .draft,
                 title: metadata.title,
                 excerpt: metadata.excerpt,
@@ -146,7 +148,8 @@ extension Components.Schemas.NewsArticleCreateSchema {
                 primaryKeyword: metadata.primaryKeyword ?? "",
                 cssCodeInjection: metadata.cssCodeInjection,
                 javascriptCodeInjection: metadata.javascriptCodeInjection,
-                structuredDataCodeInjection: metadata.structuredDataCodeInjection
+                structuredDataCodeInjection: metadata
+                    .structuredDataCodeInjection
             )
         )
     }
@@ -154,31 +157,39 @@ extension Components.Schemas.NewsArticleCreateSchema {
     fileprivate func editArticleInput(id: String) -> Article.Edit.Input {
         .init(
             id: id,
-            title: title,
-            excerpt: excerpt,
-            content: content,
-            imageAssetId: .some(imageAssetId),
-            categoryIds: Array(categoryIds ?? []),
-            metadata: .init(
-                slug: metadata.slug,
-                template: "news.article",
-                publicationDate: metadata.publicationDate.map(
-                    Date.init(timeIntervalSince1970:)
-                ),
-                expirationDate: metadata.expirationDate.map(
-                    Date.init(timeIntervalSince1970:)
-                ),
-                status: WebModule.Metadata.Model.Status(rawValue: metadata.status)
-                    ?? .draft,
-                title: metadata.title,
-                excerpt: metadata.excerpt,
-                imageURL: metadata.imageURL,
-                canonicalURL: metadata.canonicalURL,
-                noIndex: metadata.noIndex ?? false,
-                primaryKeyword: metadata.primaryKeyword ?? "",
-                cssCodeInjection: metadata.cssCodeInjection,
-                javascriptCodeInjection: metadata.javascriptCodeInjection,
-                structuredDataCodeInjection: metadata.structuredDataCodeInjection
+            title: .set(title),
+            excerpt: .set(excerpt),
+            content: .set(content),
+            imageAssetId: OptionalFieldChange(
+                value: imageAssetId,
+                shouldApply: true
+            ),
+            categoryIds: .set(Array(categoryIds ?? [])),
+            metadata: .set(
+                .init(
+                    slug: metadata.slug,
+                    template: "news.article",
+                    publicationDate: metadata.publicationDate.map(
+                        Date.init(timeIntervalSince1970:)
+                    ),
+                    expirationDate: metadata.expirationDate.map(
+                        Date.init(timeIntervalSince1970:)
+                    ),
+                    status: WebModule.Metadata.Model.Status(
+                        rawValue: metadata.status
+                    )
+                        ?? .draft,
+                    title: metadata.title,
+                    excerpt: metadata.excerpt,
+                    imageURL: metadata.imageURL,
+                    canonicalURL: metadata.canonicalURL,
+                    noIndex: metadata.noIndex ?? false,
+                    primaryKeyword: metadata.primaryKeyword ?? "",
+                    cssCodeInjection: metadata.cssCodeInjection,
+                    javascriptCodeInjection: metadata.javascriptCodeInjection,
+                    structuredDataCodeInjection: metadata
+                        .structuredDataCodeInjection
+                )
             )
         )
     }

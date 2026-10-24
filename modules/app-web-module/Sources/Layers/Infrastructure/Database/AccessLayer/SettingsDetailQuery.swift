@@ -1,11 +1,13 @@
 //
-//  Settings.Query.Database.swift
+//  SettingsDetailQuery.swift
 //  app-web-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDatabase
 public import FeatherInfrastructure
+import SystemInfrastructure
+import SystemModule
 public import WebApplication
 import WebDomain
 public import WebModule
@@ -20,39 +22,30 @@ extension Settings.Detail.Query {
         }
 
         public func get() async throws -> Settings.Detail.Output {
-            let pairs = try await context.connection.run(
-                query: #"""
-                    SELECT key, value
-                    FROM system_variable
-                    WHERE key IN (
-                        'web-settings-logo',
-                        'web-settings-logo-dark',
-                        'web-settings-meta-image',
-                        'web-settings-primary-color',
-                        'web-settings-secondary-color',
-                        'web-settings-tertiary-color',
-                        'web-settings-primary-font',
-                        'web-settings-secondary-font',
-                        'web-settings-home-page-id',
-                        'web-settings-locale',
-                        'web-settings-timezone',
-                        'web-settings-title',
-                        'web-settings-excerpt',
-                        'web-settings-no-index',
-                        'web-settings-css',
-                        'web-settings-js'
-                    );
-                    """#
-            ) { sequence in
-                let rows = try await sequence.collect()
-                return try rows.reduce(into: [String: String]()) {
-                    result,
-                    row in
-                    let name = try row.decode(column: "key", as: String.self)
-                    let value = try row.decode(column: "value", as: String.self)
-                    result[name] = value
-                }
-            }
+            let pairs = try await SystemModule.Variable.Lookup
+                .Database(
+                    context: context
+                )
+                .get(
+                    keys: [
+                        "web-settings-logo",
+                        "web-settings-logo-dark",
+                        "web-settings-meta-image",
+                        "web-settings-primary-color",
+                        "web-settings-secondary-color",
+                        "web-settings-tertiary-color",
+                        "web-settings-primary-font",
+                        "web-settings-secondary-font",
+                        "web-settings-home-page-id",
+                        "web-settings-locale",
+                        "web-settings-timezone",
+                        "web-settings-title",
+                        "web-settings-excerpt",
+                        "web-settings-no-index",
+                        "web-settings-css",
+                        "web-settings-js",
+                    ]
+                )
 
             let logo = pairs["web-settings-logo"] ?? ""
             let logoDark = pairs["web-settings-logo-dark"] ?? ""

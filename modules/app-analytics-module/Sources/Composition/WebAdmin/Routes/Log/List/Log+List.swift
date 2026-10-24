@@ -1,5 +1,6 @@
 import AnalyticsAdminAPI
 import AnalyticsModule
+import AnalyticsApplication
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird

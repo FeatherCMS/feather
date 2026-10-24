@@ -6,11 +6,11 @@ public import FeatherModuleKit
 extension Profile.Detail {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Profile.Detail.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Profile.Detail.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -18,8 +18,8 @@ extension Profile.Detail {
 
         public func execute(
             subject: Subject,
-            input: Profile.Detail.Input
-        ) async throws -> Profile.Detail.Output {
+            input: Input
+        ) async throws -> Output {
             let userId = input.userId ?? subject.id
             let action = Action(userID: userId)
             guard try await authorizer.can(subject: subject, perform: action)

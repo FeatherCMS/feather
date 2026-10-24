@@ -1,5 +1,5 @@
 //
-//  ListPublicTags.swift
+//  Public+Tag+List+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -22,12 +22,7 @@ extension Public.Tag.List {
         public func execute(input: Input) async throws -> Output {
             let now = Date()
             let items = try await query.run { scope in
-                let tags = try await scope.tag.list(
-                    query: .init(
-                        page: .init(size: 10_000, number: 1),
-                        sort: [.init(field: .createdAt, direction: .desc)]
-                    )
-                )
+                let tags = try await scope.tag.list()
                 var result: [Public.Tag.Summary.Item] = []
                 for item in tags.items {
                     guard

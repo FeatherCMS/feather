@@ -3,16 +3,16 @@ import RedirectAppAPI
 
 /// Resolves redirects through the generated App API client.
 public struct DefaultRedirectRuleResolver: RedirectRuleResolver {
-    private let apiBaseURL: URL
+    private let environment: AppEnvironment
     private let excludedPaths = ["/health", "/admin", "/login", "/logout"]
     private let staticAssetExtensions: Set<String> = [
         ".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp",
         ".ico",
     ]
 
-    /// Creates a resolver targeting the redirect App API at `apiBaseURL`.
-    public init(apiBaseURL: URL) {
-        self.apiBaseURL = apiBaseURL
+    /// Creates a resolver targeting the redirect App API from the app environment.
+    public init(environment: AppEnvironment) {
+        self.environment = environment
     }
 
     /// Looks up eligible 404 GET/HEAD requests, excluding app and asset paths.
@@ -37,7 +37,7 @@ public struct DefaultRedirectRuleResolver: RedirectRuleResolver {
     public func resolveRedirect(
         source: String
     ) async throws -> ResolvedRedirect? {
-        let api = API.Client(apiBaseURL: apiBaseURL)
+        let api = API.Client(environment: environment)
         let response = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             try await client.redirectRuleGet(

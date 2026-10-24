@@ -11,7 +11,7 @@ import WebComponents
 
 extension Asset.File.Remove.Interactor {
     struct Default: Interface {
-        let repository: Asset.File.Remove.Repository.OpenAPI
+        let repository: any Asset.File.Remove.Repository.Interface
 
         func remove(ids: [String]) async throws {
             for id in ids {

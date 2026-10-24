@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct TestServer: ServerRepresentable {
     var url: any LocationRepresentable {

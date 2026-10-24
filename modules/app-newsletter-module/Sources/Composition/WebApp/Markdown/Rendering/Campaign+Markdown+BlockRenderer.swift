@@ -1,6 +1,5 @@
 import HTML
 import NewsletterModule
-import NewsletterWebShared
 import SGML
 import WebBuilders
 import WebModuleWebApp
@@ -9,7 +8,7 @@ extension Campaign.Markdown {
     struct BlockRenderer: MarkdownBlockRenderer {
         let name = "NewsletterCampaign"
         let usesFormSubmissionNonce = true
-        let submissionRoute: NewsletterSubscriptionRoute
+        let submissionRoute: Campaign.Subscription.Route
         let turnstileSiteKey: String?
 
         func render(

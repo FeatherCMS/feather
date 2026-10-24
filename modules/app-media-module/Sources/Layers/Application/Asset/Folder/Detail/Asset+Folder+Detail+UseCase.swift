@@ -3,7 +3,7 @@ public import FeatherModuleKit
 public import MediaModule
 
 //
-//  Asset.Folder.Detail.UseCase.swift
+//  Asset+Folder+Detail+UseCase.swift
 //  app-media-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -12,11 +12,11 @@ extension Asset.Folder.Detail {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Asset.Folder.Detail.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Asset.Folder.Detail.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query

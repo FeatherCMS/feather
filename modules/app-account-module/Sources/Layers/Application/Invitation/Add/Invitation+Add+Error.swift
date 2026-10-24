@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import AccountModule
 
-extension Invitation.Add.UseCase {
+extension Invitation.Add {
     public enum Error: UseCaseError {
         case roleNotFound(String)
         case mailFromNotConfigured

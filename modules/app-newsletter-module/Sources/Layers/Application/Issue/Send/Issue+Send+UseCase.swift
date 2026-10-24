@@ -8,13 +8,13 @@ extension Issue.Send {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Issue.Send.Scope>
-        let jobs: any NewsletterIssueJobController
+        let transaction: any TransactionExecutor<Scope>
+        let jobs: any Issue.JobController.Interface
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Issue.Send.Scope>,
-            jobs: any NewsletterIssueJobController
+            transaction: any TransactionExecutor<Scope>,
+            jobs: any Issue.JobController.Interface
         ) {
             self.authorizer = authorizer
             self.transaction = transaction

@@ -1438,9 +1438,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `GET /api/v1/admin/media/assets/{mediaAssetId}/variants`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantQuery)`.
-    public enum MediaAssetVariantQuery {
-        public static let id: Swift.String = "mediaAssetVariantQuery"
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantList)`.
+    public enum MediaAssetVariantList {
+        public static let id: Swift.String = "mediaAssetVariantList"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/{mediaAssetId}/variants/GET/path`.
             public struct Path: Sendable, Hashable {
@@ -1456,27 +1456,27 @@ public enum Operations {
                     self.mediaAssetId = mediaAssetId
                 }
             }
-            public var path: Operations.MediaAssetVariantQuery.Input.Path
+            public var path: Operations.MediaAssetVariantList.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/{mediaAssetId}/variants/GET/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MediaAssetVariantQuery.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MediaAssetVariantList.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MediaAssetVariantQuery.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MediaAssetVariantList.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaAssetVariantQuery.Input.Headers
+            public var headers: Operations.MediaAssetVariantList.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
             ///   - headers:
             public init(
-                path: Operations.MediaAssetVariantQuery.Input.Path,
-                headers: Operations.MediaAssetVariantQuery.Input.Headers = .init()
+                path: Operations.MediaAssetVariantList.Input.Path,
+                headers: Operations.MediaAssetVariantList.Input.Headers = .init()
             ) {
                 self.path = path
                 self.headers = headers
@@ -1485,7 +1485,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// MediaAsset variant list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.MediaAssetVariantListResponse)
@@ -1525,26 +1525,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.MediaAssetVariantQuery.Output.NotFound.Body
+                public var body: Operations.MediaAssetVariantList.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.MediaAssetVariantQuery.Output.NotFound.Body) {
+                public init(body: Operations.MediaAssetVariantList.Output.NotFound.Body) {
                     self.body = body
                 }
             }
             /// MediaAsset not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantQuery)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantList)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.MediaAssetVariantQuery.Output.NotFound)
+            case notFound(Operations.MediaAssetVariantList.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.MediaAssetVariantQuery.Output.NotFound {
+            public var notFound: Operations.MediaAssetVariantList.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -1576,26 +1576,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.MediaAssetVariantQuery.Output.Unauthorized.Body
+                public var body: Operations.MediaAssetVariantList.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.MediaAssetVariantQuery.Output.Unauthorized.Body) {
+                public init(body: Operations.MediaAssetVariantList.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.MediaAssetVariantQuery.Output.Unauthorized)
+            case unauthorized(Operations.MediaAssetVariantList.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.MediaAssetVariantQuery.Output.Unauthorized {
+            public var unauthorized: Operations.MediaAssetVariantList.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -1627,26 +1627,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.MediaAssetVariantQuery.Output.Forbidden.Body
+                public var body: Operations.MediaAssetVariantList.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.MediaAssetVariantQuery.Output.Forbidden.Body) {
+                public init(body: Operations.MediaAssetVariantList.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaAssetVariantQuery.Output.Forbidden)
+            case forbidden(Operations.MediaAssetVariantList.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.MediaAssetVariantQuery.Output.Forbidden {
+            public var forbidden: Operations.MediaAssetVariantList.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):

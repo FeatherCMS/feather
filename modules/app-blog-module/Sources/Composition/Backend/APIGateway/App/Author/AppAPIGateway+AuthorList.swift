@@ -2,6 +2,7 @@ public import BlogAppAPI
 import BlogApplication
 import Foundation
 import WebApplication
+import WebDomain
 import WebModule
 
 extension AppAPIGateway {
@@ -65,7 +66,7 @@ extension AppAPIGateway {
             metadata: .init(
                 slug: summary.metadata.slug,
                 template: template,
-                publicationDate: summary.metadata.publicationDate?.timeIntervalSince1970,
+                publicationDate: summary.metadata.publicationDate.timeIntervalSince1970,
                 expirationDate: summary.metadata.expirationDate?.timeIntervalSince1970,
                 status: summary.metadata.status.rawValue,
                 title: resolvedMetadata.title,

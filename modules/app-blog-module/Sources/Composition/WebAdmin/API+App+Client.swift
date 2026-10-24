@@ -1,9 +1,7 @@
-import AsyncHTTPClient
 public import BlogAppAPI
 import BlogWebShared
 public import FeatherWebAdmin
 public import FeatherWebShared
-import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 
 extension API.App {
@@ -14,23 +12,20 @@ extension API.App {
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            let configuration = BlogAPIClientSupport.configuration(
+                sessionToken: requestContext.sessionToken
+            )
             self.client = .init(
                 serverURL: environment.apiBaseURL,
-                transport: AsyncHTTPClientTransport(
-                    configuration: .init(client: .shared)
-                ),
-                middlewares: [
-                    ClientAPIAuthMiddleware(
-                        sessionToken: requestContext.sessionToken
-                    )
-                ]
+                transport: configuration.transport,
+                middlewares: configuration.middlewares
             )
         }
 
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (BlogAppAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            try await APIClientSupport.withOpenAPIRepositoryErrorMapping(
+            try await BlogAPIClientSupport.withOpenAPIRepositoryErrorMapping(
                 operation,
                 using: client
             )
@@ -40,7 +35,7 @@ extension API.App {
             statusCode: Int,
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
-            try await APIClientSupport.failure(
+            try await BlogAPIClientSupport.failure(
                 statusCode: statusCode,
                 responseBody: responseBody
             )

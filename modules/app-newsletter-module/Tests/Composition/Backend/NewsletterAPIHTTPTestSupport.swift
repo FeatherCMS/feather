@@ -23,8 +23,7 @@ enum NewsletterAPIQueryKey: DatabaseQueryKey {
     case count
 }
 
-private struct MockNewsletterIssueJobController:
-    NewsletterIssueJobController
+private struct MockIssueJobController: Issue.JobController.Interface
 {
     func enqueue(_ mail: Mail) async throws {}
 
@@ -72,7 +71,7 @@ enum NewsletterAPIHTTPTestSupport {
             useCases: UseCases(
                 databaseContext: databaseContext,
                 authorizer: FeatherTesting.Authorizer.Mock(result: true),
-                jobs: MockNewsletterIssueJobController()
+                jobs: MockIssueJobController()
             )
         )
         let router = Router()

@@ -4,7 +4,7 @@ import SystemDomain
 public import SystemModule
 
 //
-//  Permission.Edit.UseCase.swift
+//  Permission+Edit+UseCase.swift
 //  app-system-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -12,11 +12,11 @@ public import SystemModule
 extension Permission.Edit {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Permission.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Permission.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -37,7 +37,7 @@ extension Permission.Edit {
                 guard
                     var model = try await scope.permission.find(id: input.id)
                 else {
-                    throw Error.notFound
+                    throw Permission.Edit.Error.notFound
                 }
 
                 try model.update(

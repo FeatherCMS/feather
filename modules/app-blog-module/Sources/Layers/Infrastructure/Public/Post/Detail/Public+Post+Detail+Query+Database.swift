@@ -1,0 +1,39 @@
+public import BlogApplication
+import BlogModule
+public import FeatherInfrastructure
+import WebDomain
+public import WebApplication
+public import WebModule
+
+extension BlogApplication.Public.Post.Detail.Query {
+    public struct Database: Interface {
+        public let context: DatabaseQueryContext
+        public let metadata: any WebModule.Metadata.Reference.Query.Interface
+
+        public init(
+            context: DatabaseQueryContext,
+            metadata: any WebModule.Metadata.Reference.Query.Interface
+        ) {
+            self.context = context
+            self.metadata = metadata
+        }
+
+        public func find(id: String) async throws -> Output {
+            let result = try await Post.Detail.Query
+                .Database(
+                    context: context,
+                    metadata: metadata
+                )
+                .find(id: id)
+            return .init(
+                id: result.id,
+                title: result.title,
+                excerpt: result.excerpt,
+                content: result.content,
+                imageAssetId: result.imageAssetId,
+                authorIds: result.authorIds,
+                tagIds: result.tagIds
+            )
+        }
+    }
+}

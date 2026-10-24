@@ -1,5 +1,5 @@
 //
-//  Category.swift
+//  Category+Model.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -13,7 +13,7 @@ public import WebModule
 
 public import struct Foundation.Date
 
-extension NewsModule.Category {
+extension Category {
     public struct Model: FeatherDomain.Model {
 
         public enum Error: DomainError {
@@ -62,7 +62,7 @@ extension NewsModule.Category {
     }
 }
 
-extension NewsModule.Category.Model {
+extension Category.Model {
 
     private static func validate(
         title: String
@@ -121,14 +121,15 @@ extension NewsModule.Category.Model {
     }
 
     public mutating func update(
-        title: String? = nil,
-        excerpt: String? = nil,
-        content: String? = nil,
-        imageAssetId: String?? = nil
+        title: FieldChange<String> = .unchanged,
+        excerpt: FieldChange<String> = .unchanged,
+        content: FieldChange<String> = .unchanged,
+        imageAssetId: OptionalFieldChange<String> = .unchanged
     ) throws(Self.Error) {
-        let newTitle = title ?? self.title
-        let newExcerpt = excerpt ?? self.excerpt
-        let newContent = content ?? self.content
+        let newTitle = title.apply(to: self.title)
+        let newExcerpt = excerpt.apply(to: self.excerpt)
+        let newContent = content.apply(to: self.content)
+        let newImageAssetId = imageAssetId.apply(to: self.imageAssetId)
 
         try Self.validate(title: newTitle)
         try Self.validate(excerpt: newExcerpt)
@@ -137,6 +138,6 @@ extension NewsModule.Category.Model {
         self.title = newTitle
         self.excerpt = newExcerpt
         self.content = newContent
-        self.imageAssetId = imageAssetId ?? self.imageAssetId
+        self.imageAssetId = newImageAssetId
     }
 }

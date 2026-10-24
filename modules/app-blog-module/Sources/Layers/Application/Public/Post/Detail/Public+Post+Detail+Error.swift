@@ -1,7 +1,7 @@
 public import FeatherApplication
 import BlogModule
 
-extension Public.Post.Detail.UseCase {
+extension Public.Post.Detail {
     public struct Error: UseCaseError {
         public let message: String
 

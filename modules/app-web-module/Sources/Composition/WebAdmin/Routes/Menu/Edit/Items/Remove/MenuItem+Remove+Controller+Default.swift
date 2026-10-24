@@ -25,7 +25,7 @@ extension MenuItem.Remove.Controller {
             let origin = routes.removeOrigin(request.queryString("origin"))
             guard
                 context.isCurrentUserAllowed(
-                    to: WebModule.Permissions.MenuItems.delete
+                    to: MenuItem.Permissions.delete
                 )
             else {
                 return HTMLResponse(content: "", status: .forbidden)
@@ -60,7 +60,7 @@ extension MenuItem.Remove.Controller {
             let origin = routes.removeOrigin(request.queryString("origin"))
             guard
                 context.isCurrentUserAllowed(
-                    to: WebModule.Permissions.MenuItems.delete
+                    to: MenuItem.Permissions.delete
                 )
             else { return Response(status: .forbidden) }
             let nonceRequest = try await request.decode(

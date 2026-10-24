@@ -1,5 +1,6 @@
 public import BlogAdminAPI
 import BlogApplication
+import BlogModule
 import FeatherApplication
 import FeatherModuleKit
 import Foundation

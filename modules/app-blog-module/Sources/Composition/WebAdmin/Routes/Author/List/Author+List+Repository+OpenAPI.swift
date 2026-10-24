@@ -22,7 +22,7 @@ extension Author.List.Repository {
 
         let api: API.Client
 
-        func list(
+        func search(
             page: Int,
             search: String?
         ) async throws -> Author.List.Model {

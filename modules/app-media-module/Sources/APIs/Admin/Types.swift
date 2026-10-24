@@ -24,8 +24,8 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/patch(mediaAssetPatch)`.
     func mediaAssetPatch(_ input: Operations.MediaAssetPatch.Input) async throws -> Operations.MediaAssetPatch.Output
     /// - Remark: HTTP `GET /api/v1/admin/media/assets/{mediaAssetId}/variants`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantQuery)`.
-    func mediaAssetVariantQuery(_ input: Operations.MediaAssetVariantQuery.Input) async throws -> Operations.MediaAssetVariantQuery.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantList)`.
+    func mediaAssetVariantList(_ input: Operations.MediaAssetVariantList.Input) async throws -> Operations.MediaAssetVariantList.Output
     /// - Remark: HTTP `GET /api/v1/admin/media/folders`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/get(mediaFolderList)`.
     func mediaFolderList(_ input: Operations.MediaFolderList.Input) async throws -> Operations.MediaFolderList.Output
@@ -146,12 +146,12 @@ extension APIProtocol {
         ))
     }
     /// - Remark: HTTP `GET /api/v1/admin/media/assets/{mediaAssetId}/variants`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantQuery)`.
-    public func mediaAssetVariantQuery(
-        path: Operations.MediaAssetVariantQuery.Input.Path,
-        headers: Operations.MediaAssetVariantQuery.Input.Headers = .init()
-    ) async throws -> Operations.MediaAssetVariantQuery.Output {
-        try await mediaAssetVariantQuery(Operations.MediaAssetVariantQuery.Input(
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantList)`.
+    public func mediaAssetVariantList(
+        path: Operations.MediaAssetVariantList.Input.Path,
+        headers: Operations.MediaAssetVariantList.Input.Headers = .init()
+    ) async throws -> Operations.MediaAssetVariantList.Output {
+        try await mediaAssetVariantList(Operations.MediaAssetVariantList.Input(
             path: path,
             headers: headers
         ))

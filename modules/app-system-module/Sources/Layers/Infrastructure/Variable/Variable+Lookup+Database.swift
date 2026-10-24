@@ -18,5 +18,15 @@ extension SystemModule.Variable.Lookup {
             )
             return row?.value
         }
+
+        public func get(keys: [String]) async throws -> [String: String] {
+            guard !keys.isEmpty else { return [:] }
+            let rows = try await accessLayer.select { query in
+                query.where(\.key, in: keys)
+            }
+            return rows.reduce(into: [String: String]()) { result, row in
+                result[row.key] = row.value
+            }
+        }
     }
 }

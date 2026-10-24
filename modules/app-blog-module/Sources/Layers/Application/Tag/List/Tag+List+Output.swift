@@ -1,5 +1,5 @@
 //
-//  Tag.List.Output.swift
+//  Tag+List+Output.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.

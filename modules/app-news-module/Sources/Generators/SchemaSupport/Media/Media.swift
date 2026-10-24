@@ -1,3 +1,1 @@
-public enum Media {
-    public enum Asset {}
-}
+public enum Media {}

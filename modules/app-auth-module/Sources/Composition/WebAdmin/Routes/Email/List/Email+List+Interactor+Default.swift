@@ -25,7 +25,7 @@ extension Email.List.Interactor {
             search: String?,
             userID: String?
         ) async throws -> Email.List.Result {
-            try await repository.list(
+            try await repository.search(
                 page: page,
                 size: size,
                 search: search,

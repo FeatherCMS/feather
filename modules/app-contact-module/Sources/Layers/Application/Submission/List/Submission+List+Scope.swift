@@ -1,17 +1,11 @@
-public import ContactDomain
 public import ContactModule
 public import FeatherModuleKit
 
 extension Submission.List {
     public struct Scope: FeatherModuleKit.Scope {
-        public let form: any Form.Repository.Interface
-        public let submission: any Submission.Repository.Interface
+        public let submission: any Query.Interface
 
-        public init(
-            form: any Form.Repository.Interface,
-            submission: any Submission.Repository.Interface
-        ) {
-            self.form = form
+        public init(submission: any Query.Interface) {
             self.submission = submission
         }
     }

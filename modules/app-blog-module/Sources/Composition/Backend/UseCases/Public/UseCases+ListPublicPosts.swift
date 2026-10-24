@@ -18,31 +18,26 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Public.Post.List.Scope(
-                    post: Public.Post.Database(
+                    post: Public.Post.Detail.Query.Database(
                         context: context,
-                        metadata: WebModule.Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Reference.Query.Database(
                             context: context
                         )
                     ),
-                    postList: Public.Post.Database(
+                    postList: Public.Post.List.Query.Database(context: context),
+                    author: Public.Author.Detail.Query.Database(
                         context: context,
-                        metadata: WebModule.Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Reference.Query.Database(
                             context: context
                         )
                     ),
-                    author: Public.Author.Database(
+                    tag: Public.Tag.Detail.Query.Database(
                         context: context,
-                        metadata: WebModule.Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Reference.Query.Database(
                             context: context
                         )
                     ),
-                    tag: Public.Tag.Database(
-                        context: context,
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
-                    ),
-                    metadata: WebModule.Metadata.Query.Database(
+                    metadata: WebModule.Metadata.Reference.Query.Database(
                         context: context
                     )
                 )

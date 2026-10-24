@@ -18,7 +18,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Metadata.Detail.Scope(
-                    metadata: Metadata.Query.Database(
+                    metadata: Metadata.Detail.Query.Database(
                         context: context
                     )
                 )

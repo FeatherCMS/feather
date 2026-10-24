@@ -18,7 +18,7 @@ extension FormField.List {
             public let createdAt: Date
             public let updatedAt: Date
 
-            init(model: FormField.Model) {
+            package init(model: FormField.Model) {
                 id = model.id
                 formId = model.formId
                 key = model.key

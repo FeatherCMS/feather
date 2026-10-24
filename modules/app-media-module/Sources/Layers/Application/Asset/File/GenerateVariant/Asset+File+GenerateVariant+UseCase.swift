@@ -37,13 +37,13 @@ extension Asset.File.GenerateVariant {
         }
 
         let transaction:
-            any TransactionExecutor<Asset.File.GenerateVariant.Scope>
+            any TransactionExecutor<Scope>
         let storageContext: StorageClientContext
         let commandRunner: any CommandRunner
 
         public init(
             transaction: any TransactionExecutor<
-                Asset.File.GenerateVariant.Scope
+                Scope
             >,
             storageContext: StorageClientContext,
             commandRunner: any CommandRunner
@@ -178,7 +178,7 @@ extension Asset.File.GenerateVariant {
                                 "variants/\(output.plan.variant.key)"
                             ]
                         else {
-                            throw Asset.File.GenerateVariant.Error
+                            throw Error
                                 .outputMissing(
                                     processorName: output.plan.processor.name
                                 )
@@ -213,11 +213,11 @@ extension Asset.File.GenerateVariant {
     }
 }
 
-extension Asset.File.GenerateVariant.UseCase {
+extension UseCase {
     private func prepare(assetID: String) async throws -> Prepared {
         try await transaction.run { scope in
             guard let asset = try await scope.assets.find(id: assetID) else {
-                throw Asset.File.GenerateVariant.Error.assetNotFound
+                throw Error.assetNotFound
             }
             let variants = try await scope.variantDefinitions.listActive()
             let variantsByID = Dictionary(
@@ -284,7 +284,7 @@ extension Asset.File.GenerateVariant.UseCase {
         )
         let result = try await commandRunner.run(command: command)
         guard result.exitCode == 0 else {
-            throw Asset.File.GenerateVariant.Error.commandFailed(
+            throw Error.commandFailed(
                 processorName: processor.name,
                 command: command,
                 status: result.exitCode,
@@ -294,7 +294,7 @@ extension Asset.File.GenerateVariant.UseCase {
         let resolvedURL = try resolveOutputURL(preferredURL: outputURL)
         defer { try? FileManager.default.removeItem(at: resolvedURL) }
         guard FileManager.default.fileExists(atPath: resolvedURL.path) else {
-            throw Asset.File.GenerateVariant.Error.outputMissing(
+            throw Error.outputMissing(
                 processorName: processor.name
             )
         }

@@ -1,6 +1,5 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 extension Article {
     protocol Operation: OperationRepresentable {}

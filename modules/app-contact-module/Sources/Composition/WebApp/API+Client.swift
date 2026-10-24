@@ -1,8 +1,6 @@
-import AsyncHTTPClient
 public import ContactAppAPI
+import ContactWebShared
 public import FeatherWebShared
-import NIOCore
-import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 
 extension API {
@@ -13,45 +11,32 @@ extension API {
             environment: AppEnvironment,
             requestContext: DefaultRequestContext? = nil
         ) {
+            let configuration = ContactAPIClientSupport.configuration(
+                sessionToken: requestContext?.sessionToken
+            )
             self.client = .init(
                 serverURL: environment.apiBaseURL,
-                transport: AsyncHTTPClientTransport(
-                    configuration: .init(
-                        client: .shared,
-                        timeout: .seconds(3)
-                    )
-                ),
-                middlewares: [
-                    ClientAPIAuthMiddleware(
-                        sessionToken: requestContext?.sessionToken
-                    )
-                ]
+                transport: configuration.transport,
+                middlewares: configuration.middlewares
             )
         }
 
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (ContactAppAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            do {
-                return try await operation(client)
-            }
-            catch let error as OpenAPIRepositoryError {
-                throw error
-            }
-            catch {
-                throw OpenAPIRepositoryError.transport(
-                    description: String(describing: error)
-                )
-            }
+            try await ContactAPIClientSupport.withOpenAPIRepositoryErrorMapping(
+                operation,
+                using: client
+            )
         }
 
         public func failure(
             statusCode: Int,
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
-            OpenAPIRepositoryError.parsedFailure(
+            try await ContactAPIClientSupport.failure(
                 statusCode: statusCode,
-                responseBody: try await responseBody?.collectString()
+                responseBody: responseBody
             )
         }
     }

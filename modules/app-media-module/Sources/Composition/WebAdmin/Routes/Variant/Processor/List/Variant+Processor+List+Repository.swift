@@ -10,7 +10,7 @@ extension Variant.Processor.List {
 
 extension Variant.Processor.List.Repository {
     protocol Interface: Sendable {
-        func list(
+        func search(
             variantId: String,
             page: Int,
             search: String?

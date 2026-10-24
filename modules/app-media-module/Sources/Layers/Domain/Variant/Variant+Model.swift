@@ -53,3 +53,17 @@ extension Variant {
         }
     }
 }
+
+extension Variant.Model {
+    public mutating func update(
+        key: FieldChange<String> = .unchanged,
+        name: FieldChange<String> = .unchanged,
+        isRequired: FieldChange<Bool> = .unchanged,
+        isActive: FieldChange<Bool> = .unchanged
+    ) {
+        self.key = key.apply(to: self.key)
+        self.name = name.apply(to: self.name)
+        self.isRequired = isRequired.apply(to: self.isRequired)
+        self.isActive = isActive.apply(to: self.isActive)
+    }
+}

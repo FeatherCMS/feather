@@ -6,6 +6,157 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
+        /// - Remark: Generated from `#/components/schemas/NewsArticleListSchema`.
+        public typealias NewsArticleListSchema = [Components.Schemas.NewsArticleListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema`.
+        public struct NewsArticleListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/title`.
+            public var title: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/excerpt`.
+            public var excerpt: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `NewsArticleListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - title:
+            ///   - excerpt:
+            ///   - imageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                title: Swift.String,
+                excerpt: Swift.String,
+                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.title = title
+                self.excerpt = excerpt
+                self.imageAssetId = imageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case title
+                case excerpt
+                case imageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsAdminOpenAPIComponentsStringField`.
+        public typealias NewsAdminOpenAPIComponentsStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+        public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
+            public var error: Components.Schemas.DefaultHTTPErrorContentSchema
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/trace`.
+            public var trace: Components.Schemas.ErrorTraceSchema?
+            /// Creates a new `DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+            ///
+            /// - Parameters:
+            ///   - error:
+            ///   - trace:
+            public init(
+                error: Components.Schemas.DefaultHTTPErrorContentSchema,
+                trace: Components.Schemas.ErrorTraceSchema? = nil
+            ) {
+                self.error = error
+                self.trace = trace
+            }
+            public enum CodingKeys: String, CodingKey {
+                case error
+                case trace
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema`.
+        public struct DefaultHTTPErrorContentSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/reason`.
+            public var reason: Swift.String
+            /// Creates a new `DefaultHTTPErrorContentSchema`.
+            ///
+            /// - Parameters:
+            ///   - message:
+            ///   - reason:
+            public init(
+                message: Swift.String,
+                reason: Swift.String
+            ) {
+                self.message = message
+                self.reason = reason
+            }
+            public enum CodingKeys: String, CodingKey {
+                case message
+                case reason
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema`.
+        public struct ErrorTraceSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/reasons`.
+            public var reasons: Components.Schemas.ErrorTraceReasonsSchema?
+            /// Creates a new `ErrorTraceSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            ///   - reasons:
+            public init(
+                id: Swift.String,
+                message: Swift.String,
+                reasons: Components.Schemas.ErrorTraceReasonsSchema? = nil
+            ) {
+                self.id = id
+                self.message = message
+                self.reasons = reasons
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+                case reasons
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonsSchema`.
+        public typealias ErrorTraceReasonsSchema = [Components.Schemas.ErrorTraceReasonSchema]
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema`.
+        public struct ErrorTraceReasonSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/message`.
+            public var message: Swift.String
+            /// Creates a new `ErrorTraceReasonSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            public init(
+                id: Swift.String,
+                message: Swift.String
+            ) {
+                self.id = id
+                self.message = message
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/NewsArticleCreateSchema`.
         public struct NewsArticleCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsArticleCreateSchema/title`.
@@ -53,8 +204,6 @@ extension Components {
                 case metadata
             }
         }
-        /// - Remark: Generated from `#/components/schemas/NewsAdminOpenAPIComponentsStringField`.
-        public typealias NewsAdminOpenAPIComponentsStringField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsAdminOpenAPIComponentsCategoryIDsField`.
         public typealias NewsAdminOpenAPIComponentsCategoryIDsField = [Components.Schemas.NewsAdminOpenAPIComponentsStringField]
         /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema`.
@@ -340,106 +489,6 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
-        public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
-            public var error: Components.Schemas.DefaultHTTPErrorContentSchema
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/trace`.
-            public var trace: Components.Schemas.ErrorTraceSchema?
-            /// Creates a new `DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
-            ///
-            /// - Parameters:
-            ///   - error:
-            ///   - trace:
-            public init(
-                error: Components.Schemas.DefaultHTTPErrorContentSchema,
-                trace: Components.Schemas.ErrorTraceSchema? = nil
-            ) {
-                self.error = error
-                self.trace = trace
-            }
-            public enum CodingKeys: String, CodingKey {
-                case error
-                case trace
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema`.
-        public struct DefaultHTTPErrorContentSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/message`.
-            public var message: Swift.String
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/reason`.
-            public var reason: Swift.String
-            /// Creates a new `DefaultHTTPErrorContentSchema`.
-            ///
-            /// - Parameters:
-            ///   - message:
-            ///   - reason:
-            public init(
-                message: Swift.String,
-                reason: Swift.String
-            ) {
-                self.message = message
-                self.reason = reason
-            }
-            public enum CodingKeys: String, CodingKey {
-                case message
-                case reason
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema`.
-        public struct ErrorTraceSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/message`.
-            public var message: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/reasons`.
-            public var reasons: Components.Schemas.ErrorTraceReasonsSchema?
-            /// Creates a new `ErrorTraceSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - message:
-            ///   - reasons:
-            public init(
-                id: Swift.String,
-                message: Swift.String,
-                reasons: Components.Schemas.ErrorTraceReasonsSchema? = nil
-            ) {
-                self.id = id
-                self.message = message
-                self.reasons = reasons
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case message
-                case reasons
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonsSchema`.
-        public typealias ErrorTraceReasonsSchema = [Components.Schemas.ErrorTraceReasonSchema]
-        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema`.
-        public struct ErrorTraceReasonSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/message`.
-            public var message: Swift.String
-            /// Creates a new `ErrorTraceReasonSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - message:
-            public init(
-                id: Swift.String,
-                message: Swift.String
-            ) {
-                self.id = id
-                self.message = message
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case message
-            }
-        }
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
@@ -453,55 +502,6 @@ extension Components {
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/NewsArticleListSchema`.
-        public typealias NewsArticleListSchema = [Components.Schemas.NewsArticleListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema`.
-        public struct NewsArticleListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/title`.
-            public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/excerpt`.
-            public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
-            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/createdAt`.
-            public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/updatedAt`.
-            public var updatedAt: Swift.Double
-            /// Creates a new `NewsArticleListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - title:
-            ///   - excerpt:
-            ///   - imageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Swift.String,
-                title: Swift.String,
-                excerpt: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                createdAt: Swift.Double,
-                updatedAt: Swift.Double
-            ) {
-                self.id = id
-                self.title = title
-                self.excerpt = excerpt
-                self.imageAssetId = imageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case title
-                case excerpt
-                case imageAssetId
-                case createdAt
-                case updatedAt
             }
         }
         /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSearchRequestQuerySchema`.
@@ -810,6 +810,55 @@ extension Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/NewsCategoryListSchema`.
+        public typealias NewsCategoryListSchema = [Components.Schemas.NewsCategoryListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema`.
+        public struct NewsCategoryListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/title`.
+            public var title: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/excerpt`.
+            public var excerpt: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `NewsCategoryListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - title:
+            ///   - excerpt:
+            ///   - imageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                title: Swift.String,
+                excerpt: Swift.String,
+                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.title = title
+                self.excerpt = excerpt
+                self.imageAssetId = imageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case title
+                case excerpt
+                case imageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/NewsCategoryCreateSchema`.
         public struct NewsCategoryCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsCategoryCreateSchema/title`.
@@ -906,55 +955,6 @@ extension Components {
                 case content
                 case imageAssetId
                 case metadata
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/NewsCategoryListSchema`.
-        public typealias NewsCategoryListSchema = [Components.Schemas.NewsCategoryListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema`.
-        public struct NewsCategoryListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/title`.
-            public var title: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/excerpt`.
-            public var excerpt: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
-            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/createdAt`.
-            public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/updatedAt`.
-            public var updatedAt: Swift.Double
-            /// Creates a new `NewsCategoryListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - title:
-            ///   - excerpt:
-            ///   - imageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Swift.String,
-                title: Swift.String,
-                excerpt: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                createdAt: Swift.Double,
-                updatedAt: Swift.Double
-            ) {
-                self.id = id
-                self.title = title
-                self.excerpt = excerpt
-                self.imageAssetId = imageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case title
-                case excerpt
-                case imageAssetId
                 case createdAt
                 case updatedAt
             }

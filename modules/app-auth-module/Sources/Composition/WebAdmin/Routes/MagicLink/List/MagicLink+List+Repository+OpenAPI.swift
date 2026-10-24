@@ -24,7 +24,7 @@ extension MagicLink.List.Repository {
         private let deleteUnauthorizedMessage =
             "Please sign in again to delete this user magic link."
 
-        func list(
+        func search(
             page: Int,
             size: Int,
             search: String?,

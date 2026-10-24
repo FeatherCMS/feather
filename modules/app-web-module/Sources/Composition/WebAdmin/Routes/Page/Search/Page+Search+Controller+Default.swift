@@ -25,7 +25,7 @@ extension Page.Search.Controller {
             let search = request.querySearch()
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
-                to: WebModule.Permissions.Pages.list
+                to: Page.Permissions.list
             )
             let emptyModel = Page.Search.Model(
                 items: [],

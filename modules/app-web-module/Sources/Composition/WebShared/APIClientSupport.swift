@@ -1,7 +1,27 @@
+import AsyncHTTPClient
 public import FeatherWebShared
+import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 
-public enum APIClientSupport {
+public enum WebModuleAPIClientSupport {
+    public struct Configuration {
+        public let transport: AsyncHTTPClientTransport
+        public let middlewares: [ClientAPIAuthMiddleware]
+    }
+
+    public static func configuration(
+        sessionToken: String?
+    ) -> Configuration {
+        Configuration(
+            transport: AsyncHTTPClientTransport(
+                configuration: .init(client: .shared, timeout: .seconds(3))
+            ),
+            middlewares: [
+                ClientAPIAuthMiddleware(sessionToken: sessionToken)
+            ]
+        )
+    }
+
 
     public static func withOpenAPIRepositoryErrorMapping<
         Client: Sendable,

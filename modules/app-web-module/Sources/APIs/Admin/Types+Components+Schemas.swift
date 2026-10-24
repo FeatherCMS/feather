@@ -6,72 +6,38 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/MenuCreateSchema`.
-        public struct MenuCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MenuCreateSchema/key`.
-            public var key: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuCreateSchema/name`.
-            public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuCreateSchema/notes`.
-            public var notes: Components.Schemas.MenuNotesField?
-            /// Creates a new `MenuCreateSchema`.
-            ///
-            /// - Parameters:
-            ///   - key:
-            ///   - name:
-            ///   - notes:
-            public init(
-                key: Swift.String,
-                name: Swift.String,
-                notes: Components.Schemas.MenuNotesField? = nil
-            ) {
-                self.key = key
-                self.name = name
-                self.notes = notes
-            }
-            public enum CodingKeys: String, CodingKey {
-                case key
-                case name
-                case notes
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/MenuNotesField`.
-        public typealias MenuNotesField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MenuDetailSchema`.
-        public struct MenuDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/key`.
-            public var key: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/name`.
-            public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/notes`.
-            public var notes: Components.Schemas.MenuNotesField?
-            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/createdAt`.
-            public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/updatedAt`.
-            public var updatedAt: Swift.Double
-            /// Creates a new `MenuDetailSchema`.
+        /// - Remark: Generated from `#/components/schemas/MenuListSchema`.
+        public typealias MenuListSchema = [Components.Schemas.MenuListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/MenuListItemSchema`.
+        public struct MenuListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/id`.
+            public var id: Components.Schemas.MenuIdField
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/key`.
+            public var key: Components.Schemas.MenuKeyField
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/name`.
+            public var name: Components.Schemas.MenuNameField
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.MenuCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.MenuUpdatedAtField
+            /// Creates a new `MenuListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
             ///   - key:
             ///   - name:
-            ///   - notes:
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Swift.String,
-                key: Swift.String,
-                name: Swift.String,
-                notes: Components.Schemas.MenuNotesField? = nil,
-                createdAt: Swift.Double,
-                updatedAt: Swift.Double
+                id: Components.Schemas.MenuIdField,
+                key: Components.Schemas.MenuKeyField,
+                name: Components.Schemas.MenuNameField,
+                createdAt: Components.Schemas.MenuCreatedAtField,
+                updatedAt: Components.Schemas.MenuUpdatedAtField
             ) {
                 self.id = id
                 self.key = key
                 self.name = name
-                self.notes = notes
                 self.createdAt = createdAt
                 self.updatedAt = updatedAt
             }
@@ -79,11 +45,20 @@ extension Components {
                 case id
                 case key
                 case name
-                case notes
                 case createdAt
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/MenuIdField`.
+        public typealias MenuIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuKeyField`.
+        public typealias MenuKeyField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuNameField`.
+        public typealias MenuNameField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuCreatedAtField`.
+        public typealias MenuCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/MenuUpdatedAtField`.
+        public typealias MenuUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
         public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
@@ -184,6 +159,84 @@ extension Components {
                 case message
             }
         }
+        /// - Remark: Generated from `#/components/schemas/MenuCreateSchema`.
+        public struct MenuCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuCreateSchema/key`.
+            public var key: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuCreateSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuCreateSchema/notes`.
+            public var notes: Components.Schemas.MenuNotesField?
+            /// Creates a new `MenuCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - key:
+            ///   - name:
+            ///   - notes:
+            public init(
+                key: Swift.String,
+                name: Swift.String,
+                notes: Components.Schemas.MenuNotesField? = nil
+            ) {
+                self.key = key
+                self.name = name
+                self.notes = notes
+            }
+            public enum CodingKeys: String, CodingKey {
+                case key
+                case name
+                case notes
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MenuNotesField`.
+        public typealias MenuNotesField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuDetailSchema`.
+        public struct MenuDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/key`.
+            public var key: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/notes`.
+            public var notes: Components.Schemas.MenuNotesField?
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/MenuDetailSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `MenuDetailSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - key:
+            ///   - name:
+            ///   - notes:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                key: Swift.String,
+                name: Swift.String,
+                notes: Components.Schemas.MenuNotesField? = nil,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.key = key
+                self.name = name
+                self.notes = notes
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case key
+                case name
+                case notes
+                case createdAt
+                case updatedAt
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
@@ -199,59 +252,6 @@ extension Components {
                 case ids
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MenuListSchema`.
-        public typealias MenuListSchema = [Components.Schemas.MenuListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/MenuListItemSchema`.
-        public struct MenuListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/id`.
-            public var id: Components.Schemas.MenuIdField
-            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/key`.
-            public var key: Components.Schemas.MenuKeyField
-            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/name`.
-            public var name: Components.Schemas.MenuNameField
-            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.MenuCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/MenuListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.MenuUpdatedAtField
-            /// Creates a new `MenuListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - key:
-            ///   - name:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.MenuIdField,
-                key: Components.Schemas.MenuKeyField,
-                name: Components.Schemas.MenuNameField,
-                createdAt: Components.Schemas.MenuCreatedAtField,
-                updatedAt: Components.Schemas.MenuUpdatedAtField
-            ) {
-                self.id = id
-                self.key = key
-                self.name = name
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case key
-                case name
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/MenuIdField`.
-        public typealias MenuIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MenuKeyField`.
-        public typealias MenuKeyField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MenuNameField`.
-        public typealias MenuNameField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MenuCreatedAtField`.
-        public typealias MenuCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/MenuUpdatedAtField`.
-        public typealias MenuUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema`.
         public struct MenuQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MenuQueryItemSearchRequestQuerySchema/page`.
@@ -587,140 +587,6 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/MenuNotesFieldNullable`.
         public typealias MenuNotesFieldNullable = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema`.
-        public struct MenuItemCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/label`.
-            public var label: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/url`.
-            public var url: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/priority`.
-            public var priority: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/isBlank`.
-            public var isBlank: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/permission`.
-            public var permission: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/authentication`.
-            public var authentication: Components.Schemas.MenuItemAuthenticationField?
-            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/notes`.
-            public var notes: Components.Schemas.MenuItemNotesField?
-            /// Creates a new `MenuItemCreateSchema`.
-            ///
-            /// - Parameters:
-            ///   - label:
-            ///   - url:
-            ///   - priority:
-            ///   - isBlank:
-            ///   - permission:
-            ///   - authentication:
-            ///   - notes:
-            public init(
-                label: Swift.String,
-                url: Swift.String,
-                priority: Swift.Int,
-                isBlank: Swift.Bool,
-                permission: Swift.String,
-                authentication: Components.Schemas.MenuItemAuthenticationField? = nil,
-                notes: Components.Schemas.MenuItemNotesField? = nil
-            ) {
-                self.label = label
-                self.url = url
-                self.priority = priority
-                self.isBlank = isBlank
-                self.permission = permission
-                self.authentication = authentication
-                self.notes = notes
-            }
-            public enum CodingKeys: String, CodingKey {
-                case label
-                case url
-                case priority
-                case isBlank
-                case permission
-                case authentication
-                case notes
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/MenuItemAuthenticationField`.
-        public typealias MenuItemAuthenticationField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MenuItemNotesField`.
-        public typealias MenuItemNotesField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema`.
-        public struct MenuItemDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/menuId`.
-            public var menuId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/label`.
-            public var label: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/url`.
-            public var url: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/priority`.
-            public var priority: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/isBlank`.
-            public var isBlank: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/permission`.
-            public var permission: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/authentication`.
-            public var authentication: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/notes`.
-            public var notes: Components.Schemas.MenuItemNotesField?
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/createdAt`.
-            public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/updatedAt`.
-            public var updatedAt: Swift.Double
-            /// Creates a new `MenuItemDetailSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - menuId:
-            ///   - label:
-            ///   - url:
-            ///   - priority:
-            ///   - isBlank:
-            ///   - permission:
-            ///   - authentication:
-            ///   - notes:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Swift.String,
-                menuId: Swift.String,
-                label: Swift.String,
-                url: Swift.String,
-                priority: Swift.Int,
-                isBlank: Swift.Bool,
-                permission: Swift.String,
-                authentication: Swift.String,
-                notes: Components.Schemas.MenuItemNotesField? = nil,
-                createdAt: Swift.Double,
-                updatedAt: Swift.Double
-            ) {
-                self.id = id
-                self.menuId = menuId
-                self.label = label
-                self.url = url
-                self.priority = priority
-                self.isBlank = isBlank
-                self.permission = permission
-                self.authentication = authentication
-                self.notes = notes
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case menuId
-                case label
-                case url
-                case priority
-                case isBlank
-                case permission
-                case authentication
-                case notes
-                case createdAt
-                case updatedAt
-            }
-        }
         /// - Remark: Generated from `#/components/schemas/MenuItemListSchema`.
         public typealias MenuItemListSchema = [Components.Schemas.MenuItemListItemSchema]
         /// - Remark: Generated from `#/components/schemas/MenuItemListItemSchema`.
@@ -806,10 +672,144 @@ extension Components {
         public typealias MenuItemIsBlankField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/MenuItemPermissionField`.
         public typealias MenuItemPermissionField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuItemAuthenticationField`.
+        public typealias MenuItemAuthenticationField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MenuItemCreatedAtField`.
         public typealias MenuItemCreatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/MenuItemUpdatedAtField`.
         public typealias MenuItemUpdatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema`.
+        public struct MenuItemCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/label`.
+            public var label: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/url`.
+            public var url: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/priority`.
+            public var priority: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/isBlank`.
+            public var isBlank: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/permission`.
+            public var permission: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/authentication`.
+            public var authentication: Components.Schemas.MenuItemAuthenticationField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/notes`.
+            public var notes: Components.Schemas.MenuItemNotesField?
+            /// Creates a new `MenuItemCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - label:
+            ///   - url:
+            ///   - priority:
+            ///   - isBlank:
+            ///   - permission:
+            ///   - authentication:
+            ///   - notes:
+            public init(
+                label: Swift.String,
+                url: Swift.String,
+                priority: Swift.Int,
+                isBlank: Swift.Bool,
+                permission: Swift.String,
+                authentication: Components.Schemas.MenuItemAuthenticationField? = nil,
+                notes: Components.Schemas.MenuItemNotesField? = nil
+            ) {
+                self.label = label
+                self.url = url
+                self.priority = priority
+                self.isBlank = isBlank
+                self.permission = permission
+                self.authentication = authentication
+                self.notes = notes
+            }
+            public enum CodingKeys: String, CodingKey {
+                case label
+                case url
+                case priority
+                case isBlank
+                case permission
+                case authentication
+                case notes
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MenuItemNotesField`.
+        public typealias MenuItemNotesField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema`.
+        public struct MenuItemDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/menuId`.
+            public var menuId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/label`.
+            public var label: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/url`.
+            public var url: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/priority`.
+            public var priority: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/isBlank`.
+            public var isBlank: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/permission`.
+            public var permission: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/authentication`.
+            public var authentication: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/notes`.
+            public var notes: Components.Schemas.MenuItemNotesField?
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/MenuItemDetailSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `MenuItemDetailSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - menuId:
+            ///   - label:
+            ///   - url:
+            ///   - priority:
+            ///   - isBlank:
+            ///   - permission:
+            ///   - authentication:
+            ///   - notes:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                menuId: Swift.String,
+                label: Swift.String,
+                url: Swift.String,
+                priority: Swift.Int,
+                isBlank: Swift.Bool,
+                permission: Swift.String,
+                authentication: Swift.String,
+                notes: Components.Schemas.MenuItemNotesField? = nil,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.menuId = menuId
+                self.label = label
+                self.url = url
+                self.priority = priority
+                self.isBlank = isBlank
+                self.permission = permission
+                self.authentication = authentication
+                self.notes = notes
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case menuId
+                case label
+                case url
+                case priority
+                case isBlank
+                case permission
+                case authentication
+                case notes
+                case createdAt
+                case updatedAt
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema`.
         public struct MenuItemQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema/page`.
@@ -1157,6 +1157,107 @@ extension Components {
                 case beforeItemId
             }
         }
+        /// - Remark: Generated from `#/components/schemas/MetadataListSchema`.
+        public typealias MetadataListSchema = [Components.Schemas.MetadataListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema`.
+        public struct MetadataListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/id`.
+            public var id: Components.Schemas.MetadataIdField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/referenceType`.
+            public var referenceType: Components.Schemas.MetadataReferenceTypeField?
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/referenceId`.
+            public var referenceId: Components.Schemas.MetadataReferenceIDField?
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/slug`.
+            public var slug: Components.Schemas.MetadataSlugField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/publicationDate`.
+            public var publicationDate: Swift.Double?
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/expirationDate`.
+            public var expirationDate: Swift.Double?
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/status`.
+            public var status: Components.Schemas.MetadataStatusField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/availability`.
+            public var availability: Components.Schemas.MetadataAvailabilityField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/title`.
+            public var title: Components.Schemas.MetadataTitleField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.MetadataTimestampField
+            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.MetadataTimestampField
+            /// Creates a new `MetadataListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - referenceType:
+            ///   - referenceId:
+            ///   - slug:
+            ///   - publicationDate:
+            ///   - expirationDate:
+            ///   - status:
+            ///   - availability:
+            ///   - title:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.MetadataIdField,
+                referenceType: Components.Schemas.MetadataReferenceTypeField? = nil,
+                referenceId: Components.Schemas.MetadataReferenceIDField? = nil,
+                slug: Components.Schemas.MetadataSlugField,
+                publicationDate: Swift.Double? = nil,
+                expirationDate: Swift.Double? = nil,
+                status: Components.Schemas.MetadataStatusField,
+                availability: Components.Schemas.MetadataAvailabilityField,
+                title: Components.Schemas.MetadataTitleField,
+                createdAt: Components.Schemas.MetadataTimestampField,
+                updatedAt: Components.Schemas.MetadataTimestampField
+            ) {
+                self.id = id
+                self.referenceType = referenceType
+                self.referenceId = referenceId
+                self.slug = slug
+                self.publicationDate = publicationDate
+                self.expirationDate = expirationDate
+                self.status = status
+                self.availability = availability
+                self.title = title
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case referenceType
+                case referenceId
+                case slug
+                case publicationDate
+                case expirationDate
+                case status
+                case availability
+                case title
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MetadataIdField`.
+        public typealias MetadataIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataReferenceTypeField`.
+        public typealias MetadataReferenceTypeField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataReferenceIDField`.
+        public typealias MetadataReferenceIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataSlugField`.
+        public typealias MetadataSlugField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataStatusField`.
+        public typealias MetadataStatusField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataAvailabilityField`.
+        @frozen public enum MetadataAvailabilityField: String, Codable, Hashable, Sendable, CaseIterable {
+            case draft = "draft"
+            case scheduled = "scheduled"
+            case live = "live"
+            case expired = "expired"
+            case archived = "archived"
+        }
+        /// - Remark: Generated from `#/components/schemas/MetadataTitleField`.
+        public typealias MetadataTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataTimestampField`.
+        public typealias MetadataTimestampField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema`.
         public struct MetadataCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/slug`.
@@ -1266,10 +1367,6 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/MetadataTemplateField`.
         public typealias MetadataTemplateField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MetadataReferenceTypeField`.
-        public typealias MetadataReferenceTypeField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MetadataReferenceIDField`.
-        public typealias MetadataReferenceIDField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataNoIndexField`.
         public typealias MetadataNoIndexField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema`.
@@ -1403,103 +1500,6 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MetadataAvailabilityField`.
-        @frozen public enum MetadataAvailabilityField: String, Codable, Hashable, Sendable, CaseIterable {
-            case draft = "draft"
-            case scheduled = "scheduled"
-            case live = "live"
-            case expired = "expired"
-            case archived = "archived"
-        }
-        /// - Remark: Generated from `#/components/schemas/MetadataListSchema`.
-        public typealias MetadataListSchema = [Components.Schemas.MetadataListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema`.
-        public struct MetadataListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/id`.
-            public var id: Components.Schemas.MetadataIdField
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/referenceType`.
-            public var referenceType: Components.Schemas.MetadataReferenceTypeField?
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/referenceId`.
-            public var referenceId: Components.Schemas.MetadataReferenceIDField?
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/slug`.
-            public var slug: Components.Schemas.MetadataSlugField
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/publicationDate`.
-            public var publicationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/expirationDate`.
-            public var expirationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/status`.
-            public var status: Components.Schemas.MetadataStatusField
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/availability`.
-            public var availability: Components.Schemas.MetadataAvailabilityField
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/title`.
-            public var title: Components.Schemas.MetadataTitleField
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.MetadataTimestampField
-            /// - Remark: Generated from `#/components/schemas/MetadataListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.MetadataTimestampField
-            /// Creates a new `MetadataListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - referenceType:
-            ///   - referenceId:
-            ///   - slug:
-            ///   - publicationDate:
-            ///   - expirationDate:
-            ///   - status:
-            ///   - availability:
-            ///   - title:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.MetadataIdField,
-                referenceType: Components.Schemas.MetadataReferenceTypeField? = nil,
-                referenceId: Components.Schemas.MetadataReferenceIDField? = nil,
-                slug: Components.Schemas.MetadataSlugField,
-                publicationDate: Swift.Double? = nil,
-                expirationDate: Swift.Double? = nil,
-                status: Components.Schemas.MetadataStatusField,
-                availability: Components.Schemas.MetadataAvailabilityField,
-                title: Components.Schemas.MetadataTitleField,
-                createdAt: Components.Schemas.MetadataTimestampField,
-                updatedAt: Components.Schemas.MetadataTimestampField
-            ) {
-                self.id = id
-                self.referenceType = referenceType
-                self.referenceId = referenceId
-                self.slug = slug
-                self.publicationDate = publicationDate
-                self.expirationDate = expirationDate
-                self.status = status
-                self.availability = availability
-                self.title = title
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case referenceType
-                case referenceId
-                case slug
-                case publicationDate
-                case expirationDate
-                case status
-                case availability
-                case title
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/MetadataIdField`.
-        public typealias MetadataIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MetadataSlugField`.
-        public typealias MetadataSlugField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MetadataStatusField`.
-        public typealias MetadataStatusField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MetadataTitleField`.
-        public typealias MetadataTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MetadataTimestampField`.
-        public typealias MetadataTimestampField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema`.
         public struct MetadataQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MetadataQueryItemSearchRequestQuerySchema/page`.
@@ -1968,6 +1968,67 @@ extension Components {
                 case structuredDataCodeInjection
             }
         }
+        /// - Remark: Generated from `#/components/schemas/PageListSchema`.
+        public typealias PageListSchema = [Components.Schemas.PageListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/PageListItemSchema`.
+        public struct PageListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/id`.
+            public var id: Components.Schemas.PageIdField
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/title`.
+            public var title: Components.Schemas.PageTitleField
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/excerpt`.
+            public var excerpt: Components.Schemas.PageExcerptField
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/imageAssetId`.
+            public var imageAssetId: Components.Schemas.PageImageAssetIdField?
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/createdAt`.
+            public var createdAt: Components.Schemas.PageCreatedAtField
+            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/updatedAt`.
+            public var updatedAt: Components.Schemas.PageUpdatedAtField
+            /// Creates a new `PageListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - title:
+            ///   - excerpt:
+            ///   - imageAssetId:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.PageIdField,
+                title: Components.Schemas.PageTitleField,
+                excerpt: Components.Schemas.PageExcerptField,
+                imageAssetId: Components.Schemas.PageImageAssetIdField? = nil,
+                createdAt: Components.Schemas.PageCreatedAtField,
+                updatedAt: Components.Schemas.PageUpdatedAtField
+            ) {
+                self.id = id
+                self.title = title
+                self.excerpt = excerpt
+                self.imageAssetId = imageAssetId
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case title
+                case excerpt
+                case imageAssetId
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/PageIdField`.
+        public typealias PageIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/PageTitleField`.
+        public typealias PageTitleField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/PageExcerptField`.
+        public typealias PageExcerptField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/PageImageAssetIdField`.
+        public typealias PageImageAssetIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/PageCreatedAtField`.
+        public typealias PageCreatedAtField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/PageUpdatedAtField`.
+        public typealias PageUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/PageCreateSchema`.
         public struct PageCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/PageCreateSchema/title`.
@@ -2003,8 +2064,6 @@ extension Components {
                 case imageAssetId
             }
         }
-        /// - Remark: Generated from `#/components/schemas/PageImageAssetIdField`.
-        public typealias PageImageAssetIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/PageDetailSchema`.
         public struct PageDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/PageDetailSchema/id`.
@@ -2064,65 +2123,6 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/PageListSchema`.
-        public typealias PageListSchema = [Components.Schemas.PageListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/PageListItemSchema`.
-        public struct PageListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/id`.
-            public var id: Components.Schemas.PageIdField
-            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/title`.
-            public var title: Components.Schemas.PageTitleField
-            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/excerpt`.
-            public var excerpt: Components.Schemas.PageExcerptField
-            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.PageImageAssetIdField?
-            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/createdAt`.
-            public var createdAt: Components.Schemas.PageCreatedAtField
-            /// - Remark: Generated from `#/components/schemas/PageListItemSchema/updatedAt`.
-            public var updatedAt: Components.Schemas.PageUpdatedAtField
-            /// Creates a new `PageListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - title:
-            ///   - excerpt:
-            ///   - imageAssetId:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.PageIdField,
-                title: Components.Schemas.PageTitleField,
-                excerpt: Components.Schemas.PageExcerptField,
-                imageAssetId: Components.Schemas.PageImageAssetIdField? = nil,
-                createdAt: Components.Schemas.PageCreatedAtField,
-                updatedAt: Components.Schemas.PageUpdatedAtField
-            ) {
-                self.id = id
-                self.title = title
-                self.excerpt = excerpt
-                self.imageAssetId = imageAssetId
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case title
-                case excerpt
-                case imageAssetId
-                case createdAt
-                case updatedAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/PageIdField`.
-        public typealias PageIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/PageTitleField`.
-        public typealias PageTitleField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/PageExcerptField`.
-        public typealias PageExcerptField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/PageCreatedAtField`.
-        public typealias PageCreatedAtField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/PageUpdatedAtField`.
-        public typealias PageUpdatedAtField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema`.
         public struct PageQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/PageQueryItemSearchRequestQuerySchema/page`.

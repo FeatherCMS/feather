@@ -7,14 +7,14 @@ public import Hummingbird
 
 extension Log {
     public struct Middleware: RouterMiddleware {
-        public let apiBaseURL: URL
+        public let environment: AppEnvironment
         private let logFilter: any Filter.Interface
 
         public init(
-            apiBaseURL: URL,
+            environment: AppEnvironment,
             logFilter: any Filter.Interface
         ) {
-            self.apiBaseURL = apiBaseURL
+            self.environment = environment
             self.logFilter = logFilter
         }
 
@@ -49,7 +49,7 @@ extension Log {
             let headers = Self.storedHeaders(from: request)
             Task.detached {
                 let api = API.Client(
-                    apiBaseURL: apiBaseURL,
+                    environment: environment,
                     sessionToken: sessionToken
                 )
                 let payload = Components.Schemas.AppAnalyticsLogTrackSchema(

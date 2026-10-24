@@ -60,44 +60,5 @@ extension API {
             )
         }
 
-        public func resolveAssets(
-            ids: [String],
-            variants: [String]? = nil
-        ) async throws -> [MediaAdminAPI.Components.Schemas
-            .MediaAssetResolveItemSchema]
-        {
-            guard !ids.isEmpty else { return [] }
-
-            return try await withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.mediaAssetResolve(
-                    .init(
-                        headers: .init(accept: [.init(contentType: .json)]),
-                        body: .json(.init(ids: ids, variants: variants))
-                    )
-                )
-                switch response {
-                case .ok(let ok):
-                    return try ok.body.json
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
-                }
-            }
-        }
-
-        public func loadImageAsset(
-            assetId: String?,
-            variants: [String] = ["preview"]
-        ) async throws -> AdminMediaAsset? {
-            guard let assetId, !assetId.isEmpty else { return nil }
-            return try await Asset.File.View.Repository.OpenAPI(api: self)
-                .getAssetWithPreview(id: assetId, variants: variants)
-        }
     }
 }

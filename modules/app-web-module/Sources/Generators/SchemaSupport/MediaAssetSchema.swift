@@ -1,6 +1,5 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct MediaAssetIdField: StringSchemaRepresentable {
     var example: String? = "media_asset_1"

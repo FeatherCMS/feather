@@ -5,15 +5,15 @@ public import struct Foundation.Data
 public import struct Foundation.Date
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/get(menuList)`.
+    func menuList(_ input: Operations.MenuList.Input) async throws -> Operations.MenuList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/menus`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(menuCreate)`.
     func menuCreate(_ input: Operations.MenuCreate.Input) async throws -> Operations.MenuCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(menuRemove)`.
     func menuRemove(_ input: Operations.MenuRemove.Input) async throws -> Operations.MenuRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(menuList)`.
-    func menuList(_ input: Operations.MenuList.Input) async throws -> Operations.MenuList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(menuQuery)`.
     func menuQuery(_ input: Operations.MenuQuery.Input) async throws -> Operations.MenuQuery.Output
@@ -26,15 +26,15 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PUT /api/v1/admin/web/menus/{menuId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/put(menuUpdate)`.
     func menuUpdate(_ input: Operations.MenuUpdate.Input) async throws -> Operations.MenuUpdate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/get(menuItemList)`.
+    func menuItemList(_ input: Operations.MenuItemList.Input) async throws -> Operations.MenuItemList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/post(menuItemCreate)`.
     func menuItemCreate(_ input: Operations.MenuItemCreate.Input) async throws -> Operations.MenuItemCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{menuId}/items`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/delete(menuItemRemove)`.
     func menuItemRemove(_ input: Operations.MenuItemRemove.Input) async throws -> Operations.MenuItemRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items//get(menuItemList)`.
-    func menuItemList(_ input: Operations.MenuItemList.Input) async throws -> Operations.MenuItemList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/query/post(menuItemQuery)`.
     func menuItemQuery(_ input: Operations.MenuItemQuery.Input) async throws -> Operations.MenuItemQuery.Output
@@ -50,15 +50,15 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move/post(menuItemMove)`.
     func menuItemMove(_ input: Operations.MenuItemMove.Input) async throws -> Operations.MenuItemMove.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/get(metadataList)`.
+    func metadataList(_ input: Operations.MetadataList.Input) async throws -> Operations.MetadataList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(metadataCreate)`.
     func metadataCreate(_ input: Operations.MetadataCreate.Input) async throws -> Operations.MetadataCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(metadataRemove)`.
     func metadataRemove(_ input: Operations.MetadataRemove.Input) async throws -> Operations.MetadataRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(metadataList)`.
-    func metadataList(_ input: Operations.MetadataList.Input) async throws -> Operations.MetadataList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(metadataQuery)`.
     func metadataQuery(_ input: Operations.MetadataQuery.Input) async throws -> Operations.MetadataQuery.Output
@@ -74,15 +74,15 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PUT /api/v1/admin/web/metadata/{metadataId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/put(metadataUpdate)`.
     func metadataUpdate(_ input: Operations.MetadataUpdate.Input) async throws -> Operations.MetadataUpdate.Output
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/get(pageList)`.
+    func pageList(_ input: Operations.PageList.Input) async throws -> Operations.PageList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/pages`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(pageCreate)`.
     func pageCreate(_ input: Operations.PageCreate.Input) async throws -> Operations.PageCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(pageRemove)`.
     func pageRemove(_ input: Operations.PageRemove.Input) async throws -> Operations.PageRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(pageList)`.
-    func pageList(_ input: Operations.PageList.Input) async throws -> Operations.PageList.Output
     /// - Remark: HTTP `POST /api/v1/admin/web/pages/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(pageQuery)`.
     func pageQuery(_ input: Operations.PageQuery.Input) async throws -> Operations.PageQuery.Output
@@ -105,6 +105,11 @@ public protocol APIProtocol: Sendable {
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/get(menuList)`.
+    public func menuList(headers: Operations.MenuList.Input.Headers = .init()) async throws -> Operations.MenuList.Output {
+        try await menuList(Operations.MenuList.Input(headers: headers))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/post(menuCreate)`.
     public func menuCreate(
@@ -126,11 +131,6 @@ extension APIProtocol {
             headers: headers,
             body: body
         ))
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus//get(menuList)`.
-    public func menuList(headers: Operations.MenuList.Input.Headers = .init()) async throws -> Operations.MenuList.Output {
-        try await menuList(Operations.MenuList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/query/post(menuQuery)`.
@@ -182,6 +182,17 @@ extension APIProtocol {
             body: body
         ))
     }
+    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/get(menuItemList)`.
+    public func menuItemList(
+        path: Operations.MenuItemList.Input.Path,
+        headers: Operations.MenuItemList.Input.Headers = .init()
+    ) async throws -> Operations.MenuItemList.Output {
+        try await menuItemList(Operations.MenuItemList.Input(
+            path: path,
+            headers: headers
+        ))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/post(menuItemCreate)`.
     public func menuItemCreate(
@@ -206,17 +217,6 @@ extension APIProtocol {
             path: path,
             headers: headers,
             body: body
-        ))
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/web/menus/{menuId}/items/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items//get(menuItemList)`.
-    public func menuItemList(
-        path: Operations.MenuItemList.Input.Path,
-        headers: Operations.MenuItemList.Input.Headers = .init()
-    ) async throws -> Operations.MenuItemList.Output {
-        try await menuItemList(Operations.MenuItemList.Input(
-            path: path,
-            headers: headers
         ))
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/menus/{menuId}/items/query`.
@@ -284,6 +284,11 @@ extension APIProtocol {
             body: body
         ))
     }
+    /// - Remark: HTTP `GET /api/v1/admin/web/metadata`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/get(metadataList)`.
+    public func metadataList(headers: Operations.MetadataList.Input.Headers = .init()) async throws -> Operations.MetadataList.Output {
+        try await metadataList(Operations.MetadataList.Input(headers: headers))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/post(metadataCreate)`.
     public func metadataCreate(
@@ -305,11 +310,6 @@ extension APIProtocol {
             headers: headers,
             body: body
         ))
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/web/metadata/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata//get(metadataList)`.
-    public func metadataList(headers: Operations.MetadataList.Input.Headers = .init()) async throws -> Operations.MetadataList.Output {
-        try await metadataList(Operations.MetadataList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/metadata/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/query/post(metadataQuery)`.
@@ -372,6 +372,11 @@ extension APIProtocol {
             body: body
         ))
     }
+    /// - Remark: HTTP `GET /api/v1/admin/web/pages`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/get(pageList)`.
+    public func pageList(headers: Operations.PageList.Input.Headers = .init()) async throws -> Operations.PageList.Output {
+        try await pageList(Operations.PageList.Input(headers: headers))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/post(pageCreate)`.
     public func pageCreate(
@@ -393,11 +398,6 @@ extension APIProtocol {
             headers: headers,
             body: body
         ))
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/web/pages/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages//get(pageList)`.
-    public func pageList(headers: Operations.PageList.Input.Headers = .init()) async throws -> Operations.PageList.Output {
-        try await pageList(Operations.PageList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/web/pages/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/query/post(pageQuery)`.

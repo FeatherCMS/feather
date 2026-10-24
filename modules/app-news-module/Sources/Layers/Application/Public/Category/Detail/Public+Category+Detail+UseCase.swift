@@ -8,17 +8,17 @@ import WebDomain
 
 extension Public.Category.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        let query: any QueryExecutor<Public.Category.Detail.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
-            query: any QueryExecutor<Public.Category.Detail.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.query = query
         }
 
         public func execute(
             input: Input
-        ) async throws -> Public.Category.Detail.Output {
+        ) async throws -> Output {
             let now = Date()
             return try await query.run { scope in
                 let category = try await scope.category.find(id: input.id)
@@ -51,7 +51,7 @@ extension Public.Category.Detail {
     }
 }
 
-extension Public.Category.Detail.UseCase {
+extension UseCase {
     fileprivate struct PublicArticlePage: Sendable {
         let items: [Public.Article.Summary.Item]
         let total: Int
@@ -62,14 +62,13 @@ extension Public.Category.Detail.UseCase {
     fileprivate static func publicArticles(
         matchingCategoryID categoryID: String,
         now: Date,
-        context: Public.Category.Detail.Scope,
+        context: Scope,
         pageNumber: Int,
         pageSize: Int
     ) async throws -> PublicArticlePage {
         let resolvedPageSize = max(1, pageSize)
         let requestedPage = max(1, pageNumber)
         async let totalTask = context.article.countPublic(
-            query: .init(),
             categoryID: categoryID
         )
         async let requestedArticlesTask = context.article.listPublic(
@@ -78,9 +77,9 @@ extension Public.Category.Detail.UseCase {
                     size: resolvedPageSize,
                     number: requestedPage
                 ),
-                sort: []
-            ),
-            categoryID: categoryID
+                sort: [],
+                categoryID: categoryID
+            )
         )
         let total = try await totalTask
         let requestedArticles = try await requestedArticlesTask
@@ -89,28 +88,28 @@ extension Public.Category.Detail.UseCase {
             (total + resolvedPageSize - 1) / resolvedPageSize
         )
         let currentPage = min(requestedPage, pageCount)
-        let articles: Public.Article.List.Query.Output
+        let articleItems: [Public.Article.Item]
         if currentPage == requestedPage || total == 0 {
-            articles = requestedArticles
+            articleItems = requestedArticles.items
         }
         else {
-            articles = try await context.article.listPublic(
+            articleItems = try await context.article.listPublic(
                 query: .init(
                     page: .init(
                         size: resolvedPageSize,
                         number: currentPage
                     ),
-                    sort: []
-                ),
-                categoryID: categoryID
+                    sort: [],
+                    categoryID: categoryID
+                )
             )
         }
         async let categoryIDsTask = context.articleCategoryIDs.categoryIDs(
-            for: articles.items.map(\.id)
+            for: articleItems.map(\.id)
         )
         async let metadataTask = context.metadataDetails.resolveDetails(
             referenceType: "news.article",
-            referenceIDs: Array(Set(articles.items.map(\.id)))
+            referenceIDs: Array(Set(articleItems.map(\.id)))
         )
         let categoryIDsByArticleID = try await categoryIDsTask
         let metadata = try await metadataTask
@@ -118,7 +117,7 @@ extension Public.Category.Detail.UseCase {
             uniqueKeysWithValues: metadata.map { ($0.referenceID, $0) }
         )
         var result: [Public.Article.Summary.Item] = []
-        for item in articles.items {
+        for item in articleItems {
             guard
                 let metadata = metadataByArticleID[item.id],
                 metadata.isPublic(at: now)
@@ -134,7 +133,9 @@ extension Public.Category.Detail.UseCase {
                     imageURL: "",
                     media: nil,
                     metadata: metadata,
-                    readingTime: NewsReadingTime.minutes(for: item.content),
+                    readingTime: Public.Article.ReadingTime.minutes(
+                        for: item.content
+                    ),
                     categoryIDs: categoryIDsByArticleID[item.id] ?? []
                 )
             )

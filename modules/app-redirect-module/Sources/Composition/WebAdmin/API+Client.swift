@@ -1,11 +1,8 @@
-import AsyncHTTPClient
 import FeatherWebAdmin
 import FeatherWebShared
-import Foundation
-import NIOCore
-import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import RedirectAdminAPI
+import RedirectWebShared
 
 extension API {
     struct Client: Sendable {
@@ -15,46 +12,32 @@ extension API {
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            let configuration = RedirectAPIClientSupport.configuration(
+                sessionToken: requestContext.sessionToken
+            )
             self.client = .init(
                 serverURL: environment.apiBaseURL,
-                transport: AsyncHTTPClientTransport(
-                    configuration: .init(
-                        client: .shared,
-                        timeout: .seconds(3)
-                    )
-                ),
-                middlewares: [
-                    ClientAPIAuthMiddleware(
-                        sessionToken: requestContext.sessionToken
-                    )
-                ]
+                transport: configuration.transport,
+                middlewares: configuration.middlewares
             )
         }
 
         func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (RedirectAdminAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            do {
-                return try await operation(client)
-            }
-            catch let error as OpenAPIRepositoryError {
-                throw error
-            }
-            catch {
-                throw OpenAPIRepositoryError.transport(
-                    description: String(describing: error)
-                )
-            }
+            try await RedirectAPIClientSupport.withOpenAPIRepositoryErrorMapping(
+                operation,
+                using: client
+            )
         }
 
         func failure(
             statusCode: Int,
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
-            let body = try await responseBody?.collectString()
-            return OpenAPIRepositoryError.parsedFailure(
+            try await RedirectAPIClientSupport.failure(
                 statusCode: statusCode,
-                responseBody: body
+                responseBody: responseBody
             )
         }
     }

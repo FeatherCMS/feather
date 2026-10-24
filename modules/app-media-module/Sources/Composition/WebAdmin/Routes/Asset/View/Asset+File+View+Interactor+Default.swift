@@ -11,7 +11,7 @@ import WebComponents
 
 extension Asset.File.View.Interactor {
     struct Default: Interface {
-        let repository: Asset.File.View.Repository.OpenAPI
+        let repository: any Asset.File.View.Repository.Interface
 
         func getMediaAsset(
             id: String

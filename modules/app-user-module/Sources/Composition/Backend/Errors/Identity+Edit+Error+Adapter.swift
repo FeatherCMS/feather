@@ -6,7 +6,7 @@ import UserModule
 struct IdentityEditErrorAdapter: ErrorTraceRepresentable,
     HTTPErrorRepresentable
 {
-    let error: Identity.Edit.UseCase.Error
+    let error: Identity.Edit.Error
 
     var underlyingErrors: [any Error] { [] }
 

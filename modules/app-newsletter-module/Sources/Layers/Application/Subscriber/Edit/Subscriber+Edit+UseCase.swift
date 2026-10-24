@@ -7,12 +7,12 @@ import struct Foundation.Date
 
 extension Subscriber.Edit {
     public struct UseCase: FeatherApplication.UseCase {
-        let transaction: any TransactionExecutor<Subscriber.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
         let authorizer: any Authorizer
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Subscriber.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -21,7 +21,7 @@ extension Subscriber.Edit {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Subscriber.Edit.Output {
+        ) async throws -> Output {
             let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
             else {

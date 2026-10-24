@@ -19,7 +19,7 @@ extension Session.Detail {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Session.Detail.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

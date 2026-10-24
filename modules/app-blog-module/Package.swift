@@ -299,6 +299,11 @@ let package = Package(
             name: "BlogWebShared",
             dependencies: [
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"
@@ -312,12 +317,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"
@@ -341,11 +341,6 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"

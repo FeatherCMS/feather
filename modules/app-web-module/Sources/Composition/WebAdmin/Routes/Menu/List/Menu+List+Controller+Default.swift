@@ -24,7 +24,7 @@ extension WebModule.Menu.List.Controller {
             let search = request.querySearch()
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
-                to: WebModule.Permissions.Menus.list
+                to: Menu.Permissions.list
             )
             let emptyModel = WebModule.Menu.List.Model(
                 items: [],

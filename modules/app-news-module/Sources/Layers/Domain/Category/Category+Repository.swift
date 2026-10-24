@@ -1,5 +1,5 @@
 //
-//  Category.Repository.swift
+//  Category+Repository.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.

@@ -19,6 +19,27 @@ security:
 - bearerAuth: []
 paths:
   /api/v1/admin/web/menus:
+    get:
+      tags:
+      - Menus
+      operationId: menuList
+      responses:
+        200:
+          $ref: '#/components/responses/MenuListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - Menus
@@ -51,28 +72,6 @@ paths:
       responses:
         204:
           $ref: '#/components/responses/NoContentResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/menus/:
-    get:
-      tags:
-      - Menus
-      operationId: menuList
-      responses:
-        200:
-          $ref: '#/components/responses/MenuListResponse'
         401:
           description: Unauthorized
           content:
@@ -215,6 +214,29 @@ paths:
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/{menuId}/items:
+    get:
+      tags:
+      - MenuItems
+      operationId: menuItemList
+      parameters:
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/MenuItemListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - MenuItems
@@ -251,30 +273,6 @@ paths:
       responses:
         204:
           $ref: '#/components/responses/NoContentResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/menus/{menuId}/items/:
-    get:
-      tags:
-      - MenuItems
-      operationId: menuItemList
-      parameters:
-      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/MenuItemListResponse'
         401:
           description: Unauthorized
           content:
@@ -455,6 +453,27 @@ paths:
       security:
       - bearerAuth: []
   /api/v1/admin/web/metadata:
+    get:
+      tags:
+      - Metadata
+      operationId: metadataList
+      responses:
+        200:
+          $ref: '#/components/responses/MetadataListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - Metadata
@@ -487,28 +506,6 @@ paths:
       responses:
         204:
           $ref: '#/components/responses/NoContentResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/metadata/:
-    get:
-      tags:
-      - Metadata
-      operationId: metadataList
-      responses:
-        200:
-          $ref: '#/components/responses/MetadataListResponse'
         401:
           description: Unauthorized
           content:
@@ -675,6 +672,27 @@ paths:
       security:
       - bearerAuth: []
   /api/v1/admin/web/pages:
+    get:
+      tags:
+      - Pages
+      operationId: pageList
+      responses:
+        200:
+          $ref: '#/components/responses/PageListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - Pages
@@ -707,28 +725,6 @@ paths:
       responses:
         204:
           $ref: '#/components/responses/NoContentResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/pages/:
-    get:
-      tags:
-      - Pages
-      operationId: pageList
-      responses:
-        200:
-          $ref: '#/components/responses/PageListResponse'
         401:
           description: Unauthorized
           content:
@@ -917,6 +913,105 @@ paths:
       - bearerAuth: []
 components:
   schemas:
+    MenuListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MenuListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    MenuListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MenuIdField'
+        key:
+          $ref: '#/components/schemas/MenuKeyField'
+        name:
+          $ref: '#/components/schemas/MenuNameField'
+        createdAt:
+          $ref: '#/components/schemas/MenuCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/MenuUpdatedAtField'
+      required:
+      - id
+      - key
+      - name
+      - createdAt
+      - updatedAt
+      minProperties: 5
+    MenuIdField:
+      type: string
+      examples:
+      - wm_header
+    MenuKeyField:
+      type: string
+      examples:
+      - header
+    MenuNameField:
+      type: string
+      examples:
+      - Header menu
+    MenuCreatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    MenuUpdatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+      minProperties: 1
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+      minProperties: 2
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+      minProperties: 2
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+      minItems: 0
+      uniqueItems: false
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
+      minProperties: 2
     MenuCreateSchema:
       type: object
       properties:
@@ -972,57 +1067,6 @@ components:
       - createdAt
       - updatedAt
       minProperties: 5
-    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
-        trace:
-          $ref: '#/components/schemas/ErrorTraceSchema'
-      required:
-      - error
-      minProperties: 1
-    DefaultHTTPErrorContentSchema:
-      type: object
-      properties:
-        message:
-          type: string
-        reason:
-          type: string
-      required:
-      - message
-      - reason
-      minProperties: 2
-    ErrorTraceSchema:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-        reasons:
-          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
-      required:
-      - id
-      - message
-      minProperties: 2
-    ErrorTraceReasonsSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/ErrorTraceReasonSchema'
-      minItems: 0
-      uniqueItems: false
-    ErrorTraceReasonSchema:
-      type: object
-      properties:
-        id:
-          type: string
-        message:
-          type: string
-      required:
-      - id
-      - message
-      minProperties: 2
     DeleteRequestSchema:
       type: object
       properties:
@@ -1037,54 +1081,6 @@ components:
       required:
       - ids
       minProperties: 1
-    MenuListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/MenuListItemSchema'
-      minItems: 0
-      uniqueItems: false
-    MenuListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/MenuIdField'
-        key:
-          $ref: '#/components/schemas/MenuKeyField'
-        name:
-          $ref: '#/components/schemas/MenuNameField'
-        createdAt:
-          $ref: '#/components/schemas/MenuCreatedAtField'
-        updatedAt:
-          $ref: '#/components/schemas/MenuUpdatedAtField'
-      required:
-      - id
-      - key
-      - name
-      - createdAt
-      - updatedAt
-      minProperties: 5
-    MenuIdField:
-      type: string
-      examples:
-      - wm_header
-    MenuKeyField:
-      type: string
-      examples:
-      - header
-    MenuNameField:
-      type: string
-      examples:
-      - Header menu
-    MenuCreatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
-    MenuUpdatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
     MenuQueryItemSearchRequestQuerySchema:
       type: object
       properties:
@@ -1274,107 +1270,6 @@ components:
       - 'null'
       examples:
       - Primary site navigation.
-    MenuItemCreateSchema:
-      type: object
-      properties:
-        label:
-          type: string
-          examples:
-          - Home
-        url:
-          type: string
-          examples:
-          - /
-        priority:
-          type: integer
-          examples:
-          - 10
-        isBlank:
-          type: boolean
-          examples:
-          - false
-        permission:
-          type: string
-          examples:
-          - ''
-        authentication:
-          $ref: '#/components/schemas/MenuItemAuthenticationField'
-        notes:
-          $ref: '#/components/schemas/MenuItemNotesField'
-      required:
-      - label
-      - url
-      - priority
-      - isBlank
-      - permission
-      minProperties: 5
-    MenuItemAuthenticationField:
-      type: string
-      examples:
-      - any
-    MenuItemNotesField:
-      type: string
-      examples:
-      - Visible for all visitors.
-    MenuItemDetailSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          examples:
-          - wmi_home
-        menuId:
-          type: string
-          examples:
-          - wm_header
-        label:
-          type: string
-          examples:
-          - Home
-        url:
-          type: string
-          examples:
-          - /
-        priority:
-          type: integer
-          examples:
-          - 10
-        isBlank:
-          type: boolean
-          examples:
-          - false
-        permission:
-          type: string
-          examples:
-          - ''
-        authentication:
-          type: string
-          examples:
-          - any
-        notes:
-          $ref: '#/components/schemas/MenuItemNotesField'
-        createdAt:
-          type: number
-          format: double
-          examples:
-          - 1.76e+9
-        updatedAt:
-          type: number
-          format: double
-          examples:
-          - 1.76e+9
-      required:
-      - id
-      - menuId
-      - label
-      - url
-      - priority
-      - isBlank
-      - permission
-      - authentication
-      - createdAt
-      - updatedAt
-      minProperties: 10
     MenuItemListSchema:
       type: array
       items:
@@ -1440,6 +1335,10 @@ components:
       type: string
       examples:
       - ''
+    MenuItemAuthenticationField:
+      type: string
+      examples:
+      - any
     MenuItemCreatedAtField:
       type: number
       format: double
@@ -1450,6 +1349,103 @@ components:
       format: double
       examples:
       - 1.76e+9
+    MenuItemCreateSchema:
+      type: object
+      properties:
+        label:
+          type: string
+          examples:
+          - Home
+        url:
+          type: string
+          examples:
+          - /
+        priority:
+          type: integer
+          examples:
+          - 10
+        isBlank:
+          type: boolean
+          examples:
+          - false
+        permission:
+          type: string
+          examples:
+          - ''
+        authentication:
+          $ref: '#/components/schemas/MenuItemAuthenticationField'
+        notes:
+          $ref: '#/components/schemas/MenuItemNotesField'
+      required:
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      minProperties: 5
+    MenuItemNotesField:
+      type: string
+      examples:
+      - Visible for all visitors.
+    MenuItemDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - wmi_home
+        menuId:
+          type: string
+          examples:
+          - wm_header
+        label:
+          type: string
+          examples:
+          - Home
+        url:
+          type: string
+          examples:
+          - /
+        priority:
+          type: integer
+          examples:
+          - 10
+        isBlank:
+          type: boolean
+          examples:
+          - false
+        permission:
+          type: string
+          examples:
+          - ''
+        authentication:
+          type: string
+          examples:
+          - any
+        notes:
+          $ref: '#/components/schemas/MenuItemNotesField'
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          examples:
+          - 1.76e+9
+      required:
+      - id
+      - menuId
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      - authentication
+      - createdAt
+      - updatedAt
+      minProperties: 10
     MenuItemQueryItemSearchRequestQuerySchema:
       type: object
       properties:
@@ -1632,6 +1628,89 @@ components:
       required:
       - beforeItemId
       minProperties: 1
+    MetadataListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MetadataListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    MetadataListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MetadataIdField'
+        referenceType:
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
+        referenceId:
+          $ref: '#/components/schemas/MetadataReferenceIDField'
+        slug:
+          $ref: '#/components/schemas/MetadataSlugField'
+        publicationDate:
+          type:
+          - number
+          - 'null'
+        expirationDate:
+          type:
+          - number
+          - 'null'
+        status:
+          $ref: '#/components/schemas/MetadataStatusField'
+        availability:
+          $ref: '#/components/schemas/MetadataAvailabilityField'
+        title:
+          $ref: '#/components/schemas/MetadataTitleField'
+        createdAt:
+          $ref: '#/components/schemas/MetadataTimestampField'
+        updatedAt:
+          $ref: '#/components/schemas/MetadataTimestampField'
+      required:
+      - id
+      - slug
+      - status
+      - availability
+      - title
+      - createdAt
+      - updatedAt
+      minProperties: 7
+    MetadataIdField:
+      type: string
+      examples:
+      - metadata_homepage
+    MetadataReferenceTypeField:
+      type: string
+      examples:
+      - web.page
+    MetadataReferenceIDField:
+      type: string
+      examples:
+      - wp_home
+    MetadataSlugField:
+      type: string
+      examples:
+      - homepage
+    MetadataStatusField:
+      type: string
+      examples:
+      - draft
+    MetadataAvailabilityField:
+      type: string
+      enum:
+      - draft
+      - scheduled
+      - live
+      - expired
+      - archived
+      examples:
+      - live
+    MetadataTitleField:
+      type: string
+      examples:
+      - Homepage metadata title
+    MetadataTimestampField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
     MetadataCreateSchema:
       type: object
       properties:
@@ -1699,14 +1778,6 @@ components:
       type: string
       examples:
       - default
-    MetadataReferenceTypeField:
-      type: string
-      examples:
-      - web.page
-    MetadataReferenceIDField:
-      type: string
-      examples:
-      - wp_home
     MetadataNoIndexField:
       type: boolean
       examples:
@@ -1801,81 +1872,6 @@ components:
       - createdAt
       - updatedAt
       minProperties: 9
-    MetadataAvailabilityField:
-      type: string
-      enum:
-      - draft
-      - scheduled
-      - live
-      - expired
-      - archived
-      examples:
-      - live
-    MetadataListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/MetadataListItemSchema'
-      minItems: 0
-      uniqueItems: false
-    MetadataListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/MetadataIdField'
-        referenceType:
-          $ref: '#/components/schemas/MetadataReferenceTypeField'
-        referenceId:
-          $ref: '#/components/schemas/MetadataReferenceIDField'
-        slug:
-          $ref: '#/components/schemas/MetadataSlugField'
-        publicationDate:
-          type:
-          - number
-          - 'null'
-        expirationDate:
-          type:
-          - number
-          - 'null'
-        status:
-          $ref: '#/components/schemas/MetadataStatusField'
-        availability:
-          $ref: '#/components/schemas/MetadataAvailabilityField'
-        title:
-          $ref: '#/components/schemas/MetadataTitleField'
-        createdAt:
-          $ref: '#/components/schemas/MetadataTimestampField'
-        updatedAt:
-          $ref: '#/components/schemas/MetadataTimestampField'
-      required:
-      - id
-      - slug
-      - status
-      - availability
-      - title
-      - createdAt
-      - updatedAt
-      minProperties: 7
-    MetadataIdField:
-      type: string
-      examples:
-      - metadata_homepage
-    MetadataSlugField:
-      type: string
-      examples:
-      - homepage
-    MetadataStatusField:
-      type: string
-      examples:
-      - draft
-    MetadataTitleField:
-      type: string
-      examples:
-      - Homepage metadata title
-    MetadataTimestampField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
     MetadataQueryItemSearchRequestQuerySchema:
       type: object
       properties:
@@ -2143,6 +2139,60 @@ components:
           - string
           - 'null'
       minProperties: 0
+    PageListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/PageListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    PageListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/PageIdField'
+        title:
+          $ref: '#/components/schemas/PageTitleField'
+        excerpt:
+          $ref: '#/components/schemas/PageExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/PageImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/PageCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/PageUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+      minProperties: 5
+    PageIdField:
+      type: string
+      examples:
+      - wp_home
+    PageTitleField:
+      type: string
+      examples:
+      - Homepage
+    PageExcerptField:
+      type: string
+      examples:
+      - Short page summary.
+    PageImageAssetIdField:
+      type: string
+      examples:
+      - media_asset_1
+    PageCreatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    PageUpdatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
     PageCreateSchema:
       type: object
       properties:
@@ -2165,10 +2215,6 @@ components:
       - excerpt
       - content
       minProperties: 3
-    PageImageAssetIdField:
-      type: string
-      examples:
-      - media_asset_1
     PageDetailSchema:
       type: object
       properties:
@@ -2211,56 +2257,6 @@ components:
       - createdAt
       - updatedAt
       minProperties: 7
-    PageListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/PageListItemSchema'
-      minItems: 0
-      uniqueItems: false
-    PageListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/PageIdField'
-        title:
-          $ref: '#/components/schemas/PageTitleField'
-        excerpt:
-          $ref: '#/components/schemas/PageExcerptField'
-        imageAssetId:
-          $ref: '#/components/schemas/PageImageAssetIdField'
-        createdAt:
-          $ref: '#/components/schemas/PageCreatedAtField'
-        updatedAt:
-          $ref: '#/components/schemas/PageUpdatedAtField'
-      required:
-      - id
-      - title
-      - excerpt
-      - createdAt
-      - updatedAt
-      minProperties: 5
-    PageIdField:
-      type: string
-      examples:
-      - wp_home
-    PageTitleField:
-      type: string
-      examples:
-      - Homepage
-    PageExcerptField:
-      type: string
-      examples:
-      - Short page summary.
-    PageCreatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
-    PageUpdatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
     PageQueryItemSearchRequestQuerySchema:
       type: object
       properties:
@@ -2580,6 +2576,12 @@ components:
       - js
       minProperties: 16
   responses:
+    MenuListResponse:
+      description: Menu list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MenuListSchema'
     MenuDetailResponse:
       description: Menu response
       content:
@@ -2588,48 +2590,42 @@ components:
             $ref: '#/components/schemas/MenuDetailSchema'
     NoContentResponse:
       description: Delete succeeded
-    MenuListResponse:
-      description: Menu list response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MenuListSchema'
     MenuQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MenuQueryItemSearchSchema'
-    MenuItemDetailResponse:
-      description: MenuItem response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MenuItemDetailSchema'
     MenuItemListResponse:
       description: MenuItem list response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MenuItemListSchema'
+    MenuItemDetailResponse:
+      description: MenuItem response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MenuItemDetailSchema'
     MenuItemQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MenuItemQueryItemSearchSchema'
-    MetadataDetailResponse:
-      description: Metadata response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MetadataDetailSchema'
     MetadataListResponse:
       description: Metadata list response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MetadataListSchema'
+    MetadataDetailResponse:
+      description: Metadata response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MetadataDetailSchema'
     MetadataQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
@@ -2642,18 +2638,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MetadataResolveSchema'
-    PageDetailResponse:
-      description: Page response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PageDetailSchema'
     PageListResponse:
       description: Page list response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/PageListSchema'
+    PageDetailResponse:
+      description: Page response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PageDetailSchema'
     PageQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:

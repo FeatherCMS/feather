@@ -4,6 +4,6 @@ import WebModule
 
 extension Page.Detail {
     struct Action: PermissionAction {
-        let key = WebModule.Permissions.Pages.read
+        let key = Page.Permissions.read
     }
 }

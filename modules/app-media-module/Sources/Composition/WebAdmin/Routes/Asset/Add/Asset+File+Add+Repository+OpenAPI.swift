@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.Add.Repository {
-    struct OpenAPI {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func listFolders(
@@ -106,10 +106,30 @@ extension Asset.File.Add.Repository {
 
             let resolvedVariants: [AdminMediaAssetVariant]
             if let variants, !variants.isEmpty {
-                let resolved = try await api.resolveAssets(
-                    ids: [asset.id],
-                    variants: variants
-                )
+                let resolved = try await api.withOpenAPIRepositoryErrorMapping {
+                    client in
+                    let response = try await client.mediaAssetResolve(
+                        .init(
+                            headers: .init(accept: [.init(contentType: .json)]),
+                            body: .json(
+                                .init(ids: [asset.id], variants: variants)
+                            )
+                        )
+                    )
+                    switch response {
+                    case .ok(let ok):
+                        return try ok.body.json
+                    case .unauthorized:
+                        throw OpenAPIRepositoryError.unauthorized
+                    case .forbidden:
+                        throw OpenAPIRepositoryError.forbidden
+                    case .undocumented(let statusCode, let response):
+                        throw try await api.failure(
+                            statusCode: statusCode,
+                            responseBody: response.body
+                        )
+                    }
+                }
                 resolvedVariants =
                     resolved
                     .first(where: { $0.id == asset.id })?

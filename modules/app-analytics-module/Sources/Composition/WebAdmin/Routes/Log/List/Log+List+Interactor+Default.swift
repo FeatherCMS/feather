@@ -1,4 +1,5 @@
 import AnalyticsModule
+import AnalyticsApplication
 
 extension Log.List.Interactor {
     struct Default: Interface {
@@ -13,7 +14,7 @@ extension Log.List.Interactor {
             from: Double?,
             to: Double?
         ) async throws -> Log.List.Model {
-            try await repository.listLogs(
+            try await repository.search(
                 page: page,
                 search: search,
                 source: source,

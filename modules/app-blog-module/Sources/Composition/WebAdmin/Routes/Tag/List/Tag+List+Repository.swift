@@ -6,6 +6,6 @@ extension Tag.List {
 
 extension Tag.List.Repository {
     protocol Interface: Sendable {
-        func query(page: Int, search: String?) async throws -> Tag.List.Model
+        func search(page: Int, search: String?) async throws -> Tag.List.Model
     }
 }

@@ -15,11 +15,11 @@ import UserDomain
 extension Invitation.Edit {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Invitation.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Invitation.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -27,7 +27,7 @@ extension Invitation.Edit {
 
         public func execute(
             subject: Subject,
-            input: Invitation.Edit.Input
+            input: Input
         ) async throws -> Output {
             let action = Action()
 
@@ -40,13 +40,13 @@ extension Invitation.Edit {
                 guard
                     var model = try await scope.invitation.findBy(id: input.id)
                 else {
-                    throw Error(message: "Invitation not found")
+                    throw Invitation.Edit.Error(message: "Invitation not found")
                 }
 
                 let roleIDs = input.roleIDs.apply(to: model.roleIDs)
                 for roleID in roleIDs {
                     guard try await scope.role.findBy(id: roleID) != nil else {
-                        throw Error(message: "Role not found: \(roleID)")
+                        throw Invitation.Edit.Error(message: "Role not found: \(roleID)")
                     }
                 }
 

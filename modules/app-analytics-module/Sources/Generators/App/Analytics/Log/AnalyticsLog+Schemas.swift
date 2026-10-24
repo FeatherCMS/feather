@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 struct AppAnalyticsLogMethodField: StringSchemaRepresentable {
     var example: String? = "GET"

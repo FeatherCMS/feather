@@ -1,5 +1,5 @@
 //
-//  MockTransactionContext.swift
+//  TransactionContext+Mock.swift
 //  app-user-module
 //
 

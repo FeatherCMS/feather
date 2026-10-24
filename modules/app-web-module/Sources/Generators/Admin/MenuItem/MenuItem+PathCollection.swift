@@ -7,8 +7,6 @@ extension MenuItem {
             [
                 "api/v1/admin/web/menus/{menuId}/items":
                     PathItem(),
-                "api/v1/admin/web/menus/{menuId}/items/":
-                    List.PathItem(),
                 "api/v1/admin/web/menus/{menuId}/items/query":
                     Query.PathItem(),
                 "api/v1/admin/web/menus/{menuId}/items/{menuItemId}":

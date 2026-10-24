@@ -1,10 +1,14 @@
 public import FeatherDomain
 public import MediaModule
 
-public import struct Foundation.Date
+public import Foundation
 
 extension Asset.Folder {
     public struct Model: FeatherDomain.Model {
+        public enum Error: DomainError {
+            case invalidName
+        }
+
         public struct New: Sendable {
             public let parentId: String?
             public let name: String
@@ -52,17 +56,57 @@ extension Asset.Folder {
 }
 
 extension Asset.Folder.Model {
+    private static func slug(from name: String) -> String {
+        name.lowercased()
+            .replacingOccurrences(
+                of: "[^a-z0-9]+",
+                with: "-",
+                options: .regularExpression
+            )
+            .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+    }
+
+    public mutating func update(
+        name: FieldChange<String>,
+        parentPath: String?
+    ) throws(Error) {
+        let name = name.apply(to: self.name).trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        let slug = Self.slug(from: name)
+        guard !name.isEmpty, !slug.isEmpty else {
+            throw .invalidName
+        }
+
+        self.name = name
+        self.slug = slug
+        self.slugPath = parentPath.map { "\($0)/\(slug)" } ?? slug
+    }
+
+    public mutating func updateAggregates(
+        assetCountDelta: Int,
+        totalSizeBytesDelta: Int64
+    ) {
+        assetCount += assetCountDelta
+        totalSizeBytes += totalSizeBytesDelta
+    }
+
     public static func create(
         parentId: String?,
         name: String,
-        slug: String,
-        slugPath: String
-    ) -> Self.New {
-        .init(
+        parentPath: String?
+    ) throws(Error) -> Self.New {
+        let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let slug = Self.slug(from: name)
+        guard !name.isEmpty, !slug.isEmpty else {
+            throw .invalidName
+        }
+
+        return .init(
             parentId: parentId,
             name: name,
             slug: slug,
-            slugPath: slugPath,
+            slugPath: parentPath.map { "\($0)/\(slug)" } ?? slug,
             assetCount: 0,
             totalSizeBytes: 0
         )

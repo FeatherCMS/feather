@@ -25,7 +25,7 @@ extension MenuItem.List.Presenter {
         ) async throws -> HTMLResponse {
             let actions = AdminListActions(
                 Set(
-                    WebModule.Permissions.MenuItems.allPermissions()
+                    MenuItem.Permissions.allPermissions()
                         .filter {
                             permissions.contains($0.rawValue)
                         }
@@ -45,7 +45,7 @@ extension MenuItem.List.Presenter {
                     )
                 )
             }
-            guard actions.allows(WebModule.Permissions.MenuItems.list) else {
+            guard actions.allows(MenuItem.Permissions.list) else {
                 return try await renderEngine.renderAdminPage(
                     request: request,
                     context: context,

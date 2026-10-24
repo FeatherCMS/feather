@@ -12,11 +12,11 @@ public import FeatherModuleKit
 extension Log.List {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Log.List.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Log.List.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -24,9 +24,9 @@ extension Log.List {
 
         public func execute(
             subject: Subject,
-            input: Log.List.Input
-        ) async throws -> Log.List.Output {
-            let action = Log.List.Action()
+            input: Input
+        ) async throws -> Output {
+            let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -39,9 +39,9 @@ extension Log.List {
 
         public func count(
             subject: Subject,
-            input: Log.List.Input
+            input: Input
         ) async throws -> Int {
-            let action = Log.List.Action()
+            let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)

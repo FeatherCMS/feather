@@ -42,27 +42,3 @@ extension Form.Detail {
         }
     }
 }
-
-extension Form.Model {
-    var asDetail: Form.Detail.Output {
-        asDetail(fields: [], mails: [])
-    }
-
-    func asDetail(
-        fields: [Form.Field] = [],
-        mails: [Form.Mail] = []
-    ) -> Form.Detail.Output {
-        .init(
-            id: id,
-            key: key,
-            name: name,
-            successMessage: successMessage,
-            failureMessage: failureMessage,
-            redirectUrl: redirectUrl,
-            fields: fields,
-            mails: mails,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}

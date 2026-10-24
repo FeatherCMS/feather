@@ -28,7 +28,7 @@ extension Menu.Edit {
 
             let model = try await transaction.run { scope in
                 guard var model = try await scope.menu.find(id: input.id) else {
-                    throw Error(message: "Menu not found")
+                    throw Menu.Edit.Error(message: "Menu not found")
                 }
                 let keyToCheck: String?
                 switch input.key {
@@ -41,7 +41,7 @@ extension Menu.Edit {
                     if let existing = try await scope.menu.find(key: key),
                         existing.id != input.id
                     {
-                        throw Error(message: "Menu key already exists")
+                        throw Menu.Edit.Error(message: "Menu key already exists")
                     }
                 }
                 try model.update(

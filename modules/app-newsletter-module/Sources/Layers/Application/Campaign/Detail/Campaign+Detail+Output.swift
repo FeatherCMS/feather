@@ -30,16 +30,3 @@ extension Campaign.Detail {
         }
     }
 }
-
-extension Campaign.Model {
-    var asDetail: Campaign.Detail.Output {
-        .init(
-            id: id,
-            key: key,
-            name: name,
-            fromEmail: fromEmail,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}

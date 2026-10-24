@@ -6,7 +6,7 @@ import WebApplication
 import WebDomain
 
 //
-//  Article.Edit.UseCase.swift
+//  Article+Edit+UseCase.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -14,11 +14,11 @@ import WebDomain
 extension Article.Edit {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Article.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Article.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -26,7 +26,7 @@ extension Article.Edit {
 
         public func execute(
             subject: Subject,
-            input: Article.Edit.Input
+            input: Input
         ) async throws -> Output {
             let action = Action()
 
@@ -38,7 +38,7 @@ extension Article.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.article.find(id: input.id)
                 else {
-                    throw Error(message: "Article not found")
+                    throw Article.Edit.Error(message: "Article not found")
                 }
                 try model.update(
                     title: input.title,
@@ -47,7 +47,7 @@ extension Article.Edit {
                     imageAssetId: input.imageAssetId,
                     categoryIds: input.categoryIds
                 )
-                if let metadataInput = input.metadata {
+                if case .set(let metadataInput) = input.metadata {
                     try metadataInput.update(
                         &model.metadata,
                         template: metadataInput.template

@@ -14,9 +14,9 @@ func buildWebMetadataExtensions() async throws -> (
     templatePaths: [URL]
 ) {
     var events = EventRegistry()
-    WebModuleWebApp.EventHandlers.register(in: &events)
+    WebModuleWebApp.Event.Handlers.register(in: &events)
     BlogWebApp.Event.Handlers.register(in: &events)
-    NewsWebApp.NewsEventHandlers.register(in: &events)
+    NewsWebApp.Event.Handlers.register(in: &events)
 
     let templateProviders = try await events.trigger(
         event: TemplateProviderEvent(),

@@ -7,17 +7,17 @@ import WebDomain
 
 extension Public.Article.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        let query: any QueryExecutor<Public.Article.Detail.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
-            query: any QueryExecutor<Public.Article.Detail.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.query = query
         }
 
         public func execute(
             input: Input
-        ) async throws -> Public.Article.Detail.Output {
+        ) async throws -> Output {
             let now = Date()
             return try await query.run { scope in
                 let article = try await scope.article.find(id: input.id)

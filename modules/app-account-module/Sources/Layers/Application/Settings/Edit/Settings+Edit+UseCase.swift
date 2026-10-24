@@ -4,7 +4,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 
 //
-//  EditSettings.swift
+//  Settings+Edit+UseCase.swift
 //  app-account-module
 //
 //  Created by Binary Birds on 2026. 07. 16.
@@ -13,11 +13,11 @@ extension Settings.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Settings.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Settings.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -25,7 +25,7 @@ extension Settings.Edit {
 
         public func execute(
             subject: Subject,
-            input: Settings.Edit.Input
+            input: Input
         ) async throws -> Output {
             let userId = input.userId ?? subject.id
             let action = Action(userID: userId)

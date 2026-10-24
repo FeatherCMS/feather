@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-public import OpenAPIKit30
 
 public extension Media.Asset {
     enum Schemas {}

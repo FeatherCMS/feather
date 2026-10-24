@@ -12,21 +12,15 @@ extension UseCases {
                 databaseContext: databaseContext,
                 scope: { context in
                     Public.Article.Related.Scope(
-                        relatedArticles: ArticleDatabaseQueries(
-                            context: context,
-                            metadata: WebModule.Metadata.Query.Database(
-                                context: context
-                            )
-                        ),
-                        articleCategoryIDs: ArticleDatabaseQueries(
-                            context: context,
-                            metadata: WebModule.Metadata.Query.Database(
-                                context: context
-                            )
-                        ),
-                        metadataDetails: WebModule.Metadata.Query.Database(
+                        relatedArticles: Public.Article.Related.Query.Database(
                             context: context
-                        )
+                        ),
+                        articleCategoryIDs: Public.Article.CategoryIDs.Query
+                            .Database(context: context),
+                        metadataDetails: WebModule.Metadata.Resolve.Detail.Query
+                            .Database(
+                                context: context
+                            )
                     )
                 }
             )

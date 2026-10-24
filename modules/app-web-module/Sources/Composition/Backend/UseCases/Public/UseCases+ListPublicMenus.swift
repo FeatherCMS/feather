@@ -21,10 +21,10 @@ extension UseCases {
                     menuList: Menu.List.Query.Database(
                         context: context
                     ),
-                    menuLookup: Menu.Detail.Query.Database(
+                    menuLookup: Menu.Lookup.Query.Database(
                         context: context
                     ),
-                    menuItems: MenuItem.List.Query.Database(
+                    menuItems: Menu.Public.List.Query.Database(
                         context: context
                     )
                 )

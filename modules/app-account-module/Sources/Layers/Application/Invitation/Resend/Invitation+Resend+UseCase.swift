@@ -17,12 +17,12 @@ extension Invitation.Resend {
         }
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Invitation.Resend.Scope>
+        let transaction: any TransactionExecutor<Scope>
         let jobs: any SendMailJobController
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Invitation.Resend.Scope>,
+            transaction: any TransactionExecutor<Scope>,
             jobs: any SendMailJobController
         ) {
             self.authorizer = authorizer
@@ -32,7 +32,7 @@ extension Invitation.Resend {
 
         public func execute(
             subject: Subject,
-            input: Invitation.Resend.Input
+            input: Input
         ) async throws -> Output {
             let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
@@ -46,7 +46,7 @@ extension Invitation.Resend {
                         id: input.id
                     )
                 else {
-                    throw Error.invitationNotFound
+                    throw Invitation.Resend.Error.invitationNotFound
                 }
                 guard
                     let mailFromAddress = try await scope.variable.get(
@@ -55,7 +55,7 @@ extension Invitation.Resend {
                     .whitespaceTrimmed,
                     !mailFromAddress.isEmpty
                 else {
-                    throw Error.mailFromNotConfigured
+                    throw Invitation.Resend.Error.mailFromNotConfigured
                 }
                 let mailFromName = try await scope.variable.get(
                     "system-settings-mail-from-name"

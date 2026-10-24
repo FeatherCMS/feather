@@ -31,13 +31,12 @@ extension Credential.Edit {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
 
-            let passwordHash: String?
-
+            let passwordHash: FieldChange<String>
             if case .set(let password) = input.password {
-                passwordHash = try await passwordHasher.hash(password)
+                passwordHash = .set(try await passwordHasher.hash(password))
             }
             else {
-                passwordHash = nil
+                passwordHash = .unchanged
             }
 
             return try await transaction.run { scope in
@@ -46,14 +45,14 @@ extension Credential.Edit {
                         id: input.id
                     )
                 else {
-                    throw Error.credentialNotFound(id: input.id)
+                    throw Credential.Edit.Error.credentialNotFound(id: input.id)
                 }
 
                 let currentAuthEmail = try await scope.authEmail.findBy(
                     id: model.authEmailId
                 )
                 guard let currentAuthEmail else {
-                    throw Error.authEmailNotFoundForCredential(id: input.id)
+                    throw Credential.Edit.Error.authEmailNotFoundForCredential(id: input.id)
                 }
                 let userId = input.userId.apply(to: currentAuthEmail.identityId)
                 let email = input.email.apply(to: currentAuthEmail.email)
@@ -62,11 +61,21 @@ extension Credential.Edit {
                         email: email
                     ), authEmail.identityId == userId
                 else {
-                    throw Error.authEmailNotFoundForIdentity(identityId: userId)
+                    throw Credential.Edit.Error.authEmailNotFoundForIdentity(identityId: userId)
+                }
+
+                let authEmailId: FieldChange<String>
+                if case .unchanged = input.userId,
+                    case .unchanged = input.email
+                {
+                    authEmailId = .unchanged
+                }
+                else {
+                    authEmailId = .set(authEmail.id)
                 }
 
                 try model.update(
-                    authEmailId: authEmail.id,
+                    authEmailId: authEmailId,
                     passwordHash: passwordHash
                 )
 

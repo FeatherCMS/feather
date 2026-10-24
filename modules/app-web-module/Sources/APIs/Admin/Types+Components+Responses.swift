@@ -6,6 +6,34 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
     public enum Responses {
+        public struct MenuListResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MenuListResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/MenuListResponse/content/application\/json`.
+                case json(Components.Schemas.MenuListSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.MenuListSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.MenuListResponse.Body
+            /// Creates a new `MenuListResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.MenuListResponse.Body) {
+                self.body = body
+            }
+        }
         public struct MenuDetailResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/MenuDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -38,34 +66,6 @@ extension Components {
             /// Creates a new `NoContentResponse`.
             public init() {}
         }
-        public struct MenuListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/MenuListResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/MenuListResponse/content/application\/json`.
-                case json(Components.Schemas.MenuListSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.MenuListSchema {
-                    get throws {
-                        switch self {
-                        case let .json(body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.MenuListResponse.Body
-            /// Creates a new `MenuListResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.MenuListResponse.Body) {
-                self.body = body
-            }
-        }
         public struct MenuQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/MenuQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -91,34 +91,6 @@ extension Components {
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.MenuQueryItemSearchSchemaSearchResponse.Body) {
-                self.body = body
-            }
-        }
-        public struct MenuItemDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/MenuItemDetailResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/MenuItemDetailResponse/content/application\/json`.
-                case json(Components.Schemas.MenuItemDetailSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.MenuItemDetailSchema {
-                    get throws {
-                        switch self {
-                        case let .json(body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.MenuItemDetailResponse.Body
-            /// Creates a new `MenuItemDetailResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.MenuItemDetailResponse.Body) {
                 self.body = body
             }
         }
@@ -150,6 +122,34 @@ extension Components {
                 self.body = body
             }
         }
+        public struct MenuItemDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MenuItemDetailResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/MenuItemDetailResponse/content/application\/json`.
+                case json(Components.Schemas.MenuItemDetailSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.MenuItemDetailSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.MenuItemDetailResponse.Body
+            /// Creates a new `MenuItemDetailResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.MenuItemDetailResponse.Body) {
+                self.body = body
+            }
+        }
         public struct MenuItemQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/MenuItemQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -178,34 +178,6 @@ extension Components {
                 self.body = body
             }
         }
-        public struct MetadataDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/MetadataDetailResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/MetadataDetailResponse/content/application\/json`.
-                case json(Components.Schemas.MetadataDetailSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.MetadataDetailSchema {
-                    get throws {
-                        switch self {
-                        case let .json(body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.MetadataDetailResponse.Body
-            /// Creates a new `MetadataDetailResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.MetadataDetailResponse.Body) {
-                self.body = body
-            }
-        }
         public struct MetadataListResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/MetadataListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -231,6 +203,34 @@ extension Components {
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.MetadataListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct MetadataDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MetadataDetailResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/MetadataDetailResponse/content/application\/json`.
+                case json(Components.Schemas.MetadataDetailSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.MetadataDetailSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.MetadataDetailResponse.Body
+            /// Creates a new `MetadataDetailResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.MetadataDetailResponse.Body) {
                 self.body = body
             }
         }
@@ -290,34 +290,6 @@ extension Components {
                 self.body = body
             }
         }
-        public struct PageDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/PageDetailResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/PageDetailResponse/content/application\/json`.
-                case json(Components.Schemas.PageDetailSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.PageDetailSchema {
-                    get throws {
-                        switch self {
-                        case let .json(body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.PageDetailResponse.Body
-            /// Creates a new `PageDetailResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.PageDetailResponse.Body) {
-                self.body = body
-            }
-        }
         public struct PageListResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/PageListResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
@@ -343,6 +315,34 @@ extension Components {
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.PageListResponse.Body) {
+                self.body = body
+            }
+        }
+        public struct PageDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/PageDetailResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/PageDetailResponse/content/application\/json`.
+                case json(Components.Schemas.PageDetailSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.PageDetailSchema {
+                    get throws {
+                        switch self {
+                        case let .json(body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.PageDetailResponse.Body
+            /// Creates a new `PageDetailResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.PageDetailResponse.Body) {
                 self.body = body
             }
         }

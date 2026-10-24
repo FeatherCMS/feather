@@ -5,10 +5,10 @@ import MediaModule
 import OpenAPIRuntime
 
 extension Variant.List.Repository {
-    struct OpenAPI: Variant.List.Repository.Interface {
+    struct OpenAPI: Interface {
         let api: API.Client
 
-        func listMediaVariants(
+        func search(
             page: Int,
             search: String?
         ) async throws

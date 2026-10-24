@@ -12,14 +12,14 @@ import UserModule
 extension Account.Add {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any ContextualTransactionExecutor<Account.Add.Scope>
+        let transaction: any ContextualTransactionExecutor<Scope>
         let passwordHasher: any PasswordHasher
         let events: any EventPublisher
 
         public init(
             authorizer: any Authorizer,
             transaction: any ContextualTransactionExecutor<
-                Account.Add.Scope
+                Scope
             >,
             passwordHasher: any PasswordHasher,
             events: any EventPublisher
@@ -32,8 +32,8 @@ extension Account.Add {
 
         public func execute(
             subject: Subject,
-            input: Account.Add.Input
-        ) async throws -> Account.Add.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
             else {

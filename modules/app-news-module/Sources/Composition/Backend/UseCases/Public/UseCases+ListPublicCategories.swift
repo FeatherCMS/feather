@@ -1,6 +1,7 @@
 import FeatherInfrastructure
 public import NewsApplication
 import NewsInfrastructure
+import NewsModule
 import WebDomain
 import WebInfrastructure
 import WebModule
@@ -13,15 +14,13 @@ extension UseCases {
                 databaseContext: databaseContext,
                 scope: { context in
                     Public.Category.List.Scope(
-                        category: CategoryDatabaseQueries(
-                            context: context,
-                            metadata: WebModule.Metadata.Query.Database(
+                        category: NewsModule.Category.List.Query.Database(
+                            context: context
+                        ),
+                        metadataDetails: WebModule.Metadata.Resolve.Detail.Query
+                            .Database(
                                 context: context
                             )
-                        ),
-                        metadataDetails: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
                     )
                 }
             )

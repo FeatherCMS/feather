@@ -1,4 +1,5 @@
 import FeatherModuleKit
+import Foundation
 public import MediaAdminAPI
 import MediaApplication
 import MediaModule

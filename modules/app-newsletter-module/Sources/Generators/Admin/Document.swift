@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Document.swift
 //  openapi-generator
 //
 //  Created by Tibor Bödecs on 2026. 03. 24..
@@ -7,7 +7,6 @@
 
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct Info: InfoRepresentable {
     var title: String { "Admin API" }

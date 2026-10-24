@@ -17,7 +17,7 @@ extension Variable.List.Interactor {
             Components.Schemas.SystemVariableListItemSchema
         > {
             do {
-                let response = try await repository.listSystemVariables(
+                let response = try await repository.search(
                     page: page,
                     search: search,
                     ids: nil

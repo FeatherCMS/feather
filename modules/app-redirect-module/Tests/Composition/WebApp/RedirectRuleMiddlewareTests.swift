@@ -13,7 +13,14 @@ struct RedirectRuleMiddlewareTests {
     @Test
     func defaultResolverOnlyLooksUpNotFoundReadRequests() {
         let resolver = DefaultRedirectRuleResolver(
-            apiBaseURL: URL(fileURLWithPath: "/")
+            environment: AppEnvironment(
+                apiBaseURL: URL(fileURLWithPath: "/"),
+                publicOrigins: .init(
+                    siteBaseURL: "https://example.test",
+                    staticBaseURL: "https://example.test",
+                    mediaBaseURL: URL(fileURLWithPath: "/")
+                )
+            )
         )
 
         #expect(

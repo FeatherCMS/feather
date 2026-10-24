@@ -6,7 +6,7 @@ extension AuthorLink.List {
 
 extension AuthorLink.List.Repository {
     protocol Interface: Sendable {
-        func list(
+        func search(
             authorID: String,
             page: Int,
             search: String?

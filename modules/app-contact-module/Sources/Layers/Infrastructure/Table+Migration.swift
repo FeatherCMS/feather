@@ -1,7 +1,7 @@
-public import FeatherDatabase
-public import FeatherDBAL
-public import FeatherInfrastructure
 import ContactModule
+public import FeatherDBAL
+public import FeatherDatabase
+public import FeatherInfrastructure
 
 public struct TableMigration: DatabaseMigration {
     public let connection: any DatabaseConnection
@@ -23,11 +23,14 @@ public struct TableMigration: DatabaseMigration {
             SubmissionMail.Table.tableCreationSchema,
             FormField.Table.tableCreationSchema,
             Submission.Table.tableCreationSchema,
-            FormFormFieldTableSchema.table,
+            FormFieldAssignment.Table.tableCreationSchema,
         ]
 
         for schema in schemas {
-            let queryBuilder = DatabaseQueryCreate(schema: schema, using: platform)
+            let queryBuilder = DatabaseQueryCreate(
+                schema: schema,
+                using: platform
+            )
             for query in queryBuilder.build() {
                 try await connection.run(query: query) { _ in }
             }

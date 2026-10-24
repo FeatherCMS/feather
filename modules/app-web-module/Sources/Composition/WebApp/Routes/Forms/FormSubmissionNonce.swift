@@ -53,10 +53,12 @@ public enum FormSubmissionNonce {
         else {
             return false
         }
-        let difference = zip(formValue.utf8, cookieValue.utf8)
-            .reduce(UInt8(0)) {
-                $0 | ($1.0 ^ $1.1)
-            }
+        let formBytes = Array(formValue.utf8)
+        let cookieBytes = Array(cookieValue.utf8)
+        var difference = UInt8(0)
+        for index in formBytes.indices {
+            difference |= formBytes[index] ^ cookieBytes[index]
+        }
         return difference == 0
     }
 

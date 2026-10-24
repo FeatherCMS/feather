@@ -2,6 +2,7 @@ import FeatherModuleKit
 import Foundation
 public import WebAdminAPI
 import WebApplication
+import WebDomain
 import WebModule
 
 extension AdminAPIGateway {

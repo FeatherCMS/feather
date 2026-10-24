@@ -14,7 +14,7 @@ import WebComponents
 
 extension Asset.File.Add.Interactor {
     struct Default: Interface {
-        let repository: Asset.File.Add.Repository.OpenAPI
+        let repository: any Asset.File.Add.Repository.Interface
         let routes: Asset.Router.Routes
 
         func folderID(forPath path: String) async throws -> String? {

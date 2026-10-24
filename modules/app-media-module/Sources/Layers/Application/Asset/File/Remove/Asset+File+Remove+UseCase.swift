@@ -8,12 +8,12 @@ extension Asset.File.Remove {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Asset.File.Remove.Scope>
+        let transaction: any TransactionExecutor<Scope>
         let storageContext: StorageClientContext
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Asset.File.Remove.Scope>,
+            transaction: any TransactionExecutor<Scope>,
             storageContext: StorageClientContext
         ) {
             self.authorizer = authorizer
@@ -92,19 +92,9 @@ extension Asset.File.Remove {
             return .init()
         }
     }
-    }
+}
 
-    extension Asset.File.Remove.UseCase {
-    fileprivate struct Snapshot: Sendable {
-        struct StoredObject: Sendable {
-            let assetId: String
-            let object: StorageObject.Model
-        }
-
-        let assets: [Asset.File.Model]
-        let folders: [Asset.Folder.Model]
-        let storageObjects: [StoredObject]
-    }
+extension UseCase {
     fileprivate func adjustFolderAggregates(
         folders: any Asset.Folder.Repository.Interface,
         folderId: String?,
@@ -115,8 +105,10 @@ extension Asset.File.Remove {
         var current = try await folders.find(id: folderId)
         while let folder = current {
             var updated = folder
-            updated.assetCount += assetCountDelta
-            updated.totalSizeBytes += sizeDelta
+            updated.updateAggregates(
+                assetCountDelta: assetCountDelta,
+                totalSizeBytesDelta: sizeDelta
+            )
             _ = try await folders.update(updated)
             if let parentId = folder.parentId {
                 current = try await folders.find(id: parentId)

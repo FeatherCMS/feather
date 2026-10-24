@@ -1,7 +1,7 @@
+import AnalyticsModule
 public import FeatherDBAL
 public import FeatherDatabase
 public import FeatherInfrastructure
-import AnalyticsModule
 
 public struct TableMigration: DatabaseMigration {
     public let connection: any DatabaseConnection
@@ -16,12 +16,6 @@ public struct TableMigration: DatabaseMigration {
     }
 
     public func apply(
-        on connection: any DatabaseConnection
-    ) async throws {
-        try await applyTableMigration(on: connection)
-    }
-
-    private func applyTableMigration(
         on connection: any DatabaseConnection
     ) async throws {
         let queryBuilder = DatabaseQueryCreate(

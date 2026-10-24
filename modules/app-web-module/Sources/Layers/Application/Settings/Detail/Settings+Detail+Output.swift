@@ -1,5 +1,4 @@
 public import FeatherApplication
-import WebDomain
 public import WebModule
 
 extension Settings.Detail {
@@ -56,28 +55,5 @@ extension Settings.Detail {
             self.css = css
             self.js = js
         }
-    }
-}
-
-extension Settings.Model {
-    var asDetail: Settings.Detail.Output {
-        .init(
-            logo: logo,
-            logoDark: logoDark,
-            metaImage: metaImage,
-            primaryColor: primaryColor,
-            secondaryColor: secondaryColor,
-            tertiaryColor: tertiaryColor,
-            primaryFont: primaryFont,
-            secondaryFont: secondaryFont,
-            homePageId: homePageId,
-            locale: locale,
-            timezone: timezone,
-            title: title,
-            excerpt: excerpt,
-            noIndex: noIndex,
-            css: css,
-            js: js
-        )
     }
 }

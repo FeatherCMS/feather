@@ -12,9 +12,7 @@ extension AuthModule.Authorization.SignIn.MagicLink {
             self.transaction = transaction
         }
 
-        public func execute(_ input: Input) async throws
-            -> AuthModule.Authorization.SignIn.Output
-        {
+        public func execute(_ input: Input) async throws -> Output {
             try await transaction.run { scope in
                 do {
                     let usedLink = try await scope.magicLink.consumeByToken(
@@ -29,21 +27,40 @@ extension AuthModule.Authorization.SignIn.MagicLink {
                         ),
                         user.status == .active
                     else {
-                        throw Error.authenticationFailed
+                        throw AuthModule.Authorization.SignIn.MagicLink.Error.authenticationFailed
                     }
-                    return try await AuthModule.Authorization.SignIn.makeAuthResponse(
-                        rolesQuery: scope.roles,
-                        permissionsQuery: scope.permissions,
-                        userSessionRepository: scope.session,
+                    async let rolesTask = scope.roles.getRolesBy(
+                        identityId: user.id
+                    )
+                    async let permissionsTask = scope.permissions
+                        .getPermissionsBy(identityId: user.id)
+                    let roles = try await rolesTask
+                    let permissions = try await permissionsTask
+                    let sessionLifetime =
+                        usedLink.isPersistent
+                        ? Session.Model.Lifetimes.persistent
+                        : Session.Model.Lifetimes.regular
+                    let session = try await scope.session.insert(
+                        Session.Model.create(
+                            token: AuthModule.Authorization.Token
+                                .generateToken(),
+                            identityId: user.id,
+                            authenticationType: Session.Model
+                                .AuthenticationTypes.magicLink,
+                            authenticationReference: usedLink.id,
+                            expiresAtInterval: sessionLifetime,
+                            isPersistent: usedLink.isPersistent
+                        )
+                    )
+                    return Output(
                         user: user,
-                        authenticationType: Session.Model.AuthenticationTypes
-                            .magicLink,
-                        authenticationReference: usedLink.id,
-                        isPersistent: usedLink.isPersistent
+                        session: session,
+                        roles: roles,
+                        permissions: permissions
                     )
                 }
                 catch {
-                    throw Error.authenticationFailed
+                    throw AuthModule.Authorization.SignIn.MagicLink.Error.authenticationFailed
                 }
             }
         }

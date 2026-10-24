@@ -10,7 +10,7 @@ extension Variant.List {
 
 extension Variant.List.Interactor {
     protocol Interface: Sendable {
-        func listMediaVariants(
+        func list(
             page: Int,
             search: String?
         ) async throws -> AdminListModel<

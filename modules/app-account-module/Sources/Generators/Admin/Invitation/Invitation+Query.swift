@@ -1,5 +1,3 @@
 extension Invitation {
-    enum Query {
-        enum Schemas {}
-    }
+    enum Query {}
 }

@@ -19,8 +19,8 @@ extension RolePermission.Add {
 
         public func execute(
             subject: Subject,
-            input: RolePermission.Add.Input
-        ) async throws -> RolePermission.Add.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

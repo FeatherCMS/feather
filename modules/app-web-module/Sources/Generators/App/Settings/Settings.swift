@@ -1,3 +1,1 @@
-enum Settings {
-    enum Get {}
-}
+enum Settings {}

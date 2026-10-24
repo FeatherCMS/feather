@@ -1,12 +1,11 @@
 public import FeatherModuleKit
-public import NewsletterDomain
 public import NewsletterModule
 
 extension Campaign.Detail {
     public struct Scope: FeatherModuleKit.Scope {
-        public let campaign: any Campaign.Repository.Interface
+        public let campaign: any Query.Interface
 
-        public init(campaign: any Campaign.Repository.Interface) {
+        public init(campaign: any Query.Interface) {
             self.campaign = campaign
         }
     }

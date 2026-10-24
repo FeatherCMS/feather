@@ -28,3 +28,13 @@ extension Email {
     }
 
 }
+
+extension Email.Model {
+    public mutating func update(
+        identityId: FieldChange<String> = .unchanged,
+        email: FieldChange<String> = .unchanged
+    ) {
+        self.identityId = identityId.apply(to: self.identityId)
+        self.email = email.apply(to: self.email)
+    }
+}

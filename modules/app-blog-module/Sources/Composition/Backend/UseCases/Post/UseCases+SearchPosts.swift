@@ -6,9 +6,6 @@ import FeatherInfrastructure
 import FeatherModuleKit
 import MediaBackend
 import SystemInfrastructure
-import WebDomain
-import WebInfrastructure
-import WebModule
 
 extension UseCases {
     public func makeSearchPosts() -> Post.Search.UseCase {
@@ -16,12 +13,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Post.Search.Scope(
-                    post: Post.Search.Query.Database(
-                        context: context,
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
-                    )
+                    post: Post.Search.Query.Database(context: context)
                 )
             }
         )

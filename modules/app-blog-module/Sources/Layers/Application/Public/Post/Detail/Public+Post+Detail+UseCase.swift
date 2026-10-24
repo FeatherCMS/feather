@@ -1,5 +1,5 @@
 //
-//  GetPublicPost.swift
+//  Public+Post+Detail+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -30,7 +30,7 @@ extension Public.Post.Detail {
                     ),
                     metadata.isDirectlyAccessible(at: now)
                 else {
-                    throw Error(message: "Post not found")
+                    throw Public.Post.Detail.Error(message: "Post not found")
                 }
 
                 let postID = id
@@ -112,20 +112,15 @@ extension Public.Post.Detail {
     }
 }
 
-extension Public.Post.Detail.UseCase {
+extension UseCase {
     fileprivate static func relatedPosts(
         authorIDs: [String],
         tagIDs: [String],
         excluding postID: String,
         now: Date,
-        context: Public.Post.Detail.Scope
+        context: Scope
     ) async throws -> [Public.Post.Summary.Item] {
-        let posts = try await context.postList.list(
-            query: .init(
-                page: .init(size: 10_000, number: 1),
-                sort: [.init(field: .createdAt, direction: .desc)]
-            )
-        )
+        let posts = try await context.postList.list()
         var result: [Public.Post.Summary.Item] = []
         for item in posts.items where item.id != postID {
             let candidate = try await context.post.find(id: item.id)

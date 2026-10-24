@@ -5,6 +5,7 @@ import Hummingbird
 import Foundation
 public import MediaAdminAPI
 import MediaApplication
+import MediaModule
 
 extension AdminAPIGateway {
     private enum UpdateMaskFields: String, Sendable {

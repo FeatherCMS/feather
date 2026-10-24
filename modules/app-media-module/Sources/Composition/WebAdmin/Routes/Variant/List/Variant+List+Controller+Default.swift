@@ -24,7 +24,7 @@ extension Variant.List.Controller {
             }
             do {
                 return try await presenter.renderListPage(
-                    model: try await interactor.listMediaVariants(
+                    model: try await interactor.list(
                         page: request.queryPage(),
                         search: request.querySearch()
                     ),

@@ -28,7 +28,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Asset.File.PublicResolve.Scope(
-                    query: Asset.File.Resolve.Query.Database(
+                    query: Asset.File.PublicResolve.Query.Database(
                         context: context,
                         objectKeyGenerator: storageContext.objectKeyGenerator
                     )

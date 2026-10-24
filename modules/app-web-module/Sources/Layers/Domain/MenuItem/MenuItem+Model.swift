@@ -1,5 +1,5 @@
 //
-//  MenuItem.swift
+//  MenuItem+Model.swift
 //  app-web-module
 //
 //  Created by Binary Birds on 2026. 06. 18.

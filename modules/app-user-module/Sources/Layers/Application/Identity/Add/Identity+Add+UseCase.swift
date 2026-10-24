@@ -4,7 +4,7 @@ import UserDomain
 public import UserModule
 
 //
-//  Identity.Add.UseCase.swift
+//  Identity+Add+UseCase.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -49,7 +49,7 @@ extension Identity.Add {
                 for roleId in roleIds {
                     guard try await scope.role.findBy(id: roleId) != nil
                     else {
-                        throw Error.roleNotFound
+                        throw Identity.Add.Error.roleNotFound
                     }
                 }
                 try await scope.identity.replaceRoleIds(

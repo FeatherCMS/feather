@@ -1,22 +1,20 @@
-import NewsletterApplication
-import NewsletterModule
-import NewsletterInfrastructure
 import FeatherDatabase
 import FeatherInfrastructure
+import NewsletterApplication
+import NewsletterInfrastructure
+import NewsletterModule
 
 extension UseCases {
 
     func makeListNewsletterDeliveries() -> Delivery.List.UseCase {
-        let transaction = DatabaseTransactionExecutor(
+        let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 Delivery.List.Scope(
-                    newsletter: Campaign.Repository.Database(context: context),
-                    issue: Issue.Repository.Database(context: context),
-                    delivery: Delivery.Repository.Database(context: context)
+                    delivery: Delivery.List.Query.Database(context: context)
                 )
             }
         )
-        return Delivery.List.UseCase(authorizer: authorizer, transaction: transaction)
+        return Delivery.List.UseCase(authorizer: authorizer, query: query)
     }
 }

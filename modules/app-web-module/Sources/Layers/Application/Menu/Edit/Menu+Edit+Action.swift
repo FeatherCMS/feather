@@ -5,6 +5,6 @@ import WebModule
 
 extension Menu.Edit {
     struct Action: PermissionAction {
-        let key = WebModule.Permissions.Menus.update
+        let key = Menu.Permissions.update
     }
 }

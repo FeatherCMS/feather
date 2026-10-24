@@ -28,7 +28,7 @@ extension MenuItem.Edit {
                 guard var model = try await scope.menuItem.find(id: input.id),
                     model.menuId == input.menuId
                 else {
-                    throw Error(message: "Menu item not found")
+                    throw MenuItem.Edit.Error(message: "Menu item not found")
                 }
                 try model.update(
                     label: input.label,

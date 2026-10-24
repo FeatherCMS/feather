@@ -1,10 +1,8 @@
-import AsyncHTTPClient
 public import FeatherWebAdmin
 public import FeatherWebShared
 public import MediaWebAdmin
-import NIOCore
 public import NewsAdminAPI
-import OpenAPIAsyncHTTPClient
+import NewsWebShared
 public import OpenAPIRuntime
 
 extension API {
@@ -19,19 +17,13 @@ extension API {
         ) {
             self.environment = environment
             self.requestContext = requestContext
+            let configuration = NewsAPIClientSupport.configuration(
+                sessionToken: requestContext.sessionToken
+            )
             client = .init(
                 serverURL: environment.apiBaseURL,
-                transport: AsyncHTTPClientTransport(
-                    configuration: .init(
-                        client: .shared,
-                        timeout: .seconds(3)
-                    )
-                ),
-                middlewares: [
-                    ClientAPIAuthMiddleware(
-                        sessionToken: requestContext.sessionToken
-                    )
-                ]
+                transport: configuration.transport,
+                middlewares: configuration.middlewares
             )
         }
 
@@ -45,22 +37,19 @@ extension API {
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (NewsAdminAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            do { return try await operation(client) }
-            catch let error as OpenAPIRepositoryError { throw error }
-            catch {
-                throw OpenAPIRepositoryError.transport(
-                    description: String(describing: error)
-                )
-            }
+            try await NewsAPIClientSupport.withOpenAPIRepositoryErrorMapping(
+                operation,
+                using: client
+            )
         }
 
         public func failure(
             statusCode: Int,
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
-            OpenAPIRepositoryError.parsedFailure(
+            try await NewsAPIClientSupport.failure(
                 statusCode: statusCode,
-                responseBody: try await responseBody?.collectString()
+                responseBody: responseBody
             )
         }
     }

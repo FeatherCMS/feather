@@ -2,7 +2,7 @@ public import FeatherApplication
 public import SystemModule
 
 //
-//  Permission.Detail.Output.swift
+//  Permission+Detail+Output.swift
 //  app-system-module
 //
 //  Created by Tibor Bödecs on 2026. 04. 11.

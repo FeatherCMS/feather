@@ -22,7 +22,7 @@ public struct TableSeedMigration: DatabaseMigration {
     public func apply(
         on connection: any DatabaseConnection
     ) async throws {
-        let category = try await CategoryDatabaseRepository(
+        let category = try await Category.Repository.Database(
             context: context
         )
         .insert(
@@ -39,7 +39,7 @@ public struct TableSeedMigration: DatabaseMigration {
             )
         )
 
-        _ = try await ArticleDatabaseRepository(
+        _ = try await Article.Repository.Database(
             context: context
         )
         .insert(

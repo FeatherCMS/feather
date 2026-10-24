@@ -5,7 +5,6 @@ import HTML
 import Hummingbird
 import NewsletterAppAPI
 import NewsletterModule
-import NewsletterWebShared
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -15,7 +14,7 @@ import WebModuleWebApp
 extension Campaign.Subscription.Controller {
     struct Default: Interface {
         let environment: AppEnvironment
-        let route: NewsletterSubscriptionRoute
+        let route: Campaign.Subscription.Route
         let turnstileVerifier: (any TurnstileVerifier)?
         func subscribe(
             request: Request,

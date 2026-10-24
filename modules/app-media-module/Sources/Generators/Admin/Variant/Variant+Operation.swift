@@ -15,5 +15,3 @@ extension Variant.IDOperation {
         [MediaVariantIdParameter().reference()]
     }
 }
-
-}

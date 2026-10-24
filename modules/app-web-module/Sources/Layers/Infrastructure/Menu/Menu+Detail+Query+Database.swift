@@ -5,7 +5,7 @@ import WebDomain
 public import WebModule
 
 extension Menu.Detail.Query {
-    public struct Database: Interface, Menu.Lookup.Query.Interface {
+    public struct Database: Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {
@@ -29,20 +29,6 @@ extension Menu.Detail.Query {
                 createdAt: row.createdAt,
                 updatedAt: row.updatedAt
             )
-        }
-
-        public func find(key: String) async throws
-            -> Menu.Lookup.Query.Output?
-        {
-            try await DatabaseAccessLayer<Menu.Table>(context: context)
-                .selectFirst(by: \.key, equals: key)
-                .map { row in
-                    .init(
-                        id: row.id,
-                        key: row.key,
-                        name: row.name
-                    )
-                }
         }
     }
 }

@@ -5,8 +5,7 @@ public import MediaApplication
 public import MediaModule
 
 extension Asset.File.Resolve.Query {
-    public struct Database: Interface, Asset.File.PublicResolve.Query.Interface
-    {
+    public struct Database: Interface {
         public let context: DatabaseQueryContext
         public let objectKeyGenerator: any ObjectKeyGenerator
 
@@ -25,16 +24,17 @@ extension Asset.File.Resolve.Query {
             let assets = try await Asset.File
                 .Table(
                     connection: context.connection,
-                        context: DatabaseTransactionContext(
-                            platform: context.platform,
-                            connection: context.connection,
-                            idGenerator: context.idGenerator
-                        )
+                    context: DatabaseTransactionContext(
+                        platform: context.platform,
+                        connection: context.connection,
+                        idGenerator: context.idGenerator
+                    )
                 )
                 .resolve(ids: ids)
             let variantRows = try await AssetFileVariantResolveQuery(
                 connection: context.connection
-            ).resolve(nodeIds: ids, variantKeys: variants)
+            )
+            .resolve(nodeIds: ids, variantKeys: variants)
             var variantsByAsset: [String: [Asset.File.Resolve.Output.Variant]] =
                 [:]
             let assetsByID = Dictionary(
@@ -82,22 +82,5 @@ extension Asset.File.Resolve.Query {
             )
         }
 
-        public func resolvePublic(ids: [String], variants: [String]?)
-            async throws
-            -> Asset.File.PublicResolve.Output
-        {
-            let output = try await resolve(ids: ids, variants: variants)
-            return .init(
-                items: output.items.map { item in
-                    .init(
-                        id: item.id,
-                        url: item.url,
-                        variants: item.variants.map {
-                            .init(key: $0.key, url: $0.url)
-                        }
-                    )
-                }
-            )
-        }
     }
 }

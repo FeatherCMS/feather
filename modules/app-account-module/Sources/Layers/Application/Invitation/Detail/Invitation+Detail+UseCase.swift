@@ -11,11 +11,11 @@ public import FeatherModuleKit
 extension Invitation.Detail {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Invitation.Detail.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Invitation.Detail.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -23,8 +23,8 @@ extension Invitation.Detail {
 
         public func execute(
             subject: Subject,
-            input: Invitation.Detail.Input
-        ) async throws -> Invitation.Detail.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

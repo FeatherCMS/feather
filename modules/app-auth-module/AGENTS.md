@@ -77,6 +77,6 @@ forward legacy layouts merely because they still compile.
 - Test application authorization, success and error paths, transaction/event
   behavior, and query criteria. Test HTTP composition through generated routers
   and gateways using mocked persistence, checking status and response bodies.
-- Before handoff, run Swift formatting, `swift build`, and `swift test` for this
-  package. After public API changes, build downstream application consumers and
-  validate every owned generator.
+- Repository-level `AGENTS.md` forbids running tests or validations in agent
+  workflows. Record the package, downstream-consumer, and generator checks in
+  the handoff notes when relevant, but do not execute them here.

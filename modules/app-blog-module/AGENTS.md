@@ -45,8 +45,9 @@
   and operation namespace. Avoid redundant `Blog` prefixes inside the Blog
   composition targets and keep view/detail naming consistent with the route
   operation (`View`).
-- Test with `swift test --parallel`; `make docker-test` runs the same package
-  tests under Swift 6.3. Use `make format` for formatting.
+- Never run builds, tests, or validation commands from this workspace; the
+  repository-level instructions reserve validation for the developer. Use
+  `make format` only when formatting is explicitly requested.
 
 ## OpenAPI and Docker
 

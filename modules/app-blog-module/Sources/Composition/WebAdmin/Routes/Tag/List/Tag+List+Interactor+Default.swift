@@ -6,7 +6,7 @@ extension Tag.List.Interactor {
 
         func execute(page: Int, search: String?) async throws -> Tag.List.Model
         {
-            try await repository.query(page: page, search: search)
+            try await repository.search(page: page, search: search)
         }
     }
 }

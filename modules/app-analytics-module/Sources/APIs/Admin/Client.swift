@@ -31,15 +31,15 @@ public struct Client: APIProtocol {
     private var converter: Converter {
         client.converter
     }
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/get(analyticsLogList)`.
     public func analyticsLogList(_ input: Operations.AnalyticsLogList.Input) async throws -> Operations.AnalyticsLogList.Output {
         try await client.send(
             input: input,
             forOperation: Operations.AnalyticsLogList.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/analytics/logs/",
+                    template: "/api/v1/admin/analytics/logs",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(

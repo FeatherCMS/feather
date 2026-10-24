@@ -80,6 +80,6 @@ current System, User, and Redirect module structure.
 - Do not mirror every import with a direct package dependency. Declare only
   dependencies SwiftPM/compiler diagnostics require, and remove unused direct
   products after moving code.
-- Before handoff, run Swift formatting and package tests/build; validate both
-  generated OpenAPI documents when generator sources change. Check downstream
-  consumers after public symbol or target changes.
+- Repository-level `AGENTS.md` forbids running tests or validations in agent
+  workflows. Record formatting, package, generator, and downstream-consumer
+  checks in the handoff notes when relevant, but do not execute them here.

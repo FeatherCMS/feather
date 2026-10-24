@@ -4,7 +4,7 @@ import NewsDomain
 public import NewsModule
 
 //
-//  Article.Detail.UseCase.swift
+//  Article+Detail+UseCase.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -24,8 +24,8 @@ extension Article.Detail {
 
         public func execute(
             subject: Subject,
-            input: Article.Detail.Input
-        ) async throws -> Article.Detail.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

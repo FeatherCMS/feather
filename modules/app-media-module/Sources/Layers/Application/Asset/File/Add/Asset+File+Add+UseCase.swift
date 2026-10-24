@@ -11,12 +11,12 @@ extension Asset.File.Add {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Asset.File.Add.Scope>
+        let transaction: any TransactionExecutor<Scope>
         let storageContext: StorageClientContext
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Asset.File.Add.Scope>,
+            transaction: any TransactionExecutor<Scope>,
             storageContext: StorageClientContext
         ) {
             self.authorizer = authorizer
@@ -58,7 +58,7 @@ extension Asset.File.Add {
                 let assetExists =
                     try await scope.assets.find(slugPath: slugPath) != nil
                 if folderExists || assetExists {
-                    throw Asset.File.Add.Error.duplicatePath
+                    throw Error.duplicatePath
                 }
                 return slugPath
             }
@@ -151,7 +151,7 @@ extension Asset.File.Add {
     }
 }
 
-extension Asset.File.Add.UseCase {
+extension UseCase {
     fileprivate struct NormalizedFile {
         let name: String
         let slug: String
@@ -169,7 +169,7 @@ extension Asset.File.Add.UseCase {
         let safeName =
             name.whitespaceTrimmed.isEmpty
             ? "asset" : name
-        let slug = normalizedSlug(safeName)
+        let slug = Asset.File.Model.slug(from: safeName)
         let ext =
             Asset.ExtensionMatcher.canonicalExtension(from: `extension`)
             ?? "bin"
@@ -178,16 +178,6 @@ extension Asset.File.Add.UseCase {
             slug: slug.isEmpty ? "asset" : slug,
             extension: ext
         )
-    }
-
-    fileprivate func normalizedSlug(_ value: String) -> String {
-        value.lowercased()
-            .replacingOccurrences(
-                of: "[^a-z0-9]+",
-                with: "-",
-                options: .regularExpression
-            )
-            .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
     }
 
     fileprivate func adjustFolderAggregates(
@@ -200,8 +190,10 @@ extension Asset.File.Add.UseCase {
         var current = try await folders.find(id: folderId)
         while let folder = current {
             var updated = folder
-            updated.assetCount += assetCountDelta
-            updated.totalSizeBytes += sizeDelta
+            updated.updateAggregates(
+                assetCountDelta: assetCountDelta,
+                totalSizeBytesDelta: sizeDelta
+            )
             _ = try await folders.update(updated)
             if let parentId = folder.parentId {
                 current = try await folders.find(id: parentId)

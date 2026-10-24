@@ -1,5 +1,8 @@
 public import BlogAdminAPI
 import BlogApplication
+import BlogModule
+import WebApplication
+import WebDomain
 import FeatherModuleKit
 import Foundation
 import WebModule

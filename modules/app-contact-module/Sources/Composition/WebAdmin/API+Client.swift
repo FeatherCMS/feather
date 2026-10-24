@@ -1,10 +1,7 @@
-import AsyncHTTPClient
 public import ContactAdminAPI
+import ContactWebShared
 public import FeatherWebAdmin
 public import FeatherWebShared
-public import Foundation
-import NIOCore
-import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 
 extension API {
@@ -12,39 +9,26 @@ extension API {
         public let client: ContactAdminAPI.Client
 
         public init(
-            apiBaseURL: URL,
+            environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            let configuration = ContactAPIClientSupport.configuration(
+                sessionToken: requestContext.sessionToken
+            )
             self.client = .init(
-                serverURL: apiBaseURL,
-                transport: AsyncHTTPClientTransport(
-                    configuration: .init(
-                        client: .shared,
-                        timeout: .seconds(3)
-                    )
-                ),
-                middlewares: [
-                    ClientAPIAuthMiddleware(
-                        sessionToken: requestContext.sessionToken
-                    )
-                ]
+                serverURL: environment.apiBaseURL,
+                transport: configuration.transport,
+                middlewares: configuration.middlewares
             )
         }
 
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (ContactAdminAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            do {
-                return try await operation(client)
-            }
-            catch let error as OpenAPIRepositoryError {
-                throw error
-            }
-            catch {
-                throw OpenAPIRepositoryError.transport(
-                    description: String(describing: error)
-                )
-            }
+            try await ContactAPIClientSupport.withOpenAPIRepositoryErrorMapping(
+                operation,
+                using: client
+            )
         }
 
         public func failure(
@@ -54,9 +38,9 @@ extension API {
             if statusCode == 409 {
                 return .conflict
             }
-            return OpenAPIRepositoryError.parsedFailure(
+            return try await ContactAPIClientSupport.failure(
                 statusCode: statusCode,
-                responseBody: try await responseBody?.collectString()
+                responseBody: responseBody
             )
         }
     }

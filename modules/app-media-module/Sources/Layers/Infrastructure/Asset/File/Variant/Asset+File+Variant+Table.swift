@@ -15,13 +15,5 @@ extension Asset.File.Variant {
             let storageObjectId = DatabaseTableColumn<String>(name: "storage_object_id")
             let createdAt = DatabaseTableColumn<Date>(name: "created_at")
         }
-
-        struct ResolveRow {
-            let assetNodeFileId: String
-            let id: String
-            let key: String
-            let name: String
-            let `extension`: String
-        }
     }
 }

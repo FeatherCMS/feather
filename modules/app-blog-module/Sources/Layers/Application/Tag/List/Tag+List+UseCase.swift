@@ -3,7 +3,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 
 //
-//  ListTags.swift
+//  Tag+List+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -11,11 +11,11 @@ public import FeatherModuleKit
 extension Tag.List {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Tag.List.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Tag.List.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -24,7 +24,7 @@ extension Tag.List {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Tag.List.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

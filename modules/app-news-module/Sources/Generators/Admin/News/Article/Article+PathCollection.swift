@@ -6,7 +6,6 @@ extension Article {
         var pathMap: PathMap {
             [
                 "api/v1/admin/news/articles": PathItem(),
-                "api/v1/admin/news/articles/": List.PathItem(),
                 "api/v1/admin/news/articles/query": Query.PathItem(),
                 "api/v1/admin/news/articles/{newsArticleId}": ID.PathItem(),
             ]

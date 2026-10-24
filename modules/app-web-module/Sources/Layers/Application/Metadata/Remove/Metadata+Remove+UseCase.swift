@@ -4,7 +4,7 @@ import WebDomain
 public import WebModule
 
 //
-//  RemoveMetadata.swift
+//  Metadata+Remove+UseCase.swift
 //  app-web-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -12,11 +12,11 @@ public import WebModule
 extension Metadata.Remove {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Metadata.Remove.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Metadata.Remove.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction

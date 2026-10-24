@@ -1,3 +1,3 @@
-enum NewsletterIssue {
+extension NewsletterIssue {
     enum Query {}
 }

@@ -17,7 +17,7 @@ extension AuthorLink.List.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func list(
+        func search(
             authorID: String,
             page: Int,
             search: String?

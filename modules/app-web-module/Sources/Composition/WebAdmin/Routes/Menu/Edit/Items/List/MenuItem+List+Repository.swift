@@ -9,7 +9,7 @@ extension MenuItem.List {
 
 extension MenuItem.List.Repository {
     protocol Interface: Sendable {
-        func listMenuItems(
+        func search(
             menuId: String,
             page: Int,
             search: String?

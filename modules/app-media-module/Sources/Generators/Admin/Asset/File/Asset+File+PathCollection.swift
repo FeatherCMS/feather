@@ -10,7 +10,7 @@ extension Asset.File {
                 "api/v1/admin/media/assets/resolve": Resolve.PathItem(),
                 "api/v1/admin/media/assets/{mediaAssetId}": ID.PathItem(),
                 "api/v1/admin/media/assets/{mediaAssetId}/variants":
-                    Variant.Query.PathItem(),
+                    Variant.List.PathItem(),
             ]
         }
     }

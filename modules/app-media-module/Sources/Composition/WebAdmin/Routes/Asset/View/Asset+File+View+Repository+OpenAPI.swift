@@ -11,7 +11,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.View.Repository {
-    public struct OpenAPI: Sendable {
+    public struct OpenAPI: Interface, Sendable {
         let api: API.Client
 
         public init(api: API.Client) {
@@ -52,10 +52,27 @@ extension Asset.File.View.Repository {
             variants: [String] = ["preview"]
         ) async throws -> AdminMediaAsset {
             let asset = try await getAsset(id: id)
-            let resolve = try await api.resolveAssets(
-                ids: [id],
-                variants: variants
-            )
+            let resolve = try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.mediaAssetResolve(
+                    .init(
+                        headers: .init(accept: [.init(contentType: .json)]),
+                        body: .json(.init(ids: [id], variants: variants))
+                    )
+                )
+                switch response {
+                case .ok(let ok):
+                    return try ok.body.json
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
             let variants =
                 resolve
                 .first(where: { $0.id == id })?
@@ -74,13 +91,24 @@ extension Asset.File.View.Repository {
             )
         }
 
+        public func loadImageAsset(
+            assetId: String?,
+            variants: [String] = ["preview"]
+        ) async throws -> AdminMediaAsset? {
+            guard let assetId, !assetId.isEmpty else { return nil }
+            return try await getAssetWithPreview(
+                id: assetId,
+                variants: variants
+            )
+        }
+
         func getVariants(
             id: String
         ) async throws -> [Components.Schemas.MediaAssetVariantListItemSchema] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
-                    .mediaAssetVariantQuery(
+                    .mediaAssetVariantList(
                         path: .init(mediaAssetId: id)
                     )
                 switch response {

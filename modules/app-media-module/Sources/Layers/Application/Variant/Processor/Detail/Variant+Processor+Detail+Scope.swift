@@ -1,5 +1,4 @@
 public import FeatherModuleKit
-public import MediaDomain
 public import MediaModule
 
 extension Variant.Processor.Detail {

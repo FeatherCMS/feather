@@ -19,7 +19,7 @@ extension MagicLink.List {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> MagicLink.List.Output {
+        ) async throws -> Output {
             guard
                 try await authorizer.can(
                     subject: subject,

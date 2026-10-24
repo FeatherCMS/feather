@@ -4,7 +4,7 @@ import WebDomain
 public import WebModule
 
 //
-//  AddMetadata.swift
+//  Metadata+Add+UseCase.swift
 //  app-web-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -12,11 +12,11 @@ public import WebModule
 extension Metadata.Add {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Metadata.Add.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Metadata.Add.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -59,7 +59,27 @@ extension Metadata.Add {
                     )
                 )
             }
-            return model.asAddOutput
+            return .init(
+                id: model.id,
+                referenceType: model.reference.type,
+                referenceID: model.reference.id ?? "[!!!INVALID!!!]",
+                template: model.template,
+                slug: model.slug,
+                publicationDate: model.publicationDate,
+                expirationDate: model.expirationDate,
+                status: model.status,
+                title: model.title,
+                excerpt: model.excerpt,
+                imageURL: model.imageURL,
+                canonicalURL: model.canonicalURL,
+                noIndex: model.noIndex,
+                primaryKeyword: model.primaryKeyword,
+                cssCodeInjection: model.cssCodeInjection,
+                javascriptCodeInjection: model.javascriptCodeInjection,
+                structuredDataCodeInjection: model.structuredDataCodeInjection,
+                createdAt: model.createdAt,
+                updatedAt: model.updatedAt
+            )
         }
     }
 }

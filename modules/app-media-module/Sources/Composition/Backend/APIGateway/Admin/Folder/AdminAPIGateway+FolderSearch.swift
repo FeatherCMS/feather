@@ -3,6 +3,7 @@ import FeatherModuleKit
 import Foundation
 public import MediaAdminAPI
 import MediaApplication
+import MediaModule
 
 extension AdminAPIGateway {
     public func mediaFolderQuery(
@@ -69,7 +70,8 @@ extension AdminAPIGateway {
         from query: Components.Schemas.MediaFolderQueryItemSearchRequestQuerySchema
     ) -> Components.Schemas.MediaFolderQueryItemSearchResponseQuerySchema {
         let page = query.page ?? .init()
-        let sort = query.sort?.map { rule in
+        let sort = query.sort?.map { rule
+            -> Components.Schemas.MediaFolderQueryItemSearchResponseQuerySchema.SortPayloadPayload in
             let field: Components.Schemas
                 .MediaFolderQueryItemSearchResponseQuerySchema
                 .SortPayloadPayload.FieldPayload

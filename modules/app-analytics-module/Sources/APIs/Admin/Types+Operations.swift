@@ -5,8 +5,8 @@ public import struct Foundation.Data
 public import struct Foundation.Date
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/get(analyticsLogList)`.
     public enum AnalyticsLogList {
         public static let id: Swift.String = "analyticsLogList"
         public struct Input: Sendable, Hashable {
@@ -33,7 +33,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// AnalyticsLog list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/get(analyticsLogList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.AnalyticsLogListResponse)
@@ -84,7 +84,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/get(analyticsLogList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AnalyticsLogList.Output.Unauthorized)
@@ -135,7 +135,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs//get(analyticsLogList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/get(analyticsLogList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AnalyticsLogList.Output.Forbidden)

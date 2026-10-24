@@ -1,5 +1,5 @@
 //
-//  RuleModelTestSuite.swift
+//  Rule+Model+Tests.swift
 //  app-redirect-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -13,7 +13,7 @@ import struct Foundation.Date
 @testable import RedirectDomain
 
 @Suite
-struct RuleModelTestSuite {
+struct RuleModelTests {
 
     @Test
     func ruleNewSucceedsWithValidInput() throws {

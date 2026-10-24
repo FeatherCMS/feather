@@ -45,10 +45,9 @@ public struct MediaFolderMigration: DatabaseMigration {
             var parentId: String?
             var currentPath = ""
             for component in path.split(separator: "/").map(String.init) {
-                currentPath =
-                    currentPath.isEmpty
-                    ? component
-                    : "\(currentPath)/\(component)"
+                let parentPath = currentPath.isEmpty ? nil : currentPath
+                let slug = component.slugified
+                currentPath = parentPath.map { "\($0)/\(slug)" } ?? slug
                 if let existing = try await repository.find(
                     slugPath: currentPath
                 ) {
@@ -59,8 +58,7 @@ public struct MediaFolderMigration: DatabaseMigration {
                     Asset.Folder.Model.create(
                         parentId: parentId,
                         name: component,
-                        slug: component.slugified,
-                        slugPath: currentPath
+                        parentPath: parentPath
                     )
                 )
                 parentId = folder.id

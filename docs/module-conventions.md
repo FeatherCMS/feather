@@ -80,6 +80,12 @@ boundaries, event publication, field clearing, and query criteria/counts.
 HTTP tests prove the gateway wiring and transport contract; they do not replace
 tests of the application use cases themselves.
 
+Keep application test doubles under `Tests/Layers/Application/Mocks/`, not next
+to the test suites. Name module-wide use-case suites
+`<Module>Application+UseCases+Tests.swift`; name focused suites for their
+entity/operation, such as `Identity+Search+UseCase+Tests.swift`. Avoid generic
+`TestSuite` suffixes and keep each suite in its own file.
+
 ## Source layout
 
 ```text
@@ -115,11 +121,13 @@ surface-specific builders so target boundaries remain explicit.
 Keep entity-specific files in that entity's directory. Put cross-entity
 infrastructure such as the aggregate migration at the infrastructure root.
 Within a route feature, keep its files together under
-`Composition/WebAdmin/Routes/<Entity>/<Operation>/`.
+`Composition/WebAdmin/Routes/<Entity>/<Operation>/` or
+`Composition/WebApp/Routes/<Entity>/<Operation>/`.
 Name namespace-extension files after the namespace path, using dots between
-namespace components and no `+Namespace.swift` suffix. For example,
-`Invitation.Add.swift` declares `Invitation.Add`, and
-`Tag.Add.Controller.swift` declares `Tag.Add.Controller`.
+namespace components and no `+Namespace.swift` suffix. Apply this to both web
+composition targets. For example, `Invitation.Add.swift` declares
+`Invitation.Add`, and `Tag.Add.Controller.swift` declares
+`Tag.Add.Controller`.
 
 ## Namespaces and symbols
 
@@ -139,6 +147,14 @@ namespace components and no `+Namespace.swift` suffix. For example,
   complete.
 - Put the model at `<Entity>.Model`; put its repository contract at
   `<Entity>.Repository.Interface`.
+- Keep entity invariants, input normalization, and state transitions on the
+  Domain model. Creation factories return `<Entity>.Model.New`; mutating edits
+  use `Model.update(...)` with `FieldChange` or `OptionalFieldChange` so
+  omission and clearing remain distinct. Application use-cases orchestrate
+  authorization, queries, transactions, and repository calls; they should not
+  duplicate model validation/normalization or directly assign persistent model
+  fields. Keep cross-entity lookups and transaction-dependent decisions in the
+  use-case, then pass the resolved values into a model operation.
 - Nest application operations under their entity and operation, for example
   `Identity.Add.Input`, `Identity.Add.Output`, and `Identity.Add.UseCase`.
   Read/search contracts belong under named query namespaces, not in unrelated
@@ -198,6 +214,16 @@ namespace components and no `+Namespace.swift` suffix. For example,
   infrastructure files by responsibility (`Table+Migration.swift`,
   `Table+SeedMigration.swift`). Avoid `Database/` subfolders that merely repeat
   the infrastructure layer name.
+- Keep entity repository adapters in the entity directory as
+  `<Entity>+Repository+Database.swift`, extending
+  `<Entity>.Repository` with `Database: Interface`. Do not add a nested
+  `Repository/` folder or create flat `<Entity>DatabaseRepository` types.
+- Give persistent many-to-many or association tables their own module/entity
+  namespace and table (`IdentityRole.Table`, `ArticleCategory.Table`,
+  `FormFieldAssignment.Table`) instead of a flat `*TableSchema` type or a
+  parent entity's `RelatedTable` declaration. Keep the table definition, row
+  representations, migration, and any association-specific DBAL access under
+  that association namespace; keep custom SQL in its `Database/AccessLayer`.
 - Use FeatherDBAL for standard persistence operations in every module's
   Infrastructure target, not only in the reference modules: table-backed
   insert, select-by-key/detail, update, and delete should use the shared
@@ -287,7 +313,11 @@ namespace components and no `+Namespace.swift` suffix. For example,
   list, search, or unrelated lookup methods. A query interface may expose the
   small set of operations that its single use-case needs (for example `list`
   and `count` for one paginated list); separate use-cases must depend on
-  separate interfaces even when one infrastructure adapter implements several.
+  separate interfaces and operation-specific infrastructure adapters. Do not
+  make a `List` query accept a `Search.Input.Query`, make a `Search` query delegate
+  through a `List` query, or otherwise pass another operation's `Input` or
+  `Output` across the contract. Give each operation its own criteria and result
+  types; share only the lower-level table/access-layer work where appropriate.
 - Implement partial updates consistently with System: every PATCH operation
   has a required, entity-specific `updateMask` query parameter listing the
   fields being changed, plus a PATCH-specific request schema and documented
@@ -359,6 +389,17 @@ consistent across modules that expose the same kind of WebAdmin client.
 Keep WebApp/WebAdmin composition adapters named `Repository`; they are
 distinct from Application-layer `List.Query`, `Detail.Query`, and
 `Search.Query` contracts and should not be renamed to `Query`.
+Within a WebAdmin list feature, name the repository operation after the HTTP
+semantics it uses: use `search` when it calls the structured paginated `Query`
+endpoint, and `list` when it calls the simple `List` endpoint used by pickers
+or reference selectors. The page/controller/interactor can remain named `List`;
+this distinction applies to the repository method and generated API call.
+Keep generated API calls and response mapping in each operation's
+`Repository.OpenAPI` adapter. Do not add an entity-wide `API.Client` wrapper
+that collects search/list/detail/add/edit/remove operations and is then
+forwarded to the operation repositories; the module-level `API.Client` is the
+transport/authentication client, while feature repositories own endpoint
+adaptation.
 
 ### WebAdmin namespace and route ownership
 
@@ -567,8 +608,10 @@ shared conventions.
   test that drops schemas against a persistent or shared development volume.
 - [ ] Downstream modules and app composition compile against renamed public APIs.
 - [ ] Formatting, module tests/build, generated-source checks, and downstream
-  builds have run; intentional deviations are recorded beside the relevant
-  package/source declaration and here.
+  builds are recorded as completed by the developer; agent workflows must not
+  execute tests or validations under the repository-level `AGENTS.md` rule.
+  Intentional deviations are recorded beside the relevant package/source
+  declaration and here.
 - [ ] Module-local contributor instructions agree with this shared guide and
   describe the current source layout and composition patterns.
 

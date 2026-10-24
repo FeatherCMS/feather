@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 extension Profile.Fields {
     public struct Name: SchemaRepresentable {

@@ -9,7 +9,7 @@ extension MenuItem.List {
 
 extension MenuItem.List.Interactor {
     protocol Interface: Sendable {
-        func listMenuItems(
+        func list(
             menuId: String,
             page: Int,
             search: String?

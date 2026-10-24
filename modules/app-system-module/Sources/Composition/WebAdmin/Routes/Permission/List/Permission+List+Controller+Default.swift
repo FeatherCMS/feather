@@ -26,7 +26,7 @@ extension Permission.List.Controller {
                 return try await presenter.renderErrorPage(error: .forbidden)
             }
             do {
-                let model = try await interactor.listSystemPermissions(
+                let model = try await interactor.list(
                     page: request.queryPage(),
                     search: request.querySearch()
                 )

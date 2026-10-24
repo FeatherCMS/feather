@@ -22,132 +22,62 @@ public struct Router {
     public func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
+        let formRoutes = Form.Router.Routes(
+            root: routes.root,
+            breadcrumb: routes.breadcrumb
+        )
+        let formFieldRoutes = FormField.Router.Routes(
+            root: routes.root,
+            breadcrumb: routes.breadcrumb
+        )
+        let submissionRoutes = Submission.Router.Routes(
+            root: routes.root,
+            breadcrumb: routes.breadcrumb
+        )
+        let submissionMailRoutes = SubmissionMail.Router.Routes(
+            root: routes.root,
+            breadcrumb: routes.breadcrumb
+        )
+
         Contact.Overview
             .Router(
                 renderingEngine: renderingEngine,
-                routes: routes
+                routes: .init(
+                    root: routes.root,
+                    breadcrumb: routes.breadcrumb,
+                    forms: formRoutes.forms,
+                    fields: formFieldRoutes.fields,
+                    submissions: submissionRoutes.submissions
+                )
             )
             .route(on: router)
 
-        Form.Search
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        Form.Add
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        Form.Edit
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        Form.View
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        Form.Remove
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
+        Form.Router(
+            environment: environment,
+            renderingEngine: renderingEngine,
+            routes: formRoutes
+        )
+        .route(on: router)
 
-        SubmissionMail.List
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        SubmissionMail.Add
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        SubmissionMail.Edit
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        SubmissionMail.Remove
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
+        FormField.Router(
+            environment: environment,
+            renderingEngine: renderingEngine,
+            routes: formFieldRoutes
+        )
+        .route(on: router)
 
-        FormField.List
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        FormField.Add
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        FormField.Edit
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        FormField.Remove
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        Submission.Detail
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        Submission.Edit
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        Submission.Search
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes
-            )
-            .route(on: router)
-        Submission.Remove
-            .Router(
-                environment: environment,
-                routes: routes
-            )
-            .route(on: router)
+        Submission.Router(
+            environment: environment,
+            renderingEngine: renderingEngine,
+            routes: submissionRoutes
+        )
+        .route(on: router)
+
+        SubmissionMail.Router(
+            environment: environment,
+            renderingEngine: renderingEngine,
+            routes: submissionMailRoutes
+        )
+        .route(on: router)
     }
 }

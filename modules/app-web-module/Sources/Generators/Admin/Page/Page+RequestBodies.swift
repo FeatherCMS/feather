@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-import OpenAPIKit30
 
 struct PageRequestBody: RequestBodyRepresentable {
     var contentMap: ContentMap {

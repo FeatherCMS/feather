@@ -30,7 +30,7 @@ extension Rule.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.repository.find(id: input.id)
                 else {
-                    throw Error(message: "Rule not found")
+                    throw Rule.Edit.Error(message: "Rule not found")
                 }
                 try model.update(
                     source: input.source,

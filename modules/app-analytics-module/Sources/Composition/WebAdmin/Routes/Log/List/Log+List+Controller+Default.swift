@@ -1,4 +1,5 @@
 import AnalyticsModule
+import AnalyticsApplication
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared

@@ -24,7 +24,7 @@ extension Page.Search.Presenter {
         ) async throws -> HTMLResponse {
             let actions = AdminListActions(
                 Set(
-                    WebModule.Permissions.Pages.allPermissions()
+                    Page.Permissions.allPermissions()
                         .filter {
                             permissions.contains($0.rawValue)
                         }
@@ -44,7 +44,7 @@ extension Page.Search.Presenter {
                     )
                 )
             }
-            guard actions.allows(WebModule.Permissions.Pages.list) else {
+            guard actions.allows(Page.Permissions.list) else {
                 return try await renderEngine.renderAdminPage(
                     request: request,
                     context: context,

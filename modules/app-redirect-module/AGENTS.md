@@ -78,6 +78,6 @@
   direct product dependency only when required to build. Remove unused direct
   dependencies after code moves, and use `public import` only for deliberate
   re-exports.
-- Before handoff, run formatting, package build, `swift test --parallel`, and
-  generator validation when the corresponding sources changed. Build/test
-  downstream consumers after public namespace or API changes.
+- Repository-level `AGENTS.md` forbids running tests or validations in agent
+  workflows. Record formatting, package, generator, and downstream-consumer
+  checks in the handoff notes when relevant, but do not execute them here.

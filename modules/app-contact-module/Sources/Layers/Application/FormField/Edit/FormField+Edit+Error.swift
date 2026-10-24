@@ -1,7 +1,7 @@
 public import ContactModule
 public import FeatherApplication
 
-extension FormField.Edit.UseCase {
+extension FormField.Edit {
     public struct Error: UseCaseError {
         public let message: String
 

@@ -53,11 +53,35 @@ extension Public.Content.Repository {
         public func publicSiteSettings() async throws
             -> WebAppAPI.Components.Schemas.SiteSettingsSchema
         {
-            try await api.publicSiteSettings()
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.siteSettings(.init())
+                switch response {
+                case .ok(let value):
+                    return try value.body.json
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
         }
 
         public func publicMetadataSlugs() async throws -> [String] {
-            try await api.publicMetadataSlugs()
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.metadataList(
+                    .init(headers: .init(accept: [.init(contentType: .json)]))
+                )
+                switch response {
+                case .ok(let value):
+                    return try value.body.json
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
         }
     }
 }

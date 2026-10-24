@@ -6,7 +6,7 @@ import SystemModule
 struct VariableEditErrorAdapter: ErrorTraceRepresentable,
     HTTPErrorRepresentable
 {
-    let error: SystemModule.Variable.Edit.UseCase.Error
+    let error: SystemModule.Variable.Edit.Error
 
     var underlyingErrors: [any Error] { [] }
 

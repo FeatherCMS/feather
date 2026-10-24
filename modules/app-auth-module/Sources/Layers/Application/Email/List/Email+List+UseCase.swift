@@ -1,4 +1,3 @@
-import AuthDomain
 public import AuthModule
 public import FeatherApplication
 public import FeatherModuleKit
@@ -7,33 +6,28 @@ extension Email.List {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Scope>
+        let query: any QueryExecutor<Scope>
+
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
-            self.transaction = transaction
+            self.query = query
         }
+
         public func execute(subject: Subject) async throws -> Output {
-            guard try await authorizer.can(subject: subject, perform: Action())
+            let action = Action()
+            guard try await authorizer.can(subject: subject, perform: action)
             else {
                 throw AuthError(
                     kind: .forbidden,
-                    message: Action().key.rawValue
+                    message: action.key.rawValue
                 )
             }
-            return try await transaction.run { scope in
-                let models = try await scope.authEmail.list()
-                return .init(
-                    items: models.map {
-                        .init(
-                            id: $0.id,
-                            identityId: $0.identityId,
-                            email: $0.email
-                        )
-                    }
-                )
+
+            return try await query.run { scope in
+                try await scope.authEmail.list()
             }
         }
 

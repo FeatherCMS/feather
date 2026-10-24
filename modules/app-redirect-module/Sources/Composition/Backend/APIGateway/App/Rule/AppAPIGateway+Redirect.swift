@@ -11,7 +11,7 @@ extension AppAPIGateway {
             rule = try await useCases.makeResolveRule()
                 .execute(input: .init(source: input.query.source))
         }
-        catch Rule.Resolve.UseCase.Error.notFound {
+        catch Rule.Resolve.Error.notFound {
             return .notFound(
                 .init(
                     body: .json(

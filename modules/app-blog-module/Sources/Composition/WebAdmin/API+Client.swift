@@ -1,10 +1,8 @@
-import AsyncHTTPClient
 public import BlogAdminAPI
 import BlogWebShared
 public import FeatherWebAdmin
 public import FeatherWebShared
 public import MediaWebAdmin
-import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 
 public enum API {
@@ -16,20 +14,17 @@ public enum API {
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            let configuration = BlogAPIClientSupport.configuration(
+                sessionToken: requestContext.sessionToken
+            )
             self.mediaClient = .init(
                 environment: environment,
                 requestContext: requestContext
             )
             self.client = .init(
                 serverURL: environment.apiBaseURL,
-                transport: AsyncHTTPClientTransport(
-                    configuration: .init(client: .shared)
-                ),
-                middlewares: [
-                    ClientAPIAuthMiddleware(
-                        sessionToken: requestContext.sessionToken
-                    )
-                ]
+                transport: configuration.transport,
+                middlewares: configuration.middlewares
             )
         }
 
@@ -40,7 +35,7 @@ public enum API {
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (BlogAdminAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            try await APIClientSupport.withOpenAPIRepositoryErrorMapping(
+            try await BlogAPIClientSupport.withOpenAPIRepositoryErrorMapping(
                 operation,
                 using: client
             )
@@ -50,7 +45,7 @@ public enum API {
             statusCode: Int,
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
-            try await APIClientSupport.failure(
+            try await BlogAPIClientSupport.failure(
                 statusCode: statusCode,
                 responseBody: responseBody
             )

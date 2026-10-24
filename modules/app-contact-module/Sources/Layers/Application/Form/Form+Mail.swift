@@ -28,7 +28,3 @@ extension Form {
         }
     }
 }
-
-extension SubmissionMail.Model {
-    var asFormMail: Form.Mail { .init(model: self) }
-}

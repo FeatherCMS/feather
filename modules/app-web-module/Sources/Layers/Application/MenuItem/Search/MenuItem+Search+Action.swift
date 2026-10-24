@@ -4,6 +4,6 @@ import WebModule
 
 extension MenuItem.Search {
     struct Action: PermissionAction {
-        let key = WebModule.Permissions.MenuItems.list
+        let key = MenuItem.Permissions.list
     }
 }

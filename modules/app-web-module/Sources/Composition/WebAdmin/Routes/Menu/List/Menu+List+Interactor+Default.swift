@@ -12,7 +12,7 @@ extension WebModule.Menu.List.Interactor {
             page: Int,
             search: String?
         ) async throws -> WebModule.Menu.List.Model {
-            try await repository.listMenus(page: page, search: search)
+            try await repository.search(page: page, search: search)
         }
 
     }

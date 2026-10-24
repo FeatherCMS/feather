@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 struct PathCollection: PathCollectionRepresentable {
     var pathMap: PathMap {

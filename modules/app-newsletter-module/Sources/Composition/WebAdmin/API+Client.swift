@@ -1,10 +1,7 @@
-import AsyncHTTPClient
 public import FeatherWebAdmin
 public import FeatherWebShared
-import Foundation
-import NIOCore
 public import NewsletterAdminAPI
-import OpenAPIAsyncHTTPClient
+import NewsletterWebShared
 public import OpenAPIRuntime
 
 extension API {
@@ -15,32 +12,24 @@ extension API {
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            let configuration = NewsletterAPIClientSupport.configuration(
+                sessionToken: requestContext.sessionToken
+            )
             self.client = .init(
                 serverURL: environment.apiBaseURL,
-                transport: AsyncHTTPClientTransport(
-                    configuration: .init(
-                        client: .shared,
-                        timeout: .seconds(3)
-                    )
-                ),
-                middlewares: [
-                    ClientAPIAuthMiddleware(
-                        sessionToken: requestContext.sessionToken
-                    )
-                ]
+                transport: configuration.transport,
+                middlewares: configuration.middlewares
             )
         }
 
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (NewsletterAdminAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            do { return try await operation(client) }
-            catch let error as OpenAPIRepositoryError { throw error }
-            catch {
-                throw OpenAPIRepositoryError.transport(
-                    description: String(describing: error)
+            try await NewsletterAPIClientSupport
+                .withOpenAPIRepositoryErrorMapping(
+                    operation,
+                    using: client
                 )
-            }
         }
 
         public func failure(
@@ -48,33 +37,10 @@ extension API {
             responseBody: HTTPBody?
         ) async throws -> OpenAPIRepositoryError {
             if statusCode == 409 { return .conflict }
-            return OpenAPIRepositoryError.parsedFailure(
+            return try await NewsletterAPIClientSupport.failure(
                 statusCode: statusCode,
-                responseBody: try await responseBody?.collectString()
+                responseBody: responseBody
             )
-        }
-
-        public func newsletterCampaignTestEmail(
-            path: NewsletterAdminAPI.Operations.NewsletterCampaignTestEmail
-                .Input
-                .Path,
-            body: NewsletterAdminAPI.Components.RequestBodies
-                .NewsletterIssueTestEmailRequestBody
-        ) async throws
-            -> NewsletterAdminAPI.Operations.NewsletterCampaignTestEmail.Output
-        {
-            try await client.newsletterCampaignTestEmail(path: path, body: body)
-        }
-
-        public func newsletterIssueTestEmail(
-            path: NewsletterAdminAPI.Operations.NewsletterIssueTestEmail.Input
-                .Path,
-            body: NewsletterAdminAPI.Components.RequestBodies
-                .NewsletterIssueTestEmailRequestBody
-        ) async throws
-            -> NewsletterAdminAPI.Operations.NewsletterIssueTestEmail.Output
-        {
-            try await client.newsletterIssueTestEmail(path: path, body: body)
         }
     }
 }

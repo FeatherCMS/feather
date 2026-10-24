@@ -9,7 +9,7 @@ extension Variable.List.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func listSystemVariables(
+        func search(
             page: Int,
             search: String?,
             ids: [String]? = nil

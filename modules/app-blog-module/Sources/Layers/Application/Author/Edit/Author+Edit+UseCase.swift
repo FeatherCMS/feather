@@ -6,7 +6,7 @@ import WebApplication
 import WebDomain
 
 //
-//  Author.Edit.UseCase.swift
+//  Author+Edit+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -14,11 +14,11 @@ import WebDomain
 extension Author.Edit {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Author.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Author.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -38,7 +38,7 @@ extension Author.Edit {
             return try await transaction.run { scope in
                 guard var model = try await scope.author.find(id: input.id)
                 else {
-                    throw Error(message: "Author not found")
+                    throw Author.Edit.Error(message: "Author not found")
                 }
                 guard
                     var metadata = try await scope.metadata.find(
@@ -46,7 +46,7 @@ extension Author.Edit {
                         referenceId: input.id
                     )
                 else {
-                    throw Error(message: "Author metadata not found")
+                    throw Author.Edit.Error(message: "Author metadata not found")
                 }
 
                 try model.update(

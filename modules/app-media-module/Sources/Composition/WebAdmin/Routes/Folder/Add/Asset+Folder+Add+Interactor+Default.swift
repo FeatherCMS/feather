@@ -12,7 +12,7 @@ import WebComponents
 
 extension Asset.Folder.Add.Interactor {
     struct Default: Interface {
-        let repository: Asset.Folder.Add.Repository.OpenAPI
+        let repository: any Asset.Folder.Add.Repository.Interface
 
         func getAddMediaFolder(
             parentId: String?,

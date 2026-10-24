@@ -8,11 +8,11 @@ import struct Foundation.Date
 extension Subscriber.Add {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Subscriber.Add.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Subscriber.Add.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -21,7 +21,7 @@ extension Subscriber.Add {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Subscriber.Add.Output {
+        ) async throws -> Output {
             let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
             else {

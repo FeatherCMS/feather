@@ -286,6 +286,11 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(
+                    name: "OpenAPIAsyncHTTPClient",
+                    package: "swift-openapi-async-http-client"
+                ),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"
@@ -297,7 +302,6 @@ let package = Package(
         .target(
             name: "WebModuleWebApp",
             dependencies: [
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "CSS", package: "swift-web-standards"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
@@ -306,10 +310,6 @@ let package = Package(
                 .product(name: "Markdown", package: "swift-markdown"),
                 .product(name: "Mustache", package: "swift-mustache"),
                 .product(name: "NIOCore", package: "swift-nio"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
                 .product(name: "RSS", package: "swift-web-standards"),
                 .product(name: "SGML", package: "swift-web-standards"),
                 .product(name: "Sitemap", package: "swift-web-standards"),
@@ -337,6 +337,7 @@ let package = Package(
                 .product(name: "WebBuilders", package: "swift-web-standards"),
                 .product(name: "WebComponents", package: "swift-web-standards"),
                 .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "MediaModule", package: "app-media-module"),
 
                 .target(name: "WebModule"),
                 .target(name: "WebDomain"),

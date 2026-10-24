@@ -102,7 +102,7 @@ extension Subscriber.Search.Query {
         ) -> DatabaseQuery {
             var sql = DatabaseQuery.StringInterpolation(
                 literalCapacity: 1200,
-                interpolationCount: 10
+                interpolationCount: 11
             )
             sql.appendLiteral(
                 """
@@ -164,7 +164,7 @@ extension Subscriber.Search.Query {
         ) -> DatabaseQuery {
             var sql = DatabaseQuery.StringInterpolation(
                 literalCapacity: 500,
-                interpolationCount: 6
+                interpolationCount: 9
             )
             sql.appendLiteral(
                 """
@@ -196,6 +196,9 @@ extension Subscriber.Search.Query {
             sql.appendInterpolation(pattern)
             sql.appendLiteral(" ESCAPE '!'")
             sql.appendLiteral(" OR LOWER(subscriber.first_name) LIKE ")
+            sql.appendInterpolation(pattern)
+            sql.appendLiteral(" ESCAPE '!'")
+            sql.appendLiteral(" OR LOWER(subscriber.status) LIKE ")
             sql.appendInterpolation(pattern)
             sql.appendLiteral(" ESCAPE '!'")
             sql.appendLiteral(" OR LOWER(subscriber.last_name) LIKE ")

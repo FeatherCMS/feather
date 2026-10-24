@@ -43,8 +43,9 @@ WebAdmin composition, and tests.
 ## Backend and API
 
 - Backend gateways adapt generated Admin API operations to application
-  use-cases; group factories under `UseCases/<Entity>/` and keep mapping helpers
-  near the relevant entity/operation.
+  use-cases; group factories under `UseCases/<Entity>/`. Keep request/response
+  mapping functions in the gateway operation file that uses them; do not create
+  standalone mapping/helper files.
 - HTTP `List` and `Query` are separate API operations with separately owned
   schemas. The application `Search` use-case serves structured `Query`
   requests; the simple `List` endpoint remains appropriate for lightweight
@@ -94,6 +95,6 @@ WebAdmin composition, and tests.
 - Keep this guide aligned with the current source layout. Do not restore
   instructions for the old `Features/Admin`, `Abstraction/Implementation`, or
   frontend `buildRuntime` structure.
-- Before handing off changes, run formatting, the System package tests/build,
-  and generator validation when API sources changed. Check downstream callers
-  when public namespaces or generated contracts changed.
+- Repository-level `AGENTS.md` forbids running tests or validations in agent
+  workflows. Record formatting, package, generator, and downstream-consumer
+  checks in the handoff notes when relevant, but do not execute them here.

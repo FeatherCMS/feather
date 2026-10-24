@@ -15,14 +15,14 @@ extension Invitation.Validate {
         }
 
         public func execute(
-            input: Invitation.Validate.Input
+            input: Input
         ) async throws -> Output {
             try await query.run { scope in
                 let invitation = try await scope.query.getBy(
                     token: input.token
                 )
                 guard invitation.expiresAt > .init() else {
-                    throw Error(message: "Invitation not found")
+                    throw Invitation.Validate.Error(message: "Invitation not found")
                 }
                 return invitation
             }

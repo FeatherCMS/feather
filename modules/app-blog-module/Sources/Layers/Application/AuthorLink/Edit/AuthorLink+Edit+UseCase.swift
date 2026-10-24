@@ -5,7 +5,7 @@ public import FeatherModuleKit
 import WebModule
 
 //
-//  EditAuthorLink.swift
+//  AuthorLink+Edit+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -14,11 +14,11 @@ extension AuthorLink.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<AuthorLink.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<AuthorLink.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -38,10 +38,10 @@ extension AuthorLink.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.authorLink.find(id: input.id)
                 else {
-                    throw Error(message: "Menu item not found")
+                    throw AuthorLink.Edit.Error(message: "Menu item not found")
                 }
                 guard model.authorId == input.authorId else {
-                    throw Error(message: "Menu item not found")
+                    throw AuthorLink.Edit.Error(message: "Menu item not found")
                 }
 
                 try model.update(

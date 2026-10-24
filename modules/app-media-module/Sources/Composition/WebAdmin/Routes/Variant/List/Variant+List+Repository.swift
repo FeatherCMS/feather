@@ -10,7 +10,7 @@ extension Variant.List {
 
 extension Variant.List.Repository {
     protocol Interface: Sendable {
-        func listMediaVariants(
+        func search(
             page: Int,
             search: String?
         ) async throws

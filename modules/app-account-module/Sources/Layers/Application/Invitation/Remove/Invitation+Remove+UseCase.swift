@@ -14,11 +14,11 @@ import UserDomain
 extension Invitation.Remove {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Invitation.Remove.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Invitation.Remove.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -26,7 +26,7 @@ extension Invitation.Remove {
 
         public func execute(
             subject: Subject,
-            input: Invitation.Remove.Input
+            input: Input
         ) async throws -> Output {
             let action = Action()
 

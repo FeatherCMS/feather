@@ -36,9 +36,9 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Article.Detail.Scope(
-                    article: ArticleDatabaseQueries(
+                    article: Article.Detail.Query.Database(
                         context: context,
-                        metadata: WebModule.Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Reference.Query.Database(
                             context: context
                         )
                     )
@@ -52,12 +52,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Article.List.Scope(
-                    article: ArticleDatabaseQueries(
-                        context: context,
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
-                    )
+                    article: Article.List.Query.Database(context: context)
                 )
             }
         )
@@ -68,23 +63,20 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Article.Search.Scope(
-                    article: ArticleDatabaseQueries(
-                        context: context,
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
-                    )
+                    article: Article.Search.Query.Database(context: context)
                 )
             }
         )
     }
 
-    func articleAddTransaction() -> DatabaseTransactionExecutor<Article.Add.Scope> {
+    func articleAddTransaction() -> DatabaseTransactionExecutor<
+        Article.Add.Scope
+    > {
         DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 Article.Add.Scope(
-                    article: ArticleDatabaseRepository(context: context),
+                    article: Article.Repository.Database(context: context),
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     ),
@@ -96,12 +88,14 @@ extension UseCases {
         )
     }
 
-    func articleEditTransaction() -> DatabaseTransactionExecutor<Article.Edit.Scope> {
+    func articleEditTransaction() -> DatabaseTransactionExecutor<
+        Article.Edit.Scope
+    > {
         DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 Article.Edit.Scope(
-                    article: ArticleDatabaseRepository(context: context),
+                    article: Article.Repository.Database(context: context),
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     )
@@ -110,12 +104,14 @@ extension UseCases {
         )
     }
 
-    func articleRemoveTransaction() -> DatabaseTransactionExecutor<Article.Remove.Scope> {
+    func articleRemoveTransaction() -> DatabaseTransactionExecutor<
+        Article.Remove.Scope
+    > {
         DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 Article.Remove.Scope(
-                    article: ArticleDatabaseRepository(context: context),
+                    article: Article.Repository.Database(context: context),
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     )
@@ -129,9 +125,9 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Category.Detail.Scope(
-                    category: CategoryDatabaseQueries(
+                    category: Category.Detail.Query.Database(
                         context: context,
-                        metadata: WebModule.Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Reference.Query.Database(
                             context: context
                         )
                     )
@@ -145,11 +141,8 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Category.List.Scope(
-                    category: CategoryDatabaseQueries(
-                        context: context,
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
+                    category: Category.List.Query.Database(
+                        context: context
                     )
                 )
             }
@@ -161,23 +154,22 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Category.Search.Scope(
-                    category: CategoryDatabaseQueries(
-                        context: context,
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
+                    category: Category.Search.Query.Database(
+                        context: context
                     )
                 )
             }
         )
     }
 
-    func categoryAddTransaction() -> DatabaseTransactionExecutor<Category.Add.Scope> {
+    func categoryAddTransaction() -> DatabaseTransactionExecutor<
+        Category.Add.Scope
+    > {
         DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 Category.Add.Scope(
-                    category: CategoryDatabaseRepository(context: context),
+                    category: Category.Repository.Database(context: context),
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     ),
@@ -189,12 +181,14 @@ extension UseCases {
         )
     }
 
-    func categoryEditTransaction() -> DatabaseTransactionExecutor<Category.Edit.Scope> {
+    func categoryEditTransaction() -> DatabaseTransactionExecutor<
+        Category.Edit.Scope
+    > {
         DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 Category.Edit.Scope(
-                    category: CategoryDatabaseRepository(context: context),
+                    category: Category.Repository.Database(context: context),
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     )
@@ -203,13 +197,15 @@ extension UseCases {
         )
     }
 
-    func categoryRemoveTransaction() -> DatabaseTransactionExecutor<Category.Remove.Scope> {
+    func categoryRemoveTransaction() -> DatabaseTransactionExecutor<
+        Category.Remove.Scope
+    > {
         DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 Category.Remove.Scope(
-                    article: ArticleDatabaseRepository(context: context),
-                    category: CategoryDatabaseRepository(context: context),
+                    article: Article.Repository.Database(context: context),
+                    category: Category.Repository.Database(context: context),
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     )

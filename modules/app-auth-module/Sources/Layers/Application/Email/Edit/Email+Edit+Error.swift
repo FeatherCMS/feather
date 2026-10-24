@@ -1,7 +1,7 @@
 public import AuthModule
 public import FeatherApplication
 
-extension Email.Edit.UseCase {
+extension Email.Edit {
     public enum Error: FeatherApplication.UseCaseError {
         case authEmailNotFound
     }

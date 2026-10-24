@@ -5,6 +5,17 @@ import FeatherApplication
 import FeatherInfrastructure
 
 extension UseCases {
+    func makeDetailAuthEmail() -> Email.Detail.UseCase {
+        let query = DatabaseQueryExecutor(
+            databaseContext: databaseContext
+        ) { context in
+            Email.Detail.Scope(
+                email: Email.Detail.Query.Database(context: context)
+            )
+        }
+        return .init(authorizer: authorizer, query: query)
+    }
+
     func makeSearchAuthEmails() -> Email.Search.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
@@ -18,15 +29,16 @@ extension UseCases {
     }
 
     func makeListAuthEmails() -> Email.List.UseCase {
-        .init(
+        let query = DatabaseQueryExecutor(
+            databaseContext: databaseContext
+        ) { context in
+            Email.List.Scope(
+                authEmail: Email.List.Query.Database(context: context)
+            )
+        }
+        return .init(
             authorizer: authorizer,
-            transaction: DatabaseTransactionExecutor(
-                databaseContext: databaseContext
-            ) { context in
-                Email.List.Scope(
-                    authEmail: Email.Repository.Database(context: context)
-                )
-            }
+            query: query
         )
     }
 

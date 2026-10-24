@@ -37,7 +37,6 @@ let package = Package(
     products: [
         .library(name: "NewsletterDomain", targets: ["NewsletterDomain"]),
         .library(name: "NewsletterModule", targets: ["NewsletterModule"]),
-        .library(name: "NewsletterWebShared", targets: ["NewsletterWebShared"]),
         .library(
             name: "NewsletterApplication",
             targets: ["NewsletterApplication"]
@@ -49,6 +48,7 @@ let package = Package(
         .library(name: "NewsletterAdminAPI", targets: ["NewsletterAdminAPI"]),
         .library(name: "NewsletterAppAPI", targets: ["NewsletterAppAPI"]),
         .library(name: "NewsletterBackend", targets: ["NewsletterBackend"]),
+        .library(name: "NewsletterWebShared", targets: ["NewsletterWebShared"]),
         .library(name: "NewsletterWebAdmin", targets: ["NewsletterWebAdmin"]),
         .library(name: "NewsletterWebApp", targets: ["NewsletterWebApp"]),
         .executable(
@@ -261,8 +261,10 @@ let package = Package(
         .target(
             name: "NewsletterWebShared",
             dependencies: [
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
-                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/Composition/WebShared",
             swiftSettings: swiftSettings
@@ -270,6 +272,7 @@ let package = Package(
         .target(
             name: "NewsletterWebAdmin",
             dependencies: [
+                .target(name: "NewsletterWebShared"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
@@ -282,7 +285,6 @@ let package = Package(
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .target(name: "NewsletterApplication"),
-                .target(name: "NewsletterWebShared"),
                 .target(name: "NewsletterModule"),
                 .target(name: "NewsletterAdminAPI"),
             ],
@@ -292,18 +294,17 @@ let package = Package(
         .target(
             name: "NewsletterWebApp",
             dependencies: [
+                .target(name: "NewsletterWebShared"),
                 .product(
                     name: "FeatherValidation",
                     package: "feather-validation"
                 ),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .target(name: "NewsletterModule"),
                 .target(name: "NewsletterAppAPI"),
-                .target(name: "NewsletterWebShared"),
             ],
             path: "Sources/Composition/WebApp",
             swiftSettings: swiftSettings

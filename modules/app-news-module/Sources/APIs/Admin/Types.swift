@@ -5,15 +5,15 @@ public import struct Foundation.Data
 public import struct Foundation.Date
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
+    /// - Remark: HTTP `GET /api/v1/admin/news/articles`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/news/articles/get(newsArticleList)`.
+    func newsArticleList(_ input: Operations.NewsArticleList.Input) async throws -> Operations.NewsArticleList.Output
     /// - Remark: HTTP `POST /api/v1/admin/news/articles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/articles/post(newsArticlePost)`.
     func newsArticlePost(_ input: Operations.NewsArticlePost.Input) async throws -> Operations.NewsArticlePost.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/news/articles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/articles/delete(newsArticleDelete)`.
     func newsArticleDelete(_ input: Operations.NewsArticleDelete.Input) async throws -> Operations.NewsArticleDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/news/articles/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/news/articles//get(newsArticleList)`.
-    func newsArticleList(_ input: Operations.NewsArticleList.Input) async throws -> Operations.NewsArticleList.Output
     /// - Remark: HTTP `POST /api/v1/admin/news/articles/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/articles/query/post(newsArticleQuery)`.
     func newsArticleQuery(_ input: Operations.NewsArticleQuery.Input) async throws -> Operations.NewsArticleQuery.Output
@@ -23,15 +23,15 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PUT /api/v1/admin/news/articles/{newsArticleId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/articles/{newsArticleId}/put(newsArticlePut)`.
     func newsArticlePut(_ input: Operations.NewsArticlePut.Input) async throws -> Operations.NewsArticlePut.Output
+    /// - Remark: HTTP `GET /api/v1/admin/news/categories`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/news/categories/get(newsCategoryList)`.
+    func newsCategoryList(_ input: Operations.NewsCategoryList.Input) async throws -> Operations.NewsCategoryList.Output
     /// - Remark: HTTP `POST /api/v1/admin/news/categories`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/categories/post(newsCategoryPost)`.
     func newsCategoryPost(_ input: Operations.NewsCategoryPost.Input) async throws -> Operations.NewsCategoryPost.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/news/categories`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/categories/delete(newsCategoryDelete)`.
     func newsCategoryDelete(_ input: Operations.NewsCategoryDelete.Input) async throws -> Operations.NewsCategoryDelete.Output
-    /// - Remark: HTTP `GET /api/v1/admin/news/categories/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/news/categories//get(newsCategoryList)`.
-    func newsCategoryList(_ input: Operations.NewsCategoryList.Input) async throws -> Operations.NewsCategoryList.Output
     /// - Remark: HTTP `POST /api/v1/admin/news/categories/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/categories/query/post(newsCategoryQuery)`.
     func newsCategoryQuery(_ input: Operations.NewsCategoryQuery.Input) async throws -> Operations.NewsCategoryQuery.Output
@@ -45,6 +45,11 @@ public protocol APIProtocol: Sendable {
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
+    /// - Remark: HTTP `GET /api/v1/admin/news/articles`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/news/articles/get(newsArticleList)`.
+    public func newsArticleList(headers: Operations.NewsArticleList.Input.Headers = .init()) async throws -> Operations.NewsArticleList.Output {
+        try await newsArticleList(Operations.NewsArticleList.Input(headers: headers))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/news/articles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/articles/post(newsArticlePost)`.
     public func newsArticlePost(
@@ -66,11 +71,6 @@ extension APIProtocol {
             headers: headers,
             body: body
         ))
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/news/articles/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/news/articles//get(newsArticleList)`.
-    public func newsArticleList(headers: Operations.NewsArticleList.Input.Headers = .init()) async throws -> Operations.NewsArticleList.Output {
-        try await newsArticleList(Operations.NewsArticleList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/news/articles/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/articles/query/post(newsArticleQuery)`.
@@ -107,6 +107,11 @@ extension APIProtocol {
             body: body
         ))
     }
+    /// - Remark: HTTP `GET /api/v1/admin/news/categories`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/news/categories/get(newsCategoryList)`.
+    public func newsCategoryList(headers: Operations.NewsCategoryList.Input.Headers = .init()) async throws -> Operations.NewsCategoryList.Output {
+        try await newsCategoryList(Operations.NewsCategoryList.Input(headers: headers))
+    }
     /// - Remark: HTTP `POST /api/v1/admin/news/categories`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/categories/post(newsCategoryPost)`.
     public func newsCategoryPost(
@@ -128,11 +133,6 @@ extension APIProtocol {
             headers: headers,
             body: body
         ))
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/news/categories/`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/news/categories//get(newsCategoryList)`.
-    public func newsCategoryList(headers: Operations.NewsCategoryList.Input.Headers = .init()) async throws -> Operations.NewsCategoryList.Output {
-        try await newsCategoryList(Operations.NewsCategoryList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/news/categories/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/news/categories/query/post(newsCategoryQuery)`.

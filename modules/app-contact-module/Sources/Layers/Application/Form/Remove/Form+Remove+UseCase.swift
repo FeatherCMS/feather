@@ -29,18 +29,21 @@ extension Form.Remove {
                 var ids: [String] = []
                 var keys: [String] = []
                 for key in input.keys {
-                    guard let form = try await scope.form.findBy(key: key) else {
+                    guard let form = try await scope.form.findBy(key: key)
+                    else {
                         continue
                     }
                     ids.append(form.id)
                     keys.append(form.key)
                 }
                 let deletedIds = try await scope.form.delete(ids: ids)
-                return .init(
-                    keys: zip(ids, keys).compactMap { id, key in
-                        deletedIds.contains(id) ? key : nil
-                    }
-                )
+                let deletedIdSet = Set(deletedIds)
+                var deletedKeys: [String] = []
+                for index in ids.indices where deletedIdSet.contains(ids[index])
+                {
+                    deletedKeys.append(keys[index])
+                }
+                return .init(keys: deletedKeys)
             }
         }
     }

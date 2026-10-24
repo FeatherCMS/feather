@@ -3,7 +3,7 @@ public import FeatherModuleKit
 public import UserModule
 
 //
-//  Role.Detail.UseCase.swift
+//  Role+Detail+UseCase.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -11,11 +11,11 @@ public import UserModule
 extension Role.Detail {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Role.Detail.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Role.Detail.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query

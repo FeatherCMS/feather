@@ -8,10 +8,10 @@ extension Variant.Processor.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Variant.Processor.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Variant.Processor.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -30,16 +30,12 @@ extension Variant.Processor.Edit {
                     var processor = try await scope.variantProcessors.find(
                         id: input.id
                     ), processor.variantId == input.variantId
-                else { throw Variant.Processor.Edit.Error.notFound }
-                processor.name = input.name.apply(to: processor.name)
-                processor.matchExtensions = input.matchExtensions.apply(
-                    to: processor.matchExtensions
-                )
-                processor.commandTemplate = input.commandTemplate.apply(
-                    to: processor.commandTemplate
-                )
-                processor.isActive = input.isActive.apply(
-                    to: processor.isActive
+                else { throw Error.notFound }
+                processor.update(
+                    name: input.name,
+                    matchExtensions: input.matchExtensions,
+                    commandTemplate: input.commandTemplate,
+                    isActive: input.isActive
                 )
                 let updated = try await scope.variantProcessors.update(
                     processor

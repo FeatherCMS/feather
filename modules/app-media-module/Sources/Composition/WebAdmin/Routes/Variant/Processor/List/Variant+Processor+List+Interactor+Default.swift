@@ -19,7 +19,7 @@ extension Variant.Processor.List.Interactor {
         > {
             do {
                 let body =
-                    try await repository.list(
+                    try await repository.search(
                         variantId: variantId,
                         page: page,
                         search: search

@@ -21,7 +21,7 @@ extension Tag.List.Repository {
 
         let api: API.Client
 
-        func query(page: Int, search: String?) async throws -> Tag.List.Model {
+        func search(page: Int, search: String?) async throws -> Tag.List.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client

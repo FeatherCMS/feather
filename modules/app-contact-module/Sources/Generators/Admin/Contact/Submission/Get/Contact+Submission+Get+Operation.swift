@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 extension Contact.Submission.Get {
     struct Operation: Contact.Submission.IDOperation {

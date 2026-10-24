@@ -8,7 +8,7 @@ public enum ErrorAdapter {
         if let error = error as? Rule.Model.Error {
             return RuleModelErrorAdapter(error: error)
         }
-        if let error = error as? Rule.Resolve.UseCase.Error {
+        if let error = error as? Rule.Resolve.Error {
             return RuleResolveErrorAdapter(error: error)
         }
         return nil

@@ -1,5 +1,5 @@
 //
-//  ListPublicPosts.swift
+//  Public+Post+List+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -22,12 +22,7 @@ extension Public.Post.List {
         public func execute(input: Input) async throws -> Output {
             let now = Date()
             let items = try await query.run { scope in
-                let posts = try await scope.postList.list(
-                    query: .init(
-                        page: .init(size: 10_000, number: 1),
-                        sort: [.init(field: .createdAt, direction: .desc)]
-                    )
-                )
+                let posts = try await scope.postList.list()
                 var result: [Public.Post.Summary.Item] = []
                 for item in posts.items {
                     guard
@@ -72,11 +67,11 @@ extension Public.Post.List {
 
 }
 
-extension Public.Post.List.UseCase {
+extension UseCase {
     fileprivate static func publicAuthors(
         _ ids: [String],
         now: Date,
-        context: Public.Post.List.Scope
+        context: Scope
     ) async throws -> [Public.Author.Summary.Item] {
         var result: [Public.Author.Summary.Item] = []
         for id in ids {
@@ -107,7 +102,7 @@ extension Public.Post.List.UseCase {
     fileprivate static func publicTags(
         _ ids: [String],
         now: Date,
-        context: Public.Post.List.Scope
+        context: Scope
     ) async throws -> [Public.Tag.Summary.Item] {
         var result: [Public.Tag.Summary.Item] = []
         for id in ids {

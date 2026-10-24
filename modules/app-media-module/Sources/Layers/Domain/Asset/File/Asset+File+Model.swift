@@ -1,7 +1,7 @@
 public import FeatherDomain
 public import MediaModule
 
-public import struct Foundation.Date
+public import Foundation
 
 extension Asset.File {
     public struct Model: FeatherDomain.Model {
@@ -79,6 +79,24 @@ extension Asset.File {
 }
 
 extension Asset.File.Model {
+    public static func slug(from name: String) -> String {
+        name.lowercased()
+            .replacingOccurrences(
+                of: "[^a-z0-9]+",
+                with: "-",
+                options: .regularExpression
+            )
+            .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+    }
+
+    public mutating func update(
+        title: OptionalFieldChange<String> = .unchanged,
+        altText: OptionalFieldChange<String> = .unchanged
+    ) {
+        self.title = title.apply(to: self.title)
+        self.altText = altText.apply(to: self.altText)
+    }
+
     public static func create(
         folderId: String?,
         name: String,

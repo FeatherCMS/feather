@@ -11,9 +11,9 @@ extension Identity.Table: DatabaseTableWithDetail {
         public let createdAt: Date
         public let updatedAt: Date
     }
-    }
+}
 
-    extension Identity.Table: DatabaseTableWithList {
+extension Identity.Table: DatabaseTableWithList {
     public struct List: DatabaseTableRowDecodable {
         public let id: String
         public let name: String
@@ -22,18 +22,18 @@ extension Identity.Table: DatabaseTableWithDetail {
         public let createdAt: Date
         public let updatedAt: Date
     }
-    }
+}
 
-    extension Identity.Table: DatabaseTableWithInsert {
+extension Identity.Table: DatabaseTableWithInsert {
     public struct Insert: DatabaseTableRowEncodable {
         public let id: String
         public let name: String
         public let status: String
         public let isRoot: Bool
     }
-    }
+}
 
-    extension Identity.Table: DatabaseTableWithUpdate {
+extension Identity.Table: DatabaseTableWithUpdate {
     public struct Update: DatabaseTableRowEncodable {
         public let id: String
         public let name: String

@@ -5,7 +5,7 @@ public import NewsModule
 import WebDomain
 
 //
-//  Article.Remove.UseCase.swift
+//  Article+Remove+UseCase.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -13,11 +13,11 @@ import WebDomain
 extension Article.Remove {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Article.Remove.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Article.Remove.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -25,7 +25,7 @@ extension Article.Remove {
 
         public func execute(
             subject: Subject,
-            input: Article.Remove.Input
+            input: Input
         ) async throws -> Output {
             let action = Action()
 

@@ -6,7 +6,7 @@ import WebApplication
 import WebDomain
 
 //
-//  EditPost.swift
+//  Post+Edit+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -15,11 +15,11 @@ extension Post.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Post.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Post.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -38,7 +38,7 @@ extension Post.Edit {
 
             return try await transaction.run { scope in
                 guard var model = try await scope.post.find(id: input.id) else {
-                    throw Error(message: "Post not found")
+                    throw Post.Edit.Error(message: "Post not found")
                 }
                 guard
                     var metadata = try await scope.metadata.find(
@@ -46,7 +46,7 @@ extension Post.Edit {
                         referenceId: input.id
                     )
                 else {
-                    throw Error(message: "Post metadata not found")
+                    throw Post.Edit.Error(message: "Post metadata not found")
                 }
 
                 try model.update(

@@ -13,9 +13,11 @@ extension AuthorLink.List.Query {
         public func list(authorId: String) async throws
             -> AuthorLink.List.Output
         {
-            let value = try await BlogApplication.Public.AuthorLink.Database(
-                context: context
-            ).list(authorId: authorId)
+            let value = try await BlogApplication.Public.AuthorLink.List.Query
+                .Database(
+                    context: context
+                )
+                .list(authorId: authorId)
             return .init(
                 items: value.items.map {
                     .init(

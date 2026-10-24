@@ -22,7 +22,7 @@ extension MagicLink.List {
 extension MagicLink.List.Repository {
     protocol Interface: Sendable {
 
-        func list(
+        func search(
             page: Int,
             size: Int,
             search: String?,

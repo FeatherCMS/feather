@@ -30,7 +30,3 @@ extension Form {
         }
     }
 }
-
-extension FormField.Model {
-    var asFormField: Form.Field { .init(model: self) }
-}

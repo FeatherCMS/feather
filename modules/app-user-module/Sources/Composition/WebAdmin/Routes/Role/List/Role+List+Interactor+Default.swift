@@ -15,7 +15,7 @@ extension Role.List.Interactor {
             Components.Schemas.UserRoleQueryItemSchema
         > {
             do {
-                let response = try await repository.list(
+                let response = try await repository.search(
                     page: page,
                     size: size,
                     search: search

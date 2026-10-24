@@ -22,7 +22,7 @@ extension Page.Remove.Controller {
             let id = try context.requiredID()
             guard
                 context.isCurrentUserAllowed(
-                    to: WebModule.Permissions.Pages.delete
+                    to: Page.Permissions.delete
                 )
             else {
                 return HTMLResponse(content: "", status: .forbidden)
@@ -49,7 +49,7 @@ extension Page.Remove.Controller {
             let runtime = buildRuntime(request, context)
             guard
                 context.isCurrentUserAllowed(
-                    to: WebModule.Permissions.Pages.delete
+                    to: Page.Permissions.delete
                 )
             else { return Response(status: .forbidden) }
             let nonceRequest = try await request.decode(

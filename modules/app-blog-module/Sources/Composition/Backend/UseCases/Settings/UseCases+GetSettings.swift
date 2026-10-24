@@ -18,7 +18,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 BlogModule.Settings.Detail.Scope(
-                    settings: BlogModule.Settings.Repository.Database(
+                    settings: BlogModule.Settings.Detail.Query.Database(
                         context: context
                     )
                 )

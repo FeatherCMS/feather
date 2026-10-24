@@ -3,7 +3,7 @@ public import FeatherModuleKit
 public import SystemModule
 
 //
-//  Permission.Detail.UseCase.swift
+//  Permission+Detail+UseCase.swift
 //  app-system-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -11,11 +11,11 @@ public import SystemModule
 extension Permission.Detail {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Permission.Detail.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Permission.Detail.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query

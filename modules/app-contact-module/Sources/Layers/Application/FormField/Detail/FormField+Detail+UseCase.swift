@@ -6,14 +6,14 @@ public import FeatherModuleKit
 extension FormField.Detail {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
-            self.transaction = transaction
+            self.query = query
         }
 
         public func execute(
@@ -25,16 +25,11 @@ extension FormField.Detail {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            return try await transaction.run { scope in
-                guard
-                    let value = try await scope.field.findBy(
-                        id: input.id,
-                        formId: input.formId
-                    )
-                else {
-                    throw Error(message: "Contact form field not found")
-                }
-                return value.asDetail
+            return try await query.run { scope in
+                try await scope.field.find(
+                    id: input.id,
+                    formId: input.formId
+                )
             }
         }
     }

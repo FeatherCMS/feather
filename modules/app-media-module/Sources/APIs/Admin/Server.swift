@@ -92,7 +92,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaAssetVariantQuery(
+                try await server.mediaAssetVariantList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -980,8 +980,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `GET /api/v1/admin/media/assets/{mediaAssetId}/variants`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantQuery)`.
-    func mediaAssetVariantQuery(
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/variants/get(mediaAssetVariantList)`.
+    func mediaAssetVariantList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -990,18 +990,18 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaAssetVariantQuery.id,
+            forOperation: Operations.MediaAssetVariantList.id,
             using: {
-                APIHandler.mediaAssetVariantQuery($0)
+                APIHandler.mediaAssetVariantList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.MediaAssetVariantQuery.Input.Path = .init(mediaAssetId: try converter.getPathParameterAsURI(
+                let path: Operations.MediaAssetVariantList.Input.Path = .init(mediaAssetId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "mediaAssetId",
                     as: Components.Parameters.MediaAssetIdParameter.self
                 ))
-                let headers: Operations.MediaAssetVariantQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.MediaAssetVariantQuery.Input(
+                let headers: Operations.MediaAssetVariantList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.MediaAssetVariantList.Input(
                     path: path,
                     headers: headers
                 )

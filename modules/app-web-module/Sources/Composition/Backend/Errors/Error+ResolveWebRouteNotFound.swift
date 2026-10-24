@@ -4,7 +4,7 @@ import WebModule
 
 extension Error {
     var isResolveWebRouteNotFound: Bool {
-        if self is WebRoute.Resolve.UseCase.Error {
+        if self is WebRoute.Resolve.Error {
             return true
         }
         if let databaseError = self as? DatabaseError {

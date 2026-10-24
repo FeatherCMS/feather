@@ -9,7 +9,7 @@ extension Permission.List {
 extension Permission.List.Repository {
     protocol Interface: Sendable {
 
-        func listSystemPermissions(
+        func search(
             page: Int,
             search: String?
         ) async throws -> Permission.List.Model

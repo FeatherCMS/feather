@@ -6,7 +6,7 @@ import SystemApplication
 import WebApplication
 
 //
-//  Article.Add.UseCase.swift
+//  Article+Add+UseCase.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -14,11 +14,11 @@ import WebApplication
 extension Article.Add {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Article.Add.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Article.Add.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -26,7 +26,7 @@ extension Article.Add {
 
         public func execute(
             subject: Subject,
-            input: Article.Add.Input
+            input: Input
         ) async throws -> Output {
             let action = Action()
 

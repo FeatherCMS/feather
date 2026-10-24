@@ -48,7 +48,9 @@ extension Public.Article.Resolve {
                         imageURL: "",
                         media: nil,
                         metadata: metadata,
-                        readingTime: NewsReadingTime.minutes(for: article.content),
+                        readingTime: Public.Article.ReadingTime.minutes(
+                            for: article.content
+                        ),
                         categoryIDs: categoryIDsByArticleID[article.id] ?? []
                     )
                     }

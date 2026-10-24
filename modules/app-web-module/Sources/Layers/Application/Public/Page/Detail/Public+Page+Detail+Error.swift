@@ -1,6 +1,6 @@
 public import FeatherApplication
 
-extension Public.Page.Detail.UseCase {
+extension Public.Page.Detail {
     public struct Error: UseCaseError {
         public let message: String
 

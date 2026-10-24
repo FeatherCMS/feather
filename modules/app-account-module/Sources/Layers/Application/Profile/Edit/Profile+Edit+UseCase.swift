@@ -6,11 +6,11 @@ public import FeatherModuleKit
 extension Profile.Edit {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Profile.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Profile.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -18,7 +18,7 @@ extension Profile.Edit {
 
         public func execute(
             subject: Subject,
-            input: Profile.Edit.Input
+            input: Input
         ) async throws -> Output {
             let userId = input.userId ?? subject.id
             let action = Action(userID: userId)

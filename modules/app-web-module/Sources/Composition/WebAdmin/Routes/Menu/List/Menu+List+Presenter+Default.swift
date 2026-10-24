@@ -25,13 +25,13 @@ extension WebModule.Menu.List.Presenter {
         ) async throws -> HTMLResponse {
             let actions = AdminListActions(
                 Set(
-                    WebModule.Permissions.Menus.allPermissions()
+                    Menu.Permissions.allPermissions()
                         .filter {
                             permissions.contains($0.rawValue)
                         }
                 )
             )
-            let canAccess = actions.allows(WebModule.Permissions.Menus.list)
+            let canAccess = actions.allows(Menu.Permissions.list)
             if let error {
                 return try await renderEngine.renderAdminPage(
                     request: request,

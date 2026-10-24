@@ -69,29 +69,3 @@ extension Metadata.Add {
         }
     }
 }
-
-extension Metadata.Model {
-    public var asAddOutput: Metadata.Add.Output {
-        .init(
-            id: id,
-            referenceType: reference.type,
-            referenceID: reference.id ?? "[!!!INVALID!!!]",
-            template: template,
-            slug: slug,
-            publicationDate: publicationDate,
-            expirationDate: expirationDate,
-            status: status,
-            title: title,
-            excerpt: excerpt,
-            imageURL: imageURL,
-            canonicalURL: canonicalURL,
-            noIndex: noIndex,
-            primaryKeyword: primaryKeyword,
-            cssCodeInjection: cssCodeInjection,
-            javascriptCodeInjection: javascriptCodeInjection,
-            structuredDataCodeInjection: structuredDataCodeInjection,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}

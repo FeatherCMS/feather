@@ -80,10 +80,10 @@ extension MenuItem.List.Page {
 
         func html(context: inout BuilderContext) -> Div {
             let canDelete = state.permissions.allows(
-                WebModule.Permissions.MenuItems.delete
+                MenuItem.Permissions.delete
             )
             let canReorder = state.permissions.allows(
-                WebModule.Permissions.MenuItems.update
+                MenuItem.Permissions.update
             )
             let searchValue = state.search ?? ""
             let hasActiveQuery = !(state.search?.isEmpty ?? true)
@@ -255,7 +255,7 @@ extension MenuItem.List.Page {
                         },
                         toolbar: {
                             if state.permissions.allows(
-                                WebModule.Permissions.MenuItems.create
+                                MenuItem.Permissions.create
                             ) {
                                 context.build(
                                     AdminListToolbar {

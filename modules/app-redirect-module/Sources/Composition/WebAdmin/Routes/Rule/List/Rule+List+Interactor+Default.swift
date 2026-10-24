@@ -16,7 +16,7 @@ extension Rule.List.Interactor {
             Components.Schemas.RedirectRuleQueryItemSchema
         > {
             do {
-                let response = try await repository.listRedirectRules(
+                let response = try await repository.search(
                     page: page,
                     search: search,
                     statusCode: statusCode

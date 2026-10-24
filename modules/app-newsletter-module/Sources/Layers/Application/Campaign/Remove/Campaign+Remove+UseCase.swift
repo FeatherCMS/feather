@@ -29,7 +29,8 @@ extension Campaign.Remove {
                 var ids: [String] = []
                 var keys: [String] = []
                 for key in input.keys {
-                    guard let campaign = try await scope.campaign.findBy(key: key)
+                    guard
+                        let campaign = try await scope.campaign.findBy(key: key)
                     else {
                         continue
                     }
@@ -37,8 +38,11 @@ extension Campaign.Remove {
                     keys.append(key)
                 }
                 let deletedIDs = try await scope.campaign.delete(ids: ids)
-                let deletedKeys = zip(ids, keys).compactMap { id, key in
-                    deletedIDs.contains(id) ? key : nil
+                let deletedIDSet = Set(deletedIDs)
+                var deletedKeys: [String] = []
+                for index in ids.indices where deletedIDSet.contains(ids[index])
+                {
+                    deletedKeys.append(keys[index])
                 }
                 return .init(keys: deletedKeys)
             }

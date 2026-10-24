@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 extension MagicLink.Schemas {
     struct ExpiresAt: DoubleSchemaRepresentable {

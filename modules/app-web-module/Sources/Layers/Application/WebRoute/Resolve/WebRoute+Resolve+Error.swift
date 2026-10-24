@@ -1,6 +1,6 @@
 public import FeatherApplication
 
-extension WebRoute.Resolve.UseCase {
+extension WebRoute.Resolve {
     public struct Error: UseCaseError {
         public let message: String
 

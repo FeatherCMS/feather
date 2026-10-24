@@ -8,11 +8,11 @@ extension Variant.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Variant.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Variant.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -31,13 +31,13 @@ extension Variant.Edit {
                     var variant = try await scope.variantDefinitions.find(
                         id: input.id
                     )
-                else { throw Variant.Edit.Error.notFound }
-                variant.key = input.key.apply(to: variant.key)
-                variant.name = input.name.apply(to: variant.name)
-                variant.isRequired = input.isRequired.apply(
-                    to: variant.isRequired
+                else { throw Error.notFound }
+                variant.update(
+                    key: input.key,
+                    name: input.name,
+                    isRequired: input.isRequired,
+                    isActive: input.isActive
                 )
-                variant.isActive = input.isActive.apply(to: variant.isActive)
                 let saved = try await scope.variantDefinitions.update(variant)
                 let processors = try await scope.variantProcessors.list(
                     variantId: saved.id

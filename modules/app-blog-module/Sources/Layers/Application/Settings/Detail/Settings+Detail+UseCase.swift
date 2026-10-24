@@ -1,4 +1,3 @@
-import BlogDomain
 public import BlogModule
 public import FeatherApplication
 public import FeatherModuleKit
@@ -25,17 +24,9 @@ extension BlogModule.Settings.Detail {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            let model = try await query.run { scope in
+            return try await query.run { scope in
                 try await scope.settings.get()
             }
-            return .init(
-                postListPath: model.postListPath,
-                authorListPath: model.authorListPath,
-                tagListPath: model.tagListPath,
-                postPathPrefix: model.postPathPrefix,
-                authorPathPrefix: model.authorPathPrefix,
-                tagPathPrefix: model.tagPathPrefix
-            )
         }
     }
 }

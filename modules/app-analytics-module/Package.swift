@@ -56,6 +56,7 @@ let package = Package(
             targets: ["AnalyticsAppOpenAPIGenerator"]
         ),
         .library(name: "AnalyticsBackend", targets: ["AnalyticsBackend"]),
+        .library(name: "AnalyticsWebShared", targets: ["AnalyticsWebShared"]),
         .library(name: "AnalyticsWebAdmin", targets: ["AnalyticsWebAdmin"]),
         .library(name: "AnalyticsWebApp", targets: ["AnalyticsWebApp"]),
     ],
@@ -235,8 +236,20 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
+            name: "AnalyticsWebShared",
+            dependencies: [
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
             name: "AnalyticsWebAdmin",
             dependencies: [
+                .target(name: "AnalyticsWebShared"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
@@ -244,6 +257,8 @@ let package = Package(
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .target(name: "AnalyticsModule"),
+                .target(name: "AnalyticsApplication"),
+                .target(name: "AnalyticsDomain"),
                 .target(name: "AnalyticsAdminAPI"),
             ],
             path: "Sources/Composition/WebAdmin",
@@ -252,13 +267,9 @@ let package = Package(
         .target(
             name: "AnalyticsWebApp",
             dependencies: [
+                .target(name: "AnalyticsWebShared"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(
                     name: "OpenAPIRuntime",
@@ -282,7 +293,9 @@ let package = Package(
         .testTarget(
             name: "AnalyticsApplicationTests",
             dependencies: [
+                .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
                 .target(name: "AnalyticsDomain"),
                 .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsApplication"),

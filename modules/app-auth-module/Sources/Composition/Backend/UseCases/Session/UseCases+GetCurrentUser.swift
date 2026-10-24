@@ -25,12 +25,13 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 AuthModule.Authorization.CurrentUser.Scope(
-                    roles: AuthModule.Authorization.Database(
+                    roles: AuthModule.Authorization.Roles.Query.Database(
                         context: context
                     ),
-                    permissions: AuthModule.Authorization.Database(
-                        context: context
-                    )
+                    permissions: AuthModule.Authorization.Permissions.Query
+                        .Database(
+                            context: context
+                        )
                 )
             }
         )

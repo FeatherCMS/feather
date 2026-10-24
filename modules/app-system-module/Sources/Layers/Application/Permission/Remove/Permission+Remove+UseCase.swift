@@ -4,7 +4,7 @@ import SystemDomain
 public import SystemModule
 
 //
-//  Permission.Remove.UseCase.swift
+//  Permission+Remove+UseCase.swift
 //  app-system-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -12,11 +12,11 @@ public import SystemModule
 extension Permission.Remove {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Permission.Remove.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Permission.Remove.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction

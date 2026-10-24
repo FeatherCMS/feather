@@ -1,7 +1,7 @@
 public import AuthModule
 public import FeatherApplication
 
-extension Credential.Edit.UseCase {
+extension Credential.Edit {
     public enum Error: FeatherApplication.UseCaseError {
         case credentialNotFound(id: String)
         case authEmailNotFoundForCredential(id: String)

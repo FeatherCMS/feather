@@ -30,4 +30,14 @@ actor MockVariableLookup: SystemModule.Variable.Lookup.Interface {
             return nil
         }
     }
+
+    func get(keys: [String]) async throws -> [String: String] {
+        var values: [String: String] = [:]
+        for key in keys {
+            if let value = try await get(key) {
+                values[key] = value
+            }
+        }
+        return values
+    }
 }

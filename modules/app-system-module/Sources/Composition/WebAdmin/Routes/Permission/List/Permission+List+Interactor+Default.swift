@@ -11,12 +11,12 @@ extension Permission.List.Interactor {
             any Permission.List.Repository
                 .Interface
 
-        func listSystemPermissions(
+        func list(
             page: Int,
             search: String?
         ) async throws -> Permission.List.Model {
             do {
-                return try await repository.listSystemPermissions(
+                return try await repository.search(
                     page: page,
                     search: search
                 )

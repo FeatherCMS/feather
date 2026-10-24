@@ -6,7 +6,7 @@ import NIOHTTP1
 public enum ErrorAdapter {
 
     public static func adapt(_ error: any Error) -> (any Error)? {
-        if let error = error as? Invitation.Resend.UseCase.Error {
+        if let error = error as? Invitation.Resend.Error {
             return AccountErrorAdapter(
                 error: error,
                 status: .notFound,
@@ -15,7 +15,7 @@ public enum ErrorAdapter {
                 reason: "invitation_not_found"
             )
         }
-        if let error = error as? Invitation.CompleteRegistration.UseCase.Error {
+        if let error = error as? Invitation.CompleteRegistration.Error {
             return AccountErrorAdapter(
                 error: error,
                 status: .notFound,
@@ -24,7 +24,7 @@ public enum ErrorAdapter {
                 reason: "invitation_not_found"
             )
         }
-        if let error = error as? Invitation.Validate.UseCase.Error {
+        if let error = error as? Invitation.Validate.Error {
             return AccountErrorAdapter(
                 error: error,
                 status: .notFound,

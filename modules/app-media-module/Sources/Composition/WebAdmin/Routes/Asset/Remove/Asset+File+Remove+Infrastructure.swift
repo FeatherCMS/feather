@@ -11,7 +11,7 @@ import WebComponents
 
 extension Asset.File.Remove {
     struct Infrastructure: Sendable {
-        let repository: Asset.File.Remove.Repository.OpenAPI
+        let repository: any Asset.File.Remove.Repository.Interface
 
         init(api: API.Client) {
             self.repository = .init(api: api)

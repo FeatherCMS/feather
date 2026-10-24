@@ -24,5 +24,6 @@
   or persistent volumes. Use the pinned Swagger UI image for local OpenAPI
   viewing; do not add a custom UI download or Nginx image.
 - After changing a public namespace or package product, search the Feather
-  workspace for consumers and update them in the same change. Run the affected
-  target build and the complete package test suite before handing off.
+  workspace for consumers and update them in the same change. The repository-
+  level `AGENTS.md` forbids running builds or tests in agent workflows; record
+  the needed checks for the developer without executing them here.

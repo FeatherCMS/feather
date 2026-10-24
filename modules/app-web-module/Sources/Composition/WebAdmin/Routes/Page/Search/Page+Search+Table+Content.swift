@@ -32,9 +32,9 @@ extension Page.Search.Table {
 
         func html(context: inout BuilderContext) -> Div {
             let canDelete = permissions.allows(
-                WebModule.Permissions.Pages.delete
+                Page.Permissions.delete
             )
-            let canEdit = permissions.allows(WebModule.Permissions.Pages.update)
+            let canEdit = permissions.allows(Page.Permissions.update)
             let hasActiveQuery = !searchValue.isEmpty
 
             return Div {
@@ -76,7 +76,7 @@ extension Page.Search.Table {
                                             icon: FeatherIcons.inbox(),
                                             action: {
                                                 if permissions.allows(
-                                                    WebModule.Permissions.Pages
+                                                    Page.Permissions
                                                         .create
                                                 ) {
                                                     context.build(
@@ -177,7 +177,7 @@ extension Page.Search.Table {
                         },
                         toolbar: {
                             if permissions.allows(
-                                WebModule.Permissions.Pages.create
+                                Page.Permissions.create
                             ) {
                                 context.build(
                                     AdminListToolbar {

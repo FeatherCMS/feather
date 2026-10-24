@@ -6,6 +6,7 @@ import Jobs
 import MediaInfrastructure
 import MediaModule
 import NewsletterInfrastructure
+import NewsletterModule
 
 struct JobController {
     init(
@@ -19,7 +20,7 @@ struct JobController {
             on: queue,
             mailClient: mailClient
         )
-        JobQueueNewsletterIssueJobController.register(
+        Issue.JobController.JobQueue.register(
             on: queue,
             databaseContext: databaseContext,
             mailClient: mailClient

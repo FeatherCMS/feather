@@ -7,12 +7,12 @@ extension MenuItem.List.Interactor {
     struct Default: Interface {
         let repository: any MenuItem.List.Repository.Interface
 
-        func listMenuItems(
+        func list(
             menuId: String,
             page: Int,
             search: String?
         ) async throws -> MenuItem.List.Model {
-            try await repository.listMenuItems(
+            try await repository.search(
                 menuId: menuId,
                 page: page,
                 search: search

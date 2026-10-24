@@ -60,7 +60,7 @@ extension AppAPIGateway {
                 template: route.template
             )
         }
-        catch is WebRoute.Resolve.UseCase.Error {
+        catch is WebRoute.Resolve.Error {
             return nil
         }
         catch let error as DatabaseError where error.isResolveWebRouteNotFound {

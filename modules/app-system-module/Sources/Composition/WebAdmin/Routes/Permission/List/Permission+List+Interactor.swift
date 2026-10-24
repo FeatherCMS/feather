@@ -9,7 +9,7 @@ extension Permission.List {
 extension Permission.List.Interactor {
     protocol Interface: Sendable {
 
-        func listSystemPermissions(
+        func list(
             page: Int,
             search: String?
         ) async throws -> Permission.List.Model

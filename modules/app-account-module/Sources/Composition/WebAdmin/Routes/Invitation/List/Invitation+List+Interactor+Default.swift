@@ -13,7 +13,7 @@ extension Invitation.List.Interactor {
             size: Int,
             search: String?
         ) async throws -> Invitation.List.Result {
-            try await repository.list(
+            try await repository.search(
                 page: page,
                 size: size,
                 search: search

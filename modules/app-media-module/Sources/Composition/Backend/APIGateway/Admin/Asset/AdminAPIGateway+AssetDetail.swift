@@ -2,6 +2,7 @@ import FeatherModuleKit
 import Foundation
 public import MediaAdminAPI
 import MediaApplication
+import MediaModule
 
 extension AdminAPIGateway {
     public func mediaAssetGet(

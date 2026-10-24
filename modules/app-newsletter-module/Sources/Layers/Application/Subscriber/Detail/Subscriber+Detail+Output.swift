@@ -48,22 +48,3 @@ extension Subscriber.Detail {
         }
     }
 }
-
-extension Subscriber.Model {
-    var asDetail: Subscriber.Detail.Output {
-        .init(
-            newsletterId: newsletterId,
-            email: email,
-            status: status,
-            subscriptionDate: subscriptionDate,
-            unsubscriptionDate: unsubscriptionDate,
-            firstName: firstName,
-            lastName: lastName,
-            confirmedAt: confirmedAt,
-            source: source,
-            lastSentAt: lastSentAt,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}

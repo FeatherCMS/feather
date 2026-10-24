@@ -5,7 +5,7 @@ public import FeatherModuleKit
 import WebDomain
 
 //
-//  RemoveTag.swift
+//  Tag+Remove+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -13,11 +13,11 @@ import WebDomain
 extension Tag.Remove {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Tag.Remove.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Tag.Remove.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction

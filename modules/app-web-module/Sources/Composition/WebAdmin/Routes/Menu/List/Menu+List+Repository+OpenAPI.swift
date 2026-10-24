@@ -24,7 +24,7 @@ extension WebModule.Menu.List.Repository {
             self.api = api
         }
 
-        func listMenus(
+        func search(
             page: Int,
             search: String?
         ) async throws -> WebModule.Menu.List.Model {

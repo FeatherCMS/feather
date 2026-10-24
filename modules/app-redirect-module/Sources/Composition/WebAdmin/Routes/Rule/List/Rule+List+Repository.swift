@@ -9,7 +9,7 @@ extension Rule.List {
 extension Rule.List.Repository {
     protocol Interface: Sendable {
 
-        func listRedirectRules(
+        func search(
             page: Int,
             search: String?,
             statusCode: Rule.StatusCode?

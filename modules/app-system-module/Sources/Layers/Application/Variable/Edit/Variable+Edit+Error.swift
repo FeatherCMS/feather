@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import SystemModule
 
-extension Variable.Edit.UseCase {
+extension Variable.Edit {
     public enum Error: UseCaseError {
         case notFound
     }

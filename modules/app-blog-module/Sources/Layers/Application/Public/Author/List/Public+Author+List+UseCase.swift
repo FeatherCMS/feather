@@ -1,5 +1,5 @@
 //
-//  ListPublicAuthors.swift
+//  Public+Author+List+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -22,12 +22,7 @@ extension Public.Author.List {
         public func execute(input: Input) async throws -> Output {
             let now = Date()
             let items = try await query.run { scope in
-                let authors = try await scope.authorList.list(
-                    query: .init(
-                        page: .init(size: 10_000, number: 1),
-                        sort: [.init(field: .createdAt, direction: .desc)]
-                    )
-                )
+                let authors = try await scope.authorList.list()
                 var result: [Public.Author.Summary.Item] = []
                 for item in authors.items {
                     guard
@@ -39,9 +34,7 @@ extension Public.Author.List {
                     else {
                         continue
                     }
-                    let author = try await scope.authorList.findAuthor(
-                        id: item.id
-                    )
+                    let author = try await scope.authorDetail.find(id: item.id)
                     result.append(
                         .init(
                             id: author.id,

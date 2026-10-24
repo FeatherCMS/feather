@@ -20,7 +20,7 @@ extension Credential.List.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func list(
+        func search(
             page: Int,
             size: Int,
             search: String?

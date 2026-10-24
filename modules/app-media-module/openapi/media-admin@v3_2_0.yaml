@@ -197,7 +197,7 @@ paths:
     get:
       tags:
       - MediaAssets
-      operationId: mediaAssetVariantQuery
+      operationId: mediaAssetVariantList
       parameters:
       - $ref: '#/components/parameters/MediaAssetIdParameter'
       responses:

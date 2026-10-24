@@ -4,6 +4,7 @@ extension Variable {
     public enum Lookup {
         public protocol Interface: Sendable {
             func get(_ key: String) async throws -> String?
+            func get(keys: [String]) async throws -> [String: String]
         }
     }
 }

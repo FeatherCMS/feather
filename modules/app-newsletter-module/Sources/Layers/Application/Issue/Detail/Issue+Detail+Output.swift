@@ -42,20 +42,3 @@ extension Issue.Detail {
         }
     }
 }
-
-extension Issue.Model {
-    var asDetail: Issue.Detail.Output {
-        .init(
-            id: id,
-            newsletterId: newsletterId,
-            subject: subject,
-            previewText: previewText,
-            content: content,
-            status: status,
-            scheduledDate: scheduledDate,
-            sentDate: sentDate,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}

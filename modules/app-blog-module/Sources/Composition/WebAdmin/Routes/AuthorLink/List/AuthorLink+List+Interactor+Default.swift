@@ -9,7 +9,7 @@ extension AuthorLink.List.Interactor {
             page: Int,
             search: String?
         ) async throws -> AuthorLink.List.Model {
-            try await repository.list(
+            try await repository.search(
                 authorID: authorID,
                 page: page,
                 search: search

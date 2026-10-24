@@ -100,7 +100,7 @@ extension Form.Submit {
             guard !mails.isEmpty else { return [:] }
 
             let providers = try await events.trigger(
-                event: ContactFormMailTemplateValuesProvider(
+                event: Form.Submit.MailTemplateValuesProvider(
                     formKey: formKey
                 ),
                 using: context

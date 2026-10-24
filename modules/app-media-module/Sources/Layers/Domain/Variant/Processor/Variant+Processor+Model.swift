@@ -59,3 +59,17 @@ extension Variant.Processor {
         }
     }
 }
+
+extension Variant.Processor.Model {
+    public mutating func update(
+        name: FieldChange<String> = .unchanged,
+        matchExtensions: FieldChange<String> = .unchanged,
+        commandTemplate: FieldChange<String> = .unchanged,
+        isActive: FieldChange<Bool> = .unchanged
+    ) {
+        self.name = name.apply(to: self.name)
+        self.matchExtensions = matchExtensions.apply(to: self.matchExtensions)
+        self.commandTemplate = commandTemplate.apply(to: self.commandTemplate)
+        self.isActive = isActive.apply(to: self.isActive)
+    }
+}

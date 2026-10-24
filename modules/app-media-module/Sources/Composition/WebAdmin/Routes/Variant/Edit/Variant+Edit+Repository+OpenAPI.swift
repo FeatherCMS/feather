@@ -7,7 +7,7 @@ import MediaModule
 import OpenAPIRuntime
 
 extension Variant.Edit.Repository {
-    struct OpenAPI: Variant.Edit.Repository.Interface {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func load(id: String) async throws

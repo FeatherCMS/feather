@@ -3,7 +3,6 @@ public import FeatherWebShared
 import HTML
 public import Hummingbird
 public import NewsletterModule
-public import NewsletterWebShared
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -14,11 +13,11 @@ extension Campaign.Subscription {
     public struct Router {
         private let controller: any Controller.Interface
 
-        public static let defaultRoute = NewsletterSubscriptionRoute.standard
+        public static let defaultRoute = Route.standard
 
         public init(
             environment: AppEnvironment,
-            route: NewsletterSubscriptionRoute = Router.defaultRoute,
+            route: Route = Router.defaultRoute,
             turnstileVerifier: (any TurnstileVerifier)? = nil
         ) {
             self.controller = Controller.Default(

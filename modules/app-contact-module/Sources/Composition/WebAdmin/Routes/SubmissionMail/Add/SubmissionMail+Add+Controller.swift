@@ -1,0 +1,34 @@
+import ContactApplication
+import ContactModule
+import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+extension SubmissionMail.Add {
+    enum Controller {}
+}
+
+extension SubmissionMail.Add.Controller {
+    protocol Interface: Sendable {
+        func add(request: Request, context: AuthenticatedRequestContext)
+            async throws -> HTMLResponse
+        func create(request: Request, context: AuthenticatedRequestContext)
+            async throws -> Response
+    }
+}
+
+extension SubmissionMail.Add.Controller.Interface {
+    func route(
+        on router: any RouterMethods<AuthenticatedRequestContext>,
+        routes: SubmissionMail.Router.Routes
+    ) {
+        router.get(routes.formEmailAdd.routerPath, use: add)
+        router.post(routes.formEmailAdd.routerPath, use: create)
+    }
+}

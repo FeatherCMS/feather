@@ -16,7 +16,7 @@ extension Public.Page.Detail {
             return try await query.run { scope in
                 let page = try await scope.page.find(id: input.id)
                 guard page.metadata.isDirectlyAccessible(at: now) else {
-                    throw Error(message: "Page not found")
+                    throw Public.Page.Detail.Error(message: "Page not found")
                 }
                 return .init(
                     id: page.id,

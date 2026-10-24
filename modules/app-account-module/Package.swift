@@ -43,6 +43,7 @@ let package = Package(
         .library(name: "AccountAdminAPI", targets: ["AccountAdminAPI"]),
         .library(name: "AccountAppAPI", targets: ["AccountAppAPI"]),
         .library(name: "AccountBackend", targets: ["AccountBackend"]),
+        .library(name: "AccountWebShared", targets: ["AccountWebShared"]),
         .library(name: "AccountWebAdmin", targets: ["AccountWebAdmin"]),
         .library(name: "AccountWebApp", targets: ["AccountWebApp"]),
         .executable(name: "AccountAdminOpenAPIGenerator", targets: ["AccountAdminOpenAPIGenerator"]),
@@ -254,13 +255,24 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
+            name: "AccountWebShared",
+            dependencies: [
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
             name: "AccountWebAdmin",
             dependencies: [
+                .target(name: "AccountWebShared"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
                 .product(name: "CSS", package: "swift-web-standards"),
                 .product(name: "HTML", package: "swift-web-standards"),
@@ -285,11 +297,10 @@ let package = Package(
         .target(
             name: "AccountWebApp",
             dependencies: [
+                .target(name: "AccountWebShared"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
                 .product(name: "CSS", package: "swift-web-standards"),
                 .product(name: "HTML", package: "swift-web-standards"),

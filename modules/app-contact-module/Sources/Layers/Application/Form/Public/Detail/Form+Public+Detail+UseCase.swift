@@ -1,38 +1,18 @@
-import ContactDomain
 public import ContactModule
 public import FeatherApplication
 public import FeatherModuleKit
 
 extension Form.Public.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        let transaction: any TransactionExecutor<Scope>
+        let query: any QueryExecutor<Scope>
 
-        public init(transaction: any TransactionExecutor<Scope>) {
-            self.transaction = transaction
+        public init(query: any QueryExecutor<Scope>) {
+            self.query = query
         }
 
         public func execute(input: Input) async throws -> Output {
-            try await transaction.run { scope in
-                guard let value = try await scope.form.findBy(key: input.key)
-                else {
-                    throw Error.formNotFound
-                }
-                let fields = try await scope.field.listBy(formId: value.id)
-                    .map(\.asFormField)
-                let mails = try await scope.mail.listBy(formId: value.id)
-                    .map(\.asFormMail)
-                return .init(
-                    id: value.id,
-                    key: value.key,
-                    name: value.name,
-                    successMessage: value.successMessage,
-                    failureMessage: value.failureMessage,
-                    redirectUrl: value.redirectUrl,
-                    fields: fields,
-                    mails: mails,
-                    createdAt: value.createdAt,
-                    updatedAt: value.updatedAt
-                )
+            try await query.run { scope in
+                try await scope.form.find(key: input.key)
             }
         }
     }

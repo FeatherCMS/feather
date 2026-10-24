@@ -35,7 +35,16 @@ extension Tag.Detail.Query {
             else {
                 throw RepositoryError.notFound
             }
-            return row.asDetail(metadata: metadata)
+            return .init(
+                id: row.id,
+                title: row.title,
+                excerpt: row.excerpt,
+                content: row.content,
+                imageAssetId: row.imageAssetId,
+                metadata: metadata,
+                createdAt: row.createdAt,
+                updatedAt: row.updatedAt
+            )
         }
     }
 }

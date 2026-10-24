@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-public import OpenAPIKit30
 
 extension Media.Asset.Schemas {
     public struct PixelSize: SchemaRepresentable {

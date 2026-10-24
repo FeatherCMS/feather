@@ -1,28 +1,26 @@
 public import ContactApplication
 import ContactInfrastructure
+public import ContactModule
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
-public import ContactModule
+import FeatherModuleKit
 
 extension UseCases {
 
     public func makeListContactForms() -> Form.List.UseCase {
-        let transaction = DatabaseTransactionExecutor(
+        let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
                 Form.List.Scope(
-                    form: Form.Repository.Database(context: context),
-                    field: FormField.Repository.Database(context: context),
-                    mail: SubmissionMail.Repository.Database(context: context)
+                    form: Form.List.Query.Database(context: context)
                 )
             }
         )
         return Form.List.UseCase(
             authorizer: authorizer,
-            transaction: transaction
+            query: query
         )
     }
 }

@@ -12,17 +12,17 @@ public import FeatherModuleKit
 extension Log.Track {
     public struct UseCase: FeatherApplication.UseCase {
 
-        let transaction: any TransactionExecutor<Log.Track.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
-            transaction: any TransactionExecutor<Log.Track.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.transaction = transaction
         }
 
         public func execute(
-            input: Log.Track.Input
-        ) async throws -> Log.Track.Output {
+            input: Input
+        ) async throws -> Output {
             let model = try await transaction.run { scope in
                 try await scope.log.insert(
                     Log.Model.create(

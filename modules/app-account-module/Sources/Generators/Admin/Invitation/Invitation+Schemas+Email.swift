@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 extension Invitation.Schemas {
     struct Email: StringSchemaRepresentable {

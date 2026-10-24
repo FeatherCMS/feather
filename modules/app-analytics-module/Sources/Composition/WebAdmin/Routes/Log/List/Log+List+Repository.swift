@@ -1,4 +1,5 @@
 import AnalyticsModule
+import AnalyticsApplication
 
 extension Log.List {
     enum Repository {}
@@ -6,7 +7,7 @@ extension Log.List {
 
 extension Log.List.Repository {
     protocol Interface: Sendable {
-        func listLogs(
+        func search(
             page: Int,
             search: String?,
             source: String?,

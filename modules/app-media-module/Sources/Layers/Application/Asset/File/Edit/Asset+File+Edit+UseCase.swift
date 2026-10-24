@@ -5,7 +5,7 @@ import MediaDomain
 public import MediaModule
 
 //
-//  Asset.File.Edit.UseCase.swift
+//  Asset+File+Edit+UseCase.swift
 //  app-media-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -14,12 +14,12 @@ extension Asset.File.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Asset.File.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
         let objectKeyGenerator: any ObjectKeyGenerator
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Asset.File.Edit.Scope>,
+            transaction: any TransactionExecutor<Scope>,
             objectKeyGenerator: any ObjectKeyGenerator
         ) {
             self.authorizer = authorizer
@@ -40,11 +40,13 @@ extension Asset.File.Edit {
             return try await transaction.run { scope in
                 guard var asset = try await scope.assets.find(id: input.id)
                 else {
-                    throw Asset.File.Edit.Error(message: "Asset not found")
+                    throw Error(message: "Asset not found")
                 }
 
-                asset.title = input.title.apply(to: asset.title)
-                asset.altText = input.altText.apply(to: asset.altText)
+                asset.update(
+                    title: input.title,
+                    altText: input.altText
+                )
 
                 let updated = try await scope.assets.update(asset)
                 return .init(

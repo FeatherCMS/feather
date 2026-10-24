@@ -4,6 +4,6 @@ import WebModule
 
 extension MenuItem.Add {
     struct Action: PermissionAction {
-        let key = WebModule.Permissions.MenuItems.create
+        let key = MenuItem.Permissions.create
     }
 }

@@ -13,12 +13,13 @@ extension UseCases {
             scope: { context in
                 AuthModule.Authorization.Token.Scope(
                     identity: Identity.Repository.Database(context: context),
-                    roles: AuthModule.Authorization.Database(
+                    roles: AuthModule.Authorization.Roles.Query.Database(
                         context: context
                     ),
-                    permissions: AuthModule.Authorization.Database(
-                        context: context
-                    ),
+                    permissions: AuthModule.Authorization.Permissions.Query
+                        .Database(
+                            context: context
+                        ),
                     session: Session.Repository.Database(context: context)
                 )
             }

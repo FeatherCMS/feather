@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 extension Contact.Field.Get {
     struct Operation: Contact.Field.IDOperation {

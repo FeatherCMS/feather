@@ -6,7 +6,7 @@ import SystemModule
 struct PermissionEditErrorAdapter: ErrorTraceRepresentable,
     HTTPErrorRepresentable
 {
-    let error: SystemModule.Permission.Edit.UseCase.Error
+    let error: SystemModule.Permission.Edit.Error
 
     var underlyingErrors: [any Error] { [] }
 

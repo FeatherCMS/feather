@@ -29,13 +29,13 @@ extension WebModule.Menu.List {
                         "View",
                         href: routes.detailsPath(menu.id),
                         style: .ghost(.primary),
-                        permission: WebModule.Permissions.Menus.read
+                        permission: Menu.Permissions.read
                     ),
                     .init(
                         "Edit",
                         href: routes.editPath(menu.id),
                         style: .ghost(.secondary),
-                        permission: WebModule.Permissions.Menus.update
+                        permission: Menu.Permissions.update
                     ),
                 ]
             }
@@ -56,7 +56,7 @@ extension WebModule.Menu.List {
 
         func html(context: inout BuilderContext) -> Tr {
             Tr {
-                if permissions.allows(WebModule.Permissions.Menus.delete) {
+                if permissions.allows(Menu.Permissions.delete) {
                     context.build(AdminListRowCheckbox(id: state.id))
                 }
                 Td(state.key).data("label", "Key")

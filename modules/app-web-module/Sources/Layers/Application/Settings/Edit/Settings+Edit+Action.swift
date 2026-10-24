@@ -3,6 +3,6 @@ import WebModule
 
 extension Settings.Edit {
     struct Action: PermissionAction {
-        let key = WebModule.Permissions.Settings.update
+        let key = Settings.Permissions.update
     }
 }

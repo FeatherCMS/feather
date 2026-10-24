@@ -54,6 +54,7 @@ let package = Package(
             targets: ["NewsAppOpenAPIGenerator"]
         ),
         .library(name: "NewsBackend", targets: ["NewsBackend"]),
+        .library(name: "NewsWebShared", targets: ["NewsWebShared"]),
         .library(name: "NewsWebAdmin", targets: ["NewsWebAdmin"]),
         .library(name: "NewsWebApp", targets: ["NewsWebApp"]),
     ],
@@ -245,7 +246,6 @@ let package = Package(
                     name: "FeatherOpenAPIGenerator",
                     package: "feather-core"
                 ),
-                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
                 .target(name: "NewsOpenAPIGeneratorSupport"),
@@ -260,7 +260,6 @@ let package = Package(
                     name: "FeatherOpenAPIGenerator",
                     package: "feather-core"
                 ),
-                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
             ],
             path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
@@ -292,8 +291,20 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
+            name: "NewsWebShared",
+            dependencies: [
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
             name: "NewsWebAdmin",
             dependencies: [
+                .target(name: "NewsWebShared"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
@@ -305,12 +316,6 @@ let package = Package(
                 .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "NIOCore", package: "swift-nio"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
                 .product(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"
@@ -330,20 +335,11 @@ let package = Package(
         .target(
             name: "NewsWebApp",
             dependencies: [
+                .target(name: "NewsWebShared"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "AsyncHTTPClient", package: "async-http-client"),
-                .product(name: "NIOCore", package: "swift-nio"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                ),
                 .product(name: "WebModule", package: "app-web-module"),
                 .target(name: "NewsAppAPI"),
             ],

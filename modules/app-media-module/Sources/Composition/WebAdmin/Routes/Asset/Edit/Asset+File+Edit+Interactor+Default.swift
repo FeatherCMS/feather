@@ -11,7 +11,7 @@ import WebComponents
 
 extension Asset.File.Edit.Interactor {
     struct Default: Interface {
-        let repository: Asset.File.Edit.Repository.OpenAPI
+        let repository: any Asset.File.Edit.Repository.Interface
 
         func load(
             id: String

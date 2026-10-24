@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 extension NewsletterSubscriber.Post {
     struct Operation: NewsletterSubscriber.Operation {

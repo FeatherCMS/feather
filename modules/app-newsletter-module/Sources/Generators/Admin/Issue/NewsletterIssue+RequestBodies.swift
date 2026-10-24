@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 struct NewsletterIssueCreateRequestBody: JSONRequestBodyRepresentable {
     var schema = NewsletterIssueCreateSchema().reference()

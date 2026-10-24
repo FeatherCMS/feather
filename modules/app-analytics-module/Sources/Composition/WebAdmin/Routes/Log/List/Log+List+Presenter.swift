@@ -1,4 +1,5 @@
 import AnalyticsModule
+import AnalyticsApplication
 import FeatherWebAdmin
 
 extension Log.List {

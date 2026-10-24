@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 extension Metadata.Input {
     struct Schema: ObjectSchemaRepresentable {

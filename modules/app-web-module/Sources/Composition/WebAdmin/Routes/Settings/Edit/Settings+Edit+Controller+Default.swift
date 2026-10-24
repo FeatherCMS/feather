@@ -23,7 +23,7 @@ extension Settings.Edit.Controller {
             let presenter = runtime.presenter
             let permissions = context.currentUserPermissions
             let canRead = context.isCurrentUserAllowed(
-                to: WebModule.Permissions.Settings.read
+                to: Settings.Permissions.read
             )
 
             guard canRead else {
@@ -182,7 +182,7 @@ extension Settings.Edit.Controller {
         private func canEdit(
             permissions: Set<String>
         ) -> Bool {
-            permissions.contains(WebModule.Permissions.Settings.update.rawValue)
+            permissions.contains(Settings.Permissions.update.rawValue)
         }
 
         private func makeFormState(

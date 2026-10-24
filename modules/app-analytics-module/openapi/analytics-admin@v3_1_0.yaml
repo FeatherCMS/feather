@@ -10,7 +10,7 @@ servers:
 security:
 - bearerAuth: []
 paths:
-  /api/v1/admin/analytics/logs/:
+  /api/v1/admin/analytics/logs:
     get:
       tags:
       - AnalyticsLogs
@@ -466,9 +466,9 @@ components:
         filters:
           type: object
           examples:
-          - source: web_app
+          - search: /articles/hello-world/
             method: GET
-            search: /articles/hello-world/
+            source: web_app
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'
@@ -597,9 +597,9 @@ components:
         filters:
           type: object
           examples:
-          - source: web_app
+          - search: /articles/hello-world/
             method: GET
-            search: /articles/hello-world/
+            source: web_app
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'

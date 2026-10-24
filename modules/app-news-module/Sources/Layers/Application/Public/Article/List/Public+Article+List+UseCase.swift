@@ -22,8 +22,7 @@ extension Public.Article.List {
                     query: .init(
                         page: .init(size: pageSize, number: 1),
                         sort: []
-                    ),
-                    categoryID: nil
+                    )
                 )
                 let metadataByID = Dictionary(
                     uniqueKeysWithValues: try await scope.metadataDetails
@@ -40,22 +39,26 @@ extension Public.Article.List {
                 let categoryIDsByArticleID = try await scope.articleCategoryIDs
                     .categoryIDs(for: publicArticles.map(\.id))
 
-                let items: [Public.Article.Summary.Item] = publicArticles
+                let items: [Public.Article.Summary.Item] =
+                    publicArticles
                     .compactMap { article -> Public.Article.Summary.Item? in
-                    guard let metadata = metadataByID[article.id] else {
-                        return nil
-                    }
-                    return Public.Article.Summary.Item(
-                        id: article.id,
-                        title: article.title,
-                        excerpt: article.excerpt,
-                        imageAssetId: article.imageAssetId,
-                        imageURL: "",
-                        media: nil,
-                        metadata: metadata,
-                        readingTime: NewsReadingTime.minutes(for: article.content),
-                        categoryIDs: categoryIDsByArticleID[article.id] ?? []
-                    )
+                        guard let metadata = metadataByID[article.id] else {
+                            return nil
+                        }
+                        return Public.Article.Summary.Item(
+                            id: article.id,
+                            title: article.title,
+                            excerpt: article.excerpt,
+                            imageAssetId: article.imageAssetId,
+                            imageURL: "",
+                            media: nil,
+                            metadata: metadata,
+                            readingTime: Public.Article.ReadingTime.minutes(
+                                for: article.content
+                            ),
+                            categoryIDs: categoryIDsByArticleID[article.id]
+                                ?? []
+                        )
                     }
                 return .init(items: items)
             }

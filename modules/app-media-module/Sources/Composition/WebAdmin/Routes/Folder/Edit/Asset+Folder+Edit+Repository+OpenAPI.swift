@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.Folder.Edit.Repository {
-    struct OpenAPI {
+    struct OpenAPI: Interface {
         let api: API.Client
         private let loadUnauthorizedMessage =
             "Please sign in again to load this media folder."

@@ -2,7 +2,7 @@ services:
     tests:
         build:
             context: ../../..
-            dockerfile: modules/app-media-module/docker/tests/Dockerfile
+            dockerfile: feather/modules/app-media-module/docker/tests/Dockerfile
         command:
             - swift
             - test

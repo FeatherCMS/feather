@@ -70,7 +70,7 @@ extension Form.Add {
                     )
                 }
                 let fields = try await scope.field.listBy(formId: saved.id)
-                    .map(\.asFormField)
+                    .map { Form.Field(model: $0) }
                 for mail in input.mails {
                     _ = try await scope.mail.insert(
                         .init(
@@ -87,7 +87,7 @@ extension Form.Add {
                     input.mails.isEmpty
                     ? []
                     : try await scope.mail.listBy(formId: saved.id)
-                        .map(\.asFormMail)
+                        .map { Form.Mail(model: $0) }
                 return .init(
                     id: saved.id,
                     key: saved.key,

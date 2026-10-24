@@ -14,7 +14,7 @@ import WebComponents
 
 extension Asset.File.List.Interactor {
     struct Default: Interface {
-        let repository: Asset.File.List.Repository.OpenAPI
+        let repository: any Asset.File.List.Repository.Interface
 
         func listMediaAssets(
             page: Int,
@@ -34,7 +34,7 @@ extension Asset.File.List.Interactor {
             else {
                 effectiveParentId = parentId
             }
-            let result = try await repository.listAssets(
+            let result = try await repository.search(
                 page: page,
                 search: search,
                 parentId: effectiveParentId,

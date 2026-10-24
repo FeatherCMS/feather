@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import RedirectModule
 
-extension Rule.Resolve.UseCase {
+extension Rule.Resolve {
     public enum Error: UseCaseError {
         case notFound
     }

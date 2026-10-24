@@ -1,11 +1,10 @@
 import FeatherDBAL
 public import FeatherInfrastructure
 public import WebApplication
-import WebDomain
 public import WebModule
 
 extension MenuItem.List.Query {
-    public struct Database: Interface, Menu.Public.List.Query.Interface {
+    public struct Database: Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {
@@ -43,23 +42,6 @@ extension MenuItem.List.Query {
                     )
                 }
             )
-        }
-
-        public func listMenuItems(
-            menuId: String
-        ) async throws -> [Menu.Public.List.Query.Item] {
-            let output = try await list(menuId: menuId)
-            return output.items.map {
-                .init(
-                    id: $0.id,
-                    label: $0.label,
-                    url: $0.url,
-                    priority: $0.priority,
-                    isBlank: $0.isBlank,
-                    permission: $0.permission,
-                    authentication: $0.authentication
-                )
-            }
         }
     }
 }

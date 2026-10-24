@@ -6,7 +6,7 @@ import WebApplication
 import WebDomain
 
 //
-//  EditTag.swift
+//  Tag+Edit+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -15,11 +15,11 @@ extension Tag.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Tag.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Tag.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -38,7 +38,7 @@ extension Tag.Edit {
 
             return try await transaction.run { scope in
                 guard var model = try await scope.tag.find(id: input.id) else {
-                    throw Error(message: "Tag not found")
+                    throw Tag.Edit.Error(message: "Tag not found")
                 }
                 guard
                     var metadata = try await scope.metadata.find(
@@ -46,7 +46,7 @@ extension Tag.Edit {
                         referenceId: input.id
                     )
                 else {
-                    throw Error(message: "Tag metadata not found")
+                    throw Tag.Edit.Error(message: "Tag metadata not found")
                 }
 
                 try model.update(

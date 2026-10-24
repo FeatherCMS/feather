@@ -1,22 +1,14 @@
 public import BlogApplication
 public import BlogModule
-import FeatherDBAL
 import FeatherApplication
+import FeatherDBAL
 public import FeatherInfrastructure
-public import WebApplication
-public import WebModule
 
 extension Tag.Search.Query {
     public struct Database: Interface {
         let context: DatabaseQueryContext
-        let metadata: any WebModule.Metadata.Reference.Query.Interface
-
-        public init(
-            context: DatabaseQueryContext,
-            metadata: any WebModule.Metadata.Reference.Query.Interface
-        ) {
+        public init(context: DatabaseQueryContext) {
             self.context = context
-            self.metadata = metadata
         }
 
         public func search(
@@ -24,7 +16,8 @@ extension Tag.Search.Query {
         ) async throws -> Tag.Search.Output {
             let page = query.page.normalized()
             let pageIndex = page.number - 1
-            let offset = pageIndex > Int.max / page.size
+            let offset =
+                pageIndex > Int.max / page.size
                 ? Int.max
                 : pageIndex * page.size
             let accessLayer = DatabaseAccessLayer<Tag.Table>(context: context)
@@ -51,12 +44,19 @@ extension Tag.Search.Query {
                     case .title:
                         DatabaseQueryOrder<Tag.Table>(by: \.title, direction)
                     case .createdAt:
-                        DatabaseQueryOrder<Tag.Table>(by: \.createdAt, direction)
+                        DatabaseQueryOrder<Tag.Table>(
+                            by: \.createdAt,
+                            direction
+                        )
                     case .updatedAt:
-                        DatabaseQueryOrder<Tag.Table>(by: \.updatedAt, direction)
+                        DatabaseQueryOrder<Tag.Table>(
+                            by: \.updatedAt,
+                            direction
+                        )
                     }
                 }
-                return result
+                return
+                    result
                     .order(by: orders + [.init(by: \.id, .ascending)])
                     .limit(page.size)
                     .offset(offset)

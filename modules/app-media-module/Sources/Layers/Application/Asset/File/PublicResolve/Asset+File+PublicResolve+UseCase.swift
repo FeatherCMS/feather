@@ -4,9 +4,9 @@ public import MediaModule
 
 extension Asset.File.PublicResolve {
     public struct UseCase: FeatherApplication.UseCase {
-        let query: any QueryExecutor<Asset.File.PublicResolve.Scope>
+        let query: any QueryExecutor<Scope>
 
-        public init(query: any QueryExecutor<Asset.File.PublicResolve.Scope>) {
+        public init(query: any QueryExecutor<Scope>) {
             self.query = query
         }
 

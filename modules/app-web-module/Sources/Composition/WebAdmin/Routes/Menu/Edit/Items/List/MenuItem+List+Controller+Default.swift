@@ -25,7 +25,7 @@ extension MenuItem.List.Controller {
             let search = request.querySearch()
             let permissions = context.currentUserPermissions
             let canAccess = context.isCurrentUserAllowed(
-                to: WebModule.Permissions.MenuItems.list
+                to: MenuItem.Permissions.list
             )
             let emptyModel = MenuItem.List.Model(
                 items: [],
@@ -37,7 +37,7 @@ extension MenuItem.List.Controller {
             let error: String?
             if canAccess {
                 do {
-                    model = try await interactor.listMenuItems(
+                    model = try await interactor.list(
                         menuId: menuId,
                         page: page,
                         search: search

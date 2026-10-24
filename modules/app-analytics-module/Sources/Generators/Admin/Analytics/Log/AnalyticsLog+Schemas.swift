@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct AnalyticsLogIdField: StringSchemaRepresentable {
     var example: String? = "analytics-log-01"

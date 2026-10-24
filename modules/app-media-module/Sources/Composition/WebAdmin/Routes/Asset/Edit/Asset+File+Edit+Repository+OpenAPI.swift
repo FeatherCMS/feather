@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.Edit.Repository {
-    struct OpenAPI {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func getAsset(

@@ -1,7 +1,6 @@
 public import FeatherApplication
 import FeatherDomain
 public import FeatherModuleKit
-import Foundation
 import MediaDomain
 public import MediaModule
 
@@ -9,11 +8,11 @@ extension Asset.Folder.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Asset.Folder.Edit.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Asset.Folder.Edit.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -30,12 +29,7 @@ extension Asset.Folder.Edit {
             return try await transaction.run { scope in
                 guard var folder = try await scope.folders.find(id: input.id)
                 else {
-                    throw Asset.Folder.Edit.Error.notFound
-                }
-                let name = input.name.apply(to: folder.name).whitespaceTrimmed
-                let slug = normalizedSlug(name)
-                guard !name.isEmpty, !slug.isEmpty else {
-                    throw Asset.Folder.Edit.Error.invalidName
+                    throw Error.notFound
                 }
                 let parentPath: String?
                 if let parentId = folder.parentId {
@@ -45,15 +39,21 @@ extension Asset.Folder.Edit {
                 else {
                     parentPath = nil
                 }
-                let slugPath = parentPath.map { "\($0)/\(slug)" } ?? slug
-                if slugPath != folder.slugPath,
-                    try await scope.folders.find(slugPath: slugPath) != nil
-                {
-                    throw Asset.Folder.Edit.Error.duplicatePath
+                let previousSlugPath = folder.slugPath
+                do {
+                    try folder.update(
+                        name: input.name,
+                        parentPath: parentPath
+                    )
                 }
-                folder.name = name
-                folder.slug = slug
-                folder.slugPath = slugPath
+                catch {
+                    throw Error.invalidName
+                }
+                if folder.slugPath != previousSlugPath,
+                    try await scope.folders.find(slugPath: folder.slugPath) != nil
+                {
+                    throw Error.duplicatePath
+                }
                 let updated = try await scope.folders.update(folder)
                 return .init(
                     id: updated.id,
@@ -69,14 +69,4 @@ extension Asset.Folder.Edit {
             }
         }
     }
-}
-
-private func normalizedSlug(_ value: String) -> String {
-    value.lowercased()
-        .replacingOccurrences(
-            of: "[^a-z0-9]+",
-            with: "-",
-            options: .regularExpression
-        )
-        .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
 }

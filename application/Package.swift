@@ -341,6 +341,10 @@ let package = Package(
                     package: "app-newsletter-module"
                 ),
                 .product(
+                    name: "NewsletterModule",
+                    package: "app-newsletter-module"
+                ),
+                .product(
                     name: "AccountInfrastructure",
                     package: "app-account-module"
                 ),
@@ -544,6 +548,10 @@ let package = Package(
                 ),
                 .product(
                     name: "NewsletterBackend",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "NewsletterModule",
                     package: "app-newsletter-module"
                 ),
                 .product(

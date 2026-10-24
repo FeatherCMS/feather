@@ -25,7 +25,7 @@ extension Email.List.Repository {
         private let deleteUnauthorizedMessage =
             "Please sign in again to delete this user email."
 
-        func list(
+        func search(
             page: Int,
             size: Int,
             search: String?,

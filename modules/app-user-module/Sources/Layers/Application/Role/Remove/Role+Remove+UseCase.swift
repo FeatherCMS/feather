@@ -4,7 +4,7 @@ import UserDomain
 public import UserModule
 
 //
-//  Role.Remove.UseCase.swift
+//  Role+Remove+UseCase.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.

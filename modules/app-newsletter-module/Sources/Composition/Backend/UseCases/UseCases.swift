@@ -1,16 +1,17 @@
 public import FeatherInfrastructure
 public import FeatherModuleKit
 public import NewsletterApplication
+import NewsletterModule
 
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext
     let authorizer: any Authorizer
-    let jobs: any NewsletterIssueJobController
+    let jobs: any Issue.JobController.Interface
 
     public init(
         databaseContext: DatabaseClientContext,
         authorizer: any Authorizer,
-        jobs: any NewsletterIssueJobController
+        jobs: any Issue.JobController.Interface
     ) {
         self.databaseContext = databaseContext
         self.authorizer = authorizer

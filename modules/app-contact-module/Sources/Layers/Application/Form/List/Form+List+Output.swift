@@ -1,4 +1,4 @@
-import ContactDomain
+package import ContactDomain
 public import ContactModule
 public import FeatherApplication
 
@@ -18,7 +18,7 @@ extension Form.List {
             public let createdAt: Date
             public let updatedAt: Date
 
-            init(
+            package init(
                 model: Form.Model,
                 fields: [Form.Field],
                 mails: [Form.Mail]

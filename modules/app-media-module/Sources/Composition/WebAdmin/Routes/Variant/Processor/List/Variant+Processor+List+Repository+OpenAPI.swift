@@ -10,7 +10,7 @@ extension Variant.Processor.List.Repository {
     {
         let api: API.Client
 
-        func list(
+        func search(
             variantId: String,
             page: Int,
             search: String?

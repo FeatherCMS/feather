@@ -13,5 +13,9 @@ extension SystemModule.Variable.Lookup {
         func get(_ key: String) async throws -> String? {
             values[key]
         }
+
+        func get(keys: [String]) async throws -> [String: String] {
+            values.filter { keys.contains($0.key) }
+        }
     }
 }

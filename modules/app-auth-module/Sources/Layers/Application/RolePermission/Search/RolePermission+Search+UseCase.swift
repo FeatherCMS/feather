@@ -19,7 +19,7 @@ extension RolePermission.Search {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> RolePermission.Search.Output {
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

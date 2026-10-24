@@ -6,14 +6,14 @@ public import FeatherModuleKit
 extension FormField.List {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
-            self.transaction = transaction
+            self.query = query
         }
 
         public func execute(
@@ -25,27 +25,8 @@ extension FormField.List {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            return try await transaction.run { scope in
-                if input.isUnassigned {
-                    return .init(
-                        items: try await scope.field.listUnassigned()
-                            .map { Output.Item(model: $0) }
-                    )
-                }
-                if let formKey = input.formKey {
-                    guard let form = try await scope.form.findBy(key: formKey)
-                    else {
-                        return .init(items: [])
-                    }
-                    return .init(
-                        items: try await scope.field.listBy(formId: form.id)
-                            .map { Output.Item(model: $0) }
-                    )
-                }
-                return .init(
-                    items: try await scope.field.listBy(formId: input.formId)
-                        .map { Output.Item(model: $0) }
-                )
+            return try await query.run { scope in
+                try await scope.formField.list(input: input)
             }
         }
     }

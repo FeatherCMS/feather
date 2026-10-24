@@ -27,16 +27,15 @@ extension Email.Edit {
                 )
             }
             let model = try await transaction.run { scope in
-                guard let model = try await scope.authEmail.findBy(id: input.id)
+                guard var model = try await scope.authEmail.findBy(id: input.id)
                 else {
-                    throw Error.authEmailNotFound
+                    throw Email.Edit.Error.authEmailNotFound
                 }
-                var updated = model
-                updated.identityId = input.identityId.apply(
-                    to: updated.identityId
+                model.update(
+                    identityId: input.identityId,
+                    email: input.email
                 )
-                updated.email = input.email.apply(to: updated.email)
-                return try await scope.authEmail.update(updated)
+                return try await scope.authEmail.update(model)
             }
             return .init(
                 id: model.id,

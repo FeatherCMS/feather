@@ -1,5 +1,6 @@
 import AnalyticsAdminAPI
 import AnalyticsModule
+import AnalyticsApplication
 import FeatherWebAdmin
 import FeatherWebShared
 import OpenAPIRuntime
@@ -16,7 +17,7 @@ extension Log.List.Repository {
             self.api = api
         }
 
-        func listLogs(
+        func search(
             page: Int,
             search: String?,
             source: String?,

@@ -1,5 +1,5 @@
 //
-//  UserApplicationTestSuite.swift
+//  UserApplication+UseCases+Tests.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -16,7 +16,7 @@ import struct Foundation.Date
 @testable import UserApplication
 
 @Suite
-struct UserApplicationTestSuite {
+struct UserApplicationUseCasesTests {
 
     @Test
     func addIdentitySuccess() async throws {
@@ -310,7 +310,7 @@ struct UserApplicationTestSuite {
                 )
             )
         )
-        await #expect(throws: Identity.Edit.UseCase.Error.self) {
+        await #expect(throws: Identity.Edit.Error.self) {
             _ = try await missing.execute(
                 subject: Subject(id: "subject-identity-edit"),
                 input: .init(id: "missing")
@@ -361,7 +361,7 @@ struct UserApplicationTestSuite {
                 context: Role.Edit.Scope(role: missingRepository)
             )
         )
-        await #expect(throws: Role.Edit.UseCase.Error.self) {
+        await #expect(throws: Role.Edit.Error.self) {
             _ = try await missing.execute(
                 subject: Subject(id: "subject-role-edit"),
                 input: .init(id: "missing")

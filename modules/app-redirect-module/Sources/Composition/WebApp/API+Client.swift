@@ -1,42 +1,29 @@
-import AsyncHTTPClient
-import FeatherWebApp
 import FeatherWebShared
-import Foundation
-import NIOCore
-import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
 import RedirectAppAPI
+import RedirectWebShared
 
 extension API {
     struct Client: Sendable {
         let client: RedirectAppAPI.Client
 
-        init(apiBaseURL: URL) {
+        init(environment: AppEnvironment) {
+            let configuration = RedirectAPIClientSupport.configuration(
+                sessionToken: nil
+            )
             self.client = .init(
-                serverURL: apiBaseURL,
-                transport: AsyncHTTPClientTransport(
-                    configuration: .init(
-                        client: .shared,
-                        timeout: .seconds(3)
-                    )
-                )
+                serverURL: environment.apiBaseURL,
+                transport: configuration.transport,
+                middlewares: configuration.middlewares
             )
         }
 
         func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (RedirectAppAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            do {
-                return try await operation(client)
-            }
-            catch let error as OpenAPIRepositoryError {
-                throw error
-            }
-            catch {
-                throw OpenAPIRepositoryError.transport(
-                    description: String(describing: error)
-                )
-            }
+            try await RedirectAPIClientSupport.withOpenAPIRepositoryErrorMapping(
+                operation,
+                using: client
+            )
         }
     }
 }

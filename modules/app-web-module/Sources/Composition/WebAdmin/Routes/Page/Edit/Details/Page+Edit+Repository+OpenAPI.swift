@@ -2,6 +2,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import MediaWebAdmin
+import MediaModule
 import OpenAPIRuntime
 import WebAdminAPI
 import WebModule
@@ -27,7 +28,9 @@ extension Page.Edit.Repository {
                         title: page.title,
                         excerpt: page.excerpt,
                         content: page.content,
-                        imageAsset: try await mediaAPI.loadImageAsset(
+                        imageAsset: try await Asset.File.View.Repository.OpenAPI(
+                            api: mediaAPI
+                        ).loadImageAsset(
                             assetId: page.imageAssetId,
                             variants: ["cover", "preview"]
                         ),

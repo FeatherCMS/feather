@@ -7,7 +7,7 @@ public import FeatherInfrastructure
 import struct Foundation.Date
 
 //
-//  MagicLink.Repository.Database.swift
+//  MagicLink+Repository+Database.swift
 //  app-auth-module
 //
 //  Created by Binary Birds on 2026. 06. 18.

@@ -25,7 +25,7 @@ extension MenuItem.Detail {
                 try await scope.menuItem.find(id: input.id)
             }
             guard detail.menuId == input.menuId else {
-                throw Error(message: "Menu item not found")
+                throw MenuItem.Detail.Error(message: "Menu item not found")
             }
             return detail
         }

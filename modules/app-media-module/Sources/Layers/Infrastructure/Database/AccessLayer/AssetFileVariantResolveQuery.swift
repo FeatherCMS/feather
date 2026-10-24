@@ -4,10 +4,18 @@ import MediaModule
 struct AssetFileVariantResolveQuery {
     let connection: any DatabaseConnection
 
+    struct Row {
+        let assetNodeFileId: String
+        let id: String
+        let key: String
+        let name: String
+        let `extension`: String
+    }
+
     func resolve(
         nodeIds: [String],
         variantKeys: [String]?
-    ) async throws -> [Asset.File.Variant.Table.ResolveRow] {
+    ) async throws -> [Row] {
         guard !nodeIds.isEmpty else { return [] }
         if let variantKeys, variantKeys.isEmpty { return [] }
         let query: DatabaseQuery

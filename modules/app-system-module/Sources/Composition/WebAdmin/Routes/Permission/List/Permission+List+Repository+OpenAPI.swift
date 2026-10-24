@@ -17,7 +17,7 @@ extension Permission.List.Repository {
             self.api = api
         }
 
-        func listSystemPermissions(
+        func search(
             page: Int,
             search: String?
         ) async throws -> Permission.List.Model {

@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 struct NewsletterSubscriberStatusField: StringSchemaRepresentable {
     var enumValues: [String]? = ["subscribed", "unsubscribed"]

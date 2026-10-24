@@ -51,6 +51,7 @@ let package = Package(
             targets: ["RedirectAppOpenAPIGenerator"]
         ),
         .library(name: "RedirectWebAdmin", targets: ["RedirectWebAdmin"]),
+        .library(name: "RedirectWebShared", targets: ["RedirectWebShared"]),
         .library(name: "RedirectWebApp", targets: ["RedirectWebApp"]),
     ],
     dependencies: [
@@ -241,23 +242,25 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "RedirectWebApp",
+            name: "RedirectWebShared",
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "RedirectWebApp",
+            dependencies: [
+                .target(name: "RedirectWebShared"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "HTTPTypes", package: "swift-http-types"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "NIOCore", package: "swift-nio"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                ),
 
                 .target(name: "RedirectAppAPI"),
             ],
@@ -267,12 +270,9 @@ let package = Package(
         .target(
             name: "RedirectWebAdmin",
             dependencies: [
+                .target(name: "RedirectWebShared"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
-                .product(
-                    name: "OpenAPIAsyncHTTPClient",
-                    package: "swift-openapi-async-http-client"
-                ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
 

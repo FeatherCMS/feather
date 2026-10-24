@@ -138,7 +138,7 @@ extension FormField.Repository {
         public func assign(formId: String, fieldId: String, position: Int)
             async throws
         {
-            try await FormFormFieldTable(
+            try await FormFieldAssignment.Table(
                 connection: context.connection,
                 context: context
             )
@@ -150,7 +150,7 @@ extension FormField.Repository {
         }
 
         public func unassign(formId: String, fieldId: String) async throws {
-            try await FormFormFieldTable(
+            try await FormFieldAssignment.Table(
                 connection: context.connection,
                 context: context
             )

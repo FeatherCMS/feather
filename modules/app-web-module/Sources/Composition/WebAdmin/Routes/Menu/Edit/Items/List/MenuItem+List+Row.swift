@@ -20,7 +20,7 @@ extension MenuItem.List {
 
         func html(context: inout BuilderContext) -> Tr {
             Tr {
-                if permissions.allows(WebModule.Permissions.MenuItems.delete) {
+                if permissions.allows(MenuItem.Permissions.delete) {
                     context.build(AdminListRowCheckbox(id: item.id))
                 }
                 if canReorder {
@@ -72,7 +72,7 @@ extension MenuItem.List {
                                     itemID: item.id
                                 ),
                                 style: .ghost(.primary),
-                                permission: WebModule.Permissions.MenuItems.read
+                                permission: MenuItem.Permissions.read
                             ),
                             .init(
                                 "Edit",
@@ -81,7 +81,7 @@ extension MenuItem.List {
                                     itemID: item.id
                                 ),
                                 style: .ghost(.secondary),
-                                permission: WebModule.Permissions.MenuItems
+                                permission: MenuItem.Permissions
                                     .update
                             ),
                         ],

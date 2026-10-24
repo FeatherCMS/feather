@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 enum NewsAdminOpenAPIComponents {
     struct StringField: StringSchemaRepresentable {

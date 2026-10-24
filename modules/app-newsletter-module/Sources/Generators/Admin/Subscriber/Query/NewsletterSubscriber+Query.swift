@@ -1,3 +1,3 @@
-enum NewsletterSubscriber {
+extension NewsletterSubscriber {
     enum Query {}
 }

@@ -5,7 +5,7 @@ import UserDomain
 public import UserModule
 
 //
-//  Identity.Edit.UseCase.swift
+//  Identity+Edit+UseCase.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -37,7 +37,7 @@ extension Identity.Edit {
             return try await transaction.run { scope in
                 guard var model = try await scope.identity.findBy(id: input.id)
                 else {
-                    throw Error.identityNotFound
+                    throw Identity.Edit.Error.identityNotFound
                 }
 
                 model.update(name: input.name, status: input.status)
@@ -51,7 +51,7 @@ extension Identity.Edit {
                 for roleId in roleIds {
                     guard try await scope.role.findBy(id: roleId) != nil
                     else {
-                        throw Error.roleNotFound
+                        throw Identity.Edit.Error.roleNotFound
                     }
                 }
                 let persistedRoleIds: [String]

@@ -52,15 +52,13 @@ func buildRouter(
     router.addMiddleware {
         LogRequestsMiddleware(Logger.current.logLevel)
         Log.Middleware(
-            apiBaseURL: environment.apiBaseURL,
+            environment: environment,
             logFilter: WebAppAnalyticsLogFilter()
         )
         HTTPErrorMiddleware<DefaultRequestContext>()
         RedirectRuleMiddleware(
             siteBaseURL: environment.publicOrigins.siteBaseURL,
-            resolver: DefaultRedirectRuleResolver(
-                apiBaseURL: environment.apiBaseURL
-            )
+            resolver: DefaultRedirectRuleResolver(environment: environment)
         )
     }
 
@@ -72,9 +70,9 @@ func buildRouter(
     let redirectRoutes = RedirectWebAdmin.Router.Routes.standard
     let newsRoutes = NewsWebAdmin.Router.Routes.standard
     var adminEvents = EventRegistry()
-    WebModuleWebApp.EventHandlers.register(in: &adminEvents)
+    WebModuleWebApp.Event.Handlers.register(in: &adminEvents)
     BlogWebApp.Event.Handlers.register(in: &adminEvents)
-    NewsWebApp.NewsEventHandlers.register(in: &adminEvents)
+    NewsWebApp.Event.Handlers.register(in: &adminEvents)
     BlogWebAdmin.Event.Handlers.registerDashboard(
         in: &adminEvents,
         environment: environment
@@ -156,16 +154,16 @@ func buildRouter(
         }
     )
     var publicContentEvents = EventRegistry()
-    WebModuleWebApp.PublicContentEventHandlers.register(
+    WebModuleWebApp.PublicContent.Event.Handlers.register(
         in: &publicContentEvents
     )
-    WebModuleWebApp.MarkdownEventHandlers.register(in: &publicContentEvents)
+    WebModuleWebApp.Event.Handlers.registerMarkdown(in: &publicContentEvents)
     BlogWebApp.PublicContent.Event.Handlers.register(in: &publicContentEvents)
-    NewsWebApp.NewsWebPublicContentEventHandlers.register(
+    NewsWebApp.PublicContent.Event.Handlers.register(
         in: &publicContentEvents
     )
 
-    ContactMarkdownEventHandlers.register(
+    ContactWebApp.Event.Handlers.registerMarkdown(
         in: &publicContentEvents,
         api: ContactWebApp.API.Client(environment: environment)
     )

@@ -5,6 +5,6 @@ import WebModule
 
 extension Metadata.List {
     struct Action: PermissionAction {
-        let key = WebModule.Permissions.Metadata.access
+        let key = Metadata.Permissions.access
     }
 }

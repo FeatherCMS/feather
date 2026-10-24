@@ -23,7 +23,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Log.List.Scope(
-                    query: LogDatabaseQueries(
+                    query: Log.List.Query.Database(
                         context: context
                     )
                 )

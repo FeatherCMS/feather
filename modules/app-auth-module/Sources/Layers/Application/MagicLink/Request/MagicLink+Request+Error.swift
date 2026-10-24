@@ -1,7 +1,7 @@
 public import AuthModule
 public import FeatherApplication
 
-extension MagicLink.Request.UseCase {
+extension MagicLink.Request {
     public enum Error: FeatherApplication.UseCaseError {
         case mailFromNotConfigured
 

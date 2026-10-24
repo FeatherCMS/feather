@@ -7,10 +7,10 @@ extension Variant.Processor.Search {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Variant.Processor.Search.Scope>
+        let query: any QueryExecutor<Scope>
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Variant.Processor.Search.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -26,7 +26,10 @@ extension Variant.Processor.Search {
             }
             return try await query.run { scope in
                 guard
-                    let result = try await scope.query.search(query: input)
+                    let result = try await scope.query.search(
+                        variantId: input.variantId,
+                        query: input.query
+                    )
                 else { throw Error.variantNotFound }
                 return result
             }

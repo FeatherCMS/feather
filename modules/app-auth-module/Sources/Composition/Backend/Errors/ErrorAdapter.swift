@@ -21,7 +21,7 @@ public enum ErrorAdapter {
                 logMessage: error.message
             )
         }
-        if let error = error as? Credential.Add.UseCase.Error {
+        if let error = error as? Credential.Add.Error {
             let identityId: String
             switch error {
             case .authEmailNotFound(let id):
@@ -34,7 +34,7 @@ public enum ErrorAdapter {
                 logMessage: "Auth email not found for identity: \(identityId)"
             )
         }
-        if let error = error as? Credential.Edit.UseCase.Error {
+        if let error = error as? Credential.Edit.Error {
             let message: String
             let logMessage: String
             switch error {
@@ -55,7 +55,7 @@ public enum ErrorAdapter {
                 logMessage: logMessage
             )
         }
-        if let error = error as? Email.Edit.UseCase.Error {
+        if let error = error as? Email.Edit.Error {
             return AuthErrorAdapter(
                 error: error,
                 status: .badRequest,
@@ -63,7 +63,7 @@ public enum ErrorAdapter {
                 logMessage: "Auth email not found"
             )
         }
-        if let error = error as? MagicLink.Edit.UseCase.Error {
+        if let error = error as? MagicLink.Edit.Error {
             let id: String
             switch error {
             case .notFound(let missingID):
@@ -76,7 +76,7 @@ public enum ErrorAdapter {
                 logMessage: "Magic link not found: \(id)"
             )
         }
-        if let error = error as? Authorization.SignIn.Credentials.UseCase.Error
+        if let error = error as? Authorization.SignIn.Credentials.Error
         {
             return AuthErrorAdapter(
                 error: error,
@@ -85,7 +85,7 @@ public enum ErrorAdapter {
                 logMessage: "authentication_error"
             )
         }
-        if let error = error as? Authorization.SignIn.MagicLink.UseCase.Error {
+        if let error = error as? Authorization.SignIn.MagicLink.Error {
             return AuthErrorAdapter(
                 error: error,
                 status: .unauthorized,

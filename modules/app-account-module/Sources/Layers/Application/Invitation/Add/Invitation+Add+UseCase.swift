@@ -25,14 +25,14 @@ extension Invitation.Add {
         }
 
         let authorizer: any Authorizer
-        let transaction: any ContextualTransactionExecutor<Invitation.Add.Scope>
+        let transaction: any ContextualTransactionExecutor<Scope>
         let events: any EventPublisher
         let jobs: any SendMailJobController
 
         public init(
             authorizer: any Authorizer,
             transaction: any ContextualTransactionExecutor<
-                Invitation.Add.Scope
+                Scope
             >,
             events: any EventPublisher,
             jobs: any SendMailJobController
@@ -45,7 +45,7 @@ extension Invitation.Add {
 
         public func execute(
             subject: Subject,
-            input: Invitation.Add.Input
+            input: Input
         ) async throws -> Output {
             let action = Action()
 
@@ -62,7 +62,7 @@ extension Invitation.Add {
                     .whitespaceTrimmed,
                     !mailFromAddress.isEmpty
                 else {
-                    throw Error.mailFromNotConfigured
+                    throw Invitation.Add.Error.mailFromNotConfigured
                 }
                 let mailFromName = try await scope.variable.get(
                     "system-settings-mail-from-name"
@@ -73,7 +73,7 @@ extension Invitation.Add {
                 for roleID in input.roleIDs {
                     guard try await roleRepository.findBy(id: roleID) != nil
                     else {
-                        throw Error.roleNotFound(roleID)
+                        throw Invitation.Add.Error.roleNotFound(roleID)
                     }
                 }
                 let token = Invitation.Token.generate()

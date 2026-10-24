@@ -4,7 +4,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 
 //
-//  RemoveAuthorLink.swift
+//  AuthorLink+Remove+UseCase.swift
 //  app-blog-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -12,11 +12,11 @@ public import FeatherModuleKit
 extension AuthorLink.Remove {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<AuthorLink.Remove.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<AuthorLink.Remove.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction

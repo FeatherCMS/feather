@@ -80,17 +80,16 @@ extension Credential.Model {
     }
 
     public mutating func update(
-        authEmailId: String? = nil,
-        passwordHash: String? = nil,
+        authEmailId: FieldChange<String> = .unchanged,
+        passwordHash: FieldChange<String> = .unchanged
     ) throws(Self.Error) {
-        let newPasswordHash = passwordHash ?? self.passwordHash
+        let newAuthEmailId = authEmailId.apply(to: self.authEmailId)
+        let newPasswordHash = passwordHash.apply(to: self.passwordHash)
 
-        if let authEmailId {
-            try Self.validate(authEmailId: authEmailId)
-            self.authEmailId = authEmailId
-        }
+        try Self.validate(authEmailId: newAuthEmailId)
         try Self.validate(passwordHash: newPasswordHash)
 
+        self.authEmailId = newAuthEmailId
         self.passwordHash = newPasswordHash
         self.updatedAt = .init()
     }

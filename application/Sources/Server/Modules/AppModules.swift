@@ -12,6 +12,7 @@ import AnalyticsBackend
 import WebBackend
 import NewsletterBackend
 import NewsletterInfrastructure
+import NewsletterModule
 import RedirectBackend
 import BlogBackend
 import AccountBackend
@@ -61,7 +62,9 @@ struct AppModules: Sendable {
                 )
             }
         )
-        self.authorizer = DefaultAuthorizer(query: query)
+        self.authorizer = AuthModule.Authorization.Authorizer.Default(
+            query: query
+        )
 
         let system = SystemBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
@@ -133,7 +136,7 @@ struct AppModules: Sendable {
         let newsletter = NewsletterBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            jobs: JobQueueNewsletterIssueJobController(
+            jobs: Issue.JobController.JobQueue(
                 queue: infrastructure.jobQueue,
                 mailJobs: JobQueueSendMailJobController(
                     queue: infrastructure.jobQueue

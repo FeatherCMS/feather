@@ -72,22 +72,18 @@ extension AdminAPIGateway {
     public func authEmailGet(
         _ input: Operations.AuthEmailGet.Input
     ) async throws -> Operations.AuthEmailGet.Output {
-        let result = try await useCases.makeListAuthEmails()
-            .execute(subject: try await CurrentSubject.require())
-        guard
-            let value = result.items.first(where: {
-                $0.id == input.path.authEmailId
-            })
-        else {
-            throw HTTPError(.notFound)
-        }
+        let result = try await useCases.makeDetailAuthEmail()
+            .execute(
+                subject: try await CurrentSubject.require(),
+                input: .init(id: input.path.authEmailId)
+            )
         return .ok(
             .init(
                 body: .json(
                     authEmailDetail(
-                        id: value.id,
-                        identityId: value.identityId,
-                        email: value.email
+                        id: result.id,
+                        identityId: result.identityId,
+                        email: result.email
                     )
                 )
             )

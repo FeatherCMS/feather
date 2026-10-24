@@ -12,25 +12,20 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Public.Tag.Detail.Scope(
-                    tag: Public.Tag.Database(
+                    tag: Public.Tag.Detail.Query.Database(
                         context: context,
-                        metadata: WebModule.Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Reference.Query.Database(
                             context: context
                         )
                     ),
-                    postDetail: Public.Post.Database(
+                    postDetail: Public.Post.Detail.Query.Database(
                         context: context,
-                        metadata: WebModule.Metadata.Query.Database(
+                        metadata: WebModule.Metadata.Reference.Query.Database(
                             context: context
                         )
                     ),
-                    postList: Public.Post.Database(
-                        context: context,
-                        metadata: WebModule.Metadata.Query.Database(
-                            context: context
-                        )
-                    ),
-                    metadata: WebModule.Metadata.Query.Database(
+                    postList: Public.Post.List.Query.Database(context: context),
+                    metadata: WebModule.Metadata.Reference.Query.Database(
                         context: context
                     )
                 )

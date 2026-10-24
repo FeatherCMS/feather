@@ -146,7 +146,7 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is AuthModule.Authorization.SignIn.MagicLink.UseCase.Error {
+        catch is AuthModule.Authorization.SignIn.MagicLink.Error {
             return .unauthorized(
                 .init(
                     body: .json(

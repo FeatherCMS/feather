@@ -3,7 +3,7 @@ public import FeatherModuleKit
 public import UserModule
 
 //
-//  Identity.Detail.UseCase.swift
+//  Identity+Detail+UseCase.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -11,11 +11,11 @@ public import UserModule
 extension Identity.Detail {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Identity.Detail.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Identity.Detail.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query

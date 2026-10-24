@@ -1,4 +1,5 @@
 import AnalyticsModule
+import AnalyticsApplication
 import CSS
 import FeatherWebAdmin
 import HTML

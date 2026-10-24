@@ -4,7 +4,7 @@ import UserDomain
 public import UserModule
 
 //
-//  Role.Edit.UseCase.swift
+//  Role+Edit+UseCase.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -36,7 +36,7 @@ extension Role.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.role.findBy(id: input.id)
                 else {
-                    throw Error.notFound
+                    throw Role.Edit.Error.notFound
                 }
 
                 try model.update(

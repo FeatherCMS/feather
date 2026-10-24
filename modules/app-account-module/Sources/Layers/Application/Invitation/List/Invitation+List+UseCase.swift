@@ -3,7 +3,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 
 //
-//  ListInvitations.swift
+//  Invitation+List+UseCase.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
@@ -11,11 +11,11 @@ public import FeatherModuleKit
 extension Invitation.List {
     public struct UseCase: FeatherApplication.UseCase {
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Invitation.List.Scope>
+        let query: any QueryExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Invitation.List.Scope>
+            query: any QueryExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -23,8 +23,8 @@ extension Invitation.List {
 
         public func execute(
             subject: Subject,
-            input: Invitation.List.Input
-        ) async throws -> Invitation.List.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

@@ -4,38 +4,39 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
+import FeatherApplication
+import FeatherDBAL
 import FeatherDatabase
 import FeatherInfrastructure
-
-import struct Foundation.Date
-
-extension ArticleQueries.Row {
-    init(from row: any DatabaseRow) throws {
-        id = try row.decode(column: "id", as: String.self)
-        title = try row.decode(column: "title", as: String.self)
-        excerpt = try row.decode(column: "excerpt", as: String.self)
-        content = try row.decode(column: "content", as: String.self)
-        imageAssetId = try row.decode(
-            column: "image_asset_id",
-            as: String?.self
-        )
-        createdAt = try row.decode(column: "created_at", as: Date.self)
-        updatedAt = try row.decode(column: "updated_at", as: Date.self)
-    }
-}
+import NewsApplication
+import NewsDomain
+import NewsModule
 
 struct ArticleQueries {
-    struct Row {
-        let id: String
-        let title: String
-        let excerpt: String
-        let content: String
-        let imageAssetId: String?
-        let createdAt: Date
-        let updatedAt: Date
+    let connection: any DatabaseConnection
+
+    func orderByPublicArticle(_ query: Public.Article.List.Input.Query)
+        -> String
+    {
+        let sortParts = query.sort.map { rule -> String in
+            let column: String
+            switch rule.field {
+            case .id: column = "id"
+            case .title: column = "title"
+            case .createdAt: column = "created_at"
+            case .updatedAt: column = "updated_at"
+            }
+            return "\(column) \(rule.direction == .asc ? "ASC" : "DESC")"
+        }
+        return (sortParts + [defaultPublicOrderByArticle, "id ASC"])
+            .joined(separator: ", ")
     }
 
-    let connection: any DatabaseConnection
+    var defaultPublicOrderByArticle: String {
+        "(SELECT publication_date FROM web_metadata "
+            + "WHERE reference_type = 'news.article' "
+            + "AND reference_id = news_article.id) DESC NULLS LAST"
+    }
 
     func listPublic(
         search: String?,
@@ -43,7 +44,7 @@ struct ArticleQueries {
         orderBy: String,
         limit: Int,
         offset: Int
-    ) async throws -> [Row] {
+    ) async throws -> [Article.Table.List] {
         try await connection.run(
             query: #"""
                 SELECT news_article.*
@@ -76,7 +77,7 @@ struct ArticleQueries {
                 OFFSET \#(offset);
                 """#
         ) { sequence in
-            try await sequence.collect().map { try Row(from: $0) }
+            try await sequence.collect().map { try Article.Table.List(row: $0) }
         }
     }
 
@@ -85,7 +86,7 @@ struct ArticleQueries {
         excludingArticleID: String,
         limit: Int,
         orderBy: String
-    ) async throws -> [Row] {
+    ) async throws -> [Article.Table.List] {
         guard !categoryIDs.isEmpty else { return [] }
         return try await connection.run(
             query: #"""
@@ -111,13 +112,13 @@ struct ArticleQueries {
                 LIMIT \#(limit);
                 """#
         ) { sequence in
-            try await sequence.collect().map { try Row(from: $0) }
+            try await sequence.collect().map { try Article.Table.List(row: $0) }
         }
     }
 
     func countPublic(
         search: String?,
-        categoryID: String?
+        categoryID: String? = nil
     ) async throws -> Int {
         try await connection.run(
             query: #"""
@@ -133,6 +134,11 @@ struct ArticleQueries {
                         OR web_metadata.expiration_date > NOW()
                     )
                     AND (
+                        \#(search == nil)
+                        OR LOWER(COALESCE(web_metadata.title_override, news_article.title))
+                            LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    )
+                    AND (
                         \#(categoryID == nil)
                         OR EXISTS (
                             SELECT 1
@@ -140,11 +146,6 @@ struct ArticleQueries {
                             WHERE news_article_category.article_id = news_article.id
                                 AND news_article_category.category_id = \#(categoryID ?? "")
                         )
-                    )
-                    AND (
-                        \#(search == nil)
-                        OR LOWER(COALESCE(web_metadata.title_override, news_article.title))
-                            LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     );
                 """#
         ) { sequence in

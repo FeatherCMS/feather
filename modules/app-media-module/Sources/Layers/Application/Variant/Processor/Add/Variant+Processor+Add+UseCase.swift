@@ -7,10 +7,10 @@ extension Variant.Processor.Add {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Variant.Processor.Add.Scope>
+        let transaction: any TransactionExecutor<Scope>
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Variant.Processor.Add.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -29,7 +29,7 @@ extension Variant.Processor.Add {
                     try await scope.variantDefinitions.find(
                         id: input.variantId
                     ) != nil
-                else { throw Variant.Processor.Add.Error.variantNotFound }
+                else { throw Error.variantNotFound }
                 let processor = try await scope.variantProcessors.insert(
                     Variant.Processor.Model.create(
                         variantId: input.variantId,

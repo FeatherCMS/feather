@@ -104,9 +104,9 @@ extension Form.Edit {
                 }
                 let saved = try await scope.form.update(value)
                 let fields = try await scope.field.listBy(formId: value.id)
-                    .map(\.asFormField)
+                    .map { Form.Field(model: $0) }
                 let mails = try await scope.mail.listBy(formId: value.id)
-                    .map(\.asFormMail)
+                    .map { Form.Mail(model: $0) }
                 return .init(
                     id: saved.id,
                     key: saved.key,

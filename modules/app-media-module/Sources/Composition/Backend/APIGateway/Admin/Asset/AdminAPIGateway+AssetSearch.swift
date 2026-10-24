@@ -74,7 +74,8 @@ extension AdminAPIGateway {
         from query: Components.Schemas.MediaAssetNodeQueryItemSearchRequestQuerySchema
     ) -> Components.Schemas.MediaAssetNodeQueryItemSearchResponseQuerySchema {
         let page = query.page ?? .init()
-        let sort = query.sort?.map { rule in
+        let sort = query.sort?.map { rule
+            -> Components.Schemas.MediaAssetNodeQueryItemSearchResponseQuerySchema.SortPayloadPayload in
             let field: Components.Schemas
                 .MediaAssetNodeQueryItemSearchResponseQuerySchema
                 .SortPayloadPayload.FieldPayload

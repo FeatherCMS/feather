@@ -2,7 +2,7 @@ public import FeatherModuleKit
 public import UserModule
 
 //
-//  Identity.Event.DidInsert.swift
+//  Identity+Event+DidInsert.swift
 //  app-user-module
 //
 

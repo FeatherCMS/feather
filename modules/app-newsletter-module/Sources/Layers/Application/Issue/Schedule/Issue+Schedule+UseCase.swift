@@ -8,12 +8,12 @@ import Foundation
 extension Issue.Schedule {
     public struct UseCase: FeatherApplication.UseCase {
 
-        let transaction: any TransactionExecutor<Issue.Schedule.Scope>
+        let transaction: any TransactionExecutor<Scope>
         let authorizer: any Authorizer
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Issue.Schedule.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -22,7 +22,7 @@ extension Issue.Schedule {
         public func execute(
             subject: Subject,
             input: Input
-        ) async throws -> Issue.Schedule.Output {
+        ) async throws -> Output {
             let action = Action()
             guard try await authorizer.can(subject: subject, perform: action)
             else {

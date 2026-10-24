@@ -7,6 +7,7 @@ import FeatherWebShared
 import HTML
 import Hummingbird
 import MediaWebAdmin
+import MediaModule
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -35,8 +36,9 @@ extension Author.Edit.Repository {
                         excerpt: menu.excerpt,
                         content: menu.content,
                         profileImageAssetId: menu.profileImageAssetId,
-                        profileImage: try await api.mediaAdminAPI()
-                            .loadImageAsset(assetId: menu.profileImageAssetId),
+                        profileImage: try await Asset.File.View.Repository.OpenAPI(
+                            api: api.mediaAdminAPI()
+                        ).loadImageAsset(assetId: menu.profileImageAssetId),
                         metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: menu.metadata,
                             fallbackTitle: menu.name,

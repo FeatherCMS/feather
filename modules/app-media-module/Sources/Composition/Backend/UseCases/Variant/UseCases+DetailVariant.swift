@@ -1,4 +1,5 @@
 import FeatherDatabase
+import FeatherInfrastructure
 public import MediaApplication
 import MediaInfrastructure
 public import MediaModule

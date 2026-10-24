@@ -12,7 +12,7 @@ extension Rule.List.Repository {
             self.api = api
         }
 
-        func listRedirectRules(
+        func search(
             page: Int,
             search: String?,
             statusCode: Rule.StatusCode?

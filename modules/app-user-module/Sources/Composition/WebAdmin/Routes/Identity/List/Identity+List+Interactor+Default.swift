@@ -16,7 +16,7 @@ extension Identity.List.Interactor {
             Components.Schemas.UserIdentityQueryItemSchema
         > {
             do {
-                let response = try await repository.list(
+                let response = try await repository.search(
                     page: page,
                     size: size,
                     search: search,

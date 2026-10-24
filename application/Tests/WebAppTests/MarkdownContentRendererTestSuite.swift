@@ -63,7 +63,7 @@ struct MarkdownContentRendererTestSuite {
     @Test
     func rendersVideoBlockDirectives() async {
         var events = EventRegistry()
-        WebMarkdownEventHandlers.register(in: &events)
+        WebModuleWebApp.Event.Handlers.registerMarkdown(in: &events)
 
         let renderer = DefaultMarkdownRenderer(
             events: events,

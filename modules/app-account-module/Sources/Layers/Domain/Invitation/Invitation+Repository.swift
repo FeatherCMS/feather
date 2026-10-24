@@ -1,5 +1,5 @@
 //
-//  InvitationRepository.swift
+//  Invitation+Repository.swift
 //  app-user-module
 //
 //  Created by Binary Birds on 2026. 06. 18.

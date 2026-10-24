@@ -10,7 +10,7 @@ extension Variable.List {
 extension Variable.List.Repository {
     protocol Interface: Sendable {
 
-        func listSystemVariables(
+        func search(
             page: Int,
             search: String?,
             ids: [String]?

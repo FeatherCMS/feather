@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import AccountModule
 
-extension Invitation.Resend.UseCase {
+extension Invitation.Resend {
     public enum Error: UseCaseError {
         case invitationNotFound
         case mailFromNotConfigured
