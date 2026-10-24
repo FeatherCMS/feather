@@ -16,6 +16,6 @@ extension Invitation.Detail.Repository {
 
         func get(
             id: String
-        ) async throws -> AccountInvitationDetailsModel
+        ) async throws -> Invitation.Detail.Result
     }
 }

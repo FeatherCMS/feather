@@ -22,7 +22,7 @@ extension Asset.Folder.Add.Interactor {
         ) async throws
             -> Asset.Folder.Add.Model
         func postAddMediaFolder(
-            payload: MediaFolderAddForm
+            payload: Asset.Folder.Add.Form.Input
         ) async throws
             -> Asset.Folder.Add.Model
     }

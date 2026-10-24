@@ -16,7 +16,7 @@ extension MenuItem.Edit.Repository {
         func update(
             menuId: String,
             id: String,
-            input: MenuItemFormInput
+            input: MenuItem.Form.Input
         ) async throws
     }
 }

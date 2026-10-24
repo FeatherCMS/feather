@@ -23,7 +23,7 @@ extension Page.View.Presenter {
                 request: request,
                 context: context,
                 title: "Web page details",
-                content: PageDetails(
+                content: Page.View.Component(
                     state: .init(
                         rule: rule,
                         breadcrumb: routes.breadcrumb,
@@ -43,7 +43,7 @@ extension Page.View.Presenter {
                 request: request,
                 context: context,
                 title: "Web page details",
-                content: PageError(
+                content: Page.Error.Page(
                     state: .init(
                         info: info,
                         message: message,

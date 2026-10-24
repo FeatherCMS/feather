@@ -20,7 +20,7 @@ extension Job.List.Presenter {
                 request: request,
                 context: context,
                 title: "Worker jobs",
-                content: SystemJobTable(
+                content: Job.List.Page(
                     state: .init(
                         jobs: model.items,
                         permissions: permissions,

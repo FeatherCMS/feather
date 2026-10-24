@@ -13,7 +13,7 @@ extension WebModule.Metadata.Edit {
     struct Page: Component {
         struct State {
             let id: String
-            let form: FormView.State
+            let form: Form.Component.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let action: String
             let navigationTabs: [AdminTabBar.Link]
@@ -30,7 +30,7 @@ extension WebModule.Metadata.Edit {
                 )
                 context.build(AdminTabBar(links: state.navigationTabs))
                 context.build(
-                    FormView(
+                    Form.Component(
                         state: state.form,
                         action: state.action,
                         submitLabel: "Edit entry"

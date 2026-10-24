@@ -37,7 +37,7 @@ extension FormField.List.Presenter {
                 request: request,
                 context: context,
                 title: "Contact form fields",
-                content: ContactFieldsTable(
+                content: FormField.List.Page(
                     state: .init(
                         fields: fields,
                         forms: forms,

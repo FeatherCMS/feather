@@ -1,5 +1,6 @@
 public import BlogAdminAPI
 import BlogApplication
+import BlogModule
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -13,6 +14,21 @@ extension AdminAPIGateway {
             input: .init()
         )
 
-        return .ok(.init(body: .json(mapGetSettings(result))))
+        return .ok(.init(body: .json(map(result))))
+    }
+}
+
+extension AdminAPIGateway {
+    private func map(
+        _ output: Settings.Detail.Output
+    ) -> Components.Schemas.SettingsGetSchema {
+        .init(
+            postListPath: output.postListPath,
+            authorListPath: output.authorListPath,
+            tagListPath: output.tagListPath,
+            postPathPrefix: output.postPathPrefix,
+            authorPathPrefix: output.authorPathPrefix,
+            tagPathPrefix: output.tagPathPrefix
+        )
     }
 }

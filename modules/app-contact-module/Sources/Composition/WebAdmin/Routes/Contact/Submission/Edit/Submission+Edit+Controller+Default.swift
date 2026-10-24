@@ -20,7 +20,7 @@ extension Submission.Edit.Controller {
             let formKey = try context.requiredParameter("formKey")
             let submissionId = try context.requiredParameter("submissionId")
             let form = try await request.decode(
-                as: Submission.Edit.StatusForm.self,
+                as: Submission.Edit.Status.Input.self,
                 context: context
             )
 

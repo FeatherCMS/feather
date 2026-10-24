@@ -8,9 +8,9 @@ extension Form.Add {
 
 extension Form.Add.Interactor {
     protocol Interface: Sendable {
-        func availableFields() async throws -> [ContactForm.Field.Option]
+        func availableFields() async throws -> [ContactModule.FormField.Option]
 
         func create(entity: Form.Add.Model) async throws
-            -> ContactForm.Details.Item
+            -> ContactModule.Form.Details.Item
     }
 }

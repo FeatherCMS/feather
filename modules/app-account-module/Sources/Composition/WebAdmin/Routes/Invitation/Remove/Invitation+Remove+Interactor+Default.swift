@@ -9,7 +9,7 @@ extension Invitation.Remove.Interactor {
 
         func get(
             id: String
-        ) async throws -> AccountInvitationDetailsModel {
+        ) async throws -> Invitation.Detail.Result {
             try await repository.get(id: id)
         }
 

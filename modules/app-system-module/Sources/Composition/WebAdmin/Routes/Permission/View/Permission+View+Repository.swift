@@ -11,6 +11,6 @@ extension Permission.View.Repository {
 
         func get(
             id: String
-        ) async throws -> SystemPermissionDetailsModel
+        ) async throws -> Permission.View.Result
     }
 }

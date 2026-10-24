@@ -18,7 +18,7 @@ extension FormField.Add {
 extension FormField.Add.Repository {
     protocol Interface: Sendable {
         func createField(
-            form: ContactFieldFormInput,
+            form: FormField.Add.Form.Input,
             assignToFormKey formKey: String?
         ) async throws
     }
@@ -29,7 +29,7 @@ extension FormField.Add.Repository {
         let api: API.Client
 
         func createField(
-            form: ContactFieldFormInput,
+            form: FormField.Add.Form.Input,
             assignToFormKey formKey: String?
         ) async throws {
             let assignmentSucceeded =

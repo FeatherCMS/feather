@@ -14,7 +14,7 @@ extension Campaign.Subscriber.View.Presenter {
             newsletterId: String,
             item: Campaign.Subscriber.Item
         ) async throws -> HTMLResponse {
-            let content = Campaign.Subscriber.FormView(
+            let content = Campaign.Subscriber.Form.Component(
                 state: .init(
                     newsletterId: newsletterId,
                     email: item.email,

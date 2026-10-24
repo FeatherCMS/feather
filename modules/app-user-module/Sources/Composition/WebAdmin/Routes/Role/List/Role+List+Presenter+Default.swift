@@ -1,6 +1,6 @@
 import FeatherModuleKit
-import FeatherWebShared
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import UserAdminAPI
 import UserModule
@@ -21,7 +21,7 @@ extension Role.List.Presenter {
                 request: request,
                 context: context,
                 title: "User roles",
-                content: Role.List.TableView(
+                content: Role.List.Component(
                     routes: routes,
                     permissions: AdminListActions(permissions),
                     roles: model.items,

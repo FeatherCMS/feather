@@ -12,11 +12,11 @@ extension WebModule.Menu.Edit.Interactor {
 
         func load(
             id: String
-        ) async throws -> MenuDetailsModel
+        ) async throws -> Menu.View.Model
 
         func update(
             id: String,
-            input: MenuFormInput
+            input: WebModule.Menu.Form.Input
         ) async throws
     }
 }

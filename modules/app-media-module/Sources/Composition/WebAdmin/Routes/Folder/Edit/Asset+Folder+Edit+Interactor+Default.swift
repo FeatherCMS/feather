@@ -31,7 +31,7 @@ extension Asset.Folder.Edit.Interactor {
 
         func update(
             id: String,
-            input: MediaFolderEditForm
+            input: Asset.Folder.Edit.Form.Input
         ) async throws -> Asset.Folder.Edit.Model {
             let folder = try await repository.updateFolder(
                 id: id,

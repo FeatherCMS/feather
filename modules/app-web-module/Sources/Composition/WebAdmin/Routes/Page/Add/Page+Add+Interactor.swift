@@ -10,7 +10,7 @@ extension Page.Add.Interactor {
     protocol Interface: Sendable {
 
         func execute(
-            input: PageFormInput
+            input: Page.Form.Input
         ) async throws
     }
 }

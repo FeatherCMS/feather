@@ -11,16 +11,16 @@ extension RedirectModule.Rule.Add {
 extension RedirectModule.Rule.Add.Presenter {
     protocol Interface: Sendable {
         func renderAddPage(
-            state: RedirectRuleAddForm.State,
+            state: RedirectModule.Rule.Add.Form.State,
             permissions: AdminListActions
         ) async throws -> HTMLResponse
 
         func renderValidationError(
-            input: RedirectRuleAddFormInput?,
+            input: RedirectModule.Rule.Add.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse
         func renderAddError(
-            input: RedirectRuleAddFormInput?,
+            input: RedirectModule.Rule.Add.Form.Input?,
             error: RedirectModule.Rule.Add.Error
         ) async throws -> HTMLResponse
         func renderSuccess() -> Response

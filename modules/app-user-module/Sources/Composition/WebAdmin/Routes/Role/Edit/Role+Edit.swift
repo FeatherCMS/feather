@@ -38,7 +38,10 @@ extension Role.Edit {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(routes.edit.routerPath, use: controller.getEditUserRole)
-            router.post(routes.edit.routerPath, use: controller.postEditUserRole)
+            router.post(
+                routes.edit.routerPath,
+                use: controller.postEditUserRole
+            )
         }
     }
 }

@@ -10,7 +10,7 @@ extension Page.Add.Repository {
     protocol Interface: Sendable {
 
         func create(
-            input: PageFormInput
+            input: Page.Form.Input
         ) async throws
     }
 }

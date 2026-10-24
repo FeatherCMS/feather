@@ -103,9 +103,10 @@ extension Campaign {
                         fromEmail: item.fromEmail
                     )
                 case .badRequest(let response):
-                    let data = try JSONEncoder().encode(
-                        try response.body.json
-                    )
+                    let data = try JSONEncoder()
+                        .encode(
+                            try response.body.json
+                        )
                     throw OpenAPIRepositoryError.parsedFailure(
                         statusCode: 400,
                         responseBody: String(data: data, encoding: .utf8)

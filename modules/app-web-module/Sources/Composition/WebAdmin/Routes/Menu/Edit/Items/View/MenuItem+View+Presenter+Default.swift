@@ -23,7 +23,7 @@ extension MenuItem.View.Presenter {
                 request: request,
                 context: context,
                 title: "Edit menu",
-                content: MenuItemDetails(
+                content: MenuItem.View.Page(
                     state: .init(
                         item: model,
                         breadcrumb: routes.itemBreadcrumb(model.menuId),
@@ -43,7 +43,7 @@ extension MenuItem.View.Presenter {
                 request: request,
                 context: context,
                 title: "Edit menu",
-                content: MenuItemError(
+                content: WebModule.MenuItem.Error.Page(
                     state: .init(
                         info: info,
                         message: message,

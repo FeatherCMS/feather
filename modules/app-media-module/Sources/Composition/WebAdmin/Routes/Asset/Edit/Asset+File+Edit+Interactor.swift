@@ -21,7 +21,7 @@ extension Asset.File.Edit.Interactor {
         ) async throws -> Asset.File.Edit.Model
         func update(
             id: String,
-            input: AssetEditForm
+            input: Asset.File.Edit.Form.Input
         ) async throws
             -> Asset.File.Edit.Model
     }

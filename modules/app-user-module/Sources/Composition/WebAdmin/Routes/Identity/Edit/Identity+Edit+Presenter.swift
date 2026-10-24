@@ -11,19 +11,19 @@ extension Identity.Edit.Presenter {
     protocol Interface: Sendable {
         func renderEditPage(
             id: String,
-            state: Identity.Edit.FormComponent.State
+            state: Identity.Edit.Form.Component.State
         )
             async throws
             -> HTMLResponse
         func renderValidationError(
             id: String,
-            input: Identity.Edit.FormInput?,
+            input: Identity.Edit.Form.Input?,
             error: ValidationError,
             roleOptions: [Identity.Edit.RoleOption]
         ) async throws -> HTMLResponse
         func renderEditError(
             id: String,
-            input: Identity.Edit.FormInput?,
+            input: Identity.Edit.Form.Input?,
             error: Identity.Edit.Error,
             roleOptions: [Identity.Edit.RoleOption]
         ) async throws -> HTMLResponse

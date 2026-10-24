@@ -13,7 +13,7 @@ extension Campaign.Edit {
         struct State {
             let id: String
             let routes: Campaign.Router.Routes
-            let form: Campaign.FormView.State
+            let form: Campaign.Form.Component.State
             let isDetails: Bool
             let permissions: AdminListActions
             let pageHeader: AdminPageHeader.State
@@ -122,7 +122,7 @@ extension Campaign.Edit {
                             )
                         ) {
                             context.build(
-                                Campaign.FormView(
+                                Campaign.Form.Component(
                                     state: state.form,
                                     action: editPath,
                                     submitLabel: "Save campaign"

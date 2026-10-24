@@ -12,7 +12,7 @@ extension Settings.Edit.Presenter {
     protocol Interface: Sendable {
 
         func renderPage(
-            state: SettingsEdit.State,
+            state: Settings.Edit.Page.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

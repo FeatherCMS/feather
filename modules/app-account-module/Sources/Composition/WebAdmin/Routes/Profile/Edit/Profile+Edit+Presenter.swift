@@ -13,7 +13,7 @@ extension Profile.Edit.Presenter {
     protocol Interface: Sendable {
 
         func renderPage(
-            state: ProfileEdit.State,
+            state: Profile.Edit.Page.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

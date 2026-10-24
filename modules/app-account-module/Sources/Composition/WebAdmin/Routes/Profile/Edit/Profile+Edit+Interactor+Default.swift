@@ -7,8 +7,7 @@ extension Profile.Edit.Interactor {
     struct Default:
         Profile.Edit.Interactor.Interface
     {
-        let profileRepository:
-            any Profile.Edit.Repository.Interface
+        let profileRepository: any Profile.Edit.Repository.Interface
 
         func loadProfile(
             account: AccountModel

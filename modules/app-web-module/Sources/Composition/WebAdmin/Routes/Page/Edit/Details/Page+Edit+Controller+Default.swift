@@ -54,11 +54,11 @@ extension Page.Edit.Controller {
             let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
-            var lastPayload: PageFormInput?
+            var lastPayload: Page.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: PageFormInput.self,
+                    as: Page.Form.Input.self,
                     context: context
                 )
                 lastPayload = payload
@@ -134,7 +134,7 @@ extension Page.Edit.Controller {
             imageAssetId: String? = nil,
             imageAsset: AdminMediaAsset? = nil,
             metadata: AdminMetadataFormValue? = nil
-        ) -> PageForm.State {
+        ) -> Page.Form.Component.State {
             .init(
                 title: .init(
                     key: "title",

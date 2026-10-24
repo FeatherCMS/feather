@@ -1,0 +1,1369 @@
+import CSS
+import FeatherModuleKit
+import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
+import Foundation
+import HTML
+import Hummingbird
+import MediaAdminAPI
+import MediaModule
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+import class Foundation.ByteCountFormatter
+import struct Foundation.CharacterSet
+
+extension Asset.File.List {
+    struct Page: Component {
+        struct State {
+            let entries: [Asset.File.List.Model.EntryItem]
+            let pageState: AdminListPageState
+            let search: String
+            let parentId: String?
+            let currentFolder: Components.Schemas.MediaFolderDetailSchema?
+            let ancestors: [Components.Schemas.MediaFolderDetailSchema]
+            let view: Asset.File.List.Model.ViewMode
+            let picker: Asset.File.List.Model.PickerState
+            let permissions: AdminListActions
+            let routes: Asset.Router.Routes
+        }
+
+        let state: State
+
+        func selectors() -> [any CSS.Selector] {
+            Class("media-assets-toolbar-group") {
+                Display(.flex)
+                FlexWrap(.wrap)
+                AlignItems(.center)
+                JustifyContent(.spaceBetween)
+                Gap(10.px)
+                MarginBottom(24.px)
+            }
+            Class("media-assets-toolbar-actions") {
+                Display(.flex)
+                FlexWrap(.wrap)
+                AlignItems(.center)
+                Gap(10.px)
+            }
+            Class("media-assets-search-row") {
+                Display(.flex)
+                FlexDirection(.column)
+                AlignItems(.flexStart)
+                Gap(4.px)
+                MarginBottom(12.px)
+            }
+            Custom(
+                ".media-assets-search-row .table-search-form input[type='search']"
+            ) {
+                MinWidth(18.rem)
+            }
+            Class("media-assets-grid") {
+                Display(.grid)
+                Gap(24.px)
+                UnsafeRawProperty(name: "align-items", value: "start")
+                UnsafeRawProperty(
+                    name: "grid-template-columns",
+                    value: "repeat(auto-fill, minmax(220px, 1fr))"
+                )
+            }
+            Custom(".media-assets-grid > *") {
+                Overflow(.hidden)
+            }
+            Class("media-assets-card") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(8.px)
+                Padding(12.px)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
+                BorderRadius(18.px)
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+            }
+            Class("media-assets-card-preview") {
+                UnsafeRawProperty(name: "aspect-ratio", value: "4 / 3")
+                Display(.grid)
+                UnsafeRawProperty(name: "place-items", value: "center")
+                Position(.relative)
+                Overflow(.hidden)
+                BorderRadius(14.px)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Secondary.border)
+                )
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+            }
+            Class("media-assets-card-preview-button") {
+                Border(0)
+                Padding(0)
+                Background(color: .transparent)
+                Width(100.percent)
+                UnsafeRawProperty(name: "cursor", value: "pointer")
+            }
+            Custom(".media-assets-card-preview img") {
+                Position(.absolute)
+                UnsafeRawProperty(name: "inset", value: "0")
+                Width(100.percent)
+                Height(100.percent)
+                ObjectFit(.cover)
+                UnsafeRawProperty(
+                    name: "object-position",
+                    value: "center center"
+                )
+                Display(.block)
+                Margin(0)
+            }
+            Class("media-assets-card-body") {
+                Display(.grid)
+                Gap(4.px)
+            }
+            Custom(".media-assets-card-body h3") {
+                Margin(0)
+                FontSize(1.rem)
+                LineHeight(1.3)
+            }
+            Custom(".media-assets-card-body p") {
+                Margin(0)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                FontSize(0.86.rem)
+                WordBreak(.breakWord)
+            }
+            Class("media-assets-card-actions") {
+                Display(.flex)
+                FlexWrap(.wrap)
+                Gap(6.px)
+                MarginTop(0.px)
+                AlignItems(.center)
+            }
+            Class("media-assets-table-preview") {
+                Width(72.px)
+            }
+            Custom(".media-assets-table-preview .media-assets-folder-icon") {
+                Display(.grid)
+                UnsafeRawProperty(name: "place-items", value: "center")
+                Width(56.px)
+                Height(56.px)
+                BorderRadius(10.px)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Secondary.border)
+                )
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+            }
+            Custom(".media-assets-table-preview a") {
+                Display(.inlineBlock)
+                TextDecoration(.none)
+            }
+            Custom(".media-assets-table-preview .media-assets-folder-icon svg")
+            {
+                Width(28.px)
+                Height(28.px)
+            }
+            Class("media-assets-folder-icon") {
+                Color(.variable(TokenKey.Colors.Link.default))
+            }
+            Custom(".admin-list > .table-pagination") {
+                MarginTop(8.px)
+                Gap(20.px)
+                Padding(vertical: 20.px, horizontal: 14.px)
+            }
+            Custom(".media-assets-folder-icon svg") {
+                Width(2.5.rem)
+                Height(2.5.rem)
+            }
+            Custom(
+                ".media-assets-card-preview.media-assets-folder-icon svg, .media-assets-card-preview .media-assets-folder-icon svg"
+            ) {
+                Width(5.rem)
+                Height(5.rem)
+            }
+        }
+
+        func rules() -> [any CSS.Rule] {
+            AdminListSearch(
+                state: .init(
+                    action: "",
+                    placeholder: "",
+                    search: ""
+                )
+            )
+            .rules() + [Media(selectors: selectors())]
+        }
+
+        func html(context: inout BuilderContext) -> some BasicTag {
+            Section {
+                if !state.permissions.allows(Asset.Permissions.list) {
+                    context.build(
+                        AdminStatusView(
+                            state: .init(
+                                title: "Forbidden",
+                                message:
+                                    "Your account cannot access media assets."
+                            ),
+                            icon: FeatherIcons.lock()
+                        )
+                    )
+                }
+                else {
+                    if !state.picker.isEnabled {
+                        context.build(
+                            AdminBreadcrumb(
+                                links: state.routes.file.listBreadcrumb
+                            )
+                        )
+                        context.build(
+                            AdminPageHeader(
+                                state: .primary(
+                                    title: "Media assets",
+                                    description:
+                                        "Browse, organize, and manage media assets."
+                                )
+                            )
+                        )
+                    }
+
+                    context.build(
+                        AdminList(
+                            table: {
+                                if state.pageState.isPageOutOfRange {
+                                    context.build(
+                                        AdminListInvalidPageState(
+                                            pageState: state.pageState,
+                                            path: state.routes.file.list.path
+                                        )
+                                    )
+                                }
+                                else if hasAnyResults {
+                                    switch state.view {
+                                    case .grid:
+                                        gridContent(context: &context)
+                                    case .list:
+                                        listContent(context: &context)
+                                    }
+                                }
+                                else {
+                                    emptyState(context: &context)
+                                }
+                            },
+                            search: {
+                                searchControls(context: &context)
+                            },
+                            toolbar: {
+                                toolbar(context: &context)
+                            },
+                            pagination: {
+                                context.build(
+                                    AdminListPagination(
+                                        state: .init(
+                                            path: state.routes.file.list.path,
+                                            pageState: state.pageState,
+                                            search: state.search,
+                                            queryItems: queryItems()
+                                        )
+                                    )
+                                )
+                            }
+                        )
+                    )
+                }
+            }
+            .class("cms-section")
+        }
+    }
+}
+
+extension Asset.File.List.Page {
+    fileprivate var hasAnyResults: Bool {
+        !state.entries.isEmpty || state.currentFolder != nil
+    }
+
+    fileprivate func queryItems() -> [AdminListPagination.QueryItem] {
+        queryItems(
+            parentId: state.parentId,
+            view: state.view,
+            search: nil,
+            page: nil
+        )
+    }
+
+    fileprivate func queryItems(
+        parentId: String?,
+        view: Asset.File.List.Model.ViewMode,
+        search: String?,
+        page: Int?,
+        includeView: Bool = false
+    ) -> [AdminListPagination.QueryItem] {
+        var items: [AdminListPagination.QueryItem] = []
+        if let parentId {
+            items.append(.init(name: "parent_id", value: parentId))
+        }
+        if includeView || view != .grid {
+            items.append(.init(name: "view", value: view.rawValue))
+        }
+        if state.picker.isEnabled {
+            items.append(.init(name: "picker", value: "1"))
+        }
+        if let field = state.picker.field {
+            items.append(.init(name: "field", value: field))
+        }
+        if !state.picker.allowedExtensions.isAnything {
+            items.append(
+                .init(
+                    name: "extensions",
+                    value: state.picker.allowedExtensions.queryValue
+                )
+            )
+        }
+        if let defaultFolderPath = state.picker.defaultFolderPath {
+            items.append(
+                .init(name: "default_folder_path", value: defaultFolderPath)
+            )
+        }
+        if let previewVariant = state.picker.previewVariant {
+            items.append(
+                .init(name: "preview_variant", value: previewVariant)
+            )
+        }
+        if let search, !search.isEmpty {
+            items.append(.init(name: "search", value: search))
+        }
+        if let page {
+            items.append(.init(name: "page", value: "\(page)"))
+        }
+        return items
+    }
+
+    fileprivate func addAssetPath() -> String {
+        var suffix: [String] = []
+        if let parentId = state.parentId {
+            suffix.append("parent_id=\(parentId.queryEncoded())")
+        }
+        if state.view != .grid {
+            suffix.append("view=\(state.view.rawValue)")
+        }
+        if state.picker.isEnabled {
+            suffix.append("picker=1")
+        }
+        if let field = state.picker.field {
+            suffix.append("field=\(field.queryEncoded())")
+        }
+        if !state.picker.allowedExtensions.isAnything {
+            suffix.append(
+                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
+            )
+        }
+        if let defaultFolderPath = state.picker.defaultFolderPath {
+            suffix.append(
+                "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            )
+        }
+        if let previewVariant = state.picker.previewVariant {
+            suffix.append(
+                "preview_variant=\(previewVariant.queryEncoded())"
+            )
+        }
+        let path = state.routes.file.add.path
+        return suffix.isEmpty
+            ? path
+            : "\(path)?\(suffix.joined(separator: "&"))"
+    }
+
+    fileprivate func addAssetDialogPath() -> String {
+        let path = addAssetPath()
+        let separator = path.contains("?") ? "&" : "?"
+        return "\(path)\(separator)presentation=dialog"
+    }
+
+    fileprivate func assetActionSuffix() -> String {
+        var suffix: [String] = []
+        if let parentId = state.parentId {
+            suffix.append("parent_id=\(parentId.queryEncoded())")
+        }
+        if state.view != .grid {
+            suffix.append("view=\(state.view.rawValue)")
+        }
+        if state.picker.isEnabled {
+            suffix.append("picker=1")
+        }
+        if let field = state.picker.field {
+            suffix.append("field=\(field.queryEncoded())")
+        }
+        if !state.picker.allowedExtensions.isAnything {
+            suffix.append(
+                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
+            )
+        }
+        if let defaultFolderPath = state.picker.defaultFolderPath {
+            suffix.append(
+                "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            )
+        }
+        if let previewVariant = state.picker.previewVariant {
+            suffix.append(
+                "preview_variant=\(previewVariant.queryEncoded())"
+            )
+        }
+        return suffix.isEmpty ? "" : "?\(suffix.joined(separator: "&"))"
+    }
+
+    fileprivate func addFolderPath() -> String {
+        var suffix: [String] = []
+        if let parentId = state.parentId {
+            suffix.append("parent_id=\(parentId.queryEncoded())")
+        }
+        if state.view != .grid {
+            suffix.append("view=\(state.view.rawValue)")
+        }
+        if state.picker.isEnabled {
+            suffix.append("picker=1")
+        }
+        if let field = state.picker.field {
+            suffix.append("field=\(field.queryEncoded())")
+        }
+        if !state.picker.allowedExtensions.isAnything {
+            suffix.append(
+                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
+            )
+        }
+        if let defaultFolderPath = state.picker.defaultFolderPath {
+            suffix.append(
+                "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            )
+        }
+        let path = state.routes.folder.add.path
+        return suffix.isEmpty
+            ? path
+            : "\(path)?\(suffix.joined(separator: "&"))"
+    }
+
+    fileprivate func addFolderDialogPath() -> String {
+        let path = addFolderPath()
+        let separator = path.contains("?") ? "&" : "?"
+        return "\(path)\(separator)presentation=dialog"
+    }
+
+    fileprivate func browsePath(
+        parentId: String?,
+        view: Asset.File.List.Model.ViewMode? = nil,
+        search: String? = nil,
+        page: Int? = nil,
+        includeView: Bool = false
+    ) -> String {
+        let view = view ?? state.view
+        let query = queryItems(
+            parentId: parentId,
+            view: view,
+            search: search,
+            page: page,
+            includeView: includeView
+        )
+        let encoded = query.map { "\($0.name)=\($0.value.queryEncoded())" }
+        let path = state.routes.file.list.path
+        return encoded.isEmpty
+            ? path
+            : "\(path)?\(encoded.joined(separator: "&"))"
+    }
+
+    fileprivate func previewLink(
+        for url: String
+    ) -> String {
+        AdminMediaAsset.mediaURL(path: url)
+    }
+
+    fileprivate func assetOriginalLink(
+        for item: Components.Schemas.MediaAssetQueryItemFileSchema
+    ) -> String {
+        previewLink(for: item.url)
+    }
+
+    fileprivate func displayTitle(
+        for item: Components.Schemas.MediaAssetQueryItemFileSchema
+    ) -> String {
+        fileName(for: item)
+    }
+
+    fileprivate func pickerTitle(
+        for item: Components.Schemas.MediaAssetQueryItemFileSchema
+    ) -> String {
+        let title = item.title?.whitespaceTrimmed
+        return title?.isEmpty == false ? title! : item.name
+    }
+
+    fileprivate func fileName(
+        for item: Components.Schemas.MediaAssetQueryItemFileSchema
+    ) -> String {
+        item._extension.isEmpty ? item.name : "\(item.name).\(item._extension)"
+    }
+
+    fileprivate func folderEditPath(
+        _ folder: Components.Schemas.MediaFolderListItemSchema
+    ) -> String {
+        state.routes.folder.editPath(folder.id)
+    }
+
+    fileprivate func toolbar(context: inout BuilderContext) -> some FlowContent
+    {
+        Div {
+            Div {
+                if state.permissions.allows(Asset.Permissions.create)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        AdminButton(
+                            "Upload assets",
+                            href: addAssetPath(),
+                            style: .primary
+                        )
+                    )
+                    .data(
+                        "admin-dialog-url",
+                        addAssetDialogPath()
+                    )
+                }
+                if state.permissions.allows(Asset.Permissions.create)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        AdminButton(
+                            "Add folder",
+                            href: addFolderPath(),
+                            style: .ghost(.primary)
+                        )
+                    )
+                    .data(
+                        "admin-dialog-url",
+                        addFolderDialogPath()
+                    )
+                }
+            }
+            .class("button-row", "media-assets-toolbar-actions")
+
+            context.build(
+                AdminSegmentedControl(
+                    links: [
+                        .init(
+                            label: "Grid",
+                            href: browsePath(
+                                parentId: state.parentId,
+                                view: .grid,
+                                search: state.search.isEmpty
+                                    ? nil : state.search,
+                                page: state.pageState.page,
+                                includeView: true
+                            ),
+                            isCurrent: state.view == .grid
+                        ),
+                        .init(
+                            label: "List",
+                            href: browsePath(
+                                parentId: state.parentId,
+                                view: .list,
+                                search: state.search.isEmpty
+                                    ? nil : state.search,
+                                page: state.pageState.page,
+                                includeView: true
+                            ),
+                            isCurrent: state.view == .list
+                        ),
+                    ]
+                )
+            )
+        }
+        .class("button-row", "media-assets-toolbar-group")
+    }
+
+    fileprivate func searchControls(
+        context: inout BuilderContext
+    ) -> some FlowContent {
+        Div {
+            context.build(
+                AdminPathBreadcrumb(items: folderPathItems())
+            )
+            if state.picker.isEnabled {
+                pickerSearchControls(context: &context)
+            }
+            else {
+                context.build(
+                    AdminListSearch(
+                        state: .init(
+                            action: state.routes.file.list.path,
+                            placeholder: "Quick search assets",
+                            search: state.search,
+                            resetPath: browsePath(parentId: state.parentId),
+                            queryItems: queryItems()
+                                .map {
+                                    .init(name: $0.name, value: $0.value)
+                                }
+                        )
+                    )
+                )
+            }
+        }
+        .class("media-assets-search-row")
+    }
+
+    fileprivate func folderPathItems() -> [AdminPathBreadcrumb.Item] {
+        var items: [AdminPathBreadcrumb.Item] = [
+            .init(
+                label: "My assets",
+                href: browsePath(parentId: nil),
+                isCurrent: state.currentFolder == nil
+            )
+        ]
+        for ancestor in state.ancestors {
+            items.append(
+                .init(
+                    label: ancestor.name,
+                    href: browsePath(parentId: ancestor.id),
+                    isCurrent: false
+                )
+            )
+        }
+        if let currentFolder = state.currentFolder {
+            items.append(
+                .init(
+                    label: currentFolder.name,
+                    isCurrent: true
+                )
+            )
+        }
+        return items
+    }
+
+    fileprivate func pickerSearchControls(
+        context: inout BuilderContext
+    ) -> some FlowContent {
+        Div {
+            context.build(
+                AdminListSearch(
+                    state: .init(
+                        action: browsePath(parentId: state.parentId),
+                        placeholder: "Quick search assets",
+                        search: state.search,
+                        resetPath: browsePath(parentId: state.parentId),
+                        queryItems: queryItems()
+                            .map {
+                                .init(name: $0.name, value: $0.value)
+                            }
+                    )
+                )
+            )
+            .data("admin-media-picker-search", "true")
+            Script(
+                """
+                (function() {
+                  var forms = document.querySelectorAll(
+                    'form[data-admin-media-picker-search]'
+                  );
+                  forms.forEach(function(form) {
+                    if (form.dataset.dialogSearchReady === "true") { return; }
+                    form.dataset.dialogSearchReady = "true";
+                    form.addEventListener("submit", function(event) {
+                      if (!form.closest("dialog[data-admin-dialog]")) { return; }
+                      if (!window.__adminDialog ||
+                          !window.__adminDialog.openURL) { return; }
+                      event.preventDefault();
+                      event.stopImmediatePropagation();
+                      var url = new URL(form.action, window.location.href);
+                      new FormData(form).forEach(function(value, key) {
+                        if (typeof value === "string") {
+                          url.searchParams.set(key, value);
+                        }
+                      });
+                      window.__adminDialog.openURL(url.href, form.action);
+                    }, true);
+                  });
+                }());
+                """
+            )
+        }
+    }
+
+    fileprivate func emptyState(
+        context: inout BuilderContext
+    ) -> some FlowContent {
+        if state.search.isEmpty {
+            return context.build(
+                AdminListEmptyState(
+                    message: "No media assets or folders yet.",
+                    icon: FeatherIcons.image(),
+                    action: {
+                        if state.permissions.allows(
+                            Asset.Permissions.create
+                        ) && !state.picker.isEnabled {
+                            context.build(
+                                AdminButton(
+                                    "Add asset",
+                                    href: addAssetPath()
+                                )
+                            )
+                        }
+                    }
+                )
+            )
+        }
+        return context.build(
+            AdminListNoResultsState(
+                message: "No media assets or folders match your search.",
+                icon: FeatherIcons.image(),
+                action: {
+                    context.build(
+                        AdminButton(
+                            "Reset search",
+                            href: browsePath(parentId: state.parentId),
+                            style: .secondary
+                        )
+                    )
+                }
+            )
+        )
+    }
+
+    fileprivate func gridContent(context: inout BuilderContext)
+        -> some FlowContent
+    {
+        let returnTo = browsePath(
+            parentId: state.parentId,
+            search: state.search.isEmpty ? nil : state.search,
+            page: state.pageState.page
+        )
+        return Div {
+            if let currentFolder = state.currentFolder {
+                upCard(parentId: currentFolder.parentId, context: &context)
+            }
+            for entry in state.entries {
+                switch entry {
+                case .folder(let folder):
+                    folderCard(folder, returnTo: returnTo, context: &context)
+                case .asset(let item):
+                    assetCard(item, returnTo: returnTo, context: &context)
+                }
+            }
+        }
+        .class("media-assets-grid")
+    }
+
+    fileprivate func listContent(context: inout BuilderContext)
+        -> some FlowContent
+    {
+        let canRemove =
+            state.permissions.allows(Asset.Permissions.delete)
+            && !state.picker.isEnabled
+        let returnTo = browsePath(
+            parentId: state.parentId,
+            search: state.search.isEmpty ? nil : state.search,
+            page: state.pageState.page
+        )
+        return context.build(
+            AdminListSelectionForm(
+                state: .init(
+                    action: AdminLocation.remove(
+                        path: state.routes.file.remove.path,
+                        ids: [],
+                        returnTo: returnTo
+                    ),
+                    pageState: state.pageState,
+                    search: state.search,
+                    button: .init("Remove selected", style: .destructive),
+                    isEnabled: canRemove
+                ),
+                table: context.build(
+                    AdminListShell(
+                        layout: .init(
+                            name: "media-assets",
+                            columns: [
+                                .fixed(84),
+                                .fraction(2),
+                                .fixed(100),
+                                .fixed(120),
+                                .fixed(260),
+                            ]
+                        ),
+                        hasSelection: canRemove,
+                        table: Table {
+                            Thead {
+                                Tr {
+                                    if canRemove {
+                                        context.build(
+                                            AdminListSelectAllCheckbox()
+                                        )
+                                    }
+                                    Th("Preview")
+                                    Th("Name")
+                                    Th("Type")
+                                    Th("Size")
+                                    Th("Actions")
+                                }
+                            }
+                            Tbody {
+                                if let currentFolder = state.currentFolder {
+                                    upRow(
+                                        parentId: currentFolder.parentId,
+                                        canRemove: canRemove,
+                                        context: &context
+                                    )
+                                }
+                                for entry in state.entries {
+                                    switch entry {
+                                    case .folder(let folder):
+                                        folderRow(
+                                            folder,
+                                            canRemove: canRemove,
+                                            returnTo: returnTo,
+                                            context: &context
+                                        )
+                                    case .asset(let item):
+                                        assetRow(
+                                            item,
+                                            canRemove: canRemove,
+                                            returnTo: returnTo,
+                                            context: &context
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        .class("cms-table", "action-table")
+                        .if(canRemove) { $0.class("select-table") }
+                    )
+                )
+            )
+        )
+    }
+
+    fileprivate func upCard(
+        parentId: String?,
+        context: inout BuilderContext
+    ) -> some FlowContent {
+
+        Div {
+            A {
+                Div {
+                    FeatherIcons.cornerUpLeft()
+                }
+                .class("media-assets-card-preview", "media-assets-folder-icon")
+            }
+            .href(browsePath(parentId: parentId))
+
+            Div {
+                H3("..")
+                P("Parent folder")
+            }
+            .class("media-assets-card-body")
+
+            Div {
+                context.build(
+                    AdminRowButton(
+                        "View",
+                        href: browsePath(parentId: parentId),
+                        style: .ghost(.primary)
+                    )
+                )
+            }
+            .class("media-assets-card-actions")
+        }
+        .class("media-assets-card")
+    }
+
+    fileprivate func folderCard(
+        _ folder: Components.Schemas.MediaFolderListItemSchema,
+        returnTo: String,
+        context: inout BuilderContext
+    ) -> some FlowContent {
+        Div {
+            A {
+                Div {
+                    FeatherIcons.folder()
+                }
+                .class("media-assets-card-preview", "media-assets-folder-icon")
+            }
+            .href(browsePath(parentId: folder.id))
+
+            Div {
+                H3 {
+                    folder.name
+                }
+                P(folderItemCountLabel(for: folder))
+            }
+            .class("media-assets-card-body")
+
+            Div {
+                context.build(
+                    AdminRowButton(
+                        "View",
+                        href: browsePath(parentId: folder.id),
+                        style: .ghost(.primary)
+                    )
+                )
+                if state.permissions.allows(Asset.Permissions.update)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        AdminRowButton(
+                            "Edit",
+                            href: folderEditPath(folder),
+                            style: .ghost(.secondary)
+                        )
+                    )
+                }
+                if state.permissions.allows(Asset.Permissions.delete)
+                    && !state.picker.isEnabled
+                {
+                }
+            }
+            .class("media-assets-card-actions")
+        }
+        .class("media-assets-card")
+    }
+
+    fileprivate func assetCard(
+        _ item: Asset.File.List.Model.AssetItem,
+        returnTo: String,
+        context: inout BuilderContext
+    ) -> some FlowContent {
+
+        let actionSuffix = assetActionSuffix()
+        let detailsURL =
+            "\(state.routes.file.detailsPath(item.asset.id))\(actionSuffix)"
+        let previewURL = previewLink(
+            for: item.preview?.url ?? item.asset.url
+        )
+        let originalURL = assetOriginalLink(for: item.asset)
+        return Div {
+            if state.picker.isEnabled, let field = state.picker.field {
+                Button {
+                    Div {
+                        if item.preview != nil {
+                            Img(
+                                src: previewURL,
+                                alt: displayTitle(for: item.asset)
+                            )
+                        }
+                        else {
+                            Div {
+                                FeatherIcons.file()
+                            }
+                            .class("media-assets-folder-icon")
+                        }
+                    }
+                    .class("media-assets-card-preview")
+                }
+                .type(.button)
+                .class("media-assets-card-preview-button")
+                .data("picker-select", item.asset.id)
+                .data("picker-field", field)
+                .data(
+                    "picker-url",
+                    previewLink(for: item.asset.url)
+                )
+                .data(
+                    "picker-preview-url",
+                    item.preview.map { previewLink(for: $0.url) } ?? ""
+                )
+                .data("picker-name", item.asset.name)
+                .data("picker-extension", item.asset._extension)
+                .data("picker-title", pickerTitle(for: item.asset))
+                .data("picker-alt-text", item.asset.altText ?? "")
+                .data("picker-status", item.asset.status)
+            }
+            else {
+                A {
+                    Div {
+                        if item.preview != nil {
+                            Img(
+                                src: previewURL,
+                                alt: displayTitle(for: item.asset)
+                            )
+                        }
+                        else {
+                            Div {
+                                FeatherIcons.file()
+                            }
+                            .class("media-assets-folder-icon")
+                        }
+                    }
+                    .class("media-assets-card-preview")
+                }
+                .href(originalURL)
+                .target(.blank)
+            }
+
+            Div {
+                H3(displayTitle(for: item.asset))
+                P(fileSizeLabel(bytes: item.asset.sizeBytes))
+            }
+            .class("media-assets-card-body")
+
+            Div {
+                if state.picker.isEnabled, let field = state.picker.field {
+                    context.build(
+                        AdminRowButton(
+                            "Select",
+                            style: .ghost(.primary)
+                        )
+                    )
+                    .data("picker-select", item.asset.id)
+                    .data("picker-field", field)
+                    .data(
+                        "picker-url",
+                        previewLink(for: item.asset.url)
+                    )
+                    .data(
+                        "picker-preview-url",
+                        item.preview.map { previewLink(for: $0.url) } ?? ""
+                    )
+                    .data("picker-name", item.asset.name)
+                    .data("picker-extension", item.asset._extension)
+                    .data("picker-title", pickerTitle(for: item.asset))
+                    .data("picker-alt-text", item.asset.altText ?? "")
+                    .data("picker-status", item.asset.status)
+                }
+                else if state.permissions.allows(Asset.Permissions.read) {
+                    context.build(
+                        AdminRowButton(
+                            "View",
+                            href: detailsURL,
+                            style: .ghost(.primary)
+                        )
+                    )
+                }
+                if state.permissions.allows(Asset.Permissions.update)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        AdminRowButton(
+                            "Edit",
+                            href:
+                                "\(state.routes.file.editPath(item.asset.id))\(actionSuffix)",
+                            style: .ghost(.secondary)
+                        )
+                    )
+                }
+                if state.permissions.allows(Asset.Permissions.delete)
+                    && !state.picker.isEnabled
+                {
+                }
+            }
+            .class("media-assets-card-actions")
+        }
+        .class("media-assets-card")
+    }
+
+    fileprivate func upRow(
+        parentId: String?,
+        canRemove: Bool,
+        context: inout BuilderContext
+    ) -> some BasicTag {
+        Tr {
+            if canRemove {
+                Td("")
+            }
+            parentPreviewCell(
+                href: browsePath(parentId: parentId),
+                context: &context
+            )
+            Td("..")
+                .data("label", "Name")
+            Td("Folder")
+                .data("label", "Type")
+            Td("-")
+                .data("label", "Size")
+            Td {
+                context.build(
+                    AdminRowButton(
+                        "View",
+                        href: browsePath(parentId: parentId),
+                        style: .ghost(.primary)
+                    )
+                )
+            }
+            .data("label", "Actions")
+            .class("action-cell")
+        }
+    }
+
+    fileprivate func folderRow(
+        _ folder: Components.Schemas.MediaFolderListItemSchema,
+        canRemove: Bool,
+        returnTo: String,
+        context: inout BuilderContext
+    ) -> some BasicTag {
+        Tr {
+            let actions: [AdminListRowActions.Action] =
+                state.picker.isEnabled
+                ? [
+                    .init(
+                        "View",
+                        href: browsePath(parentId: folder.id),
+                        style: .ghost(.primary),
+                        permission: Asset.Permissions.read
+                    )
+                ]
+                : [
+                    .init(
+                        "View",
+                        href: browsePath(parentId: folder.id),
+                        style: .ghost(.primary),
+                        permission: Asset.Permissions.read
+                    ),
+                    .init(
+                        "Edit",
+                        href: folderEditPath(folder),
+                        style: .ghost(.secondary),
+                        permission: Asset.Permissions.update
+                    ),
+                ]
+            if canRemove {
+                context.build(
+                    AdminListRowCheckbox(id: folder.id)
+                )
+            }
+            folderPreviewCell(
+                label: folder.name,
+                href: browsePath(parentId: folder.id),
+                context: &context
+            )
+            folderTitleCell(for: folder)
+            Td("Folder")
+                .data("label", "Type")
+            Td(folderItemCountLabel(for: folder))
+                .data("label", "Size")
+            context.build(
+                AdminListRowActions(
+                    label: "Actions",
+                    actions: actions,
+                    permissions: state.permissions
+                )
+            )
+        }
+    }
+
+    fileprivate func assetRow(
+        _ item: Asset.File.List.Model.AssetItem,
+        canRemove: Bool,
+        returnTo: String,
+        context: inout BuilderContext
+    ) -> some BasicTag {
+
+        let previewURL = previewLink(
+            for: item.preview?.url ?? item.asset.url
+        )
+        let originalURL = assetOriginalLink(for: item.asset)
+        return Tr {
+            if canRemove {
+                context.build(
+                    AdminListRowCheckbox(id: item.asset.id)
+                )
+            }
+            assetPreviewCell(
+                for: item,
+                previewURL: previewURL,
+                originalURL: originalURL,
+                context: &context
+            )
+            assetTitleCell(
+                for: item,
+                originalURL: originalURL,
+                context: &context
+            )
+            Td(item.asset._extension)
+                .data("label", "Extension")
+            Td(fileSizeLabel(bytes: item.asset.sizeBytes))
+                .data("label", "Size")
+            if state.picker.isEnabled, let field = state.picker.field {
+                Td {
+                    context.build(
+                        AdminRowButton(
+                            "Select",
+                            style: .ghost(.primary)
+                        )
+                    )
+                    .data(
+                        "picker-select",
+                        item.asset.id
+                    )
+                    .data("picker-field", field)
+                    .data(
+                        "picker-url",
+                        previewLink(for: item.asset.url)
+                    )
+                    .data(
+                        "picker-preview-url",
+                        item.preview.map { previewLink(for: $0.url) } ?? ""
+                    )
+                    .data(
+                        "picker-name",
+                        item.asset.name
+                    )
+                    .data(
+                        "picker-extension",
+                        item.asset._extension
+                    )
+                    .data(
+                        "picker-title",
+                        pickerTitle(for: item.asset)
+                    )
+                    .data(
+                        "picker-alt-text",
+                        item.asset.altText ?? ""
+                    )
+                    .data(
+                        "picker-status",
+                        item.asset.status
+                    )
+                }
+                .data("label", "Actions")
+                .class("action-cell")
+            }
+            else {
+                context.build(
+                    AdminListRowActions(
+                        label: "Actions",
+                        actions: [
+                            .init(
+                                "View",
+                                href:
+                                    "\(state.routes.file.detailsPath(item.asset.id))\(assetActionSuffix())",
+                                style: .ghost(.primary),
+                                permission: Asset.Permissions.read
+                            ),
+                            .init(
+                                "Edit",
+                                href:
+                                    "\(state.routes.file.editPath(item.asset.id))\(assetActionSuffix())",
+                                style: .ghost(.secondary),
+                                permission: Asset.Permissions.update
+                            ),
+                        ],
+                        permissions: state.permissions
+                    )
+                )
+            }
+        }
+    }
+
+    fileprivate func folderItemCountLabel(
+        for folder: Components.Schemas.MediaFolderListItemSchema
+    ) -> String {
+        folder.assetCount == 1 ? "1 item" : "\(folder.assetCount) items"
+    }
+
+    fileprivate func fileSizeLabel(
+        bytes: Int64
+    ) -> String {
+        ByteCountFormatter.string(fromByteCount: bytes, countStyle: .file)
+    }
+
+    fileprivate func parentPreviewCell(
+        href: String,
+        context: inout BuilderContext
+    ) -> some BasicTag {
+
+        Td {
+            A {
+                Div {
+                    FeatherIcons.cornerUpLeft()
+                }
+                .class("media-assets-folder-icon")
+            }
+            .href(href)
+            .ariaLabel("Open parent folder")
+        }
+        .class("media-assets-table-preview")
+        .data("label", "Preview")
+        .ariaLabel("Parent folder")
+    }
+
+    fileprivate func folderPreviewCell(
+        label: String,
+        href: String,
+        context: inout BuilderContext
+    ) -> some BasicTag {
+
+        Td {
+            A {
+                Div {
+                    FeatherIcons.folder()
+                }
+                .class("media-assets-folder-icon")
+            }
+            .href(href)
+            .ariaLabel("Open \(label)")
+        }
+        .class("media-assets-table-preview")
+        .data("label", "Preview")
+        .ariaLabel(label)
+    }
+
+    fileprivate func assetPreviewCell(
+        for item: Asset.File.List.Model.AssetItem,
+        previewURL: String,
+        originalURL: String,
+        context: inout BuilderContext
+    ) -> some BasicTag {
+
+        Td {
+            A {
+                if item.preview != nil {
+                    context.build(
+                        AdminImageCell(
+                            imageURL: previewURL,
+                            alt: displayTitle(for: item.asset),
+                            size: .square
+                        )
+                    )
+                }
+                else {
+                    Div {
+                        FeatherIcons.file()
+                    }
+                    .class("media-assets-folder-icon")
+                }
+            }
+            .href(originalURL)
+            .target(.blank)
+            .ariaLabel("Open \(displayTitle(for: item.asset))")
+        }
+        .class("media-assets-table-preview")
+        .data("label", "Preview")
+    }
+
+    fileprivate func folderTitleCell(
+        for folder: Components.Schemas.MediaFolderListItemSchema
+    ) -> some BasicTag {
+        Td(folder.name)
+            .data("label", "Name")
+            .data("remove-label", "true")
+    }
+
+    fileprivate func assetTitleCell(
+        for item: Asset.File.List.Model.AssetItem,
+        originalURL: String,
+        context: inout BuilderContext
+    ) -> some BasicTag {
+
+        Td {
+            Span {
+                Span(fileName(for: item.asset))
+                context.build(
+                    AdminPreviewLink(
+                        href: originalURL,
+                        label: "Preview \(displayTitle(for: item.asset))"
+                    )
+                )
+            }
+            .style(
+                "display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;line-height:1.25;"
+            )
+        }
+        .data("label", "Name")
+        .data("remove-label", "true")
+    }
+}

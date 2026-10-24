@@ -6,9 +6,6 @@ import MediaWebAdmin
 
 extension Profile.Detail {
 
-
-
-
     enum Form { enum Input {} }
 
 }

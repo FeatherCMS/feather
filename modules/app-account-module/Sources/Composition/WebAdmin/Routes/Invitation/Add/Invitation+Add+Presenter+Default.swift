@@ -14,7 +14,7 @@ extension Invitation.Add.Presenter {
         let routes: Invitation.Router.Routes
 
         func renderPage(
-            form: AccountInvitationForm.State,
+            form: Invitation.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             var form = form
@@ -25,7 +25,7 @@ extension Invitation.Add.Presenter {
                 request: request,
                 context: context,
                 title: "Add user invitation",
-                content: AccountInvitationAdd(
+                content: Invitation.Add.Page(
                     routes: routes,
                     state: .init(
                         form: form,
@@ -38,8 +38,8 @@ extension Invitation.Add.Presenter {
         func formState(
             email: String = "",
             roleIDs: [String] = [],
-            roleOptions: [AccountInvitationForm.RoleOptionState] = []
-        ) -> AccountInvitationForm.State {
+            roleOptions: [Invitation.Form.Component.RoleOptionState] = []
+        ) -> Invitation.Form.Component.State {
             .init(
                 email: .init(
                     key: "email",

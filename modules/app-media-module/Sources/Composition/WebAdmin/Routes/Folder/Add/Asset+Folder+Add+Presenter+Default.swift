@@ -21,7 +21,7 @@ extension Asset.Folder.Add.Presenter {
             model: Asset.Folder.Add.Model
         ) async throws -> HTMLResponse {
             let isDialog = request.queryString("presentation") == "dialog"
-            let content = MediaFolderAddView(
+            let content = Asset.Folder.Add.Page(
                 state: .init(
                     routes: routes,
                     form: .init(

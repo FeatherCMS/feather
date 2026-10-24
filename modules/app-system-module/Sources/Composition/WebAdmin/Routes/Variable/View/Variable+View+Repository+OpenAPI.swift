@@ -11,7 +11,7 @@ extension Variable.View.Repository {
 
         func get(
             id: String
-        ) async throws -> SystemVariableDetailsModel {
+        ) async throws -> Variable.View.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client

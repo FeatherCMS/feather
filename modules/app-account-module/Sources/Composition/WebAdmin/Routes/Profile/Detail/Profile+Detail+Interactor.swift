@@ -12,11 +12,11 @@ extension Profile.Detail {
 extension Profile.Detail.Interactor {
 
     protocol Interface: Sendable {
-        func getProfile() async throws -> Profile.WebAdminModel
+        func getProfile() async throws -> Profile.Remote.Model
 
         func getProfile(
             account: AccountModel,
-            profile: Profile.WebAdminModel
+            profile: Profile.Remote.Model
         ) async throws -> Profile.Detail.Model
     }
 }

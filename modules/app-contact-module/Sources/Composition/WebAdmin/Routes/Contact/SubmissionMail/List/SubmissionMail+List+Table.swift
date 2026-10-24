@@ -12,7 +12,7 @@ extension SubmissionMail.List {
     struct Table: Component {
         struct State {
             let id: String
-            let mails: [ContactForm.Email]
+            let mails: [ContactModule.Form.Email]
             let permissions: AdminListActions
             let breadcrumb: [AdminBreadcrumb.Link]
             let error: String?
@@ -34,7 +34,7 @@ extension SubmissionMail.List {
                     )
                 )
                 context.build(
-                    ContactForm.TabBar(formId: state.id, active: .emails)
+                    ContactModule.Form.TabBar(formId: state.id, active: .emails)
                 )
                 context.build(
                     AdminRelationshipGroup(

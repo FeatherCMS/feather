@@ -21,7 +21,7 @@ extension FormField.Edit.Interactor {
                 throw map(error)
             }
         }
-        func update(id: String, form: ContactFieldFormInput) async throws {
+        func update(id: String, form: FormField.Add.Form.Input) async throws {
             do {
                 try await repository.update(id: id, form: form)
             }

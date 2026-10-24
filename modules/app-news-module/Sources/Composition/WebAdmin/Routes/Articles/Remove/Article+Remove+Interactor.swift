@@ -1,5 +1,5 @@
-import NewsApplication
 import NewsAdminAPI
+import NewsApplication
 import NewsModule
 
 extension Article.Remove {

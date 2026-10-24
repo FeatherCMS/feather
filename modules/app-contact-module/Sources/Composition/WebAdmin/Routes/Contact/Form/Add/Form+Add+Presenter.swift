@@ -10,13 +10,13 @@ extension Form.Add {
 extension Form.Add.Presenter {
     protocol Interface: Sendable {
         func renderPage(
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 
         func renderAddError(
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             error: Form.Add.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse

@@ -10,6 +10,6 @@ extension Variable.View.Repository {
 
         func get(
             id: String
-        ) async throws -> SystemVariableDetailsModel
+        ) async throws -> Variable.View.Result
     }
 }

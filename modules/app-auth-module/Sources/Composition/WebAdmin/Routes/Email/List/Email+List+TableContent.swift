@@ -11,7 +11,7 @@ import WebComponents
 
 extension Email.List {
     struct TableContent: WebComponents.Component {
-        let state: Email.List.ListTable.State
+        let state: Email.List.Component.State
 
         func html(context: inout BuilderContext) -> Div {
             let actions = AdminListActions(

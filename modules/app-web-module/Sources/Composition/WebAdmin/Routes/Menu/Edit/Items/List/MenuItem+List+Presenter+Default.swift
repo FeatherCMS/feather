@@ -36,7 +36,7 @@ extension MenuItem.List.Presenter {
                     request: request,
                     context: context,
                     title: "Edit menu",
-                    content: MenuItemError(
+                    content: MenuItem.Error.Page(
                         state: .init(
                             info: "Unable to load web menu items.",
                             message: error,
@@ -50,7 +50,7 @@ extension MenuItem.List.Presenter {
                     request: request,
                     context: context,
                     title: "Edit menu",
-                    content: MenuItemError(
+                    content: MenuItem.Error.Page(
                         state: .init(
                             info: "Forbidden",
                             message:
@@ -64,7 +64,7 @@ extension MenuItem.List.Presenter {
                 request: request,
                 context: context,
                 title: "Edit menu",
-                content: MenuItemTable(
+                content: MenuItem.List.Page(
                     state: .init(
                         menuId: menuId,
                         permissions: actions,

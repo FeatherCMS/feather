@@ -14,7 +14,7 @@ extension Page.Edit.Interactor {
 
         func update(
             id: String,
-            input: PageFormInput
+            input: Page.Form.Input
         ) async throws {
             try await repository.update(id: id, input: input)
         }

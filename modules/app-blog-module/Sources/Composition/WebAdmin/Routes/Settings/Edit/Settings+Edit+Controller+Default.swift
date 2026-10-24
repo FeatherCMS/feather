@@ -93,7 +93,7 @@ extension Settings.Edit.Controller {
             }
 
             let input = try await request.decode(
-                as: Settings.Edit.FormInput.self,
+                as: Settings.Edit.Form.Input.self,
                 context: context
             )
             let errors = input.validationErrors()
@@ -167,7 +167,7 @@ extension Settings.Edit.Controller {
         private func makeFormState(
             from settings: Settings.Edit.Model,
             canEdit: Bool
-        ) -> Settings.Edit.Form.State {
+        ) -> Settings.Edit.Form.Component.State {
             makeFormState(
                 postListPath: settings.postListPath,
                 authorListPath: settings.authorListPath,
@@ -189,7 +189,7 @@ extension Settings.Edit.Controller {
             tagPathPrefix: String,
             canEdit: Bool,
             error: String?
-        ) -> Settings.Edit.Form.State {
+        ) -> Settings.Edit.Form.Component.State {
             .init(
                 postListPath: .init(
                     key: Settings.Edit.VariableKey.postListPath.fieldKey,
@@ -235,7 +235,7 @@ extension Settings.Edit.Controller {
         private func makeFormState(
             canEdit: Bool,
             error: String?
-        ) -> Settings.Edit.Form.State {
+        ) -> Settings.Edit.Form.Component.State {
             makeFormState(
                 postListPath: "",
                 authorListPath: "",

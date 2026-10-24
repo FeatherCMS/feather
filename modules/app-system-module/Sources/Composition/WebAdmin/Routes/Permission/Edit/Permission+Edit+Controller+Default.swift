@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import Hummingbird
 import SystemModule
 
@@ -65,10 +65,10 @@ extension Permission.Edit.Controller {
                     try await presenter.renderErrorPage(error: .forbidden)
                     .response(from: request, context: context)
             }
-            var lastPayload: SystemPermissionEditFormInput?
+            var lastPayload: Permission.Edit.Form.Input?
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<SystemPermissionEditFormInput>.self,
+                    as: NonceRequest<Permission.Edit.Form.Input>.self,
                     context: context
                 )
                 lastPayload = payload.input
@@ -112,7 +112,7 @@ extension Permission.Edit.Controller {
             key: String,
             name: String,
             notes: String
-        ) -> SystemPermissionEditForm.State {
+        ) -> Permission.Edit.Form.State {
             .init(
                 key: .init(
                     name: "key",

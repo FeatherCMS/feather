@@ -9,7 +9,7 @@ import WebComponents
 extension Role.Add {
     struct Page: Component {
         let routes: Role.Router.Routes
-        let form: Role.Add.FormComponent.State
+        let form: Role.Add.Form.Component.State
         let nonceToken: String?
 
         func html(context: inout BuilderContext) -> Section {
@@ -24,7 +24,7 @@ extension Role.Add {
                     )
                 )
                 context.build(
-                    Role.Add.FormComponent(
+                    Role.Add.Form.Component(
                         state: form,
                         action: routes.add.path,
                         submitLabel: "Add role",

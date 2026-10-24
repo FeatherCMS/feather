@@ -15,7 +15,7 @@ extension Invitation.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: AccountInvitationForm.State,
+            state: Invitation.Form.Component.State,
             isEdited: Bool,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -27,7 +27,7 @@ extension Invitation.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit user invitation",
-                content: AccountInvitationEdit(
+                content: Invitation.Edit.Page(
                     routes: routes,
                     state: .init(
                         id: id,
@@ -59,8 +59,8 @@ extension Invitation.Edit.Presenter {
         func formState(
             email: String = "",
             roleIDs: [String] = [],
-            roleOptions: [AccountInvitationForm.RoleOptionState] = []
-        ) -> AccountInvitationForm.State {
+            roleOptions: [Invitation.Form.Component.RoleOptionState] = []
+        ) -> Invitation.Form.Component.State {
             .init(
                 email: .init(
                     key: "email",

@@ -10,11 +10,11 @@ extension Role.Edit.Interactor {
 
         func load(
             id: String
-        ) async throws -> Role.Detail.RepositoryModel
+        ) async throws -> Role.Detail.Repository.Model
 
         func edit(
             id: String,
-            input: Role.Edit.FormInput
+            input: Role.Edit.Form.Input
         ) async throws
     }
 }

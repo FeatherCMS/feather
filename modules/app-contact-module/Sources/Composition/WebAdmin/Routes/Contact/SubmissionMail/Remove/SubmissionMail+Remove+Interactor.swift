@@ -15,7 +15,7 @@ extension SubmissionMail.Remove {
 
 extension SubmissionMail.Remove.Interactor {
     protocol Interface: Sendable {
-        func get(id: String) async throws -> ContactForm.Details.Item
+        func get(id: String) async throws -> ContactModule.Form.Details.Item
         func remove(id: String, emailIds: [String]) async throws
     }
 }

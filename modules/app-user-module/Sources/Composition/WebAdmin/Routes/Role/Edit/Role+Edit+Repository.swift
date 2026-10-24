@@ -5,13 +5,12 @@ extension Role.Edit {
     enum Repository {}
 }
 
-
 extension Role.Edit.Repository {
     protocol Interface: Sendable {
 
         func load(
             id: String
-        ) async throws -> Role.Detail.RepositoryModel
+        ) async throws -> Role.Detail.Repository.Model
 
         func update(
             id: String,

@@ -18,7 +18,7 @@ extension WebModule.Metadata.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: WebModule.Metadata.Edit.FormView.State,
+            state: WebModule.Metadata.Edit.Form.Component.State,
             permissions: Set<String>,
             navigationTabs: [AdminTabBar.Link],
             configuration: WebModule.Metadata.Edit.Configuration
@@ -71,7 +71,7 @@ extension WebModule.Metadata.Edit.Presenter {
         }
 
         private func previewPath(
-            for state: WebModule.Metadata.Edit.FormView.State
+            for state: WebModule.Metadata.Edit.Form.Component.State
         ) -> String? {
             guard let slug = state.slug.value else { return nil }
             let normalizedSlug = slug.whitespaceTrimmed

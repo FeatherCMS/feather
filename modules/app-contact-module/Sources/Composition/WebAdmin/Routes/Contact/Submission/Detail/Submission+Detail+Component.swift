@@ -9,7 +9,7 @@ import WebBuilders
 import WebComponents
 
 extension Submission.Detail {
-    struct DetailsView: Component {
+    struct Component: WebComponents.Component {
         struct State {
             let formId: String
             let item: Submission.Item
@@ -36,7 +36,7 @@ extension Submission.Detail {
                     )
                 )
                 context.build(
-                    ContactForm.TabBar(
+                    ContactModule.Form.TabBar(
                         formId: state.formId,
                         active: .submissions
                     )

@@ -16,7 +16,7 @@ extension FormField.Edit {
 extension FormField.Edit.Interactor {
     protocol Interface: Sendable {
         func get(id: String) async throws -> FormField.Model
-        func update(id: String, form: ContactFieldFormInput)
+        func update(id: String, form: FormField.Add.Form.Input)
             async throws
     }
 }

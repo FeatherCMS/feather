@@ -17,14 +17,14 @@ extension WebModule.Menu.View.Presenter {
         let routes: WebModule.Menu.Router.Routes
 
         func renderDetailsPage(
-            rule: MenuDetailsModel,
+            rule: WebModule.Menu.View.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Menu details",
-                content: MenuDetails(
+                content: WebModule.Menu.View.Page(
                     state: .init(
                         menu: rule,
                         breadcrumb: routes.breadcrumb,
@@ -44,7 +44,7 @@ extension WebModule.Menu.View.Presenter {
                 request: request,
                 context: context,
                 title: "Menu details",
-                content: MenuError(
+                content: WebModule.Menu.Error.Page(
                     state: .init(
                         info: info,
                         message: message,

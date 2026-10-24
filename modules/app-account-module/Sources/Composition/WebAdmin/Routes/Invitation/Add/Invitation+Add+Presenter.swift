@@ -12,15 +12,15 @@ extension Invitation.Add.Presenter {
     protocol Interface: Sendable {
 
         func renderPage(
-            form: AccountInvitationForm.State,
+            form: Invitation.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 
         func formState(
             email: String,
             roleIDs: [String],
-            roleOptions: [AccountInvitationForm.RoleOptionState]
-        ) -> AccountInvitationForm.State
+            roleOptions: [Invitation.Form.Component.RoleOptionState]
+        ) -> Invitation.Form.Component.State
 
         func format(
             error: OpenAPIRepositoryError

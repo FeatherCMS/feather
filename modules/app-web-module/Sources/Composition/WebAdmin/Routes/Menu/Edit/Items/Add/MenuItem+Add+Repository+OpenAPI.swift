@@ -11,7 +11,7 @@ extension MenuItem.Add.Repository {
 
         func create(
             menuId: String,
-            input: MenuItemFormInput
+            input: MenuItem.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.menuItemCreate(

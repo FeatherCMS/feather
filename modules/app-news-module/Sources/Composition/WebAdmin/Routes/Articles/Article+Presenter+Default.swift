@@ -75,7 +75,7 @@ extension Article.Presenter {
                 request: request,
                 context: context,
                 title: "News article",
-                content: NewsErrorPage(
+                content: News.Error.Page(
                     breadcrumb: routes.breadcrumb,
                     title: "News article unavailable",
                     message: message

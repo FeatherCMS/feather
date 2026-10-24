@@ -9,17 +9,17 @@ extension Role.Edit {
 
 extension Role.Edit.Presenter {
     protocol Interface: Sendable {
-        func renderEditPage(id: String, state: Role.Edit.FormComponent.State)
+        func renderEditPage(id: String, state: Role.Edit.Form.Component.State)
             async throws
             -> HTMLResponse
         func renderValidationError(
             id: String,
-            input: Role.Edit.FormInput?,
+            input: Role.Edit.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse
         func renderEditError(
             id: String,
-            input: Role.Edit.FormInput?,
+            input: Role.Edit.Form.Input?,
             error: Role.Edit.Error
         ) async throws -> HTMLResponse
         func renderSuccess(id: String) -> Response

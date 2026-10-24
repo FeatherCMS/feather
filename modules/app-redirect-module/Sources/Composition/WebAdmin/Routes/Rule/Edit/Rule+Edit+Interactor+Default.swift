@@ -9,14 +9,14 @@ extension Rule.Edit.Interactor {
 
         func load(
             id: String
-        ) async throws -> RedirectRuleEditModel {
+        ) async throws -> Rule.Edit.Model {
             do { return try await repository.load(id: id) }
             catch let error as OpenAPIRepositoryError { throw map(error) }
         }
 
         func update(
             id: String,
-            input: RedirectRuleEditFormInput
+            input: RedirectModule.Rule.Edit.Form.Input
         ) async throws {
             do { try await repository.update(id: id, input: input) }
             catch let error as OpenAPIRepositoryError { throw map(error) }

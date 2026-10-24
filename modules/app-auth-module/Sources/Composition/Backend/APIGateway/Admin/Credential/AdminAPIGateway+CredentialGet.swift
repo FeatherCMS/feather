@@ -1,5 +1,6 @@
 public import AuthAdminAPI
 import AuthApplication
+import AuthModule
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -16,8 +17,16 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(mapCredential(result))
             )
         )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapCredential(
+        _ output: Credential.Detail.Output
+    ) -> Components.Schemas.AuthCredentialDetailSchema {
+        .init(id: output.id, userId: output.userId, email: output.email)
     }
 }

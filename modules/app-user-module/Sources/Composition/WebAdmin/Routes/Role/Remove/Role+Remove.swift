@@ -38,8 +38,14 @@ extension Role.Remove {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.post(routes.remove.routerPath, use: controller.postRemoveUserRoles)
-            router.post(routes.removeDetails.routerPath, use: controller.postRemoveUserRole)
+            router.post(
+                routes.remove.routerPath,
+                use: controller.postRemoveUserRoles
+            )
+            router.post(
+                routes.removeDetails.routerPath,
+                use: controller.postRemoveUserRole
+            )
         }
     }
 }

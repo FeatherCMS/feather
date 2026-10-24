@@ -8,7 +8,7 @@ extension Rule.Add {
 extension Rule.Add.Interactor {
     protocol Interface: Sendable {
         func add(
-            input: RedirectRuleAddFormInput
+            input: RedirectModule.Rule.Add.Form.Input
         ) async throws
     }
 }

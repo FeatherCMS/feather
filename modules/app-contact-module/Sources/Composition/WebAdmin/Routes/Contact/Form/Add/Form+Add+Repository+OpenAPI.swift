@@ -8,7 +8,8 @@ extension Form.Add.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func availableFields() async throws -> [ContactForm.Field.Option] {
+        func availableFields() async throws -> [ContactModule.FormField.Option]
+        {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.contactFieldList(
                     .init(query: .init(form: nil))
@@ -16,7 +17,7 @@ extension Form.Add.Repository {
                 switch response {
                 case .ok(let value):
                     return try value.body.json.map {
-                        ContactForm.Field.Option(
+                        ContactModule.FormField.Option(
                             id: $0.id,
                             key: $0.key,
                             label: $0.label
@@ -36,7 +37,7 @@ extension Form.Add.Repository {
         }
 
         func create(entity: Form.Add.Model) async throws
-            -> ContactForm.Details.Item
+            -> ContactModule.Form.Details.Item
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.contactFormCreate(
@@ -49,7 +50,7 @@ extension Form.Add.Repository {
                             redirectUrl: entity.redirectUrl,
                             fieldIds: entity.fieldIDs,
                             mails: entity.mails.map {
-                                (mail: ContactForm.Email)
+                                (mail: ContactModule.Form.Email)
                                     -> Components.Schemas
                                     .SubmissionMailInputSchema in
                                 .init(

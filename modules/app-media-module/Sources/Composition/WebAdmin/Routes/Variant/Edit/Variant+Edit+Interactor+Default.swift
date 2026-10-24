@@ -39,7 +39,7 @@ extension Variant.Edit.Interactor {
             catch let error as OpenAPIRepositoryError { throw map(error) }
         }
 
-        func update(id: String, input: MediaVariantFormInput) async throws {
+        func update(id: String, input: Variant.Form.Input) async throws {
             do {
                 try await repository.update(
                     id: id,
@@ -56,7 +56,7 @@ extension Variant.Edit.Interactor {
 
         func addProcessor(
             variantId: String,
-            input: MediaVariantProcessorFormInput
+            input: Variant.Processor.Form.Input
         )
             async throws
         {
@@ -77,7 +77,7 @@ extension Variant.Edit.Interactor {
         func updateProcessor(
             variantId: String,
             id: String,
-            input: MediaVariantProcessorFormInput
+            input: Variant.Processor.Form.Input
         ) async throws {
             do {
                 try await repository.updateProcessor(

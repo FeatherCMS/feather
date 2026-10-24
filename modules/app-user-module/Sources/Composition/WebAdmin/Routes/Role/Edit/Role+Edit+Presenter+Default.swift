@@ -1,6 +1,6 @@
 import FeatherValidation
-import FeatherWebShared
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import UserModule
 import WebComponents
@@ -12,7 +12,7 @@ extension Role.Edit.Presenter {
         let renderingEngine: any RenderingEngine
         let routes: Role.Router.Routes
 
-        func renderEditPage(id: String, state: Role.Edit.FormComponent.State)
+        func renderEditPage(id: String, state: Role.Edit.Form.Component.State)
             async throws
             -> HTMLResponse
         {
@@ -32,11 +32,11 @@ extension Role.Edit.Presenter {
 
         func renderValidationError(
             id: String,
-            input: Role.Edit.FormInput?,
+            input: Role.Edit.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse {
             var state =
-                input.map(Role.Edit.FormComponent.State.from(input:))
+                input.map(Role.Edit.Form.Component.State.from(input:))
                 ?? .edit(name: "", notes: "")
             var errors: [String: String] = [:]
             for failure in error.failures {
@@ -49,7 +49,7 @@ extension Role.Edit.Presenter {
 
         func renderEditError(
             id: String,
-            input: Role.Edit.FormInput?,
+            input: Role.Edit.Form.Input?,
             error: Role.Edit.Error
         ) async throws -> HTMLResponse {
             switch error {
@@ -119,12 +119,12 @@ extension Role.Edit.Presenter {
 
         private func renderFormError(
             id: String,
-            input: Role.Edit.FormInput?,
+            input: Role.Edit.Form.Input?,
             message: String,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             var state =
-                input.map(Role.Edit.FormComponent.State.from(input:))
+                input.map(Role.Edit.Form.Component.State.from(input:))
                 ?? .edit(name: "", notes: "")
             state.error = message
             return try await renderEditPage(id: id, state: state)
@@ -158,9 +158,9 @@ extension Role.Edit.Presenter {
             return HTMLResponse(content: page.content, status: status)
         }
     }
-    }
+}
 
-    extension HTMLResponse {
+extension HTMLResponse {
     fileprivate func withStatus(_ status: HTTPResponse.Status) -> HTMLResponse {
         HTMLResponse(content: content, status: status)
     }

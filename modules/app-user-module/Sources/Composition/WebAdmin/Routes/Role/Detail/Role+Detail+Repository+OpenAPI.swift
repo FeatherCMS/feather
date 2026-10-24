@@ -10,7 +10,7 @@ extension Role.Detail.Repository {
 
         func load(
             id: String
-        ) async throws -> Role.Detail.RepositoryModel {
+        ) async throws -> Role.Detail.Repository.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client

@@ -1,5 +1,6 @@
 import BlogModule
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import SGML
@@ -10,7 +11,7 @@ extension Settings.Edit {
     struct Component: WebComponents.Component {
         struct State {
             let canEdit: Bool
-            let form: Settings.Edit.Form.State
+            let form: Settings.Edit.Form.Component.State
             let breadcrumb: [AdminBreadcrumb.Link]
         }
         let state: State
@@ -41,7 +42,7 @@ extension Settings.Edit {
                     )
                 }
                 context.build(
-                    Settings.Edit.Form(
+                    Settings.Edit.Form.Component(
                         state: state.form,
                         action: routes.settings.path
                     )
@@ -51,4 +52,3 @@ extension Settings.Edit {
         }
     }
 }
-import FeatherWebShared

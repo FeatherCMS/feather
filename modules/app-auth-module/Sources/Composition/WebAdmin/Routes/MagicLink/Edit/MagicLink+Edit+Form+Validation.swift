@@ -33,9 +33,9 @@ extension MagicLink.Edit.Form {
             )
         }
     }
-    }
+}
 
-    extension MagicLink.Edit.Form.Input {
+extension MagicLink.Edit.Form.Input {
 
     private var validator: GroupValidator {
         GroupValidator {

@@ -21,7 +21,7 @@ extension Asset.Folder.Edit.Interactor {
         ) async throws -> Asset.Folder.Edit.Model
         func update(
             id: String,
-            input: MediaFolderEditForm
+            input: Asset.Folder.Edit.Form.Input
         ) async throws
             -> Asset.Folder.Edit.Model
     }

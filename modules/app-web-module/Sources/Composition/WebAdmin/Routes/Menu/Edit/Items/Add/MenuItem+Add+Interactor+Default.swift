@@ -13,7 +13,7 @@ extension MenuItem.Add.Interactor {
 
         func execute(
             menuId: String,
-            input: MenuItemFormInput
+            input: MenuItem.Form.Input
         ) async throws {
             try await repository.create(menuId: menuId, input: input)
         }

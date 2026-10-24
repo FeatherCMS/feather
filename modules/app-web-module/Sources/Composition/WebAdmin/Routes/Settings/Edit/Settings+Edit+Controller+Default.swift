@@ -86,7 +86,7 @@ extension Settings.Edit.Controller {
             }
 
             let input = try await request.decode(
-                as: Settings.Edit.FormInput.self,
+                as: Settings.Edit.Form.Input.self,
                 context: context
             )
             let errors = input.validationErrors()
@@ -188,7 +188,7 @@ extension Settings.Edit.Controller {
         private func makeFormState(
             from settings: Settings.Edit.Model,
             canEdit: Bool
-        ) -> Settings.Edit.Form.State {
+        ) -> Settings.Edit.Form.Component.State {
             makeFormState(
                 logo: settings.logo,
                 logoDark: settings.logoDark,
@@ -232,7 +232,7 @@ extension Settings.Edit.Controller {
             js: String,
             canEdit: Bool,
             error: String?
-        ) -> Settings.Edit.Form.State {
+        ) -> Settings.Edit.Form.Component.State {
             .init(
                 logo: .init(
                     key: Settings.Edit.VariableKey.logo.fieldKey,
@@ -355,7 +355,7 @@ extension Settings.Edit.Controller {
         private func makeFormState(
             canEdit: Bool,
             error: String?
-        ) -> Settings.Edit.Form.State {
+        ) -> Settings.Edit.Form.Component.State {
             makeFormState(
                 logo: "",
                 logoDark: "",

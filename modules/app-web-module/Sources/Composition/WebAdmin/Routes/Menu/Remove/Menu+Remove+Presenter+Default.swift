@@ -49,7 +49,7 @@ extension WebModule.Menu.Remove.Presenter {
                 request: request,
                 context: context,
                 title: "Remove menu",
-                content: MenuError(
+                content: WebModule.Menu.Error.Page(
                     state: .init(
                         info: info,
                         message: message,

@@ -17,16 +17,16 @@ extension Variant.Edit.Interactor {
             .MediaVariantProcessorDetailSchema
         func processorNames(variantId: String, ids: [String]) async throws
             -> [AdminRemoveItemContext]
-        func update(id: String, input: MediaVariantFormInput) async throws
+        func update(id: String, input: Variant.Form.Input) async throws
         func addProcessor(
             variantId: String,
-            input: MediaVariantProcessorFormInput
+            input: Variant.Processor.Form.Input
         )
             async throws
         func updateProcessor(
             variantId: String,
             id: String,
-            input: MediaVariantProcessorFormInput
+            input: Variant.Processor.Form.Input
         ) async throws
         func removeProcessor(variantId: String, id: String) async throws
     }

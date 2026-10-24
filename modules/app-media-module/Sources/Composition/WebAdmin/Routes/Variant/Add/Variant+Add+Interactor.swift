@@ -9,6 +9,6 @@ extension Variant.Add {
 
 extension Variant.Add.Interactor {
     protocol Interface: Sendable {
-        func add(input: MediaVariantFormInput) async throws
+        func add(input: Variant.Form.Input) async throws
     }
 }

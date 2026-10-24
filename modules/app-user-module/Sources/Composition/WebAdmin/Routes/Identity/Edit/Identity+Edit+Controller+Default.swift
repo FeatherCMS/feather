@@ -1,6 +1,6 @@
 import FeatherValidation
-import FeatherWebShared
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import UserModule
 
@@ -69,10 +69,10 @@ extension Identity.Edit.Controller {
             }
             let id = try context.requiredID()
             let roleOptions = (try? await interactor.loadRoleOptions()) ?? []
-            var lastPayload: Identity.Edit.FormInput?
+            var lastPayload: Identity.Edit.Form.Input?
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<Identity.Edit.FormInput>.self,
+                    as: NonceRequest<Identity.Edit.Form.Input>.self,
                     context: context
                 )
                 let input = payload.input

@@ -11,18 +11,18 @@ extension Variable.Add.Presenter {
     protocol Interface: Sendable {
 
         func renderAddPage(
-            state: SystemVariableAddForm.State
+            state: Variable.Add.Form.State
         ) async throws -> HTMLResponse
 
         func renderValidationError(
-            input: SystemVariableAddFormInput?,
+            input: Variable.Add.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse
 
         func renderSuccess() -> Response
 
         func renderAddError(
-            input: SystemVariableAddFormInput?,
+            input: Variable.Add.Form.Input?,
             error: Variable.Add.Error
         ) async throws -> HTMLResponse
 

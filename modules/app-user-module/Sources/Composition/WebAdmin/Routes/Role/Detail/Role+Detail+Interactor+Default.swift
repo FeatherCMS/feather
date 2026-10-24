@@ -8,7 +8,7 @@ extension Role.Detail.Interactor {
 
         func load(
             id: String
-        ) async throws -> Role.Detail.RepositoryModel {
+        ) async throws -> Role.Detail.Repository.Model {
             do { return try await repository.load(id: id) }
             catch let error as OpenAPIRepositoryError {
                 switch error {

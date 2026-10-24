@@ -27,7 +27,7 @@ extension Asset.File.Remove.Presenter {
                 request: request,
                 context: context,
                 title: AdminRemoveConfirmation.dialogTitle,
-                content: AssetRemoveView(
+                content: Asset.File.Remove.Page(
                     item: model.item,
                     nonceToken: nonceToken,
                     routes: routes

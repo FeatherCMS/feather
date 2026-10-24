@@ -19,8 +19,8 @@ extension SubmissionMail.Edit.Presenter {
 
         func renderPage(
             formId: String,
-            mail: ContactForm.Email,
-            availableFields: [ContactForm.Field.Option],
+            mail: ContactModule.Form.Email,
+            availableFields: [ContactModule.FormField.Option],
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {

@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import Hummingbird
 import SystemAdminAPI
 import SystemModule
@@ -17,7 +17,7 @@ extension Permission.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: SystemPermissionEditForm.State,
+            state: Permission.Edit.Form.State,
             isEdited: Bool
         ) async throws -> HTMLResponse {
             try await renderEditPage(
@@ -30,7 +30,7 @@ extension Permission.Edit.Presenter {
 
         private func renderEditPage(
             id: String,
-            state: SystemPermissionEditForm.State,
+            state: Permission.Edit.Form.State,
             isEdited: Bool,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
@@ -38,7 +38,7 @@ extension Permission.Edit.Presenter {
                 sessionToken: context.sessionToken
             )
             return try await renderPage(
-                content: SystemPermissionEditPage(
+                content: Permission.Edit.Page(
                     state: .init(
                         id: id,
                         isEdited: isEdited,
@@ -53,7 +53,7 @@ extension Permission.Edit.Presenter {
 
         func renderValidationError(
             id: String,
-            input: SystemPermissionEditFormInput?,
+            input: Permission.Edit.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse {
             var errors: [String: String] = [:]
@@ -61,7 +61,7 @@ extension Permission.Edit.Presenter {
                 errors[failure.key] = failure.message
             }
             var state =
-                input.map(SystemPermissionEditForm.State.from) ?? .empty()
+                input.map(Permission.Edit.Form.State.from) ?? .empty()
             state.apply(errors: errors)
             return try await renderEditPage(
                 id: id,
@@ -73,7 +73,7 @@ extension Permission.Edit.Presenter {
 
         func renderEditError(
             id: String,
-            input: SystemPermissionEditFormInput?,
+            input: Permission.Edit.Form.Input?,
             error: Permission.Edit.Error
         ) async throws -> HTMLResponse {
             switch error {
@@ -194,12 +194,12 @@ extension Permission.Edit.Presenter {
 
         private func renderFormError(
             id: String,
-            input: SystemPermissionEditFormInput?,
+            input: Permission.Edit.Form.Input?,
             message: String,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             var state =
-                input.map(SystemPermissionEditForm.State.from) ?? .empty()
+                input.map(Permission.Edit.Form.State.from) ?? .empty()
             state.error = message
             return try await renderEditPage(
                 id: id,

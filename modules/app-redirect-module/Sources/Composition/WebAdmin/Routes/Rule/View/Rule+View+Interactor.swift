@@ -10,6 +10,6 @@ extension Rule.View.Interactor {
 
         func load(
             id: String
-        ) async throws -> RedirectRuleDetailsModel
+        ) async throws -> Rule.View.Model
     }
 }

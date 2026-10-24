@@ -15,7 +15,7 @@ extension Invitation.Detail.Presenter {
     protocol Interface: Sendable {
 
         func renderDetailsPage(
-            invitation: AccountInvitationDetailsModel,
+            invitation: Invitation.Detail.Result,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

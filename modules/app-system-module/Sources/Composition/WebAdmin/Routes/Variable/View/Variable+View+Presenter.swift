@@ -11,7 +11,7 @@ extension Variable.View.Presenter {
     protocol Interface: Sendable {
 
         func renderDetailsPage(
-            variable: SystemVariableDetailsModel,
+            variable: Variable.View.Result,
             permissions: AdminListActions
         ) async throws -> HTMLResponse
 

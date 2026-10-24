@@ -56,7 +56,7 @@ extension SubmissionMail.Add.Controller {
             let interactor = buildRuntime(request, context).interactor
             let formId = try context.requiredParameter("formKey")
             let input = try await request.decode(
-                as: SubmissionMailFormInput.self,
+                as: SubmissionMail.Form.Input.self,
                 context: context
             )
             try await interactor.add(id: formId, email: input.mail)

@@ -11,7 +11,7 @@ extension Role.Detail.Presenter {
         let routes: Role.Router.Routes
 
         func renderDetailsPage(
-            role: Role.Detail.RepositoryModel,
+            role: Role.Detail.Repository.Model,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(

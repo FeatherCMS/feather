@@ -12,8 +12,8 @@ import WebComponents
 extension SubmissionMail.Add {
     struct Form: Component {
         let formId: String
-        let mail: ContactForm.Email
-        let availableFields: [ContactForm.Field.Option]
+        let mail: ContactModule.Form.Email
+        let availableFields: [ContactModule.FormField.Option]
         let breadcrumb: [AdminBreadcrumb.Link]
         let error: String?
         let routes: Contact.Router.Routes
@@ -31,7 +31,7 @@ extension SubmissionMail.Add {
                     )
                 )
                 context.build(
-                    ContactForm.TabBar(formId: formId, active: .emails)
+                    ContactModule.Form.TabBar(formId: formId, active: .emails)
                 )
                 context.build(
                     AdminRelationshipGroup(
@@ -43,7 +43,7 @@ extension SubmissionMail.Add {
                     ) {
                         replacementVariables
                         context.build(
-                            SubmissionMailForm(
+                            SubmissionMail.Form.Component(
                                 mail: mail,
                                 action: routes.formEmailAddPath(formId),
                                 submitLabel: "Add email",

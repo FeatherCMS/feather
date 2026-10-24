@@ -49,12 +49,12 @@ extension MenuItem.Add.Controller {
             let runtime = buildRuntime(request, context)
             let menuId = try context.requiredID()
             let permissions = context.currentUserPermissions
-            var lastPayload: MenuItemFormInput?
+            var lastPayload: MenuItem.Form.Input?
             var availablePermissions: [String] = []
 
             do {
                 let payload = try await request.decode(
-                    as: MenuItemFormInput.self,
+                    as: MenuItem.Form.Input.self,
                     context: context
                 )
                 lastPayload = payload
@@ -232,7 +232,7 @@ extension MenuItem.Add.Controller {
             permissionOptions: [String] = [],
             authentication: String = "any",
             notes: String = ""
-        ) -> MenuItemForm.State {
+        ) -> MenuItem.Form.Component.State {
             .init(
                 label: .init(
                     key: "label",

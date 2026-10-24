@@ -37,7 +37,7 @@ extension Campaign.Subscriber.Add.Controller {
             let runtime = buildRuntime(request, context)
             let newsletterId = try context.requiredParameter("newsletterId")
             let form = try await request.decode(
-                as: Campaign.Subscriber.Form.self,
+                as: Campaign.Subscriber.Form.Input.self,
                 context: context
             )
             do {

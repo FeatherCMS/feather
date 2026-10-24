@@ -28,7 +28,7 @@ extension NotFound.View.Presenter {
                 request: request,
                 context: context,
                 title: "404s",
-                content: StatusView(
+                content: Log.Status.Page(
                     breadcrumb: AnalyticsWebAdmin.Router.Routes.breadcrumb,
                     title: "Forbidden",
                     message: "Your account cannot access 404 analytics."
@@ -45,7 +45,7 @@ extension NotFound.View.Presenter {
                 request: request,
                 context: context,
                 title: "404s",
-                content: StatusView(
+                content: Log.Status.Page(
                     breadcrumb: AnalyticsWebAdmin.Router.Routes.breadcrumb,
                     title: info,
                     message: message

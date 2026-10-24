@@ -23,7 +23,7 @@ extension Credential.List {
 extension Credential.List.Presenter {
     protocol Interface: Sendable {
         func renderPage(
-            state: Credential.List.ListTable.State
+            state: Credential.List.Component.State
         ) async throws -> HTMLResponse
 
         func renderError(

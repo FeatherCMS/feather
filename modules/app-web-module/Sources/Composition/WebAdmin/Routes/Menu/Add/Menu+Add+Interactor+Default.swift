@@ -8,7 +8,7 @@ extension WebModule.Menu.Add.Interactor {
         let repository: any WebModule.Menu.Add.Repository.Interface
 
         func execute(
-            input: MenuFormInput
+            input: WebModule.Menu.Form.Input
         ) async throws {
             try await repository.create(input: input)
         }

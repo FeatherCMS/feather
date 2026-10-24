@@ -7,7 +7,7 @@ extension Variant.Add.Interactor {
     struct Default: Interface {
         let repository: any Variant.Add.Repository.Interface
 
-        func add(input: MediaVariantFormInput) async throws {
+        func add(input: Variant.Form.Input) async throws {
             do {
                 try await repository.create(
                     input: .init(

@@ -16,8 +16,6 @@ import UserWebAdmin
 import WebBuilders
 import WebComponents
 
-
-
 extension Email.View {
     struct Router {
         let controller: any Controller.Interface

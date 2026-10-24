@@ -37,8 +37,14 @@ extension Identity.Remove {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.post(routes.remove.routerPath, use: controller.postRemoveUserIdentities)
-            router.post(routes.removeDetails.routerPath, use: controller.postRemoveUserIdentity)
+            router.post(
+                routes.remove.routerPath,
+                use: controller.postRemoveUserIdentities
+            )
+            router.post(
+                routes.removeDetails.routerPath,
+                use: controller.postRemoveUserIdentity
+            )
         }
     }
 }

@@ -1,5 +1,5 @@
-import AccountModule
 import AccountDomain
+import AccountModule
 import FeatherWebAdmin
 import FeatherWebShared
 
@@ -17,7 +17,7 @@ extension Profile.Detail {
 
         init(
             account: AccountModel,
-            profile: Profile.WebAdminModel
+            profile: Profile.Remote.Model
         ) {
             self.id = account.user.id
             self.email = account.user.email

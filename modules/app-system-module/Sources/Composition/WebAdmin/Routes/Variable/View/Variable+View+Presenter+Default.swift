@@ -16,14 +16,14 @@ extension Variable.View.Presenter {
         let routes: Variable.Router.Routes
 
         func renderDetailsPage(
-            variable: SystemVariableDetailsModel,
+            variable: Variable.View.Result,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "System variable details",
-                content: SystemVariableDetails(
+                content: Variable.View.Page(
                     state: .init(
                         variable: variable,
                         permissions: permissions,

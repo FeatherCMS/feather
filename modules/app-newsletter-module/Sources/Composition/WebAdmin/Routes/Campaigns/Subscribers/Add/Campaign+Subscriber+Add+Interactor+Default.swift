@@ -6,7 +6,7 @@ extension Campaign.Subscriber.Add.Interactor {
 
         func create(
             newsletterId: String,
-            form: Campaign.Subscriber.Form
+            form: Campaign.Subscriber.Form.Input
         ) async throws {
             try await repository.create(newsletterId: newsletterId, form: form)
         }

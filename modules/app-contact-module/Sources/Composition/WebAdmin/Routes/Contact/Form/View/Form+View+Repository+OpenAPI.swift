@@ -17,7 +17,7 @@ extension ContactModule.Form.View {
 
 extension ContactModule.Form.View.Repository {
     protocol Interface: Sendable {
-        func get(key: String) async throws -> ContactForm.Details.Item
+        func get(key: String) async throws -> ContactModule.Form.Details.Item
     }
 }
 
@@ -25,7 +25,7 @@ extension ContactModule.Form.View.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func get(key: String) async throws -> ContactForm.Details.Item {
+        func get(key: String) async throws -> ContactModule.Form.Details.Item {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.contactFormGet(
                     path: .init(contactFormKey: key)
@@ -36,7 +36,7 @@ extension ContactModule.Form.View.Repository {
                     let fieldsResponse = try await client.contactFieldList(
                         .init(query: .init(form: nil))
                     )
-                    let fields: [ContactForm.Field.Option]
+                    let fields: [ContactModule.FormField.Option]
                     switch fieldsResponse {
                     case .ok(let fieldsValue):
                         fields = try fieldsValue.body.json.map {

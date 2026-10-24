@@ -66,7 +66,7 @@ extension Email.List.Controller {
                         size: pageSize
                     )
 
-                let state = Email.List.ListTable.State(
+                let state = Email.List.Component.State(
                     isAdded: request.hasQueryFlag("added"),
                     isEdited: request.hasQueryFlag("edited"),
                     isRemoved: request.hasQueryFlag("removed"),

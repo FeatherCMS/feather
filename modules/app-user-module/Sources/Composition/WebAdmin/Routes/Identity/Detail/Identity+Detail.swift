@@ -23,7 +23,9 @@ extension Identity.Detail {
                     return WebAdminRuntime(
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(api: userAPI),
-                            roleRepository: Repository.Role.OpenAPI(api: userAPI)
+                            roleRepository: Repository.Role.OpenAPI(
+                                api: userAPI
+                            )
                         ),
                         presenter: Presenter.Default(
                             request: request,
@@ -37,7 +39,10 @@ extension Identity.Detail {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.get(routes.details.routerPath, use: controller.getUserIdentity)
+            router.get(
+                routes.details.routerPath,
+                use: controller.getUserIdentity
+            )
         }
     }
 }

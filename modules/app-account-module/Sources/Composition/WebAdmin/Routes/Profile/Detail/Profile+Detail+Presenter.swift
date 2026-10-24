@@ -13,7 +13,7 @@ extension Profile.Detail.Presenter {
     protocol Interface: Sendable {
 
         func renderPage(
-            state: ProfileDetails.State,
+            state: Profile.Detail.Page.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

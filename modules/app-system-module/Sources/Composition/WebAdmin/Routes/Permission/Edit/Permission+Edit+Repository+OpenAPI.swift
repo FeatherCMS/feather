@@ -12,7 +12,7 @@ extension Permission.Edit.Repository {
 
         func load(
             id: String
-        ) async throws -> SystemPermissionDetailsModel {
+        ) async throws -> Permission.View.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.systemPermissionGet(
                     path: .init(systemPermissionId: id),
@@ -45,7 +45,7 @@ extension Permission.Edit.Repository {
 
         func update(
             id: String,
-            input: SystemPermissionEditFormInput
+            input: Permission.Edit.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.systemPermissionPut(

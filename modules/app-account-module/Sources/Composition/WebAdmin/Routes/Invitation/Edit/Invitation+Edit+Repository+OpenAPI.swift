@@ -13,7 +13,7 @@ extension Invitation.Edit.Repository {
 
         func get(
             id: String
-        ) async throws -> AccountInvitationDetailsModel {
+        ) async throws -> Invitation.Detail.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client.accountInvitationGet(

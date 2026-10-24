@@ -9,7 +9,7 @@ extension Role.Add.Interactor {
     protocol Interface: Sendable {
 
         func add(
-            input: Role.Add.FormInput
+            input: Role.Add.Form.Input
         ) async throws
     }
 }

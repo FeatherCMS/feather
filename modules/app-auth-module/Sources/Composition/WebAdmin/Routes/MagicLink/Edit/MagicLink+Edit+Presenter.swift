@@ -46,9 +46,9 @@ extension MagicLink.Edit.Presenter {
             error: OpenAPIRepositoryError
         ) -> String
     }
-    }
+}
 
-    extension MagicLink.Edit.Presenter.Interface {
+extension MagicLink.Edit.Presenter.Interface {
     func formState(
         credentialId: String,
         isPersistent: Bool

@@ -8,7 +8,7 @@ extension Rule.Add.Interactor {
         let repository: any Rule.Add.Repository.Interface
 
         func add(
-            input: RedirectRuleAddFormInput
+            input: RedirectModule.Rule.Add.Form.Input
         ) async throws {
             do { try await repository.create(input: input) }
             catch let error as OpenAPIRepositoryError {

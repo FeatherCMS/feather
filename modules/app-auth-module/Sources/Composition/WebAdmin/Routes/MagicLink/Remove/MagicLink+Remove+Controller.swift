@@ -28,9 +28,9 @@ extension MagicLink.Remove.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> Response
     }
-    }
+}
 
-    extension MagicLink.Remove.Controller.Interface {
+extension MagicLink.Remove.Controller.Interface {
 
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>,

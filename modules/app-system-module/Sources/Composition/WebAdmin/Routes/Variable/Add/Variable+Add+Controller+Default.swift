@@ -45,11 +45,11 @@ extension Variable.Add.Controller {
                     .renderForbiddenPage()
                     .response(from: request, context: context)
             }
-            var lastPayload: SystemVariableAddFormInput?
+            var lastPayload: Variable.Add.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<SystemVariableAddFormInput>.self,
+                    as: NonceRequest<Variable.Add.Form.Input>.self,
                     context: context
                 )
                 let formInput = payload.input

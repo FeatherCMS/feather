@@ -13,18 +13,18 @@ extension RedirectModule.Rule.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: RedirectRuleEditForm.State,
+            state: RedirectModule.Rule.Edit.Form.State,
             permissions: AdminListActions
         ) async throws -> HTMLResponse
 
         func renderValidationError(
             id: String,
-            input: RedirectRuleEditFormInput?,
+            input: RedirectModule.Rule.Edit.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse
         func renderEditError(
             id: String,
-            input: RedirectRuleEditFormInput?,
+            input: RedirectModule.Rule.Edit.Form.Input?,
             error: RedirectModule.Rule.Edit.Error
         ) async throws -> HTMLResponse
         func renderSuccess(id: String) -> Response

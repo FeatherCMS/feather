@@ -10,7 +10,7 @@ import WebComponents
 
 extension MagicLink.List {
     struct TableContent: WebComponents.Component {
-        let state: MagicLink.List.ListTable.State
+        let state: MagicLink.List.Component.State
 
         func html(context: inout BuilderContext) -> Div {
             let actions = AdminListActions(

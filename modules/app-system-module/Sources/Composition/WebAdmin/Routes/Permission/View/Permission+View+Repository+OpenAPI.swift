@@ -11,7 +11,7 @@ extension Permission.View.Repository {
 
         func get(
             id: String
-        ) async throws -> SystemPermissionDetailsModel {
+        ) async throws -> Permission.View.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client

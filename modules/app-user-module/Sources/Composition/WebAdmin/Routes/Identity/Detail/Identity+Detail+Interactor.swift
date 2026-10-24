@@ -11,6 +11,6 @@ extension Identity.Detail.Interactor {
 
         func load(
             id: String
-        ) async throws -> Identity.Detail.ViewModel
+        ) async throws -> Identity.Detail.Repository.Model
     }
 }

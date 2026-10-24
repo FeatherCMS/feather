@@ -1,6 +1,8 @@
 public import AuthAdminAPI
 import AuthApplication
+import AuthModule
 import FeatherModuleKit
+import Foundation
 
 extension AdminAPIGateway {
 
@@ -17,9 +19,25 @@ extension AdminAPIGateway {
         return .ok(
             .init(
                 body: .json(
-                    .init(items: result.items.map(map))
+                    .init(items: result.items.map(mapSession))
                 )
             )
+        )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapSession(
+        _ item: Session.ListByIdentity.Output.Item
+    ) -> AuthAdminAPI.Components.Schemas.UserAuthSessionListItemSchema {
+        .init(
+            id: item.id,
+            authenticationType: item.authenticationType,
+            authenticationReference: item.authenticationReference,
+            expiresAt: item.expiresAt,
+            isPersistent: item.isPersistent,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
         )
     }
 }

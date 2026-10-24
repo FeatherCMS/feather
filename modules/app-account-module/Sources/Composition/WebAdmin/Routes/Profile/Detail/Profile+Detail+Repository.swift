@@ -12,6 +12,6 @@ extension Profile.Detail {
 extension Profile.Detail.Repository {
 
     protocol Interface: Sendable {
-        func get() async throws -> Profile.WebAdminModel
+        func get() async throws -> Profile.Remote.Model
     }
 }

@@ -19,7 +19,7 @@ extension SubmissionMail.Add.Presenter {
 
         func renderPage(
             formId: String,
-            availableFields: [ContactForm.Field.Option],
+            availableFields: [ContactModule.FormField.Option],
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {

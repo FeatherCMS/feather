@@ -65,7 +65,7 @@ extension Asset.File.Add.Repository {
         }
 
         func createAsset(
-            payload: AssetAddUpload,
+            payload: Asset.File.Add.Upload.Payload,
             variants: [String]? = nil
         ) async throws -> AdminMediaAsset {
             let asset: Components.Schemas.MediaAssetDetailSchema =

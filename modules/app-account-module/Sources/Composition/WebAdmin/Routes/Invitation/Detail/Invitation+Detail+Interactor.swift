@@ -17,6 +17,6 @@ extension Invitation.Detail.Interactor {
 
         func execute(
             entity: Invitation.Detail.Model
-        ) async throws -> AccountInvitationDetailsModel
+        ) async throws -> Invitation.Detail.Result
     }
 }

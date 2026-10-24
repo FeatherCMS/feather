@@ -12,7 +12,7 @@ extension Permission.Edit.Interactor {
 
         func load(
             id: String
-        ) async throws -> SystemPermissionDetailsModel {
+        ) async throws -> Permission.View.Result {
             do {
                 return try await repository.load(id: id)
             }
@@ -23,7 +23,7 @@ extension Permission.Edit.Interactor {
 
         func update(
             id: String,
-            input: SystemPermissionEditFormInput
+            input: Permission.Edit.Form.Input
         ) async throws {
             do {
                 try await repository.update(id: id, input: input)

@@ -20,7 +20,7 @@ extension FormField.Add.Interactor {
             )
         }
         func postAddContactField(
-            payload: ContactFieldFormInput,
+            payload: FormField.Add.Form.Input,
             formKey: String?
         ) async throws -> FormField.Add.Model {
             if let error = payload.allowedValuesValidationError {

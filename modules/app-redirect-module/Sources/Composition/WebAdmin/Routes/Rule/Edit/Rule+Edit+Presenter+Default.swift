@@ -15,14 +15,14 @@ extension RedirectModule.Rule.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: RedirectRuleEditForm.State,
+            state: RedirectModule.Rule.Edit.Form.State,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
             let nonceToken = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
             return try await renderPage(
-                content: RedirectRuleEditPage(
+                content: RedirectModule.Rule.Edit.Page(
                     id: id,
                     form: state,
                     nonceToken: nonceToken,
@@ -35,11 +35,12 @@ extension RedirectModule.Rule.Edit.Presenter {
 
         func renderValidationError(
             id: String,
-            input: RedirectRuleEditFormInput?,
+            input: RedirectModule.Rule.Edit.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse {
             var state =
-                input.map(RedirectRuleEditForm.State.from(input:)) ?? .empty()
+                input.map(RedirectModule.Rule.Edit.Form.State.from(input:))
+                ?? .empty()
             state.apply(
                 errors: Dictionary(
                     uniqueKeysWithValues: error.failures.map {
@@ -57,7 +58,7 @@ extension RedirectModule.Rule.Edit.Presenter {
 
         func renderEditError(
             id: String,
-            input: RedirectRuleEditFormInput?,
+            input: RedirectModule.Rule.Edit.Form.Input?,
             error: RedirectModule.Rule.Edit.Error
         ) async throws -> HTMLResponse {
             switch error {
@@ -119,13 +120,14 @@ extension RedirectModule.Rule.Edit.Presenter {
         }
 
         private func renderFormError(
-            input: RedirectRuleEditFormInput?,
+            input: RedirectModule.Rule.Edit.Form.Input?,
             message: String,
             status: HTTPResponse.Status,
             id: String
         ) async throws -> HTMLResponse {
             var state =
-                input.map(RedirectRuleEditForm.State.from(input:)) ?? .empty()
+                input.map(RedirectModule.Rule.Edit.Form.State.from(input:))
+                ?? .empty()
             state.error = message
             return try await renderEditPage(
                 id: id,
@@ -162,9 +164,9 @@ extension RedirectModule.Rule.Edit.Presenter {
             return HTMLResponse(content: page.content, status: status)
         }
     }
-    }
+}
 
-    extension HTMLResponse {
+extension HTMLResponse {
     fileprivate func withStatus(_ status: HTTPResponse.Status) -> HTMLResponse {
         HTMLResponse(content: content, status: status)
     }

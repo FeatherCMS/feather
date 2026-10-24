@@ -70,7 +70,7 @@ extension MenuItem.List.Controller {
             let menuId = try context.requiredID()
             let itemId = try context.requiredParameter("itemId")
             let payload = try await request.decode(
-                as: MenuItemMoveFormInput.self,
+                as: MenuItem.List.Move.Input.self,
                 context: context
             )
             try await interactor.move(

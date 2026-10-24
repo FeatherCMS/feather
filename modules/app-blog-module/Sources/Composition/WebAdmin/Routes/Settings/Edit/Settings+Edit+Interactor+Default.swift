@@ -21,7 +21,7 @@ extension Settings.Edit.Interactor {
         }
 
         func saveSettings(
-            input: Settings.Edit.FormInput
+            input: Settings.Edit.Form.Input
         ) async throws {
             try await repository.saveSettings(input: input)
         }

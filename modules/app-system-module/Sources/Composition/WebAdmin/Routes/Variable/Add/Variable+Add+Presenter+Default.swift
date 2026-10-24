@@ -16,22 +16,22 @@ extension Variable.Add.Presenter {
         let routes: Variable.Router.Routes
 
         func renderAddPage(
-            state: SystemVariableAddForm.State
+            state: Variable.Add.Form.State
         ) async throws -> HTMLResponse {
             try await renderAddPage(state: state, status: .ok)
         }
 
         private func renderAddPage(
-            state: SystemVariableAddForm.State,
+            state: Variable.Add.Form.State,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             let nonceToken = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
             return try await renderPage(
-                content: SystemVariableAddPage(
+                content: Variable.Add.Page(
                     routes: routes,
-                    form: SystemVariableAddForm(
+                    form: Variable.Add.Form(
                         state: state,
                         action: routes.add.path,
                         nonceToken: nonceToken
@@ -42,7 +42,7 @@ extension Variable.Add.Presenter {
         }
 
         func renderValidationError(
-            input: SystemVariableAddFormInput?,
+            input: Variable.Add.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse {
             var errors: [String: String] = [:]
@@ -52,7 +52,7 @@ extension Variable.Add.Presenter {
 
             var state =
                 input.map {
-                    SystemVariableAddForm.State.from(input: $0)
+                    Variable.Add.Form.State.from(input: $0)
                 } ?? .empty()
             state.apply(errors: errors)
 
@@ -73,7 +73,7 @@ extension Variable.Add.Presenter {
         }
 
         func renderAddError(
-            input: SystemVariableAddFormInput?,
+            input: Variable.Add.Form.Input?,
             error: Variable.Add.Error
         ) async throws -> HTMLResponse {
             switch error {
@@ -152,13 +152,13 @@ extension Variable.Add.Presenter {
         }
 
         private func renderFormError(
-            input: SystemVariableAddFormInput?,
+            input: Variable.Add.Form.Input?,
             message: String,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             var state =
                 input.map {
-                    SystemVariableAddForm.State.from(input: $0)
+                    Variable.Add.Form.State.from(input: $0)
                 } ?? .empty()
             state.apply(error: message)
 

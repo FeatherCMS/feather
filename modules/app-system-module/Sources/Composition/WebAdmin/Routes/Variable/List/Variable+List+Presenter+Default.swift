@@ -27,7 +27,7 @@ extension Variable.List.Presenter {
                 request: request,
                 context: context,
                 title: "Variables",
-                content: SystemVariableTable(
+                content: Variable.List.Page(
                     state: .init(
                         permissions: actions,
                         variables: model.items,

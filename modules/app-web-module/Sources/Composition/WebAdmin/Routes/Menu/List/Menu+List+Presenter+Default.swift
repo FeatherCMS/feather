@@ -37,7 +37,7 @@ extension WebModule.Menu.List.Presenter {
                     request: request,
                     context: context,
                     title: "Manage menus",
-                    content: MenuError(
+                    content: Menu.Error.Page(
                         state: .init(
                             info: "Unable to load web menus.",
                             message: error,
@@ -51,7 +51,7 @@ extension WebModule.Menu.List.Presenter {
                     request: request,
                     context: context,
                     title: "Manage menus",
-                    content: MenuError(
+                    content: Menu.Error.Page(
                         state: .init(
                             info: "Forbidden",
                             message: "Your account cannot access web menus.",
@@ -64,7 +64,7 @@ extension WebModule.Menu.List.Presenter {
                 request: request,
                 context: context,
                 title: "Manage menus",
-                content: MenuTable(
+                content: WebModule.Menu.List.Page(
                     state: .init(
                         permissions: actions,
                         menus: model.items,

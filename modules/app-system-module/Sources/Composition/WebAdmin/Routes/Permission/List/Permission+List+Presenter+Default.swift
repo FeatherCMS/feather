@@ -1,6 +1,6 @@
+import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherModuleKit
 import HTML
 import Hummingbird
 import SystemModule
@@ -25,7 +25,7 @@ extension Permission.List.Presenter {
                 request: request,
                 context: context,
                 title: "Permissions",
-                content: SystemPermissionTable(
+                content: Permission.List.Page(
                     state: .init(
                         permissions: permissions,
                         permissionsList: model.items,

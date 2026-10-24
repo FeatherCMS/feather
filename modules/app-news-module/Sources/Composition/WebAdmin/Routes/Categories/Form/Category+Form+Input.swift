@@ -34,7 +34,7 @@ extension NewsModule.Category.Form {
             excerpt = item.excerpt
             content = item.content
             imageAssetId = item.imageAssetId ?? ""
-            let metadata = NewsMetadataFormInput(metadata: item.metadata)
+            let metadata = News.Metadata.Form.Input(metadata: item.metadata)
             slug = metadata.slug
             status = metadata.status
             publicationDate = metadata.publicationDate
@@ -50,7 +50,7 @@ extension NewsModule.Category.Form {
             structuredDataCodeInjection = metadata.structuredDataCodeInjection
         }
 
-        var metadata: NewsMetadataFormInput {
+        var metadata: News.Metadata.Form.Input {
             .init(
                 slug: slug,
                 status: status,

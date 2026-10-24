@@ -11,16 +11,16 @@ extension Permission.Add.Presenter {
     protocol Interface: Sendable {
 
         func renderAddPage(
-            state: SystemPermissionAddForm.State
+            state: Permission.Add.Form.State
         ) async throws -> HTMLResponse
 
         func renderValidationError(
-            input: SystemPermissionAddFormInput?,
+            input: Permission.Add.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse
 
         func renderAddError(
-            input: SystemPermissionAddFormInput?,
+            input: Permission.Add.Form.Input?,
             error: Permission.Add.Error
         ) async throws -> HTMLResponse
 

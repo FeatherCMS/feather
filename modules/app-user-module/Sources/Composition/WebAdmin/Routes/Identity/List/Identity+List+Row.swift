@@ -7,7 +7,7 @@ import WebBuilders
 import WebComponents
 
 extension Identity.List {
-    struct Row: Component {
+    struct Row: WebComponents.Component {
         let routes: Identity.Router.Routes
         let identity: Components.Schemas.UserIdentityQueryItemSchema
         let permissions: AdminListActions

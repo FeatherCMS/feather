@@ -12,7 +12,7 @@ extension WebModule.Menu.View.Repository {
 
         func get(
             id: String
-        ) async throws -> MenuDetailsModel {
+        ) async throws -> WebModule.Menu.View.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 async let menuResponse =
                     client

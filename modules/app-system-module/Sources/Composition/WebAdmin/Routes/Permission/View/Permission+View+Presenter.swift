@@ -9,7 +9,7 @@ extension Permission.View.Presenter {
     protocol Interface: Sendable {
 
         func renderDetailsPage(
-            permission: SystemPermissionDetailsModel,
+            permission: Permission.View.Result,
             permissions: AdminListActions
         ) async throws -> HTMLResponse
 

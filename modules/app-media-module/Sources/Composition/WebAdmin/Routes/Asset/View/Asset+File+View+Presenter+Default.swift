@@ -29,7 +29,7 @@ extension Asset.File.View.Presenter {
                     request: request,
                     context: context,
                     title: "Media asset details",
-                    content: AssetDetailsView(
+                    content: Asset.File.View.Page(
                         item: model.item,
                         variants: model.variants,
                         permissions: permissions,
@@ -41,7 +41,7 @@ extension Asset.File.View.Presenter {
                 request: request,
                 context: context,
                 title: "Media asset details",
-                content: MediaAssetErrorView(
+                content: Asset.Error.Page(
                     info: "Asset not found.",
                     message: error ?? "Unknown error"
                 )

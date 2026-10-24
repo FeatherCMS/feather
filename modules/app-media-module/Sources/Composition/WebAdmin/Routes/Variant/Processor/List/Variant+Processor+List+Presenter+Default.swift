@@ -22,9 +22,9 @@ extension Variant.Processor.List.Presenter {
                 request: request,
                 context: context,
                 title: "Add media variant processor",
-                content: MediaVariantProcessorAddPage(
+                content: Variant.Processor.Add.Page(
                     variantId: variantId,
-                    form: MediaVariantProcessorFormView(
+                    form: Variant.Processor.Form(
                         processor: nil,
                         action: routes.processorAddPath(variantId),
                         nonceToken: nonce
@@ -47,7 +47,7 @@ extension Variant.Processor.List.Presenter {
                 request: request,
                 context: context,
                 title: "Media variant processors",
-                content: MediaVariantProcessorsPage(
+                content: Variant.Processor.List.Page(
                     variantId: variantId,
                     processors: model.items,
                     pageState: model.pageState,

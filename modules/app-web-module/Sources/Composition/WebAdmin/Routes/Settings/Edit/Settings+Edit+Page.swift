@@ -11,7 +11,7 @@ extension Settings.Edit {
 
         struct State {
             let canEdit: Bool
-            let form: Settings.Edit.Form.State
+            let form: Settings.Edit.Form.Component.State
             let breadcrumb: [AdminBreadcrumb.Link]
             let action: String
         }
@@ -37,7 +37,10 @@ extension Settings.Edit {
                 }
 
                 context.build(
-                    Settings.Edit.Form(state: state.form, action: state.action)
+                    Settings.Edit.Form.Component(
+                        state: state.form,
+                        action: state.action
+                    )
                 )
             }
             .class("cms-section")

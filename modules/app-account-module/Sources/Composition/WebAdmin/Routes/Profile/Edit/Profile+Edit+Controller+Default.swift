@@ -155,7 +155,7 @@ extension Profile.Edit.Controller {
             lastName: String?,
             profileImageAssetId: String?,
             selectedImageAsset: AdminMediaAsset? = nil
-        ) -> ProfileForm.State {
+        ) -> Profile.Edit.Form.Component.State {
             .init(
                 firstName: .init(
                     key: "firstName",
@@ -187,8 +187,8 @@ extension Profile.Edit.Controller {
             lastName: String?,
             profileImageAssetId: String?,
             failures: [FeatherValidation.Failure]
-        ) -> ProfileEdit.State {
-            var state = ProfileEdit.State(
+        ) -> Profile.Edit.Page.State {
+            var state = Profile.Edit.Page.State(
                 id: id,
                 isEdited: false,
                 form: formState(
@@ -212,8 +212,8 @@ extension Profile.Edit.Controller {
             lastName: String?,
             profileImageAssetId: String?,
             error: OpenAPIRepositoryError
-        ) -> ProfileEdit.State {
-            var state = ProfileEdit.State(
+        ) -> Profile.Edit.Page.State {
+            var state = Profile.Edit.Page.State(
                 id: id,
                 isEdited: false,
                 form: formState(
@@ -233,8 +233,8 @@ extension Profile.Edit.Controller {
             lastName: String?,
             profileImageAssetId: String?,
             message: String
-        ) -> ProfileEdit.State {
-            var state = ProfileEdit.State(
+        ) -> Profile.Edit.Page.State {
+            var state = Profile.Edit.Page.State(
                 id: id,
                 isEdited: false,
                 form: formState(
@@ -259,7 +259,7 @@ extension Profile.Edit.Controller {
             context: AuthenticatedRequestContext,
             presenter: any Profile.Edit.Presenter.Interface,
             permissions: Set<String>,
-            state: ProfileEdit.State
+            state: Profile.Edit.Page.State
         ) async throws -> Response {
             try await presenter.renderPage(
                 state: state,

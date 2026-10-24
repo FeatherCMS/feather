@@ -4,6 +4,7 @@ import AuthModule
 import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
+import Foundation
 import Hummingbird
 
 extension AdminAPIGateway {
@@ -54,8 +55,23 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(mapMagicLink(result))
             )
+        )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapMagicLink(
+        _ output: MagicLink.Edit.Output
+    ) -> Components.Schemas.AuthMagicLinkDetailSchema {
+        .init(
+            id: output.id,
+            credentialId: output.authEmailId,
+            token: output.token,
+            expiresAt: output.expiresAt.timeIntervalSince1970,
+            isPersistent: output.isPersistent,
+            isUsed: output.isUsed
         )
     }
 }

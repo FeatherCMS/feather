@@ -68,10 +68,10 @@ extension ContactModule.Form.Edit.Controller {
             let presenter = runtime.presenter
             let formKey = try context.requiredParameter("formKey")
             let form = try await request.decode(
-                as: ContactFormEditForm.self,
+                as: ContactModule.Form.Edit.Input.self,
                 context: context
             )
-            let current: ContactForm.Details.Item
+            let current: ContactModule.Form.Details.Item
             do {
                 current = try await interactor.get(key: formKey)
             }
@@ -136,10 +136,10 @@ extension ContactModule.Form.Edit.Controller {
             let presenter = runtime.presenter
             let formKey = try context.requiredParameter("formKey")
             let form = try await request.decode(
-                as: ContactModule.Form.Edit.FieldsForm.self,
+                as: ContactModule.Form.Edit.Fields.Input.self,
                 context: context
             )
-            let current: ContactForm.Details.Item
+            let current: ContactModule.Form.Details.Item
             do {
                 current = try await interactor.get(key: formKey)
             }
@@ -172,7 +172,7 @@ extension ContactModule.Form.Edit.Controller {
                 )
             }
             catch {
-                let attempted = ContactForm.Details.Item(
+                let attempted = ContactModule.Form.Details.Item(
                     key: current.key,
                     name: current.name,
                     successMessage: current.successMessage,

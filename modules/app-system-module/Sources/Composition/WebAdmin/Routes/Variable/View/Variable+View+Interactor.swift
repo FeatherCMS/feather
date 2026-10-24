@@ -10,6 +10,6 @@ extension Variable.View.Interactor {
 
         func execute(
             entity: Variable.View.Model
-        ) async throws -> SystemVariableDetailsModel
+        ) async throws -> Variable.View.Result
     }
 }

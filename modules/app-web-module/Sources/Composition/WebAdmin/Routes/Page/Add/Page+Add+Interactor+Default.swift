@@ -7,7 +7,7 @@ extension Page.Add.Interactor {
         let repository: any Page.Add.Repository.Interface
 
         func execute(
-            input: PageFormInput
+            input: Page.Form.Input
         ) async throws {
             try await repository.create(input: input)
         }

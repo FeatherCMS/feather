@@ -8,7 +8,7 @@ extension Rule.Add {
 extension Rule.Add.Repository {
     protocol Interface: Sendable {
         func create(
-            input: RedirectRuleAddFormInput
+            input: RedirectModule.Rule.Add.Form.Input
         ) async throws
     }
 }

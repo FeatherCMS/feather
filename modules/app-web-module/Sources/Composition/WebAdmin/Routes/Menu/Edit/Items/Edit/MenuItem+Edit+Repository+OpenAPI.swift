@@ -50,7 +50,7 @@ extension MenuItem.Edit.Repository {
         func update(
             menuId: String,
             id: String,
-            input: MenuItemFormInput
+            input: MenuItem.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.menuItemUpdate(

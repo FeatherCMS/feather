@@ -12,7 +12,7 @@ extension Identity.Add.Interactor {
         }
 
         func add(
-            input: Identity.Add.FormInput
+            input: Identity.Add.Form.Input
         ) async throws {
             do {
                 try await repository.create(

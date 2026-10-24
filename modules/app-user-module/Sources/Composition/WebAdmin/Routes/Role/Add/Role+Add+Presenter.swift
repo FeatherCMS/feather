@@ -9,14 +9,14 @@ extension Role.Add {
 
 extension Role.Add.Presenter {
     protocol Interface: Sendable {
-        func renderAddPage(state: Role.Add.FormComponent.State) async throws
+        func renderAddPage(state: Role.Add.Form.Component.State) async throws
             -> HTMLResponse
         func renderValidationError(
-            input: Role.Add.FormInput?,
+            input: Role.Add.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse
         func renderAddError(
-            input: Role.Add.FormInput?,
+            input: Role.Add.Form.Input?,
             error: Role.Add.Error
         ) async throws -> HTMLResponse
         func renderSuccess() -> Response

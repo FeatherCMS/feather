@@ -11,7 +11,7 @@ extension WebModule.Menu.Add.Interactor {
     protocol Interface: Sendable {
 
         func execute(
-            input: MenuFormInput
+            input: WebModule.Menu.Form.Input
         ) async throws
     }
 }

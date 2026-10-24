@@ -7,6 +7,6 @@ extension Job.View {
 
 extension Job.View.Repository {
     protocol Interface: Sendable {
-        func get(id: String) async throws -> SystemJobDetailsModel
+        func get(id: String) async throws -> Job.View.Result
     }
 }

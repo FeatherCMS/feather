@@ -8,7 +8,7 @@ extension Variable.Add.Interactor {
         let repository: any Variable.Add.Repository.Interface
 
         func add(
-            input: SystemVariableAddFormInput
+            input: Variable.Add.Form.Input
         ) async throws {
             do {
                 try await repository.create(

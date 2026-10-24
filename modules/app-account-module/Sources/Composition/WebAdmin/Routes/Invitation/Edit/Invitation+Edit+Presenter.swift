@@ -13,7 +13,7 @@ extension Invitation.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: AccountInvitationForm.State,
+            state: Invitation.Form.Component.State,
             isEdited: Bool,
             permissions: Set<String>
         ) async throws -> HTMLResponse
@@ -28,8 +28,8 @@ extension Invitation.Edit.Presenter {
         func formState(
             email: String,
             roleIDs: [String],
-            roleOptions: [AccountInvitationForm.RoleOptionState]
-        ) -> AccountInvitationForm.State
+            roleOptions: [Invitation.Form.Component.RoleOptionState]
+        ) -> Invitation.Form.Component.State
 
         func format(
             error: OpenAPIRepositoryError

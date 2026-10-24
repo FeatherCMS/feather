@@ -23,7 +23,7 @@ extension Invitation.Remove.Presenter {
                 request: request,
                 context: context,
                 title: AdminRemoveConfirmation.dialogTitle,
-                content: AccountInvitationConfirmation(
+                content: Invitation.Remove.Confirmation(
                     routes: routes,
                     state: .init(
                         id: item.id,

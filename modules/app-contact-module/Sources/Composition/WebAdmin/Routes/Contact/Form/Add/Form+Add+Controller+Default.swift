@@ -46,7 +46,7 @@ extension Form.Add.Controller {
             let interactor = runtime.interactor
             let presenter = runtime.presenter
             let form = try await request.decode(
-                as: ContactFormEditForm.self,
+                as: ContactModule.Form.Edit.Input.self,
                 context: context
             )
             do {

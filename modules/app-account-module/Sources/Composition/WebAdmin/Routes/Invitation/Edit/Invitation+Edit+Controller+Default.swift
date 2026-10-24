@@ -166,7 +166,7 @@ extension Invitation.Edit.Controller {
         private func roleOptions(
             _ context: AuthenticatedRequestContext,
             selected: [String]
-        ) async -> [AccountInvitationForm.RoleOptionState] {
+        ) async -> [Invitation.Form.Component.RoleOptionState] {
             let userAPI = UserWebAdmin.API.Client(
                 apiBaseURL: environment.apiBaseURL,
                 requestContext: context
@@ -198,7 +198,7 @@ extension Invitation.Edit.Controller {
             context: AuthenticatedRequestContext,
             id: String,
             presenter: any Invitation.Edit.Presenter.Interface,
-            state: AccountInvitationForm.State
+            state: Invitation.Form.Component.State
         ) async throws -> Response {
             try await presenter.renderEditPage(
                 id: id,

@@ -17,14 +17,14 @@ extension MenuItem.Add.Presenter {
 
         func renderAddPage(
             menuId: String,
-            state: MenuItemForm.State,
+            state: MenuItem.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Edit menu",
-                content: MenuItemAdd(
+                content: MenuItem.Add.Page(
                     state: .init(
                         menuId: menuId,
                         form: state,

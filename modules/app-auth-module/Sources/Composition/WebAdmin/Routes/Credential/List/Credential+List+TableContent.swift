@@ -10,7 +10,7 @@ import WebComponents
 
 extension Credential.List {
     struct TableContent: WebComponents.Component {
-        let state: Credential.List.ListTable.State
+        let state: Credential.List.Component.State
 
         func html(context: inout BuilderContext) -> Div {
             let actions = AdminListActions(

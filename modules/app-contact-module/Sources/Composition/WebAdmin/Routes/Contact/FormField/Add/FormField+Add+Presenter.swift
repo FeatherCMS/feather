@@ -16,7 +16,7 @@ extension FormField.Add.Presenter {
         ) async throws -> HTMLResponse
 
         func renderAddError(
-            input: ContactFieldFormInput,
+            input: FormField.Add.Form.Input,
             error: FormField.Add.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse

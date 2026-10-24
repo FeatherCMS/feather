@@ -12,7 +12,7 @@ extension WebModule.Menu.View.Presenter {
     protocol Interface: Sendable {
 
         func renderDetailsPage(
-            rule: MenuDetailsModel,
+            rule: WebModule.Menu.View.Model,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

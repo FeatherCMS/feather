@@ -3,8 +3,6 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 
-
-
 extension MagicLink {
     struct Router {
         struct Routes {

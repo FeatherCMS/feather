@@ -15,7 +15,7 @@ extension Variant.Edit.Presenter {
         func renderEditPage(
             id: String,
             detail: MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema,
-            state: MediaVariantFormView.State,
+            state: Variant.Form.State,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
             let variantNonce = await AdminNonceStore.shared.issue(
@@ -25,10 +25,10 @@ extension Variant.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit media variant",
-                content: MediaVariantEditPage(
+                content: Variant.Edit.Page(
                     id: id,
                     detail: detail,
-                    form: MediaVariantFormView(
+                    form: Variant.Form(
                         state: state,
                         action: routes.editPath(id),
                         submitLabel: "Save changes",
@@ -63,10 +63,10 @@ extension Variant.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit media variant processor",
-                content: MediaVariantProcessorEditPage(
+                content: Variant.Processor.Edit.Page(
                     variantId: variantId,
                     processor: processor,
-                    form: MediaVariantProcessorFormView(
+                    form: Variant.Processor.Form(
                         processor: .init(
                             id: processor.id,
                             name: processor.name,

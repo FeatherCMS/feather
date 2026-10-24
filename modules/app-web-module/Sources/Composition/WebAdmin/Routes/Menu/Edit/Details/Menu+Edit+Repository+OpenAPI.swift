@@ -12,7 +12,7 @@ extension WebModule.Menu.Edit.Repository {
 
         func load(
             id: String
-        ) async throws -> MenuDetailsModel {
+        ) async throws -> Menu.View.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.menuGet(
                     path: .init(menuId: id),
@@ -44,7 +44,7 @@ extension WebModule.Menu.Edit.Repository {
 
         func update(
             id: String,
-            input: MenuFormInput
+            input: WebModule.Menu.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.menuUpdate(

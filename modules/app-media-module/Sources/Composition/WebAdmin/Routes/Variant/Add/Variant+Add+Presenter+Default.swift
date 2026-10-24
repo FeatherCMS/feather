@@ -12,15 +12,15 @@ extension Variant.Add.Presenter {
         let renderingEngine: any RenderingEngine
         let routes: Variant.Router.Routes
 
-        func renderAddPage(state: MediaVariantFormView.State) async throws
+        func renderAddPage(state: Variant.Form.State) async throws
             -> HTMLResponse
         {
             let nonce = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
             return try await renderPage(
-                content: MediaVariantAddPage(
-                    form: MediaVariantFormView(
+                content: Variant.Add.Page(
+                    form: Variant.Form(
                         state: state,
                         action: routes.add.path,
                         submitLabel: "Add variant",
@@ -32,10 +32,10 @@ extension Variant.Add.Presenter {
         }
 
         func renderValidationError(
-            input: MediaVariantFormInput?,
+            input: Variant.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse {
-            var state = MediaVariantFormView.State.from(input: input)
+            var state = Variant.Form.State.from(input: input)
             state.apply(
                 errors: Dictionary(
                     uniqueKeysWithValues: error.failures.map {
@@ -47,7 +47,7 @@ extension Variant.Add.Presenter {
         }
 
         func renderAddError(
-            input: MediaVariantFormInput?,
+            input: Variant.Form.Input?,
             error: Variant.Add.Error
         ) async throws -> HTMLResponse {
             switch error {
@@ -64,14 +64,14 @@ extension Variant.Add.Presenter {
                     status: .unauthorized
                 )
             case .conflict:
-                var state = MediaVariantFormView.State.from(input: input)
+                var state = Variant.Form.State.from(input: input)
                 state.apply(
                     error: "A media variant with this key already exists."
                 )
                 let page = try await renderAddPage(state: state)
                 return HTMLResponse(content: page.content, status: .conflict)
             case .unavailable:
-                var state = MediaVariantFormView.State.from(input: input)
+                var state = Variant.Form.State.from(input: input)
                 state.apply(
                     error:
                         "The media variant could not be created. Please try again."

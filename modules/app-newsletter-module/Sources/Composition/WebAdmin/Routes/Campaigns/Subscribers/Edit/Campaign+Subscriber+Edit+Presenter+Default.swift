@@ -13,10 +13,10 @@ extension Campaign.Subscriber.Edit.Presenter {
         func render(
             newsletterId: String,
             subscriberId: String,
-            form: Campaign.Subscriber.Form,
+            form: Campaign.Subscriber.Form.Input,
             error: String?
         ) async throws -> HTMLResponse {
-            let content = Campaign.Subscriber.FormView(
+            let content = Campaign.Subscriber.Form.Component(
                 state: .init(
                     newsletterId: newsletterId,
                     email: form.email,

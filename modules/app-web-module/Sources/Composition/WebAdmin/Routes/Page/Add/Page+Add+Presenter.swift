@@ -11,7 +11,7 @@ extension Page.Add.Presenter {
     protocol Interface: Sendable {
 
         func renderAddPage(
-            state: PageForm.State,
+            state: Page.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

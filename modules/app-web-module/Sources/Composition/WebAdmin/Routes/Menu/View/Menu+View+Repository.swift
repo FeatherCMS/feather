@@ -12,6 +12,6 @@ extension WebModule.Menu.View.Repository {
 
         func get(
             id: String
-        ) async throws -> MenuDetailsModel
+        ) async throws -> WebModule.Menu.View.Model
     }
 }

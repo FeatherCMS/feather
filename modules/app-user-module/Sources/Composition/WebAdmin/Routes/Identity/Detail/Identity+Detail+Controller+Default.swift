@@ -32,13 +32,11 @@ extension Identity.Detail.Controller {
                 let roleNames = try await interactor.roleNames(
                     for: identity.roleIds
                 )
-                let model = Identity.Detail.ViewModel(
-                    details: .init(
-                        id: identity.id,
-                        name: identity.name,
-                        status: identity.status,
-                        roleIds: identity.roleIds
-                    ),
+                let model = Identity.Detail.Model(
+                    id: identity.id,
+                    name: identity.name,
+                    status: identity.status,
+                    roleIds: identity.roleIds,
                     roleNames: roleNames
                 )
                 return try await presenter.renderDetailsPage(

@@ -1,3 +1,0 @@
-extension ContactForm {
-    enum Field {}
-}

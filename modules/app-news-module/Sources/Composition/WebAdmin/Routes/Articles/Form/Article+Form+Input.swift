@@ -36,7 +36,7 @@ extension Article.Form {
             content = item.content
             imageAssetId = item.imageAssetId ?? ""
             categoryIds = item.categoryIds
-            let metadata = NewsMetadataFormInput(metadata: item.metadata)
+            let metadata = News.Metadata.Form.Input(metadata: item.metadata)
             slug = metadata.slug
             status = metadata.status
             publicationDate = metadata.publicationDate
@@ -52,7 +52,7 @@ extension Article.Form {
             structuredDataCodeInjection = metadata.structuredDataCodeInjection
         }
 
-        var metadata: NewsMetadataFormInput {
+        var metadata: News.Metadata.Form.Input {
             .init(
                 slug: slug,
                 status: status,

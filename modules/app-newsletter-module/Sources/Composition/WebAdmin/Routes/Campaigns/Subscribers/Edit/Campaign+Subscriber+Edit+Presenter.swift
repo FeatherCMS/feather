@@ -11,7 +11,7 @@ extension Campaign.Subscriber.Edit.Presenter {
         func render(
             newsletterId: String,
             subscriberId: String,
-            form: Campaign.Subscriber.Form,
+            form: Campaign.Subscriber.Form.Input,
             error: String?
         ) async throws -> HTMLResponse
     }

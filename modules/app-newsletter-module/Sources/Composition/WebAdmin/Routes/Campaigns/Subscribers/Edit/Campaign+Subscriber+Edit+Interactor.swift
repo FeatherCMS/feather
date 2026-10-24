@@ -14,7 +14,7 @@ extension Campaign.Subscriber.Edit.Interactor {
         func update(
             newsletterId: String,
             subscriberId: String,
-            form: Campaign.Subscriber.Form
+            form: Campaign.Subscriber.Form.Input
         ) async throws
     }
 }

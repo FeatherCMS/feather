@@ -13,7 +13,7 @@ extension Variant.Edit.Presenter {
         func renderEditPage(
             id: String,
             detail: MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema,
-            state: MediaVariantFormView.State,
+            state: Variant.Form.State,
             permissions: AdminListActions
         ) async throws -> HTMLResponse
         func renderProcessorEditPage(

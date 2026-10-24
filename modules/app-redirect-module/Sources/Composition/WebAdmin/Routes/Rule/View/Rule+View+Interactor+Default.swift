@@ -9,7 +9,7 @@ extension Rule.View.Interactor {
 
         func load(
             id: String
-        ) async throws -> RedirectRuleDetailsModel {
+        ) async throws -> Rule.View.Model {
             do { return try await repository.load(id: id) }
             catch let error as OpenAPIRepositoryError {
                 switch error {

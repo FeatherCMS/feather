@@ -68,7 +68,7 @@ extension MagicLink.List.Controller {
                         size: pageSize
                     )
 
-                let state = MagicLink.List.ListTable.State(
+                let state = MagicLink.List.Component.State(
                     isAdded: request.hasQueryFlag("added"),
                     isEdited: request.hasQueryFlag("edited"),
                     isRemoved: request.hasQueryFlag("removed"),

@@ -14,14 +14,14 @@ extension Invitation.Detail.Presenter {
         let routes: Invitation.Router.Routes
 
         func renderDetailsPage(
-            invitation: AccountInvitationDetailsModel,
+            invitation: Invitation.Detail.Result,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "User invitation details",
-                content: AccountInvitationDetails(
+                content: Invitation.Detail.Page(
                     routes: routes,
                     state: .init(
                         invitation: invitation,

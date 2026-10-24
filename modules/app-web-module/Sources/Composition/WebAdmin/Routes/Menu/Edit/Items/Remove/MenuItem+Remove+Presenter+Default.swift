@@ -53,7 +53,7 @@ extension MenuItem.Remove.Presenter {
                 request: request,
                 context: context,
                 title: "Edit menu",
-                content: MenuItemError(
+                content: WebModule.MenuItem.Error.Page(
                     state: .init(
                         info: info,
                         message: message,

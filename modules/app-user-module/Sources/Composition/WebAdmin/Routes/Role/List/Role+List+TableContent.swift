@@ -9,7 +9,7 @@ import WebBuilders
 import WebComponents
 
 extension Role.List {
-    struct TableContent: Component {
+    struct TableContent: WebComponents.Component {
         let routes: Role.Router.Routes
         let roles: [Components.Schemas.UserRoleQueryItemSchema]
         let permissions: AdminListActions

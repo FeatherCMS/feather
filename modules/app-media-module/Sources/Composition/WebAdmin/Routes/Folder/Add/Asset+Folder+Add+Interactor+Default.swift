@@ -27,7 +27,7 @@ extension Asset.Folder.Add.Interactor {
         }
 
         func postAddMediaFolder(
-            payload: MediaFolderAddForm
+            payload: Asset.Folder.Add.Form.Input
         ) async throws -> Asset.Folder.Add.Model {
             do {
                 try await repository.createFolder(
@@ -64,9 +64,9 @@ extension Asset.Folder.Add.Interactor {
             )
         }
     }
-    }
+}
 
-    extension OpenAPIRepositoryError.BackendError.Trace {
+extension OpenAPIRepositoryError.BackendError.Trace {
     fileprivate var containsDuplicatePath: Bool {
         if id == "MediaApplication.Asset.Folder.Add.Error",
             message == "duplicatePath"

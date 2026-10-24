@@ -50,7 +50,7 @@ extension Asset.Folder.Add.Controller {
             let presenter = runtime.presenter
             let isDialog = request.queryString("presentation") == "dialog"
             let payload = try await request.decode(
-                as: MediaFolderAddForm.self,
+                as: Asset.Folder.Add.Form.Input.self,
                 context: context
             )
             let model = try await interactor.postAddMediaFolder(
@@ -87,9 +87,9 @@ extension Asset.Folder.Add.Controller {
                 .response(from: request, context: context)
         }
     }
-    }
+}
 
-    extension Asset.Folder.Add.Controller.Default {
+extension Asset.Folder.Add.Controller.Default {
     fileprivate func redirectLocation(
         parentId: String?,
         view: String

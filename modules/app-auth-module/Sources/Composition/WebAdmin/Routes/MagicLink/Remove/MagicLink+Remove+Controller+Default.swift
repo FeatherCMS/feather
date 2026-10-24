@@ -45,7 +45,7 @@ extension MagicLink.Remove.Controller {
                     .response(from: request, context: context)
             }
             let nonceRequest = try await request.decode(
-                as: NonceRequest<MagicLink.List.RemoveInput>.self,
+                as: NonceRequest<MagicLink.Remove.Request.Input>.self,
                 context: context
             )
             guard

@@ -10,6 +10,6 @@ extension Permission.View.Interactor {
 
         func execute(
             entity: Permission.View.Model
-        ) async throws -> SystemPermissionDetailsModel
+        ) async throws -> Permission.View.Result
     }
 }

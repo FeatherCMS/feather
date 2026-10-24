@@ -14,7 +14,7 @@ extension Settings.Edit.Presenter {
         let routes: Settings.Router.Routes
 
         func renderPage(
-            state: SettingsEdit.State,
+            state: Settings.Edit.Page.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             var state = state
@@ -25,7 +25,7 @@ extension Settings.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Settings",
-                content: SettingsEdit(routes: routes, state: state)
+                content: Settings.Edit.Page(routes: routes, state: state)
             )
         }
 

@@ -17,14 +17,14 @@ extension WebModule.Menu.Add.Presenter {
         let routes: WebModule.Menu.Router.Routes
 
         func renderAddPage(
-            state: MenuForm.State,
+            state: WebModule.Menu.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Add menu",
-                content: MenuAdd(
+                content: WebModule.Menu.Add.Page(
                     state: .init(
                         form: state,
                         breadcrumb: routes.breadcrumb,

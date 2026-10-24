@@ -2,6 +2,7 @@ public import AuthAdminAPI
 import AuthApplication
 import AuthModule
 import FeatherModuleKit
+import Foundation
 
 extension AdminAPIGateway {
 
@@ -17,8 +18,23 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(mapMagicLink(result))
             )
+        )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapMagicLink(
+        _ output: MagicLink.Detail.Output
+    ) -> Components.Schemas.AuthMagicLinkDetailSchema {
+        .init(
+            id: output.id,
+            credentialId: output.authEmailId,
+            token: output.token,
+            expiresAt: output.expiresAt.timeIntervalSince1970,
+            isPersistent: output.isPersistent,
+            isUsed: output.isUsed
         )
     }
 }

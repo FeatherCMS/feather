@@ -10,6 +10,6 @@ extension Rule.View.Repository {
 
         func load(
             id: String
-        ) async throws -> RedirectRuleDetailsModel
+        ) async throws -> Rule.View.Model
     }
 }

@@ -67,9 +67,9 @@ extension Asset.File.List.Interactor {
         }
 
     }
-    }
+}
 
-    extension Asset.File.List.Interactor.Default {
+extension Asset.File.List.Interactor.Default {
     fileprivate func findFolderPath(
         _ path: String
     ) async throws -> String? {

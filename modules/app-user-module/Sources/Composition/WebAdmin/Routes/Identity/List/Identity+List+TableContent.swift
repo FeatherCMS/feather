@@ -10,7 +10,7 @@ import WebBuilders
 import WebComponents
 
 extension Identity.List {
-    struct TableContent: Component {
+    struct TableContent: WebComponents.Component {
         let routes: Identity.Router.Routes
         let permissions: AdminListActions
         let identities: [Components.Schemas.UserIdentityQueryItemSchema]

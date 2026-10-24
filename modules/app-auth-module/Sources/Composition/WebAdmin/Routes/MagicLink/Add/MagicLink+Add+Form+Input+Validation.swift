@@ -32,9 +32,9 @@ extension MagicLink.Add.Form.Input {
             )
         }
     }
-    }
+}
 
-    extension MagicLink.Add.Form.Input {
+extension MagicLink.Add.Form.Input {
 
     private var validator: GroupValidator {
         GroupValidator {

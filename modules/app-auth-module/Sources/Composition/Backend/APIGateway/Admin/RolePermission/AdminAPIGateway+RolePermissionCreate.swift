@@ -1,5 +1,6 @@
 public import AuthAdminAPI
 import AuthApplication
+import AuthModule
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -25,8 +26,16 @@ extension AdminAPIGateway {
 
         return .created(
             .init(
-                body: .json(map(result))
+                body: .json(mapRolePermissionDetail(result))
             )
         )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapRolePermissionDetail(
+        _ output: RolePermission.Add.Output
+    ) -> Components.Schemas.AuthRolePermissionDetailSchema {
+        .init(roleId: output.roleId, permissionId: output.permissionId)
     }
 }

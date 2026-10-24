@@ -32,11 +32,11 @@ extension Page.Add.Controller {
         ) async throws -> Response {
             let runtime = buildRuntime(request, context)
             let permissions = context.currentUserPermissions
-            var lastPayload: PageFormInput?
+            var lastPayload: Page.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: PageFormInput.self,
+                    as: Page.Form.Input.self,
                     context: context
                 )
                 lastPayload = payload
@@ -112,7 +112,7 @@ extension Page.Add.Controller {
             imageAssetId: String? = nil,
             metadata: AdminMetadataFormValue? = nil,
             slugPrefix: String? = nil
-        ) -> PageForm.State {
+        ) -> Page.Form.Component.State {
             .init(
                 title: .init(
                     key: "title",

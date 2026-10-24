@@ -12,6 +12,6 @@ extension WebModule.Menu.View.Interactor {
 
         func execute(
             input: WebModule.Menu.View.Input
-        ) async throws -> MenuDetailsModel
+        ) async throws -> WebModule.Menu.View.Model
     }
 }

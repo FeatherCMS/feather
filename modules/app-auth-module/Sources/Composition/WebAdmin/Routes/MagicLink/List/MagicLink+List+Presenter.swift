@@ -24,7 +24,7 @@ extension MagicLink.List.Presenter {
     protocol Interface: Sendable {
 
         func renderPage(
-            state: MagicLink.List.ListTable.State
+            state: MagicLink.List.Component.State
         ) async throws -> HTMLResponse
 
         func renderError(

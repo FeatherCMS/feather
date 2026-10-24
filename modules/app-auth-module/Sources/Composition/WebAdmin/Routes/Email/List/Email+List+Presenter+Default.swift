@@ -25,13 +25,13 @@ extension Email.List.Presenter {
         let routes: Email.Router.Routes
 
         func renderPage(
-            state: Email.List.ListTable.State
+            state: Email.List.Component.State
         ) async throws -> HTMLResponse {
             try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Manage user emails",
-                content: Email.List.ListTable(state: state)
+                content: Email.List.Component(state: state)
             )
         }
 

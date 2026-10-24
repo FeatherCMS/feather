@@ -43,8 +43,14 @@ extension Identity.Add {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.get(routes.add.routerPath, use: controller.getAddUserIdentity)
-            router.post(routes.add.routerPath, use: controller.postAddUserIdentity)
+            router.get(
+                routes.add.routerPath,
+                use: controller.getAddUserIdentity
+            )
+            router.post(
+                routes.add.routerPath,
+                use: controller.postAddUserIdentity
+            )
         }
     }
 }

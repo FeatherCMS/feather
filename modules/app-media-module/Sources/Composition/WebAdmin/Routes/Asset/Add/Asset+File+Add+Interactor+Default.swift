@@ -79,7 +79,7 @@ extension Asset.File.Add.Interactor {
         }
 
         func postAddMediaAsset(
-            payload: AssetAddUpload,
+            payload: Asset.File.Add.Upload.Payload,
             variants: [String]?
         ) async throws -> Asset.File.Add.Model {
             do {
@@ -131,9 +131,9 @@ extension Asset.File.Add.Interactor {
             }
         }
     }
-    }
+}
 
-    extension OpenAPIRepositoryError.BackendError.Trace {
+extension OpenAPIRepositoryError.BackendError.Trace {
     fileprivate var containsDuplicatePath: Bool {
         if id == "MediaApplication.Asset.File.Add.Error",
             message == "duplicatePath"

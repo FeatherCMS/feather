@@ -9,7 +9,7 @@ extension Variable.Add.Interactor {
     protocol Interface: Sendable {
 
         func add(
-            input: SystemVariableAddFormInput
+            input: Variable.Add.Form.Input
         ) async throws
     }
 }

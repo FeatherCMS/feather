@@ -11,7 +11,7 @@ extension Variable.Edit.Repository {
 
         func load(
             id: String
-        ) async throws -> SystemVariableEditModel
+        ) async throws -> Variable.Edit.Model
 
         func update(
             id: String,

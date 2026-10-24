@@ -4,7 +4,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 
-extension Form.Add.Presenter {
+extension ContactModule.Form.Add.Presenter {
     struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
@@ -12,7 +12,7 @@ extension Form.Add.Presenter {
         let routes: Contact.Router.Routes
 
         func renderPage(
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -20,7 +20,7 @@ extension Form.Add.Presenter {
                 request: request,
                 context: context,
                 title: "Add contact form",
-                content: ContactFormAddPage(
+                content: ContactModule.Form.Add.Page(
                     state: .init(
                         form: .init(
                             key: item.key,
@@ -41,7 +41,7 @@ extension Form.Add.Presenter {
         }
 
         func renderAddError(
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             error: Form.Add.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -77,7 +77,7 @@ extension Form.Add.Presenter {
         }
 
         private func renderFormError(
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             message: String,
             permissions: Set<String>,
             status: HTTPResponse.Status

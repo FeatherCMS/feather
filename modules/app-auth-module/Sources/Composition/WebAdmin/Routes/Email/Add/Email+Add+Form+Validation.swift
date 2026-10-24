@@ -33,9 +33,9 @@ extension Email.Add.Form {
             )
         }
     }
-    }
+}
 
-    extension Email.Add.Form.Input {
+extension Email.Add.Form.Input {
 
     private var validator: GroupValidator {
         GroupValidator {

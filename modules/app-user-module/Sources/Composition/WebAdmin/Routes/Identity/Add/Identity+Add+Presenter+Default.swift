@@ -1,6 +1,6 @@
 import FeatherValidation
-import FeatherWebShared
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import UserModule
 import WebComponents
@@ -12,14 +12,15 @@ extension Identity.Add.Presenter {
         let renderingEngine: any RenderingEngine
         let routes: Identity.Router.Routes
 
-        func renderAddPage(state: Identity.Add.FormComponent.State) async throws
+        func renderAddPage(state: Identity.Add.Form.Component.State)
+            async throws
             -> HTMLResponse
         {
             try await renderAddPage(state: state, status: .ok)
         }
 
         private func renderAddPage(
-            state: Identity.Add.FormComponent.State,
+            state: Identity.Add.Form.Component.State,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             let nonceToken = await AdminNonceStore.shared.issue(
@@ -36,11 +37,11 @@ extension Identity.Add.Presenter {
         }
 
         func renderValidationError(
-            input: Identity.Add.FormInput?,
+            input: Identity.Add.Form.Input?,
             error: ValidationError,
             roleOptions: [Identity.Add.RoleOption]
         ) async throws -> HTMLResponse {
-            var state = Identity.Add.FormComponent.State.empty()
+            var state = Identity.Add.Form.Component.State.empty()
             if let input {
                 state = .from(
                     name: input.name,
@@ -64,7 +65,7 @@ extension Identity.Add.Presenter {
         }
 
         func renderAddError(
-            input: Identity.Add.FormInput?,
+            input: Identity.Add.Form.Input?,
             error: Identity.Add.Error,
             roleOptions: [Identity.Add.RoleOption]
         ) async throws -> HTMLResponse {
@@ -138,12 +139,12 @@ extension Identity.Add.Presenter {
         }
 
         private func renderFormError(
-            input: Identity.Add.FormInput?,
+            input: Identity.Add.Form.Input?,
             message: String,
             status: HTTPResponse.Status,
             roleOptions: [Identity.Add.RoleOption]
         ) async throws -> HTMLResponse {
-            var state = Identity.Add.FormComponent.State.empty()
+            var state = Identity.Add.Form.Component.State.empty()
             if let input {
                 state = .from(
                     name: input.name,

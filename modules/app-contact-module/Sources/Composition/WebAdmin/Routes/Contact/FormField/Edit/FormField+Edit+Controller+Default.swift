@@ -60,7 +60,7 @@ extension FormField.Edit.Controller {
             }
             let id = try context.requiredParameter("fieldId")
             let form = try await request.decode(
-                as: ContactFieldFormInput.self,
+                as: FormField.Add.Form.Input.self,
                 context: context
             )
             if let error = form.allowedValuesValidationError {

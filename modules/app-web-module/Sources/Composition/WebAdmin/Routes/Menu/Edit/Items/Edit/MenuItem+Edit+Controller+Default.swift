@@ -75,12 +75,12 @@ extension MenuItem.Edit.Controller {
             let menuId = try context.requiredID()
             let id = try context.requiredParameter("itemId")
             let permissions = context.currentUserPermissions
-            var lastPayload: MenuItemFormInput?
+            var lastPayload: MenuItem.Form.Input?
             var availablePermissions: [String] = []
 
             do {
                 let payload = try await request.decode(
-                    as: MenuItemFormInput.self,
+                    as: MenuItem.Form.Input.self,
                     context: context
                 )
                 lastPayload = payload
@@ -265,7 +265,7 @@ extension MenuItem.Edit.Controller {
             permissionOptions: [String] = [],
             authentication: String = "any",
             notes: String? = nil
-        ) -> MenuItemForm.State {
+        ) -> MenuItem.Form.Component.State {
             .init(
                 label: .init(
                     key: "label",

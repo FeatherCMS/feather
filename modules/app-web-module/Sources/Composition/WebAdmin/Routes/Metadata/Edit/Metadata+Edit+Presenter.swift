@@ -12,7 +12,7 @@ extension WebModule.Metadata.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: WebModule.Metadata.Edit.FormView.State,
+            state: WebModule.Metadata.Edit.Form.Component.State,
             permissions: Set<String>,
             navigationTabs: [AdminTabBar.Link],
             configuration: WebModule.Metadata.Edit.Configuration

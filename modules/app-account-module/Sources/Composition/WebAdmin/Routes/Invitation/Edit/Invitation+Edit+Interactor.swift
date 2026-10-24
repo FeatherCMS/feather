@@ -13,7 +13,7 @@ extension Invitation.Edit.Interactor {
 
         func get(
             id: String
-        ) async throws -> AccountInvitationDetailsModel
+        ) async throws -> Invitation.Detail.Result
 
         func execute(
             entity: Invitation.Edit.Model

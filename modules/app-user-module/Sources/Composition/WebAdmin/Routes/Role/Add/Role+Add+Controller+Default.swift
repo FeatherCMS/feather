@@ -1,7 +1,7 @@
 import FeatherModuleKit
-import FeatherWebShared
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import UserModule
@@ -43,10 +43,10 @@ extension Role.Add.Controller {
                     .renderForbiddenPage()
                     .response(from: request, context: context)
             }
-            var lastPayload: Role.Add.FormInput?
+            var lastPayload: Role.Add.Form.Input?
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<Role.Add.FormInput>.self,
+                    as: NonceRequest<Role.Add.Form.Input>.self,
                     context: context
                 )
                 let input = payload.input

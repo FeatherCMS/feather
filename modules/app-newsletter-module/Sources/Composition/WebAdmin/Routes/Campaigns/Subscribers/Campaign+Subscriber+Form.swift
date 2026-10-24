@@ -1,7 +1,11 @@
 import NewsletterModule
 
 extension Campaign.Subscriber {
-    struct Form: Decodable, Sendable {
+    enum Form {}
+}
+
+extension Campaign.Subscriber.Form {
+    struct Input: Decodable, Sendable {
         let email: String
         let firstName: String
         let lastName: String

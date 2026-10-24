@@ -19,7 +19,7 @@ extension ContactModule.Form.Edit.Presenter {
         let routes: Contact.Router.Routes
 
         func renderPage(
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -32,7 +32,7 @@ extension ContactModule.Form.Edit.Presenter {
         }
 
         func renderFieldsPage(
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -40,7 +40,7 @@ extension ContactModule.Form.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Contact form fields",
-                content: ContactFormFieldsPage(
+                content: ContactModule.Form.Edit.Fields.Page(
                     state: .init(
                         key: item.key,
                         isReadOnly: !permissions.contains(
@@ -73,7 +73,7 @@ extension ContactModule.Form.Edit.Presenter {
 
         private func renderPage(
             key: String,
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -81,7 +81,7 @@ extension ContactModule.Form.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit contact form",
-                content: ContactFormEditPage(
+                content: ContactModule.Form.Edit.Page(
                     state: .init(
                         key: key,
                         isReadOnly: !permissions.contains(
@@ -108,7 +108,7 @@ extension ContactModule.Form.Edit.Presenter {
 
         func renderEditError(
             key: String,
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             error: ContactModule.Form.Edit.Repository.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -187,7 +187,7 @@ extension ContactModule.Form.Edit.Presenter {
 
         private func renderFormError(
             key: String,
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             message: String,
             permissions: Set<String>,
             status: HTTPResponse.Status

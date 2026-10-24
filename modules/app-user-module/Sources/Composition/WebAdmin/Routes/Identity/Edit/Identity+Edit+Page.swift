@@ -9,7 +9,7 @@ extension Identity.Edit {
     struct Page: Component {
         let routes: Identity.Router.Routes
         let id: String
-        let form: Identity.Edit.FormComponent.State
+        let form: Identity.Edit.Form.Component.State
         let permissions: AdminListActions
         let nonceToken: String?
 
@@ -27,7 +27,7 @@ extension Identity.Edit {
                     )
                 )
                 context.build(
-                    Identity.Edit.FormComponent(
+                    Identity.Edit.Form.Component(
                         state: form,
                         action: routes.editPath(id)
                             .description,

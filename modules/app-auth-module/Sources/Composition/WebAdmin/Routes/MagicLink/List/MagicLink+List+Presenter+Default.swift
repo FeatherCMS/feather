@@ -25,13 +25,13 @@ extension MagicLink.List.Presenter {
         let routes: MagicLink.Router.Routes
 
         func renderPage(
-            state: MagicLink.List.ListTable.State
+            state: MagicLink.List.Component.State
         ) async throws -> HTMLResponse {
             try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Manage user magic links",
-                content: MagicLink.List.ListTable(state: state)
+                content: MagicLink.List.Component(state: state)
             )
         }
 

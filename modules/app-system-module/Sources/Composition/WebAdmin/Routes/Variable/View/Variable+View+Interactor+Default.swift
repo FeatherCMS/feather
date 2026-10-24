@@ -10,7 +10,7 @@ extension Variable.View.Interactor {
 
         func execute(
             entity: Variable.View.Model
-        ) async throws -> SystemVariableDetailsModel {
+        ) async throws -> Variable.View.Result {
             do {
                 return try await repository.get(id: entity.id)
             }

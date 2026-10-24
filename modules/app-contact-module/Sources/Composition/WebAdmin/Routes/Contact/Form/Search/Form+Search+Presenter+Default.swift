@@ -5,7 +5,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 
-extension Form.Search.Presenter {
+extension ContactModule.Form.Search.Presenter {
     struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
@@ -31,7 +31,7 @@ extension Form.Search.Presenter {
                 request: request,
                 context: context,
                 title: "Contact forms",
-                content: ContactFormTable(
+                content: ContactModule.Form.Search.Page(
                     state: .init(
                         items: items,
                         pageState: pageState,

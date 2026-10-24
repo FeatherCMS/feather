@@ -24,7 +24,7 @@ extension Rule.List.Presenter {
                 request: request,
                 context: context,
                 title: "Redirect rules",
-                content: RedirectRuleTable(
+                content: Rule.List.Page(
                     state: .init(
                         permissions: permissions,
                         rules: model.items,

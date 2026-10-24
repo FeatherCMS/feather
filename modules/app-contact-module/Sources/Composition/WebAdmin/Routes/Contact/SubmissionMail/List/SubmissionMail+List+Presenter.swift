@@ -16,7 +16,7 @@ extension SubmissionMail.List {
 extension SubmissionMail.List.Presenter {
     protocol Interface: Sendable {
         func renderPage(
-            item: ContactForm.Details.Item,
+            item: ContactModule.Form.Details.Item,
             error: String?,
             permissions: Set<String>
         ) async throws -> HTMLResponse

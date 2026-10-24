@@ -12,14 +12,14 @@ extension Rule.View.Presenter {
         let routes: Rule.Router.Routes
 
         func renderDetailsPage(
-            rule: RedirectRuleDetailsModel,
+            rule: Rule.View.Model,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Redirect rule details",
-                content: RedirectRuleDetails(
+                content: Rule.View.Page(
                     rule: rule,
                     permissions: permissions,
                     routes: routes

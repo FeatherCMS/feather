@@ -6,12 +6,13 @@ extension Form.Add.Interactor {
     struct Default: Interface {
         let repository: any Form.Add.Repository.Interface
 
-        func availableFields() async throws -> [ContactForm.Field.Option] {
+        func availableFields() async throws -> [ContactModule.FormField.Option]
+        {
             try await repository.availableFields()
         }
 
         func create(entity: Form.Add.Model) async throws
-            -> ContactForm.Details.Item
+            -> ContactModule.Form.Details.Item
         {
             do {
                 return try await repository.create(entity: entity)

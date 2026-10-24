@@ -10,14 +10,14 @@ extension Variant.Add {
 
 extension Variant.Add.Presenter {
     protocol Interface: Sendable {
-        func renderAddPage(state: MediaVariantFormView.State) async throws
+        func renderAddPage(state: Variant.Form.State) async throws
             -> HTMLResponse
         func renderValidationError(
-            input: MediaVariantFormInput?,
+            input: Variant.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse
         func renderAddError(
-            input: MediaVariantFormInput?,
+            input: Variant.Form.Input?,
             error: Variant.Add.Error
         ) async throws -> HTMLResponse
         func renderSuccess() -> Response

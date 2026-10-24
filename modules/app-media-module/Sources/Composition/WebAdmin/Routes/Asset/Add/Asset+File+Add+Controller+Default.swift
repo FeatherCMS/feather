@@ -157,7 +157,7 @@ extension Asset.File.Add.Controller {
                     )
                     .response(from: request, context: context)
             }
-            let payload = AssetAddUpload(
+            let payload = Asset.File.Add.Upload.Payload(
                 parentId: parentId,
                 fileName: fileName,
                 extension: fileExtension,
@@ -167,7 +167,7 @@ extension Asset.File.Add.Controller {
                 altText: header("X-Media-Asset-Alt-Text", from: request) ?? "",
                 view: request.queryString("view") ?? "grid",
                 content: .init(
-                    MediaHTTPBodySequence(body: request.body),
+                    Asset.File.Add.HTTPBodySequence(body: request.body),
                     length: .known(contentLength),
                     iterationBehavior: .single
                 )
@@ -253,9 +253,9 @@ extension Asset.File.Add.Controller {
                 .response(from: request, context: context)
         }
     }
-    }
+}
 
-    extension Asset.File.Add.Controller.Default {
+extension Asset.File.Add.Controller.Default {
     fileprivate func defaultTitle(for fileName: String) -> String {
         URL(fileURLWithPath: fileName)
             .deletingPathExtension()
@@ -270,7 +270,7 @@ extension Asset.File.Add.Controller {
 
     fileprivate struct PickerState {
         let isEnabled: Bool
-        let configuration: MediaAssetPopupConfiguration?
+        let configuration: Asset.Picker.Popup.Configuration?
 
         var field: String? {
             guard let field = configuration?.field, !field.isEmpty else {
@@ -291,7 +291,7 @@ extension Asset.File.Add.Controller {
             configuration?.previewVariant
         }
 
-        var selectionMode: MediaAssetSelectionMode {
+        var selectionMode: Asset.Picker.SelectionMode {
             configuration?.selectionMode ?? .single
         }
     }

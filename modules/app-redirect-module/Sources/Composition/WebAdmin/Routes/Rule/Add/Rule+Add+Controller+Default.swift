@@ -48,10 +48,10 @@ extension RedirectModule.Rule.Add.Controller {
                 return try await presenter.renderForbiddenPage()
                     .response(from: request, context: context)
             }
-            var lastPayload: RedirectRuleAddFormInput?
+            var lastPayload: RedirectModule.Rule.Add.Form.Input?
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<RedirectRuleAddFormInput>.self,
+                    as: NonceRequest<RedirectModule.Rule.Add.Form.Input>.self,
                     context: context
                 )
                 lastPayload = payload.input

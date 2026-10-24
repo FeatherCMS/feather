@@ -10,7 +10,7 @@ extension Page.Add.Repository {
         let api: API.Client
 
         func create(
-            input: PageFormInput
+            input: Page.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.pageCreate(

@@ -10,11 +10,11 @@ extension Permission.Edit.Repository {
 
         func load(
             id: String
-        ) async throws -> SystemPermissionDetailsModel
+        ) async throws -> Permission.View.Result
 
         func update(
             id: String,
-            input: SystemPermissionEditFormInput
+            input: Permission.Edit.Form.Input
         ) async throws
     }
 }

@@ -11,7 +11,7 @@ extension Variable.Edit.Interactor {
 
         func load(
             id: String
-        ) async throws -> SystemVariableEditModel {
+        ) async throws -> Variable.Edit.Model {
             do {
                 return try await repository.load(id: id)
             }
@@ -22,7 +22,7 @@ extension Variable.Edit.Interactor {
 
         func edit(
             id: String,
-            input: SystemVariableEditFormInput
+            input: Variable.Edit.Form.Input
         ) async throws {
             do {
                 try await repository.update(

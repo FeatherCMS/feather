@@ -72,7 +72,7 @@ extension Category.Presenter {
                 request: request,
                 context: context,
                 title: "News category",
-                content: NewsErrorPage(
+                content: News.Error.Page(
                     breadcrumb: routes.breadcrumb,
                     title: "News category unavailable",
                     message: message

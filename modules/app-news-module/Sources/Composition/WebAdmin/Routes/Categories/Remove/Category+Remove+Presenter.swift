@@ -1,8 +1,8 @@
-import NewsApplication
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import NewsAdminAPI
+import NewsApplication
 import NewsModule
 
 extension Category.Remove {

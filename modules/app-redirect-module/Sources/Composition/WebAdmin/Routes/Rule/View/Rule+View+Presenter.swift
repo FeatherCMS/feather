@@ -10,7 +10,7 @@ extension Rule.View.Presenter {
     protocol Interface: Sendable {
 
         func renderDetailsPage(
-            rule: RedirectRuleDetailsModel,
+            rule: Rule.View.Model,
             permissions: AdminListActions
         ) async throws -> HTMLResponse
 

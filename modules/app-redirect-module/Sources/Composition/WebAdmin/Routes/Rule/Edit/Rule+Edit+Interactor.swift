@@ -10,11 +10,11 @@ extension Rule.Edit.Interactor {
 
         func load(
             id: String
-        ) async throws -> RedirectRuleEditModel
+        ) async throws -> Rule.Edit.Model
 
         func update(
             id: String,
-            input: RedirectRuleEditFormInput
+            input: RedirectModule.Rule.Edit.Form.Input
         ) async throws
     }
 }

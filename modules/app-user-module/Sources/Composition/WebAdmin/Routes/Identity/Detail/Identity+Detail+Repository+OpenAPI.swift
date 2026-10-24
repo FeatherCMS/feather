@@ -1,6 +1,6 @@
 import FeatherModuleKit
-import FeatherWebShared
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import OpenAPIRuntime
 import UserAdminAPI
@@ -11,7 +11,7 @@ extension Identity.Detail.Repository {
         let api: API.Client
         func load(
             id: String
-        ) async throws -> Identity.Detail.RepositoryModel {
+        ) async throws -> Identity.Detail.Repository.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.userIdentityGet(
                     path: .init(userIdentityId: id),

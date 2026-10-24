@@ -16,14 +16,14 @@ extension Page.Add.Presenter {
         let routes: Page.Router.Routes
 
         func renderAddPage(
-            state: PageForm.State,
+            state: Page.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Add page",
-                content: PageAdd(
+                content: Page.Add.Component(
                     state: .init(
                         form: state,
                         breadcrumb: routes.breadcrumb,

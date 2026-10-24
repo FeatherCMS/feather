@@ -26,7 +26,7 @@ extension FormField.Add.Presenter {
                 request: request,
                 context: context,
                 title: "Add contact form field",
-                content: ContactFieldAddPage(
+                content: FormField.Add.Page(
                     state: .init(
                         key: model.key,
                         type: model.type,
@@ -48,7 +48,7 @@ extension FormField.Add.Presenter {
         }
 
         func renderAddError(
-            input: ContactFieldFormInput,
+            input: FormField.Add.Form.Input,
             error: FormField.Add.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
@@ -98,7 +98,7 @@ extension FormField.Add.Presenter {
         }
 
         private func renderFormError(
-            input: ContactFieldFormInput,
+            input: FormField.Add.Form.Input,
             message: String,
             permissions: Set<String>,
             status: HTTPResponse.Status

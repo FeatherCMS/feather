@@ -9,6 +9,6 @@ extension Job.View.Interactor {
     protocol Interface: Sendable {
         func execute(entity: Job.View.Model)
             async throws
-            -> SystemJobDetailsModel
+            -> Job.View.Result
     }
 }

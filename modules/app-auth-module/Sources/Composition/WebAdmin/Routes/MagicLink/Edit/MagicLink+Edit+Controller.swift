@@ -33,9 +33,9 @@ extension MagicLink.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> Response
     }
-    }
+}
 
-    extension MagicLink.Edit.Controller.Interface {
+extension MagicLink.Edit.Controller.Interface {
 
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>,

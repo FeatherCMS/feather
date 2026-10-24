@@ -12,7 +12,7 @@ extension Page.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: PageForm.State,
+            state: Page.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

@@ -12,7 +12,7 @@ extension Permission.View.Interactor {
 
         func execute(
             entity: Permission.View.Model
-        ) async throws -> SystemPermissionDetailsModel {
+        ) async throws -> Permission.View.Result {
             do {
                 return try await repository.get(id: entity.id)
             }

@@ -17,14 +17,14 @@ extension Page.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: PageForm.State,
+            state: Page.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Edit page",
-                content: PageEdit(
+                content: Page.Edit.Component(
                     state: .init(
                         id: id,
                         form: state,
@@ -45,7 +45,7 @@ extension Page.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit page",
-                content: PageError(
+                content: Page.Error.Page(
                     state: .init(
                         info: info,
                         message: message,

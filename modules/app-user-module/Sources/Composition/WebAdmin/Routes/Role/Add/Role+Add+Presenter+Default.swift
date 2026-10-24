@@ -1,6 +1,6 @@
 import FeatherValidation
-import FeatherWebShared
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import UserModule
 import WebComponents
@@ -12,14 +12,14 @@ extension Role.Add.Presenter {
         let renderingEngine: any RenderingEngine
         let routes: Role.Router.Routes
 
-        func renderAddPage(state: Role.Add.FormComponent.State) async throws
+        func renderAddPage(state: Role.Add.Form.Component.State) async throws
             -> HTMLResponse
         {
             try await renderAddPage(state: state, status: .ok)
         }
 
         private func renderAddPage(
-            state: Role.Add.FormComponent.State,
+            state: Role.Add.Form.Component.State,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             let nonceToken = await AdminNonceStore.shared.issue(
@@ -36,11 +36,11 @@ extension Role.Add.Presenter {
         }
 
         func renderValidationError(
-            input: Role.Add.FormInput?,
+            input: Role.Add.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse {
             var state =
-                input.map(Role.Add.FormComponent.State.from(input:))
+                input.map(Role.Add.Form.Component.State.from(input:))
                 ?? .addEmpty()
             var errors: [String: String] = [:]
             for failure in error.failures {
@@ -54,7 +54,7 @@ extension Role.Add.Presenter {
         }
 
         func renderAddError(
-            input: Role.Add.FormInput?,
+            input: Role.Add.Form.Input?,
             error: Role.Add.Error
         ) async throws -> HTMLResponse {
             switch error {
@@ -126,12 +126,12 @@ extension Role.Add.Presenter {
         }
 
         private func renderFormError(
-            input: Role.Add.FormInput?,
+            input: Role.Add.Form.Input?,
             message: String,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             var state =
-                input.map(Role.Add.FormComponent.State.from(input:))
+                input.map(Role.Add.Form.Component.State.from(input:))
                 ?? .addEmpty()
             state.error = message
             return try await renderAddPage(state: state, status: status)

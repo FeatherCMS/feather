@@ -13,7 +13,7 @@ extension Invitation.Remove.Repository {
 
         func get(
             id: String
-        ) async throws -> AccountInvitationDetailsModel
+        ) async throws -> Invitation.Detail.Result
 
         func delete(
             id: String

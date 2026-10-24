@@ -45,7 +45,7 @@ extension Campaign.Add {
                     )
                 )
                 context.build(
-                    Campaign.FormView(
+                    Campaign.Form.Component(
                         state: .init(
                             key: state.key,
                             name: state.name,

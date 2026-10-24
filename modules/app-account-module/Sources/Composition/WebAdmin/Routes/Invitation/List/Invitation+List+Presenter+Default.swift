@@ -49,7 +49,7 @@ extension Invitation.List.Presenter {
                 request: request,
                 context: context,
                 title: "User invitations",
-                content: AccountInvitationTable(
+                content: Invitation.List.Page(
                     routes: routes,
                     state: .init(
                         isAdded: isAdded,

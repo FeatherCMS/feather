@@ -11,7 +11,7 @@ extension WebModule.Menu.Add.Repository {
         let api: API.Client
 
         func create(
-            input: MenuFormInput
+            input: WebModule.Menu.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.menuCreate(

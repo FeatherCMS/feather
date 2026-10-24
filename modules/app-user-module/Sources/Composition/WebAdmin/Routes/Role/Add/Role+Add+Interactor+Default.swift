@@ -7,7 +7,7 @@ extension Role.Add.Interactor {
         let repository: any Role.Add.Repository.Interface
 
         func add(
-            input: Role.Add.FormInput
+            input: Role.Add.Form.Input
         ) async throws {
             do {
                 try await repository.create(

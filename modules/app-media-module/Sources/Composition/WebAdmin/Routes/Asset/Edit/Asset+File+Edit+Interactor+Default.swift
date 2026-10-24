@@ -27,7 +27,7 @@ extension Asset.File.Edit.Interactor {
 
         func update(
             id: String,
-            input: AssetEditForm
+            input: Asset.File.Edit.Form.Input
         ) async throws -> Asset.File.Edit.Model {
             let item = try await repository.updateAsset(
                 id: id,

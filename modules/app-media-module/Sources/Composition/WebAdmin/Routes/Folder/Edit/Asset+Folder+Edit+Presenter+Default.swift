@@ -26,7 +26,7 @@ extension Asset.Folder.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit media folder",
-                content: MediaFolderEditView(
+                content: Asset.Folder.Edit.Page(
                     state: .init(
                         model: model,
                         permissions: permissions,
@@ -46,7 +46,7 @@ extension Asset.Folder.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit media folder",
-                content: MediaAssetErrorView(
+                content: Asset.Error.Page(
                     info: info,
                     message: message
                 )

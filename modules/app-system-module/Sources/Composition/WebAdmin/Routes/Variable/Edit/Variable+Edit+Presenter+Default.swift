@@ -19,7 +19,7 @@ extension Variable.Edit.Presenter {
         func renderEditPage(
             id: String,
             deleteID: String,
-            state: SystemVariableEditForm.State,
+            state: Variable.Edit.Form.State,
             permissions: Set<PermissionKey>
         ) async throws -> HTMLResponse {
             try await renderEditPage(
@@ -34,7 +34,7 @@ extension Variable.Edit.Presenter {
         private func renderEditPage(
             id: String,
             deleteID: String?,
-            state: SystemVariableEditForm.State,
+            state: Variable.Edit.Form.State,
             permissions: Set<PermissionKey>,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
@@ -43,9 +43,9 @@ extension Variable.Edit.Presenter {
                 sessionToken: context.sessionToken
             )
             return try await renderPage(
-                content: SystemVariableEditPage(
+                content: Variable.Edit.Page(
                     routes: routes,
-                    form: SystemVariableEditForm(
+                    form: Variable.Edit.Form(
                         state: state,
                         action: routes.editPath(id),
                         viewHref: routes.detailsPath(id),
@@ -68,7 +68,7 @@ extension Variable.Edit.Presenter {
 
         func renderValidationError(
             id: String,
-            input: SystemVariableEditFormInput?,
+            input: Variable.Edit.Form.Input?,
             permissions: Set<PermissionKey>,
             error: ValidationError
         ) async throws -> HTMLResponse {
@@ -79,7 +79,7 @@ extension Variable.Edit.Presenter {
 
             var state =
                 input.map {
-                    SystemVariableEditForm.State.from(input: $0)
+                    Variable.Edit.Form.State.from(input: $0)
                 } ?? .empty()
             state.apply(errors: errors)
 
@@ -94,7 +94,7 @@ extension Variable.Edit.Presenter {
 
         func renderEditError(
             id: String,
-            input: SystemVariableEditFormInput?,
+            input: Variable.Edit.Form.Input?,
             permissions: Set<PermissionKey>,
             error: Variable.Edit.Error
         ) async throws -> HTMLResponse {
@@ -203,14 +203,14 @@ extension Variable.Edit.Presenter {
 
         private func renderFormError(
             id: String,
-            input: SystemVariableEditFormInput?,
+            input: Variable.Edit.Form.Input?,
             permissions: Set<PermissionKey>,
             message: String,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             var state =
                 input.map {
-                    SystemVariableEditForm.State.from(input: $0)
+                    Variable.Edit.Form.State.from(input: $0)
                 } ?? .empty()
             state.apply(error: message)
 

@@ -22,7 +22,7 @@ extension Submission.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Contact form submission",
-                content: Submission.Detail.DetailsView(
+                content: Submission.Detail.Component(
                     state: .init(
                         formId: formId,
                         item: .init(

@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import Hummingbird
 import SystemModule
 
@@ -43,11 +43,11 @@ extension Permission.Add.Controller {
                     try await presenter.renderForbiddenPage()
                     .response(from: request, context: context)
             }
-            var lastPayload: SystemPermissionAddFormInput?
+            var lastPayload: Permission.Add.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<SystemPermissionAddFormInput>.self,
+                    as: NonceRequest<Permission.Add.Form.Input>.self,
                     context: context
                 )
                 lastPayload = payload.input

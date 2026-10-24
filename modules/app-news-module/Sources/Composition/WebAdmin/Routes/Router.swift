@@ -49,7 +49,7 @@ public struct Router: Sendable {
             request: request,
             context: context,
             title: "News",
-            content: NewsHomePage(
+            content: News.Home.Page(
                 routes: routes,
                 canViewArticles: context.isCurrentUserAllowed(
                     to: Article.Permissions.list

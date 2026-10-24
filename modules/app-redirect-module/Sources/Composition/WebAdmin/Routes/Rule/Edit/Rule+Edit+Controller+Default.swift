@@ -62,10 +62,10 @@ extension RedirectModule.Rule.Edit.Controller {
                     .response(from: request, context: context)
             }
             let id = try context.requiredID()
-            var lastPayload: RedirectRuleEditFormInput?
+            var lastPayload: RedirectModule.Rule.Edit.Form.Input?
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<RedirectRuleEditFormInput>.self,
+                    as: NonceRequest<RedirectModule.Rule.Edit.Form.Input>.self,
                     context: context
                 )
                 lastPayload = payload.input

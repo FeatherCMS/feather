@@ -12,7 +12,7 @@ extension MenuItem.Add.Interactor {
 
         func execute(
             menuId: String,
-            input: MenuItemFormInput
+            input: MenuItem.Form.Input
         ) async throws
     }
 }

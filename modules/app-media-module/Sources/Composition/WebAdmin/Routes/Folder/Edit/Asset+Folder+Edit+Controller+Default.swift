@@ -52,7 +52,7 @@ extension Asset.Folder.Edit.Controller {
             let id = try context.requiredID()
             let permissions = context.currentUserAdminListActions
             let payload = try await request.decode(
-                as: MediaFolderEditForm.self,
+                as: Asset.Folder.Edit.Form.Input.self,
                 context: context
             )
 

@@ -71,7 +71,7 @@ extension SubmissionMail.Edit.Controller {
             let formId = try context.requiredParameter("formKey")
             let mailId = try context.requiredParameter("mailId")
             let input = try await request.decode(
-                as: SubmissionMailFormInput.self,
+                as: SubmissionMail.Form.Input.self,
                 context: context
             )
             try await interactor.update(

@@ -10,7 +10,7 @@ extension FormField.Add.Interactor {
         func getAddContactField() async throws -> FormField.Add.Model
 
         func postAddContactField(
-            payload: ContactFieldFormInput,
+            payload: FormField.Add.Form.Input,
             formKey: String?
         ) async throws -> FormField.Add.Model
     }

@@ -26,7 +26,7 @@ extension Asset.File.Add.Presenter {
                 request.queryString("presentation") == "dialog"
                 && request.headers[.accept]?.contains("type=admin-dialog")
                     == true
-            let content = MediaAssetUploadView(
+            let content = Asset.File.Add.Upload.Page(
                 state: .init(
                     routes: routes,
                     form: .init(

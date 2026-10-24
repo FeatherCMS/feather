@@ -66,11 +66,11 @@ extension Variable.Edit.Controller {
             }
             let id = try context.requiredID()
             let permissions = context.currentUserAdminListActions.granted
-            var lastPayload: SystemVariableEditFormInput?
+            var lastPayload: Variable.Edit.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<SystemVariableEditFormInput>.self,
+                    as: NonceRequest<Variable.Edit.Form.Input>.self,
                     context: context
                 )
                 lastPayload = payload.input

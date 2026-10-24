@@ -11,7 +11,7 @@ extension Settings.Edit.Interactor {
         func loadSettings() async throws -> Settings.Edit.Model
 
         func saveSettings(
-            input: Settings.Edit.FormInput
+            input: Settings.Edit.Form.Input
         ) async throws
     }
 }

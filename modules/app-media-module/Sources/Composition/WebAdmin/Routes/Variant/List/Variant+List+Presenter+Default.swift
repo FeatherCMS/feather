@@ -23,7 +23,7 @@ extension Variant.List.Presenter {
                 request: request,
                 context: context,
                 title: "Media variants",
-                content: MediaVariantTable(
+                content: Variant.List.Page(
                     state: .init(
                         permissions: permissions,
                         variants: model.items,

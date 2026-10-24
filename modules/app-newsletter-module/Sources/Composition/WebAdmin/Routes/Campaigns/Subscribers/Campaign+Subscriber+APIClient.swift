@@ -44,7 +44,7 @@ extension Campaign.Subscriber {
             }
         }
 
-        func create(newsletterId: String, form: Form) async throws {
+        func create(newsletterId: String, form: Form.Input) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterSubscriberCreate(
                     path: .init(newsletterCampaignKey: newsletterId),
@@ -114,7 +114,7 @@ extension Campaign.Subscriber {
         func update(
             newsletterId: String,
             subscriberId: String,
-            form: Form
+            form: Form.Input
         ) async throws {
             let email = try await email(
                 newsletterId: newsletterId,
@@ -138,9 +138,10 @@ extension Campaign.Subscriber {
                 switch response {
                 case .ok: return
                 case .badRequest(let response):
-                    let data = try JSONEncoder().encode(
-                        try response.body.json
-                    )
+                    let data = try JSONEncoder()
+                        .encode(
+                            try response.body.json
+                        )
                     throw OpenAPIRepositoryError.parsedFailure(
                         statusCode: 400,
                         responseBody: String(data: data, encoding: .utf8)

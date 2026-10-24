@@ -19,7 +19,7 @@ extension Asset.File.List {
 
         struct PickerState: Sendable {
             let isEnabled: Bool
-            let configuration: MediaAssetPopupConfiguration?
+            let configuration: Asset.Picker.Popup.Configuration?
             let resetSelection: Bool
 
             var field: String? {
@@ -41,7 +41,7 @@ extension Asset.File.List {
                 configuration?.previewVariant
             }
 
-            var selectionMode: MediaAssetSelectionMode {
+            var selectionMode: Asset.Picker.SelectionMode {
                 configuration?.selectionMode ?? .single
             }
         }

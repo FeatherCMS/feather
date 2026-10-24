@@ -1,6 +1,6 @@
 import FeatherValidation
-import FeatherWebShared
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import UserModule
 import WebComponents
@@ -14,7 +14,7 @@ extension Identity.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: Identity.Edit.FormComponent.State
+            state: Identity.Edit.Form.Component.State
         )
             async throws
             -> HTMLResponse
@@ -35,13 +35,13 @@ extension Identity.Edit.Presenter {
 
         func renderValidationError(
             id: String,
-            input: Identity.Edit.FormInput?,
+            input: Identity.Edit.Form.Input?,
             error: ValidationError,
             roleOptions: [Identity.Edit.RoleOption]
         ) async throws -> HTMLResponse {
             var state =
                 input.map {
-                    Identity.Edit.FormComponent.State.from(
+                    Identity.Edit.Form.Component.State.from(
                         name: $0.normalizedName,
                         status: $0.normalizedStatus,
                         roleIds: $0.roleIds,
@@ -59,7 +59,7 @@ extension Identity.Edit.Presenter {
 
         func renderEditError(
             id: String,
-            input: Identity.Edit.FormInput?,
+            input: Identity.Edit.Form.Input?,
             error: Identity.Edit.Error,
             roleOptions: [Identity.Edit.RoleOption]
         ) async throws -> HTMLResponse {
@@ -132,14 +132,14 @@ extension Identity.Edit.Presenter {
 
         private func renderFormError(
             id: String,
-            input: Identity.Edit.FormInput?,
+            input: Identity.Edit.Form.Input?,
             message: String,
             status: HTTPResponse.Status,
             roleOptions: [Identity.Edit.RoleOption]
         ) async throws -> HTMLResponse {
             var state =
                 input.map {
-                    Identity.Edit.FormComponent.State.from(
+                    Identity.Edit.Form.Component.State.from(
                         name: $0.normalizedName,
                         status: $0.normalizedStatus,
                         roleIds: $0.roleIds,
@@ -179,9 +179,9 @@ extension Identity.Edit.Presenter {
             )
         }
     }
-    }
+}
 
-    extension HTMLResponse {
+extension HTMLResponse {
     fileprivate func withStatus(_ status: HTTPResponse.Status) -> HTMLResponse {
         HTMLResponse(content: content, status: status)
     }

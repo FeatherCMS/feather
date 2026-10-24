@@ -12,7 +12,7 @@ extension Variable.Edit.Repository {
 
         func load(
             id: String
-        ) async throws -> SystemVariableEditModel {
+        ) async throws -> Variable.Edit.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.systemVariableGet(
                     path: .init(systemVariableId: id),

@@ -26,7 +26,7 @@ extension FormField.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit contact form field",
-                content: ContactFieldEditPage(
+                content: FormField.Edit.Page(
                     state: .init(
                         field: field,
                         error: error,

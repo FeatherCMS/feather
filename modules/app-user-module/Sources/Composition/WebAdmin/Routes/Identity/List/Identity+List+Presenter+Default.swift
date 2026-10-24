@@ -1,6 +1,6 @@
 import FeatherModuleKit
-import FeatherWebShared
 import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import UserAdminAPI
 import UserModule
@@ -25,7 +25,7 @@ extension Identity.List.Presenter {
                 request: request,
                 context: context,
                 title: "User identities",
-                content: Identity.List.TableView(
+                content: Identity.List.Component(
                     routes: routes,
                     permissions: AdminListActions(permissions),
                     identities: model.items,

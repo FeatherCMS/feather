@@ -13,11 +13,11 @@ extension SubmissionMail.Add.Interactor {
     struct Default: Interface {
         let repository: any SubmissionMail.Add.Repository.Interface
 
-        func get(id: String) async throws -> ContactForm.Details.Item {
+        func get(id: String) async throws -> ContactModule.Form.Details.Item {
             try await repository.get(id: id)
         }
 
-        func add(id: String, email: ContactForm.Email) async throws {
+        func add(id: String, email: ContactModule.Form.Email) async throws {
             let current = try await repository.get(id: id)
             _ = try await repository.update(
                 id: id,

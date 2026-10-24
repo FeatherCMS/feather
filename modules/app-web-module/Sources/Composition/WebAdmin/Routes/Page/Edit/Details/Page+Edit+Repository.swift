@@ -15,7 +15,7 @@ extension Page.Edit.Repository {
 
         func update(
             id: String,
-            input: PageFormInput
+            input: Page.Form.Input
         ) async throws
     }
 }

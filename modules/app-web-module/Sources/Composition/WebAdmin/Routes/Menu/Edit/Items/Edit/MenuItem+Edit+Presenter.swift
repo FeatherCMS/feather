@@ -12,7 +12,7 @@ extension MenuItem.Edit.Presenter {
         func renderEditPage(
             menuId: String,
             id: String,
-            state: MenuItemForm.State,
+            state: MenuItem.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

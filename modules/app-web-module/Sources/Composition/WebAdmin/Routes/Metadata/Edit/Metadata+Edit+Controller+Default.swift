@@ -266,7 +266,7 @@ extension WebModule.Metadata.Edit.Controller {
             cssCodeInjection: String = "",
             javascriptCodeInjection: String = "",
             structuredDataCodeInjection: String = ""
-        ) -> WebModule.Metadata.Edit.FormView.State {
+        ) -> WebModule.Metadata.Edit.Form.Component.State {
             .init(
                 referenceType: .init(
                     key: "referenceType",

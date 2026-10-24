@@ -31,7 +31,7 @@ extension Insight.View.Presenter {
                 request: request,
                 context: context,
                 title: source.pageTitle,
-                content: StatusView(
+                content: Log.Status.Page(
                     breadcrumb: AnalyticsWebAdmin.Router.Routes.breadcrumb,
                     title: info,
                     message: message
@@ -47,7 +47,7 @@ extension Insight.View.Presenter {
                 request: request,
                 context: context,
                 title: source.pageTitle,
-                content: StatusView(
+                content: Log.Status.Page(
                     breadcrumb: AnalyticsWebAdmin.Router.Routes.breadcrumb,
                     title: "Forbidden",
                     message: "Your account cannot access analytics insights."

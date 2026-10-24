@@ -8,7 +8,7 @@ extension Job.View.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func get(id: String) async throws -> SystemJobDetailsModel {
+        func get(id: String) async throws -> Job.View.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.systemJobGet(
                     path: .init(systemJobId: id),

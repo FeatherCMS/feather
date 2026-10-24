@@ -16,7 +16,7 @@ extension ContactModule.Form.Edit {
 
 extension ContactModule.Form.Edit.Repository {
     protocol Interface: Sendable {
-        func get(key: String) async throws -> ContactForm.Details.Item
+        func get(key: String) async throws -> ContactModule.Form.Details.Item
         func update(
             key: String,
             newKey: String,
@@ -25,8 +25,8 @@ extension ContactModule.Form.Edit.Repository {
             failureMessage: String,
             redirectUrl: String?,
             fieldIDs: [String],
-            mails: [ContactForm.Email]
-        ) async throws -> ContactForm.Details.Item
+            mails: [ContactModule.Form.Email]
+        ) async throws -> ContactModule.Form.Details.Item
     }
 }
 
@@ -34,7 +34,7 @@ extension ContactModule.Form.Edit.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func get(key: String) async throws -> ContactForm.Details.Item {
+        func get(key: String) async throws -> ContactModule.Form.Details.Item {
             try await ContactModule.Form.View.Repository.OpenAPI(api: api)
                 .get(key: key)
         }
@@ -47,8 +47,8 @@ extension ContactModule.Form.Edit.Repository {
             failureMessage: String,
             redirectUrl: String?,
             fieldIDs: [String],
-            mails: [ContactForm.Email]
-        ) async throws -> ContactForm.Details.Item {
+            mails: [ContactModule.Form.Email]
+        ) async throws -> ContactModule.Form.Details.Item {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.contactFormUpdate(
                     path: .init(contactFormKey: key),

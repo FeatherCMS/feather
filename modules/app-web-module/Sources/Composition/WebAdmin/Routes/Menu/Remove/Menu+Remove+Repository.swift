@@ -12,7 +12,7 @@ extension WebModule.Menu.Remove.Repository {
 
         func get(
             id: String
-        ) async throws -> MenuDetailsModel
+        ) async throws -> WebModule.Menu.View.Model
 
         func delete(
             id: String

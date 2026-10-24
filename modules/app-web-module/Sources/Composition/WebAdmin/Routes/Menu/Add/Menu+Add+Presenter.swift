@@ -12,7 +12,7 @@ extension WebModule.Menu.Add.Presenter {
     protocol Interface: Sendable {
 
         func renderAddPage(
-            state: MenuForm.State,
+            state: WebModule.Menu.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

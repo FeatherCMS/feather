@@ -23,7 +23,7 @@ extension Identity.Edit.Interactor {
 
         func edit(
             id: String,
-            input: Identity.Edit.FormInput
+            input: Identity.Edit.Form.Input
         ) async throws {
             do {
                 try await identityRepository.update(

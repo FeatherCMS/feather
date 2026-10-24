@@ -10,11 +10,11 @@ extension Variable.Edit.Interactor {
 
         func load(
             id: String
-        ) async throws -> SystemVariableEditModel
+        ) async throws -> Variable.Edit.Model
 
         func edit(
             id: String,
-            input: SystemVariableEditFormInput
+            input: Variable.Edit.Form.Input
         ) async throws
     }
 }

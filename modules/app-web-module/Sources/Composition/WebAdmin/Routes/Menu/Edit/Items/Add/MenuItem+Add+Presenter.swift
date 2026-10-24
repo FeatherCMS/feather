@@ -11,7 +11,7 @@ extension MenuItem.Add.Presenter {
     protocol Interface: Sendable {
         func renderAddPage(
             menuId: String,
-            state: MenuItemForm.State,
+            state: MenuItem.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
     }

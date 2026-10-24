@@ -24,13 +24,13 @@ extension Credential.List.Presenter {
         let routes: Credential.Router.Routes
 
         func renderPage(
-            state: Credential.List.ListTable.State
+            state: Credential.List.Component.State
         ) async throws -> HTMLResponse {
             try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "User credentials",
-                content: Credential.List.ListTable(state: state)
+                content: Credential.List.Component(state: state)
             )
         }
 

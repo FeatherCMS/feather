@@ -15,14 +15,14 @@ extension Permission.View.Presenter {
         let routes: Permission.Router.Routes
 
         func renderDetailsPage(
-            permission: SystemPermissionDetailsModel,
+            permission: Permission.View.Result,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "System permission details",
-                content: SystemPermissionDetailsView(
+                content: Permission.View.Page(
                     state: .init(
                         permission: permission,
                         permissions: permissions,

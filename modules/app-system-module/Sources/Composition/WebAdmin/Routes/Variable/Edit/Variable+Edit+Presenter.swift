@@ -14,7 +14,7 @@ extension Variable.Edit.Presenter {
         func renderEditPage(
             id: String,
             deleteID: String,
-            state: SystemVariableEditForm.State,
+            state: Variable.Edit.Form.State,
             permissions: Set<PermissionKey>
         ) async throws -> HTMLResponse
 
@@ -24,14 +24,14 @@ extension Variable.Edit.Presenter {
 
         func renderValidationError(
             id: String,
-            input: SystemVariableEditFormInput?,
+            input: Variable.Edit.Form.Input?,
             permissions: Set<PermissionKey>,
             error: ValidationError
         ) async throws -> HTMLResponse
 
         func renderEditError(
             id: String,
-            input: SystemVariableEditFormInput?,
+            input: Variable.Edit.Form.Input?,
             permissions: Set<PermissionKey>,
             error: Variable.Edit.Error
         ) async throws -> HTMLResponse

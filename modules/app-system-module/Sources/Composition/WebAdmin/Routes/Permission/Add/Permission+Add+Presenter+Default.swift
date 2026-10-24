@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import Hummingbird
 import SystemAdminAPI
 import SystemModule
@@ -16,20 +16,20 @@ extension Permission.Add.Presenter {
         let routes: Permission.Router.Routes
 
         func renderAddPage(
-            state: SystemPermissionAddForm.State
+            state: Permission.Add.Form.State
         ) async throws -> HTMLResponse {
             try await renderAddPage(state: state, status: .ok)
         }
 
         private func renderAddPage(
-            state: SystemPermissionAddForm.State,
+            state: Permission.Add.Form.State,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             let nonceToken = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
             return try await renderPage(
-                content: SystemPermissionAddPage(
+                content: Permission.Add.Page(
                     state: .init(
                         form: state,
                         nonceToken: nonceToken,
@@ -41,7 +41,7 @@ extension Permission.Add.Presenter {
         }
 
         func renderValidationError(
-            input: SystemPermissionAddFormInput?,
+            input: Permission.Add.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse {
             var errors: [String: String] = [:]
@@ -49,7 +49,7 @@ extension Permission.Add.Presenter {
                 errors[failure.key] = failure.message
             }
             var state =
-                input.map(SystemPermissionAddForm.State.from) ?? .empty()
+                input.map(Permission.Add.Form.State.from) ?? .empty()
             state.apply(errors: errors)
             return try await renderAddPage(
                 state: state,
@@ -58,7 +58,7 @@ extension Permission.Add.Presenter {
         }
 
         func renderAddError(
-            input: SystemPermissionAddFormInput?,
+            input: Permission.Add.Form.Input?,
             error: Permission.Add.Error
         ) async throws -> HTMLResponse {
             switch error {
@@ -160,12 +160,12 @@ extension Permission.Add.Presenter {
         }
 
         private func renderFormError(
-            input: SystemPermissionAddFormInput?,
+            input: Permission.Add.Form.Input?,
             message: String,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             var state =
-                input.map(SystemPermissionAddForm.State.from) ?? .empty()
+                input.map(Permission.Add.Form.State.from) ?? .empty()
             state.error = message
             return try await renderAddPage(state: state, status: status)
         }

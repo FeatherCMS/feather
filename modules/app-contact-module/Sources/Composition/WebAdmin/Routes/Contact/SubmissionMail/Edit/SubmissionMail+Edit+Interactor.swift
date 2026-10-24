@@ -15,7 +15,7 @@ extension SubmissionMail.Edit {
 
 extension SubmissionMail.Edit.Interactor {
     protocol Interface: Sendable {
-        func get(id: String) async throws -> ContactForm.Details.Item
-        func update(id: String, email: ContactForm.Email) async throws
+        func get(id: String) async throws -> ContactModule.Form.Details.Item
+        func update(id: String, email: ContactModule.Form.Email) async throws
     }
 }

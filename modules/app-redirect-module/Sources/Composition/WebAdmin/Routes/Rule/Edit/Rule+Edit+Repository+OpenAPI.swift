@@ -11,7 +11,7 @@ extension Rule.Edit.Repository {
 
         func load(
             id: String
-        ) async throws -> RedirectRuleEditModel {
+        ) async throws -> Rule.Edit.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.redirectRuleGet(
                     path: .init(redirectRuleId: id),
@@ -44,7 +44,7 @@ extension Rule.Edit.Repository {
 
         func update(
             id: String,
-            input: RedirectRuleEditFormInput
+            input: RedirectModule.Rule.Edit.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.redirectRuleUpdate(

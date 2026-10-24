@@ -12,13 +12,13 @@ extension Job.View.Presenter {
         let routes: Job.Router.Routes
 
         func renderDetailsPage(
-            job: SystemJobDetailsModel
+            job: Job.View.Result
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Worker job details",
-                content: SystemJobDetailsView(
+                content: Job.View.Page(
                     state: .init(job: job, routes: routes)
                 )
             )

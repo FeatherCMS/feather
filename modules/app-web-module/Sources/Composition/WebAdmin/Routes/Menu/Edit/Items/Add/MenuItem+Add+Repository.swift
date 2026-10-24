@@ -10,7 +10,7 @@ extension MenuItem.Add.Repository {
     protocol Interface: Sendable {
         func create(
             menuId: String,
-            input: MenuItemFormInput
+            input: MenuItem.Form.Input
         ) async throws
     }
 }

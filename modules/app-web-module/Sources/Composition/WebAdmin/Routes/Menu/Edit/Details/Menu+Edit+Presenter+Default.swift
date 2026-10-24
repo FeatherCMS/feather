@@ -18,14 +18,14 @@ extension WebModule.Menu.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: MenuForm.State,
+            state: WebModule.Menu.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Edit menu",
-                content: MenuEdit(
+                content: WebModule.Menu.Edit.Page(
                     state: .init(
                         id: id,
                         form: state,
@@ -46,7 +46,7 @@ extension WebModule.Menu.Edit.Presenter {
                 request: request,
                 context: context,
                 title: "Edit menu",
-                content: MenuError(
+                content: WebModule.Menu.Error.Page(
                     state: .init(
                         info: info,
                         message: message,

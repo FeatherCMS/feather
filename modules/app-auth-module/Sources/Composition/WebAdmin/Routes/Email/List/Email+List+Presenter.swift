@@ -24,7 +24,7 @@ extension Email.List.Presenter {
     protocol Interface: Sendable {
 
         func renderPage(
-            state: Email.List.ListTable.State
+            state: Email.List.Component.State
         ) async throws -> HTMLResponse
 
         func renderError(

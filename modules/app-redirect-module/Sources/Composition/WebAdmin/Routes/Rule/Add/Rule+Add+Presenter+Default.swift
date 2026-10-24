@@ -14,11 +14,11 @@ extension RedirectModule.Rule.Add.Presenter {
         let routes: RedirectModule.Rule.Router.Routes
 
         func renderAddPage(
-            state: RedirectRuleAddForm.State,
+            state: RedirectModule.Rule.Add.Form.State,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
             try await renderPage(
-                content: RedirectRuleAddPage(
+                content: RedirectModule.Rule.Add.Page(
                     form: state,
                     nonceToken: await AdminNonceStore.shared.issue(
                         sessionToken: context.sessionToken
@@ -30,11 +30,12 @@ extension RedirectModule.Rule.Add.Presenter {
         }
 
         func renderValidationError(
-            input: RedirectRuleAddFormInput?,
+            input: RedirectModule.Rule.Add.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse {
             var state =
-                input.map(RedirectRuleAddForm.State.from(input:)) ?? .empty()
+                input.map(RedirectModule.Rule.Add.Form.State.from(input:))
+                ?? .empty()
             state.apply(
                 errors: Dictionary(
                     uniqueKeysWithValues: error.failures.map {
@@ -50,7 +51,7 @@ extension RedirectModule.Rule.Add.Presenter {
         }
 
         func renderAddError(
-            input: RedirectRuleAddFormInput?,
+            input: RedirectModule.Rule.Add.Form.Input?,
             error: RedirectModule.Rule.Add.Error
         ) async throws -> HTMLResponse {
             switch error {
@@ -109,12 +110,13 @@ extension RedirectModule.Rule.Add.Presenter {
         }
 
         private func renderFormError(
-            input: RedirectRuleAddFormInput?,
+            input: RedirectModule.Rule.Add.Form.Input?,
             message: String,
             status: HTTPResponse.Status
         ) async throws -> HTMLResponse {
             var state =
-                input.map(RedirectRuleAddForm.State.from(input:)) ?? .empty()
+                input.map(RedirectModule.Rule.Add.Form.State.from(input:))
+                ?? .empty()
             state.error = message
             return try await renderAddPage(
                 state: state,
@@ -150,9 +152,9 @@ extension RedirectModule.Rule.Add.Presenter {
             return HTMLResponse(content: page.content, status: status)
         }
     }
-    }
+}
 
-    extension HTMLResponse {
+extension HTMLResponse {
     fileprivate func withStatus(_ status: HTTPResponse.Status) -> HTMLResponse {
         HTMLResponse(content: content, status: status)
     }

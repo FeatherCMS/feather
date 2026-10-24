@@ -43,7 +43,7 @@ extension Category.Remove.Controller {
             let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let payload = try await request.decode(
-                as: NonceRequest<RemoveInput>.self,
+                as: NonceRequest<Category.Remove.Request.Input>.self,
                 context: context
             )
             guard

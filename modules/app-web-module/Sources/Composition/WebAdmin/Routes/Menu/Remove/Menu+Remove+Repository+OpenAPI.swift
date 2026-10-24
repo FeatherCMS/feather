@@ -12,7 +12,7 @@ extension WebModule.Menu.Remove.Repository {
 
         func get(
             id: String
-        ) async throws -> MenuDetailsModel {
+        ) async throws -> WebModule.Menu.View.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.menuGet(
                     path: .init(menuId: id),

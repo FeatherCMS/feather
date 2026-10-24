@@ -1,8 +1,8 @@
 import ContactAdminAPI
 import ContactApplication
 import ContactModule
-import Foundation
 import FeatherWebShared
+import Foundation
 import OpenAPIRuntime
 
 extension Submission.Edit.Repository {
@@ -22,9 +22,10 @@ extension Submission.Edit.Repository {
                 switch response {
                 case .ok: return
                 case .badRequest(let response):
-                    let data = try JSONEncoder().encode(
-                        try response.body.json
-                    )
+                    let data = try JSONEncoder()
+                        .encode(
+                            try response.body.json
+                        )
                     throw OpenAPIRepositoryError.parsedFailure(
                         statusCode: 400,
                         responseBody: String(data: data, encoding: .utf8)

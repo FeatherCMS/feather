@@ -22,7 +22,7 @@ extension Asset.File.Add.Interactor {
         func getAddMediaAsset() async throws -> Asset.File.Add.Model
 
         func postAddMediaAsset(
-            payload: AssetAddUpload,
+            payload: Asset.File.Add.Upload.Payload,
             variants: [String]?
         ) async throws -> Asset.File.Add.Model
     }

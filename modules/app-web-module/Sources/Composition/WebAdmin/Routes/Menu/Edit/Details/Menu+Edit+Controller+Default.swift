@@ -52,11 +52,11 @@ extension WebModule.Menu.Edit.Controller {
             let runtime = buildRuntime(request, context)
             let id = try context.requiredID()
             let permissions = context.currentUserPermissions
-            var lastPayload: MenuFormInput?
+            var lastPayload: WebModule.Menu.Form.Input?
 
             do {
                 let payload = try await request.decode(
-                    as: MenuFormInput.self,
+                    as: WebModule.Menu.Form.Input.self,
                     context: context
                 )
                 lastPayload = payload
@@ -126,7 +126,7 @@ extension WebModule.Menu.Edit.Controller {
             key: String = "",
             name: String = "",
             notes: String? = nil
-        ) -> MenuForm.State {
+        ) -> WebModule.Menu.Form.Component.State {
             .init(
                 key: .init(key: "key", label: "Key", value: key, error: nil),
                 name: .init(

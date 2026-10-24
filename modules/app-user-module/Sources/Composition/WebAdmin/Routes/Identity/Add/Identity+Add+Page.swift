@@ -9,7 +9,7 @@ import WebComponents
 extension Identity.Add {
     struct Page: Component {
         let routes: Identity.Router.Routes
-        let form: Identity.Add.FormComponent.State
+        let form: Identity.Add.Form.Component.State
         let nonceToken: String?
 
         func html(context: inout BuilderContext) -> Section {
@@ -26,7 +26,7 @@ extension Identity.Add {
                     )
                 )
                 context.build(
-                    Identity.Add.FormComponent(
+                    Identity.Add.Form.Component(
                         state: form,
                         action: routes.add.path,
                         submitLabel: "Add identity",

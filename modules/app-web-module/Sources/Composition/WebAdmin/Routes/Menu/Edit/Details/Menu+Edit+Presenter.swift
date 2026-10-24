@@ -13,7 +13,7 @@ extension WebModule.Menu.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: MenuForm.State,
+            state: WebModule.Menu.Form.Component.State,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 

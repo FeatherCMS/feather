@@ -68,10 +68,10 @@ extension Variant.Edit.Controller {
                     .response(from: request, context: context)
             }
             let id = try context.requiredID()
-            var input: MediaVariantFormInput?
+            var input: Variant.Form.Input?
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<MediaVariantFormInput>.self,
+                    as: NonceRequest<Variant.Form.Input>.self,
                     context: context
                 )
                 input = payload.input
@@ -90,7 +90,7 @@ extension Variant.Edit.Controller {
             }
             catch let error as ValidationError {
                 let detail = try await runtime.interactor.load(id: id)
-                var state = MediaVariantFormView.State.from(input: input)
+                var state = Variant.Form.State.from(input: input)
                 state.apply(
                     errors: Dictionary(
                         uniqueKeysWithValues: error.failures.map {
@@ -161,7 +161,7 @@ extension Variant.Edit.Controller {
             let id = try context.requiredID()
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<MediaVariantProcessorFormInput>.self,
+                    as: NonceRequest<Variant.Processor.Form.Input>.self,
                     context: context
                 )
                 guard
@@ -204,7 +204,7 @@ extension Variant.Edit.Controller {
             let processorId = try context.requiredParameter("processorId")
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<MediaVariantProcessorFormInput>.self,
+                    as: NonceRequest<Variant.Processor.Form.Input>.self,
                     context: context
                 )
                 guard

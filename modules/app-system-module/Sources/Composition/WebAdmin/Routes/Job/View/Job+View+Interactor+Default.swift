@@ -8,7 +8,7 @@ extension Job.View.Interactor {
 
         func execute(entity: Job.View.Model)
             async throws
-            -> SystemJobDetailsModel
+            -> Job.View.Result
         {
             do {
                 return try await repository.get(id: entity.id)

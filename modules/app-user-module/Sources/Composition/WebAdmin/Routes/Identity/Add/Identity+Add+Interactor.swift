@@ -10,7 +10,7 @@ extension Identity.Add.Interactor {
         func loadRoleOptions() async throws -> [Identity.Add.RoleOption]
 
         func add(
-            input: Identity.Add.FormInput
+            input: Identity.Add.Form.Input
         ) async throws
     }
 }

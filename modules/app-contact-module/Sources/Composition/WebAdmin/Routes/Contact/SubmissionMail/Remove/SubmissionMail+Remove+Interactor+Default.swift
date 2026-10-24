@@ -14,7 +14,7 @@ extension SubmissionMail.Remove.Interactor {
     struct Default: Interface {
         let repository: any SubmissionMail.Remove.Repository.Interface
 
-        func get(id: String) async throws -> ContactForm.Details.Item {
+        func get(id: String) async throws -> ContactModule.Form.Details.Item {
             try await repository.get(id: id)
         }
 

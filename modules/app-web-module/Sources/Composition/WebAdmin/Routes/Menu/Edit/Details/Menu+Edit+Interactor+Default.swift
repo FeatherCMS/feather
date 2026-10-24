@@ -9,13 +9,13 @@ extension WebModule.Menu.Edit.Interactor {
 
         func load(
             id: String
-        ) async throws -> MenuDetailsModel {
+        ) async throws -> Menu.View.Model {
             try await repository.load(id: id)
         }
 
         func update(
             id: String,
-            input: MenuFormInput
+            input: WebModule.Menu.Form.Input
         ) async throws {
             try await repository.update(id: id, input: input)
         }

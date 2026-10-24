@@ -8,7 +8,7 @@ extension Job.View {
 extension Job.View.Presenter {
     protocol Interface: Sendable {
         func renderDetailsPage(
-            job: SystemJobDetailsModel
+            job: Job.View.Result
         ) async throws -> HTMLResponse
 
         func renderErrorPage(

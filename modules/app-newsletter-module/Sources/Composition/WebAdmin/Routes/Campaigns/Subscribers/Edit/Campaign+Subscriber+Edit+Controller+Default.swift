@@ -59,7 +59,7 @@ extension Campaign.Subscriber.Edit.Controller {
             let newsletterId = try context.requiredParameter("newsletterId")
             let subscriberId = try context.requiredParameter("subscriberId")
             let form = try await request.decode(
-                as: Campaign.Subscriber.Form.self,
+                as: Campaign.Subscriber.Form.Input.self,
                 context: context
             )
             do {

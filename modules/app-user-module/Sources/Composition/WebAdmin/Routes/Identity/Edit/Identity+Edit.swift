@@ -43,8 +43,14 @@ extension Identity.Edit {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.get(routes.edit.routerPath, use: controller.getEditUserIdentity)
-            router.post(routes.edit.routerPath, use: controller.postEditUserIdentity)
+            router.get(
+                routes.edit.routerPath,
+                use: controller.getEditUserIdentity
+            )
+            router.post(
+                routes.edit.routerPath,
+                use: controller.postEditUserIdentity
+            )
         }
     }
 }

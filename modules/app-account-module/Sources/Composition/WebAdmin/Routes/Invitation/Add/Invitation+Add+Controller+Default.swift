@@ -135,7 +135,7 @@ extension Invitation.Add.Controller {
 
         private func roleOptions(
             _ context: AuthenticatedRequestContext
-        ) async -> [AccountInvitationForm.RoleOptionState] {
+        ) async -> [Invitation.Form.Component.RoleOptionState] {
             let userAPI = UserWebAdmin.API.Client(
                 apiBaseURL: environment.apiBaseURL,
                 requestContext: context
@@ -162,7 +162,7 @@ extension Invitation.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext,
             presenter: any Invitation.Add.Presenter.Interface,
-            state: AccountInvitationForm.State
+            state: Invitation.Form.Component.State
         ) async throws -> Response {
             try await presenter.renderPage(
                 form: state,

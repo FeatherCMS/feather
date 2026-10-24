@@ -35,7 +35,7 @@ extension Page.Search.Presenter {
                     request: request,
                     context: context,
                     title: "Manage web pages",
-                    content: PageError(
+                    content: Page.Error.Page(
                         state: .init(
                             info: "Unable to load web pages.",
                             message: error,
@@ -49,7 +49,7 @@ extension Page.Search.Presenter {
                     request: request,
                     context: context,
                     title: "Manage web pages",
-                    content: PageError(
+                    content: Page.Error.Page(
                         state: .init(
                             info: "Forbidden",
                             message: "Your account cannot access web pages.",

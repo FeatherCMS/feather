@@ -28,7 +28,7 @@ extension Asset.File.List.Presenter {
                 && request.headers[.accept]?.contains("type=admin-dialog")
                     == true
             if model.picker.isEnabled && isDialog {
-                let navigation = MediaAssetPickerDialogNavigation(
+                let navigation = Asset.Picker.Dialog.Navigation(
                     field: model.picker.field,
                     selectionMode: model.picker.selectionMode
                 )
@@ -38,9 +38,9 @@ extension Asset.File.List.Presenter {
                     title: model.picker.selectionMode == .multiple
                         ? "Select media assets"
                         : "Select media asset",
-                    content: MediaAssetPickerDialogView(
+                    content: Asset.Picker.Dialog.View(
                         navigation: navigation,
-                        content: MediaAssetPickerView(
+                        content: Asset.Picker.View(
                             state: .init(
                                 entries: model.entries,
                                 pageState: model.pageState,
@@ -64,7 +64,7 @@ extension Asset.File.List.Presenter {
                     title: model.picker.selectionMode == .multiple
                         ? "Select media assets"
                         : "Select media asset",
-                    content: MediaAssetPickerView(
+                    content: Asset.Picker.View(
                         state: .init(
                             entries: model.entries,
                             pageState: model.pageState,
@@ -79,7 +79,7 @@ extension Asset.File.List.Presenter {
                     )
                 )
             }
-            let content = AssetListView(
+            let content = Asset.File.List.Page(
                 state: .init(
                     entries: model.entries,
                     pageState: model.pageState,
@@ -110,7 +110,7 @@ extension Asset.File.List.Presenter {
                 && request.headers[.accept]?.contains("type=admin-dialog")
                     == true
             if picker {
-                let errorContent = MediaAssetErrorView(
+                let errorContent = Asset.Error.Page(
                     info: "Unable to load media assets.",
                     message: message
                 )
@@ -119,7 +119,7 @@ extension Asset.File.List.Presenter {
                         request: request,
                         context: context,
                         title: "Select media asset",
-                        content: MediaAssetPickerDialogView(
+                        content: Asset.Picker.Dialog.View(
                             navigation: pickerNavigation(),
                             content: errorContent
                         ),
@@ -137,15 +137,15 @@ extension Asset.File.List.Presenter {
                 request: request,
                 context: context,
                 title: "Media assets",
-                content: MediaAssetErrorView(
+                content: Asset.Error.Page(
                     info: "Unable to load media assets.",
                     message: message
                 )
             )
         }
 
-        private func pickerNavigation() -> MediaAssetPickerDialogNavigation {
-            MediaAssetPickerDialogNavigation(
+        private func pickerNavigation() -> Asset.Picker.Dialog.Navigation {
+            Asset.Picker.Dialog.Navigation(
                 field: request.queryString("field")?.emptyToNil,
                 selectionMode: request.queryString("selection") == "multiple"
                     ? .multiple

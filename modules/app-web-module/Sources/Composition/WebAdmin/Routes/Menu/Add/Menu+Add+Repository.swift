@@ -11,7 +11,7 @@ extension WebModule.Menu.Add.Repository {
     protocol Interface: Sendable {
 
         func create(
-            input: MenuFormInput
+            input: WebModule.Menu.Form.Input
         ) async throws
     }
 }

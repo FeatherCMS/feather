@@ -65,7 +65,7 @@ extension Settings.Edit.Repository {
         }
 
         func saveSettings(
-            input: Settings.Edit.FormInput
+            input: Settings.Edit.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.settingsPut(

@@ -42,10 +42,10 @@ extension Variant.Add.Controller {
                     .renderAddError(input: nil, error: .forbidden)
                     .response(from: request, context: context)
             }
-            var input: MediaVariantFormInput?
+            var input: Variant.Form.Input?
             do {
                 let payload = try await request.decode(
-                    as: NonceRequest<MediaVariantFormInput>.self,
+                    as: NonceRequest<Variant.Form.Input>.self,
                     context: context
                 )
                 input = payload.input

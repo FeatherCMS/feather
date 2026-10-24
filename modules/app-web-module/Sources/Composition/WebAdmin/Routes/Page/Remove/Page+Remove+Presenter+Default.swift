@@ -26,7 +26,7 @@ extension Page.Remove.Presenter {
                 request: request,
                 context: context,
                 title: AdminRemoveConfirmation.dialogTitle,
-                content: PageConfirmation(
+                content: Page.Remove.Confirmation(
                     state: .init(
                         id: item.id,
                         source: item.label,
@@ -48,7 +48,7 @@ extension Page.Remove.Presenter {
                 request: request,
                 context: context,
                 title: "Remove page",
-                content: PageError(
+                content: WebModule.Page.Error.Page(
                     state: .init(
                         info: info,
                         message: message,

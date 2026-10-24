@@ -11,10 +11,10 @@ extension Profile.Edit {
 extension Profile.Edit.Repository {
 
     protocol Interface: Sendable {
-        func get() async throws -> Profile.WebAdminModel
+        func get() async throws -> Profile.Remote.Model
 
         func update(
-            profile: Profile.WebAdminModel
+            profile: Profile.Remote.Model
         ) async throws
     }
 }

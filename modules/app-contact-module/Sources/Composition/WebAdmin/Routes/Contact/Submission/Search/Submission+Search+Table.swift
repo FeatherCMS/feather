@@ -39,7 +39,7 @@ extension Submission.Search {
                 )
                 if let formKey = state.formKey {
                     context.build(
-                        ContactForm.TabBar(
+                        ContactModule.Form.TabBar(
                             formId: formKey,
                             active: .submissions
                         )

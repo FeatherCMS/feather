@@ -12,7 +12,7 @@ extension Identity.Detail.Presenter {
         let routes: Identity.Router.Routes
 
         func renderDetailsPage(
-            model: Identity.Detail.ViewModel,
+            model: Identity.Detail.Model,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(

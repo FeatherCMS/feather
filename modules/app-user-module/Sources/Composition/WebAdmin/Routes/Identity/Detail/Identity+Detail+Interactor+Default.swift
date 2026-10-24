@@ -23,9 +23,9 @@ extension Identity.Detail.Interactor {
 
         func load(
             id: String
-        ) async throws -> Identity.Detail.ViewModel {
+        ) async throws -> Identity.Detail.Repository.Model {
             do {
-                return .init(details: try await repository.load(id: id))
+                return try await repository.load(id: id)
             }
             catch let error as OpenAPIRepositoryError {
                 throw map(error)

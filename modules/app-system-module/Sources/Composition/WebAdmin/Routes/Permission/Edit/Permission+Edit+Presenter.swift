@@ -13,19 +13,19 @@ extension Permission.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            state: SystemPermissionEditForm.State,
+            state: Permission.Edit.Form.State,
             isEdited: Bool
         ) async throws -> HTMLResponse
 
         func renderValidationError(
             id: String,
-            input: SystemPermissionEditFormInput?,
+            input: Permission.Edit.Form.Input?,
             error: ValidationError
         ) async throws -> HTMLResponse
 
         func renderEditError(
             id: String,
-            input: SystemPermissionEditFormInput?,
+            input: Permission.Edit.Form.Input?,
             error: Permission.Edit.Error
         ) async throws -> HTMLResponse
 

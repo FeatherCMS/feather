@@ -80,7 +80,7 @@ extension FormField.Add.Controller {
                     .response(from: request, context: context)
             }
             let payload = try await request.decode(
-                as: ContactFieldFormInput.self,
+                as: FormField.Add.Form.Input.self,
                 context: context
             )
             do {

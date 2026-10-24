@@ -38,7 +38,10 @@ extension Identity.List {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.get(routes.list.routerPath, use: controller.getUserIdentities)
+            router.get(
+                routes.list.routerPath,
+                use: controller.getUserIdentities
+            )
         }
     }
 }
