@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 03. 10..
 //
 
-import BlogSharedOpenAPIGenerator
+import BlogSchemaSupport
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 

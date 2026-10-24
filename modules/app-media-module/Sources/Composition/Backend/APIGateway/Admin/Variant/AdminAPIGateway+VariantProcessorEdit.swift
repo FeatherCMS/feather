@@ -62,15 +62,32 @@ extension AdminAPIGateway {
                         isActive: isActive
                     )
                 )
-            return .ok(.init(body: .json(map(result))))
+            return .ok(
+                .init(
+                    body: .json(
+                        .init(
+                            id: result.id,
+                            variantId: result.variantId,
+                            name: result.name,
+                            matchExtensions: result.matchExtensions,
+                            commandTemplate: result.commandTemplate,
+                            isActive: result.isActive,
+                            createdAt: result.createdAt.timeIntervalSince1970,
+                            updatedAt: result.updatedAt.timeIntervalSince1970
+                        )
+                    )
+                )
+            )
         }
         catch Variant.Processor.Edit.Error.notFound {
             return .notFound(
                 .init(
                     body: .json(
-                        errorEnvelope(
-                            message: "Media variant processor not found.",
-                            reason: "media_variant_processor_not_found"
+                        .init(
+                            error: .init(
+                                message: "Media variant processor not found.",
+                                reason: "media_variant_processor_not_found"
+                            )
                         )
                     )
                 )

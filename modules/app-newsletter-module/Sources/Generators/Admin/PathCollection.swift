@@ -1,34 +1,25 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct PathCollection: PathCollectionRepresentable {
 
     var pathMap: PathMap {
-        [
-            "api/v1/admin/newsletter/campaign": NewsletterCampaignPathItems(),
-            "api/v1/admin/newsletter/campaign/query":
-                NewsletterCampaign.Query.PathItem(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}":
-                NewsletterCampaignIDPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues":
-                NewsletterIssuePathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query":
-                NewsletterIssue.Query.PathItem(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email":
-                NewsletterCampaignTestEmailPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}":
-                NewsletterIssueIDPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries":
-                NewsletterIssueDeliveryListPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email":
-                NewsletterIssueTestEmailPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers":
-                NewsletterSubscriberPathItems(),
-            "api/v1/admin/newsletter/subscribers/query":
-                NewsletterSubscriber.Query.PathItem(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}":
-                NewsletterSubscriberIDPathItems(),
-        ]
+        var paths: PathMap = [:]
+        paths.merge(NewsletterCampaign.PathCollection().pathMap) {
+            current,
+            _ in current
+        }
+        paths.merge(NewsletterIssue.PathCollection().pathMap) { current, _ in
+            current
+        }
+        paths.merge(NewsletterDelivery.PathCollection().pathMap) {
+            current,
+            _ in current
+        }
+        paths.merge(NewsletterSubscriber.PathCollection().pathMap) {
+            current,
+            _ in current
+        }
+        return paths
     }
 }

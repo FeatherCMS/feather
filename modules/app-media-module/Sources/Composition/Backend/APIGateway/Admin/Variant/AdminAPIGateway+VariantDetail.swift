@@ -17,14 +17,39 @@ extension AdminAPIGateway {
             return .notFound(
                 .init(
                     body: .json(
-                        errorEnvelope(
-                            message: "Media variant not found.",
-                            reason: "media_variant_not_found"
+                        .init(
+                            error: .init(
+                                message: "Media variant not found.",
+                                reason: "media_variant_not_found"
+                            )
                         )
                     )
                 )
             )
         }
-        return .ok(.init(body: .json(map(result))))
+        return .ok(
+            .init(
+                body: .json(
+                    .init(
+                        id: result.id,
+                        key: result.key,
+                        name: result.name,
+                        isRequired: result.isRequired,
+                        isActive: result.isActive,
+                        processors: result.processors.map {
+                            .init(
+                                id: $0.id,
+                                name: $0.name,
+                                matchExtensions: $0.matchExtensions,
+                                commandTemplate: $0.commandTemplate,
+                                isActive: $0.isActive
+                            )
+                        },
+                        createdAt: result.createdAt.timeIntervalSince1970,
+                        updatedAt: result.updatedAt.timeIntervalSince1970
+                    )
+                )
+            )
+        )
     }
 }

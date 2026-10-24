@@ -1,0 +1,3 @@
+extension NewsletterSubscriber {
+    enum Delete {}
+}

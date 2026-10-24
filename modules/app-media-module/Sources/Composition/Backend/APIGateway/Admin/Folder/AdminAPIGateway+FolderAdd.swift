@@ -32,10 +32,12 @@ extension AdminAPIGateway {
                 return .conflict(
                     .init(
                         body: .json(
-                            errorEnvelope(
-                                message:
-                                    "A media folder with this name already exists.",
-                                reason: "media_folder_conflict"
+                            .init(
+                                error: .init(
+                                    message:
+                                        "A media folder with this name already exists.",
+                                    reason: "media_folder_conflict"
+                                )
                             )
                         )
                     )

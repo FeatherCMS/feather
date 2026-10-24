@@ -74,10 +74,12 @@ extension AdminAPIGateway {
                 return .conflict(
                     .init(
                         body: .json(
-                            errorEnvelope(
-                                message:
-                                    "A media asset already exists at this path.",
-                                reason: "media_asset_conflict"
+                            .init(
+                                error: .init(
+                                    message:
+                                        "A media asset already exists at this path.",
+                                    reason: "media_asset_conflict"
+                                )
                             )
                         )
                     )

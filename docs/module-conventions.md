@@ -356,6 +356,10 @@ request-specific credentials. Do not pass only an extracted URL through every
 route or share request credentials globally. Keep this constructor contract
 consistent across modules that expose the same kind of WebAdmin client.
 
+Keep WebApp/WebAdmin composition adapters named `Repository`; they are
+distinct from Application-layer `List.Query`, `Detail.Query`, and
+`Search.Query` contracts and should not be renamed to `Query`.
+
 ### WebAdmin namespace and route ownership
 
 - A composition target is already a Swift module namespace to external clients.

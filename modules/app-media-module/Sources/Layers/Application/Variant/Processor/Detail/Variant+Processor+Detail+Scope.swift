@@ -4,12 +4,12 @@ public import MediaModule
 
 extension Variant.Processor.Detail {
     public struct Scope: FeatherModuleKit.Scope {
-        public let variantProcessors: any Variant.Processor.Repository.Interface
+        public let query: any Query.Interface
 
         public init(
-            variantProcessors: any Variant.Processor.Repository.Interface
+            query: any Query.Interface
         ) {
-            self.variantProcessors = variantProcessors
+            self.query = query
         }
     }
 }

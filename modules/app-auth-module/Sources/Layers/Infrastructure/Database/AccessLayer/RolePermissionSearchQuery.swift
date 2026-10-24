@@ -6,12 +6,6 @@ import FeatherDatabase
 public import FeatherInfrastructure
 import Foundation
 
-//
-//  RolePermissionDatabaseQueries.swift
-//  app-auth-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 extension RolePermission.Search.Query.Database {
     private struct Row {
         let roleId: String
@@ -79,7 +73,7 @@ extension RolePermission.Search.Query {
                 )
         }
 
-        public func list(
+        public func search(
             query: RolePermission.Search.Input.Query
         ) async throws -> RolePermission.Search.Output {
             let search = query.search

@@ -1,4 +1,4 @@
-import BlogSharedOpenAPIGenerator
+import BlogSchemaSupport
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 

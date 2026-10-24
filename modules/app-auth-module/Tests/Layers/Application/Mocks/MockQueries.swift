@@ -87,25 +87,25 @@ actor MockAuthEmailSearchQuery: Email.Search.Query.Interface {
 }
 
 actor MockRolePermissionQueries: RolePermission.Search.Query.Interface {
-    private(set) var listCallCount = 0
+    private(set) var searchCallCount = 0
     private(set) var countCallCount = 0
 
-    private let listResult: RolePermission.Search.Output
+    private let searchResult: RolePermission.Search.Output
     private let countResult: Int
 
     init(
-        listResult: RolePermission.Search.Output,
+        searchResult: RolePermission.Search.Output,
         countResult: Int
     ) {
-        self.listResult = listResult
+        self.searchResult = searchResult
         self.countResult = countResult
     }
 
-    func list(
+    func search(
         query: RolePermission.Search.Input.Query
     ) async throws -> RolePermission.Search.Output {
-        listCallCount += 1
-        return listResult
+        searchCallCount += 1
+        return searchResult
     }
 
     func count(

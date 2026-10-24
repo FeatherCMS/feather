@@ -7,14 +7,14 @@ extension Variant.Processor.Detail {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Variant.Processor.Detail.Scope>
+        let query: any QueryExecutor<Variant.Processor.Detail.Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Variant.Processor.Detail.Scope>
+            query: any QueryExecutor<Variant.Processor.Detail.Scope>
         ) {
             self.authorizer = authorizer
-            self.transaction = transaction
+            self.query = query
         }
 
         public func execute(subject: Subject, input: Input) async throws
@@ -26,22 +26,10 @@ extension Variant.Processor.Detail {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
 
-            return try await transaction.run { scope in
-                guard
-                    let processor = try await scope.variantProcessors.find(
-                        id: input.id
-                    ),
-                    processor.variantId == input.variantId
-                else { return nil }
-                return .init(
-                    id: processor.id,
-                    variantId: processor.variantId,
-                    name: processor.name,
-                    matchExtensions: processor.matchExtensions,
-                    commandTemplate: processor.commandTemplate,
-                    isActive: processor.isActive,
-                    createdAt: processor.createdAt,
-                    updatedAt: processor.updatedAt
+            return try await query.run { scope in
+                try await scope.query.find(
+                    id: input.id,
+                    variantId: input.variantId
                 )
             }
         }

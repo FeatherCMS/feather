@@ -25,9 +25,11 @@ extension AdminAPIGateway {
             return .notFound(
                 .init(
                     body: .json(
-                        errorEnvelope(
-                            message: "Media asset not found.",
-                            reason: "media_asset_not_found"
+                        .init(
+                            error: .init(
+                                message: "Media asset not found.",
+                                reason: "media_asset_not_found"
+                            )
                         )
                     )
                 )

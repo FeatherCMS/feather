@@ -7,14 +7,14 @@ extension Variant.Detail {
     public struct UseCase: FeatherApplication.UseCase {
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Variant.Detail.Scope>
+        let query: any QueryExecutor<Variant.Detail.Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Variant.Detail.Scope>
+            query: any QueryExecutor<Variant.Detail.Scope>
         ) {
             self.authorizer = authorizer
-            self.transaction = transaction
+            self.query = query
         }
 
         public func execute(subject: Subject, input: Input) async throws
@@ -25,34 +25,8 @@ extension Variant.Detail {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            return try await transaction.run { scope in
-                guard
-                    let variant = try await scope.variantDefinitions.find(
-                        id: input.id
-                    )
-                else { return nil }
-                let processors = try await scope.variantProcessors.list(
-                    variantId: variant.id
-                )
-                return Output(
-                    id: variant.id,
-                    key: variant.key,
-                    name: variant.name,
-                    isRequired: variant.isRequired,
-                    isActive: variant.isActive,
-                    processors: processors.map {
-                        Output.Processor(
-                            id: $0.id,
-                            variantId: $0.variantId,
-                            name: $0.name,
-                            matchExtensions: $0.matchExtensions,
-                            commandTemplate: $0.commandTemplate,
-                            isActive: $0.isActive
-                        )
-                    },
-                    createdAt: variant.createdAt,
-                    updatedAt: variant.updatedAt
-                )
+            return try await query.run { scope in
+                try await scope.query.find(id: input.id)
             }
         }
     }

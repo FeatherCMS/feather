@@ -370,9 +370,9 @@ struct AuthApplicationTestSuite {
     }
 
     @Test
-    func listRolePermissionsAndCountSuccess() async throws {
+    func searchRolePermissionsAndCountSuccess() async throws {
         let rpQueries = MockRolePermissionQueries(
-            listResult: .init(items: []),
+            searchResult: .init(items: []),
             countResult: 2
         )
         let queryExecutor = MockQueryExecutor(
@@ -386,7 +386,7 @@ struct AuthApplicationTestSuite {
             query: queryExecutor
         )
 
-        let list = try await useCase.execute(
+        let result = try await useCase.execute(
             subject: Subject(id: "subject-6"),
             input: .init(query: .init())
         )
@@ -395,9 +395,9 @@ struct AuthApplicationTestSuite {
             input: .init(query: .init())
         )
 
-        #expect(list.items.count == 0)
+        #expect(result.items.count == 0)
         #expect(count == 2)
-        #expect(await rpQueries.listCallCount == 1)
+        #expect(await rpQueries.searchCallCount == 1)
         #expect(await rpQueries.countCallCount == 1)
     }
 

@@ -1,4 +1,4 @@
-import BlogSharedOpenAPIGenerator
+import BlogSchemaSupport
 import FeatherOpenAPI
 
 extension Post.Get {

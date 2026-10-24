@@ -18,7 +18,7 @@ extension Invitation.List {
                 buildRuntime: { request, context in
                     WebAdminRuntime(
                         interactor: Invitation.List.Interactor.Default(
-                            repository: Invitation.Detail.Repository.OpenAPI(
+                            repository: Invitation.List.Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context

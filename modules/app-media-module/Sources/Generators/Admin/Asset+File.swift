@@ -1,4 +1,0 @@
-
-extension Asset {
-    enum File {}
-}

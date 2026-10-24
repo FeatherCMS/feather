@@ -5,81 +5,18 @@ import FeatherWebShared
 import OpenAPIRuntime
 
 extension Invitation.Detail.Repository {
-    struct OpenAPI:
-        Invitation.List.Repository.Interface,
-        Invitation.Detail.Repository.Interface,
-        Invitation.Add.Repository.Interface,
-        Invitation.Edit.Repository.Interface,
-        Invitation.Remove.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
-        private let listUnauthorizedMessage =
-            "Please sign in again to view user invitations."
-        private let getUnauthorizedMessage =
-            "Please sign in again to load this user invitation."
-        private let createUnauthorizedMessage =
-            "Please sign in again to create this user invitation."
-        private let updateUnauthorizedMessage =
-            "Please sign in again to update this user invitation."
-        private let deleteUnauthorizedMessage =
-            "Please sign in again to delete this user invitation."
 
-        init(api: API.Client) {
-            self.api = api
-        }
-
-        func list(
-            page: Int,
-            size: Int,
-            search: String?
-        ) async throws -> Invitation.List.Result {
+        func get(id: String) async throws -> Invitation.Detail.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response =
-                    try await client
-                    .accountInvitationQuery(
-                        headers: .init(accept: [.init(contentType: .json)]),
-                        body: .json(
-                            .init(
-                                page: .init(size: size, number: page),
-                                filters: .init(search: search)
-                            )
-                        )
-                    )
+                let response = try await client.accountInvitationGet(
+                    path: .init(accountInvitationId: id),
+                    headers: .init(accept: [.init(contentType: .json)])
+                )
                 switch response {
-                case .ok(let ok):
-                    let body = try ok.body.json
-                    return .init(
-                        items: body.data.items,
-                        total: body.data.total,
-                        page: body.query.page.number,
-                        size: body.query.page.size
-                    )
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
-                }
-            }
-        }
-
-        func get(
-            id: String
-        ) async throws -> Invitation.Detail.Result {
-            try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response =
-                    try await client
-                    .accountInvitationGet(
-                        path: .init(accountInvitationId: id),
-                        headers: .init(accept: [.init(contentType: .json)])
-                    )
-                switch response {
-                case .ok(let ok):
-                    let item = try ok.body.json
+                case .ok(let value):
+                    let item = try value.body.json
                     return .init(
                         id: item.id,
                         email: item.email,
@@ -99,80 +36,5 @@ extension Invitation.Detail.Repository {
                 }
             }
         }
-
-        func create(
-            payload: Invitation.Form.Payload
-        ) async throws {
-            try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response =
-                    try await client
-                    .accountInvitationCreate(
-                        headers: .init(accept: [.init(contentType: .json)]),
-                        body: .json(
-                            .init(
-                                email: payload.email,
-                                roleIds: payload.roleIDs
-                            )
-                        )
-                    )
-                switch response {
-                case .created: return
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
-                }
-            }
-        }
-
-        func update(
-            id: String,
-            payload: Invitation.Form.Payload
-        ) async throws {
-            try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response =
-                    try await client
-                    .accountInvitationUpdate(
-                        path: .init(accountInvitationId: id),
-                        headers: .init(accept: [.init(contentType: .json)]),
-                        body: .json(
-                            .init(
-                                email: payload.email,
-                                roleIds: payload.roleIDs
-                            )
-                        )
-                    )
-                switch response {
-                case .ok: return
-                case .notFound:
-                    throw OpenAPIRepositoryError.notFound
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
-                }
-            }
-        }
-
-        func delete(
-            id: String
-        ) async throws {
-            try await api.withOpenAPIRepositoryErrorMapping { client in
-                _ = try await client.accountInvitationDelete(
-                    body: .json(.init(ids: [id]))
-                )
-            }
-        }
-
     }
 }

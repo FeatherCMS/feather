@@ -4,12 +4,12 @@ public import MediaModule
 
 extension Variant.Search {
     public struct Scope: FeatherModuleKit.Scope {
-        public let variantDefinitions: any Variant.Repository.Interface
+        public let query: any Query.Interface
 
         public init(
-            variantDefinitions: any Variant.Repository.Interface
+            query: any Query.Interface
         ) {
-            self.variantDefinitions = variantDefinitions
+            self.query = query
         }
     }
 }

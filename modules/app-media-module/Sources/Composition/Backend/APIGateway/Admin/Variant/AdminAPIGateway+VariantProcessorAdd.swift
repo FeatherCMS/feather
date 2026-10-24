@@ -24,15 +24,32 @@ extension AdminAPIGateway {
                         isActive: body.isActive
                     )
                 )
-            return .created(.init(body: .json(map(result))))
+            return .created(
+                .init(
+                    body: .json(
+                        .init(
+                            id: result.id,
+                            variantId: result.variantId,
+                            name: result.name,
+                            matchExtensions: result.matchExtensions,
+                            commandTemplate: result.commandTemplate,
+                            isActive: result.isActive,
+                            createdAt: result.createdAt.timeIntervalSince1970,
+                            updatedAt: result.updatedAt.timeIntervalSince1970
+                        )
+                    )
+                )
+            )
         }
         catch Variant.Processor.Add.Error.variantNotFound {
             return .notFound(
                 .init(
                     body: .json(
-                        errorEnvelope(
-                            message: "Media variant not found.",
-                            reason: "media_variant_not_found"
+                        .init(
+                            error: .init(
+                                message: "Media variant not found.",
+                                reason: "media_variant_not_found"
+                            )
                         )
                     )
                 )

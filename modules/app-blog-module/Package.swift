@@ -219,7 +219,7 @@ let package = Package(
         ),
         // MARK: -
         .target(
-            name: "BlogSharedOpenAPIGenerator",
+            name: "BlogSchemaSupport",
             dependencies: [
                 .product(name: "MediaOpenAPIGeneratorSupport", package: "app-media-module"),
                 .product(
@@ -227,7 +227,7 @@ let package = Package(
                     package: "feather-core"
                 )
             ],
-            path: "Sources/Generators/Shared",
+            path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
         ),
         .executableTarget(
@@ -240,7 +240,7 @@ let package = Package(
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
 
-                .target(name: "BlogSharedOpenAPIGenerator"),
+                .target(name: "BlogSchemaSupport"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -255,7 +255,7 @@ let package = Package(
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
 
-                .target(name: "BlogSharedOpenAPIGenerator"),
+                .target(name: "BlogSchemaSupport"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings

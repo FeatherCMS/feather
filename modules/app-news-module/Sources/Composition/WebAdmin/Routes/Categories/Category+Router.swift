@@ -79,7 +79,7 @@ extension Category {
                             interactor: Category.Detail.Interactor.Default(
                                 repository: repository
                             ),
-                            presenter: Category.Presenter.Default(
+                            presenter: Category.Detail.Presenter.Default(
                                 request: request,
                                 context: context,
                                 mediaAPI: api.mediaAdminAPI(),
@@ -100,7 +100,7 @@ extension Category {
                             environment: environment,
                             requestContext: context
                         )
-                        let repository = Category.Detail.Repository.OpenAPI(
+                        let repository = Category.Edit.Repository.OpenAPI(
                             api: api
                         )
                         return WebAdminRuntime<
@@ -110,7 +110,7 @@ extension Category {
                             interactor: Category.Edit.Interactor.Default(
                                 repository: repository
                             ),
-                            presenter: Category.Presenter.Default(
+                            presenter: Category.Edit.Presenter.Default(
                                 request: request,
                                 context: context,
                                 mediaAPI: api.mediaAdminAPI(),
@@ -131,7 +131,7 @@ extension Category {
                             environment: environment,
                             requestContext: context
                         )
-                        let repository = Category.Detail.Repository.OpenAPI(
+                        let repository = Category.Remove.Repository.OpenAPI(
                             api: api
                         )
                         return WebAdminRuntime<
@@ -141,7 +141,7 @@ extension Category {
                             interactor: Category.Remove.Interactor.Default(
                                 repository: repository
                             ),
-                            presenter: Category.Presenter.Default(
+                            presenter: Category.Remove.Presenter.Default(
                                 request: request,
                                 context: context,
                                 mediaAPI: api.mediaAdminAPI(),

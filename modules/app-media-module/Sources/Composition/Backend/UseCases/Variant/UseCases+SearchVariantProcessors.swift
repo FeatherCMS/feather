@@ -1,3 +1,4 @@
+import FeatherDatabase
 public import MediaApplication
 import MediaInfrastructure
 public import MediaModule
@@ -8,16 +9,16 @@ extension UseCases {
     {
         .init(
             authorizer: authorizer,
-            transaction: writeTransaction(scope: { context in
-                Variant.Processor.Search.Scope(
-                    variantDefinitions: Variant.Repository.Database(
-                        context: context
-                    ),
-                    variantProcessors: Variant.Processor.Repository.Database(
-                        context: context
+            query: DatabaseQueryExecutor(
+                databaseContext: databaseContext,
+                scope: { context in
+                    Variant.Processor.Search.Scope(
+                        query: Variant.Processor.Search.Query.Database(
+                            context: context
+                        )
                     )
-                )
-            })
+                }
+            )
         )
     }
 }

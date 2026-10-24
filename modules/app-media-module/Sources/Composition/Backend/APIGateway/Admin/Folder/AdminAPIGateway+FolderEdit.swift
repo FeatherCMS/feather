@@ -52,9 +52,11 @@ extension AdminAPIGateway {
                 return .notFound(
                     .init(
                         body: .json(
-                            errorEnvelope(
-                                message: "Media folder not found.",
-                                reason: "media_folder_not_found"
+                            .init(
+                                error: .init(
+                                    message: "Media folder not found.",
+                                    reason: "media_folder_not_found"
+                                )
                             )
                         )
                     )

@@ -69,7 +69,7 @@ extension Article {
                             environment: environment,
                             requestContext: context
                         )
-                        let repository = Article.Detail.Repository.OpenAPI(
+                        let repository = Article.Add.Repository.OpenAPI(
                             api: api
                         )
                         return WebAdminRuntime<
@@ -79,7 +79,7 @@ extension Article {
                             interactor: Article.Add.Interactor.Default(
                                 repository: repository
                             ),
-                            presenter: Article.Presenter.Default(
+                            presenter: Article.Add.Presenter.Default(
                                 request: request,
                                 context: context,
                                 mediaAPI: api.mediaAdminAPI(),
@@ -110,7 +110,7 @@ extension Article {
                             interactor: Article.Detail.Interactor.Default(
                                 repository: repository
                             ),
-                            presenter: Article.Presenter.Default(
+                            presenter: Article.Detail.Presenter.Default(
                                 request: request,
                                 context: context,
                                 mediaAPI: api.mediaAdminAPI(),
@@ -131,7 +131,7 @@ extension Article {
                             environment: environment,
                             requestContext: context
                         )
-                        let repository = Article.Detail.Repository.OpenAPI(
+                        let repository = Article.Edit.Repository.OpenAPI(
                             api: api
                         )
                         return WebAdminRuntime<
@@ -141,7 +141,7 @@ extension Article {
                             interactor: Article.Edit.Interactor.Default(
                                 repository: repository
                             ),
-                            presenter: Article.Presenter.Default(
+                            presenter: Article.Edit.Presenter.Default(
                                 request: request,
                                 context: context,
                                 mediaAPI: api.mediaAdminAPI(),
@@ -162,7 +162,7 @@ extension Article {
                             environment: environment,
                             requestContext: context
                         )
-                        let repository = Article.Detail.Repository.OpenAPI(
+                        let repository = Article.Remove.Repository.OpenAPI(
                             api: api
                         )
                         return WebAdminRuntime<
@@ -172,7 +172,7 @@ extension Article {
                             interactor: Article.Remove.Interactor.Default(
                                 repository: repository
                             ),
-                            presenter: Article.Presenter.Default(
+                            presenter: Article.Remove.Presenter.Default(
                                 request: request,
                                 context: context,
                                 mediaAPI: api.mediaAdminAPI(),

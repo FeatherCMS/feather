@@ -2,7 +2,6 @@ import AuthModule
 import Testing
 
 import struct Foundation.Date
-import typealias Foundation.TimeInterval
 
 @testable import AuthDomain
 
@@ -177,7 +176,7 @@ struct AuthDomainTestSuite {
 
 private func makeMagicLink(
     isUsed: Bool,
-    expiresAfter: TimeInterval
+    expiresAfter: Double
 ) -> MagicLink.Model {
     .init(
         id: "m1",

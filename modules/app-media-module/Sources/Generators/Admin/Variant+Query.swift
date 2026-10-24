@@ -1,4 +1,0 @@
-
-extension Variant {
-    enum Query {}
-}

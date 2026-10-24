@@ -1,3 +1,4 @@
+import FeatherApplication
 import FeatherModuleKit
 public import MediaAdminAPI
 import MediaApplication
@@ -15,7 +16,13 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeSearchVariantProcessors()
-        let objectQuery = map(query)
+        let objectQuery = Variant.Processor.Search.Input.Query(
+            page: Search.Page(
+                size: query.page?.size ?? 20,
+                number: query.page?.number ?? 1
+            ),
+            search: query.filters.search
+        )
         do {
             let result = try await useCase.execute(
                 subject: subject,
@@ -28,9 +35,39 @@ extension AdminAPIGateway {
                 .init(
                     body: .json(
                         .init(
-                            query: responseQuery(from: query),
+                            query: .init(
+                                page: .init(
+                                    size: query.page?.size ?? 20,
+                                    number: query.page?.number ?? 1
+                                ),
+                                sort: query.sort?.map { rule in
+                                    let field: Components.Schemas
+                                        .MediaVariantProcessorQueryItemSearchResponseQuerySchema
+                                        .SortPayloadPayload.FieldPayload
+                                    switch rule.field {
+                                    case .id: field = .id
+                                    case .name: field = .name
+                                    case .matchExtensions: field = .matchExtensions
+                                    case .commandTemplate: field = .commandTemplate
+                                    case .isActive: field = .isActive
+                                    }
+                                    return .init(
+                                        field: field,
+                                        direction: rule.direction
+                                    )
+                                },
+                                filters: .init(search: query.filters.search)
+                            ),
                             data: .init(
-                                items: result.items.map(map),
+                                items: result.items.map {
+                                    .init(
+                                        id: $0.id,
+                                        name: $0.name,
+                                        matchExtensions: $0.matchExtensions,
+                                        commandTemplate: $0.commandTemplate,
+                                        isActive: $0.isActive
+                                    )
+                                },
                                 total: result.total
                             )
                         )
@@ -42,9 +79,11 @@ extension AdminAPIGateway {
             return .notFound(
                 .init(
                     body: .json(
-                        errorEnvelope(
-                            message: "Media variant not found.",
-                            reason: "media_variant_not_found"
+                        .init(
+                            error: .init(
+                                message: "Media variant not found.",
+                                reason: "media_variant_not_found"
+                            )
                         )
                     )
                 )

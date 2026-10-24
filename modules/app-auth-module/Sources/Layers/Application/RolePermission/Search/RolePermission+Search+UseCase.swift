@@ -30,7 +30,7 @@ extension RolePermission.Search {
             let inputQuery = input.query
 
             return try await query.run { scope in
-                try await scope.rolePermissions.list(query: inputQuery)
+                try await scope.rolePermissions.search(query: inputQuery)
             }
         }
 
