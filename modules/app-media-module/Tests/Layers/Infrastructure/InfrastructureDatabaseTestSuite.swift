@@ -32,6 +32,7 @@ struct InfrastructureDatabaseTestSuite {
             .joined(
                 separator: "\n"
             )
+        let normalizedSQL = String(sql.filter { $0 != "\"" })
 
         for table in [
             "media_asset_node",
@@ -42,27 +43,31 @@ struct InfrastructureDatabaseTestSuite {
             "media_variant_processor",
             "media_asset_node_file_variant",
         ] {
-            #expect(sql.contains("CREATE TABLE IF NOT EXISTS \(table)"))
+            #expect(
+                normalizedSQL.contains("CREATE TABLE IF NOT EXISTS \(table) (")
+            )
         }
 
         for column in [
-            "parent_id TEXT REFERENCES media_asset_node(id) ON DELETE CASCADE",
+            "parent_id TEXT",
             "absolute_slug TEXT NOT NULL DEFAULT ''",
             "asset_count INTEGER NOT NULL DEFAULT 0",
-            "total_size_bytes BIGINT NOT NULL DEFAULT 0",
-            "storage_object_id TEXT NOT NULL UNIQUE REFERENCES media_storage_object(id)",
+            "total_size_bytes INTEGER NOT NULL DEFAULT 0",
+            "storage_object_id TEXT NOT NULL UNIQUE",
             "variant_key TEXT NOT NULL UNIQUE",
             "is_required BOOLEAN NOT NULL DEFAULT TRUE",
             "is_active BOOLEAN NOT NULL DEFAULT TRUE",
             "match_extensions TEXT NOT NULL",
             "command_template TEXT NOT NULL",
-            "UNIQUE(variant_id, name)",
-            "UNIQUE(variant_id, id)",
-            "UNIQUE(asset_node_file_id, variant_id)",
-            "UNIQUE(storage_object_id)",
+            "UNIQUE (variant_id, name)",
+            "UNIQUE (variant_id, id)",
+            "UNIQUE (asset_node_file_id, variant_id)",
+            "UNIQUE (storage_object_id)",
+            "FOREIGN KEY (parent_id) REFERENCES media_asset_node (id) ON DELETE CASCADE",
+            "FOREIGN KEY (storage_object_id) REFERENCES media_storage_object (id)",
             "FOREIGN KEY (variant_id, variant_processor_id)",
         ] {
-            #expect(sql.contains(column))
+            #expect(normalizedSQL.contains(column))
         }
 
         for index in [
@@ -70,7 +75,9 @@ struct InfrastructureDatabaseTestSuite {
             "media_asset_node_parent_slug_idx",
             "media_asset_node_absolute_slug_slug_idx",
         ] {
-            #expect(sql.contains("CREATE UNIQUE INDEX IF NOT EXISTS \(index)"))
+            #expect(
+                normalizedSQL.contains("CREATE UNIQUE INDEX IF NOT EXISTS \(index)")
+            )
         }
 
         for index in [
@@ -85,10 +92,13 @@ struct InfrastructureDatabaseTestSuite {
             "media_asset_node_file_variant_variant_id_idx",
             "media_asset_node_file_variant_processor_id_idx",
         ] {
-            #expect(sql.contains("CREATE INDEX IF NOT EXISTS \(index)"))
+            #expect(
+                normalizedSQL.contains("CREATE INDEX \(index)")
+                    || normalizedSQL.contains("CREATE INDEX IF NOT EXISTS \(index)")
+            )
         }
 
-        #expect(sql.contains("created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())"))
-        #expect(sql.contains("updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())"))
+        #expect(normalizedSQL.contains("created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP"))
+        #expect(normalizedSQL.contains("updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP"))
     }
 }

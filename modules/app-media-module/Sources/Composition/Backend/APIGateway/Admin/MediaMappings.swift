@@ -123,6 +123,34 @@ extension AdminAPIGateway {
         )
     }
 
+    func map(
+        _ query: MediaAdminAPI.Components.Schemas
+            .MediaFolderQueryItemSearchRequestQuerySchema
+    ) -> Asset.Folder.Search.Input.Query {
+        let sort = (query.sort ?? [])
+            .map { rule in
+                let field: Asset.Folder.Search.Input.Query.Sort.Field
+                switch rule.field {
+                case .id: field = .id
+                case .name: field = .name
+                case .path: field = .path
+                case .assetCount: field = .assetCount
+                case .totalSizeBytes: field = .totalSizeBytes
+                case .createdAt: field = .createdAt
+                case .updatedAt: field = .updatedAt
+                }
+                return Asset.Folder.Search.Input.Query.Sort(
+                    field: field,
+                    direction: mapSortDirection(rule.direction)
+                )
+            }
+        return .init(
+            page: map(query.page ?? .init()),
+            sort: sort,
+            parentId: (query.filters.parentId ?? "").emptyToNil
+        )
+    }
+
     func responseQuery(
         from query: MediaAdminAPI.Components.Schemas
             .MediaVariantQueryItemSearchRequestQuerySchema
@@ -429,6 +457,22 @@ extension AdminAPIGateway {
     }
 
     func map(_ item: Asset.Folder.List.Output.Item)
+        -> MediaAdminAPI.Components.Schemas.MediaFolderQueryItemSchema
+    {
+        .init(
+            id: item.id,
+            parentId: item.parentId,
+            name: item.name,
+            slug: item.slug,
+            slugPath: item.slugPath,
+            assetCount: item.assetCount,
+            totalSizeBytes: item.totalSizeBytes,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func map(_ item: Asset.Folder.Search.Output.Item)
         -> MediaAdminAPI.Components.Schemas.MediaFolderQueryItemSchema
     {
         .init(

@@ -1,3 +1,4 @@
+import FeatherDomain
 import FeatherModuleKit
 public import WebDomain
 public import WebModule
@@ -72,6 +73,47 @@ extension Metadata {
                 cssCodeInjection: cssCodeInjection,
                 javascriptCodeInjection: javascriptCodeInjection,
                 structuredDataCodeInjection: structuredDataCodeInjection
+            )
+        }
+
+        public func update(
+            _ metadata: inout Metadata.Model,
+            template: String? = nil
+        ) throws {
+            try metadata.update(
+                template: template.map(FieldChange.set) ?? .unchanged,
+                slug: .set(slug),
+                publicationDate: publicationDate.map(FieldChange.set)
+                    ?? .unchanged,
+                expirationDate: .init(
+                    value: expirationDate,
+                    shouldApply: expirationDate != nil
+                ),
+                status: .set(status),
+                title: .init(value: title, shouldApply: title != nil),
+                excerpt: .init(value: excerpt, shouldApply: excerpt != nil),
+                imageURL: .init(value: imageURL, shouldApply: imageURL != nil),
+                canonicalURL: .init(
+                    value: canonicalURL,
+                    shouldApply: canonicalURL != nil
+                ),
+                noIndex: .set(noIndex),
+                primaryKeyword: .init(
+                    value: primaryKeyword,
+                    shouldApply: true
+                ),
+                cssCodeInjection: .init(
+                    value: cssCodeInjection,
+                    shouldApply: cssCodeInjection != nil
+                ),
+                javascriptCodeInjection: .init(
+                    value: javascriptCodeInjection,
+                    shouldApply: javascriptCodeInjection != nil
+                ),
+                structuredDataCodeInjection: .init(
+                    value: structuredDataCodeInjection,
+                    shouldApply: structuredDataCodeInjection != nil
+                )
             )
         }
     }

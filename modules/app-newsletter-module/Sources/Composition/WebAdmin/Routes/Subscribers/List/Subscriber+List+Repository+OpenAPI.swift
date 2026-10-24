@@ -21,6 +21,18 @@ extension Subscriber.List.Repository {
             try await APIClient(api: api).campaigns()
         }
 
+        func search(
+            search: String?,
+            campaignKey: String?,
+            page: Int
+        ) async throws -> SearchResult {
+            try await APIClient(api: api).search(
+                search: search,
+                campaignKey: campaignKey,
+                page: page
+            )
+        }
+
         func list() async throws -> [Subscriber.List.Model.Item] {
             try await APIClient(api: api).list()
         }

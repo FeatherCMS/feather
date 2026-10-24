@@ -33,8 +33,8 @@ struct AssetFileEditUseCaseTestSuite {
             )
         )
 
-        #expect(result.detail.title == nil)
-        #expect(result.detail.altText == "Existing alt text")
+        #expect(result.title == nil)
+        #expect(result.altText == "Existing alt text")
         #expect(await repository.updatedAsset?.title == nil)
         #expect(await repository.updatedAsset?.altText == "Existing alt text")
         #expect(await repository.updateCallCount == 1)

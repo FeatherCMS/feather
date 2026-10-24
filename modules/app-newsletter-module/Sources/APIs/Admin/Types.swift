@@ -59,6 +59,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/delete(newsletterSubscriberRemove)`.
     func newsletterSubscriberRemove(_ input: Operations.NewsletterSubscriberRemove.Input) async throws -> Operations.NewsletterSubscriberRemove.Output
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/subscribers/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/subscribers/query/post(newsletterSubscriberQuery)`.
+    func newsletterSubscriberQuery(_ input: Operations.NewsletterSubscriberQuery.Input) async throws -> Operations.NewsletterSubscriberQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/get(newsletterSubscriberGet)`.
     func newsletterSubscriberGet(_ input: Operations.NewsletterSubscriberGet.Input) async throws -> Operations.NewsletterSubscriberGet.Output
@@ -279,6 +282,17 @@ extension APIProtocol {
     ) async throws -> Operations.NewsletterSubscriberRemove.Output {
         try await newsletterSubscriberRemove(Operations.NewsletterSubscriberRemove.Input(
             path: path,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/subscribers/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/subscribers/query/post(newsletterSubscriberQuery)`.
+    public func newsletterSubscriberQuery(
+        headers: Operations.NewsletterSubscriberQuery.Input.Headers = .init(),
+        body: Operations.NewsletterSubscriberQuery.Input.Body
+    ) async throws -> Operations.NewsletterSubscriberQuery.Output {
+        try await newsletterSubscriberQuery(Operations.NewsletterSubscriberQuery.Input(
             headers: headers,
             body: body
         ))

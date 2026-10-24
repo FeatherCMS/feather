@@ -56,23 +56,7 @@ extension Author.Edit {
                     profileImageAssetId: input.profileImageAssetId
                 )
                 if let metadataInput = input.metadata {
-                    try metadata.update(
-                        slug: metadataInput.slug,
-                        publicationDate: metadataInput.publicationDate,
-                        expirationDate: metadataInput.expirationDate,
-                        status: metadataInput.status,
-                        title: metadataInput.title,
-                        excerpt: metadataInput.excerpt,
-                        imageURL: metadataInput.imageURL,
-                        canonicalURL: metadataInput.canonicalURL,
-                        noIndex: metadataInput.noIndex,
-                        primaryKeyword: metadataInput.primaryKeyword,
-                        cssCodeInjection: metadataInput.cssCodeInjection,
-                        javascriptCodeInjection: metadataInput
-                            .javascriptCodeInjection,
-                        structuredDataCodeInjection: metadataInput
-                            .structuredDataCodeInjection
-                    )
+                    try metadataInput.update(&metadata)
                 }
 
                 let savedModel = try await scope.author.update(model)

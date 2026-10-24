@@ -512,6 +512,32 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
+  /api/v1/admin/newsletter/subscribers/query:
+    post:
+      operationId: newsletterSubscriberQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterSubscriberQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
   /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}:
     get:
       tags:
@@ -1174,6 +1200,147 @@ components:
       minProperties: 1
     NewsletterSubscriberStatusField:
       type: string
+    NewsletterSubscriberQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - email
+                - name
+                examples:
+                - email
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            campaignKey:
+              $ref: '#/components/schemas/NewsletterKeyField'
+            email:
+              $ref: '#/components/schemas/NewsletterEmailField'
+          minProperties: 0
+      required:
+      - filters
+      minProperties: 1
+    NewsletterSubscriberQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/NewsletterSubscriberQueryItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    NewsletterSubscriberQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - email
+                - name
+                examples:
+                - email
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            campaignKey:
+              $ref: '#/components/schemas/NewsletterKeyField'
+            email:
+              $ref: '#/components/schemas/NewsletterEmailField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    NewsletterSubscriberQueryItemSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/NewsletterEmailField'
+        name:
+          $ref: '#/components/schemas/NewsletterNameField'
+        memberships:
+          $ref: '#/components/schemas/NewsletterSubscriberQueryMembershipListSchema'
+      required:
+      - email
+      - name
+      - memberships
+      minProperties: 3
+    NewsletterSubscriberQueryMembershipListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsletterSubscriberQueryMembershipSchema'
+      minItems: 0
+      uniqueItems: false
+    NewsletterSubscriberQueryMembershipSchema:
+      type: object
+      properties:
+        campaignKey:
+          $ref: '#/components/schemas/NewsletterKeyField'
+        campaignName:
+          $ref: '#/components/schemas/NewsletterNameField'
+        status:
+          $ref: '#/components/schemas/NewsletterSubscriberStatusField'
+      required:
+      - campaignKey
+      - campaignName
+      - status
+      minProperties: 3
     NewsletterSubscriberUpdateMask:
       type: string
       examples:
@@ -1245,6 +1412,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/NewsletterSubscriberSchema'
+    NewsletterSubscriberQueryItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterSubscriberQueryItemSearchSchema'
   parameters:
     NewsletterCampaignKeyParameter:
       name: newsletterCampaignKey

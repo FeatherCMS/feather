@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import MediaWebAdmin
+import FeatherWebShared
 import Testing
 
 @Suite

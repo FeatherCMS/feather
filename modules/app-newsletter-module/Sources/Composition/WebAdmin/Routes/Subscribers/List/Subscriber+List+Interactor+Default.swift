@@ -18,31 +18,23 @@ extension Subscriber.List.Interactor {
             -> Subscriber.List.Model
         {
             let campaigns = try await repository.campaigns()
-            let items = try await repository.list()
             let normalizedSearch =
                 search?.whitespaceTrimmed ?? ""
-            let filtered = items.filter {
-                (normalizedSearch.isEmpty
-                    || $0.email.localizedCaseInsensitiveContains(
-                        normalizedSearch
-                    )
-                    || $0.name.localizedCaseInsensitiveContains(
-                        normalizedSearch
-                    ))
-                    && (campaignId?.isEmpty != false
-                        || $0.newsletters.contains { $0.id == campaignId })
-            }
+            let result = try await repository.search(
+                search: normalizedSearch,
+                campaignKey: campaignId,
+                page: page
+            )
             let pageSize = 20
-            let start = max(0, (page - 1) * pageSize)
             return .init(
-                items: Array(filtered.dropFirst(start).prefix(pageSize)),
+                items: result.items,
                 campaigns: campaigns,
                 search: normalizedSearch,
                 campaignId: campaignId ?? "",
                 pageState: .init(
                     page: page,
                     pageSize: pageSize,
-                    total: filtered.count
+                    total: result.total
                 )
             )
         }

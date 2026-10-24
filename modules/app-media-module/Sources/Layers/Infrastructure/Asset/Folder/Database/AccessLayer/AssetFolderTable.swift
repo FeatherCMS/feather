@@ -31,7 +31,9 @@ extension Asset.Folder {
         struct Columns: DatabaseTableColumns {
             let assetNodeId = DatabaseTableColumn<String>(name: "asset_node_id")
             let assetCount = DatabaseTableColumn<Int>(name: "asset_count")
-            let totalSizeBytes = DatabaseTableColumn<Int64>(name: "total_size_bytes")
+            let totalSizeBytes = DatabaseTableColumn<Int64>(
+                name: "total_size_bytes"
+            )
         }
         struct Row {
             struct Create {
@@ -60,7 +62,8 @@ extension Asset.Folder {
         let context: DatabaseTransactionContext
 
         func create(row: Row.Create) async throws -> Row {
-            _ = try await Asset.Node.Table(connection: connection, context: context)
+            _ = try await Asset.Node
+                .Table(connection: connection, context: context)
                 .create(
                     row: .init(
                         id: row.id,
@@ -70,13 +73,14 @@ extension Asset.Folder {
                         slugPath: row.slugPath
                     )
                 )
-            try await DatabaseAccessLayer<Self>(context: context).insert(
-                Insert(
-                    assetNodeId: row.id,
-                    assetCount: row.assetCount,
-                    totalSizeBytes: row.totalSizeBytes
+            try await DatabaseAccessLayer<Self>(context: context)
+                .insert(
+                    Insert(
+                        assetNodeId: row.id,
+                        assetCount: row.assetCount,
+                        totalSizeBytes: row.totalSizeBytes
+                    )
                 )
-            )
             guard let result = try await find(id: row.id) else {
                 throw RepositoryError.notFound
             }
@@ -84,7 +88,8 @@ extension Asset.Folder {
         }
 
         func update(row: Row) async throws -> Row {
-            _ = try await Asset.Node.Table(connection: connection, context: context)
+            _ = try await Asset.Node
+                .Table(connection: connection, context: context)
                 .update(
                     row: .init(
                         id: row.id,
@@ -94,11 +99,15 @@ extension Asset.Folder {
                         slugPath: row.slugPath
                     )
                 )
-            try await DatabaseAccessLayer<Self>(context: context).update(
-                Update(assetCount: row.assetCount, totalSizeBytes: row.totalSizeBytes),
-                where: \.assetNodeId,
-                equals: row.id
-            )
+            try await DatabaseAccessLayer<Self>(context: context)
+                .update(
+                    Update(
+                        assetCount: row.assetCount,
+                        totalSizeBytes: row.totalSizeBytes
+                    ),
+                    where: \.assetNodeId,
+                    equals: row.id
+                )
             guard let result = try await find(id: row.id) else {
                 throw RepositoryError.notFound
             }
@@ -185,6 +194,53 @@ extension Asset.Folder {
             }
         }
 
+        func search(
+            parentId: String?,
+            orderBy: String,
+            limit: Int,
+            offset: Int
+        ) async throws -> [Row] {
+            try await connection.run(
+                query: #"""
+                    SELECT n.id, n.parent_id, n.name, n.slug,
+                           \#(unescaped: Asset.Node.SlugPath.sql) AS slug_path,
+                           (
+                               SELECT COUNT(*)::integer
+                               FROM media_asset_node child
+                               WHERE child.parent_id = n.id
+                                 AND child.deleted_at IS NULL
+                           ) AS asset_count,
+                           f.total_size_bytes,
+                           n.created_at, n.updated_at, n.deleted_at
+                    FROM media_asset_node n
+                    JOIN media_asset_node_folder f ON f.asset_node_id = n.id
+                    WHERE n.deleted_at IS NULL
+                      AND ((\#(parentId == nil) AND n.parent_id IS NULL) OR n.parent_id = \#(parentId))
+                    ORDER BY \#(unescaped: orderBy)
+                    LIMIT \#(limit) OFFSET \#(offset);
+                    """#
+            ) { sequence in
+                try await sequence.collect().map { try Row(from: $0) }
+            }
+        }
+
+        func count(parentId: String?) async throws -> Int {
+            try await connection.run(
+                query: #"""
+                    SELECT COUNT(*) AS count
+                    FROM media_asset_node n
+                    JOIN media_asset_node_folder f ON f.asset_node_id = n.id
+                    WHERE n.deleted_at IS NULL
+                      AND ((\#(parentId == nil) AND n.parent_id IS NULL) OR n.parent_id = \#(parentId));
+                    """#
+            ) { sequence in
+                guard let row = try await sequence.collect().first else {
+                    return 0
+                }
+                return try row.decode(column: "count", as: Int.self)
+            }
+        }
+
         func listDescendants(slugPath: String) async throws -> [Row] {
             try await connection.run(
                 query: #"""
@@ -217,4 +273,4 @@ extension Asset.Folder {
                 .delete(ids: ids)
         }
     }
-    }
+}

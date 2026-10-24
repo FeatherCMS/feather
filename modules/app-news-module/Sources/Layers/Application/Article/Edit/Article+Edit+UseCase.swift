@@ -48,23 +48,9 @@ extension Article.Edit {
                     categoryIds: input.categoryIds
                 )
                 if let metadataInput = input.metadata {
-                    try model.metadata.update(
-                        template: metadataInput.template,
-                        slug: metadataInput.slug,
-                        publicationDate: metadataInput.publicationDate,
-                        expirationDate: metadataInput.expirationDate,
-                        status: metadataInput.status,
-                        title: metadataInput.title,
-                        excerpt: metadataInput.excerpt,
-                        imageURL: metadataInput.imageURL,
-                        canonicalURL: metadataInput.canonicalURL,
-                        noIndex: metadataInput.noIndex,
-                        primaryKeyword: metadataInput.primaryKeyword,
-                        cssCodeInjection: metadataInput.cssCodeInjection,
-                        javascriptCodeInjection: metadataInput
-                            .javascriptCodeInjection,
-                        structuredDataCodeInjection: metadataInput
-                            .structuredDataCodeInjection
+                    try metadataInput.update(
+                        &model.metadata,
+                        template: metadataInput.template
                     )
                 }
 

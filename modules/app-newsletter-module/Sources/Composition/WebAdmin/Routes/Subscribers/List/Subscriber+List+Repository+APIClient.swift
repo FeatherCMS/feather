@@ -37,6 +37,59 @@ extension Subscriber.List.Repository {
             }
         }
 
+        func search(
+            search: String?,
+            campaignKey: String?,
+            page: Int
+        ) async throws -> Subscriber.List.Repository.SearchResult {
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.newsletterSubscriberQuery(
+                    body: .json(
+                        .init(
+                            page: .init(size: 20, number: page),
+                            sort: [
+                                .init(field: .email, direction: .asc)
+                            ],
+                            filters: .init(
+                                search: search,
+                                campaignKey: campaignKey
+                            )
+                        )
+                    )
+                )
+                switch response {
+                case .ok(let value):
+                    let result = try value.body.json
+                    return .init(
+                        items: result.data.items.map { item in
+                            .init(
+                                id: subscriberID(item.email),
+                                email: item.email,
+                                name: item.name,
+                                newsletters: item.memberships.map {
+                                    .init(
+                                        id: $0.campaignKey,
+                                        name: $0.campaignName,
+                                        status: $0.status
+                                    )
+                                }
+                            )
+                        },
+                        total: result.data.total
+                    )
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+        }
+
         func list() async throws -> [Subscriber.List.Model.Item] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let newslettersResponse =
@@ -113,6 +166,14 @@ extension Subscriber.List.Repository {
                     }
                 }
             }
+        }
+
+        private func subscriberID(_ email: String) -> String {
+            Data(email.utf8)
+                .base64EncodedString()
+                .replacingOccurrences(of: "+", with: "-")
+                .replacingOccurrences(of: "/", with: "_")
+                .replacingOccurrences(of: "=", with: "")
         }
     }
 }

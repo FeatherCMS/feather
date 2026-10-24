@@ -353,6 +353,7 @@ let package = Package(
         .testTarget(
             name: "WebDomainTests",
             dependencies: [
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .target(name: "WebDomain"),
                 .target(name: "WebModule"),
             ],

@@ -14,12 +14,10 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await self.useCases.makeListFolders()
+        let result = try await self.useCases.makeSearchFolders()
             .execute(
                 subject: subject,
-                input: .init(
-                    parentId: (query.filters.parentId ?? "").emptyToNil
-                )
+                input: .init(query: map(query))
             )
 
         return .ok(
@@ -29,7 +27,7 @@ extension AdminAPIGateway {
                         query: responseQuery(from: query),
                         data: .init(
                             items: result.items.map(map),
-                            total: result.items.count
+                            total: result.total
                         )
                     )
                 )

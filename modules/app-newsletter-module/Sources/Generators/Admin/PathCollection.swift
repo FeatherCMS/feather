@@ -25,6 +25,8 @@ struct PathCollection: PathCollectionRepresentable {
                 NewsletterIssueTestEmailPathItems(),
             "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers":
                 NewsletterSubscriberPathItems(),
+            "api/v1/admin/newsletter/subscribers/query":
+                NewsletterSubscriber.Query.PathItem(),
             "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}":
                 NewsletterSubscriberIDPathItems(),
         ]

@@ -96,6 +96,28 @@ let package = Package(
             exact: "1.0.0-alpha.1"
         ),
         .package(
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url:
+                "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            from: "2.0.1"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-http-types",
+            from: "1.0.0"
+        ),
+        .package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
         ),
@@ -299,6 +321,9 @@ let package = Package(
         .testTarget(
             name: "NewsletterApplicationTests",
             dependencies: [
+                .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .target(name: "NewsletterApplication"),
                 .target(name: "NewsletterModule"),
             ],
@@ -308,11 +333,63 @@ let package = Package(
         .testTarget(
             name: "NewsletterInfrastructureTests",
             dependencies: [
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "FeatherApplication", package: "feather-core"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .target(name: "NewsletterInfrastructure"),
+                .target(name: "NewsletterApplication"),
+                .target(name: "NewsletterDomain"),
                 .target(name: "NewsletterModule"),
             ],
             path: "Tests/Layers/Infrastructure",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "NewsletterBackendTests",
+            dependencies: [
+                .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
+                .product(
+                    name: "HummingbirdTesting",
+                    package: "hummingbird"
+                ),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
+                .target(name: "NewsletterAdminAPI"),
+                .target(name: "NewsletterApplication"),
+                .target(name: "NewsletterBackend"),
+                .target(name: "NewsletterDomain"),
+                .target(name: "NewsletterInfrastructure"),
+                .target(name: "NewsletterModule"),
+            ],
+            path: "Tests/Composition/Backend",
             swiftSettings: swiftSettings
         ),
     ]

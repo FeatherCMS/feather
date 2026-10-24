@@ -1,11 +1,138 @@
+import FeatherApplication
 import FeatherDBAL
+import FeatherDBALTesting
+import FeatherDatabase
+import FeatherDatabaseTesting
+import FeatherInfrastructure
+import FeatherTesting
+import NewsletterDomain
 import NewsletterModule
 import Testing
 
+@testable import FeatherDBAL
+@testable import NewsletterApplication
 @testable import NewsletterInfrastructure
+
+private enum NewsletterQueryKey: DatabaseQueryKey {
+    case search
+    case count
+}
 
 @Suite
 struct NewsletterInfrastructureTestSuite {
+
+    @Test
+    func subscriberSearchGroupsMembershipsAndAppliesDatabasePagination()
+        async throws
+    {
+        let connection = MockDatabaseConnection<NewsletterQueryKey>(
+            responses: [
+                .init(
+                    key: .search,
+                    rows: [
+                        .init([
+                            "email": .string("person@example.com"),
+                            "first_name": .string("Test"),
+                            "last_name": .string("Person"),
+                            "campaign_key": .string("weekly"),
+                            "campaign_name": .string("Weekly"),
+                            "status": .string("subscribed"),
+                        ]),
+                        .init([
+                            "email": .string("person@example.com"),
+                            "first_name": .string("Test"),
+                            "last_name": .string("Person"),
+                            "campaign_key": .string("monthly"),
+                            "campaign_name": .string("Monthly"),
+                            "status": .string("unsubscribed"),
+                        ]),
+                    ]
+                ),
+                .init(key: .count, rows: [.init(["count": .int(1)])]),
+            ]
+        )
+        let query = Subscriber.Search.Query.Database(
+            context: DatabaseQueryContext(
+                platform: MockDatabasePlatform(),
+                connection: connection,
+                idGenerator: FeatherTesting.IDGenerator.Mock(id: "unused")
+            )
+        )
+
+        let result = try await query.search(
+            query: .init(
+                page: .init(size: 15, number: 2),
+                sort: [.init(field: .email, direction: .desc)],
+                search: "Person_%",
+                campaignKey: "weekly"
+            )
+        )
+        try await connection.assertAllResponsesConsumed()
+
+        #expect(result.total == 1)
+        #expect(result.items.count == 1)
+        #expect(result.items[0].email == "person@example.com")
+        #expect(result.items[0].name == "Test Person")
+        #expect(
+            result.items[0].memberships.map(\.campaignKey)
+                == ["weekly", "monthly"]
+        )
+        #expect(
+            result.items[0].memberships.map(\.status)
+                == [.subscribed, .unsubscribed]
+        )
+
+        let queries = await connection.executedQueries()
+        let search = try #require(queries[.search]?.first)
+        #expect(search.sql.contains("COUNT") == false)
+        #expect(search.sql.contains("ORDER BY email DESC"))
+        #expect(search.sql.contains("LIMIT"))
+        #expect(search.sql.contains("OFFSET"))
+        #expect(search.bindings.contains(where: { $0.binding == .int(15) }))
+        #expect(
+            search.bindings.contains(where: {
+                $0.binding == .string("%person!_!%%")
+            })
+        )
+        #expect(
+            search.bindings.contains(where: {
+                $0.binding == .string("weekly")
+            })
+        )
+        #expect(queries[.count]?.first?.sql.contains("COUNT(DISTINCT") == true)
+    }
+
+    @Test
+    func subscriberSearchSortsByNameComponents() async throws {
+        let connection = MockDatabaseConnection<NewsletterQueryKey>(
+            responses: [
+                .init(key: .search),
+                .init(key: .count, rows: [.init(["count": .int(0)])]),
+            ]
+        )
+        let query = Subscriber.Search.Query.Database(
+            context: DatabaseQueryContext(
+                platform: MockDatabasePlatform(),
+                connection: connection,
+                idGenerator: FeatherTesting.IDGenerator.Mock(id: "unused")
+            )
+        )
+
+        let result = try await query.search(
+            query: .init(sort: [.init(field: .name, direction: .asc)])
+        )
+        try await connection.assertAllResponsesConsumed()
+
+        #expect(result.items.isEmpty)
+        let queries = await connection.executedQueries()
+        let search = try #require(queries[.search]?.first)
+        #expect(search.sql.contains("ORDER BY first_name ASC, last_name ASC"))
+        #expect(
+            search.sql.contains(
+                "ORDER BY paged.first_name ASC, paged.last_name ASC"
+            )
+        )
+    }
 
     @Test
     func campaignSchemaDefinesIdentityTimestampsAndIndex() {

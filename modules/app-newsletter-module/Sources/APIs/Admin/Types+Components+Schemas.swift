@@ -1086,6 +1086,288 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberStatusField`.
         public typealias NewsletterSubscriberStatusField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema`.
+        public struct NewsletterSubscriberQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case email = "email"
+                    case name = "name"
+                }
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.NewsletterSubscriberQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.NewsletterSubscriberQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.NewsletterSubscriberQueryItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.NewsletterSubscriberQueryItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/filters/campaignKey`.
+                public var campaignKey: Components.Schemas.NewsletterKeyField?
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/filters/email`.
+                public var email: Components.Schemas.NewsletterEmailField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - campaignKey:
+                ///   - email:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    campaignKey: Components.Schemas.NewsletterKeyField? = nil,
+                    email: Components.Schemas.NewsletterEmailField? = nil
+                ) {
+                    self.search = search
+                    self.campaignKey = campaignKey
+                    self.email = email
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case campaignKey
+                    case email
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.NewsletterSubscriberQueryItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `NewsletterSubscriberQueryItemSearchRequestQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.NewsletterSubscriberQueryItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.NewsletterSubscriberQueryItemSearchRequestQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchSchema`.
+        public struct NewsletterSubscriberQueryItemSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchSchema/query`.
+            public var query: Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchSchema/data`.
+            public struct DataPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchSchema/data/items`.
+                public var items: [Components.Schemas.NewsletterSubscriberQueryItemSchema]
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchSchema/data/total`.
+                public var total: Swift.Int
+                /// Creates a new `DataPayload`.
+                ///
+                /// - Parameters:
+                ///   - items:
+                ///   - total:
+                public init(
+                    items: [Components.Schemas.NewsletterSubscriberQueryItemSchema],
+                    total: Swift.Int
+                ) {
+                    self.items = items
+                    self.total = total
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case items
+                    case total
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchSchema/data`.
+            public var data: Components.Schemas.NewsletterSubscriberQueryItemSearchSchema.DataPayload
+            /// Creates a new `NewsletterSubscriberQueryItemSearchSchema`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - data:
+            public init(
+                query: Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema,
+                data: Components.Schemas.NewsletterSubscriberQueryItemSearchSchema.DataPayload
+            ) {
+                self.query = query
+                self.data = data
+            }
+            public enum CodingKeys: String, CodingKey {
+                case query
+                case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema`.
+        public struct NewsletterSubscriberQueryItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case email = "email"
+                    case name = "name"
+                }
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/filters/campaignKey`.
+                public var campaignKey: Components.Schemas.NewsletterKeyField?
+                /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/filters/email`.
+                public var email: Components.Schemas.NewsletterEmailField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - campaignKey:
+                ///   - email:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    campaignKey: Components.Schemas.NewsletterKeyField? = nil,
+                    email: Components.Schemas.NewsletterEmailField? = nil
+                ) {
+                    self.search = search
+                    self.campaignKey = campaignKey
+                    self.email = email
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case campaignKey
+                    case email
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `NewsletterSubscriberQueryItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSchema`.
+        public struct NewsletterSubscriberQueryItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSchema/email`.
+            public var email: Components.Schemas.NewsletterEmailField
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSchema/name`.
+            public var name: Components.Schemas.NewsletterNameField
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSchema/memberships`.
+            public var memberships: Components.Schemas.NewsletterSubscriberQueryMembershipListSchema
+            /// Creates a new `NewsletterSubscriberQueryItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - email:
+            ///   - name:
+            ///   - memberships:
+            public init(
+                email: Components.Schemas.NewsletterEmailField,
+                name: Components.Schemas.NewsletterNameField,
+                memberships: Components.Schemas.NewsletterSubscriberQueryMembershipListSchema
+            ) {
+                self.email = email
+                self.name = name
+                self.memberships = memberships
+            }
+            public enum CodingKeys: String, CodingKey {
+                case email
+                case name
+                case memberships
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipListSchema`.
+        public typealias NewsletterSubscriberQueryMembershipListSchema = [Components.Schemas.NewsletterSubscriberQueryMembershipSchema]
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema`.
+        public struct NewsletterSubscriberQueryMembershipSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema/campaignKey`.
+            public var campaignKey: Components.Schemas.NewsletterKeyField
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema/campaignName`.
+            public var campaignName: Components.Schemas.NewsletterNameField
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema/status`.
+            public var status: Components.Schemas.NewsletterSubscriberStatusField
+            /// Creates a new `NewsletterSubscriberQueryMembershipSchema`.
+            ///
+            /// - Parameters:
+            ///   - campaignKey:
+            ///   - campaignName:
+            ///   - status:
+            public init(
+                campaignKey: Components.Schemas.NewsletterKeyField,
+                campaignName: Components.Schemas.NewsletterNameField,
+                status: Components.Schemas.NewsletterSubscriberStatusField
+            ) {
+                self.campaignKey = campaignKey
+                self.campaignName = campaignName
+                self.status = status
+            }
+            public enum CodingKeys: String, CodingKey {
+                case campaignKey
+                case campaignName
+                case status
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberUpdateMask`.
         public typealias NewsletterSubscriberUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberPatchSchema`.
