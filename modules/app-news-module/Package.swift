@@ -20,9 +20,10 @@ let sharedSwiftSettings: [SwiftSetting] = [
     ),
 ]
 
-let swiftSettings = sharedSwiftSettings + [
-    .treatAllWarnings(as: .error)
-]
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
 
 let package = Package(
     name: "app-news-module",
@@ -78,6 +79,24 @@ let package = Package(
             from: "2.27.0"
         ),
         .package(
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            from: "2.0.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url:
+                "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-http-types",
+            from: "1.0.0"
+        ),
+        .package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
@@ -99,6 +118,10 @@ let package = Package(
             exact: "1.0.0-beta.4"
         ),
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
+        ),
         .package(
             url: "https://github.com/feather-framework/feather-dbal",
             exact: "1.0.0-alpha.1"
@@ -341,6 +364,22 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .testTarget(
+            name: "NewsApplicationTests",
+            dependencies: [
+                .product(
+                    name: "FeatherApplication",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .target(name: "NewsApplication"),
+                .target(name: "NewsDomain"),
+                .target(name: "NewsModule"),
+            ],
+            path: "Tests/Layers/Application",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
             name: "NewsWebAdminTests",
             dependencies: [
                 .product(
@@ -361,6 +400,47 @@ let package = Package(
                 .target(name: "NewsModule"),
             ],
             path: "Tests/Layers/Infrastructure",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "NewsBackendTests",
+            dependencies: [
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
+                .product(
+                    name: "FeatherModuleKit",
+                    package: "feather-core"
+                ),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
+                .product(name: "HummingbirdTesting", package: "hummingbird"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+
+                .target(name: "NewsBackend"),
+                .target(name: "NewsAdminAPI"),
+                .target(name: "NewsApplication"),
+                .target(name: "NewsDomain"),
+                .target(name: "NewsInfrastructure"),
+                .target(name: "NewsModule"),
+            ],
+            path: "Tests/Composition/Backend",
             swiftSettings: swiftSettings
         ),
     ]
