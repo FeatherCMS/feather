@@ -1,7 +1,6 @@
-import AnalyticsApplication
-import AnalyticsModule
-import FeatherDatabase
-import FeatherInfrastructure
+public import AnalyticsApplication
+public import AnalyticsModule
+public import FeatherInfrastructure
 
 extension Log.Search.Query {
     public struct Database: Interface {
@@ -17,17 +16,18 @@ extension Log.Search.Query {
             let listQuery = Log.List.Input.Query(
                 page: query.page,
                 sort: query.sort.map { sort in
-                    let field: Log.List.Input.Query.Sort.Field = switch sort.field {
-                    case .id: .id
-                    case .accountId: .accountId
-                    case .method: .method
-                    case .source: .source
-                    case .path: .path
-                    case .responseCode: .responseCode
-                    case .ip: .ip
-                    case .browserName: .browserName
-                    case .createdAt: .createdAt
-                    }
+                    let field: Log.List.Input.Query.Sort.Field =
+                        switch sort.field {
+                        case .id: .id
+                        case .accountId: .accountId
+                        case .method: .method
+                        case .source: .source
+                        case .path: .path
+                        case .responseCode: .responseCode
+                        case .ip: .ip
+                        case .browserName: .browserName
+                        case .createdAt: .createdAt
+                        }
                     return Log.List.Input.Query.Sort(
                         field: field,
                         direction: sort.direction
