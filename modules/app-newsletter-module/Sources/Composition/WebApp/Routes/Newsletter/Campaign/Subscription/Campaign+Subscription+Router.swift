@@ -1,0 +1,37 @@
+import FeatherValidation
+public import FeatherWebShared
+import HTML
+public import Hummingbird
+public import NewsletterModule
+public import NewsletterWebShared
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+public import WebModuleWebApp
+
+extension Campaign.Subscription {
+    public struct Router {
+        private let controller: any Controller.Interface
+
+        public static let defaultRoute = NewsletterSubscriptionRoute.standard
+
+        public init(
+            environment: AppEnvironment,
+            route: NewsletterSubscriptionRoute = Router.defaultRoute,
+            turnstileVerifier: (any TurnstileVerifier)? = nil
+        ) {
+            self.controller = Controller.Default(
+                environment: environment,
+                route: route,
+                turnstileVerifier: turnstileVerifier
+            )
+        }
+
+        public func route(
+            on router: Hummingbird.Router<DefaultRequestContext>
+        ) {
+            router.post(controller.route.routerPath, use: controller.subscribe)
+        }
+    }
+}

@@ -1,0 +1,52 @@
+import AccountModule
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+import MediaWebAdmin
+
+extension Profile.Edit {
+    struct Router {
+        let controller: any Profile.Edit.Controller.Interface
+        let routes: Profile.Router.Routes
+
+        init(
+            environment: AppEnvironment,
+            renderingEngine: any RenderingEngine,
+            routes: Profile.Router.Routes
+        ) {
+            self.routes = routes
+            self.controller = Profile.Edit.Controller.Default(
+                routes: routes,
+                buildRuntime: { request, context in
+                    WebAdminRuntime(
+                        interactor: Profile.Edit.Interactor.Default(
+                            profileRepository:
+                                Profile.Edit.Repository.OpenAPI(
+                                    api: API.Client(
+                                        environment: environment,
+                                        requestContext: context
+                                    ),
+                                    mediaAPI: MediaWebAdmin.API.Client(
+                                        environment: environment,
+                                        requestContext: context
+                                    )
+                                )
+                        ),
+                        presenter: Profile.Edit.Presenter.Default(
+                            request: request,
+                            context: context,
+                            renderEngine: renderingEngine,
+                            routes: routes
+                        )
+                    )
+                }
+            )
+        }
+
+        func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+            let path = routes.profileEdit.routerPath
+            router.get(path, use: controller.getEdit)
+            router.post(path, use: controller.postEdit)
+        }
+    }
+}

@@ -1,46 +1,47 @@
-import Foundation
-import FeatherContracts
-import BlogFrontend
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
-import WebFrontend
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import SystemFrontend
-import FeatherAdmin
+import AccountWebApp
+import ContactWebApp
+import ContactModule
 import FeatherApplication
+import FeatherModuleKit
+import FeatherWebApp
+import FeatherWebShared
 import Hummingbird
+import NewsletterWebApp
+import NewsletterModule
 import WebApplication
-import NewsFrontend
+import WebModuleWebApp
 
 func buildAppRoutes(
-    router: Router<DefaultRequestContext>,
-    authRouter: Router<DefaultRequestContext>,
-    renderingEngine: DefaultRenderingEngine,
+    router: Hummingbird.Router<DefaultRequestContext>,
+    environment: AppEnvironment,
+    publicPageRenderer: any PublicPageRenderer,
     themeRenderer: DefaultThemeRenderer,
     publicContentEvents: any EventPublisher,
-    apiBuilder: APIBuilder,
     mediaResolver: MediaResolver,
     publicOrigins: AppPublicOriginConfiguration
 ) {
-    AppContactFormSubmission(apiBuilder: apiBuilder.contact).route(on: router)
+    AccountWebApp.Router(
+        environment: environment,
+        pageRenderer: publicPageRenderer
+    )
+    .route(on: router)
 
-    AppNewsletterCampaignSubscription(apiBuilder: apiBuilder.newsletter)
+    Submission.Router(environment: environment).route(on: router)
+
+    Campaign.Subscription.Router(environment: environment)
         .route(on: router)
 
-    AppPublicContent(
-        events: publicContentEvents,
-        themeRenderer: themeRenderer,
-        contentRenderer: DefaultMarkdownRenderer(
+    Public.Content
+        .Router(
             events: publicContentEvents,
+            themeRenderer: themeRenderer,
+            contentRenderer: DefaultMarkdownRenderer(
+                events: publicContentEvents,
+                mediaResolver: mediaResolver
+            ),
+            apiBaseURL: environment.apiBaseURL,
+            publicOrigins: publicOrigins,
             mediaResolver: mediaResolver
-        ),
-        apiBaseURL: apiBuilder.web.baseURL,
-        publicOrigins: publicOrigins,
-        mediaResolver: mediaResolver
-    )
-    .controller.route(on: router)
-
+        )
+        .route(on: router)
 }

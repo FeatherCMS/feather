@@ -1,8 +1,24 @@
 import NewsletterApplication
+import NewsletterModule
+import NewsletterInfrastructure
+import FeatherDatabase
+import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeRemoveNewsletterSubscriber() -> RemoveSubscriber {
-        .init(authorizer: authorizer, transaction: transaction())
+    func makeRemoveNewsletterSubscriber() -> Subscriber.Remove.UseCase {
+        let transaction = DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                Subscriber.Remove.Scope(
+                    newsletter: Campaign.Repository.Database(context: context),
+                    subscriber: Subscriber.Repository.Database(context: context)
+                )
+            }
+        )
+        return Subscriber.Remove.UseCase(
+            authorizer: authorizer,
+            transaction: transaction
+        )
     }
 }

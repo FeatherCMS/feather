@@ -1,0 +1,4 @@
+
+extension Rule {
+    enum Put {}
+}

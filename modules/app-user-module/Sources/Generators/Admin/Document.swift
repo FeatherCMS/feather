@@ -1,7 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
-import UserSharedOpenAPIGenerator
 
 struct Info: InfoRepresentable {
     var title: String { "User Admin API" }

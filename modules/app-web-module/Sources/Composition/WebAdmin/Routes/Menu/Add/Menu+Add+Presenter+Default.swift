@@ -1,0 +1,38 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebDomain
+import WebModule
+
+extension WebModule.Menu.Add.Presenter {
+    struct Default: Interface {
+        let request: Request
+        let context: AuthenticatedRequestContext
+        let renderingEngine: any RenderingEngine
+        let routes: WebModule.Menu.Router.Routes
+
+        func renderAddPage(
+            state: WebModule.Menu.Form.Component.State,
+            permissions: Set<String>
+        ) async throws -> HTMLResponse {
+            try await renderingEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Add menu",
+                content: WebModule.Menu.Add.Page(
+                    state: .init(
+                        form: state,
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
+                    )
+                )
+            )
+        }
+
+    }
+}

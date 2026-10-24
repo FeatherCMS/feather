@@ -1,20 +1,22 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeRemoveCredential() -> RemoveCredential {
+    func makeRemoveCredential() -> Credential.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteCredentialLink(
-                    credential: CredentialDatabaseRepository(context: context),
-                    authEmail: AuthEmailDatabaseRepository(context: context)
+                Credential.Remove.Scope(
+                    credential: Credential.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )
-        return RemoveCredential(
+        return Credential.Remove.UseCase(
             authorizer: authorizer,
             transaction: transaction
         )

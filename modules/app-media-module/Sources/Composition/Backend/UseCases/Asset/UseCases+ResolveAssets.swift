@@ -3,21 +3,15 @@ import FeatherDomain
 import FeatherInfrastructure
 public import MediaApplication
 import MediaInfrastructure
+public import MediaModule
 
 extension UseCases {
-    public func makeResolveAssets() -> ResolveMediaAssets {
+    public func makeResolveAssets() -> Asset.File.Resolve.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadMedia(
-                    folders: MediaFolderDatabaseQueries(
-                        context: context
-                    ),
-                    assets: MediaAssetDatabaseQueries(
-                        context: context,
-                        objectKeyGenerator: storageContext.objectKeyGenerator
-                    ),
-                    assetSearch: MediaAssetSearchDatabaseQueries(
+                Asset.File.Resolve.Scope(
+                    query: Asset.File.Resolve.Query.Database(
                         context: context,
                         objectKeyGenerator: storageContext.objectKeyGenerator
                     )
@@ -28,20 +22,13 @@ extension UseCases {
     }
 
     public func makePublicResolveMediaAssets()
-        -> PublicResolveMediaAssets
+        -> Asset.File.PublicResolve.UseCase
     {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadMedia(
-                    folders: MediaFolderDatabaseQueries(
-                        context: context
-                    ),
-                    assets: MediaAssetDatabaseQueries(
-                        context: context,
-                        objectKeyGenerator: storageContext.objectKeyGenerator
-                    ),
-                    assetSearch: MediaAssetSearchDatabaseQueries(
+                Asset.File.PublicResolve.Scope(
+                    query: Asset.File.Resolve.Query.Database(
                         context: context,
                         objectKeyGenerator: storageContext.objectKeyGenerator
                     )

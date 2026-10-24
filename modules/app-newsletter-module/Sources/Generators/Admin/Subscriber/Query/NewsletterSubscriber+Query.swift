@@ -1,0 +1,3 @@
+enum NewsletterSubscriber {
+    enum Query {}
+}

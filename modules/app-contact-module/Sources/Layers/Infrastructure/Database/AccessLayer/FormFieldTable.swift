@@ -1,46 +1,12 @@
 import ContactDomain
+import ContactModule
+import FeatherDBAL
 import FeatherDatabase
 import FeatherInfrastructure
-
-import struct Foundation.Data
-import struct Foundation.Date
-import class Foundation.JSONDecoder
-import class Foundation.JSONEncoder
-
-extension FormFieldTable.Row {
-
-    init(from row: any DatabaseRow) throws {
-        self.id = try row.decode(column: "id", as: String.self)
-        self.formId = try row.decode(column: "form_id", as: String.self)
-        self.key = try row.decode(column: "key", as: String.self)
-        self.type = try row.decode(column: "type", as: String.self)
-        self.label = try row.decode(column: "label", as: String.self)
-        self.allowedValuesJSON = try row.decode(
-            column: "allowed_values",
-            as: String.self
-        )
-        self.isRequired = try row.decode(column: "is_required", as: Bool.self)
-        self.position = try row.decode(column: "position", as: Int.self)
-        self.createdAt = try row.decode(column: "created_at", as: Date.self)
-        self.updatedAt = try row.decode(column: "updated_at", as: Date.self)
-    }
-}
+import Foundation
 
 struct FormFieldTable {
-
     struct Row {
-
-        struct Create {
-            let id: String
-            let formId: String
-            let key: String
-            let type: String
-            let label: String
-            let allowedValuesJSON: String
-            let isRequired: Bool
-            let position: Int
-        }
-
         let id: String
         let formId: String
         let key: String
@@ -51,54 +17,76 @@ struct FormFieldTable {
         let position: Int
         let createdAt: Date
         let updatedAt: Date
+
+        init(from row: any DatabaseRow) throws {
+            id = try row.decode(column: "id", as: String.self)
+            formId = try row.decode(column: "form_id", as: String.self)
+            key = try row.decode(column: "key", as: String.self)
+            type = try row.decode(column: "type", as: String.self)
+            label = try row.decode(column: "label", as: String.self)
+            allowedValuesJSON = try row.decode(column: "allowed_values", as: String.self)
+            isRequired = try row.decode(column: "is_required", as: Bool.self)
+            position = try row.decode(column: "position", as: Int.self)
+            createdAt = try row.decode(column: "created_at", as: Date.self)
+            updatedAt = try row.decode(column: "updated_at", as: Date.self)
+        }
+
+        func allowedValues() throws -> [FormField.Model.Option] {
+            try JSONDecoder().decode(
+                [FormField.Model.Option].self,
+                from: Data(allowedValuesJSON.utf8)
+            )
+        }
     }
 
     let connection: any DatabaseConnection
 
-    func create(
-        row: Row.Create
-    ) async throws -> Row {
-        try await connection.run(
-            query: #"""
-                INSERT INTO contact_form_field (
-                    id, key, type, label, allowed_values,
-                    is_required, created_at, updated_at
-                )
-                VALUES (
-                    \#(row.id), \#(row.key), \#(row.type),
-                    \#(row.label), \#(row.allowedValuesJSON)::jsonb,
-                    \#(row.isRequired), NOW(), NOW()
-                )
-                RETURNING *, \#(row.formId) AS form_id, \#(row.position) AS position;
-                """#
-        ) { sequence in
-            guard let row = try await sequence.collect().first else {
-                throw RepositoryError.notFound
-            }
-            return try Row(from: row)
+    static func applyCheckConstraints(on connection: any DatabaseConnection) async throws {
+        let queries: [DatabaseQuery] = [
+            #"""
+            DO $$ BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 FROM pg_constraint
+                    WHERE conname = 'contact_form_field_type_check'
+                ) THEN
+                    ALTER TABLE contact_form_field
+                    ADD CONSTRAINT contact_form_field_type_check
+                    CHECK (type IN ('text', 'textarea', 'select', 'radio', 'toggle', 'hidden'));
+                END IF;
+            END $$;
+            """#,
+            #"""
+            DO $$ BEGIN
+                IF NOT EXISTS (
+                    SELECT 1 FROM pg_constraint
+                    WHERE conname IN (
+                        'contact_form_field_check',
+                        'contact_form_field_allowed_values_check'
+                    )
+                ) THEN
+                    ALTER TABLE contact_form_field
+                    ADD CONSTRAINT contact_form_field_allowed_values_check
+                    CHECK (
+                        (type IN ('select', 'radio') AND jsonb_array_length(allowed_values) > 0)
+                        OR (type IN ('text', 'textarea', 'toggle', 'hidden') AND allowed_values = '[]'::jsonb)
+                    );
+                END IF;
+            END $$;
+            """#,
+        ]
+
+        for query in queries {
+            try await connection.run(query: query) { _ in }
         }
     }
 
-    func find(
-        id: String,
-        formId: String?
-    ) async throws -> Row? {
-        if formId == nil {
-            return try await findCatalog(id: id)
-        }
-        return try await findAssigned(id: id, formId: formId!)
-    }
-
-    private func findAssigned(
-        id: String,
-        formId: String
-    ) async throws -> Row? {
+    func find(id: String, formId: String) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT i.*, a.form_id, a.position
-                FROM contact_form_field i
-                JOIN contact_form_form_field a ON a.field_id = i.id
-                WHERE i.id = \#(id) AND a.form_id = \#(formId)
+                SELECT field.*, assignment.form_id, assignment.position
+                FROM contact_form_field AS field
+                JOIN contact_form_form_field AS assignment ON assignment.field_id = field.id
+                WHERE field.id = \#(id) AND assignment.form_id = \#(formId)
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -106,141 +94,62 @@ struct FormFieldTable {
         }
     }
 
-    func list(
-        formId: String?
-    ) async throws -> [Row] {
-        if formId == nil {
-            return try await listCatalog()
-        }
-        let formId = formId!
-        return try await connection.run(
+    func list(formId: String) async throws -> [Row] {
+        try await connection.run(
             query: #"""
-                SELECT i.*, \#(formId) AS form_id, COALESCE(a.position, 0) AS position
-                FROM contact_form_field i
-                LEFT JOIN contact_form_form_field a
-                    ON a.field_id = i.id AND a.form_id = \#(formId)
-                WHERE a.field_id IS NOT NULL
-                ORDER BY COALESCE(a.position, 0), i.id;
+                SELECT field.*, assignment.form_id, assignment.position
+                FROM contact_form_field AS field
+                JOIN contact_form_form_field AS assignment ON assignment.field_id = field.id
+                WHERE assignment.form_id = \#(formId)
+                ORDER BY assignment.position, field.id;
                 """#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
         }
     }
 
-    private func findCatalog(id: String) async throws -> Row? {
+    func listUnassigned() async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT i.*, '' AS form_id, 0 AS position
-                FROM contact_form_field i
-                WHERE i.id = \#(id)
-                LIMIT 1;
-                """#
-        ) { sequence in
-            try await sequence.collect().first.map { try Row(from: $0) }
-        }
-    }
-
-    private func listCatalog() async throws -> [Row] {
-        try await connection.run(
-            query: #"""
-                SELECT i.*, '' AS form_id, 0 AS position
-                FROM contact_form_field i
-                ORDER BY i.id;
+                SELECT field.*, '' AS form_id, 0 AS position
+                FROM contact_form_field AS field
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM contact_form_form_field AS assignment
+                    WHERE assignment.field_id = field.id
+                )
+                ORDER BY field.id;
                 """#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
         }
     }
 
-    func update(
-        id: String,
-        row: Row
-    ) async throws -> Row {
-        try await connection.run(
-            query: #"""
-                UPDATE contact_form_field
-                SET key = \#(row.key),
-                    type = \#(row.type),
-                    label = \#(row.label),
-                    allowed_values = \#(row.allowedValuesJSON)::jsonb,
-                    is_required = \#(row.isRequired),
-                    updated_at = NOW()
-                WHERE id = \#(id)
-                RETURNING *, \#(row.formId) AS form_id, \#(row.position) AS position;
-                """#
-        ) { sequence in
-            guard let row = try await sequence.collect().first else {
-                throw RepositoryError.notFound
-            }
-            return try Row(from: row)
-        }
-    }
-
-    func delete(
-        ids: [String],
-        formId: String?
-    ) async throws -> [String] {
+    func delete(ids: [String], formId: String) async throws -> [String] {
         guard !ids.isEmpty else { return [] }
-        let values =
-            ids.map {
-                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-            }
-            .joined(separator: ", ")
-        if let formId {
-            return try await connection.run(
-                query: #"""
-                    DELETE FROM contact_form_field
-                    WHERE id IN (\#(unescaped: values))
-                      AND EXISTS (
-                          SELECT 1
-                          FROM contact_form_form_field
-                          WHERE form_id = \#(formId) AND field_id = contact_form_field.id
-                      )
-                    RETURNING id;
-                    """#
-            ) { sequence in
-                try await sequence.collect()
-                    .map {
-                        try $0.decode(column: "id", as: String.self)
-                    }
-            }
-        }
         return try await connection.run(
             query: #"""
                 DELETE FROM contact_form_field
-                WHERE id IN (\#(unescaped: values))
+                WHERE id IN (\#(ids))
+                  AND EXISTS (
+                      SELECT 1 FROM contact_form_form_field
+                      WHERE form_id = \#(formId) AND field_id = contact_form_field.id
+                  )
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect()
-                .map {
-                    try $0.decode(column: "id", as: String.self)
-                }
+            try await sequence.collect().map { try $0.decode(column: "id", as: String.self) }
         }
     }
 }
 
-extension FormFieldTable.Row {
-    func allowedValues() throws -> [FormField.Option] {
-        try JSONDecoder()
-            .decode(
-                [FormField.Option].self,
-                from: Data(allowedValuesJSON.utf8)
-            )
-    }
-}
-
-extension FormField.Option {
-    static func jsonString(
-        _ values: [Self]
-    ) throws -> String {
+extension FormField.Model.Option {
+    static func jsonString(_ values: [Self]) throws -> String {
         let data = try JSONEncoder().encode(values)
         guard let result = String(data: data, encoding: .utf8) else {
             throw RepositoryError(
                 reason: .database(.rowDecoding),
                 logMessage: "Unable to encode contact form field options",
-                userFriendlyMessage:
-                    "Unable to encode contact form field options."
+                userFriendlyMessage: "Unable to encode contact form field options."
             )
         }
         return result

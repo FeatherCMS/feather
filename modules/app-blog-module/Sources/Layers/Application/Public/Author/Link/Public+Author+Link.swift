@@ -1,0 +1,21 @@
+//
+//  Public.Author.Link.swift
+//  app-blog-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
+public import FeatherApplication
+
+extension Public.Author {
+    public struct Link: DTO {
+        public let label: String
+        public let url: String
+        public let isBlank: Bool
+
+        public init(label: String, url: String, isBlank: Bool) {
+            self.label = label
+            self.url = url
+            self.isBlank = isBlank
+        }
+    }
+}

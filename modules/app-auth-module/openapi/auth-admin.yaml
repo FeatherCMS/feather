@@ -1,10 +1,8 @@
 openapi: 3.0.0
 info:
-  title: User Admin API
+  title: Auth Admin API
   version: 0.1.0
 tags:
-- name: Auth
-  description: Authentication endpoints.
 - name: UserIdentities
   description: User identities related endpoints.
 - name: AuthCredentials
@@ -19,64 +17,6 @@ servers:
 security:
 - bearerAuth: []
 paths:
-  /api/v1/admin/auth/me:
-    get:
-      tags:
-      - Auth
-      operationId: authMe
-      responses:
-        200:
-          $ref: '#/components/responses/AuthMeResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/auth/login:
-    post:
-      tags:
-      - Auth
-      operationId: authLogin
-      requestBody:
-        $ref: '#/components/requestBodies/AuthLoginRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/AuthResponse'
-  /api/v1/admin/auth/logout:
-    post:
-      tags:
-      - Auth
-      operationId: authLogout
-      responses:
-        204:
-          description: Logged out
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/auth/magic-link:
-    post:
-      tags:
-      - Auth
-      operationId: authMagicLink
-      requestBody:
-        $ref: '#/components/requestBodies/AuthMagicLinkRequestBody'
-      responses:
-        204:
-          description: Magic link requested
-  /api/v1/admin/auth/magic-link/verify:
-    post:
-      tags:
-      - Auth
-      operationId: authMagicLinkVerify
-      requestBody:
-        $ref: '#/components/requestBodies/AuthMagicLinkVerifyRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/AuthResponse'
   /api/v1/admin/user/identities/{userIdentityId}/sessions:
     get:
       tags:
@@ -89,10 +29,22 @@ paths:
           $ref: '#/components/responses/UserIdentitySessionListResponse'
         404:
           description: UserIdentity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -104,16 +56,44 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}: {}
   /api/v1/admin/auth/credentials:
+    get:
+      tags:
+      - AuthCredentials
+      operationId: authCredentialList
+      responses:
+        200:
+          $ref: '#/components/responses/AuthCredentialListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - AuthCredentials
@@ -125,8 +105,16 @@ paths:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -136,46 +124,48 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/credentials/:
-    get:
-      tags:
-      - AuthCredentials
-      operationId: authCredentialList
-      responses:
-        200:
-          $ref: '#/components/responses/AuthCredentialListResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/auth/credentials/search:
+  /api/v1/admin/auth/credentials/query:
     post:
       tags:
       - AuthCredentials
-      operationId: authCredentialSearch
+      operationId: authCredentialQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthCredentialListItemSearchQuerySchema'
+              $ref: '#/components/schemas/AuthCredentialQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/AuthCredentialListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/AuthCredentialQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/credentials/{authCredentialId}:
@@ -190,10 +180,22 @@ paths:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
         404:
           description: AuthCredential not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -209,10 +211,22 @@ paths:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
         404:
           description: AuthCredential not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -221,51 +235,39 @@ paths:
       operationId: authCredentialPatch
       parameters:
       - $ref: '#/components/parameters/AuthCredentialIdParameter'
+      - $ref: '#/components/parameters/AuthCredentialUpdateMaskParameter'
       requestBody:
         $ref: '#/components/requestBodies/AuthCredentialPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
+        400:
+          description: Invalid update mask
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: AuthCredential not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/emails:
-    post:
-      tags:
-      - AuthEmails
-      operationId: authEmailCreate
-      requestBody:
-        $ref: '#/components/requestBodies/AuthEmailRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/AuthEmailDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - AuthEmails
-      operationId: authEmailRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/auth/emails/:
     get:
       tags:
       - AuthEmails
@@ -275,8 +277,90 @@ paths:
           $ref: '#/components/responses/AuthEmailListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - AuthEmails
+      operationId: authEmailCreate
+      requestBody:
+        $ref: '#/components/requestBodies/AuthEmailPostRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AuthEmailGetResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - AuthEmails
+      operationId: authEmailRemove
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/auth/emails/query:
+    post:
+      tags:
+      - AuthEmails
+      operationId: authEmailQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthEmailQuerySchemasItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/AuthEmailQuerySchemasItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/emails/{authEmailId}:
@@ -285,16 +369,28 @@ paths:
       - AuthEmails
       operationId: authEmailGet
       parameters:
-      - $ref: '#/components/parameters/AuthEmailIdParameter'
+      - $ref: '#/components/parameters/AuthEmailParametersID'
       responses:
         200:
-          $ref: '#/components/responses/AuthEmailDetailResponse'
+          $ref: '#/components/responses/AuthEmailGetResponse'
         404:
-          description: Auth auth email not found
+          description: Auth email not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -302,18 +398,37 @@ paths:
       - AuthEmails
       operationId: authEmailPatch
       parameters:
-      - $ref: '#/components/parameters/AuthEmailIdParameter'
+      - $ref: '#/components/parameters/AuthEmailParametersID'
+      - $ref: '#/components/parameters/AuthEmailParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/AuthEmailPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/AuthEmailDetailResponse'
+          $ref: '#/components/responses/AuthEmailGetResponse'
+        400:
+          description: Invalid update mask
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
-          description: Auth auth email not found
+          description: Auth email not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/role-permissions:
@@ -328,8 +443,16 @@ paths:
           $ref: '#/components/responses/AuthRolePermissionDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -339,36 +462,73 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/role-permissions/search:
+  /api/v1/admin/auth/role-permissions/query:
     post:
       tags:
       - AuthRolePermissions
-      operationId: authRolePermissionSearch
+      operationId: authRolePermissionQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthRolePermissionListItemSearchQuerySchema'
+              $ref: '#/components/schemas/AuthRolePermissionQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/AuthRolePermissionListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/AuthRolePermissionQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}: {}
   /api/v1/admin/auth/magic-links:
+    get:
+      tags:
+      - AuthMagicLinks
+      operationId: authMagicLinkList
+      responses:
+        200:
+          $ref: '#/components/responses/AuthMagicLinkListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - AuthMagicLinks
@@ -380,8 +540,16 @@ paths:
           $ref: '#/components/responses/AuthMagicLinkDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -391,46 +559,48 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/magic-links/:
-    get:
-      tags:
-      - AuthMagicLinks
-      operationId: authMagicLinkList
-      responses:
-        200:
-          $ref: '#/components/responses/AuthMagicLinkListResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/auth/magic-links/search:
+  /api/v1/admin/auth/magic-links/query:
     post:
       tags:
       - AuthMagicLinks
-      operationId: authMagicLinkSearch
+      operationId: authMagicLinkQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthMagicLinkListItemSearchQuerySchema'
+              $ref: '#/components/schemas/AuthMagicLinkQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/AuthMagicLinkListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/AuthMagicLinkQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/magic-links/{authMagicLinkId}:
@@ -445,10 +615,22 @@ paths:
           $ref: '#/components/responses/AuthMagicLinkDetailResponse'
         404:
           description: AuthMagicLink not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -464,10 +646,22 @@ paths:
           $ref: '#/components/responses/AuthMagicLinkDetailResponse'
         404:
           description: AuthMagicLink not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -476,108 +670,43 @@ paths:
       operationId: authMagicLinkPatch
       parameters:
       - $ref: '#/components/parameters/AuthMagicLinkIdParameter'
+      - $ref: '#/components/parameters/AuthMagicLinkUpdateMaskParameter'
       requestBody:
         $ref: '#/components/requestBodies/AuthMagicLinkPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/AuthMagicLinkDetailResponse'
+        400:
+          description: Invalid update mask
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: AuthMagicLink not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
   schemas:
-    AuthResponseSchema:
-      type: object
-      properties:
-        user:
-          $ref: '#/components/schemas/AuthUserIdentityDetailSchema'
-        roles:
-          type: array
-          items:
-            type: string
-        permissions:
-          type: array
-          items:
-            type: string
-        token:
-          $ref: '#/components/schemas/UserAuthTokenField'
-      required:
-      - user
-      - roles
-      - permissions
-      - token
-    AuthUserIdentityDetailSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/UserIdentityIDField'
-        status:
-          $ref: '#/components/schemas/UserIdentityStatusField'
-      required:
-      - id
-      - status
     UserIdentityIDField:
       type: string
       example: usr_a9x1f7Qk2m
-    UserIdentityStatusField:
-      type: string
-      enum:
-      - invited
-      - active
-      - suspended
-      - deactivated
-      - anonymized
-      example: active
-    UserAuthTokenField:
-      type: string
-      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-    AuthLoginRequestSchema:
-      type: object
-      properties:
-        email:
-          $ref: '#/components/schemas/UserAuthEmailField'
-        password:
-          $ref: '#/components/schemas/UserAuthPasswordField'
-        isPersistent:
-          $ref: '#/components/schemas/UserAuthIsPersistentField'
-      required:
-      - email
-      - password
-      - isPersistent
-    UserAuthEmailField:
-      type: string
-      example: admin@example.com
-    UserAuthPasswordField:
-      type: string
-      example: password
-    UserAuthIsPersistentField:
-      type: boolean
-      example: true
-    AuthMagicLinkRequestSchema:
-      type: object
-      properties:
-        email:
-          type: string
-          example: admin@example.com
-        isPersistent:
-          type: boolean
-          example: true
-      required:
-      - email
-      - isPersistent
-    AuthMagicLinkVerifyRequestSchema:
-      type: object
-      properties:
-        token:
-          type: string
-          example: mgl_3XbY...
-      required:
-      - token
     UserAuthSessionListSchema:
       type: object
       properties:
@@ -593,7 +722,7 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/UserAuthSessionIdField'
+          $ref: '#/components/schemas/UserIdentityIDField'
         authenticationType:
           $ref: '#/components/schemas/UserAuthSessionAuthenticationTypeField'
         authenticationReference:
@@ -614,9 +743,6 @@ components:
       - isPersistent
       - createdAt
       - updatedAt
-    UserAuthSessionIdField:
-      type: string
-      example: sess_3XbY...
     UserAuthSessionAuthenticationTypeField:
       type: string
     UserAuthSessionAuthenticationReferenceField:
@@ -626,6 +752,51 @@ components:
       format: double
     UserAuthSessionPersistentField:
       type: boolean
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     DeleteRequestSchema:
       type: object
       properties:
@@ -634,89 +805,8 @@ components:
           items:
             type: string
             example: id1
-        results:
-          type: boolean
-          example: true
-        summary:
-          type: boolean
-          example: true
       required:
       - ids
-      - results
-      - summary
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-    DeleteResultListSchema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            example: id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            example: deleted
-        required:
-        - id
-        - status
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          example: 1
-        deleted:
-          type: integer
-          example: 1
-        omitted:
-          type: integer
-          example: 1
-      required:
-      - requested
-      - deleted
-      - omitted
-    AuthCredentialCreateSchema:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: user_7nL3xQ2v
-        email:
-          type: string
-          example: john.doe@example.com
-        password:
-          type: string
-          example: correct-horse-battery-staple
-      required:
-      - userId
-      - email
-      - password
-    AuthCredentialDetailSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          example: credential_7nL3xQ2v
-        userId:
-          type: string
-          example: user_7nL3xQ2v
-        email:
-          type: string
-          example: john.doe@example.com
-      required:
-      - id
-      - userId
-      - email
     AuthCredentialListSchema:
       type: array
       items:
@@ -749,7 +839,39 @@ components:
     AuthCredentialEmailField:
       type: string
       example: john.doe@example.com
-    AuthCredentialListItemSearchQuerySchema:
+    AuthCredentialCreateSchema:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: user_7nL3xQ2v
+        email:
+          type: string
+          example: john.doe@example.com
+        password:
+          type: string
+          example: correct-horse-battery-staple
+      required:
+      - userId
+      - email
+      - password
+    AuthCredentialDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: credential_7nL3xQ2v
+        userId:
+          type: string
+          example: user_7nL3xQ2v
+        email:
+          type: string
+          example: john.doe@example.com
+      required:
+      - id
+      - userId
+      - email
+    AuthCredentialQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -773,15 +895,14 @@ components:
         filters:
           type: object
           example:
-            userId: user_7nL3xQ2v
             search: foo
+            userId: user_7nL3xQ2v
           properties:
             search:
-              $ref: '#/components/schemas/AuthCredentialSearchField'
+              $ref: '#/components/schemas/AuthCredentialQueryField'
             userId:
               $ref: '#/components/schemas/AuthCredentialUserIdField'
       required:
-      - page
       - filters
     SearchPageSchema:
       type: object
@@ -790,14 +911,17 @@ components:
           $ref: '#/components/schemas/SearchPageSizeField'
         number:
           $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
     SearchPageSizeField:
       type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
       example: 20
     SearchPageNumberField:
       type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
       example: 1
     SortDirection:
       type: string
@@ -805,21 +929,21 @@ components:
       - asc
       - desc
       example: asc
-    AuthCredentialSearchField:
+    AuthCredentialQueryField:
       type: string
       example: foo
-    AuthCredentialListItemSearchSchema:
+    AuthCredentialQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/AuthCredentialListItemSearchQuerySchema'
+          $ref: '#/components/schemas/AuthCredentialQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/AuthCredentialListItemSchema'
+                $ref: '#/components/schemas/AuthCredentialQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -829,6 +953,69 @@ components:
       required:
       - query
       - data
+    AuthCredentialQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - userId
+                - email
+                example: userId
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+            userId: user_7nL3xQ2v
+          properties:
+            search:
+              $ref: '#/components/schemas/AuthCredentialQueryField'
+            userId:
+              $ref: '#/components/schemas/AuthCredentialUserIdField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+    AuthCredentialQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AuthCredentialIdField'
+        userId:
+          $ref: '#/components/schemas/AuthCredentialUserIdField'
+        identityName:
+          $ref: '#/components/schemas/AuthCredentialIdentityNameField'
+        email:
+          $ref: '#/components/schemas/AuthCredentialEmailField'
+      required:
+      - id
+      - userId
+      - identityName
+      - email
+    AuthCredentialUpdateMaskField:
+      type: string
+      example: userId,email,password
     AuthCredentialPatchSchema:
       type: object
       properties:
@@ -841,54 +1028,154 @@ components:
     AuthCredentialPasswordField:
       type: string
       example: correct-horse-battery-staple
-    AuthEmailCreateSchema:
-      type: object
-      properties:
-        identityId:
-          type: string
-          example: user_7nL3xQ2v
-        email:
-          type: string
-          example: john.doe@example.com
-      required:
-      - identityId
-      - email
-    AuthEmailDetailSchema:
+    AuthEmailSchemasList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AuthEmailSchemasDetail'
+    AuthEmailSchemasDetail:
       type: object
       properties:
         id:
-          type: string
-          example: email_7nL3xQ2v
+          $ref: '#/components/schemas/AuthEmailSchemasIDField'
         identityId:
-          type: string
-          example: user_7nL3xQ2v
+          $ref: '#/components/schemas/AuthEmailSchemasIdentityIDField'
         email:
-          type: string
-          example: john.doe@example.com
+          $ref: '#/components/schemas/AuthEmailSchemasEmailField'
       required:
       - id
       - identityId
       - email
-    AuthEmailListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/AuthEmailDetailSchema'
-    AuthEmailIdField:
+    AuthEmailSchemasIDField:
       type: string
       example: email_7nL3xQ2v
-    AuthEmailPatchSchema:
+    AuthEmailSchemasIdentityIDField:
+      type: string
+      example: user_7nL3xQ2v
+    AuthEmailSchemasEmailField:
+      type: string
+      example: john.doe@example.com
+    AuthEmailSchemasCreate:
       type: object
       properties:
         identityId:
-          $ref: '#/components/schemas/AuthEmailIdentityIdField'
+          $ref: '#/components/schemas/AuthEmailSchemasIdentityIDField'
         email:
-          $ref: '#/components/schemas/AuthEmailEmailField'
-    AuthEmailIdentityIdField:
+          $ref: '#/components/schemas/AuthEmailSchemasEmailField'
+      required:
+      - identityId
+      - email
+    AuthEmailQuerySchemasItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - identityId
+                - email
+                example: identityId
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            identityId:
+              $ref: '#/components/schemas/AuthEmailSchemasIdentityIDField'
+      required:
+      - filters
+    SearchStringField:
       type: string
-      example: user_7nL3xQ2v
-    AuthEmailEmailField:
+      example: foo
+    AuthEmailQuerySchemasItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/AuthEmailQuerySchemasItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/AuthEmailQuerySchemasItem'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    AuthEmailQuerySchemasItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - identityId
+                - email
+                example: identityId
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            identityId:
+              $ref: '#/components/schemas/AuthEmailSchemasIdentityIDField'
+      required:
+      - page
+      - filters
+    AuthEmailQuerySchemasItem:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AuthEmailSchemasIDField'
+        identityId:
+          $ref: '#/components/schemas/AuthEmailSchemasIdentityIDField'
+        email:
+          $ref: '#/components/schemas/AuthEmailSchemasEmailField'
+      required:
+      - id
+      - identityId
+      - email
+    AuthEmailSchemasUpdateMask:
       type: string
-      example: john.doe@example.com
+      example: identityId,email
+    AuthEmailSchemasPatch:
+      type: object
+      properties:
+        identityId:
+          $ref: '#/components/schemas/AuthEmailSchemasIdentityIDField'
+        email:
+          $ref: '#/components/schemas/AuthEmailSchemasEmailField'
     AuthRolePermissionCreateSchema:
       type: object
       properties:
@@ -917,7 +1204,7 @@ components:
     AuthRolePermissionPermissionIdField:
       type: string
       example: user_roles.list
-    AuthRolePermissionListItemSearchQuerySchema:
+    AuthRolePermissionQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -946,23 +1233,19 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
-    SearchStringField:
-      type: string
-      example: foo
-    AuthRolePermissionListItemSearchSchema:
+    AuthRolePermissionQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/AuthRolePermissionListItemSearchQuerySchema'
+          $ref: '#/components/schemas/AuthRolePermissionQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/AuthRolePermissionListItemSchema'
+                $ref: '#/components/schemas/AuthRolePermissionQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -972,7 +1255,38 @@ components:
       required:
       - query
       - data
-    AuthRolePermissionListItemSchema:
+    AuthRolePermissionQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - roleId
+                - permissionId
+                example: roleId
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    AuthRolePermissionQueryItemSchema:
       type: object
       properties:
         roleId:
@@ -982,47 +1296,6 @@ components:
       required:
       - roleId
       - permissionId
-    AuthMagicLinkCreateSchema:
-      type: object
-      properties:
-        credentialId:
-          type: string
-          example: cred_k3P9qN2v
-        isPersistent:
-          type: boolean
-          example: true
-      required:
-      - credentialId
-      - isPersistent
-    AuthMagicLinkDetailSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          example: uml_k3P9qN2v
-        credentialId:
-          type: string
-          example: cred_k3P9qN2v
-        token:
-          type: string
-          example: mgl_3XbY...
-        expiresAt:
-          type: number
-          format: double
-          example: 1.76e+9
-        isPersistent:
-          type: boolean
-          example: true
-        isUsed:
-          type: boolean
-          example: false
-      required:
-      - id
-      - credentialId
-      - token
-      - expiresAt
-      - isPersistent
-      - isUsed
     AuthMagicLinkListSchema:
       type: array
       items:
@@ -1068,7 +1341,48 @@ components:
     AuthMagicLinkIsUsedField:
       type: boolean
       example: false
-    AuthMagicLinkListItemSearchQuerySchema:
+    AuthMagicLinkCreateSchema:
+      type: object
+      properties:
+        credentialId:
+          type: string
+          example: cred_k3P9qN2v
+        isPersistent:
+          type: boolean
+          example: true
+      required:
+      - credentialId
+      - isPersistent
+    AuthMagicLinkDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: uml_k3P9qN2v
+        credentialId:
+          type: string
+          example: cred_k3P9qN2v
+        token:
+          type: string
+          example: mgl_3XbY...
+        expiresAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        isPersistent:
+          type: boolean
+          example: true
+        isUsed:
+          type: boolean
+          example: false
+      required:
+      - id
+      - credentialId
+      - token
+      - expiresAt
+      - isPersistent
+      - isUsed
+    AuthMagicLinkQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1103,22 +1417,21 @@ components:
             userId:
               $ref: '#/components/schemas/AuthMagicLinkUserIdField'
       required:
-      - page
       - filters
     AuthMagicLinkUserIdField:
       type: string
-    AuthMagicLinkListItemSearchSchema:
+    AuthMagicLinkQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/AuthMagicLinkListItemSearchQuerySchema'
+          $ref: '#/components/schemas/AuthMagicLinkQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/AuthMagicLinkListItemSchema'
+                $ref: '#/components/schemas/AuthMagicLinkQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -1128,6 +1441,68 @@ components:
       required:
       - query
       - data
+    AuthMagicLinkQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - credentialId
+                - token
+                - expiresAt
+                - isPersistent
+                - isUsed
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            userId:
+              $ref: '#/components/schemas/AuthMagicLinkUserIdField'
+      required:
+      - page
+      - filters
+    AuthMagicLinkQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AuthMagicLinkIdField'
+        credentialId:
+          $ref: '#/components/schemas/AuthMagicLinkCredentialIdField'
+        token:
+          $ref: '#/components/schemas/AuthMagicLinkTokenField'
+        expiresAt:
+          $ref: '#/components/schemas/AuthMagicLinkExpiresAtField'
+        isPersistent:
+          $ref: '#/components/schemas/AuthMagicLinkIsPersistentField'
+        isUsed:
+          $ref: '#/components/schemas/AuthMagicLinkIsUsedField'
+      required:
+      - id
+      - credentialId
+      - token
+      - expiresAt
+      - isPersistent
+      - isUsed
+    AuthMagicLinkUpdateMaskField:
+      type: string
+      example: credentialId,isPersistent
     AuthMagicLinkPatchSchema:
       type: object
       properties:
@@ -1136,90 +1511,80 @@ components:
         isPersistent:
           $ref: '#/components/schemas/AuthMagicLinkIsPersistentField'
   responses:
-    AuthMeResponse:
-      description: Auth response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthResponseSchema'
-    AuthResponse:
-      description: Auth response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthResponseSchema'
     UserIdentitySessionListResponse:
       description: UserIdentity session list response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/UserAuthSessionListSchema'
-    DeleteResponse:
-      description: Delete response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
-    AuthCredentialDetailResponse:
-      description: User credential response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthCredentialDetailSchema'
+    NoContentResponse:
+      description: Delete succeeded
     AuthCredentialListResponse:
       description: AuthCredential list response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthCredentialListSchema'
-    AuthCredentialListItemSearchSchemaSearchResponse:
+    AuthCredentialDetailResponse:
+      description: User credential response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthCredentialDetailSchema'
+    AuthCredentialQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthCredentialListItemSearchSchema'
-    AuthEmailDetailResponse:
-      description: Auth auth email response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthEmailDetailSchema'
+            $ref: '#/components/schemas/AuthCredentialQueryItemSearchSchema'
     AuthEmailListResponse:
-      description: Auth auth email list response
+      description: Auth email list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthEmailListSchema'
+            $ref: '#/components/schemas/AuthEmailSchemasList'
+    AuthEmailGetResponse:
+      description: Auth email response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthEmailSchemasDetail'
+    AuthEmailQuerySchemasItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthEmailQuerySchemasItemSearchSchema'
     AuthRolePermissionDetailResponse:
       description: AuthRolePermission response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthRolePermissionDetailSchema'
-    AuthRolePermissionListItemSearchSchemaSearchResponse:
+    AuthRolePermissionQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthRolePermissionListItemSearchSchema'
-    AuthMagicLinkDetailResponse:
-      description: User magic link response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthMagicLinkDetailSchema'
+            $ref: '#/components/schemas/AuthRolePermissionQueryItemSearchSchema'
     AuthMagicLinkListResponse:
       description: AuthMagicLink list response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthMagicLinkListSchema'
-    AuthMagicLinkListItemSearchSchemaSearchResponse:
+    AuthMagicLinkDetailResponse:
+      description: User magic link response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthMagicLinkDetailSchema'
+    AuthMagicLinkQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthMagicLinkListItemSearchSchema'
+            $ref: '#/components/schemas/AuthMagicLinkQueryItemSearchSchema'
   parameters:
     UserIdentityIdParameter:
       name: userIdentityId
@@ -1234,37 +1599,43 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/AuthCredentialIdField'
-    AuthEmailIdParameter:
+    AuthCredentialUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/AuthCredentialUpdateMaskField'
+      description: 'Comma-separated fields to update: userId, email, password'
+    AuthEmailParametersID:
       name: authEmailId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/AuthEmailIdField'
+        $ref: '#/components/schemas/AuthEmailSchemasIDField'
+    AuthEmailParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/AuthEmailSchemasUpdateMask'
+      description: 'Comma-separated fields to update: identityId, email'
     AuthMagicLinkIdParameter:
       name: authMagicLinkId
       in: path
       required: true
       schema:
         $ref: '#/components/schemas/AuthMagicLinkIdField'
+    AuthMagicLinkUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/AuthMagicLinkUpdateMaskField'
+      description: 'Comma-separated fields to update: credentialId, isPersistent'
   requestBodies:
-    AuthLoginRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthLoginRequestSchema'
-      required: true
-    AuthMagicLinkRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthMagicLinkRequestSchema'
-      required: true
-    AuthMagicLinkVerifyRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthMagicLinkVerifyRequestSchema'
-      required: true
     DeleteRequestBody:
       content:
         application/json:
@@ -1289,17 +1660,17 @@ components:
           schema:
             $ref: '#/components/schemas/AuthCredentialPatchSchema'
       required: true
-    AuthEmailRequestBody:
+    AuthEmailPostRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthEmailCreateSchema'
+            $ref: '#/components/schemas/AuthEmailSchemasCreate'
       required: true
     AuthEmailPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthEmailPatchSchema'
+            $ref: '#/components/schemas/AuthEmailSchemasPatch'
       required: true
     AuthRolePermissionRequestBody:
       content:

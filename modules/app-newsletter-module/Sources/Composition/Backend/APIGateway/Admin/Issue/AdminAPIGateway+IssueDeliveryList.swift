@@ -1,6 +1,9 @@
-import FeatherContracts
+import FeatherModuleKit
+import Foundation
+import NewsletterModule
 public import NewsletterAdminAPI
 import NewsletterApplication
+import NewsletterDomain
 
 extension AdminAPIGateway {
     public func newsletterIssueDeliveryList(
@@ -15,6 +18,19 @@ extension AdminAPIGateway {
                     issueId: input.path.newsletterIssueId
                 )
             )
-        return .ok(.init(body: .json(result.map(map))))
+        return .ok(.init(body: .json(result.items.map(map))))
+    }
+
+    private func map(
+        _ value: Delivery.List.Item
+    ) -> Components.Schemas.NewsletterDeliverySchema {
+        .init(
+            subscriberEmail: value.subscriberEmail,
+            status: value.status.rawValue,
+            sentAt: value.sentDate?.timeIntervalSince1970,
+            failureReason: value.failureReason,
+            createdAt: value.createdAt.timeIntervalSince1970,
+            updatedAt: value.updatedAt.timeIntervalSince1970
+        )
     }
 }

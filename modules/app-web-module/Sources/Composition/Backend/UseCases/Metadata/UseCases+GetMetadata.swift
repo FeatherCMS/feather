@@ -1,22 +1,24 @@
 import FeatherApplication
-import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    func makeGetMetadata() -> GetMetadata {
+    func makeGetMetadata() -> Metadata.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadMetadata(
-                    metadata: MetadataDatabaseQueries(
+                Metadata.Detail.Scope(
+                    metadata: Metadata.Query.Database(
                         context: context
                     )
                 )

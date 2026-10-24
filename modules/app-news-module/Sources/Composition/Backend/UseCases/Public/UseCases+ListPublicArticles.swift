@@ -1,29 +1,31 @@
 import FeatherInfrastructure
 public import NewsApplication
 import NewsInfrastructure
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    public func makeListPublicArticles() -> ListPublicArticles {
+    public func makeListPublicArticles() -> Public.Article.List.UseCase {
         .init(
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
                 scope: { context in
-                    ReadPublicNewsArticle(
+                    Public.Article.List.Scope(
                         article: ArticleDatabaseQueries(
                             context: context,
-                            metadata: MetadataDatabaseQueries(
+                            metadata: WebModule.Metadata.Query.Database(
                                 context: context
                             )
                         ),
-                        category: CategoryDatabaseQueries(
+                        articleCategoryIDs: ArticleDatabaseQueries(
                             context: context,
-                            metadata: MetadataDatabaseQueries(
+                            metadata: WebModule.Metadata.Query.Database(
                                 context: context
                             )
                         ),
-                        metadata: MetadataDatabaseQueries(
+                        metadataDetails: WebModule.Metadata.Query.Database(
                             context: context
                         )
                     )

@@ -1,24 +1,26 @@
 import Foundation
-import FeatherContracts
+import FeatherModuleKit
 import WebApplication
-import BlogFrontend
-import NewsFrontend
-import WebFrontend
-import WebContracts
+import BlogWebAdmin
+import BlogWebApp
+import NewsWebApp
+import WebModuleWebAdmin
+import WebModule
+import WebModuleWebApp
 
 func buildWebMetadataExtensions() async throws -> (
-    templates: [WebPageTemplateOption],
-    templateDefinitions: [WebTemplateDefinition],
+    templates: [PageTemplateOption],
+    templateDefinitions: [TemplateDefinition],
     templatePaths: [URL]
 ) {
     var events = EventRegistry()
-    WebFrontend.WebEventHandlers.register(in: &events)
-    BlogFrontend.BlogEventHandlers.register(in: &events)
-    NewsFrontend.NewsEventHandlers.register(in: &events)
+    WebModuleWebApp.EventHandlers.register(in: &events)
+    BlogWebApp.Event.Handlers.register(in: &events)
+    NewsWebApp.NewsEventHandlers.register(in: &events)
 
     let templateProviders = try await events.trigger(
-        event: WebTemplateProviderEvent(),
-        using: WebFrontendEventContext()
+        event: TemplateProviderEvent(),
+        using: WebModule.Event.Context()
     )
     let templateDefinitions = templateProviders.flatMap(\.templates)
     return (

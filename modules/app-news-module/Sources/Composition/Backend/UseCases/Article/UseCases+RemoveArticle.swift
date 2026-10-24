@@ -1,8 +1,9 @@
 public import NewsApplication
+public import NewsModule
 
 extension UseCases {
 
-    public func makeRemoveArticle() -> RemoveArticle {
-        .init(authorizer: authorizer, transaction: articleTransaction())
+    public func makeRemoveArticle() -> Article.Remove.UseCase {
+        .init(authorizer: authorizer, transaction: articleRemoveTransaction())
     }
 }

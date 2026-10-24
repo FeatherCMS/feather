@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -21,6 +20,10 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
 
 let package = Package(
     name: "app-newsletter-module",
@@ -33,15 +36,29 @@ let package = Package(
     ],
     products: [
         .library(name: "NewsletterDomain", targets: ["NewsletterDomain"]),
-        .library(name: "NewsletterContracts", targets: ["NewsletterContracts"]),
-        .library(name: "NewsletterApplication", targets: ["NewsletterApplication"]),
-        .library(name: "NewsletterInfrastructure", targets: ["NewsletterInfrastructure"]),
+        .library(name: "NewsletterModule", targets: ["NewsletterModule"]),
+        .library(name: "NewsletterWebShared", targets: ["NewsletterWebShared"]),
+        .library(
+            name: "NewsletterApplication",
+            targets: ["NewsletterApplication"]
+        ),
+        .library(
+            name: "NewsletterInfrastructure",
+            targets: ["NewsletterInfrastructure"]
+        ),
         .library(name: "NewsletterAdminAPI", targets: ["NewsletterAdminAPI"]),
         .library(name: "NewsletterAppAPI", targets: ["NewsletterAppAPI"]),
         .library(name: "NewsletterBackend", targets: ["NewsletterBackend"]),
-        .library(name: "NewsletterFrontend", targets: ["NewsletterFrontend"]),
-        .executable(name: "NewsletterAdminOpenAPIGenerator", targets: ["NewsletterAdminOpenAPIGenerator"]),
-        .executable(name: "NewsletterAppOpenAPIGenerator", targets: ["NewsletterAppOpenAPIGenerator"]),
+        .library(name: "NewsletterWebAdmin", targets: ["NewsletterWebAdmin"]),
+        .library(name: "NewsletterWebApp", targets: ["NewsletterWebApp"]),
+        .executable(
+            name: "NewsletterAdminOpenAPIGenerator",
+            targets: ["NewsletterAdminOpenAPIGenerator"]
+        ),
+        .executable(
+            name: "NewsletterAppOpenAPIGenerator",
+            targets: ["NewsletterAppOpenAPIGenerator"]
+        ),
     ],
     dependencies: [
         .package(
@@ -54,7 +71,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
@@ -68,8 +85,38 @@ let package = Package(
             url: "https://github.com/hummingbird-project/swift-jobs",
             from: "1.1.0"
         ),
+        .package(
+            url: "https://github.com/feather-framework/feather-validation",
+            exact: "1.0.0-beta.1"
+        ),
 
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url:
+                "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            from: "2.0.1"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-http-types",
+            from: "1.0.0"
+        ),
         .package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
@@ -79,11 +126,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "NewsletterContracts",
+            name: "NewsletterModule",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
@@ -91,7 +138,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
 
-                .target(name: "NewsletterContracts"),
+                .target(name: "NewsletterModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -101,8 +148,13 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherMail", package: "feather-mail"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
+                .product(name: "SystemModule", package: "app-system-module"),
 
+                .target(name: "NewsletterModule"),
                 .target(name: "NewsletterDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -111,10 +163,19 @@ let package = Package(
         .target(
             name: "NewsletterInfrastructure",
             dependencies: [
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "Jobs", package: "swift-jobs"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
+                .product(name: "SystemModule", package: "app-system-module"),
 
+                .target(name: "NewsletterModule"),
                 .target(name: "NewsletterApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -124,24 +185,39 @@ let package = Package(
         .target(
             name: "NewsletterAdminAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "NewsletterAppAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         // MARK: -
         .executableTarget(
             name: "NewsletterAdminOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
 
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
@@ -152,7 +228,10 @@ let package = Package(
         .executableTarget(
             name: "NewsletterAppOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
 
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
@@ -165,8 +244,13 @@ let package = Package(
             name: "NewsletterBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
+                .product(name: "SystemModule", package: "app-system-module"),
 
+                .target(name: "NewsletterModule"),
                 .target(name: "NewsletterInfrastructure"),
                 .target(name: "NewsletterAdminAPI"),
                 .target(name: "NewsletterAppAPI"),
@@ -175,17 +259,53 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "NewsletterFrontend",
+            name: "NewsletterWebShared",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
-
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "WebFrontend", package: "app-web-module"),
-                .target(name: "NewsletterContracts"),
-                .target(name: "NewsletterAdminAPI"),
-                .target(name: "NewsletterAppAPI"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "NewsletterWebAdmin",
+            dependencies: [
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
+                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
+                .target(name: "NewsletterApplication"),
+                .target(name: "NewsletterWebShared"),
+                .target(name: "NewsletterModule"),
+                .target(name: "NewsletterAdminAPI"),
+            ],
+            path: "Sources/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "NewsletterWebApp",
+            dependencies: [
+                .product(
+                    name: "FeatherValidation",
+                    package: "feather-validation"
+                ),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "WebModuleWebApp", package: "app-web-module"),
+                .target(name: "NewsletterModule"),
+                .target(name: "NewsletterAppAPI"),
+                .target(name: "NewsletterWebShared"),
+            ],
+            path: "Sources/Composition/WebApp",
             swiftSettings: swiftSettings
         ),
         // MARK: -
@@ -193,21 +313,83 @@ let package = Package(
             name: "NewsletterDomainTests",
             dependencies: [
                 .target(name: "NewsletterDomain"),
+                .target(name: "NewsletterModule"),
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "NewsletterApplicationTests",
             dependencies: [
+                .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .target(name: "NewsletterApplication"),
+                .target(name: "NewsletterModule"),
             ],
+            path: "Tests/Layers/Application",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "NewsletterInfrastructureTests",
             dependencies: [
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "FeatherApplication", package: "feather-core"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .target(name: "NewsletterInfrastructure"),
+                .target(name: "NewsletterApplication"),
+                .target(name: "NewsletterDomain"),
+                .target(name: "NewsletterModule"),
             ],
+            path: "Tests/Layers/Infrastructure",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "NewsletterBackendTests",
+            dependencies: [
+                .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
+                .product(
+                    name: "HummingbirdTesting",
+                    package: "hummingbird"
+                ),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
+                .target(name: "NewsletterAdminAPI"),
+                .target(name: "NewsletterApplication"),
+                .target(name: "NewsletterBackend"),
+                .target(name: "NewsletterDomain"),
+                .target(name: "NewsletterInfrastructure"),
+                .target(name: "NewsletterModule"),
+            ],
+            path: "Tests/Composition/Backend",
             swiftSettings: swiftSettings
         ),
     ]

@@ -1,15 +1,16 @@
 import FeatherInfrastructure
 import SystemApplication
 import SystemInfrastructure
+import SystemModule
 
 extension UseCases {
 
-    func makeGetVariable() -> GetVariable {
+    func makeGetVariable() -> SystemModule.Variable.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadVariable(
-                    variable: VariableDatabaseQueries(
+                SystemModule.Variable.Detail.Scope(
+                    variable: SystemModule.Variable.Detail.Query.Database(
                         context: context
                     )
                 )

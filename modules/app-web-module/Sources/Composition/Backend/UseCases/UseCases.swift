@@ -1,8 +1,8 @@
 import FeatherApplication
-public import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 public import FeatherInfrastructure
+public import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI

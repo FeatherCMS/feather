@@ -1,28 +1,31 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherApplication
-import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import MediaBackend
 import SystemInfrastructure
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    public func makeRemoveTag() -> RemoveTag {
+    public func makeRemoveTag() -> Tag.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteTagPostsMetadata(
-                    post: PostDatabaseRepository(
+                Tag.Remove.Scope(
+                    post: Post.Repository.Database(
                         context: context
                     ),
-                    tag: TagDatabaseRepository(
+                    tag: Tag.Repository.Database(
                         context: context
                     ),
-                    metadata: MetadataDatabaseRepository(
+                    metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     )
                 )

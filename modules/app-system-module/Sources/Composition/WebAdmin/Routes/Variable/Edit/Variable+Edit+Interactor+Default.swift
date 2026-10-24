@@ -1,0 +1,62 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import SystemAdminAPI
+import SystemModule
+
+extension Variable.Edit.Interactor {
+    struct Default:
+        Interface
+    {
+        let repository: any Variable.Edit.Repository.Interface
+
+        func load(
+            id: String
+        ) async throws -> Variable.Edit.Model {
+            do {
+                return try await repository.load(id: id)
+            }
+            catch let error as OpenAPIRepositoryError {
+                throw map(error)
+            }
+        }
+
+        func edit(
+            id: String,
+            input: Variable.Edit.Form.Input
+        ) async throws {
+            do {
+                try await repository.update(
+                    id: id,
+                    input: .init(
+                        key: input.normalizedKey,
+                        value: input.normalizedValue,
+                        name: input.normalizedName,
+                        notes: input.normalizedNotes
+                    )
+                )
+            }
+            catch let error as OpenAPIRepositoryError {
+                throw map(error)
+            }
+        }
+
+        private func map(
+            _ error: OpenAPIRepositoryError
+        ) -> Variable.Edit.Error {
+            switch error {
+            case .notFound:
+                .notFound
+            case .unauthorized:
+                .unauthorized
+            case .forbidden:
+                .forbidden
+            case .conflict:
+                .conflict
+            case .failure(let failure) where failure.statusCode == 409:
+                .conflict
+            case .failure, .transport:
+                .unavailable
+            }
+        }
+    }
+}

@@ -1,8 +1,9 @@
-FROM swift:6.2
+FROM swift:6.3
 
 WORKDIR /app/modules/app-user-module
 
 COPY modules/app-user-module /app/modules/app-user-module
+COPY modules/app-system-module /app/modules/app-system-module
 COPY feather-core /app/feather-core
 
 RUN swift package resolve

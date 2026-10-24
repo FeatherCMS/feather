@@ -1,29 +1,28 @@
 import FeatherApplication
-import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    func makeGetPublicPageByID() -> GetPublicPageByID {
+    func makeGetPublicPageByID() -> Public.Page.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadPageMetadata(
-                    page: PageDatabaseQueries(
+                Public.Page.Detail.Scope(
+                    page: Page.Detail.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: Metadata.Query.Database(
                             context: context
                         )
-                    ),
-                    metadata: MetadataDatabaseQueries(
-                        context: context
                     )
                 )
             }

@@ -4,7 +4,7 @@ import Foundation
 import OpenAPIKit
 import OpenAPIKit30
 import OpenAPIKitCompat
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 import Yams
 
 @main

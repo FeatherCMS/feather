@@ -1,0 +1,196 @@
+import BlogAdminAPI
+import BlogAppAPI
+import BlogModule
+import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import MediaWebAdmin
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebModuleWebAdmin
+
+extension AuthorLink.Add.Controller {
+    struct Default: Interface {
+        let routes: AuthorLink.Router.Routes
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any AuthorLink.Add.Interactor.Interface,
+                any AuthorLink.Add.Presenter.Interface
+            >
+
+        func get(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse {
+            let runtime = buildRuntime(request, context)
+            let authorID = try context.requiredID()
+            return try await runtime.presenter.render(
+                authorID: authorID,
+                state: formState(),
+                permissions: context.currentUserPermissions
+            )
+        }
+
+        func post(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let runtime = buildRuntime(request, context)
+            let authorID = try context.requiredID()
+            let permissions = context.currentUserPermissions
+            var lastPayload: AuthorLink.Form.Input?
+
+            do {
+                let payload = try await request.decode(
+                    as: AuthorLink.Form.Input.self,
+                    context: context
+                )
+                lastPayload = payload
+                try await payload.validate()
+                guard payload.parsedPriority != nil else {
+                    var state = formState(
+                        label: payload.normalizedLabel,
+                        url: payload.normalizedURL,
+                        priority: payload.normalizedPriority,
+                        isBlank: payload.isBlank.value,
+                        permission: payload.normalizedPermission,
+                        notes: payload.normalizedNotes
+                    )
+                    state.apply(errors: [
+                        "priority": "Priority must be a valid integer."
+                    ])
+                    return try await runtime.presenter
+                        .render(
+                            authorID: authorID,
+                            state: state,
+                            permissions: permissions
+                        )
+                        .response(from: request, context: context)
+                }
+                try await runtime.interactor.execute(
+                    authorID: authorID,
+                    input: payload
+                )
+
+                return AdminNotificationFlash.redirect(
+                    to: routes.author(authorID),
+                    notification: .init(
+                        title: "Added",
+                        message: "Link added successfully."
+                    )
+                )
+            }
+            catch let error as ValidationError {
+                var errors: [String: String] = [:]
+                for failure in error.failures {
+                    errors[failure.key] = failure.message
+                }
+                var state = formState(
+                    label: lastPayload?.normalizedLabel ?? "",
+                    url: lastPayload?.normalizedURL ?? "",
+                    priority: lastPayload?.normalizedPriority ?? "0",
+                    isBlank: lastPayload?.isBlank.value ?? false,
+                    permission: lastPayload?.normalizedPermission ?? "",
+                    notes: lastPayload?.normalizedNotes ?? ""
+                )
+                state.apply(errors: errors)
+                return try await runtime.presenter
+                    .render(
+                        authorID: authorID,
+                        state: state,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+            catch let error as OpenAPIRepositoryError {
+                var state = formState(
+                    label: lastPayload?.normalizedLabel ?? "",
+                    url: lastPayload?.normalizedURL ?? "",
+                    priority: lastPayload?.normalizedPriority ?? "0",
+                    isBlank: lastPayload?.isBlank.value ?? false,
+                    permission: lastPayload?.normalizedPermission ?? "",
+                    notes: lastPayload?.normalizedNotes ?? ""
+                )
+                state.error = error.errorDescription
+                return try await runtime.presenter
+                    .render(
+                        authorID: authorID,
+                        state: state,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+            catch {
+                var state = formState(
+                    label: lastPayload?.normalizedLabel ?? "",
+                    url: lastPayload?.normalizedURL ?? "",
+                    priority: lastPayload?.normalizedPriority ?? "0",
+                    isBlank: lastPayload?.isBlank.value ?? false,
+                    permission: lastPayload?.normalizedPermission ?? "",
+                    notes: lastPayload?.normalizedNotes ?? ""
+                )
+                state.error = error.displayMessage
+                return try await runtime.presenter
+                    .render(
+                        authorID: authorID,
+                        state: state,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+        }
+
+        private func formState(
+            label: String = "",
+            url: String = "",
+            priority: String = "0",
+            isBlank: Bool = false,
+            permission: String = "",
+            notes: String = ""
+        ) -> AuthorLink.Form.State {
+            .init(
+                label: .init(
+                    key: "label",
+                    label: "Label",
+                    value: label,
+                    error: nil
+                ),
+                url: .init(
+                    key: "url",
+                    label: "URL",
+                    value: url,
+                    error: nil
+                ),
+                priority: .init(
+                    key: "priority",
+                    label: "Priority",
+                    value: priority,
+                    error: nil
+                ),
+                isBlank: .init(
+                    key: "isBlank",
+                    label: "Open in new tab",
+                    value: isBlank,
+                    error: nil
+                ),
+                permission: .init(
+                    key: "permission",
+                    label: "Permission",
+                    value: permission,
+                    error: nil
+                ),
+                notes: .init(
+                    key: "notes",
+                    label: "Notes",
+                    value: notes,
+                    error: nil
+                ),
+                error: nil,
+            )
+        }
+    }
+}

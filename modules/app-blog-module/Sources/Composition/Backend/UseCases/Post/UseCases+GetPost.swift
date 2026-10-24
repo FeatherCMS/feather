@@ -1,23 +1,23 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherInfrastructure
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    public func makeGetPost() -> GetPost {
+    public func makeGetPost() -> Post.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadPostMetadata(
-                    post: PostDatabaseQueries(
+                Post.Detail.Scope(
+                    post: Post.Detail.Query.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: WebModule.Metadata.Query.Database(
                             context: context
                         )
-                    ),
-                    metadata: MetadataDatabaseQueries(
-                        context: context
                     )
                 )
             }

@@ -1,13 +1,10 @@
-FROM swift:6.2
+FROM swift:6.3
 
-WORKDIR /app/modules/app-blog-module
+WORKDIR /app/feather/modules/app-blog-module
 
-COPY modules/app-blog-module /app/modules/app-blog-module
-COPY feather-core /app/feather-core
-COPY modules/app-system-module /app/modules/app-system-module
-COPY modules/app-web-module /app/modules/app-web-module
+COPY . /app/feather
 
 RUN swift package resolve
 RUN swift package clean
 
-CMD ["swift", "test", "--parallel"]
+CMD ["swift", "test", "--parallel", "--enable-code-coverage"]

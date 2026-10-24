@@ -1,19 +1,18 @@
-import BlogSharedOpenAPIGenerator
+import BlogSchemaSupport
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct PathCollection: PathCollectionRepresentable {
 
     var pathMap: PathMap {
-        [
-            "api/v1/blog/settings": BlogRouteSettingsPathItems(),
-            "api/v1/blog/posts": BlogPostListPathItems(),
-            "api/v1/blog/posts/{id}": BlogPostGetPathItems(),
-            "api/v1/blog/authors": BlogAuthorListPathItems(),
-            "api/v1/blog/authors/{id}": BlogAuthorGetPathItems(),
-            "api/v1/blog/tags": BlogTagListPathItems(),
-            "api/v1/blog/tags/{id}": BlogTagGetPathItems(),
-        ]
+        var paths: PathMap = [:]
+        paths.merge(Author.PathCollection().pathMap) { current, _ in current
+        }
+        paths.merge(Post.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Settings.PathCollection().pathMap) { current, _ in
+            current
+        }
+        paths.merge(Tag.PathCollection().pathMap) { current, _ in current }
+        return paths
     }
 }

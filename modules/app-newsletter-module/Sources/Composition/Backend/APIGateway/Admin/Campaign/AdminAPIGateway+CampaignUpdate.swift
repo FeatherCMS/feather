@@ -1,8 +1,19 @@
-import FeatherContracts
+import FeatherBackend
+import FeatherDomain
+import FeatherModuleKit
+import Foundation
+import Hummingbird
 public import NewsletterAdminAPI
 import NewsletterApplication
+import NewsletterModule
 
 extension AdminAPIGateway {
+    private enum UpdateMaskFields: String, Sendable {
+        case key
+        case name
+        case fromEmail
+    }
+
     public func newsletterCampaignUpdate(
         _ input: Operations.NewsletterCampaignUpdate.Input
     ) async throws -> Operations.NewsletterCampaignUpdate.Output {
@@ -11,21 +22,47 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        let current = try await self.useCases.makeGetNewsletterCampaign()
-            .execute(
-                subject: subject,
-                input: .init(key: input.path.newsletterCampaignKey)
-            )
-        let result = try await self.useCases.makeUpdateNewsletterCampaign()
+        let fields: UpdateMask<UpdateMaskFields>
+        do {
+            fields = try .init(input.query.updateMask)
+        }
+        catch {
+            throw HTTPError(.badRequest)
+        }
+        let result = try await self.useCases.makeEditNewsletterCampaign()
             .execute(
                 subject: subject,
                 input: .init(
-                    key: current.key,
-                    newKey: body.key ?? current.key,
-                    name: body.name ?? current.name,
-                    fromEmail: body.fromEmail ?? current.fromEmail
+                    key: input.path.newsletterCampaignKey,
+                    newKey: try FieldChange(
+                        value: body.key,
+                        shouldApply: fields.contains(.key),
+                        onMissing: { HTTPError(.badRequest) }
+                    ),
+                    name: try FieldChange(
+                        value: body.name,
+                        shouldApply: fields.contains(.name),
+                        onMissing: { HTTPError(.badRequest) }
+                    ),
+                    fromEmail: try FieldChange(
+                        value: body.fromEmail,
+                        shouldApply: fields.contains(.fromEmail),
+                        onMissing: { HTTPError(.badRequest) }
+                    )
                 )
             )
         return .ok(.init(body: .json(map(result))))
+    }
+
+    private func map(
+        _ value: Campaign.Edit.Output
+    ) -> Components.Schemas.NewsletterCampaignSchema {
+        .init(
+            key: value.key,
+            name: value.name,
+            fromEmail: value.fromEmail,
+            createdAt: value.createdAt.timeIntervalSince1970,
+            updatedAt: value.updatedAt.timeIntervalSince1970
+        )
     }
 }

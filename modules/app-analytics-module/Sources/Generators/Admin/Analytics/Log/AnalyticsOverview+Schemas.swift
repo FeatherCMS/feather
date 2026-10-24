@@ -1,0 +1,110 @@
+import FeatherOpenAPI
+import FeatherOpenAPIGenerator
+import OpenAPIKit30
+
+struct AnalyticsLogOverviewDateField: DoubleSchemaRepresentable {
+    var example: Double? = 1_717_171_717
+}
+
+struct AnalyticsLogOverviewDashboardOnlyField: BoolSchemaRepresentable {}
+
+struct AnalyticsLogOverviewQuerySchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "source": AnalyticsLogSourceField(),
+            "from": AnalyticsLogOverviewDateField(),
+            "to": AnalyticsLogOverviewDateField(),
+            "dashboardOnly": AnalyticsLogOverviewDashboardOnlyField()
+                .reference(required: false),
+            "notFoundOnly": AnalyticsLogOverviewDashboardOnlyField()
+                .reference(required: false),
+        ]
+    }
+}
+
+struct AnalyticsLogOverviewKPIField: DoubleSchemaRepresentable {
+    var example: Double? = 123
+}
+
+struct AnalyticsLogOverviewKPIIntField: IntSchemaRepresentable {
+    var example: Int? = 123
+}
+
+struct AnalyticsLogOverviewKPISchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "totalRequests": AnalyticsLogOverviewKPIIntField(),
+            "averageRequestsPerDay": AnalyticsLogOverviewKPIField(),
+            "authenticatedRequests": AnalyticsLogOverviewKPIIntField(),
+            "notFoundRequests": AnalyticsLogOverviewKPIIntField(),
+            "clientErrorRequests": AnalyticsLogOverviewKPIIntField(),
+            "serverErrorRequests": AnalyticsLogOverviewKPIIntField(),
+            "pageViews": AnalyticsLogOverviewKPIIntField(),
+            "searchRequests": AnalyticsLogOverviewKPIIntField(),
+            "botRequests": AnalyticsLogOverviewKPIIntField(),
+            "aiRequests": AnalyticsLogOverviewKPIIntField(),
+            "humanRequests": AnalyticsLogOverviewKPIIntField(),
+            "uniqueVisitors": AnalyticsLogOverviewKPIIntField(),
+        ]
+    }
+}
+
+struct AnalyticsLogOverviewDailyPointSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "bucket": AnalyticsLogOverviewDateField(),
+            "requests": AnalyticsLogOverviewKPIIntField(),
+            "notFoundRequests": AnalyticsLogOverviewKPIIntField(),
+            "clientErrorRequests": AnalyticsLogOverviewKPIIntField(),
+            "serverErrorRequests": AnalyticsLogOverviewKPIIntField(),
+        ]
+    }
+}
+
+struct AnalyticsLogOverviewDailyListSchema: ArraySchemaRepresentable {
+    var items: (any SchemaRepresentable)? {
+        AnalyticsLogOverviewDailyPointSchema().reference()
+    }
+}
+
+struct AnalyticsLogOverviewBreakdownItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "label": AnalyticsLogSearchField(),
+            "count": AnalyticsLogOverviewKPIIntField(),
+            "share": AnalyticsLogOverviewKPIField(),
+        ]
+    }
+}
+
+struct AnalyticsLogOverviewBreakdownListSchema: ArraySchemaRepresentable {
+    var items: (any SchemaRepresentable)? {
+        AnalyticsLogOverviewBreakdownItemSchema().reference()
+    }
+}
+
+struct AnalyticsLogOverviewSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "query": AnalyticsLogOverviewQuerySchema().reference(),
+            "kpis": AnalyticsLogOverviewKPISchema().reference(),
+            "daily": AnalyticsLogOverviewDailyListSchema().reference(),
+            "statusFamilies": AnalyticsLogOverviewBreakdownListSchema()
+                .reference(),
+            "methods": AnalyticsLogOverviewBreakdownListSchema().reference(),
+            "paths": AnalyticsLogOverviewBreakdownListSchema().reference(),
+            "notFoundPaths": AnalyticsLogOverviewBreakdownListSchema()
+                .reference(),
+            "serverErrorPaths": AnalyticsLogOverviewBreakdownListSchema()
+                .reference(),
+            "referrers": AnalyticsLogOverviewBreakdownListSchema().reference(),
+            "browsers": AnalyticsLogOverviewBreakdownListSchema().reference(),
+            "operatingSystems": AnalyticsLogOverviewBreakdownListSchema()
+                .reference(),
+            "deviceTypes": AnalyticsLogOverviewBreakdownListSchema()
+                .reference(),
+            "languages": AnalyticsLogOverviewBreakdownListSchema().reference(),
+            "regions": AnalyticsLogOverviewBreakdownListSchema().reference(),
+        ]
+    }
+}

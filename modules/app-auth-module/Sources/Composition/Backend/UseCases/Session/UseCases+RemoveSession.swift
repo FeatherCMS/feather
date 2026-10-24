@@ -1,19 +1,20 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeRemoveSession() -> RemoveSession {
+    func makeRemoveSession() -> Session.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteSession(
-                    session: SessionDatabaseRepository(context: context)
+                Session.Remove.Scope(
+                    session: Session.Repository.Database(context: context)
                 )
             }
         )
-        return RemoveSession(
+        return Session.Remove.UseCase(
             authorizer: authorizer,
             transaction: transaction
         )

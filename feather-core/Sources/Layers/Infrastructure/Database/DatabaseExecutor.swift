@@ -4,7 +4,7 @@
 //
 
 import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 public import FeatherDatabase
 
 public struct DatabaseExecutor<S: Scope, C: ExecutionContext>: Sendable {

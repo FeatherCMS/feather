@@ -1,15 +1,16 @@
 import AccountApplication
 import AccountInfrastructure
+import AccountModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeGetSettings() -> AccountApplication.GetSettings {
+    func makeGetSettings() -> Settings.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadSettings(
-                    settings: SettingsDatabaseQueries(context: context)
+                Settings.Detail.Scope(
+                    query: Settings.Detail.Query.Database(context: context)
                 )
             }
         )

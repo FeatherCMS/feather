@@ -1,15 +1,16 @@
 import FeatherInfrastructure
 import RedirectApplication
 import RedirectInfrastructure
+import RedirectModule
 
 extension UseCases {
 
-    func makeListRules() -> ListRules {
+    func makeListRules() -> Rule.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadRule(
-                    rule: RuleDatabaseQueries(
+                Rule.List.Scope(
+                    query: Rule.List.Query.Database(
                         context: context
                     )
                 )

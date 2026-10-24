@@ -1,0 +1,3 @@
+extension NewsletterDelivery {
+    enum List {}
+}

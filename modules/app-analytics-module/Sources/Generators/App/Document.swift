@@ -5,7 +5,6 @@
 //  Created by Tibor Bödecs on 2026. 03. 10..
 //
 
-import AnalyticsSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30

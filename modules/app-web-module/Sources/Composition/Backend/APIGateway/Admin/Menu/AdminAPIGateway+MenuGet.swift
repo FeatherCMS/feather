@@ -1,19 +1,34 @@
-import FeatherContracts
+import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
+import Foundation
+import WebModule
 
 extension AdminAPIGateway {
 
-    public func webMenuGet(
-        _ input: Operations.WebMenuGet.Input
-    ) async throws -> Operations.WebMenuGet.Output {
+    public func menuGet(
+        _ input: Operations.MenuGet.Input
+    ) async throws -> Operations.MenuGet.Output {
         let useCase = useCases.makeGetMenu()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(
             subject: subject,
-            input: .init(id: input.path.webMenuId)
+            input: .init(id: input.path.menuId)
         )
 
-        return .ok(.init(body: .json(useCases.map(result))))
+        return .ok(.init(body: .json(mapMenuDetail(result))))
+    }
+
+    private func mapMenuDetail(
+        _ detail: Menu.Detail.Output
+    ) -> Components.Schemas.MenuDetailSchema {
+        .init(
+            id: detail.id,
+            key: detail.key,
+            name: detail.name,
+            notes: detail.notes,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

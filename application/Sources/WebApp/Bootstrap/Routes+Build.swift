@@ -1,44 +1,66 @@
+import SystemModule
+import UserModule
+import RedirectModule
+import AuthModule
+import ContactModule
+import AnalyticsModule
+import Environment
+import FeatherWebShared
 import Foundation
-import FeatherContracts
+import FeatherModuleKit
 import WebApplication
-import BlogFrontend
-import NewsFrontend
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
-import WebFrontend
-import WebContracts
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import SystemFrontend
-import FeatherAdmin
+import BlogWebAdmin
+import BlogWebApp
+import NewsWebApp
+import NewsWebAdmin
+import MediaWebAdmin
+import ContactWebAdmin
+import ContactWebApp
+import NewsletterWebAdmin
+import NewsletterWebApp
+import WebModuleWebAdmin
+import WebModule
+import WebModuleWebApp
+import AnalyticsWebAdmin
+import AnalyticsWebApp
+import RedirectWebAdmin
+import RedirectWebApp
+import UserWebAdmin
+import SystemWebAdmin
+import FeatherWebAdmin
+import FeatherWebApp
 import Hummingbird
 import HummingbirdAuth
-import AuthFrontend
-import AccountFrontend
+import AuthWebAdmin
+import AuthWebApp
+import AccountWebAdmin
+import AccountWebApp
 import Logging
 
 func buildRouter(
     environment: AppEnvironment,
-    templateOptions: [WebPageTemplateOption],
-    templateDefinitions: [WebTemplateDefinition],
+    templateOptions: [PageTemplateOption],
+    templateDefinitions: [TemplateDefinition],
     templatePaths: [URL]
-) async throws -> Router<DefaultRequestContext> {
+) async throws -> Hummingbird.Router<DefaultRequestContext> {
 
-    let router = Router(context: DefaultRequestContext.self)
-    let apiBuilder = APIBuilder(apiBaseURL: environment.apiBaseURL)
+    let router = Hummingbird.Router(context: DefaultRequestContext.self)
     let mediaResolver = MediaResolver(
         mediaBaseURL: environment.publicOrigins.mediaBaseURL
     )
 
     router.addMiddleware {
         LogRequestsMiddleware(Logger.current.logLevel)
-        WebAppAnalyticsLogMiddleware(apiBaseURL: environment.apiBaseURL)
+        Log.Middleware(
+            apiBaseURL: environment.apiBaseURL,
+            logFilter: WebAppAnalyticsLogFilter()
+        )
         HTTPErrorMiddleware<DefaultRequestContext>()
         RedirectRuleMiddleware(
-            apiBaseURL: environment.apiBaseURL,
-            siteBaseURL: environment.publicOrigins.siteBaseURL
+            siteBaseURL: environment.publicOrigins.siteBaseURL,
+            resolver: DefaultRedirectRuleResolver(
+                apiBaseURL: environment.apiBaseURL
+            )
         )
     }
 
@@ -46,41 +68,69 @@ func buildRouter(
         Response(status: .ok)
     }
 
+    let systemRoutes = SystemWebAdmin.Router.Routes.standard
+    let redirectRoutes = RedirectWebAdmin.Router.Routes.standard
+    let newsRoutes = NewsWebAdmin.Router.Routes.standard
     var adminEvents = EventRegistry()
-    WebFrontend.WebEventHandlers.register(in: &adminEvents)
-    BlogFrontend.BlogEventHandlers.register(in: &adminEvents)
-    NewsFrontend.NewsEventHandlers.register(in: &adminEvents)
-    BlogAdminDashboardEventHandlers.register(in: &adminEvents)
-    WebAdminDashboardEventHandlers.register(in: &adminEvents)
-    RedirectAdminDashboardEventHandlers.register(in: &adminEvents)
-    AnalyticsAdminDashboardEventHandlers.register(in: &adminEvents)
-    AdminMenuEventHandlers.register(in: &adminEvents)
-    AccountAdminMenuEventHandlers.register(in: &adminEvents)
-    AuthAdminMenuEventHandlers.register(in: &adminEvents)
-    UserAdminMenuEventHandlers.register(in: &adminEvents)
-    MediaAdminMenuEventHandlers.register(in: &adminEvents)
-    RedirectAdminMenuEventHandlers.register(in: &adminEvents)
-    AnalyticsAdminMenuEventHandlers.register(in: &adminEvents)
-    BlogAdminMenuEventHandlers.register(in: &adminEvents)
-    NewsAdminMenuEventHandlers.register(in: &adminEvents)
-    NewsletterRichContentEditorEventHandlers.register(in: &adminEvents)
-    ContactRichContentEditorEventHandlers.register(in: &adminEvents)
-    NewsletterAdminMenuEventHandlers.register(in: &adminEvents)
-    ContactAdminMenuEventHandlers.register(in: &adminEvents)
-    WebAdminMenuEventHandlers.register(in: &adminEvents)
+    WebModuleWebApp.EventHandlers.register(in: &adminEvents)
+    BlogWebApp.Event.Handlers.register(in: &adminEvents)
+    NewsWebApp.NewsEventHandlers.register(in: &adminEvents)
+    BlogWebAdmin.Event.Handlers.registerDashboard(
+        in: &adminEvents,
+        environment: environment
+    )
+    WebModule.Event.Handlers.registerDashboard(
+        in: &adminEvents,
+        environment: environment
+    )
+    RedirectModule.Event.Handlers.register(
+        in: &adminEvents,
+        environment: environment,
+        routes: redirectRoutes
+    )
+    AnalyticsWebAdmin.Event.Handlers.registerDashboard(
+        in: &adminEvents,
+        environment: environment
+    )
+    SystemWebAdmin.Event.Handlers.register(
+        in: &adminEvents,
+        routes: systemRoutes
+    )
+    AccountWebAdmin.Event.Handlers.register(in: &adminEvents)
+    AuthWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    UserModule.Event.Handlers.register(in: &adminEvents)
+    MediaWebAdmin.Event.Handlers.register(in: &adminEvents)
+    AnalyticsWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    BlogWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    NewsWebAdmin.Menu.Provider.register(in: &adminEvents)
+    NewsWebAdmin.Event.Handlers.registerMenu(
+        in: &adminEvents,
+        routes: newsRoutes
+    )
+    NewsletterWebAdmin.Event.Handlers.registerRichContentEditor(
+        in: &adminEvents
+    )
+    ContactWebAdmin.Event.Handlers.registerRichContentEditor(
+        in: &adminEvents
+    )
+    NewsletterWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    ContactWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    WebModule.Event.Handlers.registerMenu(in: &adminEvents)
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(
             event: AdminRichContentEditorBlockProvider(),
-            using: AdminEventContext(path: "", permissions: [])
-        ).compactMap { $0 }) ?? []
+            using: SystemWebAdmin.Admin.Menu.Context(
+                path: "",
+                permissions: []
+            )
+        )
+        .compactMap { $0 }) ?? []
     let renderingEngine = DefaultRenderingEngine(
-        publicOrigins: environment.publicOrigins,
         adminEvents: adminEvents,
         richContentEditorBlocks: richContentEditorBlocks,
         adminPageRenderContextProvider: DefaultAdminPageRenderContextProvider(
             events: adminEvents,
-            accountAPIBuilder: .init(apiBaseURL: environment.apiBaseURL),
-            mediaAPIBuilder: .init(apiBaseURL: environment.apiBaseURL),
+            environment: environment,
             mediaResolver: mediaResolver
         )
     )
@@ -106,47 +156,52 @@ func buildRouter(
         }
     )
     var publicContentEvents = EventRegistry()
-    WebPublicContentEventHandlers.register(in: &publicContentEvents)
-    WebMarkdownEventHandlers.register(in: &publicContentEvents)
-    BlogWebPublicContentEventHandlers.register(in: &publicContentEvents)
-    NewsWebPublicContentEventHandlers.register(in: &publicContentEvents)
+    WebModuleWebApp.PublicContentEventHandlers.register(
+        in: &publicContentEvents
+    )
+    WebModuleWebApp.MarkdownEventHandlers.register(in: &publicContentEvents)
+    BlogWebApp.PublicContent.Event.Handlers.register(in: &publicContentEvents)
+    NewsWebApp.NewsWebPublicContentEventHandlers.register(
+        in: &publicContentEvents
+    )
 
     ContactMarkdownEventHandlers.register(
         in: &publicContentEvents,
-        api: ContactAppAPIClient(apiBaseURL: environment.apiBaseURL)
+        api: ContactWebApp.API.Client(environment: environment)
     )
-    NewsletterMarkdownEventHandlers.register(in: &publicContentEvents)
+    NewsletterWebApp.Event.Handlers.registerMarkdown(in: &publicContentEvents)
 
     let authRouter = router.add(
         middleware: DefaultAuthMiddleware(
-            apiBaseURL: environment.apiBaseURL,
+            environment: environment,
             secureCookies: environment.publicOrigins.usesSecureCookies
         )
     )
     buildAppRoutes(
         router: router,
-        authRouter: authRouter,
-        renderingEngine: renderingEngine,
+        environment: environment,
+        publicPageRenderer: DefaultPublicPageRenderer(
+            publicOrigins: environment.publicOrigins
+        ),
         themeRenderer: themeRenderer,
         publicContentEvents: publicContentEvents,
-        apiBuilder: apiBuilder,
         mediaResolver: mediaResolver,
         publicOrigins: environment.publicOrigins
     )
 
-    AuthFrontendRoutes.registerAppRoutes(
-        router: router,
-        renderingEngine: renderingEngine,
-        authAPIBuilder: apiBuilder.auth,
+    AuthWebApp.Router(
+        templateRenderer: try AuthWebApp.MustacheTemplateRenderer(),
+        environment: environment,
         usesSecureCookies: environment.publicOrigins.usesSecureCookies
     )
+    .route(on: router)
 
     // MARK: - admin
 
     let adminRouter =
         authRouter
         .add(
-            middleware: AdminAuthMiddleware(
+            middleware: AuthMiddleware(
                 loginPath: "/login/",
                 unauthorizedPath: "/"
             )
@@ -154,9 +209,12 @@ func buildRouter(
         .group(context: AuthenticatedRequestContext.self)
     buildAdminRoutes(
         router: adminRouter,
+        environment: environment,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents,
-        apiBuilder: apiBuilder
+        systemRoutes: systemRoutes,
+        redirectRoutes: redirectRoutes,
+        newsRoutes: newsRoutes
     )
 
     return router

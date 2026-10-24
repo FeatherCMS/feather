@@ -1,21 +1,22 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeAddRolePermission() -> AddRolePermission {
+    func makeAddRolePermission() -> RolePermission.Add.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteRolePermissions(
-                    rolePermissions: RolePermissionDatabaseRepository(
+                RolePermission.Add.Scope(
+                    rolePermissions: RolePermission.Repository.Database(
                         context: context
                     )
                 )
             }
         )
-        return AddRolePermission(
+        return RolePermission.Add.UseCase(
             authorizer: authorizer,
             transaction: transaction
         )

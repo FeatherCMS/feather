@@ -1,9 +1,9 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import SGML
 import Testing
 
-@testable import WebApp
+@testable import WebModuleWebApp
 
 @Suite
 struct FormInputFieldTestSuite {

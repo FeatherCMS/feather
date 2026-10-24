@@ -1,20 +1,23 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeAddCredential() -> AddCredential {
+    func makeAddCredential() -> Credential.Add.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteCredentialLink(
-                    credential: CredentialDatabaseRepository(context: context),
-                    authEmail: AuthEmailDatabaseRepository(context: context)
+                Credential.Add.Scope(
+                    credential: Credential.Repository.Database(
+                        context: context
+                    ),
+                    authEmail: Email.Repository.Database(context: context)
                 )
             }
         )
-        return AddCredential(
+        return Credential.Add.UseCase(
             authorizer: authorizer,
             transaction: transaction,
             passwordHasher: BCryptPasswordHasher()

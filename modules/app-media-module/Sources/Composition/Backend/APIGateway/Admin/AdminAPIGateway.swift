@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 public import MediaAdminAPI
 
 public struct AdminAPIGateway: Sendable, MediaAdminAPI.APIProtocol {

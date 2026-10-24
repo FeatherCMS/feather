@@ -1,9 +1,10 @@
 import Configuration
-import FeatherAdmin
+import FeatherWebShared
+import FeatherWebAdmin
 import Foundation
 import Testing
 
-@testable import WebApp
+@testable import WebModuleWebApp
 
 @Suite
 struct AppEnvironmentURLResolverTestSuite {

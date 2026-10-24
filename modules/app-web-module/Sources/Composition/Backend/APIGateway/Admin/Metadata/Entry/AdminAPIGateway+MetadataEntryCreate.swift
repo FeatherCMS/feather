@@ -1,24 +1,23 @@
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 public import WebAdminAPI
 import WebApplication
 import WebDomain
+import WebModule
 
 extension AdminAPIGateway {
 
     /// Create web metadata
-    /*
-     curl -i -X 'POST' \
-        'http://127.0.0.1:8080/api/v1/admin/web/metadata' \
-        -H 'Accept: application/json' \
-        -H 'Content-Type: application/json' \
-        -d '{"slug":"homepage","status":"draft","title":"Homepage","excerpt":"","imageUrl":"","canonicalUrl":"","cssCodeInjection":"","javascriptCodeInjection":""}'
-    */
-    public func webMetadataCreate(
-        _ input: Operations.WebMetadataCreate.Input
-    ) async throws -> Operations.WebMetadataCreate.Output {
+    // curl -i -X 'POST' \
+    //     'http://127.0.0.1:8080/api/v1/admin/web/metadata' \
+    //     -H 'Accept: application/json' \
+    //     -H 'Content-Type: application/json' \
+    //     -d '{"slug":"homepage","status":"draft","title":"Homepage","excerpt":"","imageUrl":"","canonicalUrl":"","cssCodeInjection":"","javascriptCodeInjection":""}'
+    public func metadataCreate(
+        _ input: Operations.MetadataCreate.Input
+    ) async throws -> Operations.MetadataCreate.Output {
 
-        let body: Components.Schemas.WebMetadataCreateSchema
+        let body: Components.Schemas.MetadataCreateSchema
         switch input.body {
         case .json(let value):
             body = value
@@ -32,7 +31,7 @@ extension AdminAPIGateway {
         )
         let expDate = body.expirationDate.map(Date.init(timeIntervalSince1970:))
 
-        let addInput = AddMetadata.Input(
+        let addInput = Metadata.Add.Input(
             referenceType: body.referenceType ?? "",
             referenceID: body.referenceId ?? "",
             slug: body.slug,
@@ -58,8 +57,41 @@ extension AdminAPIGateway {
 
         return .created(
             .init(
-                body: .json(useCases.map(result))
+                body: .json(mapAddedMetadata(result))
             )
+        )
+    }
+
+    private func mapAddedMetadata(
+        _ output: Metadata.Add.Output
+    ) -> Components.Schemas.MetadataDetailSchema {
+        let availability = Metadata.Model.Availability(
+            status: output.status,
+            publicationDate: output.publicationDate,
+            expirationDate: output.expirationDate,
+            at: .now
+        )
+        return .init(
+            id: output.id,
+            referenceType: output.referenceType,
+            referenceId: output.referenceID,
+            slug: output.slug,
+            template: output.template,
+            publicationDate: output.publicationDate.timeIntervalSince1970,
+            expirationDate: output.expirationDate?.timeIntervalSince1970,
+            status: output.status.rawValue,
+            availability: .init(rawValue: availability.rawValue) ?? .draft,
+            title: output.title,
+            excerpt: output.excerpt,
+            imageUrl: output.imageURL,
+            canonicalUrl: output.canonicalURL,
+            noIndex: output.noIndex,
+            primaryKeyword: output.primaryKeyword ?? "",
+            cssCodeInjection: output.cssCodeInjection,
+            javascriptCodeInjection: output.javascriptCodeInjection,
+            structuredDataCodeInjection: output.structuredDataCodeInjection,
+            createdAt: output.createdAt.timeIntervalSince1970,
+            updatedAt: output.updatedAt.timeIntervalSince1970
         )
     }
 }

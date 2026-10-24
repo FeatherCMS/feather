@@ -5,10 +5,10 @@
 //  Created by Tibor Bödecs on 2026. 03. 10..
 //
 
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 struct Info: InfoRepresentable {
     var title: String { "App API" }

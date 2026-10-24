@@ -1,15 +1,16 @@
 import FeatherInfrastructure
 import UserApplication
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 
-    func makeRemoveRole() -> RemoveRole {
+    func makeRemoveRole() -> Role.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteRole(
-                    role: RoleDatabaseRepository(context: context)
+                Role.Remove.Scope(
+                    role: Role.Repository.Database(context: context)
                 )
             }
         )

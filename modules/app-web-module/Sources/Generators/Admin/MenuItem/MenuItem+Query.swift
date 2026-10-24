@@ -1,0 +1,3 @@
+extension MenuItem {
+    enum Query {}
+}

@@ -1,9 +1,11 @@
+import FeatherDBAL
 import FeatherDatabase
 public import FeatherInfrastructure
 public import FeatherMail
 import Foundation
 public import Jobs
 import NewsletterDomain
+import NewsletterModule
 
 public enum SendNewsletterIssueJobHandler {
 
@@ -55,15 +57,16 @@ public enum SendNewsletterIssueJobHandler {
     private static func updateNewsletterDelivery(
         databaseContext: DatabaseClientContext,
         parameters: SendNewsletterIssueJobParameter,
-        status: Delivery.Status,
+        status: Delivery.Model.Status,
         failureReason: String?
     ) async throws {
         try await databaseContext.database.withConnection { connection in
             guard let subscriberEmail = parameters.mail.to.first else {
                 return
             }
-            let repository = DeliveryDatabaseRepository(
+            let repository = Delivery.Repository.Database(
                 context: .init(
+                    platform: databaseContext.platform,
                     connection: connection,
                     idGenerator: databaseContext.idGenerator
                 )

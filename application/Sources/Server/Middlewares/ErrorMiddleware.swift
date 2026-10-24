@@ -7,7 +7,7 @@ import OpenAPIRuntime
 //#else
 //import Foundation
 //#endif
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 
 struct ErrorMiddleware: ServerMiddleware {
@@ -97,28 +97,6 @@ struct ErrorMiddleware: ServerMiddleware {
         return .plainText
     }
 
-    private func respond<T: Encodable>(
-        status: HTTPResponseStatus,
-        headers: HTTPHeaders?,
-        object: T,
-        using request: HTTPRequest
-    ) throws -> (HTTPResponse, HTTPBody?) {
-        switch getErrorResponseContentType(from: request) {
-        case .json:
-            return try jsonResponse(
-                status: .init(code: Int(status.code)),
-                headers: headers,
-                body: object
-            )
-        default:
-            return plainTextResponse(
-                status: .init(code: Int(status.code)),
-                headers: headers,
-                body: "\(object)"
-            )
-        }
-    }
-
     private func respond(
         with details: ServerError.Details,
         headers: HTTPHeaders?,
@@ -129,15 +107,44 @@ struct ErrorMiddleware: ServerMiddleware {
             return try jsonResponse(
                 status: .init(code: Int(details.code.code)),
                 headers: headers,
-                body: details
+                body: HTTPErrorEnvelope(
+                    error: details,
+                    trace: debugTrace(details.trace)
+                )
             )
         case .plainText:
             return plainTextResponse(
                 status: .init(code: Int(details.code.code)),
                 headers: headers,
-                body: details.plainTextValue
+                body: details.plainTextValue(
+                    includeTrace: debugTrace(details.trace) != nil
+                )
             )
         }
+    }
+
+    private func respond(
+        with content: any HTTPErrorContent,
+        status: HTTPResponseStatus,
+        headers: HTTPHeaders?,
+        trace: ErrorTrace?
+    ) throws -> (HTTPResponse, HTTPBody?) {
+        try jsonResponse(
+            status: .init(code: Int(status.code)),
+            headers: headers,
+            body: HTTPErrorEnvelope(
+                error: content,
+                trace: debugTrace(trace)
+            )
+        )
+    }
+
+    private func debugTrace(_ trace: ErrorTrace?) -> ErrorTrace? {
+        #if DEBUG
+        trace
+        #else
+        nil
+        #endif
     }
 
     private func enrich(
@@ -162,43 +169,38 @@ struct ErrorMiddleware: ServerMiddleware {
         body: HTTPBody?,
         metadata: ServerRequestMetadata,
         operationID: String,
-        next: MiddlewareNextBlock
+        next: @concurrent @Sendable (
+            HTTPRequest, HTTPBody?, ServerRequestMetadata
+        ) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         do {
             return try await next(request, body, metadata)
         }
         catch let error as OpenAPIRuntime.ServerError {
+            let underlyingError = error.underlyingError
+            let adaptedError = BackendErrorAdapter.adapt(underlyingError)
+            let httpError =
+                (adaptedError as? any HTTPErrorRepresentable)
+                ?? (adaptedError as? any ErrorTraceRepresentable)?
+                    .lookup((any HTTPErrorRepresentable).self)
+            if let httpError {
+                let traceableError = adaptedError as? any ErrorTraceRepresentable
+                let trace = traceableError?.trace()
+                    ?? traceableError?
+                        .lookup((any ErrorTraceRepresentable).self)?
+                        .trace()
+                return try respond(
+                    with: httpError.content,
+                    status: httpError.status,
+                    headers: httpError.headers,
+                    trace: trace
+                )
+            }
             let details = enrich(
                 try error.parseDetails(),
                 request: request,
                 operationID: operationID
             )
-            if let error = error.underlyingError
-                as? any ErrorTraceRepresentable,
-                let httpError = error.lookup((any HTTPErrorRepresentable).self)
-            {
-                if let object = httpError.content {
-                    return try respond(
-                        status: httpError.status,
-                        headers: httpError.headers,
-                        object: object,
-                        using: request
-                    )
-                }
-                else {
-                    var response = HTTPResponse(
-                        status: .init(code: Int(httpError.status.code))
-                    )
-                    if let headers = httpError.headers {
-                        for header in headers {
-                            if let key = HTTPField.Name(header.name) {
-                                response.headerFields[key] = header.value
-                            }
-                        }
-                    }
-                    return (response, nil)
-                }
-            }
             return try respond(
                 with: details,
                 headers: nil,
@@ -206,13 +208,14 @@ struct ErrorMiddleware: ServerMiddleware {
             )
         }
         catch {
+            let adaptedError = BackendErrorAdapter.adapt(error)
             return try respond(
                 with: enrich(
                     .init(
                         code: .internalServerError,
                         message: "Unknown error.",
                         reason: "\(error)",
-                        trace: (error as? any ErrorTraceRepresentable)?.trace()
+                        trace: (adaptedError as? any ErrorTraceRepresentable)?.trace()
                     ),
                     request: request,
                     operationID: operationID

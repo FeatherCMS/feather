@@ -57,7 +57,9 @@ struct RandomErrorMiddleware: ServerMiddleware {
         body: HTTPBody?,
         metadata: ServerRequestMetadata,
         operationID: String,
-        next: MiddlewareNextBlock
+        next: @concurrent @Sendable (
+            HTTPRequest, HTTPBody?, ServerRequestMetadata
+        ) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         guard shouldIntercept(request) else {
             return try await next(request, body, metadata)
@@ -157,6 +159,6 @@ struct RandomErrorMiddleware: ServerMiddleware {
         }
 
         response.headerFields[.contentType] = "text/plain; charset=utf-8"
-        return (response, HTTPBody(details.plainTextValue))
+        return (response, HTTPBody(details.plainTextValue(includeTrace: false)))
     }
 }

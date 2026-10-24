@@ -1,0 +1,9 @@
+public import BlogModule
+public import FeatherModuleKit
+import WebModule
+
+extension BlogModule.Settings.Detail {
+    public struct Action: PermissionAction {
+        public let key = BlogModule.Settings.Permissions.read
+    }
+}

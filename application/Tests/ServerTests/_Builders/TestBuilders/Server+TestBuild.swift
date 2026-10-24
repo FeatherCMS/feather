@@ -10,7 +10,7 @@ import FeatherStorage
 import FeatherStorageFS
 import Jobs
 import MediaInfrastructure
-import FeatherContracts
+import FeatherModuleKit
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else

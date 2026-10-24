@@ -1,0 +1,177 @@
+import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+import UserModule
+import WebComponents
+
+extension Identity.Add.Presenter {
+    struct Default: Interface {
+        let request: Request
+        let context: AuthenticatedRequestContext
+        let renderingEngine: any RenderingEngine
+        let routes: Identity.Router.Routes
+
+        func renderAddPage(state: Identity.Add.Form.Component.State)
+            async throws
+            -> HTMLResponse
+        {
+            try await renderAddPage(state: state, status: .ok)
+        }
+
+        private func renderAddPage(
+            state: Identity.Add.Form.Component.State,
+            status: HTTPResponse.Status
+        ) async throws -> HTMLResponse {
+            let nonceToken = await AdminNonceStore.shared.issue(
+                sessionToken: context.sessionToken
+            )
+            return try await renderPage(
+                content: Identity.Add.Page(
+                    routes: routes,
+                    form: state,
+                    nonceToken: nonceToken
+                ),
+                status: status
+            )
+        }
+
+        func renderValidationError(
+            input: Identity.Add.Form.Input?,
+            error: ValidationError,
+            roleOptions: [Identity.Add.RoleOption]
+        ) async throws -> HTMLResponse {
+            var state = Identity.Add.Form.Component.State.empty()
+            if let input {
+                state = .from(
+                    name: input.name,
+                    status: input.status,
+                    roleIds: input.roleIds,
+                    roleOptions: roleOptions
+                )
+            }
+            else {
+                state = .empty(roleOptions: roleOptions)
+            }
+            var errors: [String: String] = [:]
+            for failure in error.failures {
+                errors[failure.key] = failure.message
+            }
+            state.apply(errors: errors)
+            return try await renderAddPage(
+                state: state,
+                status: .unprocessableContent
+            )
+        }
+
+        func renderAddError(
+            input: Identity.Add.Form.Input?,
+            error: Identity.Add.Error,
+            roleOptions: [Identity.Add.RoleOption]
+        ) async throws -> HTMLResponse {
+            switch error {
+            case .unauthorized: return try await renderUnauthorizedPage()
+            case .forbidden: return try await renderForbiddenPage()
+            case .conflict:
+                return try await renderFormError(
+                    input: input,
+                    message: "A user identity with this name already exists.",
+                    status: .conflict,
+                    roleOptions: roleOptions
+                )
+            case .unavailable:
+                return try await renderFormError(
+                    input: input,
+                    message:
+                        "The user identity could not be created. Please try again.",
+                    status: .serviceUnavailable,
+                    roleOptions: roleOptions
+                )
+            }
+        }
+
+        func renderSuccess() -> Response {
+            AdminNotificationFlash.redirect(
+                to: routes.list.path,
+                notification: .init(
+                    title: "Added",
+                    message: "User identity added successfully."
+                )
+            )
+        }
+
+        func renderUnauthorizedPage() async throws -> HTMLResponse {
+            try await renderStatusPage(
+                title: "Session expired",
+                message: "Please sign in again to create user identities.",
+                status: .unauthorized
+            )
+        }
+
+        func renderForbiddenPage() async throws -> HTMLResponse {
+            try await renderStatusPage(
+                title: "Forbidden",
+                message: "Your account cannot create user identities.",
+                status: .forbidden
+            )
+        }
+
+        func renderInvalidNoncePage() async throws -> HTMLResponse {
+            try await renderStatusPage(
+                title: "Form expired",
+                message:
+                    "This form is no longer valid. Please reload the page and try again.",
+                status: .badRequest
+            )
+        }
+
+        private func renderPage<T: Component>(
+            content: T,
+            status: HTTPResponse.Status = .ok
+        ) async throws -> HTMLResponse {
+            let page = try await renderingEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Manage user identities",
+                content: content
+            )
+            return HTMLResponse(content: page.content, status: status)
+        }
+
+        private func renderFormError(
+            input: Identity.Add.Form.Input?,
+            message: String,
+            status: HTTPResponse.Status,
+            roleOptions: [Identity.Add.RoleOption]
+        ) async throws -> HTMLResponse {
+            var state = Identity.Add.Form.Component.State.empty()
+            if let input {
+                state = .from(
+                    name: input.name,
+                    status: input.status,
+                    roleIds: input.roleIds,
+                    roleOptions: roleOptions
+                )
+            }
+            else {
+                state = .empty(roleOptions: roleOptions)
+            }
+            state.error = message
+            return try await renderAddPage(state: state, status: status)
+        }
+
+        private func renderStatusPage(
+            title: String,
+            message: String,
+            status: HTTPResponse.Status
+        ) async throws -> HTMLResponse {
+            try await renderPage(
+                content: AdminStatusView(
+                    state: .init(title: title, message: message),
+                    icon: FeatherIcons.alertCircle()
+                ),
+                status: status
+            )
+        }
+    }
+}

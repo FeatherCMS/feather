@@ -5,10 +5,10 @@ info:
 tags:
 - name: Accounts
   description: Create user accounts.
-- name: AccountSettings
-  description: Manage account settings.
 - name: Account
   description: Account endpoints.
+- name: AccountSettings
+  description: Manage account settings.
 - name: AccountInvitations
   description: Manage user invitations.
 servers:
@@ -28,8 +28,110 @@ paths:
           $ref: '#/components/responses/AccountCreateResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/account/users/{userId}/profile:
+    get:
+      tags:
+      - Account
+      operationId: accountProfileGet
+      parameters:
+      - $ref: '#/components/parameters/AccountProfileUserIDParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Account
+      operationId: accountProfileUpdate
+      parameters:
+      - $ref: '#/components/parameters/AccountProfileUserIDParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AccountProfileUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/account/profile:
+    get:
+      tags:
+      - Account
+      operationId: accountCurrentUserProfileGet
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Account
+      operationId: accountCurrentUserProfileUpdate
+      requestBody:
+        $ref: '#/components/requestBodies/AccountProfileUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/AccountProfileResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/account/settings:
@@ -42,8 +144,16 @@ paths:
           $ref: '#/components/responses/AccountSettingsDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -57,57 +167,46 @@ paths:
           $ref: '#/components/responses/AccountSettingsDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/account/users/{userId}/profile:
-    get:
-      tags:
-      - Account
-      operationId: adminAccountProfileGet
-      parameters:
-      - $ref: '#/components/parameters/AccountProfileUserIDParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/AccountProfileResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    put:
-      tags:
-      - Account
-      operationId: adminAccountProfileUpdate
-      parameters:
-      - $ref: '#/components/parameters/AccountProfileUserIDParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/AccountProfileUpdateRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/AccountProfileResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/account/users/{userId}/settings:
     get:
       tags:
       - AccountSettings
-      operationId: adminAccountSettingsGet
+      operationId: accountUserSettingsGet
       parameters:
       - $ref: '#/components/parameters/AccountSettingsUserIDParameter'
       responses:
         200:
           $ref: '#/components/responses/AccountSettingsDetailResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     put:
       tags:
       - AccountSettings
-      operationId: adminAccountSettingsUpdate
+      operationId: accountUserSettingsUpdate
       parameters:
       - $ref: '#/components/parameters/AccountSettingsUserIDParameter'
       requestBody:
@@ -115,69 +214,114 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/AccountSettingsDetailResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
   /api/v1/admin/account/invitations:
-    post:
-      tags:
-      - AccountInvitations
-      operationId: accountInvitationCreate
-      requestBody:
-        $ref: '#/components/requestBodies/AccountInvitationRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/AccountInvitationDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - AccountInvitations
-      operationId: accountInvitationRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/account/invitations/:
     get:
       tags:
       - AccountInvitations
       operationId: accountInvitationList
       responses:
         200:
-          $ref: '#/components/responses/AccountInvitationListResponse'
+          $ref: '#/components/responses/InvitationListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/account/invitations/search:
     post:
       tags:
       - AccountInvitations
-      operationId: accountInvitationSearch
+      operationId: accountInvitationCreate
+      requestBody:
+        $ref: '#/components/requestBodies/InvitationPostRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/InvitationGetResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationDelete
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/account/invitations/query:
+    post:
+      tags:
+      - AccountInvitations
+      operationId: accountInvitationQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AccountInvitationListItemSearchQuerySchema'
+              $ref: '#/components/schemas/InvitationQuerySchemasItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/AccountInvitationListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/InvitationQuerySchemasItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/account/invitations/{accountInvitationId}:
@@ -186,16 +330,28 @@ paths:
       - AccountInvitations
       operationId: accountInvitationGet
       parameters:
-      - $ref: '#/components/parameters/AccountInvitationIdParameter'
+      - $ref: '#/components/parameters/InvitationParametersID'
       responses:
         200:
-          $ref: '#/components/responses/AccountInvitationDetailResponse'
+          $ref: '#/components/responses/InvitationGetResponse'
         404:
-          description: AccountInvitation not found
+          description: Account invitation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -203,18 +359,30 @@ paths:
       - AccountInvitations
       operationId: accountInvitationUpdate
       parameters:
-      - $ref: '#/components/parameters/AccountInvitationIdParameter'
+      - $ref: '#/components/parameters/InvitationParametersID'
       requestBody:
-        $ref: '#/components/requestBodies/AccountInvitationUpdateRequestBody'
+        $ref: '#/components/requestBodies/InvitationPutRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/AccountInvitationDetailResponse'
+          $ref: '#/components/responses/InvitationGetResponse'
         404:
-          description: AccountInvitation not found
+          description: Account invitation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -222,18 +390,37 @@ paths:
       - AccountInvitations
       operationId: accountInvitationPatch
       parameters:
-      - $ref: '#/components/parameters/AccountInvitationIdParameter'
+      - $ref: '#/components/parameters/InvitationParametersID'
+      - $ref: '#/components/parameters/InvitationParametersUpdateMask'
       requestBody:
-        $ref: '#/components/requestBodies/AccountInvitationPatchRequestBody'
+        $ref: '#/components/requestBodies/InvitationPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/AccountInvitationDetailResponse'
+          $ref: '#/components/responses/InvitationGetResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
-          description: AccountInvitation not found
+          description: Account invitation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/account/invitations/{accountInvitationId}/resend:
@@ -242,16 +429,28 @@ paths:
       - AccountInvitations
       operationId: accountInvitationResend
       parameters:
-      - $ref: '#/components/parameters/AccountInvitationIdParameter'
+      - $ref: '#/components/parameters/InvitationParametersID'
       responses:
         200:
-          $ref: '#/components/responses/AccountInvitationDetailResponse'
+          $ref: '#/components/responses/InvitationGetResponse'
         404:
-          description: AccountInvitation not found
+          description: Account invitation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
@@ -280,32 +479,51 @@ components:
       required:
       - userId
       - email
-    AccountSettingsDetailSchema:
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
       type: object
       properties:
-        language:
-          type: string
-        timezone:
-          type: string
-        pageSize:
-          type: integer
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
       required:
-      - language
-      - timezone
-      - pageSize
-    AccountSettingsUpdateSchema:
+      - error
+    DefaultHTTPErrorContentSchema:
       type: object
       properties:
-        language:
+        message:
           type: string
-        timezone:
+        reason:
           type: string
-        pageSize:
-          type: integer
       required:
-      - language
-      - timezone
-      - pageSize
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     AccountProfileUserIDField:
       type: string
     AccountProfileResponseSchema:
@@ -332,23 +550,85 @@ components:
         profileImageAssetId:
           type: string
           nullable: true
+    AccountSettingsDetailSchema:
+      type: object
+      properties:
+        language:
+          type: string
+        timezone:
+          type: string
+        pageSize:
+          type: integer
+      required:
+      - language
+      - timezone
+      - pageSize
+    AccountSettingsUpdateSchema:
+      type: object
+      properties:
+        language:
+          type: string
+        timezone:
+          type: string
+        pageSize:
+          type: integer
+      required:
+      - language
+      - timezone
+      - pageSize
     AccountSettingsUserIDField:
       type: string
-    AccountInvitationCreateSchema:
+    InvitationListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/InvitationListItem'
+    InvitationListItem:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/InvitationSchemasID'
+        email:
+          $ref: '#/components/schemas/InvitationSchemasEmail'
+        token:
+          $ref: '#/components/schemas/InvitationSchemasToken'
+        roleIds:
+          $ref: '#/components/schemas/InvitationSchemasRoleIDs'
+        expiresAt:
+          $ref: '#/components/schemas/InvitationSchemasExpiresAt'
+      required:
+      - id
+      - email
+      - token
+      - roleIds
+      - expiresAt
+    InvitationSchemasID:
+      type: string
+      example: inv_7nL3xQ2v
+    InvitationSchemasEmail:
+      type: string
+      example: john.doe@example.com
+    InvitationSchemasToken:
+      type: string
+      example: eyJhbGciOi...
+    InvitationSchemasRoleIDs:
+      type: array
+      items:
+        type: string
+    InvitationSchemasExpiresAt:
+      type: number
+      format: double
+      example: 1.76e+9
+    InvitationPostSchema:
       type: object
       properties:
         email:
           type: string
           example: john.doe@example.com
         roleIds:
-          $ref: '#/components/schemas/AccountInvitationRoleIDsField'
+          $ref: '#/components/schemas/InvitationSchemasRoleIDs'
       required:
       - email
-    AccountInvitationRoleIDsField:
-      type: array
-      items:
-        type: string
-    AccountInvitationDetailSchema:
+    InvitationSchemasDetail:
       type: object
       properties:
         id:
@@ -382,94 +662,9 @@ components:
           items:
             type: string
             example: id1
-        results:
-          type: boolean
-          example: true
-        summary:
-          type: boolean
-          example: true
       required:
       - ids
-      - results
-      - summary
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-    DeleteResultListSchema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            example: id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            example: deleted
-        required:
-        - id
-        - status
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          example: 1
-        deleted:
-          type: integer
-          example: 1
-        omitted:
-          type: integer
-          example: 1
-      required:
-      - requested
-      - deleted
-      - omitted
-    AccountInvitationListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/AccountInvitationListItemSchema'
-    AccountInvitationListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/AccountInvitationIdField'
-        email:
-          $ref: '#/components/schemas/AccountInvitationEmailField'
-        token:
-          $ref: '#/components/schemas/AccountInvitationTokenField'
-        roleIds:
-          $ref: '#/components/schemas/AccountInvitationRoleIDsField'
-        expiresAt:
-          $ref: '#/components/schemas/AccountInvitationExpiresAtField'
-      required:
-      - id
-      - email
-      - token
-      - roleIds
-      - expiresAt
-    AccountInvitationIdField:
-      type: string
-      example: inv_7nL3xQ2v
-    AccountInvitationEmailField:
-      type: string
-      example: john.doe@example.com
-    AccountInvitationTokenField:
-      type: string
-      example: eyJhbGciOi...
-    AccountInvitationExpiresAtField:
-      type: number
-      format: double
-      example: 1.76e+9
-    AccountInvitationListItemSearchQuerySchema:
+    InvitationQuerySchemasItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -500,7 +695,6 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     SearchPageSchema:
       type: object
@@ -509,14 +703,17 @@ components:
           $ref: '#/components/schemas/SearchPageSizeField'
         number:
           $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
     SearchPageSizeField:
       type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
       example: 20
     SearchPageNumberField:
       type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
       example: 1
     SortDirection:
       type: string
@@ -527,18 +724,18 @@ components:
     SearchStringField:
       type: string
       example: foo
-    AccountInvitationListItemSearchSchema:
+    InvitationQuerySchemasItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/AccountInvitationListItemSearchQuerySchema'
+          $ref: '#/components/schemas/InvitationQuerySchemasItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/AccountInvitationListItemSchema'
+                $ref: '#/components/schemas/InvitationQuerySchemasItem'
             total:
               type: integer
               example: 123
@@ -548,13 +745,88 @@ components:
       required:
       - query
       - data
-    AccountInvitationPatchSchema:
+    InvitationQuerySchemasItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - email
+                - token
+                - expiresAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+    InvitationQuerySchemasItem:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/InvitationSchemasID'
+        email:
+          $ref: '#/components/schemas/InvitationSchemasEmail'
+        token:
+          $ref: '#/components/schemas/InvitationSchemasToken'
+        roleIds:
+          $ref: '#/components/schemas/InvitationSchemasRoleIDs'
+        expiresAt:
+          $ref: '#/components/schemas/InvitationSchemasExpiresAt'
+      required:
+      - id
+      - email
+      - token
+      - roleIds
+      - expiresAt
+    InvitationPutSchema:
       type: object
       properties:
         email:
-          $ref: '#/components/schemas/AccountInvitationEmailField'
+          type: string
+          example: john.doe@example.com
         roleIds:
-          $ref: '#/components/schemas/AccountInvitationRoleIDsField'
+          $ref: '#/components/schemas/InvitationSchemasRoleIDs'
+      required:
+      - email
+    InvitationUpdateMask:
+      type: string
+      example: email,roleIds
+    InvitationPatchSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/InvitationSchemasEmail'
+        roleIds:
+          $ref: '#/components/schemas/InvitationSchemasRoleIDs'
   responses:
     AccountCreateResponse:
       description: Account response
@@ -562,42 +834,38 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountCreateResponseSchema'
-    AccountSettingsDetailResponse:
-      description: Account settings
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AccountSettingsDetailSchema'
     AccountProfileResponse:
       description: Account profile response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountProfileResponseSchema'
-    AccountInvitationDetailResponse:
-      description: AccountInvitation response
+    AccountSettingsDetailResponse:
+      description: Account settings
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AccountInvitationDetailSchema'
-    DeleteResponse:
-      description: Delete response
+            $ref: '#/components/schemas/AccountSettingsDetailSchema'
+    InvitationListResponse:
+      description: Account invitation list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
-    AccountInvitationListResponse:
-      description: AccountInvitation list response
+            $ref: '#/components/schemas/InvitationListSchema'
+    InvitationGetResponse:
+      description: Account invitation response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AccountInvitationListSchema'
-    AccountInvitationListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/InvitationSchemasDetail'
+    NoContentResponse:
+      description: Delete succeeded
+    InvitationQuerySchemasItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AccountInvitationListItemSearchSchema'
+            $ref: '#/components/schemas/InvitationQuerySchemasItemSearchSchema'
   parameters:
     AccountProfileUserIDParameter:
       name: userId
@@ -611,13 +879,21 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/AccountSettingsUserIDField'
-    AccountInvitationIdParameter:
+    InvitationParametersID:
       name: accountInvitationId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/AccountInvitationIdField'
-      description: AccountInvitation id
+        $ref: '#/components/schemas/InvitationSchemasID'
+      description: Account invitation ID
+    InvitationParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/InvitationUpdateMask'
+      description: Comma-separated list of fields to update.
   requestBodies:
     AccountCreateRequestBody:
       content:
@@ -625,23 +901,23 @@ components:
           schema:
             $ref: '#/components/schemas/AccountCreateSchema'
       required: true
-    AccountSettingsUpdateRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AccountSettingsUpdateSchema'
-      required: true
     AccountProfileUpdateRequestBody:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/AccountProfileUpdateSchema'
       required: true
-    AccountInvitationRequestBody:
+    AccountSettingsUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AccountInvitationCreateSchema'
+            $ref: '#/components/schemas/AccountSettingsUpdateSchema'
+      required: true
+    InvitationPostRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InvitationPostSchema'
       required: true
     DeleteRequestBody:
       content:
@@ -649,17 +925,17 @@ components:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
-    AccountInvitationUpdateRequestBody:
+    InvitationPutRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AccountInvitationCreateSchema'
+            $ref: '#/components/schemas/InvitationPutSchema'
       required: true
-    AccountInvitationPatchRequestBody:
+    InvitationPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AccountInvitationPatchSchema'
+            $ref: '#/components/schemas/InvitationPatchSchema'
       required: true
   securitySchemes:
     bearerAuth:

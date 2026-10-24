@@ -1,21 +1,42 @@
 public import AuthApplication
+import AuthInfrastructure
+public import AuthModule
 import FeatherInfrastructure
 import UserApplication
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 
-    public func makeGetCurrentUser() -> AuthApplication.GetCurrentUser {
-        let query = DatabaseQueryExecutor(
+    public func makeGetCurrentUser()
+        -> AuthModule.Authorization.CurrentUser.UseCase
+    {
+        let detailQuery = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadIdentity(
-                    identity: IdentityDatabaseQueries(
+                Identity.Detail.Scope(
+                    identity: Identity.Detail.Query.Database(
                         context: context
                     )
                 )
             }
         )
-        return .init(query: query)
+        let authorizationQuery = DatabaseQueryExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                AuthModule.Authorization.CurrentUser.Scope(
+                    roles: AuthModule.Authorization.Database(
+                        context: context
+                    ),
+                    permissions: AuthModule.Authorization.Database(
+                        context: context
+                    )
+                )
+            }
+        )
+        return .init(
+            detailQuery: detailQuery,
+            authorizationQuery: authorizationQuery
+        )
     }
 }

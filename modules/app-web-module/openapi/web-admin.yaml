@@ -3,596 +3,1537 @@ info:
   title: Admin API
   version: 0.1.0
 tags:
-- name: WebMetadata
-  description: Manage web metadata.
-- name: WebPages
-  description: Manage web pages.
-- name: WebMenus
+- name: Menus
   description: Manage web menus.
-- name: WebMenuItems
+- name: MenuItems
   description: Manage web menu items.
-- name: WebSettings
+- name: Metadata
+  description: Manage web metadata.
+- name: Pages
+  description: Manage web pages.
+- name: Settings
   description: Manage web settings.
 servers:
 - url: http://127.0.0.1:8080/
 security:
 - bearerAuth: []
 paths:
-  /api/v1/admin/web/metadata:
-    post:
-      tags:
-      - WebMetadata
-      operationId: webMetadataCreate
-      requestBody:
-        $ref: '#/components/requestBodies/WebMetadataRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/WebMetadataDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - WebMetadata
-      operationId: webMetadataRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/metadata/:
-    get:
-      tags:
-      - WebMetadata
-      operationId: webMetadataList
-      responses:
-        200:
-          $ref: '#/components/responses/WebMetadataListResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/metadata/search:
-    post:
-      tags:
-      - WebMetadata
-      operationId: webMetadataSearch
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WebMetadataListItemSearchQuerySchema'
-        required: true
-      responses:
-        200:
-          $ref: '#/components/responses/WebMetadataListItemSearchSchemaSearchResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/metadata/resolve:
-    post:
-      tags:
-      - WebMetadata
-      operationId: webMetadataResolve
-      requestBody:
-        $ref: '#/components/requestBodies/WebMetadataResolveRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/WebMetadataResolveResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/metadata/{webMetadataId}:
-    get:
-      tags:
-      - WebMetadata
-      operationId: webMetadataGet
-      parameters:
-      - $ref: '#/components/parameters/WebMetadataIdParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/WebMetadataDetailResponse'
-        404:
-          description: WebMetadata not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    put:
-      tags:
-      - WebMetadata
-      operationId: webMetadataUpdate
-      parameters:
-      - $ref: '#/components/parameters/WebMetadataIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/WebMetadataUpdateRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/WebMetadataDetailResponse'
-        404:
-          description: WebMetadata not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    patch:
-      tags:
-      - WebMetadata
-      operationId: webMetadataPatch
-      parameters:
-      - $ref: '#/components/parameters/WebMetadataIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/WebMetadataPatchRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/WebMetadataDetailResponse'
-        404:
-          description: WebMetadata not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/pages:
-    post:
-      tags:
-      - WebPages
-      operationId: webPageCreate
-      requestBody:
-        $ref: '#/components/requestBodies/WebPageRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/WebPageDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - WebPages
-      operationId: webPageRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/pages/:
-    get:
-      tags:
-      - WebPages
-      operationId: webPageList
-      responses:
-        200:
-          $ref: '#/components/responses/WebPageListResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/pages/search:
-    post:
-      tags:
-      - WebPages
-      operationId: webPageSearch
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WebPageListItemSearchQuerySchema'
-        required: true
-      responses:
-        200:
-          $ref: '#/components/responses/WebPageListItemSearchSchemaSearchResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/web/pages/{webPageId}:
-    get:
-      tags:
-      - WebPages
-      operationId: webPageGet
-      parameters:
-      - $ref: '#/components/parameters/WebPageIdParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/WebPageDetailResponse'
-        404:
-          description: WebPage not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    put:
-      tags:
-      - WebPages
-      operationId: webPageUpdate
-      parameters:
-      - $ref: '#/components/parameters/WebPageIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/WebPageUpdateRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/WebPageDetailResponse'
-        404:
-          description: WebPage not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    patch:
-      tags:
-      - WebPages
-      operationId: webPagePatch
-      parameters:
-      - $ref: '#/components/parameters/WebPageIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/WebPagePatchRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/WebPageDetailResponse'
-        404:
-          description: WebPage not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
   /api/v1/admin/web/menus:
     post:
       tags:
-      - WebMenus
-      operationId: webMenuCreate
+      - Menus
+      operationId: menuCreate
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuRequestBody'
+        $ref: '#/components/requestBodies/MenuRequestBody'
       responses:
         201:
-          $ref: '#/components/responses/WebMenuDetailResponse'
+          $ref: '#/components/responses/MenuDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
       tags:
-      - WebMenus
-      operationId: webMenuRemove
+      - Menus
+      operationId: menuRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/:
     get:
       tags:
-      - WebMenus
-      operationId: webMenuList
+      - Menus
+      operationId: menuList
       responses:
         200:
-          $ref: '#/components/responses/WebMenuListResponse'
+          $ref: '#/components/responses/MenuListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/search:
+  /api/v1/admin/web/menus/query:
     post:
       tags:
-      - WebMenus
-      operationId: webMenuSearch
+      - Menus
+      operationId: menuQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebMenuListItemSearchQuerySchema'
+              $ref: '#/components/schemas/MenuQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/WebMenuListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MenuQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}:
+  /api/v1/admin/web/menus/{menuId}:
     get:
       tags:
-      - WebMenus
-      operationId: webMenuGet
+      - Menus
+      operationId: menuGet
       parameters:
-      - $ref: '#/components/parameters/WebMenuIdParameter'
+      - $ref: '#/components/parameters/MenuIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuDetailResponse'
+          $ref: '#/components/responses/MenuDetailResponse'
         404:
-          description: WebMenu not found
+          description: Menu not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
       tags:
-      - WebMenus
-      operationId: webMenuUpdate
+      - Menus
+      operationId: menuUpdate
       parameters:
-      - $ref: '#/components/parameters/WebMenuIdParameter'
+      - $ref: '#/components/parameters/MenuIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuUpdateRequestBody'
+        $ref: '#/components/requestBodies/MenuUpdateRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuDetailResponse'
+          $ref: '#/components/responses/MenuDetailResponse'
         404:
-          description: WebMenu not found
+          description: Menu not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
       tags:
-      - WebMenus
-      operationId: webMenuPatch
+      - Menus
+      operationId: menuPatch
       parameters:
-      - $ref: '#/components/parameters/WebMenuIdParameter'
+      - $ref: '#/components/parameters/MenuIdParameter'
+      - $ref: '#/components/parameters/MenuParametersUpdateMask'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuPatchRequestBody'
+        $ref: '#/components/requestBodies/MenuPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuDetailResponse'
+          $ref: '#/components/responses/MenuDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
-          description: WebMenu not found
+          description: Menu not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items:
+  /api/v1/admin/web/menus/{menuId}/items:
     post:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemCreate
+      - MenuItems
+      operationId: menuItemCreate
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuItemRequestBody'
+        $ref: '#/components/requestBodies/MenuItemRequestBody'
       responses:
         201:
-          $ref: '#/components/responses/WebMenuItemDetailResponse'
+          $ref: '#/components/responses/MenuItemDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemRemove
+      - MenuItems
+      operationId: menuItemRemove
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items/:
+  /api/v1/admin/web/menus/{menuId}/items/:
     get:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemList
+      - MenuItems
+      operationId: menuItemList
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemListResponse'
+          $ref: '#/components/responses/MenuItemListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items/search:
+  /api/v1/admin/web/menus/{menuId}/items/query:
     post:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemSearch
+      - MenuItems
+      operationId: menuItemQuery
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebMenuItemListItemSearchQuerySchema'
+              $ref: '#/components/schemas/MenuItemQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MenuItemQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}:
+  /api/v1/admin/web/menus/{menuId}/items/{menuItemId}:
     get:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemGet
+      - MenuItems
+      operationId: menuItemGet
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
-      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemDetailResponse'
+          $ref: '#/components/responses/MenuItemDetailResponse'
         404:
-          description: WebMenuItem not found
+          description: MenuItem not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemUpdate
+      - MenuItems
+      operationId: menuItemUpdate
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
-      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuItemUpdateRequestBody'
+        $ref: '#/components/requestBodies/MenuItemUpdateRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemDetailResponse'
+          $ref: '#/components/responses/MenuItemDetailResponse'
         404:
-          description: WebMenuItem not found
+          description: MenuItem not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemPatch
+      - MenuItems
+      operationId: menuItemPatch
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
-      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemParametersUpdateMask'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuItemPatchRequestBody'
+        $ref: '#/components/requestBodies/MenuItemPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMenuItemDetailResponse'
+          $ref: '#/components/responses/MenuItemDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
-          description: WebMenuItem not found
+          description: MenuItem not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move:
+  /api/v1/admin/web/menus/{menuId}/items/{menuItemId}/move:
     post:
       tags:
-      - WebMenuItems
-      operationId: webMenuItemMove
+      - MenuItems
+      operationId: menuItemMove
       parameters:
-      - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
-      - $ref: '#/components/parameters/WebMenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemMenuIdParameter'
+      - $ref: '#/components/parameters/MenuItemIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/WebMenuItemMoveRequestBody'
+        $ref: '#/components/requestBodies/MenuItemMoveRequestBody'
       responses:
         204:
-          description: WebMenuItem moved
+          description: MenuItem moved
         404:
-          description: WebMenuItem not found
+          description: MenuItem not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/metadata:
+    post:
+      tags:
+      - Metadata
+      operationId: metadataCreate
+      requestBody:
+        $ref: '#/components/requestBodies/MetadataRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/MetadataDetailResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Metadata
+      operationId: metadataRemove
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/metadata/:
+    get:
+      tags:
+      - Metadata
+      operationId: metadataList
+      responses:
+        200:
+          $ref: '#/components/responses/MetadataListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/metadata/query:
+    post:
+      tags:
+      - Metadata
+      operationId: metadataQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MetadataQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/MetadataQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/metadata/resolve:
+    post:
+      tags:
+      - Metadata
+      operationId: metadataResolve
+      requestBody:
+        $ref: '#/components/requestBodies/MetadataResolveRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/MetadataResolveResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/metadata/{metadataId}:
+    get:
+      tags:
+      - Metadata
+      operationId: metadataGet
+      parameters:
+      - $ref: '#/components/parameters/MetadataIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/MetadataDetailResponse'
+        404:
+          description: Metadata not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Metadata
+      operationId: metadataUpdate
+      parameters:
+      - $ref: '#/components/parameters/MetadataIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/MetadataUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/MetadataDetailResponse'
+        404:
+          description: Metadata not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Metadata
+      operationId: metadataPatch
+      parameters:
+      - $ref: '#/components/parameters/MetadataIdParameter'
+      - $ref: '#/components/parameters/MetadataParametersUpdateMask'
+      requestBody:
+        $ref: '#/components/requestBodies/MetadataPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/MetadataDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        404:
+          description: Metadata not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/pages:
+    post:
+      tags:
+      - Pages
+      operationId: pageCreate
+      requestBody:
+        $ref: '#/components/requestBodies/PageRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/PageDetailResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Pages
+      operationId: pageRemove
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/pages/:
+    get:
+      tags:
+      - Pages
+      operationId: pageList
+      responses:
+        200:
+          $ref: '#/components/responses/PageListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/pages/query:
+    post:
+      tags:
+      - Pages
+      operationId: pageQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/PageQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/web/pages/{pageId}:
+    get:
+      tags:
+      - Pages
+      operationId: pageGet
+      parameters:
+      - $ref: '#/components/parameters/PageIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/PageDetailResponse'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - Pages
+      operationId: pageUpdate
+      parameters:
+      - $ref: '#/components/parameters/PageIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/PageUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/PageDetailResponse'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Pages
+      operationId: pagePatch
+      parameters:
+      - $ref: '#/components/parameters/PageIdParameter'
+      - $ref: '#/components/parameters/PageParametersUpdateMask'
+      requestBody:
+        $ref: '#/components/requestBodies/PagePatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/PageDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        404:
+          description: Page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/settings:
     get:
       tags:
-      - WebSettings
-      operationId: webSettingsGet
+      - Settings
+      operationId: settingsGet
       responses:
         200:
-          $ref: '#/components/responses/WebSettingsDetailResponse'
+          $ref: '#/components/responses/SettingsDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
       tags:
-      - WebSettings
-      operationId: webSettingsUpdate
+      - Settings
+      operationId: settingsPut
       requestBody:
-        $ref: '#/components/requestBodies/WebSettingsUpdateRequestBody'
+        $ref: '#/components/requestBodies/SettingsUpdateRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebSettingsDetailResponse'
+          $ref: '#/components/responses/SettingsDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
   schemas:
-    WebMetadataCreateSchema:
+    MenuCreateSchema:
+      type: object
+      properties:
+        key:
+          type: string
+          example: header
+        name:
+          type: string
+          example: Header menu
+        notes:
+          $ref: '#/components/schemas/MenuNotesField'
+      required:
+      - key
+      - name
+    MenuNotesField:
+      type: string
+      example: Primary site navigation.
+    MenuDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: wm_header
+        key:
+          type: string
+          example: header
+        name:
+          type: string
+          example: Header menu
+        notes:
+          $ref: '#/components/schemas/MenuNotesField'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - key
+      - name
+      - createdAt
+      - updatedAt
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
+    DeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            example: id1
+      required:
+      - ids
+    MenuListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MenuListItemSchema'
+    MenuListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MenuIdField'
+        key:
+          $ref: '#/components/schemas/MenuKeyField'
+        name:
+          $ref: '#/components/schemas/MenuNameField'
+        createdAt:
+          $ref: '#/components/schemas/MenuCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/MenuUpdatedAtField'
+      required:
+      - id
+      - key
+      - name
+      - createdAt
+      - updatedAt
+    MenuIdField:
+      type: string
+      example: wm_header
+    MenuKeyField:
+      type: string
+      example: header
+    MenuNameField:
+      type: string
+      example: Header menu
+    MenuCreatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    MenuUpdatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    MenuQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - key
+                - name
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - filters
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+    SearchPageSizeField:
+      type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
+      example: 20
+    SearchPageNumberField:
+      type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
+      example: 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      example: asc
+    SearchStringField:
+      type: string
+      example: foo
+    MenuQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/MenuQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/MenuQueryItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    MenuQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - key
+                - name
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+    MenuQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MenuIdField'
+        key:
+          $ref: '#/components/schemas/MenuKeyField'
+        name:
+          $ref: '#/components/schemas/MenuNameField'
+        createdAt:
+          $ref: '#/components/schemas/MenuCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/MenuUpdatedAtField'
+      required:
+      - id
+      - key
+      - name
+      - createdAt
+      - updatedAt
+    WebMenuUpdateMask:
+      type: string
+      example: key,name,notes
+    MenuPatchSchema:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/MenuKeyField'
+        name:
+          $ref: '#/components/schemas/MenuNameField'
+        notes:
+          $ref: '#/components/schemas/MenuNotesFieldNullable'
+    MenuNotesFieldNullable:
+      type: string
+      example: Primary site navigation.
+      nullable: true
+    MenuItemCreateSchema:
+      type: object
+      properties:
+        label:
+          type: string
+          example: Home
+        url:
+          type: string
+          example: /
+        priority:
+          type: integer
+          example: 10
+        isBlank:
+          type: boolean
+          example: false
+        permission:
+          type: string
+          example: ''
+        authentication:
+          $ref: '#/components/schemas/MenuItemAuthenticationField'
+        notes:
+          $ref: '#/components/schemas/MenuItemNotesField'
+      required:
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+    MenuItemAuthenticationField:
+      type: string
+      example: any
+    MenuItemNotesField:
+      type: string
+      example: Visible for all visitors.
+    MenuItemDetailSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: wmi_home
+        menuId:
+          type: string
+          example: wm_header
+        label:
+          type: string
+          example: Home
+        url:
+          type: string
+          example: /
+        priority:
+          type: integer
+          example: 10
+        isBlank:
+          type: boolean
+          example: false
+        permission:
+          type: string
+          example: ''
+        authentication:
+          type: string
+          example: any
+        notes:
+          $ref: '#/components/schemas/MenuItemNotesField'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - menuId
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      - authentication
+      - createdAt
+      - updatedAt
+    MenuItemListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MenuItemListItemSchema'
+    MenuItemListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MenuItemIdField'
+        menuId:
+          $ref: '#/components/schemas/MenuIdField'
+        label:
+          $ref: '#/components/schemas/MenuItemLabelField'
+        url:
+          $ref: '#/components/schemas/MenuItemURLField'
+        priority:
+          $ref: '#/components/schemas/MenuItemPriorityField'
+        isBlank:
+          $ref: '#/components/schemas/MenuItemIsBlankField'
+        permission:
+          $ref: '#/components/schemas/MenuItemPermissionField'
+        authentication:
+          $ref: '#/components/schemas/MenuItemAuthenticationField'
+        createdAt:
+          $ref: '#/components/schemas/MenuItemCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/MenuItemUpdatedAtField'
+      required:
+      - id
+      - menuId
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      - authentication
+      - createdAt
+      - updatedAt
+    MenuItemIdField:
+      type: string
+      example: wmi_home
+    MenuItemLabelField:
+      type: string
+      example: Home
+    MenuItemURLField:
+      type: string
+      example: /
+    MenuItemPriorityField:
+      type: integer
+      example: 10
+    MenuItemIsBlankField:
+      type: boolean
+      example: false
+    MenuItemPermissionField:
+      type: string
+      example: ''
+    MenuItemCreatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    MenuItemUpdatedAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    MenuItemQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - label
+                - url
+                - priority
+                - permission
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - filters
+    MenuItemQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/MenuItemQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/MenuItemQueryItemSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    MenuItemQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - label
+                - url
+                - priority
+                - permission
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    MenuItemQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MenuItemIdField'
+        menuId:
+          $ref: '#/components/schemas/MenuIdField'
+        label:
+          $ref: '#/components/schemas/MenuItemLabelField'
+        url:
+          $ref: '#/components/schemas/MenuItemURLField'
+        priority:
+          $ref: '#/components/schemas/MenuItemPriorityField'
+        isBlank:
+          $ref: '#/components/schemas/MenuItemIsBlankField'
+        permission:
+          $ref: '#/components/schemas/MenuItemPermissionField'
+        authentication:
+          $ref: '#/components/schemas/MenuItemAuthenticationField'
+        createdAt:
+          $ref: '#/components/schemas/MenuItemCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/MenuItemUpdatedAtField'
+      required:
+      - id
+      - menuId
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      - authentication
+      - createdAt
+      - updatedAt
+    WebMenuItemUpdateMask:
+      type: string
+      example: label,url,notes
+    MenuItemPatchSchema:
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/MenuItemLabelField'
+        url:
+          $ref: '#/components/schemas/MenuItemURLField'
+        priority:
+          $ref: '#/components/schemas/MenuItemPriorityField'
+        isBlank:
+          $ref: '#/components/schemas/MenuItemIsBlankField'
+        permission:
+          $ref: '#/components/schemas/MenuItemPermissionField'
+        authentication:
+          $ref: '#/components/schemas/MenuItemAuthenticationField'
+        notes:
+          $ref: '#/components/schemas/MenuItemNotesFieldNullable'
+    MenuItemNotesFieldNullable:
+      type: string
+      example: Visible for all visitors.
+      nullable: true
+    MenuItemMoveSchema:
+      type: object
+      properties:
+        beforeItemId:
+          type: string
+          example: wmi_home
+      required:
+      - beforeItemId
+    MetadataCreateSchema:
       type: object
       properties:
         slug:
           type: string
           example: homepage
         template:
-          $ref: '#/components/schemas/WebMetadataTemplateField'
+          $ref: '#/components/schemas/MetadataTemplateField'
         referenceType:
-          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
         referenceId:
-          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+          $ref: '#/components/schemas/MetadataReferenceIDField'
         publicationDate:
           type: number
           nullable: true
@@ -615,7 +1556,7 @@ components:
           type: string
           nullable: true
         noIndex:
-          $ref: '#/components/schemas/WebMetadataNoIndexField'
+          $ref: '#/components/schemas/MetadataNoIndexField'
         primaryKeyword:
           type: string
           nullable: true
@@ -631,28 +1572,28 @@ components:
       required:
       - slug
       - status
-    WebMetadataTemplateField:
+    MetadataTemplateField:
       type: string
       example: default
-    WebMetadataReferenceTypeField:
+    MetadataReferenceTypeField:
       type: string
       example: web.page
-    WebMetadataReferenceIDField:
+    MetadataReferenceIDField:
       type: string
       example: wp_home
-    WebMetadataNoIndexField:
+    MetadataNoIndexField:
       type: boolean
       example: false
-    WebMetadataDetailSchema:
+    MetadataDetailSchema:
       type: object
       properties:
         id:
           type: string
           example: metadata_homepage
         referenceType:
-          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
         referenceId:
-          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+          $ref: '#/components/schemas/MetadataReferenceIDField'
         slug:
           type: string
           example: homepage
@@ -669,7 +1610,7 @@ components:
           type: string
           example: published
         availability:
-          $ref: '#/components/schemas/WebMetadataAvailabilityField'
+          $ref: '#/components/schemas/MetadataAvailabilityField'
         title:
           type: string
           nullable: true
@@ -715,7 +1656,7 @@ components:
       - primaryKeyword
       - createdAt
       - updatedAt
-    WebMetadataAvailabilityField:
+    MetadataAvailabilityField:
       type: string
       enum:
       - draft
@@ -724,80 +1665,21 @@ components:
       - expired
       - archived
       example: live
-    DeleteRequestSchema:
-      type: object
-      properties:
-        ids:
-          type: array
-          items:
-            type: string
-            example: id1
-        results:
-          type: boolean
-          example: true
-        summary:
-          type: boolean
-          example: true
-      required:
-      - ids
-      - results
-      - summary
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-    DeleteResultListSchema:
+    MetadataListSchema:
       type: array
       items:
-        type: object
-        properties:
-          id:
-            type: string
-            example: id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            example: deleted
-        required:
-        - id
-        - status
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          example: 1
-        deleted:
-          type: integer
-          example: 1
-        omitted:
-          type: integer
-          example: 1
-      required:
-      - requested
-      - deleted
-      - omitted
-    WebMetadataListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/WebMetadataListItemSchema'
-    WebMetadataListItemSchema:
+        $ref: '#/components/schemas/MetadataListItemSchema'
+    MetadataListItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebMetadataIdField'
+          $ref: '#/components/schemas/MetadataIdField'
         referenceType:
-          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
         referenceId:
-          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+          $ref: '#/components/schemas/MetadataReferenceIDField'
         slug:
-          $ref: '#/components/schemas/WebMetadataSlugField'
+          $ref: '#/components/schemas/MetadataSlugField'
         publicationDate:
           type: number
           nullable: true
@@ -805,15 +1687,15 @@ components:
           type: number
           nullable: true
         status:
-          $ref: '#/components/schemas/WebMetadataStatusField'
+          $ref: '#/components/schemas/MetadataStatusField'
         availability:
-          $ref: '#/components/schemas/WebMetadataAvailabilityField'
+          $ref: '#/components/schemas/MetadataAvailabilityField'
         title:
-          $ref: '#/components/schemas/WebMetadataTitleField'
+          $ref: '#/components/schemas/MetadataTitleField'
         createdAt:
-          $ref: '#/components/schemas/WebMetadataTimestampField'
+          $ref: '#/components/schemas/MetadataTimestampField'
         updatedAt:
-          $ref: '#/components/schemas/WebMetadataTimestampField'
+          $ref: '#/components/schemas/MetadataTimestampField'
       required:
       - id
       - slug
@@ -822,23 +1704,23 @@ components:
       - title
       - createdAt
       - updatedAt
-    WebMetadataIdField:
+    MetadataIdField:
       type: string
       example: metadata_homepage
-    WebMetadataSlugField:
+    MetadataSlugField:
       type: string
       example: homepage
-    WebMetadataStatusField:
+    MetadataStatusField:
       type: string
       example: draft
-    WebMetadataTitleField:
+    MetadataTitleField:
       type: string
       example: Homepage metadata title
-    WebMetadataTimestampField:
+    MetadataTimestampField:
       type: number
       format: double
       example: 1.76e+9
-    WebMetadataListItemSearchQuerySchema:
+    MetadataQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -873,47 +1755,21 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
             referenceType:
-              $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+              $ref: '#/components/schemas/MetadataReferenceTypeField'
       required:
-      - page
       - filters
-    SearchPageSchema:
-      type: object
-      properties:
-        size:
-          $ref: '#/components/schemas/SearchPageSizeField'
-        number:
-          $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
-    SearchPageSizeField:
-      type: integer
-      example: 20
-    SearchPageNumberField:
-      type: integer
-      example: 1
-    SortDirection:
-      type: string
-      enum:
-      - asc
-      - desc
-      example: asc
-    SearchStringField:
-      type: string
-      example: foo
-    WebMetadataListItemSearchSchema:
+    MetadataQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebMetadataListItemSearchQuerySchema'
+          $ref: '#/components/schemas/MetadataQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/WebMetadataListItemSchema'
+                $ref: '#/components/schemas/MetadataQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -923,7 +1779,81 @@ components:
       required:
       - query
       - data
-    WebMetadataResolveRequestSchema:
+    MetadataQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - slug
+                - publicationDate
+                - expirationDate
+                - status
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            referenceType:
+              $ref: '#/components/schemas/MetadataReferenceTypeField'
+      required:
+      - page
+      - filters
+    MetadataQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MetadataIdField'
+        referenceType:
+          $ref: '#/components/schemas/MetadataReferenceTypeField'
+        referenceId:
+          $ref: '#/components/schemas/MetadataReferenceIDField'
+        slug:
+          $ref: '#/components/schemas/MetadataSlugField'
+        publicationDate:
+          type: number
+          nullable: true
+        expirationDate:
+          type: number
+          nullable: true
+        status:
+          $ref: '#/components/schemas/MetadataStatusField'
+        availability:
+          $ref: '#/components/schemas/MetadataAvailabilityField'
+        title:
+          $ref: '#/components/schemas/MetadataTitleField'
+        createdAt:
+          $ref: '#/components/schemas/MetadataTimestampField'
+        updatedAt:
+          $ref: '#/components/schemas/MetadataTimestampField'
+      required:
+      - id
+      - slug
+      - status
+      - availability
+      - title
+      - createdAt
+      - updatedAt
+    MetadataResolveRequestSchema:
       type: object
       properties:
         referenceType:
@@ -937,11 +1867,11 @@ components:
       required:
       - referenceType
       - referenceIds
-    WebMetadataResolveSchema:
+    MetadataResolveSchema:
       type: array
       items:
-        $ref: '#/components/schemas/WebMetadataResolveItemSchema'
-    WebMetadataResolveItemSchema:
+        $ref: '#/components/schemas/MetadataResolveItemSchema'
+    MetadataResolveItemSchema:
       type: object
       properties:
         referenceId:
@@ -961,24 +1891,23 @@ components:
           type: string
           example: draft
         availability:
-          $ref: '#/components/schemas/WebMetadataAvailabilityField'
+          $ref: '#/components/schemas/MetadataAvailabilityField'
       required:
       - referenceId
       - slug
       - publicationDate
       - status
       - availability
-    WebMetadataPatchSchema:
+    WebMetadataUpdateMask:
+      type: string
+      example: title,slug,status,publicationDate
+    MetadataPatchSchema:
       type: object
       properties:
         slug:
-          $ref: '#/components/schemas/WebMetadataSlugField'
+          $ref: '#/components/schemas/MetadataSlugField'
         template:
-          $ref: '#/components/schemas/WebMetadataTemplateField'
-        referenceType:
-          $ref: '#/components/schemas/WebMetadataReferenceTypeField'
-        referenceId:
-          $ref: '#/components/schemas/WebMetadataReferenceIDField'
+          $ref: '#/components/schemas/MetadataTemplateField'
         publicationDate:
           type: number
           nullable: true
@@ -986,7 +1915,7 @@ components:
           type: number
           nullable: true
         status:
-          $ref: '#/components/schemas/WebMetadataStatusField'
+          $ref: '#/components/schemas/MetadataStatusField'
         title:
           type: string
           nullable: true
@@ -1000,7 +1929,7 @@ components:
           type: string
           nullable: true
         noIndex:
-          $ref: '#/components/schemas/WebMetadataNoIndexField'
+          $ref: '#/components/schemas/MetadataNoIndexField'
         primaryKeyword:
           type: string
           nullable: true
@@ -1013,7 +1942,7 @@ components:
         structuredDataCodeInjection:
           type: string
           nullable: true
-    WebPageCreateSchema:
+    PageCreateSchema:
       type: object
       properties:
         title:
@@ -1026,15 +1955,15 @@ components:
           type: string
           example: <h1>Homepage</h1>
         imageAssetId:
-          $ref: '#/components/schemas/WebPageImageAssetIdField'
+          $ref: '#/components/schemas/PageImageAssetIdField'
       required:
       - title
       - excerpt
       - content
-    WebPageImageAssetIdField:
+    PageImageAssetIdField:
       type: string
       example: media_asset_1
-    WebPageDetailSchema:
+    PageDetailSchema:
       type: object
       properties:
         id:
@@ -1050,9 +1979,9 @@ components:
           type: string
           example: <h1>Homepage</h1>
         imageAssetId:
-          $ref: '#/components/schemas/WebPageImageAssetIdField'
+          $ref: '#/components/schemas/PageImageAssetIdField'
         metadata:
-          $ref: '#/components/schemas/WebMetadataDetailSchema'
+          $ref: '#/components/schemas/MetadataDetailSchema'
         createdAt:
           type: number
           format: double
@@ -1069,49 +1998,49 @@ components:
       - metadata
       - createdAt
       - updatedAt
-    WebPageListSchema:
+    PageListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/WebPageListItemSchema'
-    WebPageListItemSchema:
+        $ref: '#/components/schemas/PageListItemSchema'
+    PageListItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/WebPageIdField'
+          $ref: '#/components/schemas/PageIdField'
         title:
-          $ref: '#/components/schemas/WebPageTitleField'
+          $ref: '#/components/schemas/PageTitleField'
         excerpt:
-          $ref: '#/components/schemas/WebPageExcerptField'
+          $ref: '#/components/schemas/PageExcerptField'
         imageAssetId:
-          $ref: '#/components/schemas/WebPageImageAssetIdField'
+          $ref: '#/components/schemas/PageImageAssetIdField'
         createdAt:
-          $ref: '#/components/schemas/WebPageCreatedAtField'
+          $ref: '#/components/schemas/PageCreatedAtField'
         updatedAt:
-          $ref: '#/components/schemas/WebPageUpdatedAtField'
+          $ref: '#/components/schemas/PageUpdatedAtField'
       required:
       - id
       - title
       - excerpt
       - createdAt
       - updatedAt
-    WebPageIdField:
+    PageIdField:
       type: string
       example: wp_home
-    WebPageTitleField:
+    PageTitleField:
       type: string
       example: Homepage
-    WebPageExcerptField:
+    PageExcerptField:
       type: string
       example: Short page summary.
-    WebPageCreatedAtField:
+    PageCreatedAtField:
       type: number
       format: double
       example: 1.76e+9
-    WebPageUpdatedAtField:
+    PageUpdatedAtField:
       type: number
       format: double
       example: 1.76e+9
-    WebPageListItemSearchQuerySchema:
+    PageQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1142,20 +2071,19 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
-    WebPageListItemSearchSchema:
+    PageQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebPageListItemSearchQuerySchema'
+          $ref: '#/components/schemas/PageQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/WebPageListItemSchema'
+                $ref: '#/components/schemas/PageQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -1165,398 +2093,78 @@ components:
       required:
       - query
       - data
-    WebPagePatchSchema:
+    PageQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    PageQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/PageIdField'
+        title:
+          $ref: '#/components/schemas/PageTitleField'
+        excerpt:
+          $ref: '#/components/schemas/PageExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/PageImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/PageCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/PageUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+    PagePatchSchema:
       type: object
       properties:
         title:
-          $ref: '#/components/schemas/WebPageTitleField'
+          $ref: '#/components/schemas/PageTitleField'
         excerpt:
-          $ref: '#/components/schemas/WebPageExcerptField'
+          $ref: '#/components/schemas/PageExcerptField'
         content:
-          $ref: '#/components/schemas/WebPageContentField'
+          $ref: '#/components/schemas/PageContentField'
         imageAssetId:
-          $ref: '#/components/schemas/WebPageImageAssetIdField'
-    WebPageContentField:
+          $ref: '#/components/schemas/PageImageAssetIdField'
+    PageContentField:
       type: string
       example: <h1>Homepage</h1>
-    WebMenuCreateSchema:
-      type: object
-      properties:
-        key:
-          type: string
-          example: header
-        name:
-          type: string
-          example: Header menu
-        notes:
-          $ref: '#/components/schemas/WebMenuNotesField'
-      required:
-      - key
-      - name
-    WebMenuNotesField:
+    WebPageUpdateMask:
       type: string
-      example: Primary site navigation.
-    WebMenuDetailSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          example: wm_header
-        key:
-          type: string
-          example: header
-        name:
-          type: string
-          example: Header menu
-        notes:
-          $ref: '#/components/schemas/WebMenuNotesField'
-        createdAt:
-          type: number
-          format: double
-          example: 1.76e+9
-        updatedAt:
-          type: number
-          format: double
-          example: 1.76e+9
-      required:
-      - id
-      - key
-      - name
-      - createdAt
-      - updatedAt
-    WebMenuListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/WebMenuListItemSchema'
-    WebMenuListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/WebMenuIdField'
-        key:
-          $ref: '#/components/schemas/WebMenuKeyField'
-        name:
-          $ref: '#/components/schemas/WebMenuNameField'
-        createdAt:
-          $ref: '#/components/schemas/WebMenuCreatedAtField'
-        updatedAt:
-          $ref: '#/components/schemas/WebMenuUpdatedAtField'
-      required:
-      - id
-      - key
-      - name
-      - createdAt
-      - updatedAt
-    WebMenuIdField:
-      type: string
-      example: wm_header
-    WebMenuKeyField:
-      type: string
-      example: header
-    WebMenuNameField:
-      type: string
-      example: Header menu
-    WebMenuCreatedAtField:
-      type: number
-      format: double
-      example: 1.76e+9
-    WebMenuUpdatedAtField:
-      type: number
-      format: double
-      example: 1.76e+9
-    WebMenuListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - key
-                - name
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          example:
-            search: foo
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - page
-      - filters
-    WebMenuListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/WebMenuListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/WebMenuListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
-    WebMenuPatchSchema:
-      type: object
-      properties:
-        key:
-          $ref: '#/components/schemas/WebMenuKeyField'
-        name:
-          $ref: '#/components/schemas/WebMenuNameField'
-        notes:
-          $ref: '#/components/schemas/WebMenuNotesField'
-    WebMenuItemCreateSchema:
-      type: object
-      properties:
-        label:
-          type: string
-          example: Home
-        url:
-          type: string
-          example: /
-        priority:
-          type: integer
-          example: 10
-        isBlank:
-          type: boolean
-          example: false
-        permission:
-          type: string
-          example: ''
-        authentication:
-          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
-        notes:
-          $ref: '#/components/schemas/WebMenuItemNotesField'
-      required:
-      - label
-      - url
-      - priority
-      - isBlank
-      - permission
-    WebMenuItemAuthenticationField:
-      type: string
-      example: any
-    WebMenuItemNotesField:
-      type: string
-      example: Visible for all visitors.
-    WebMenuItemDetailSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          example: wmi_home
-        menuId:
-          type: string
-          example: wm_header
-        label:
-          type: string
-          example: Home
-        url:
-          type: string
-          example: /
-        priority:
-          type: integer
-          example: 10
-        isBlank:
-          type: boolean
-          example: false
-        permission:
-          type: string
-          example: ''
-        authentication:
-          type: string
-          example: any
-        notes:
-          $ref: '#/components/schemas/WebMenuItemNotesField'
-        createdAt:
-          type: number
-          format: double
-          example: 1.76e+9
-        updatedAt:
-          type: number
-          format: double
-          example: 1.76e+9
-      required:
-      - id
-      - menuId
-      - label
-      - url
-      - priority
-      - isBlank
-      - permission
-      - authentication
-      - createdAt
-      - updatedAt
-    WebMenuItemListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/WebMenuItemListItemSchema'
-    WebMenuItemListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/WebMenuItemIdField'
-        menuId:
-          $ref: '#/components/schemas/WebMenuIdField'
-        label:
-          $ref: '#/components/schemas/WebMenuItemLabelField'
-        url:
-          $ref: '#/components/schemas/WebMenuItemURLField'
-        priority:
-          $ref: '#/components/schemas/WebMenuItemPriorityField'
-        isBlank:
-          $ref: '#/components/schemas/WebMenuItemIsBlankField'
-        permission:
-          $ref: '#/components/schemas/WebMenuItemPermissionField'
-        authentication:
-          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
-        createdAt:
-          $ref: '#/components/schemas/WebMenuItemCreatedAtField'
-        updatedAt:
-          $ref: '#/components/schemas/WebMenuItemUpdatedAtField'
-      required:
-      - id
-      - menuId
-      - label
-      - url
-      - priority
-      - isBlank
-      - permission
-      - authentication
-      - createdAt
-      - updatedAt
-    WebMenuItemIdField:
-      type: string
-      example: wmi_home
-    WebMenuItemLabelField:
-      type: string
-      example: Home
-    WebMenuItemURLField:
-      type: string
-      example: /
-    WebMenuItemPriorityField:
-      type: integer
-      example: 10
-    WebMenuItemIsBlankField:
-      type: boolean
-      example: false
-    WebMenuItemPermissionField:
-      type: string
-      example: ''
-    WebMenuItemCreatedAtField:
-      type: number
-      format: double
-      example: 1.76e+9
-    WebMenuItemUpdatedAtField:
-      type: number
-      format: double
-      example: 1.76e+9
-    WebMenuItemListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - label
-                - url
-                - priority
-                - permission
-                - createdAt
-                - updatedAt
-                example: id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-        filters:
-          type: object
-          example:
-            search: foo
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-      required:
-      - page
-      - filters
-    WebMenuItemListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/WebMenuItemListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/WebMenuItemListItemSchema'
-            total:
-              type: integer
-              example: 123
-          required:
-          - items
-          - total
-      required:
-      - query
-      - data
-    WebMenuItemPatchSchema:
-      type: object
-      properties:
-        label:
-          $ref: '#/components/schemas/WebMenuItemLabelField'
-        url:
-          $ref: '#/components/schemas/WebMenuItemURLField'
-        priority:
-          $ref: '#/components/schemas/WebMenuItemPriorityField'
-        isBlank:
-          $ref: '#/components/schemas/WebMenuItemIsBlankField'
-        permission:
-          $ref: '#/components/schemas/WebMenuItemPermissionField'
-        authentication:
-          $ref: '#/components/schemas/WebMenuItemAuthenticationField'
-        notes:
-          $ref: '#/components/schemas/WebMenuItemNotesField'
-    WebMenuItemMoveSchema:
-      type: object
-      properties:
-        beforeItemId:
-          type: string
-          example: wmi_home
-      required:
-      - beforeItemId
-    WebSettingsDetailSchema:
+      example: title,content,imageAssetId
+    SettingsDetailSchema:
       type: object
       properties:
         logo:
@@ -1584,7 +2192,7 @@ components:
           type: string
           example: Merriweather
         homePageId:
-          $ref: '#/components/schemas/WebSettingsHomePageIDField'
+          $ref: '#/components/schemas/SettingsHomePageIDField'
         locale:
           type: string
           example: en-US
@@ -1622,10 +2230,10 @@ components:
       - noIndex
       - css
       - js
-    WebSettingsHomePageIDField:
+    SettingsHomePageIDField:
       type: string
       example: web_page_1
-    WebSettingsUpdateSchema:
+    SettingsUpdateSchema:
       type: object
       properties:
         id:
@@ -1656,7 +2264,7 @@ components:
           type: string
           example: Merriweather
         homePageId:
-          $ref: '#/components/schemas/WebSettingsHomePageIDField'
+          $ref: '#/components/schemas/SettingsHomePageIDField'
         locale:
           type: string
           example: en-US
@@ -1696,138 +2304,170 @@ components:
       - css
       - js
   responses:
-    WebMetadataDetailResponse:
-      description: WebMetadata response
+    MenuDetailResponse:
+      description: Menu response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataDetailSchema'
-    DeleteResponse:
-      description: Delete response
+            $ref: '#/components/schemas/MenuDetailSchema'
+    NoContentResponse:
+      description: Delete succeeded
+    MenuListResponse:
+      description: Menu list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
-    WebMetadataListResponse:
-      description: WebMetadata list response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/WebMetadataListSchema'
-    WebMetadataListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/MenuListSchema'
+    MenuQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataListItemSearchSchema'
-    WebMetadataResolveResponse:
-      description: WebMetadata resolve response
+            $ref: '#/components/schemas/MenuQueryItemSearchSchema'
+    MenuItemDetailResponse:
+      description: MenuItem response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataResolveSchema'
-    WebPageDetailResponse:
-      description: WebPage response
+            $ref: '#/components/schemas/MenuItemDetailSchema'
+    MenuItemListResponse:
+      description: MenuItem list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPageDetailSchema'
-    WebPageListResponse:
-      description: WebPage list response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/WebPageListSchema'
-    WebPageListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/MenuItemListSchema'
+    MenuItemQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPageListItemSearchSchema'
-    WebMenuDetailResponse:
-      description: WebMenu response
+            $ref: '#/components/schemas/MenuItemQueryItemSearchSchema'
+    MetadataDetailResponse:
+      description: Metadata response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuDetailSchema'
-    WebMenuListResponse:
-      description: WebMenu list response
+            $ref: '#/components/schemas/MetadataDetailSchema'
+    MetadataListResponse:
+      description: Metadata list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuListSchema'
-    WebMenuListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/MetadataListSchema'
+    MetadataQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuListItemSearchSchema'
-    WebMenuItemDetailResponse:
-      description: WebMenuItem response
+            $ref: '#/components/schemas/MetadataQueryItemSearchSchema'
+    MetadataResolveResponse:
+      description: Metadata resolve response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemDetailSchema'
-    WebMenuItemListResponse:
-      description: WebMenuItem list response
+            $ref: '#/components/schemas/MetadataResolveSchema'
+    PageDetailResponse:
+      description: Page response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemListSchema'
-    WebMenuItemListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/PageDetailSchema'
+    PageListResponse:
+      description: Page list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PageListSchema'
+    PageQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemListItemSearchSchema'
-    WebSettingsDetailResponse:
-      description: WebSettings response
+            $ref: '#/components/schemas/PageQueryItemSearchSchema'
+    SettingsDetailResponse:
+      description: Settings response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebSettingsDetailSchema'
+            $ref: '#/components/schemas/SettingsDetailSchema'
   parameters:
-    WebMetadataIdParameter:
-      name: webMetadataId
+    MenuIdParameter:
+      name: menuId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebMetadataIdField'
-      description: WebMetadata id
-    WebPageIdParameter:
-      name: webPageId
+        $ref: '#/components/schemas/MenuIdField'
+      description: Menu id
+    MenuParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMenuUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
+    MenuItemMenuIdParameter:
+      name: menuId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebPageIdField'
-      description: WebPage id
-    WebMenuIdParameter:
-      name: webMenuId
+        $ref: '#/components/schemas/MenuIdField'
+      description: Menu id
+    MenuItemIdParameter:
+      name: menuItemId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebMenuIdField'
-      description: WebMenu id
-    WebMenuItemMenuIdParameter:
-      name: webMenuId
+        $ref: '#/components/schemas/MenuItemIdField'
+      description: MenuItem id
+    MenuItemParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMenuItemUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
+    MetadataIdParameter:
+      name: metadataId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebMenuIdField'
-      description: WebMenu id
-    WebMenuItemIdParameter:
-      name: webMenuItemId
+        $ref: '#/components/schemas/MetadataIdField'
+      description: Metadata id
+    MetadataParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMetadataUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
+    PageIdParameter:
+      name: pageId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/WebMenuItemIdField'
-      description: WebMenuItem id
+        $ref: '#/components/schemas/PageIdField'
+      description: Page id
+    PageParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebPageUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
   requestBodies:
-    WebMetadataRequestBody:
+    MenuRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataCreateSchema'
+            $ref: '#/components/schemas/MenuCreateSchema'
       required: true
     DeleteRequestBody:
       content:
@@ -1835,89 +2475,89 @@ components:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
-    WebMetadataResolveRequestBody:
+    MenuUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataResolveRequestSchema'
+            $ref: '#/components/schemas/MenuCreateSchema'
       required: true
-    WebMetadataUpdateRequestBody:
+    MenuPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataCreateSchema'
+            $ref: '#/components/schemas/MenuPatchSchema'
       required: true
-    WebMetadataPatchRequestBody:
+    MenuItemRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataPatchSchema'
+            $ref: '#/components/schemas/MenuItemCreateSchema'
       required: true
-    WebPageRequestBody:
+    MenuItemUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPageCreateSchema'
+            $ref: '#/components/schemas/MenuItemCreateSchema'
       required: true
-    WebPageUpdateRequestBody:
+    MenuItemPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPagePatchSchema'
+            $ref: '#/components/schemas/MenuItemPatchSchema'
       required: true
-    WebPagePatchRequestBody:
+    MenuItemMoveRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebPagePatchSchema'
+            $ref: '#/components/schemas/MenuItemMoveSchema'
       required: true
-    WebMenuRequestBody:
+    MetadataRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuCreateSchema'
+            $ref: '#/components/schemas/MetadataCreateSchema'
       required: true
-    WebMenuUpdateRequestBody:
+    MetadataResolveRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuCreateSchema'
+            $ref: '#/components/schemas/MetadataResolveRequestSchema'
       required: true
-    WebMenuPatchRequestBody:
+    MetadataUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuPatchSchema'
+            $ref: '#/components/schemas/MetadataCreateSchema'
       required: true
-    WebMenuItemRequestBody:
+    MetadataPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemCreateSchema'
+            $ref: '#/components/schemas/MetadataPatchSchema'
       required: true
-    WebMenuItemUpdateRequestBody:
+    PageRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemCreateSchema'
+            $ref: '#/components/schemas/PageCreateSchema'
       required: true
-    WebMenuItemPatchRequestBody:
+    PageUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemPatchSchema'
+            $ref: '#/components/schemas/PagePatchSchema'
       required: true
-    WebMenuItemMoveRequestBody:
+    PagePatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMenuItemMoveSchema'
+            $ref: '#/components/schemas/PagePatchSchema'
       required: true
-    WebSettingsUpdateRequestBody:
+    SettingsUpdateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebSettingsUpdateSchema'
+            $ref: '#/components/schemas/SettingsUpdateSchema'
       required: true
   securitySchemes:
     bearerAuth:

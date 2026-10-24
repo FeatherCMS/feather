@@ -79,7 +79,7 @@ public struct MediaAssetPopupConfiguration: Sendable {
 }
 ```
 
-Expose reusable controls from `MediaFrontend`:
+Expose reusable controls from `MediaWebAdmin`:
 
 - `AdminMediaAssetPickerButton`
   - Opens the asset browser.
@@ -210,7 +210,7 @@ The same pattern can then be reused for showcase galleries, member galleries, se
 
 ## Implementation sequence and extension points
 
-1. Add shared media configuration, selection mode, asset result, URL builder, and event payload types in `MediaFrontend`.
+1. Add shared media configuration, selection mode, asset result, URL builder, and event payload types in `MediaWebAdmin`.
 2. Refactor `MediaAssetPickerView` and `MediaAssetUploadView` to consume that configuration.
 3. Make both single and multiple picker/upload flows publish the same result event.
 4. Add reusable picker and uploader popup controls.
@@ -468,7 +468,7 @@ generic media controls.
                                 │ dialog request
                                 ▼
 ┌───────────────────────────────────────────────────────────┐
-│ MediaFrontend                                              │
+│ MediaWebAdmin                                              │
 │                                                           │
 │ MediaAssetPopupConfiguration                              │
 │ AdminMediaAssetPickerButton                               │

@@ -1,0 +1,10 @@
+import FeatherOpenAPI
+import FeatherOpenAPIGenerator
+import OpenAPIKit30
+import UserOpenAPIGeneratorSupport
+
+extension Auth.Schemas {
+    struct MagicLinkTokenField: StringSchemaRepresentable {
+        var example: String? = "mgl_3XbY..."
+    }
+}

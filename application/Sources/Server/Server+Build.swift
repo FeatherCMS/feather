@@ -1,7 +1,9 @@
 import Hummingbird
+import FeatherWebShared
 import Logging
 import FeatherDatabase
 import FeatherDatabasePostgres
+import FeatherDBALPostgres
 import Jobs
 import JobsPostgres
 import NIOSSL
@@ -15,15 +17,13 @@ import FeatherStorage
 import FeatherStorageFS
 import MediaApplication
 import MediaInfrastructure
-import FeatherContracts
-import FeatherAdmin
+import FeatherModuleKit
+import FeatherWebAdmin
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
 import Foundation
 #endif
-
-typealias DefaultRequestContext = BasicRequestContext
 
 func buildServer(
     config: ServerConfig
@@ -73,7 +73,8 @@ func buildServer(
     let idGenerator = NanoIDGenerator()
     let databaseContext = DatabaseClientContext(
         database: database,
-        idGenerator: idGenerator
+        idGenerator: idGenerator,
+        platform: PostgresDatabasePlatform()
     )
     let events = buildAppEventPublisher()
 

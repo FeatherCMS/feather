@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -21,6 +20,11 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
+
 
 let package = Package(
     name: "app-account-module",
@@ -33,19 +37,18 @@ let package = Package(
     ],
     products: [
         .library(name: "AccountDomain", targets: ["AccountDomain"]),
-        .library(name: "AccountContracts", targets: ["AccountContracts"]),
+        .library(name: "AccountModule", targets: ["AccountModule"]),
         .library(name: "AccountApplication", targets: ["AccountApplication"]),
         .library(name: "AccountInfrastructure", targets: ["AccountInfrastructure"]),
         .library(name: "AccountAdminAPI", targets: ["AccountAdminAPI"]),
         .library(name: "AccountAppAPI", targets: ["AccountAppAPI"]),
-        .library(name: "AccountSharedOpenAPIGenerator", targets: ["AccountSharedOpenAPIGenerator"]),
         .library(name: "AccountBackend", targets: ["AccountBackend"]),
-        .library(name: "AccountFrontend", targets: ["AccountFrontend"]),
+        .library(name: "AccountWebAdmin", targets: ["AccountWebAdmin"]),
+        .library(name: "AccountWebApp", targets: ["AccountWebApp"]),
         .executable(name: "AccountAdminOpenAPIGenerator", targets: ["AccountAdminOpenAPIGenerator"]),
         .executable(name: "AccountAppOpenAPIGenerator", targets: ["AccountAppOpenAPIGenerator"]),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
 
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
@@ -57,21 +60,57 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-http-types",
+            from: "1.8.0"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
             from: "2.27.0"
         ),
         .package(
+            url: "https://github.com/apple/swift-nio",
+            from: "2.0.0"
+        ),
+        .package(
+            url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            from: "2.0.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
+        ),
+        .package(
+            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            from: "1.0.0"
+        ),
+        .package(
+            url: "https://github.com/BinaryBirds/swift-web-standards",
+            exact: "1.0.0-beta.4"
         ),
 
         .package(path: "../../feather-core"),
         .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-openapi",
+            exact: "1.0.0-rc.2"
         ),
         .package(path: "../app-auth-module"),
         .package(path: "../app-media-module"),
@@ -81,25 +120,17 @@ let package = Package(
         // MARK: - test dependencies
 
         .package(
-            url: "https://github.com/feather-framework/feather-database-postgres",
-            exact: "1.0.0-rc.2"
-        ),
-        .package(
-            url: "https://github.com/vapor/postgres-nio",
-            from: "1.32.2"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio-ssl",
-            from: "2.34.0"
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
         ),
     ],
     targets: [
         .target(
-            name: "AccountContracts",
+            name: "AccountModule",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
@@ -107,7 +138,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
 
-                .target(name: "AccountContracts"),
+                .target(name: "AccountModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -120,9 +151,12 @@ let package = Package(
                 .product(name: "FeatherDomain", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "AuthDomain", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "app-auth-module"),
                 .product(name: "UserApplication", package: "app-user-module"),
                 .product(name: "UserDomain", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
 
                 .target(name: "AccountDomain"),
             ],
@@ -133,11 +167,18 @@ let package = Package(
             name: "AccountInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
 
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "app-auth-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
+                .product(name: "UserDomain", package: "app-user-module"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "UserModule", package: "app-user-module"),
 
+                .target(name: "AccountModule"),
                 .target(name: "AccountApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -149,7 +190,9 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "AccountAppAPI",
@@ -157,25 +200,17 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
-        ),
-        .target(
-            name: "AccountSharedOpenAPIGenerator",
-            dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
-
-                .product(name: "UserSharedOpenAPIGenerator", package: "app-user-module"),
-            ],
-            path: "Sources/Generators/Shared",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .executableTarget(
             name: "AccountAdminOpenAPIGenerator",
             dependencies: [
+                .product(name: "FeatherOpenAPI", package: "feather-openapi"),
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "AccountSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -183,10 +218,11 @@ let package = Package(
         .executableTarget(
             name: "AccountAppOpenAPIGenerator",
             dependencies: [
+                .product(name: "FeatherOpenAPI", package: "feather-openapi"),
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "AccountSharedOpenAPIGenerator"),
+                .product(name: "UserOpenAPIGeneratorSupport", package: "app-user-module"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings
@@ -195,14 +231,22 @@ let package = Package(
             name: "AccountBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
 
                 .product(name: "AuthDomain", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "app-auth-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
+                .product(name: "UserDomain", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
 
                 .target(name: "AccountInfrastructure"),
+                .target(name: "AccountApplication"),
+                .target(name: "AccountDomain"),
+                .target(name: "AccountModule"),
                 .target(name: "AccountAdminAPI"),
                 .target(name: "AccountAppAPI"),
             ],
@@ -210,53 +254,118 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "AccountFrontend",
+            name: "AccountWebAdmin",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "CSS", package: "swift-web-standards"),
+                .product(name: "HTML", package: "swift-web-standards"),
+                .product(name: "WebBuilders", package: "swift-web-standards"),
+                .product(name: "WebComponents", package: "swift-web-standards"),
 
-                .product(name: "AuthAdminAPI", package: "app-auth-module"),
-                .product(name: "AuthAppAPI", package: "app-auth-module"),
-                .product(name: "MediaFrontend", package: "app-media-module"),
+                .product(name: "MediaWebAdmin", package: "app-media-module"),
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
-                .product(name: "SystemContracts", package: "app-system-module"),
-                .product(name: "SystemFrontend", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
-                .product(name: "UserContracts", package: "app-user-module"),
-                .product(name: "UserAppAPI", package: "app-user-module"),
-                .product(name: "UserFrontend", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
+                .product(name: "UserWebAdmin", package: "app-user-module"),
 
-                .target(name: "AccountContracts"),
+                .target(name: "AccountModule"),
+                .target(name: "AccountDomain"),
                 .target(name: "AccountAdminAPI"),
+            ],
+            path: "Sources/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "AccountWebApp",
+            dependencies: [
+                .product(name: "FeatherWebApp", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "CSS", package: "swift-web-standards"),
+                .product(name: "HTML", package: "swift-web-standards"),
+                .product(name: "SGML", package: "swift-web-standards"),
+                .product(name: "WebBuilders", package: "swift-web-standards"),
+                .product(name: "WebComponents", package: "swift-web-standards"),
+
+                .target(name: "AccountModule"),
                 .target(name: "AccountAppAPI"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebApp",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AccountDomainTests",
             dependencies: [
+                .target(name: "AccountModule"),
                 .target(name: "AccountDomain"),
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AccountApplicationTests",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .target(name: "AccountModule"),
+                .product(name: "AuthModule", package: "app-auth-module"),
                 .product(name: "AuthDomain", package: "app-auth-module"),
+                .product(name: "UserDomain", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
                 .target(name: "AccountApplication"),
             ],
+            path: "Tests/Layers/Application",
             swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AccountInfrastructureTests",
             dependencies: [
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
-                .product(name: "PostgresNIO", package: "postgres-nio"),
-                .product(name: "NIOSSL", package: "swift-nio-ssl"),
+                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
 
+                .target(name: "AccountModule"),
                 .target(name: "AccountInfrastructure"),
             ],
+            path: "Tests/Layers/Infrastructure",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "AccountBackendTests",
+            dependencies: [
+                .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(name: "FeatherHTTPHummingbirdTesting", package: "feather-http-hummingbird-testing"),
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "HummingbirdTesting", package: "hummingbird"),
+                .product(name: "OpenAPIHummingbird", package: "swift-openapi-hummingbird"),
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+
+                .target(name: "AccountBackend"),
+                .target(name: "AccountAdminAPI"),
+                .target(name: "AccountAppAPI"),
+                .target(name: "AccountModule"),
+            ],
+            path: "Tests/Composition/Backend",
             swiftSettings: swiftSettings
         ),
     ]

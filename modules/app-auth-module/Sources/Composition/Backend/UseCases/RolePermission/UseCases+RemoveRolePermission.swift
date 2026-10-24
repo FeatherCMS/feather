@@ -1,21 +1,22 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeRemoveRolePermission() -> RemoveRolePermission {
+    func makeRemoveRolePermission() -> RolePermission.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteRolePermissions(
-                    rolePermissions: RolePermissionDatabaseRepository(
+                RolePermission.Remove.Scope(
+                    rolePermissions: RolePermission.Repository.Database(
                         context: context
                     )
                 )
             }
         )
-        return RemoveRolePermission(
+        return RolePermission.Remove.UseCase(
             authorizer: authorizer,
             transaction: transaction
         )

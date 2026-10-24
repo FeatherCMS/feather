@@ -1,16 +1,21 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 public import FeatherInfrastructure
+import WebModule
 
 extension UseCases {
 
-    public func makeGetPublicSettings() -> DatabaseQueryExecutor<WriteSettings>
-    {
+    public func makeGetPublicSettings() -> DatabaseQueryExecutor<
+        BlogModule.Settings.Detail.Scope
+    > {
         DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteSettings(
-                    settings: SettingsDatabaseRepository(context: context)
+                BlogModule.Settings.Detail.Scope(
+                    settings: BlogModule.Settings.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )

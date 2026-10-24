@@ -3,12 +3,12 @@ info:
   title: Blog Admin API
   version: 0.1.0
 tags:
-- name: BlogPosts
-  description: Manage blog posts.
 - name: BlogAuthors
   description: Manage blog authors.
 - name: BlogAuthorLinks
   description: Manage blog author links.
+- name: BlogPosts
+  description: Manage blog posts.
 - name: BlogSettings
   description: Manage blog settings.
 - name: BlogTags
@@ -18,190 +18,100 @@ servers:
 security:
 - bearerAuth: []
 paths:
-  /api/v1/admin/blog/posts:
-    post:
-      tags:
-      - BlogPosts
-      operationId: blogPostCreate
-      requestBody:
-        $ref: '#/components/requestBodies/BlogPostRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/BlogPostDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - BlogPosts
-      operationId: blogPostRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/blog/posts/:
-    get:
-      tags:
-      - BlogPosts
-      operationId: blogPostList
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostListResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/blog/posts/search:
-    post:
-      tags:
-      - BlogPosts
-      operationId: blogPostSearch
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BlogPostListItemSearchQuerySchema'
-        required: true
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostListItemSearchSchemaSearchResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/blog/posts/{blogPostId}:
-    get:
-      tags:
-      - BlogPosts
-      operationId: blogPostGet
-      parameters:
-      - $ref: '#/components/parameters/BlogPostIdParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostDetailResponse'
-        404:
-          description: BlogPost not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    put:
-      tags:
-      - BlogPosts
-      operationId: blogPostUpdate
-      parameters:
-      - $ref: '#/components/parameters/BlogPostIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/BlogPostUpdateRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostDetailResponse'
-        404:
-          description: BlogPost not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    patch:
-      tags:
-      - BlogPosts
-      operationId: blogPostPatch
-      parameters:
-      - $ref: '#/components/parameters/BlogPostIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/BlogPostPatchRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/BlogPostDetailResponse'
-        404:
-          description: BlogPost not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
   /api/v1/admin/blog/authors:
-    post:
-      tags:
-      - BlogAuthors
-      operationId: blogAuthorCreate
-      requestBody:
-        $ref: '#/components/requestBodies/BlogAuthorRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/BlogAuthorDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - BlogAuthors
-      operationId: blogAuthorRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/blog/authors/:
     get:
       tags:
       - BlogAuthors
       operationId: blogAuthorList
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorListResponse'
+          $ref: '#/components/responses/AuthorListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/blog/authors/search:
     post:
       tags:
       - BlogAuthors
-      operationId: blogAuthorSearch
+      operationId: blogAuthorPost
+      requestBody:
+        $ref: '#/components/requestBodies/AuthorPostRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AuthorGetResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - BlogAuthors
+      operationId: blogAuthorDelete
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/authors/query:
+    post:
+      tags:
+      - BlogAuthors
+      operationId: blogAuthorQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogAuthorListItemSearchQuerySchema'
+              $ref: '#/components/schemas/AuthorQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/AuthorQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/{blogAuthorId}:
@@ -213,32 +123,56 @@ paths:
       - $ref: '#/components/parameters/BlogAuthorIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorDetailResponse'
+          $ref: '#/components/responses/AuthorGetResponse'
         404:
-          description: BlogAuthor not found
+          description: Blog author not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
       tags:
       - BlogAuthors
-      operationId: blogAuthorUpdate
+      operationId: blogAuthorPut
       parameters:
       - $ref: '#/components/parameters/BlogAuthorIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/BlogAuthorUpdateRequestBody'
+        $ref: '#/components/requestBodies/AuthorPutRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorDetailResponse'
+          $ref: '#/components/responses/AuthorGetResponse'
         404:
-          description: BlogAuthor not found
+          description: Blog author not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -247,90 +181,140 @@ paths:
       operationId: blogAuthorPatch
       parameters:
       - $ref: '#/components/parameters/BlogAuthorIdParameter'
+      - $ref: '#/components/parameters/BlogAuthorParametersUpdateMask'
       requestBody:
-        $ref: '#/components/requestBodies/BlogAuthorPatchRequestBody'
+        $ref: '#/components/requestBodies/AuthorPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorDetailResponse'
+          $ref: '#/components/responses/AuthorGetResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
-          description: BlogAuthor not found
+          description: Blog author not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/{blogAuthorId}/links:
-    post:
-      tags:
-      - BlogAuthorLinks
-      operationId: blogAuthorLinkCreate
-      parameters:
-      - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/BlogAuthorLinkRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - BlogAuthorLinks
-      operationId: blogAuthorLinkRemove
-      parameters:
-      - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/blog/authors/{blogAuthorId}/links/:
     get:
       tags:
       - BlogAuthorLinks
       operationId: blogAuthorLinkList
       parameters:
-      - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
+      - $ref: '#/components/parameters/BlogAuthorLinkAuthorIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorLinkListResponse'
+          $ref: '#/components/responses/AuthorLinkListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/blog/authors/{blogAuthorId}/links/search:
     post:
       tags:
       - BlogAuthorLinks
-      operationId: blogAuthorLinkSearch
+      operationId: blogAuthorLinkPost
       parameters:
-      - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
+      - $ref: '#/components/parameters/BlogAuthorLinkAuthorIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/AuthorLinkPostRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AuthorLinkGetResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - BlogAuthorLinks
+      operationId: blogAuthorLinkDelete
+      parameters:
+      - $ref: '#/components/parameters/BlogAuthorLinkAuthorIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/authors/{blogAuthorId}/links/query:
+    post:
+      tags:
+      - BlogAuthorLinks
+      operationId: blogAuthorLinkQuery
+      parameters:
+      - $ref: '#/components/parameters/BlogAuthorLinkAuthorIdParameter'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogAuthorLinkListItemSearchQuerySchema'
+              $ref: '#/components/schemas/AuthorLinkQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorLinkListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/AuthorLinkQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}:
@@ -339,37 +323,61 @@ paths:
       - BlogAuthorLinks
       operationId: blogAuthorLinkGet
       parameters:
-      - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
+      - $ref: '#/components/parameters/BlogAuthorLinkAuthorIdParameter'
       - $ref: '#/components/parameters/BlogAuthorLinkIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
+          $ref: '#/components/responses/AuthorLinkGetResponse'
         404:
-          description: BlogAuthorLink not found
+          description: Blog author link not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
       tags:
       - BlogAuthorLinks
-      operationId: blogAuthorLinkUpdate
+      operationId: blogAuthorLinkPut
       parameters:
-      - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
+      - $ref: '#/components/parameters/BlogAuthorLinkAuthorIdParameter'
       - $ref: '#/components/parameters/BlogAuthorLinkIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/BlogAuthorLinkUpdateRequestBody'
+        $ref: '#/components/requestBodies/AuthorLinkPutRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
+          $ref: '#/components/responses/AuthorLinkGetResponse'
         404:
-          description: BlogAuthorLink not found
+          description: Blog author link not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -377,19 +385,233 @@ paths:
       - BlogAuthorLinks
       operationId: blogAuthorLinkPatch
       parameters:
-      - $ref: '#/components/parameters/BlogAuthorLinkMenuIdParameter'
+      - $ref: '#/components/parameters/BlogAuthorLinkAuthorIdParameter'
       - $ref: '#/components/parameters/BlogAuthorLinkIdParameter'
+      - $ref: '#/components/parameters/BlogAuthorLinkParametersUpdateMask'
       requestBody:
-        $ref: '#/components/requestBodies/BlogAuthorLinkPatchRequestBody'
+        $ref: '#/components/requestBodies/AuthorLinkPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
+          $ref: '#/components/responses/AuthorLinkGetResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
-          description: BlogAuthorLink not found
+          description: Blog author link not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/posts:
+    get:
+      tags:
+      - BlogPosts
+      operationId: blogPostList
+      responses:
+        200:
+          $ref: '#/components/responses/PostListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - BlogPosts
+      operationId: blogPostPost
+      requestBody:
+        $ref: '#/components/requestBodies/PostPostRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/PostGetResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - BlogPosts
+      operationId: blogPostDelete
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/posts/query:
+    post:
+      tags:
+      - BlogPosts
+      operationId: blogPostQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostQueryItemSearchRequestQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/PostQueryItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/posts/{blogPostId}:
+    get:
+      tags:
+      - BlogPosts
+      operationId: blogPostGet
+      parameters:
+      - $ref: '#/components/parameters/BlogPostIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/PostGetResponse'
+        404:
+          description: Blog post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - BlogPosts
+      operationId: blogPostPut
+      parameters:
+      - $ref: '#/components/parameters/BlogPostIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/PostPutRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/PostGetResponse'
+        404:
+          description: Blog post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - BlogPosts
+      operationId: blogPostPatch
+      parameters:
+      - $ref: '#/components/parameters/BlogPostIdParameter'
+      - $ref: '#/components/parameters/BlogPostParametersUpdateMask'
+      requestBody:
+        $ref: '#/components/requestBodies/PostPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/PostGetResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        404:
+          description: Blog post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/settings:
@@ -399,91 +621,138 @@ paths:
       operationId: blogSettingsGet
       responses:
         200:
-          $ref: '#/components/responses/BlogSettingsDetailResponse'
+          $ref: '#/components/responses/SettingsGetResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
       tags:
       - BlogSettings
-      operationId: blogSettingsUpdate
+      operationId: blogSettingsPut
       requestBody:
-        $ref: '#/components/requestBodies/BlogSettingsUpdateRequestBody'
+        $ref: '#/components/requestBodies/SettingsPutRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BlogSettingsDetailResponse'
+          $ref: '#/components/responses/SettingsGetResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/tags:
-    post:
-      tags:
-      - BlogTags
-      operationId: blogTagCreate
-      requestBody:
-        $ref: '#/components/requestBodies/BlogTagRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/BlogTagDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - BlogTags
-      operationId: blogTagRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/blog/tags/:
     get:
       tags:
       - BlogTags
       operationId: blogTagList
       responses:
         200:
-          $ref: '#/components/responses/BlogTagListResponse'
+          $ref: '#/components/responses/TagListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/blog/tags/search:
     post:
       tags:
       - BlogTags
-      operationId: blogTagSearch
+      operationId: blogTagPost
+      requestBody:
+        $ref: '#/components/requestBodies/TagPostRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/TagGetResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - BlogTags
+      operationId: blogTagDelete
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/blog/tags/query:
+    post:
+      tags:
+      - BlogTags
+      operationId: blogTagQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogTagListItemSearchQuerySchema'
+              $ref: '#/components/schemas/TagQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/BlogTagListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/TagQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/tags/{blogTagId}:
@@ -495,32 +764,56 @@ paths:
       - $ref: '#/components/parameters/BlogTagIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/BlogTagDetailResponse'
+          $ref: '#/components/responses/TagGetResponse'
         404:
-          description: BlogTag not found
+          description: Blog tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
       tags:
       - BlogTags
-      operationId: blogTagUpdate
+      operationId: blogTagPut
       parameters:
       - $ref: '#/components/parameters/BlogTagIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/BlogTagUpdateRequestBody'
+        $ref: '#/components/requestBodies/TagPutRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BlogTagDetailResponse'
+          $ref: '#/components/responses/TagGetResponse'
         404:
-          description: BlogTag not found
+          description: Blog tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -529,96 +822,186 @@ paths:
       operationId: blogTagPatch
       parameters:
       - $ref: '#/components/parameters/BlogTagIdParameter'
+      - $ref: '#/components/parameters/BlogTagParametersUpdateMask'
       requestBody:
-        $ref: '#/components/requestBodies/BlogTagPatchRequestBody'
+        $ref: '#/components/requestBodies/TagPatchRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/BlogTagDetailResponse'
+          $ref: '#/components/responses/TagGetResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
-          description: BlogTag not found
+          description: Blog tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
   schemas:
-    BlogPostCreateSchema:
-      type: object
-      properties:
-        title:
-          type: string
-          examples:
-          - Hello world
-        excerpt:
-          type: string
-          examples:
-          - Short post summary.
-        content:
-          type: string
-          examples:
-          - <h1>Homepage</h1>
-        imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdField'
-        authorIds:
-          $ref: '#/components/schemas/BlogPostAuthorIdsField'
-        tagIds:
-          $ref: '#/components/schemas/BlogPostTagIdsField'
-      required:
-      - title
-      - excerpt
-      - content
-      minProperties: 3
-    BlogPostImageAssetIdField:
-      type: string
-      examples:
-      - media_asset_1
-    BlogPostAuthorIdsField:
+    AuthorListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/BlogAuthorIdField'
+        $ref: '#/components/schemas/AuthorListItemSchema'
       minItems: 0
       uniqueItems: false
+    AuthorListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogAuthorIdField'
+        name:
+          $ref: '#/components/schemas/BlogAuthorNameField'
+        excerpt:
+          $ref: '#/components/schemas/BlogAuthorExcerptField'
+        profileImageAssetId:
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/BlogAuthorCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogAuthorUpdatedAtField'
+      required:
+      - id
+      - name
+      - excerpt
+      - createdAt
+      - updatedAt
+      minProperties: 5
     BlogAuthorIdField:
       type: string
       examples:
       - wm_header
-    BlogPostTagIdsField:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogTagIdField'
-      minItems: 0
-      uniqueItems: false
-    BlogTagIdField:
+    BlogAuthorNameField:
       type: string
       examples:
-      - wp_home
-    BlogPostDetailSchema:
+      - Header menu
+    BlogAuthorExcerptField:
+      type: string
+      examples:
+      - Short author summary.
+    BlogAuthorProfileImageAssetIdField:
+      type: string
+      examples:
+      - media_asset_1
+    BlogAuthorCreatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    BlogAuthorUpdatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+      minProperties: 1
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+      minProperties: 2
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+      minProperties: 2
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+      minItems: 0
+      uniqueItems: false
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
+      minProperties: 2
+    AuthorPostSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - Header menu
+        excerpt:
+          $ref: '#/components/schemas/BlogAuthorExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogAuthorContentField'
+        profileImageAssetId:
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
+      required:
+      - name
+      minProperties: 1
+    BlogAuthorContentField:
+      type: string
+      examples:
+      - Author biography.
+    AuthorGetSchema:
       type: object
       properties:
         id:
           type: string
           examples:
-          - wp_home
-        title:
+          - wm_header
+        name:
           type: string
           examples:
-          - Hello world
+          - Header menu
         excerpt:
           type: string
           examples:
-          - Short post summary.
+          - Short author summary.
         content:
           type: string
           examples:
-          - <h1>Homepage</h1>
-        imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdField'
-        authorIds:
-          $ref: '#/components/schemas/BlogPostAuthorIdsField'
-        tagIds:
-          $ref: '#/components/schemas/BlogPostTagIdsField'
+          - Author biography.
+        profileImageAssetId:
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
         metadata:
           $ref: '#/components/schemas/WebMetadataDetailSchema'
         createdAt:
@@ -633,15 +1016,13 @@ components:
           - 1.76e+9
       required:
       - id
-      - title
+      - name
       - excerpt
       - content
-      - authorIds
-      - tagIds
       - metadata
       - createdAt
       - updatedAt
-      minProperties: 9
+      minProperties: 7
     WebMetadataDetailSchema:
       type: object
       properties:
@@ -748,348 +1129,10 @@ components:
             - id1
           minItems: 0
           uniqueItems: false
-        results:
-          type: boolean
-          examples:
-          - true
-        summary:
-          type: boolean
-          examples:
-          - true
       required:
       - ids
-      - results
-      - summary
-      minProperties: 3
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-      minProperties: 0
-    DeleteResultListSchema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            examples:
-            - id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            examples:
-            - deleted
-        required:
-        - id
-        - status
-        minProperties: 2
-      minItems: 0
-      uniqueItems: false
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          examples:
-          - 1
-        deleted:
-          type: integer
-          examples:
-          - 1
-        omitted:
-          type: integer
-          examples:
-          - 1
-      required:
-      - requested
-      - deleted
-      - omitted
-      minProperties: 3
-    BlogPostListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogPostListItemSchema'
-      minItems: 0
-      uniqueItems: false
-    BlogPostListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/BlogPostIdField'
-        title:
-          $ref: '#/components/schemas/BlogPostTitleField'
-        excerpt:
-          $ref: '#/components/schemas/BlogPostExcerptField'
-        imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdField'
-        createdAt:
-          $ref: '#/components/schemas/BlogPostCreatedAtField'
-        updatedAt:
-          $ref: '#/components/schemas/BlogPostUpdatedAtField'
-      required:
-      - id
-      - title
-      - excerpt
-      - createdAt
-      - updatedAt
-      minProperties: 5
-    BlogPostIdField:
-      type: string
-      examples:
-      - wp_home
-    BlogPostTitleField:
-      type: string
-      examples:
-      - Hello world
-    BlogPostExcerptField:
-      type: string
-      examples:
-      - Short post summary.
-    BlogPostCreatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
-    BlogPostUpdatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
-    BlogPostListItemSearchQuerySchema:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/SearchPageSchema'
-        sort:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                enum:
-                - id
-                - title
-                - createdAt
-                - updatedAt
-                examples:
-                - id
-              direction:
-                $ref: '#/components/schemas/SortDirection'
-            required:
-            - field
-            - direction
-            minProperties: 2
-          minItems: 0
-          uniqueItems: false
-        filters:
-          type: object
-          examples:
-          - search: foo
-          properties:
-            search:
-              $ref: '#/components/schemas/SearchStringField'
-          minProperties: 0
-      required:
-      - page
-      - filters
-      minProperties: 2
-    SearchPageSchema:
-      type: object
-      properties:
-        size:
-          $ref: '#/components/schemas/SearchPageSizeField'
-        number:
-          $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
-      minProperties: 2
-    SearchPageSizeField:
-      type: integer
-      examples:
-      - 20
-    SearchPageNumberField:
-      type: integer
-      examples:
-      - 1
-    SortDirection:
-      type: string
-      enum:
-      - asc
-      - desc
-      examples:
-      - asc
-    SearchStringField:
-      type: string
-      examples:
-      - foo
-    BlogPostListItemSearchSchema:
-      type: object
-      properties:
-        query:
-          $ref: '#/components/schemas/BlogPostListItemSearchQuerySchema'
-        data:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/BlogPostListItemSchema'
-              minItems: 0
-              uniqueItems: false
-            total:
-              type: integer
-              examples:
-              - 123
-          required:
-          - items
-          - total
-          minProperties: 2
-      required:
-      - query
-      - data
-      minProperties: 2
-    BlogPostPatchSchema:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/BlogPostTitleField'
-        excerpt:
-          $ref: '#/components/schemas/BlogPostExcerptField'
-        content:
-          $ref: '#/components/schemas/BlogPostContentField'
-        imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdField'
-        authorIds:
-          $ref: '#/components/schemas/BlogPostAuthorIdsField'
-        tagIds:
-          $ref: '#/components/schemas/BlogPostTagIdsField'
-      minProperties: 0
-    BlogPostContentField:
-      type: string
-      examples:
-      - <h1>Homepage</h1>
-    BlogAuthorCreateSchema:
-      type: object
-      properties:
-        name:
-          type: string
-          examples:
-          - Header menu
-        excerpt:
-          $ref: '#/components/schemas/BlogAuthorExcerptField'
-        content:
-          $ref: '#/components/schemas/BlogAuthorContentField'
-        profileImageAssetId:
-          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
-      required:
-      - name
       minProperties: 1
-    BlogAuthorExcerptField:
-      type: string
-      examples:
-      - Short author summary.
-    BlogAuthorContentField:
-      type: string
-      examples:
-      - Author biography.
-    BlogAuthorProfileImageAssetIdField:
-      type: string
-      examples:
-      - media_asset_1
-    BlogAuthorDetailSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          examples:
-          - wm_header
-        name:
-          type: string
-          examples:
-          - Header menu
-        excerpt:
-          type: string
-          examples:
-          - Short author summary.
-        content:
-          type: string
-          examples:
-          - Author biography.
-        profileImageAssetId:
-          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
-        metadata:
-          $ref: '#/components/schemas/WebMetadataDetailSchema'
-        createdAt:
-          type: number
-          format: double
-          examples:
-          - 1.76e+9
-        updatedAt:
-          type: number
-          format: double
-          examples:
-          - 1.76e+9
-      required:
-      - id
-      - name
-      - excerpt
-      - content
-      - metadata
-      - createdAt
-      - updatedAt
-      minProperties: 7
-    BlogAuthorListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogAuthorListItemSchema'
-      minItems: 0
-      uniqueItems: false
-    BlogAuthorListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/BlogAuthorIdField'
-        name:
-          $ref: '#/components/schemas/BlogAuthorNameField'
-        excerpt:
-          $ref: '#/components/schemas/BlogAuthorExcerptField'
-        profileImageAssetId:
-          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
-        createdAt:
-          $ref: '#/components/schemas/BlogAuthorCreatedAtField'
-        updatedAt:
-          $ref: '#/components/schemas/BlogAuthorUpdatedAtField'
-      required:
-      - id
-      - name
-      - excerpt
-      - createdAt
-      - updatedAt
-      minProperties: 5
-    BlogAuthorNameField:
-      type: string
-      examples:
-      - Header menu
-    BlogAuthorCreatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
-    BlogAuthorUpdatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
-    BlogAuthorListItemSearchQuerySchema:
+    AuthorQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1126,21 +1169,53 @@ components:
               $ref: '#/components/schemas/SearchStringField'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
-    BlogAuthorListItemSearchSchema:
+      minProperties: 1
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      minProperties: 0
+    SearchPageSizeField:
+      type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
+      examples:
+      - 20
+    SearchPageNumberField:
+      type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
+      examples:
+      - 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      examples:
+      - asc
+    SearchStringField:
+      type: string
+      examples:
+      - foo
+    AuthorQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogAuthorListItemSearchQuerySchema'
+          $ref: '#/components/schemas/AuthorQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/BlogAuthorListItemSchema'
+                $ref: '#/components/schemas/AuthorQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -1155,7 +1230,80 @@ components:
       - query
       - data
       minProperties: 2
-    BlogAuthorPatchSchema:
+    AuthorQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - key
+                - name
+                - createdAt
+                - updatedAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+      minProperties: 2
+    AuthorQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogAuthorIdField'
+        name:
+          $ref: '#/components/schemas/BlogAuthorNameField'
+        excerpt:
+          $ref: '#/components/schemas/BlogAuthorExcerptField'
+        profileImageAssetId:
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/BlogAuthorCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogAuthorUpdatedAtField'
+      required:
+      - id
+      - name
+      - excerpt
+      - createdAt
+      - updatedAt
+      minProperties: 5
+    AuthorPutSchema:
       type: object
       properties:
         name:
@@ -1165,108 +1313,37 @@ components:
         content:
           $ref: '#/components/schemas/BlogAuthorContentField'
         profileImageAssetId:
-          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdField'
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdFieldNullable'
       minProperties: 0
-    BlogAuthorLinkCreateSchema:
-      type: object
-      properties:
-        label:
-          type: string
-          examples:
-          - Home
-        url:
-          type: string
-          examples:
-          - /
-        priority:
-          type: integer
-          examples:
-          - 10
-        isBlank:
-          type: boolean
-          examples:
-          - false
-        permission:
-          type: string
-          examples:
-          - ''
-        notes:
-          $ref: '#/components/schemas/BlogAuthorLinkNotesField'
-      required:
-      - label
-      - url
-      - priority
-      - isBlank
-      - permission
-      minProperties: 5
-    BlogAuthorLinkNotesField:
+    BlogAuthorProfileImageAssetIdFieldNullable:
+      type:
+      - string
+      - 'null'
+      examples:
+      - media_asset_1
+    BlogAuthorUpdateMaskField:
       type: string
       examples:
-      - Visible for all visitors.
-    BlogAuthorLinkDetailSchema:
+      - name,excerpt
+    AuthorPatchSchema:
       type: object
       properties:
-        id:
-          type: string
-          examples:
-          - wmi_home
-        menuId:
-          type: string
-          examples:
-          - wm_header
-        label:
-          type: string
-          examples:
-          - Home
-        url:
-          type: string
-          examples:
-          - /
-        priority:
-          type: integer
-          examples:
-          - 10
-        isBlank:
-          type: boolean
-          examples:
-          - false
-        permission:
-          type: string
-          examples:
-          - ''
-        notes:
-          type: string
-          examples:
-          - Visible for all visitors.
-        createdAt:
-          type: number
-          format: double
-          examples:
-          - 1.76e+9
-        updatedAt:
-          type: number
-          format: double
-          examples:
-          - 1.76e+9
-      required:
-      - id
-      - menuId
-      - label
-      - url
-      - priority
-      - isBlank
-      - permission
-      - notes
-      - createdAt
-      - updatedAt
-      minProperties: 10
-    BlogAuthorLinkListSchema:
+        name:
+          $ref: '#/components/schemas/BlogAuthorNameField'
+        excerpt:
+          $ref: '#/components/schemas/BlogAuthorExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogAuthorContentField'
+        profileImageAssetId:
+          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdFieldNullable'
+      minProperties: 0
+    AuthorLinkListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/BlogAuthorLinkListItemSchema'
+        $ref: '#/components/schemas/AuthorLinkListItemSchema'
       minItems: 0
       uniqueItems: false
-    BlogAuthorLinkListItemSchema:
+    AuthorLinkListItemSchema:
       type: object
       properties:
         id:
@@ -1332,7 +1409,100 @@ components:
       format: double
       examples:
       - 1.76e+9
-    BlogAuthorLinkListItemSearchQuerySchema:
+    AuthorLinkPostSchema:
+      type: object
+      properties:
+        label:
+          type: string
+          examples:
+          - Home
+        url:
+          type: string
+          examples:
+          - /
+        priority:
+          type: integer
+          examples:
+          - 10
+        isBlank:
+          type: boolean
+          examples:
+          - false
+        permission:
+          type: string
+          examples:
+          - ''
+        notes:
+          $ref: '#/components/schemas/BlogAuthorLinkNotesField'
+      required:
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      minProperties: 5
+    BlogAuthorLinkNotesField:
+      type: string
+      examples:
+      - Visible for all visitors.
+    AuthorLinkGetSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - wmi_home
+        menuId:
+          type: string
+          examples:
+          - wm_header
+        label:
+          type: string
+          examples:
+          - Home
+        url:
+          type: string
+          examples:
+          - /
+        priority:
+          type: integer
+          examples:
+          - 10
+        isBlank:
+          type: boolean
+          examples:
+          - false
+        permission:
+          type: string
+          examples:
+          - ''
+        notes:
+          type: string
+          examples:
+          - Visible for all visitors.
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          examples:
+          - 1.76e+9
+      required:
+      - id
+      - menuId
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      - notes
+      - createdAt
+      - updatedAt
+      minProperties: 10
+    AuthorLinkQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1371,21 +1541,20 @@ components:
               $ref: '#/components/schemas/SearchStringField'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
-    BlogAuthorLinkListItemSearchSchema:
+      minProperties: 1
+    AuthorLinkQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogAuthorLinkListItemSearchQuerySchema'
+          $ref: '#/components/schemas/AuthorLinkQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/BlogAuthorLinkListItemSchema'
+                $ref: '#/components/schemas/AuthorLinkQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -1400,7 +1569,117 @@ components:
       - query
       - data
       minProperties: 2
-    BlogAuthorLinkPatchSchema:
+    AuthorLinkQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - label
+                - url
+                - priority
+                - permission
+                - createdAt
+                - updatedAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    AuthorLinkQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogAuthorLinkIdField'
+        menuId:
+          $ref: '#/components/schemas/BlogAuthorIdField'
+        label:
+          $ref: '#/components/schemas/BlogAuthorLinkLabelField'
+        url:
+          $ref: '#/components/schemas/BlogAuthorLinkURLField'
+        priority:
+          $ref: '#/components/schemas/BlogAuthorLinkPriorityField'
+        isBlank:
+          $ref: '#/components/schemas/BlogAuthorLinkIsBlankField'
+        permission:
+          $ref: '#/components/schemas/BlogAuthorLinkPermissionField'
+        createdAt:
+          $ref: '#/components/schemas/BlogAuthorLinkCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogAuthorLinkUpdatedAtField'
+      required:
+      - id
+      - menuId
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      - createdAt
+      - updatedAt
+      minProperties: 9
+    AuthorLinkPutSchema:
+      type: object
+      properties:
+        label:
+          type: string
+          examples:
+          - Home
+        url:
+          type: string
+          examples:
+          - /
+        priority:
+          type: integer
+          examples:
+          - 10
+        isBlank:
+          type: boolean
+          examples:
+          - false
+        permission:
+          type: string
+          examples:
+          - ''
+        notes:
+          $ref: '#/components/schemas/BlogAuthorLinkNotesField'
+      required:
+      - label
+      - url
+      - priority
+      - isBlank
+      - permission
+      minProperties: 5
+    BlogAuthorLinkUpdateMaskField:
+      type: string
+      examples:
+      - label,url
+    AuthorLinkPatchSchema:
       type: object
       properties:
         label:
@@ -1416,7 +1695,322 @@ components:
         notes:
           $ref: '#/components/schemas/BlogAuthorLinkNotesField'
       minProperties: 0
-    BlogSettingsDetailSchema:
+    PostListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/PostListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    PostListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostIdField'
+        title:
+          $ref: '#/components/schemas/BlogPostTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/BlogPostCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogPostUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+      minProperties: 5
+    BlogPostIdField:
+      type: string
+      examples:
+      - wp_home
+    BlogPostTitleField:
+      type: string
+      examples:
+      - Hello world
+    BlogPostExcerptField:
+      type: string
+      examples:
+      - Short post summary.
+    BlogPostImageAssetIdField:
+      type: string
+      examples:
+      - media_asset_1
+    BlogPostCreatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    BlogPostUpdatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    PostPostSchema:
+      type: object
+      properties:
+        title:
+          type: string
+          examples:
+          - Hello world
+        excerpt:
+          type: string
+          examples:
+          - Short post summary.
+        content:
+          type: string
+          examples:
+          - <h1>Homepage</h1>
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+        authorIds:
+          $ref: '#/components/schemas/BlogPostAuthorIdsField'
+        tagIds:
+          $ref: '#/components/schemas/BlogPostTagIdsField'
+      required:
+      - title
+      - excerpt
+      - content
+      minProperties: 3
+    BlogPostAuthorIdsField:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogAuthorIdField'
+      minItems: 0
+      uniqueItems: false
+    BlogPostTagIdsField:
+      type: array
+      items:
+        $ref: '#/components/schemas/BlogTagIdField'
+      minItems: 0
+      uniqueItems: false
+    BlogTagIdField:
+      type: string
+      examples:
+      - wp_home
+    PostGetSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          examples:
+          - wp_home
+        title:
+          type: string
+          examples:
+          - Hello world
+        excerpt:
+          type: string
+          examples:
+          - Short post summary.
+        content:
+          type: string
+          examples:
+          - <h1>Homepage</h1>
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+        authorIds:
+          $ref: '#/components/schemas/BlogPostAuthorIdsField'
+        tagIds:
+          $ref: '#/components/schemas/BlogPostTagIdsField'
+        metadata:
+          $ref: '#/components/schemas/WebMetadataDetailSchema'
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          examples:
+          - 1.76e+9
+      required:
+      - id
+      - title
+      - excerpt
+      - content
+      - authorIds
+      - tagIds
+      - metadata
+      - createdAt
+      - updatedAt
+      minProperties: 9
+    PostQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - filters
+      minProperties: 1
+    PostQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/PostQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/PostQueryItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    PostQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    PostQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogPostIdField'
+        title:
+          $ref: '#/components/schemas/BlogPostTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/BlogPostCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogPostUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+      minProperties: 5
+    PostPutSchema:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/BlogPostTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogPostContentField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdFieldNullable'
+        authorIds:
+          $ref: '#/components/schemas/BlogPostAuthorIdsField'
+        tagIds:
+          $ref: '#/components/schemas/BlogPostTagIdsField'
+      minProperties: 0
+    BlogPostContentField:
+      type: string
+      examples:
+      - <h1>Homepage</h1>
+    BlogPostImageAssetIdFieldNullable:
+      type:
+      - string
+      - 'null'
+      examples:
+      - media_asset_1
+    BlogPostUpdateMaskField:
+      type: string
+      examples:
+      - title,imageAssetId
+    PostPatchSchema:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/BlogPostTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogPostExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogPostContentField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogPostImageAssetIdFieldNullable'
+        authorIds:
+          $ref: '#/components/schemas/BlogPostAuthorIdsField'
+        tagIds:
+          $ref: '#/components/schemas/BlogPostTagIdsField'
+      minProperties: 0
+    SettingsGetSchema:
       type: object
       properties:
         postListPath:
@@ -1451,7 +2045,7 @@ components:
       - authorPathPrefix
       - tagPathPrefix
       minProperties: 6
-    BlogSettingsUpdateSchema:
+    SettingsPutSchema:
       type: object
       properties:
         postListPath:
@@ -1486,7 +2080,57 @@ components:
       - authorPathPrefix
       - tagPathPrefix
       minProperties: 6
-    BlogTagCreateSchema:
+    TagListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/TagListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    TagListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogTagIdField'
+        title:
+          $ref: '#/components/schemas/BlogTagTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogTagExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogTagImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/BlogTagCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogTagUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+      minProperties: 5
+    BlogTagTitleField:
+      type: string
+      examples:
+      - Swift
+    BlogTagExcerptField:
+      type: string
+      examples:
+      - Short tag summary.
+    BlogTagImageAssetIdField:
+      type: string
+      examples:
+      - media_asset_1
+    BlogTagCreatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    BlogTagUpdatedAtField:
+      type: number
+      format: double
+      examples:
+      - 1.76e+9
+    TagPostSchema:
       type: object
       properties:
         title:
@@ -1508,11 +2152,7 @@ components:
       - excerpt
       - content
       minProperties: 3
-    BlogTagImageAssetIdField:
-      type: string
-      examples:
-      - media_asset_1
-    BlogTagDetailSchema:
+    TagGetSchema:
       type: object
       properties:
         id:
@@ -1554,53 +2194,7 @@ components:
       - createdAt
       - updatedAt
       minProperties: 7
-    BlogTagListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/BlogTagListItemSchema'
-      minItems: 0
-      uniqueItems: false
-    BlogTagListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/BlogTagIdField'
-        title:
-          $ref: '#/components/schemas/BlogTagTitleField'
-        excerpt:
-          $ref: '#/components/schemas/BlogTagExcerptField'
-        imageAssetId:
-          $ref: '#/components/schemas/BlogTagImageAssetIdField'
-        createdAt:
-          $ref: '#/components/schemas/BlogTagCreatedAtField'
-        updatedAt:
-          $ref: '#/components/schemas/BlogTagUpdatedAtField'
-      required:
-      - id
-      - title
-      - excerpt
-      - createdAt
-      - updatedAt
-      minProperties: 5
-    BlogTagTitleField:
-      type: string
-      examples:
-      - Swift
-    BlogTagExcerptField:
-      type: string
-      examples:
-      - Short tag summary.
-    BlogTagCreatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
-    BlogTagUpdatedAtField:
-      type: number
-      format: double
-      examples:
-      - 1.76e+9
-    BlogTagListItemSearchQuerySchema:
+    TagQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1636,21 +2230,20 @@ components:
               $ref: '#/components/schemas/SearchStringField'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
-    BlogTagListItemSearchSchema:
+      minProperties: 1
+    TagQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogTagListItemSearchQuerySchema'
+          $ref: '#/components/schemas/TagQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/BlogTagListItemSchema'
+                $ref: '#/components/schemas/TagQueryItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -1665,7 +2258,68 @@ components:
       - query
       - data
       minProperties: 2
-    BlogTagPatchSchema:
+    TagQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    TagQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BlogTagIdField'
+        title:
+          $ref: '#/components/schemas/BlogTagTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogTagExcerptField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogTagImageAssetIdField'
+        createdAt:
+          $ref: '#/components/schemas/BlogTagCreatedAtField'
+        updatedAt:
+          $ref: '#/components/schemas/BlogTagUpdatedAtField'
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+      minProperties: 5
+    TagPutSchema:
       type: object
       properties:
         title:
@@ -1675,105 +2329,116 @@ components:
         content:
           $ref: '#/components/schemas/BlogTagContentField'
         imageAssetId:
-          $ref: '#/components/schemas/BlogTagImageAssetIdField'
+          $ref: '#/components/schemas/BlogTagImageAssetIdFieldNullable'
       minProperties: 0
     BlogTagContentField:
       type: string
       examples:
       - <h1>Homepage</h1>
+    BlogTagImageAssetIdFieldNullable:
+      type:
+      - string
+      - 'null'
+      examples:
+      - media_asset_1
+    BlogTagUpdateMaskField:
+      type: string
+      examples:
+      - title,imageAssetId
+    TagPatchSchema:
+      type: object
+      properties:
+        title:
+          $ref: '#/components/schemas/BlogTagTitleField'
+        excerpt:
+          $ref: '#/components/schemas/BlogTagExcerptField'
+        content:
+          $ref: '#/components/schemas/BlogTagContentField'
+        imageAssetId:
+          $ref: '#/components/schemas/BlogTagImageAssetIdFieldNullable'
+      minProperties: 0
   responses:
-    BlogPostDetailResponse:
-      description: BlogPost response
+    AuthorListResponse:
+      description: Blog author list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogPostDetailSchema'
-    DeleteResponse:
-      description: Delete response
+            $ref: '#/components/schemas/AuthorListSchema'
+    AuthorGetResponse:
+      description: Blog author response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
-    BlogPostListResponse:
-      description: BlogPost list response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BlogPostListSchema'
-    BlogPostListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/AuthorGetSchema'
+    NoContentResponse:
+      description: Delete succeeded
+    AuthorQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogPostListItemSearchSchema'
-    BlogAuthorDetailResponse:
-      description: BlogAuthor response
+            $ref: '#/components/schemas/AuthorQueryItemSearchSchema'
+    AuthorLinkListResponse:
+      description: Blog author link list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorDetailSchema'
-    BlogAuthorListResponse:
-      description: BlogAuthor list response
+            $ref: '#/components/schemas/AuthorLinkListSchema'
+    AuthorLinkGetResponse:
+      description: Blog author link response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorListSchema'
-    BlogAuthorListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/AuthorLinkGetSchema'
+    AuthorLinkQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorListItemSearchSchema'
-    BlogAuthorLinkDetailResponse:
-      description: BlogAuthorLink response
+            $ref: '#/components/schemas/AuthorLinkQueryItemSearchSchema'
+    PostListResponse:
+      description: Blog post list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorLinkDetailSchema'
-    BlogAuthorLinkListResponse:
-      description: BlogAuthorLink list response
+            $ref: '#/components/schemas/PostListSchema'
+    PostGetResponse:
+      description: Blog post response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorLinkListSchema'
-    BlogAuthorLinkListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/PostGetSchema'
+    PostQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorLinkListItemSearchSchema'
-    BlogSettingsDetailResponse:
-      description: BlogSettings response
+            $ref: '#/components/schemas/PostQueryItemSearchSchema'
+    SettingsGetResponse:
+      description: Blog settings response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogSettingsDetailSchema'
-    BlogTagDetailResponse:
-      description: BlogTag response
+            $ref: '#/components/schemas/SettingsGetSchema'
+    TagListResponse:
+      description: Blog tag list response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogTagDetailSchema'
-    BlogTagListResponse:
-      description: BlogTag list response
+            $ref: '#/components/schemas/TagListSchema'
+    TagGetResponse:
+      description: Blog tag response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogTagListSchema'
-    BlogTagListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/TagGetSchema'
+    TagQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogTagListItemSearchSchema'
+            $ref: '#/components/schemas/TagQueryItemSearchSchema'
   parameters:
-    BlogPostIdParameter:
-      name: blogPostId
-      in: path
-      required: true
-      schema:
-        $ref: '#/components/schemas/BlogPostIdField'
-      description: BlogPost id
     BlogAuthorIdParameter:
       name: blogAuthorId
       in: path
@@ -1781,7 +2446,16 @@ components:
       schema:
         $ref: '#/components/schemas/BlogAuthorIdField'
       description: BlogAuthor id
-    BlogAuthorLinkMenuIdParameter:
+    BlogAuthorParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogAuthorUpdateMaskField'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
+    BlogAuthorLinkAuthorIdParameter:
       name: blogAuthorId
       in: path
       required: true
@@ -1795,6 +2469,31 @@ components:
       schema:
         $ref: '#/components/schemas/BlogAuthorLinkIdField'
       description: BlogAuthorLink id
+    BlogAuthorLinkParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogAuthorLinkUpdateMaskField'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
+    BlogPostIdParameter:
+      name: blogPostId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogPostIdField'
+      description: BlogPost id
+    BlogPostParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogPostUpdateMaskField'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
     BlogTagIdParameter:
       name: blogTagId
       in: path
@@ -1802,12 +2501,21 @@ components:
       schema:
         $ref: '#/components/schemas/BlogTagIdField'
       description: BlogTag id
+    BlogTagParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/BlogTagUpdateMaskField'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
   requestBodies:
-    BlogPostRequestBody:
+    AuthorPostRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogPostCreateSchema'
+            $ref: '#/components/schemas/AuthorPostSchema'
       required: true
     DeleteRequestBody:
       content:
@@ -1815,77 +2523,77 @@ components:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
-    BlogPostUpdateRequestBody:
+    AuthorPutRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogPostPatchSchema'
+            $ref: '#/components/schemas/AuthorPutSchema'
       required: true
-    BlogPostPatchRequestBody:
+    AuthorPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogPostPatchSchema'
+            $ref: '#/components/schemas/AuthorPatchSchema'
       required: true
-    BlogAuthorRequestBody:
+    AuthorLinkPostRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorCreateSchema'
+            $ref: '#/components/schemas/AuthorLinkPostSchema'
       required: true
-    BlogAuthorUpdateRequestBody:
+    AuthorLinkPutRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorPatchSchema'
+            $ref: '#/components/schemas/AuthorLinkPutSchema'
       required: true
-    BlogAuthorPatchRequestBody:
+    AuthorLinkPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorPatchSchema'
+            $ref: '#/components/schemas/AuthorLinkPatchSchema'
       required: true
-    BlogAuthorLinkRequestBody:
+    PostPostRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorLinkCreateSchema'
+            $ref: '#/components/schemas/PostPostSchema'
       required: true
-    BlogAuthorLinkUpdateRequestBody:
+    PostPutRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorLinkCreateSchema'
+            $ref: '#/components/schemas/PostPutSchema'
       required: true
-    BlogAuthorLinkPatchRequestBody:
+    PostPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogAuthorLinkPatchSchema'
+            $ref: '#/components/schemas/PostPatchSchema'
       required: true
-    BlogSettingsUpdateRequestBody:
+    SettingsPutRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogSettingsUpdateSchema'
+            $ref: '#/components/schemas/SettingsPutSchema'
       required: true
-    BlogTagRequestBody:
+    TagPostRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogTagCreateSchema'
+            $ref: '#/components/schemas/TagPostSchema'
       required: true
-    BlogTagUpdateRequestBody:
+    TagPutRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogTagPatchSchema'
+            $ref: '#/components/schemas/TagPutSchema'
       required: true
-    BlogTagPatchRequestBody:
+    TagPatchRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/BlogTagPatchSchema'
+            $ref: '#/components/schemas/TagPatchSchema'
       required: true
   securitySchemes:
     bearerAuth:

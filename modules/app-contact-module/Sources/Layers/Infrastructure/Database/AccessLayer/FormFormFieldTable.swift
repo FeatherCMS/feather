@@ -1,7 +1,25 @@
+import FeatherDBAL
 import FeatherDatabase
+import FeatherInfrastructure
 
-struct FormFormFieldTable {
+struct FormFormFieldTable: DatabaseTable, DatabaseTableWithDelete {
+    static let name = "contact_form_form_field"
+    static let columns = Columns()
+
+    struct Columns: DatabaseTableColumns {
+        let formId = DatabaseTableColumn<String>(name: "form_id")
+        let fieldId = DatabaseTableColumn<String>(name: "field_id")
+        let position = DatabaseTableColumn<Int>(name: "position")
+    }
+
+    enum Fields {
+        static let formID = "form_id"
+        static let fieldID = "field_id"
+        static let position = "position"
+    }
+
     let connection: any DatabaseConnection
+    let context: DatabaseTransactionContext
 
     func assign(
         formId: String,
@@ -10,9 +28,17 @@ struct FormFormFieldTable {
     ) async throws {
         try await connection.run(
             query: #"""
-                INSERT INTO contact_form_form_field (form_id, field_id, position)
+                INSERT INTO \#(unescaped: Self.name) (
+                    \#(unescaped: Fields.formID),
+                    \#(unescaped: Fields.fieldID),
+                    \#(unescaped: Fields.position)
+                )
                 VALUES (\#(formId), \#(fieldId), \#(position))
-                ON CONFLICT (form_id, field_id) DO UPDATE SET position = EXCLUDED.position;
+                ON CONFLICT (
+                    \#(unescaped: Fields.formID),
+                    \#(unescaped: Fields.fieldID)
+                ) DO UPDATE SET
+                    \#(unescaped: Fields.position) = EXCLUDED.\#(unescaped: Fields.position);
                 """#
         ) { _ in }
     }
@@ -21,11 +47,10 @@ struct FormFormFieldTable {
         formId: String,
         fieldId: String
     ) async throws {
-        try await connection.run(
-            query: #"""
-                DELETE FROM contact_form_form_field
-                WHERE form_id = \#(formId) AND field_id = \#(fieldId);
-                """#
-        ) { _ in }
+        try await DatabaseAccessLayer<Self>(context: context).delete(
+            where: DatabaseQueryFilter<Self>()
+                .where(\.formId, equals: formId)
+                .where(\.fieldId, equals: fieldId)
+        )
     }
 }

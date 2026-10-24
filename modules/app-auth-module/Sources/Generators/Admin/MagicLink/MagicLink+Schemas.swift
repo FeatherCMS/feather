@@ -1,0 +1,3 @@
+extension MagicLink {
+    enum Schemas {}
+}

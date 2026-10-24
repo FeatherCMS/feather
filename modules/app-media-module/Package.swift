@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -21,6 +20,15 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
+let swiftSettings = sharedSwiftSettings + [
+    .treatAllWarnings(as: .error)
+]
+
+let generatedAPISwiftSettings = sharedSwiftSettings + [
+    // https://github.com/apple/swift-openapi-generator/issues/946
+    .unsafeFlags(["-suppress-warnings"])
+]
+
 
 let package = Package(
     name: "app-media-module",
@@ -33,18 +41,18 @@ let package = Package(
     ],
     products: [
         .library(name: "MediaDomain", targets: ["MediaDomain"]),
-        .library(name: "MediaContracts", targets: ["MediaContracts"]),
+        .library(name: "MediaModule", targets: ["MediaModule"]),
         .library(name: "MediaApplication", targets: ["MediaApplication"]),
         .library(name: "MediaInfrastructure", targets: ["MediaInfrastructure"]),
         .library(name: "MediaAdminAPI", targets: ["MediaAdminAPI"]),
         .library(name: "MediaAppAPI", targets: ["MediaAppAPI"]),
+        .library(name: "MediaOpenAPIGeneratorSupport", targets: ["MediaOpenAPIGeneratorSupport"]),
         .executable(name: "MediaAdminOpenAPIGenerator", targets: ["MediaAdminOpenAPIGenerator"]),
         .executable(name: "MediaAppOpenAPIGenerator", targets: ["MediaAppOpenAPIGenerator"]),
         .library(name: "MediaBackend", targets: ["MediaBackend"]),
-        .library(name: "MediaFrontend", targets: ["MediaFrontend"]),
+        .library(name: "MediaWebAdmin", targets: ["MediaWebAdmin"]),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
 
         .package(
             url: "https://github.com/feather-framework/feather-storage",
@@ -53,7 +61,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.34.0"),
         .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "7.0.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.0"),
-        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.12.1"),
+        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.13.2"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.27.0"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.0.0"),
         .package(url: "https://github.com/hummingbird-project/swift-jobs", from: "1.1.0"),
@@ -62,15 +70,39 @@ let package = Package(
             exact: "1.0.0-beta.4"
         ),
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            from: "2.0.1"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-http-types",
+            from: "1.0.0"
+        ),
         .package(path: "../app-system-module"),
     ],
     targets: [
         .target(
-            name: "MediaContracts",
+            name: "MediaModule",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
@@ -78,7 +110,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
 
-                .target(name: "MediaContracts"),
+                .target(name: "MediaModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -92,8 +124,10 @@ let package = Package(
                 .product(name: "MIME", package: "swift-web-standards"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "MediaDomain"),
+                .target(name: "MediaModule"),
             ],
             path: "Sources/Layers/Application",
             swiftSettings: swiftSettings
@@ -102,11 +136,14 @@ let package = Package(
             name: "MediaInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "FeatherDomain", package: "feather-core"),
 
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .target(name: "MediaApplication"),
+                .target(name: "MediaModule"),
             ],
             path: "Sources/Layers/Infrastructure",
             swiftSettings: swiftSettings
@@ -117,7 +154,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: generatedAPISwiftSettings
         ),
         .target(
             name: "MediaAppAPI",
@@ -125,6 +162,15 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
+            swiftSettings: generatedAPISwiftSettings
+        ),
+        .target(
+            name: "MediaOpenAPIGeneratorSupport",
+            dependencies: [
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
+            ],
+            path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
         ),
         .executableTarget(
@@ -160,20 +206,25 @@ let package = Package(
                 .target(name: "MediaInfrastructure"),
                 .target(name: "MediaAdminAPI"),
                 .target(name: "MediaAppAPI"),
+                .target(name: "MediaModule"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "MediaFrontend",
+            name: "MediaWebAdmin",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "WebBuilders", package: "swift-web-standards"),
+                .product(name: "WebComponents", package: "swift-web-standards"),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
 
-                .target(name: "MediaContracts"),
+                .target(name: "MediaModule"),
                 .target(name: "MediaAdminAPI"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
         .testTarget(
@@ -181,6 +232,7 @@ let package = Package(
             dependencies: [
                 .target(name: "MediaDomain"),
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
@@ -188,9 +240,67 @@ let package = Package(
             dependencies: [
                 .target(name: "MediaApplication"),
                 .target(name: "MediaDomain"),
+                .product(name: "FeatherTesting", package: "feather-core"),
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
             ],
+            path: "Tests/Layers/Application",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "MediaInfrastructureTests",
+            dependencies: [
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .target(name: "MediaInfrastructure"),
+            ],
+            path: "Tests/Layers/Infrastructure",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "MediaBackendTests",
+            dependencies: [
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherStorage", package: "feather-storage"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "HummingbirdTesting", package: "hummingbird"),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
+                .target(name: "MediaAdminAPI"),
+                .target(name: "MediaApplication"),
+                .target(name: "MediaBackend"),
+                .target(name: "MediaModule"),
+            ],
+            path: "Tests/Composition/Backend",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "MediaWebAdminTests",
+            dependencies: [
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .target(name: "MediaWebAdmin"),
+            ],
+            path: "Tests/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
     ]

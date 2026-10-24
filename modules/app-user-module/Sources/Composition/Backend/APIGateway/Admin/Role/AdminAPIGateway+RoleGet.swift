@@ -1,6 +1,8 @@
-import FeatherContracts
+import FeatherModuleKit
 public import UserAdminAPI
 import UserApplication
+import UserDomain
+import UserModule
 
 extension AdminAPIGateway {
 
@@ -16,8 +18,19 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(roleDetailSchema(from: result))
             )
         )
     }
+}
+
+private func roleDetailSchema(
+    from output: Role.Detail.Output
+) -> Components.Schemas.UserRoleDetailSchema {
+    .init(
+        id: output.id,
+        key: output.key,
+        name: output.name,
+        notes: output.notes
+    )
 }

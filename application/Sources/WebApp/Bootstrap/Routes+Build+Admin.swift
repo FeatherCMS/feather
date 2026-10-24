@@ -1,76 +1,97 @@
-import FeatherContracts
+import SystemModule
+import FeatherWebShared
+import FeatherModuleKit
 import WebApplication
-import BlogFrontend
-import MediaFrontend
-import ContactFrontend
-import NewsletterFrontend
-import WebFrontend
-import AnalyticsFrontend
-import RedirectFrontend
-import UserFrontend
-import AccountFrontend
-import SystemFrontend
-import AuthFrontend
-import FeatherAdmin
+import BlogWebAdmin
+import MediaWebAdmin
+import ContactWebAdmin
+import NewsletterWebAdmin
+import NewsWebAdmin
+import WebModuleWebAdmin
+import WebModuleWebApp
+import AnalyticsWebAdmin
+import RedirectWebAdmin
+import UserWebAdmin
+import AccountWebAdmin
+import SystemWebAdmin
+import AuthWebAdmin
+import FeatherWebAdmin
 import FeatherApplication
 import Hummingbird
 
 func buildAdminRoutes(
     router: any RouterMethods<AuthenticatedRequestContext>,
+    environment: AppEnvironment,
     renderingEngine: any RenderingEngine,
     adminEvents: any EventPublisher,
-    apiBuilder: APIBuilder
+    systemRoutes: SystemWebAdmin.Router.Routes,
+    redirectRoutes: RedirectWebAdmin.Router.Routes,
+    newsRoutes: NewsWebAdmin.Router.Routes
 ) {
-    AuthFrontend.AdminAuth(
-        apiBuilder: apiBuilder.auth,
+    AuthWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AccountAdmin(
-        apiBuilder: apiBuilder.account,
+    AccountWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AdminUser(apiBuilder: apiBuilder.user, renderingEngine: renderingEngine)
-        .route(on: router)
-    AdminSystem(
-        apiBuilder: apiBuilder.system,
+    UserWebAdmin.Router(
+        environment: environment,
+        renderingEngine: renderingEngine
+    )
+    .route(on: router)
+    SystemWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine,
-        adminEvents: adminEvents
+        adminEvents: adminEvents,
+        routes: systemRoutes
     )
     .route(on: router)
-    AdminAnalytics(
-        apiBuilder: apiBuilder.analytics,
+    AnalyticsWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AdminRedirect(
-        apiBuilder: apiBuilder.redirect,
-        renderingEngine: renderingEngine
+    RedirectWebAdmin.Router(
+        environment: environment,
+        renderingEngine: renderingEngine,
+        routes: redirectRoutes
     )
     .route(on: router)
-    AdminBlog(
-        apiBuilder: apiBuilder.blog,
+    BlogWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents
     )
     .route(on: router)
 
-    AdminWeb(
-        apiBuilder: apiBuilder.web,
+    WebModuleWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents
     )
     .route(on: router)
-    AdminMedia(apiBuilder: apiBuilder.media, renderingEngine: renderingEngine)
-        .route(on: router)
-    AdminNewsletter(
-        apiBuilder: apiBuilder.newsletter,
+    MediaWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AdminContact(
-        apiBuilder: apiBuilder.contact,
+    NewsletterWebAdmin.Router(
+        environment: environment,
+        renderingEngine: renderingEngine
+    )
+    .route(on: router)
+    NewsWebAdmin.Router(
+        environment: environment,
+        renderingEngine: renderingEngine,
+        routes: newsRoutes
+    )
+    .route(on: router)
+    ContactWebAdmin.Router(
+        environment: environment,
         renderingEngine: renderingEngine
     )
     .route(on: router)

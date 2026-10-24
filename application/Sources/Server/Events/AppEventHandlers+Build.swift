@@ -1,15 +1,16 @@
-import FeatherContracts
+import FeatherModuleKit
 //
 //  AppEventHandlers+Build.swift
 //  application
 //
 
 import AccountInfrastructure
+import AccountModule
 
 func buildAppEventPublisher() -> any EventPublisher {
     var events = EventRegistry()
 
-    AccountInfrastructure.EventHandlers.register(in: &events)
+    AccountModule.Event.Handlers.register(in: &events)
 
     return events
 }

@@ -1,12 +1,12 @@
 import AuthApplication
+import FeatherWebShared
+import Environment
 import Hummingbird
 import OpenAPIHummingbird
 import OpenAPIRuntime
 import Logging
 import SystemAdminAPI
-import SystemAppAPI
 import UserAdminAPI
-import UserAppAPI
 import AccountAdminAPI
 import AccountAppAPI
 import RedirectAdminAPI
@@ -40,8 +40,8 @@ import AuthAppAPI
 
 func buildRouter(
     modules: AppModules
-) throws -> Router<DefaultRequestContext> {
-    let router = Router(context: DefaultRequestContext.self)
+) throws -> Router<BasicRequestContext> {
+    let router = Router(context: BasicRequestContext.self)
 
     router.addMiddleware {
         // LOG
@@ -102,7 +102,8 @@ func buildRouter(
                     .makeTokenAuth()
                     .execute(.init(token: token))?
                     .identityId
-            }
+            },
+            logFilter: BackendAPIAnalyticsLogFilter()
         )
     }
 
@@ -119,17 +120,6 @@ func buildRouter(
     ]
 
     try SystemBackend.AdminAPIGateway(useCases: modules.system)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-    try SystemBackend.AppAPIGateway(useCases: modules.system)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-
-    try UserBackend.AppAPIGateway(useCases: modules.user)
         .registerHandlers(
             on: router,
             middlewares: middlewares
@@ -184,7 +174,11 @@ func buildRouter(
             middlewares: middlewares
         )
 
-    try WebBackend.AppAPIGateway(useCases: modules.web)
+    try WebBackend.AppAPIGateway(
+        useCases: modules.web,
+        mediaUseCases: modules.media,
+        mediaResolver: modules.mediaResolver
+    )
         .registerHandlers(
             on: router,
             middlewares: middlewares

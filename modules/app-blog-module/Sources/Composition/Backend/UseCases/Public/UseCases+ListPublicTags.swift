@@ -1,43 +1,30 @@
 public import BlogApplication
 import BlogInfrastructure
 import FeatherApplication
-import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import MediaBackend
 import SystemInfrastructure
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    public func makeListPublicTags() -> ListPublicTags {
+    public func makeListPublicTags() -> Public.Tag.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadPublic(
-                    post: PostDatabaseQueries(
+                Public.Tag.List.Scope(
+                    tag: Public.Tag.Database(
                         context: context,
-                        metadata: MetadataDatabaseQueries(
+                        metadata: WebModule.Metadata.Query.Database(
                             context: context
                         )
                     ),
-                    author: AuthorDatabaseQueries(
-                        context: context,
-                        metadata: MetadataDatabaseQueries(
-                            context: context
-                        )
-                    ),
-                    tag: TagDatabaseQueries(
-                        context: context,
-                        metadata: MetadataDatabaseQueries(
-                            context: context
-                        )
-                    ),
-                    authorLink: AuthorLinkDatabaseQueries(
-                        context: context
-                    ),
-                    metadata: MetadataDatabaseQueries(
+                    metadata: WebModule.Metadata.Query.Database(
                         context: context
                     )
                 )

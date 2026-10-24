@@ -1,0 +1,4 @@
+
+extension Permission {
+    enum Delete {}
+}

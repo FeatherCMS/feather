@@ -3,7 +3,7 @@ import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 struct Info: InfoRepresentable {
-    var title: String { "System App API" }
+    var title: String { "Redirect App API" }
     var version: String { "0.1.0" }
 }
 

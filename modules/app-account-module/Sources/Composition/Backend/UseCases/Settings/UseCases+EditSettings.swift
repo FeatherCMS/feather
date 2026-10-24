@@ -1,15 +1,16 @@
 import AccountApplication
 import AccountInfrastructure
+import AccountModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeEditSettings() -> AccountApplication.EditSettings {
+    func makeEditSettings() -> Settings.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteSettings(
-                    settings: SettingsDatabaseRepository(context: context)
+                Settings.Edit.Scope(
+                    settings: Settings.Repository.Database(context: context)
                 )
             }
         )

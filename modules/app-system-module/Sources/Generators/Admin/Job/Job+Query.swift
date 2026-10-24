@@ -1,0 +1,4 @@
+
+extension Job {
+    enum Query {}
+}

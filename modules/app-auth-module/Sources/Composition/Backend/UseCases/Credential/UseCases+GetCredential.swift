@@ -1,20 +1,21 @@
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeGetCredential() -> GetCredential {
+    func makeGetCredential() -> Credential.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadCredentialLink(
-                    credential: CredentialDatabaseQueries(
+                Credential.Detail.Scope(
+                    credential: Credential.Detail.Query.Database(
                         context: context
                     )
                 )
             }
         )
-        return GetCredential(authorizer: authorizer, query: query)
+        return Credential.Detail.UseCase(authorizer: authorizer, query: query)
     }
 }

@@ -1,15 +1,17 @@
 import AnalyticsApplication
+import AnalyticsDomain
 import AnalyticsInfrastructure
+import AnalyticsModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeGetLog() -> GetLog {
+    func makeLogDetail() -> Log.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadLog(
-                    log: LogDatabaseQueries(
+                Log.Detail.Scope(
+                    query: LogDatabaseQueries(
                         context: context
                     )
                 )

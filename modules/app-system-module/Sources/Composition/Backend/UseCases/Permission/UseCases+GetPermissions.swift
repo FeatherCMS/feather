@@ -1,17 +1,19 @@
 import FeatherInfrastructure
 import SystemApplication
 import SystemInfrastructure
+import SystemModule
 
 extension UseCases {
 
-    func makeGetPermissions() -> GetPermission {
+    func makeGetPermissions() -> SystemModule.Permission.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadPermission(
-                    permission: PermissionDatabaseQueries(
-                        context: context
-                    )
+                SystemModule.Permission.Detail.Scope(
+                    permission: SystemModule.Permission.Detail.Query
+                        .Database(
+                            context: context
+                        )
                 )
             }
         )
