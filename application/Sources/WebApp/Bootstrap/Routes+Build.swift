@@ -77,7 +77,7 @@ func buildRouter(
         in: &adminEvents,
         environment: environment
     )
-    WebModule.Event.Handlers.registerDashboard(
+    WebModuleWebAdmin.Event.Handlers.registerDashboard(
         in: &adminEvents,
         environment: environment
     )
@@ -113,7 +113,7 @@ func buildRouter(
     )
     NewsletterWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     ContactWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
-    WebModule.Event.Handlers.registerMenu(in: &adminEvents)
+    WebModuleWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(
             event: AdminRichContentEditorBlockProvider(),

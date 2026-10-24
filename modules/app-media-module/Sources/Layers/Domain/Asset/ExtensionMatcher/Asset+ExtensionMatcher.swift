@@ -8,42 +8,45 @@ import FeatherModuleKit
 import Foundation
 public import MediaModule
 
-extension Asset.ExtensionMatcher {
-    public static func matches(
-        `extension`: String,
-        processor: Variant.Processor.Model
-    ) -> Bool {
-        let assetExtension = canonicalExtension(from: `extension`) ?? "bin"
-        let acceptedExtensions = processor.matchExtensions
-            .components(separatedBy: CharacterSet(charactersIn: ",; \n\r\t"))
-            .compactMap { canonicalExtension(from: String($0)) }
-            .filter { !$0.isEmpty }
-        return acceptedExtensions.contains(assetExtension)
-    }
+extension Asset {
+    public enum ExtensionMatcher {
+        public static func matches(
+            `extension`: String,
+            processor: Variant.Processor.Model
+        ) -> Bool {
+            let assetExtension = canonicalExtension(from: `extension`) ?? "bin"
+            let acceptedExtensions = processor.matchExtensions
+                .components(
+                    separatedBy: CharacterSet(charactersIn: ",; \n\r\t")
+                )
+                .compactMap { canonicalExtension(from: String($0)) }
+                .filter { !$0.isEmpty }
+            return acceptedExtensions.contains(assetExtension)
+        }
 
-    public static func canonicalExtension(
-        from value: String
-    ) -> String? {
-        let normalized = value.whitespaceTrimmed
-            .lowercased()
-        guard !normalized.isEmpty else { return nil }
+        public static func canonicalExtension(
+            from value: String
+        ) -> String? {
+            let normalized = value.whitespaceTrimmed
+                .lowercased()
+            guard !normalized.isEmpty else { return nil }
 
-        let strippedPrefix =
-            normalized.hasPrefix(".")
-            ? String(normalized.drop(while: { $0 == "." }))
-            : normalized
-        let rawExtension =
-            strippedPrefix.contains("/")
-            ? (strippedPrefix.split(separator: "/").last.map(String.init)
-                ?? strippedPrefix)
-            : strippedPrefix
+            let strippedPrefix =
+                normalized.hasPrefix(".")
+                ? String(normalized.drop(while: { $0 == "." }))
+                : normalized
+            let rawExtension =
+                strippedPrefix.contains("/")
+                ? (strippedPrefix.split(separator: "/").last.map(String.init)
+                    ?? strippedPrefix)
+                : strippedPrefix
 
-        switch rawExtension {
-        case "jpg", "jpeg":
-            return "jpeg"
-        default:
-            return rawExtension
+            switch rawExtension {
+            case "jpg", "jpeg":
+                return "jpeg"
+            default:
+                return rawExtension
+            }
         }
     }
-
 }

@@ -1,0 +1,127 @@
+import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+import MediaModule
+import WebComponents
+
+extension Variant.Add.Presenter {
+    struct Default: Interface {
+        let request: Request
+        let context: AuthenticatedRequestContext
+        let renderingEngine: any RenderingEngine
+        let routes: Variant.Router.Routes
+
+        func renderAddPage(state: Variant.Form.State) async throws
+            -> HTMLResponse
+        {
+            let nonce = await AdminNonceStore.shared.issue(
+                sessionToken: context.sessionToken
+            )
+            return try await renderPage(
+                content: Variant.Add.Page(
+                    form: Variant.Form(
+                        state: state,
+                        action: routes.add.path,
+                        submitLabel: "Add variant",
+                        nonceToken: nonce
+                    ),
+                    routes: routes
+                )
+            )
+        }
+
+        func renderValidationError(
+            input: Variant.Form.Input?,
+            error: ValidationError
+        ) async throws -> HTMLResponse {
+            var state = Variant.Form.State.from(input: input)
+            var errors: [String: String] = [:]
+            for failure in error.failures {
+                precondition(
+                    errors.updateValue(failure.message, forKey: failure.key)
+                        == nil
+                )
+            }
+            state.apply(
+                errors: errors
+            )
+            return try await renderAddPage(state: state)
+        }
+
+        func renderAddError(
+            input: Variant.Form.Input?,
+            error: Variant.Add.Error
+        ) async throws -> HTMLResponse {
+            switch error {
+            case .forbidden:
+                return try await status(
+                    title: "Forbidden",
+                    message: "Your account cannot create media variants.",
+                    status: .forbidden
+                )
+            case .unauthorized:
+                return try await status(
+                    title: "Session expired",
+                    message: "Please sign in again to create media variants.",
+                    status: .unauthorized
+                )
+            case .conflict:
+                var state = Variant.Form.State.from(input: input)
+                state.apply(
+                    error: "A media variant with this key already exists."
+                )
+                let page = try await renderAddPage(state: state)
+                return HTMLResponse(content: page.content, status: .conflict)
+            case .unavailable:
+                var state = Variant.Form.State.from(input: input)
+                state.apply(
+                    error:
+                        "The media variant could not be created. Please try again."
+                )
+                let page = try await renderAddPage(state: state)
+                return HTMLResponse(
+                    content: page.content,
+                    status: .serviceUnavailable
+                )
+            }
+        }
+
+        func renderSuccess() -> Response {
+            AdminNotificationFlash.redirect(
+                to: routes.list.path,
+                notification: .init(
+                    title: "Added",
+                    message: "Media variant added successfully."
+                )
+            )
+        }
+
+        private func renderPage<T: Component>(
+            content: T,
+            status: HTTPResponse.Status = .ok
+        ) async throws -> HTMLResponse {
+            let page = try await renderingEngine.renderAdminPage(
+                request: request,
+                context: context,
+                title: "Media variants",
+                content: content
+            )
+            return HTMLResponse(content: page.content, status: status)
+        }
+
+        private func status(
+            title: String,
+            message: String,
+            status: HTTPResponse.Status
+        ) async throws -> HTMLResponse {
+            try await renderPage(
+                content: AdminStatusView(
+                    state: .init(title: title, message: message),
+                    icon: FeatherIcons.alertCircle()
+                ),
+                status: status
+            )
+        }
+    }
+}

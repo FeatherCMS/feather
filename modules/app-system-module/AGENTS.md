@@ -27,7 +27,7 @@ WebAdmin composition, and tests.
 - Model application operations as sibling namespace declarations, for example
   `Variable.Add.Input|Output|Scope|UseCase`, `Variable.List.*`, and
   `Variable.Search.*`. `List` is for lightweight list results; `Search` backs
-  structured query results. Keep their criteria and result DTOs separate.
+  structured query results. Keep their criteria and result types separate.
 - Query criteria belong to the input's named `Query` value. Keep database
   adapters under their owning query/repository namespace and use DBAL table,
   column, and schema definitions; do not introduce driver-specific SQL or

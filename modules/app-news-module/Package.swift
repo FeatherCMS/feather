@@ -260,6 +260,7 @@ let package = Package(
                     name: "FeatherOpenAPIGenerator",
                     package: "feather-core"
                 ),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
             ],
             path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings

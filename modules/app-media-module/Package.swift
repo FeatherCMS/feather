@@ -168,6 +168,7 @@ let package = Package(
             name: "MediaOpenAPIGeneratorSupport",
             dependencies: [
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
             ],
             path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings

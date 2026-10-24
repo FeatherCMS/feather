@@ -11,8 +11,8 @@ module's current implementation.
   application operations, queries, tables, and persistence adapters nested
   under `Identity`, `Role`, and `IdentityRole` as appropriate.
 - The package exposes an Admin API, not an app-facing API. Do not retain an App
-  generator, generated App API, app API client, or app-client builder unless
-  User explicitly takes ownership of such an API.
+  generator, generated App API, or App API client unless User explicitly takes
+  ownership of such an API.
 - `UserOpenAPIGeneratorSupport` is a narrow exception for User-owned schemas
   shared with other modules' generators. Keep only shared schema declarations
   there; generator implementation and API-specific paths belong to the Admin
@@ -28,7 +28,8 @@ module's current implementation.
   their own `Action`, `Input`, `Output`, `Scope`, `UseCase`, and query contracts
   as applicable. `List` and `Search` are distinct: list queries return simple
   lookup results, while search queries handle structured criteria, sorting,
-  pagination, and totals. Their schemas and DTOs must not overlap.
+  pagination, and totals. Keep their schemas, criteria, and result types
+  separate.
 - Use the shared DBAL table/query/repository APIs. Put the identity-role join
   schema and row types under `IdentityRole.Table`; keep its columns, migration,
   and row definitions consistent. Do not introduce concrete SQL-driver

@@ -12,6 +12,12 @@ public import Hummingbird
 public struct URLFormRequestDecoder: RequestDecoder {
     public let decoder = URLEncodedFormDecoder()
 
+    private struct Pair {
+        let decodedKey: String
+        let rawValue: String
+        let hasValue: Bool
+    }
+
     public init() {}
 
     public func decode<T>(
@@ -35,7 +41,7 @@ public struct URLFormRequestDecoder: RequestDecoder {
     ) -> String {
         guard !raw.isEmpty else { return raw }
 
-        let pairs: [(decodedKey: String, rawValue: String, hasValue: Bool)] =
+        let pairs: [Pair] =
             raw
             .split(separator: "&")
             .map { pair in
@@ -46,7 +52,7 @@ public struct URLFormRequestDecoder: RequestDecoder {
                 )
                 let keyRaw = String(parts.first ?? "")
                 let valueRaw = parts.count > 1 ? String(parts[1]) : ""
-                return (
+                return Pair(
                     decodedKey: decodeFormComponent(keyRaw),
                     rawValue: valueRaw,
                     hasValue: parts.count > 1

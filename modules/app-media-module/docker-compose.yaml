@@ -8,6 +8,15 @@ services:
             - test
             - --parallel
 
+    openapi-app:
+        image: swaggerapi/swagger-ui:v5.32.15
+        ports:
+            - '8888:8080'
+        environment:
+            SWAGGER_JSON: /app/media-app@v3_2_0.yaml
+        volumes:
+            - './openapi/media-app@v3_2_0.yaml:/app/media-app@v3_2_0.yaml:ro'
+
     openapi-admin:
         image: swaggerapi/swagger-ui:v5.32.15
         ports:

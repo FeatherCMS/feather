@@ -46,9 +46,9 @@ The event registry is typed by both event and context. A handler registered for
 | `UserIdentitySeedProvider` | `UserEventContext` | `backend` | `app-user-module` | `[UserIdentitySeedDefinition]` | Supplies initial user identities, including generated IDs, status, root status, and role keys. | Triggered by `UserInfrastructure.TableSeedMigration`. Registered by `app-user-module`; the context provides the shared `IDGenerator`. |
 | `UserIdentityDidInsert` | `DatabaseTransactionContext` | `backend` | `app-user-module` | `Void` | Notifies backend modules that a user identity was inserted. The event carries the new `identityID` and runs inside the active database transaction. | Triggered by identity creation, account creation/invitation, and identity seeding. Registered by `app-account-module`, which creates the related account settings/profile records using the same transaction context. |
 | `AccountSeedProvider` | `EventContext` | `backend` | `app-account-module` | `[AccountSeedDefinition]` | Supplies initial accounts with email, password, and role keys for clean-install seeding. | Triggered by `AccountInfrastructure.TableSeedMigration`. No production provider registration was found in the audited Feather source; an application must register one if it wants seeded accounts. |
-| `MenuProvider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[MenuDefinition]` | Contributes public menu definitions, including menu keys, names, and notes. | Triggered by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module`; application modules can add additional menu providers. |
-| `MenuItemProvider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[MenuItemDefinition]` | Contributes items to a named public menu during seeding. Items can carry priority, authentication, permission, external-link, and notes metadata. | Triggered once per seeded menu by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module` and `app-blog-module` in Feather. |
-| `PageProvider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[PageDefinition]` | Contributes initial public pages and their content/metadata for database seeding. | Triggered by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module` and `app-blog-module`. |
+| `Menu.Provider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[Menu.Definition]` | Contributes public menu definitions, including menu keys, names, and notes. | Triggered by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module`; application modules can add additional menu providers. |
+| `MenuItem.Provider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[MenuItem.Definition]` | Contributes items to a named public menu during seeding. Items can carry priority, authentication, permission, external-link, and notes metadata. | Triggered once per seeded menu by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module` and `app-blog-module` in Feather. |
+| `Page.Provider` | `WebSeedEventContext` | `backend` | `app-web-module` | `[Page.Definition]` | Contributes initial public pages and their content/metadata for database seeding. | Triggered by `WebInfrastructure.TableSeedMigration`. Registered by `app-web-module` and `app-blog-module`. |
 
 ## Context catalogue
 
@@ -65,7 +65,7 @@ parameterless initializer:
 | `AccessControlContext` | `feather-core` | `AccessControlProvider` | Marker context for access-control providers. |
 | `EventContext` | `app-system-module` | Permission, variable, and mail-from seed providers | General-purpose backend context. |
 | `WebModule.Event.Context` | `app-web-module` | `TemplateProviderEvent` | Marker context for web-composition events. |
-| `WebSeedEventContext` | `app-web-module` | `MenuProvider`, `MenuItemProvider`, `PageProvider` | Marker context for backend web-seeding providers. |
+| `WebSeedEventContext` | `app-web-module` | `Menu.Provider`, `MenuItem.Provider`, `Page.Provider` | Marker context for backend web-seeding providers. |
 | `WebMarkdownSourceTransformerRequest` | `app-web-module` | `WebMarkdownSourceTransformerProvider` | Empty request context for source-transformer extensions. |
 
 `ExecutionContext` itself is also a marker protocol with no members, but it is
@@ -94,10 +94,10 @@ and context type:
 
 ```swift
 registry.register(
-    event: MenuItemProvider.self,
+    event: MenuItem.Provider.self,
     context: WebSeedEventContext.self
 ) { event, context in
-    // return [MenuItemDefinition]
+    // return [MenuItem.Definition]
 }
 ```
 
@@ -105,7 +105,7 @@ The event is triggered through the `EventPublisher` abstraction:
 
 ```swift
 let results = try await events.trigger(
-    event: MenuItemProvider(menuKey: "main"),
+    event: MenuItem.Provider(menuKey: "main"),
     using: WebSeedEventContext()
 )
 ```

@@ -9,13 +9,13 @@ extension MagicLink.Request {
         public let credential: any Credential.Repository.Interface
         public let authEmail: any Email.Repository.Interface
         public let magicLink: any MagicLink.Repository.Interface
-        public let variable: any SystemModule.Variable.Lookup.Interface
+        public let variable: any SystemModule.Variable.Lookup.Query.Interface
 
         public init(
             credential: any Credential.Repository.Interface,
             authEmail: any Email.Repository.Interface,
             magicLink: any MagicLink.Repository.Interface,
-            variable: any SystemModule.Variable.Lookup.Interface
+            variable: any SystemModule.Variable.Lookup.Query.Interface
         ) {
             self.credential = credential
             self.authEmail = authEmail

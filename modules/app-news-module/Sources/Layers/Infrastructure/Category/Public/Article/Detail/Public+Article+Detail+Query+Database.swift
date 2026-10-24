@@ -31,9 +31,15 @@ extension NewsApplication.Public.Article.Detail.Query {
                 referenceType: "news.category",
                 referenceIDs: Array(Set(ids))
             )
-            let metadataByID = Dictionary(
-                uniqueKeysWithValues: details.map { ($0.referenceID, $0) }
-            )
+            var metadataByID: [String: WebModule.Metadata.Snapshot] = [:]
+            for detail in details {
+                precondition(
+                    metadataByID.updateValue(
+                        detail,
+                        forKey: detail.referenceID
+                    ) == nil
+                )
+            }
             let items = rows.compactMap {
                 row -> NewsApplication.Public.Article.Detail.Query.Item? in
                 guard let detail = metadataByID[row.id] else { return nil }

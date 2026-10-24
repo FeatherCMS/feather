@@ -80,7 +80,7 @@ extension UseCases {
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     ),
-                    variable: SystemModule.Variable.Lookup.Database(
+                    variable: SystemModule.Variable.Lookup.Query.Database(
                         context: context
                     )
                 )
@@ -173,7 +173,7 @@ extension UseCases {
                     metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     ),
-                    variable: SystemModule.Variable.Lookup.Database(
+                    variable: SystemModule.Variable.Lookup.Query.Database(
                         context: context
                     )
                 )

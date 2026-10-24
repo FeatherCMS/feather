@@ -3,6 +3,7 @@ public import FeatherModuleKit
 import Foundation
 import NewsModule
 import WebApplication
+import WebModule
 
 extension Public.Article.Related {
     public struct UseCase: FeatherApplication.UseCase {
@@ -27,15 +28,19 @@ extension Public.Article.Related {
                     excludingArticleID: input.excludingArticleID,
                     limit: input.limit
                 )
-                let metadataByID = Dictionary(
-                    uniqueKeysWithValues: try await scope.metadataDetails
-                        .resolveDetails(
-                            referenceType: "news.article",
-                            referenceIDs: Array(Set(articles.items.map(\.id)))
-                        )
-                        .filter { $0.isPublic(at: now) }
-                        .map { ($0.referenceID, $0) }
+                let metadata = try await scope.metadataDetails.resolveDetails(
+                    referenceType: "news.article",
+                    referenceIDs: Array(Set(articles.items.map(\.id)))
                 )
+                var metadataByID: [String: WebModule.Metadata.Snapshot] = [:]
+                for item in metadata where item.isPublic(at: now) {
+                    precondition(
+                        metadataByID.updateValue(
+                            item,
+                            forKey: item.referenceID
+                        ) == nil
+                    )
+                }
                 let categoryIDsByArticleID = try await scope.articleCategoryIDs
                     .categoryIDs(for: articles.items.map(\.id))
 

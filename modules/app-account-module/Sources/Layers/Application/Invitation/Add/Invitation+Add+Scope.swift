@@ -14,14 +14,14 @@ extension Invitation.Add {
         public let identity: any Identity.Repository.Interface
         public let role: any Role.Repository.Interface
         public let authEmail: any Email.Repository.Interface
-        public let variable: any SystemModule.Variable.Lookup.Interface
+        public let variable: any SystemModule.Variable.Lookup.Query.Interface
 
         public init(
             invitation: any Invitation.Repository.Interface,
             identity: any Identity.Repository.Interface,
             role: any Role.Repository.Interface,
             authEmail: any Email.Repository.Interface,
-            variable: any SystemModule.Variable.Lookup.Interface
+            variable: any SystemModule.Variable.Lookup.Query.Interface
         ) {
             self.invitation = invitation
             self.identity = identity

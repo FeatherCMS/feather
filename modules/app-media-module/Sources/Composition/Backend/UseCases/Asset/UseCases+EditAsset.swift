@@ -10,11 +10,14 @@ extension UseCases {
     public func makeEditAsset() -> Asset.File.Edit.UseCase {
         .init(
             authorizer: authorizer,
-            transaction: writeTransaction(scope: { context in
-                Asset.File.Edit.Scope(
-                    assets: Asset.File.Repository.Database(context: context)
-                )
-            }),
+            transaction: DatabaseTransactionExecutor(
+                databaseContext: databaseContext,
+                scope: { context in
+                    Asset.File.Edit.Scope(
+                        assets: Asset.File.Repository.Database(context: context)
+                    )
+                }
+            ),
             objectKeyGenerator: storageContext.objectKeyGenerator
         )
     }

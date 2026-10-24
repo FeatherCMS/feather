@@ -20,7 +20,7 @@ extension UseCases {
                         context: context
                     ),
                     magicLink: MagicLink.Repository.Database(context: context),
-                    variable: SystemModule.Variable.Lookup.Database(
+                    variable: SystemModule.Variable.Lookup.Query.Database(
                         context: context
                     )
                 )

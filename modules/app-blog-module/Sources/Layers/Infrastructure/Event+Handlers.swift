@@ -64,7 +64,7 @@ extension BlogModule.Event {
             }
 
             registry.register(
-                event: MenuItemProvider.self,
+                event: MenuItem.Provider.self,
                 context: WebModule.Event.Context.self
             ) { event, _ in
                 guard event.menuKey == "main" else { return [] }
@@ -88,7 +88,7 @@ extension BlogModule.Event {
             }
 
             registry.register(
-                event: PageProvider.self,
+                event: Page.Provider.self,
                 context: WebModule.Event.Context.self
             ) { _, _ in
                 [

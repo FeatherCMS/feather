@@ -114,9 +114,13 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
         form: ContactAppAPI.Components.Schemas.AppContactFormSchema,
         feedback: FormSubmissionFeedback?
     ) -> String? {
-        let fieldsByKey = Dictionary(
-            uniqueKeysWithValues: fields.map { ($0.key, $0) }
-        )
+        var fieldsByKey:
+            [String: ContactAppAPI.Components.Schemas.AppFormFieldSchema] = [:]
+        for field in fields {
+            precondition(
+                fieldsByKey.updateValue(field, forKey: field.key) == nil
+            )
+        }
         var fieldCounts: [String: Int] = [:]
         var hasInvalidField = false
         var submitCount = 0

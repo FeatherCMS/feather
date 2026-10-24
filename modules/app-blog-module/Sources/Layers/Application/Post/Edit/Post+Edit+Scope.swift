@@ -10,12 +10,12 @@ extension Post.Edit {
     public struct Scope: FeatherModuleKit.Scope {
         public let post: any Post.Repository.Interface
         public let metadata: any WebModule.Metadata.Repository.Interface
-        public let variable: any SystemModule.Variable.Lookup.Interface
+        public let variable: any SystemModule.Variable.Lookup.Query.Interface
 
         public init(
             post: any Post.Repository.Interface,
             metadata: any WebModule.Metadata.Repository.Interface,
-            variable: any SystemModule.Variable.Lookup.Interface
+            variable: any SystemModule.Variable.Lookup.Query.Interface
         ) {
             self.post = post
             self.metadata = metadata

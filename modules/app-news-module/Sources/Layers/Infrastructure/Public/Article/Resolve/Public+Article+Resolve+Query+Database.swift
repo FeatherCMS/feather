@@ -18,22 +18,19 @@ extension Public.Article.Resolve.Query {
                 context: context
             )
             .select { $0.where(\.id, in: ids) }
-            let itemsByID = Dictionary(
-                uniqueKeysWithValues: rows.map {
-                    (
-                        $0.id,
-                        Public.Article.Item(
-                            id: $0.id,
-                            title: $0.title,
-                            excerpt: $0.excerpt,
-                            content: $0.content,
-                            imageAssetId: $0.imageAssetId,
-                            createdAt: $0.createdAt,
-                            updatedAt: $0.updatedAt
-                        )
-                    )
-                }
-            )
+            var itemsByID: [String: Public.Article.Item] = [:]
+            for row in rows {
+                let item = Public.Article.Item(
+                    id: row.id,
+                    title: row.title,
+                    excerpt: row.excerpt,
+                    content: row.content,
+                    imageAssetId: row.imageAssetId,
+                    createdAt: row.createdAt,
+                    updatedAt: row.updatedAt
+                )
+                precondition(itemsByID.updateValue(item, forKey: row.id) == nil)
+            }
             return .init(items: ids.compactMap { itemsByID[$0] })
         }
     }

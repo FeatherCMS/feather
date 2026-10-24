@@ -29,8 +29,9 @@ current System, User, and Redirect module structure.
   `Page.Search.Input.Query`, and `Page.Search.Output`). Keep each declaration
   in its own appropriately named file and operation directory.
 - Use distinct `List` and `Search` operations and their own schemas. Lightweight
-  selectors use List; structured filtering, sorting, pagination, and table
-  results use Search/HTTP Query.
+  selectors use the HTTP List endpoint; structured filtering, sorting,
+  pagination, and table results use the application Search use-case through the
+  HTTP Query endpoint. Keep their schemas separate.
 - Put tables, schema definitions, repository/query adapters, and row types under
   their owning entity. Keep aggregate migration, seed migration, and event
   handler registration at the Infrastructure root. Use `Table+Migration.swift`

@@ -13,11 +13,16 @@ extension UseCases {
     public func makeEditFolder() -> Asset.Folder.Edit.UseCase {
         .init(
             authorizer: authorizer,
-            transaction: writeTransaction(scope: { context in
-                Asset.Folder.Edit.Scope(
-                    folders: Asset.Folder.Repository.Database(context: context)
-                )
-            })
+            transaction: DatabaseTransactionExecutor(
+                databaseContext: databaseContext,
+                scope: { context in
+                    Asset.Folder.Edit.Scope(
+                        folders: Asset.Folder.Repository.Database(
+                            context: context
+                        )
+                    )
+                }
+            )
         )
     }
 }

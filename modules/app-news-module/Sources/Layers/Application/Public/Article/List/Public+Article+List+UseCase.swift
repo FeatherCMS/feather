@@ -4,6 +4,7 @@ import Foundation
 import NewsDomain
 import NewsModule
 import WebApplication
+import WebModule
 
 extension Public.Article.List {
     public struct UseCase: FeatherApplication.UseCase {
@@ -24,15 +25,19 @@ extension Public.Article.List {
                         sort: []
                     )
                 )
-                let metadataByID = Dictionary(
-                    uniqueKeysWithValues: try await scope.metadataDetails
-                        .resolveDetails(
-                            referenceType: "news.article",
-                            referenceIDs: Array(Set(articles.items.map(\.id)))
-                        )
-                        .filter { $0.isPublic(at: now) }
-                        .map { ($0.referenceID, $0) }
+                let metadata = try await scope.metadataDetails.resolveDetails(
+                    referenceType: "news.article",
+                    referenceIDs: Array(Set(articles.items.map(\.id)))
                 )
+                var metadataByID: [String: WebModule.Metadata.Snapshot] = [:]
+                for item in metadata where item.isPublic(at: now) {
+                    precondition(
+                        metadataByID.updateValue(
+                            item,
+                            forKey: item.referenceID
+                        ) == nil
+                    )
+                }
                 let publicArticles = articles.items.filter {
                     metadataByID[$0.id] != nil
                 }

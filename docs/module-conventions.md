@@ -127,7 +127,10 @@ Name namespace-extension files after the namespace path, using dots between
 namespace components and no `+Namespace.swift` suffix. Apply this to both web
 composition targets. For example, `Invitation.Add.swift` declares
 `Invitation.Add`, and `Tag.Add.Controller.swift` declares
-`Tag.Add.Controller`.
+`Tag.Add.Controller`. Use the same dotted namespace path for implementations,
+such as `Invitation.Add.Controller.Default.swift` and
+`Invitation.Add.Repository.OpenAPI.swift`; do not use `+` separators in
+WebApp/WebAdmin composition filenames.
 
 ## Namespaces and symbols
 
@@ -157,6 +160,14 @@ composition targets. For example, `Invitation.Add.swift` declares
   use-case, then pass the resolved values into a model operation.
 - Nest application operations under their entity and operation, for example
   `Identity.Add.Input`, `Identity.Add.Output`, and `Identity.Add.UseCase`.
+  Define the operation namespace itself in the Application target, beside that
+  operation's declarations and under its operation directory (for example,
+  `Application/Identity/Add/Identity+Add.swift`). Keep the Module target to
+  module/entity namespaces and module-level contracts; do not place empty
+  `Entity.Add`, `Entity.List`, `Entity.Public`, or similar operation shells
+  there. This keeps operation APIs owned by the layer that implements them.
+  Place pure domain-service namespaces beside their implementation in Domain,
+  rather than anchoring an empty service shell in Module.
   Read/search contracts belong under named query namespaces, not in unrelated
   list operation types. Every operation owns its `Action`, `Input`, `Output`,
   `Error`, `Scope`, and `UseCase` declarations as applicable. Keep each declaration in
@@ -212,8 +223,11 @@ composition targets. For example, `Invitation.Add.swift` declares
   `Identity+Query+Database.swift`.
 - Put database tables below the entity (`Identity.Table`) and name cross-entity
   infrastructure files by responsibility (`Table+Migration.swift`,
-  `Table+SeedMigration.swift`). Avoid `Database/` subfolders that merely repeat
-  the infrastructure layer name.
+  `Table+SeedMigration.swift`). Do not add a `Database/` directory solely to
+  wrap entity tables, row representations, or migrations. When custom SQL is
+  necessary, keep it in the required `Database/AccessLayer` directory below
+  the owning entity or in the Infrastructure-level `Database/AccessLayer`
+  directory for cross-entity work.
 - Keep entity repository adapters in the entity directory as
   `<Entity>+Repository+Database.swift`, extending
   `<Entity>.Repository` with `Database: Interface`. Do not add a nested
@@ -262,6 +276,13 @@ composition targets. For example, `Invitation.Add.swift` declares
   explicit `typealias Output`. For example, all consumers of the
   identity-created event use `Identity.Event.DidInsert`, and role seed
   consumers use `Role.Event.Seed.Provider`.
+- Keep event-handler namespaces in the target that owns the registration:
+  persistence, seed, and authorization handlers extend
+  `<Module>Module.Event.Handlers` in Infrastructure; admin navigation and
+  dashboard handlers use the WebAdmin target's own `Event.Handlers`, and
+  public web handlers use the WebApp target's own event namespaces. Do not put
+  WebAdmin/WebApp registration methods on the module-level Infrastructure
+  handler namespace merely because both registrations use `EventRegistry`.
 - Put persistence implementations under the corresponding abstraction, for
   example `<Entity>.Repository.Database` and `<Entity>.Search.Database`.
 - Keep generated API and composition namespaces explicit: `UserAdminAPI`,
@@ -271,13 +292,20 @@ composition targets. For example, `Invitation.Add.swift` declares
   route namespace owns its abstraction and implementation; avoid flat `Admin...`
   names or an extra `Feature` wrapper where a route router can construct its
   collaborators and register the route.
+- Keep WebApp and WebAdmin transport adapters named `Repository` within their
+  route operation namespace, including adapters backed by generated OpenAPI
+  clients. Their job is to adapt the transport to the application operation;
+  do not rename them `Query` just because they call an Application
+  `List.Query`, `Detail.Query`, or `Search.Query` port. The `Query` name belongs
+  to those application-layer read contracts.
 - Prefer one source file per meaningful nested declaration, with filename
   segments matching its namespace, e.g. `Identity+Add+Input.swift` and
   `Identity+Repository.swift`. Do not use `typealias` in handwritten module
   or composition code, including compatibility shims for deliberate renames;
-  generated OpenAPI sources are exempt. Do not use tuples for domain,
-  application, or composition data contracts—introduce a named value type
-  instead. This includes helper results and closure context/result contracts.
+  generated OpenAPI sources are exempt. Do not use tuples in handwritten
+  module or composition code. Use named value types for domain, application,
+  and composition data; use `URLQueryItem` for URL query parameters. This
+  includes helper results and closure context/result contracts.
 - Inside an extension of a namespace, refer to its immediate nested types
   directly instead of repeating the full qualified path. For example, within
   the Identity.Search.Query extension, write Database: Interface rather than
@@ -462,10 +490,12 @@ Regenerate through the module's checked-in script/Makefile and never patch the
 generated Swift manually.
 
 - Mirror the System generator organization: each API entity has a namespace
-  enum in its own directory, operations are nested under semantic operation
-  namespaces (for example `Identity.Post.Operation`), and path items are
-  associated with those operations/entities rather than declared as flat
-  `UserIdentity...PathItems` types.
+  enum in its own directory, nested entity namespaces use matching directory
+  hierarchies (for example `Member/Client`, not `MemberClient`), operations are
+  nested under semantic operation namespaces (for example
+  `Identity.Post.Operation`), and path items are associated with those
+  operations/entities rather than declared as flat `UserIdentity...PathItems`
+  types.
 - Give each entity its own `PathCollection`; the API-level `PathCollection`
   merges those maps. Keep `Document` limited to assembling metadata, paths, and
   components, and keep process/file output in `Entrypoint`.

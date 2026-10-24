@@ -1,7 +1,7 @@
 import SystemApplication
 import SystemModule
 
-actor MockVariableLookup: SystemModule.Variable.Lookup.Interface {
+actor MockVariableLookup: SystemModule.Variable.Lookup.Query.Interface {
     private let value: String?
     private let mailFromAddress: String
     private let mailFromName: String?

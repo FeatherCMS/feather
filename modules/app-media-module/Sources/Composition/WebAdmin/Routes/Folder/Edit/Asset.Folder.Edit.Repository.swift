@@ -10,6 +10,19 @@ import SGML
 import WebBuilders
 import WebComponents
 
+extension Asset.Folder.Edit.Repository {
+    protocol Interface: Sendable {
+        func getFolder(
+            id: String
+        ) async throws -> Components.Schemas.MediaFolderDetailSchema
+
+        func updateFolder(
+            id: String,
+            name: String
+        ) async throws -> Components.Schemas.MediaFolderDetailSchema
+    }
+}
+
 extension Asset.Folder.Edit {
     enum Repository {}
 }

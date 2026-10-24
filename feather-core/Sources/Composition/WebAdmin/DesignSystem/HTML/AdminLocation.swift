@@ -7,9 +7,14 @@ public struct AdminLocation: Sendable {
         ids: [String],
         returnTo: String
     ) -> String {
+        var queryItems: [URLQueryItem] = []
+        for id in ids {
+            queryItems.append(.init(name: "ids", value: id))
+        }
+        queryItems.append(.init(name: "returnTo", value: returnTo))
         url(
             path: path,
-            queryItems: ids.map { ("ids", $0) } + [("returnTo", returnTo)]
+            queryItems: queryItems
         )
     }
 
@@ -30,7 +35,7 @@ public struct AdminLocation: Sendable {
         path: String,
         page: Int? = nil,
         search: String? = nil,
-        queryItems extraQueryItems: [(String, String)] = []
+        queryItems extraQueryItems: [URLQueryItem] = []
     ) -> String {
         var queryItems: [URLQueryItem] = []
         if let page {
@@ -39,11 +44,7 @@ public struct AdminLocation: Sendable {
         if let search, !search.isEmpty {
             queryItems.append(.init(name: "search", value: search))
         }
-        queryItems.append(
-            contentsOf: extraQueryItems.map {
-                .init(name: $0.0, value: $0.1)
-            }
-        )
+        queryItems.append(contentsOf: extraQueryItems)
         var components = URLComponents()
         components.path = path
         components.queryItems = queryItems.isEmpty ? nil : queryItems

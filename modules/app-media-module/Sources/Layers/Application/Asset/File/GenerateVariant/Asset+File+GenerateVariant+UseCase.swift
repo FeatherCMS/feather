@@ -36,8 +36,7 @@ extension Asset.File.GenerateVariant {
             let sizeInBytes: Int64
         }
 
-        let transaction:
-            any TransactionExecutor<Scope>
+        let transaction: any TransactionExecutor<Scope>
         let storageContext: StorageClientContext
         let commandRunner: any CommandRunner
 
@@ -167,18 +166,23 @@ extension Asset.File.GenerateVariant {
                             )
                         }
                     )
-                    let storageObjectIDsByKey = Dictionary(
-                        uniqueKeysWithValues: storedObjects.map {
-                            ($0.key, $0.id)
-                        }
-                    )
+                    var storageObjectIDsByKey: [String: String] = [:]
+                    for storedObject in storedObjects {
+                        precondition(
+                            storageObjectIDsByKey.updateValue(
+                                storedObject.id,
+                                forKey: storedObject.key
+                            ) == nil
+                        )
+                    }
                     let variants = try generatedOutputs.map { output in
                         guard
                             let storageObjectId = storageObjectIDsByKey[
                                 "variants/\(output.plan.variant.key)"
                             ]
                         else {
-                            throw Error
+                            throw
+                                Error
                                 .outputMissing(
                                     processorName: output.plan.processor.name
                                 )
@@ -220,9 +224,12 @@ extension UseCase {
                 throw Error.assetNotFound
             }
             let variants = try await scope.variantDefinitions.listActive()
-            let variantsByID = Dictionary(
-                uniqueKeysWithValues: variants.map { ($0.id, $0) }
-            )
+            var variantsByID: [String: Variant.Model] = [:]
+            for variant in variants {
+                precondition(
+                    variantsByID.updateValue(variant, forKey: variant.id) == nil
+                )
+            }
             let processors = try await scope.variantProcessors.listActive()
             let applicableProcessors = processors.filter {
                 Asset.ExtensionMatcher.matches(

@@ -1,3 +1,4 @@
+import FeatherInfrastructure
 public import MediaApplication
 import MediaInfrastructure
 public import MediaModule
@@ -7,13 +8,17 @@ extension UseCases {
     {
         .init(
             authorizer: authorizer,
-            transaction: writeTransaction(scope: { context in
-                Variant.Processor.Remove.Scope(
-                    variantProcessors: Variant.Processor.Repository.Database(
-                        context: context
+            transaction: DatabaseTransactionExecutor(
+                databaseContext: databaseContext,
+                scope: { context in
+                    Variant.Processor.Remove.Scope(
+                        variantProcessors: Variant.Processor.Repository
+                            .Database(
+                                context: context
+                            )
                     )
-                )
-            })
+                }
+            )
         )
     }
 }

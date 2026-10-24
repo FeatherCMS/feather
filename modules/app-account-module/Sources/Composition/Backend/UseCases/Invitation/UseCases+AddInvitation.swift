@@ -23,7 +23,7 @@ extension UseCases {
                     identity: Identity.Repository.Database(context: context),
                     role: Role.Repository.Database(context: context),
                     authEmail: Email.Repository.Database(context: context),
-                    variable: SystemModule.Variable.Lookup.Database(
+                    variable: SystemModule.Variable.Lookup.Query.Database(
                         context: context
                     )
                 )

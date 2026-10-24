@@ -8,6 +8,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 import Foundation
 import WebApplication
+import WebModule
 
 extension Public.Category.List {
     public struct UseCase: FeatherApplication.UseCase {
@@ -26,15 +27,19 @@ extension Public.Category.List {
                         sort: [.init(field: .createdAt, direction: .desc)]
                     )
                 )
-                let metadataByID = Dictionary(
-                    uniqueKeysWithValues: try await scope.metadataDetails
-                        .resolveDetails(
-                            referenceType: "news.category",
-                            referenceIDs: Array(Set(categories.items.map(\.id)))
-                        )
-                        .filter { $0.isPublic(at: now) }
-                        .map { ($0.referenceID, $0) }
+                let metadata = try await scope.metadataDetails.resolveDetails(
+                    referenceType: "news.category",
+                    referenceIDs: Array(Set(categories.items.map(\.id)))
                 )
+                var metadataByID: [String: WebModule.Metadata.Snapshot] = [:]
+                for item in metadata where item.isPublic(at: now) {
+                    precondition(
+                        metadataByID.updateValue(
+                            item,
+                            forKey: item.referenceID
+                        ) == nil
+                    )
+                }
                 let items: [Public.Category.Summary.Item] = categories.items
                     .compactMap { item -> Public.Category.Summary.Item? in
                     guard let metadata = metadataByID[item.id] else {

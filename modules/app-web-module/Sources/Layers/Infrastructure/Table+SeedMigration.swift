@@ -26,7 +26,7 @@ public struct TableSeedMigration: DatabaseMigration {
     ) async throws {
         let pageRepository = Page.Repository.Database(context: context)
         let definitions = try await events.trigger(
-            event: PageProvider(),
+            event: Page.Provider(),
             using: WebModule.Event.Context()
         )
         for definition in definitions.flatMap({ $0 }) {
@@ -73,7 +73,7 @@ public struct TableSeedMigration: DatabaseMigration {
     ) async throws {
         let menus =
             try await events.trigger(
-                event: MenuProvider(),
+                event: Menu.Provider(),
                 using: WebModule.Event.Context()
             )
             .flatMap { $0 }
@@ -84,7 +84,7 @@ public struct TableSeedMigration: DatabaseMigration {
         for menu in menus {
             let items =
                 try await events.trigger(
-                    event: MenuItemProvider(menuKey: menu.key),
+                    event: MenuItem.Provider(menuKey: menu.key),
                     using: WebModule.Event.Context()
                 )
                 .flatMap { $0 }

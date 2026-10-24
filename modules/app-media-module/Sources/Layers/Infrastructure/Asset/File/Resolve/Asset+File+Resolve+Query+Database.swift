@@ -37,9 +37,12 @@ extension Asset.File.Resolve.Query {
             .resolve(nodeIds: ids, variantKeys: variants)
             var variantsByAsset: [String: [Asset.File.Resolve.Output.Variant]] =
                 [:]
-            let assetsByID = Dictionary(
-                uniqueKeysWithValues: assets.map { ($0.id, $0) }
-            )
+            var assetsByID: [String: Asset.File.Table.Row] = [:]
+            for asset in assets {
+                precondition(
+                    assetsByID.updateValue(asset, forKey: asset.id) == nil
+                )
+            }
             for variant in variantRows {
                 guard let asset = assetsByID[variant.assetNodeFileId] else {
                     continue

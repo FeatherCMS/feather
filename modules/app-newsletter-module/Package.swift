@@ -82,6 +82,11 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
+            url:
+                "https://github.com/swift-server/swift-openapi-async-http-client",
+            from: "1.0.0"
+        ),
+        .package(
             url: "https://github.com/hummingbird-project/swift-jobs",
             from: "1.1.0"
         ),

@@ -151,6 +151,13 @@ public struct Router {
                 routes: subscriberRoutes
             )
             .route(on: router)
+        Subscriber.View
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: subscriberRoutes
+            )
+            .route(on: router)
         Subscriber.Add
             .Router(
                 environment: environment,

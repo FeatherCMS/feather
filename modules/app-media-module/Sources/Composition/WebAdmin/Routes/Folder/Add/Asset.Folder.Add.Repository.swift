@@ -10,6 +10,15 @@ import SGML
 import WebBuilders
 import WebComponents
 
+extension Asset.Folder.Add.Repository {
+    protocol Interface: Sendable {
+        func createFolder(
+            name: String,
+            parentId: String?
+        ) async throws
+    }
+}
+
 extension Asset.Folder.Add {
     enum Repository {}
 }

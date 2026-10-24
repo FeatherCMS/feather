@@ -10,12 +10,12 @@ extension Author.Edit {
     public struct Scope: FeatherModuleKit.Scope {
         public let author: any Author.Repository.Interface
         public let metadata: any WebModule.Metadata.Repository.Interface
-        public let variable: any SystemModule.Variable.Lookup.Interface
+        public let variable: any SystemModule.Variable.Lookup.Query.Interface
 
         public init(
             author: any Author.Repository.Interface,
             metadata: any WebModule.Metadata.Repository.Interface,
-            variable: any SystemModule.Variable.Lookup.Interface
+            variable: any SystemModule.Variable.Lookup.Query.Interface
         ) {
             self.author = author
             self.metadata = metadata

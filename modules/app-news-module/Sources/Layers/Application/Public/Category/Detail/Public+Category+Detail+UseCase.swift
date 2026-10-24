@@ -113,9 +113,15 @@ extension UseCase {
         )
         let categoryIDsByArticleID = try await categoryIDsTask
         let metadata = try await metadataTask
-        let metadataByArticleID = Dictionary(
-            uniqueKeysWithValues: metadata.map { ($0.referenceID, $0) }
-        )
+        var metadataByArticleID: [String: WebModule.Metadata.Snapshot] = [:]
+        for item in metadata {
+            precondition(
+                metadataByArticleID.updateValue(
+                    item,
+                    forKey: item.referenceID
+                ) == nil
+            )
+        }
         var result: [Public.Article.Summary.Item] = []
         for item in articleItems {
             guard

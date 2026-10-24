@@ -12,9 +12,9 @@
 - Backend gateways adapt generated API operations to application use cases.
   Admin routes, page composition, and the admin API client belong in
   `MediaWebAdmin`.
-- Construct admin API clients from `AppEnvironment` and the authenticated
-  request context at the request boundary. Do not cache request credentials or
-  pass an API-builder through route features.
+- Construct `API.Client` from `AppEnvironment` and the authenticated request
+  context in the feature router, then pass it to that feature's repository.
+  Do not cache request credentials or pass a builder through route features.
 - Route registration belongs to feature routers. Controllers implement request
   behavior; they do not register routes.
 - Do not add a database-server dependency to ordinary unit tests. Keep package
