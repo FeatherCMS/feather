@@ -197,7 +197,8 @@ struct AuthApplicationTestSuite {
         let transaction = MockTransactionExecutor(
             context: AuthModule.Authorization.SignIn.MagicLink.Scope(
                 identity: MockAuthIdentityRepository(identity: identity),
-                authorization: DummyAuthorizationQueries(),
+                roles: DummyAuthorizationQueries(),
+                permissions: DummyAuthorizationQueries(),
                 authEmail: MockAuthEmailRepository(
                     result: makeAuthEmail(identityId: identity.id)
                 ),
@@ -233,7 +234,8 @@ struct AuthApplicationTestSuite {
         let transaction = MockTransactionExecutor(
             context: AuthModule.Authorization.SignIn.MagicLink.Scope(
                 identity: MockAuthIdentityRepository(),
-                authorization: DummyAuthorizationQueries(),
+                roles: DummyAuthorizationQueries(),
+                permissions: DummyAuthorizationQueries(),
                 authEmail: MockAuthEmailRepository(
                     result: makeAuthEmail(identityId: "identity-1")
                 ),
@@ -375,7 +377,6 @@ struct AuthApplicationTestSuite {
         )
         let queryExecutor = MockQueryExecutor(
             context: RolePermission.Search.Scope(
-                authorization: DummyAuthorizationQueries(),
                 rolePermissions: rpQueries
             )
         )

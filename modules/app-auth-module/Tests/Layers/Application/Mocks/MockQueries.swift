@@ -183,7 +183,9 @@ actor MockSessionQueries: Session.Detail.Query.Interface,
     }
 }
 
-struct DummyAuthorizationQueries: AuthModule.Authorization.Query.Interface {
+struct DummyAuthorizationQueries: Authorization.Roles.Query.Interface,
+    Authorization.Permissions.Query.Interface
+{
     func getRolesBy(
         identityId: String
     ) async throws -> [String] {
