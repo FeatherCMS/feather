@@ -11,7 +11,7 @@ import WebBuilders
 import WebComponents
 
 extension Overview.View.Controller {
-    struct Default: Overview.View.Controller.Interface {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Overview.View.Interactor.Interface,

@@ -10,7 +10,7 @@ public import OpenAPIRuntime
 public enum API {
     public struct Client: Sendable {
         public let client: BlogAdminAPI.Client
-        private let mediaClient: MediaAdminAPIClient
+        private let mediaClient: MediaWebAdmin.API.Client
 
         public init(
             environment: AppEnvironment,
@@ -33,7 +33,7 @@ public enum API {
             )
         }
 
-        public func mediaAdminAPI() -> MediaAdminAPIClient {
+        public func mediaAdminAPI() -> MediaWebAdmin.API.Client {
             mediaClient
         }
 

@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 extension Page.ID.Get {
     struct Operation: Page.Operation {

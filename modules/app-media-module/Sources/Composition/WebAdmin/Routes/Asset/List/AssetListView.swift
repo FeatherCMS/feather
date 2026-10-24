@@ -2,6 +2,7 @@ import CSS
 import FeatherModuleKit
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird
@@ -11,7 +12,6 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-import FeatherWebShared
 
 import class Foundation.ByteCountFormatter
 import struct Foundation.CharacterSet
@@ -270,9 +270,9 @@ struct AssetListView: Component {
         }
         .class("cms-section")
     }
-    }
+}
 
-    extension AssetListView {
+extension AssetListView {
     fileprivate var hasAnyResults: Bool {
         !state.entries.isEmpty || state.currentFolder != nil
     }
@@ -496,7 +496,7 @@ struct AssetListView: Component {
     }
 
     fileprivate func folderEditPath(
-        _ folder: Components.Schemas.MediaFolderQueryItemSchema
+        _ folder: Components.Schemas.MediaFolderListItemSchema
     ) -> String {
         state.routes.folder.editPath(folder.id)
     }
@@ -866,7 +866,7 @@ struct AssetListView: Component {
     }
 
     fileprivate func folderCard(
-        _ folder: Components.Schemas.MediaFolderQueryItemSchema,
+        _ folder: Components.Schemas.MediaFolderListItemSchema,
         returnTo: String,
         context: inout BuilderContext
     ) -> some FlowContent {
@@ -1083,7 +1083,7 @@ struct AssetListView: Component {
     }
 
     fileprivate func folderRow(
-        _ folder: Components.Schemas.MediaFolderQueryItemSchema,
+        _ folder: Components.Schemas.MediaFolderListItemSchema,
         canRemove: Bool,
         returnTo: String,
         context: inout BuilderContext
@@ -1243,7 +1243,7 @@ struct AssetListView: Component {
     }
 
     fileprivate func folderItemCountLabel(
-        for folder: Components.Schemas.MediaFolderQueryItemSchema
+        for folder: Components.Schemas.MediaFolderListItemSchema
     ) -> String {
         folder.assetCount == 1 ? "1 item" : "\(folder.assetCount) items"
     }
@@ -1329,7 +1329,7 @@ struct AssetListView: Component {
     }
 
     fileprivate func folderTitleCell(
-        for folder: Components.Schemas.MediaFolderQueryItemSchema
+        for folder: Components.Schemas.MediaFolderListItemSchema
     ) -> some BasicTag {
         Td(folder.name)
             .data("label", "Name")

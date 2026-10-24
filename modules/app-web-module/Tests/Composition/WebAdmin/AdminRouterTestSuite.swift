@@ -1,6 +1,8 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Testing
 import WebDomain
+import WebModule
 
 @testable import WebModuleWebAdmin
 
@@ -19,7 +21,10 @@ struct AdminRouterTestSuite {
         let root = WebRoute.root
             .appending(pathComponent: "control")
             .appending(pathComponent: "website")
-        let routes = Page.Router.Routes(root: root)
+        let routes = Page.Router.Routes(
+            root: root.appending(pathComponent: "pages"),
+            breadcrumb: []
+        )
 
         #expect(routes.list.path == "/control/website/pages/")
         #expect(routes.add.path == "/control/website/pages/add/")
@@ -35,11 +40,15 @@ struct AdminRouterTestSuite {
         let root = WebRoute.root
             .appending(pathComponent: "control")
             .appending(pathComponent: "website")
-        let routes = Menu.Router.Routes(root: root)
+        let routes = Menu.Router.Routes(
+            root: root.appending(pathComponent: "menus"),
+            breadcrumb: []
+        )
 
         #expect(routes.list.path == "/control/website/menus/")
         #expect(routes.add.path == "/control/website/menus/add/")
         #expect(routes.details.pattern == "/control/website/menus/{id}")
-        #expect(routes.items.pattern == "/control/website/menus/{id}/items")
+        let itemRoutes = MenuItem.Router.Routes(menu: routes)
+        #expect(itemRoutes.items.pattern == "/control/website/menus/{id}/items")
     }
 }

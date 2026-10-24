@@ -756,6 +756,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     name: "newsletterCampaignKey",
                     as: Components.Parameters.NewsletterCampaignKeyParameter.self
                 ))
+                let query: Operations.NewsletterCampaignUpdate.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.NewsletterCampaignUpdateMaskParameter.self
+                ))
                 let headers: Operations.NewsletterCampaignUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.NewsletterCampaignPatchRequestBody
@@ -779,6 +786,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.NewsletterCampaignUpdate.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -788,6 +796,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -1508,6 +1534,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                         as: Components.Parameters.NewsletterIssueIdParameter.self
                     )
                 )
+                let query: Operations.NewsletterIssueUpdate.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.NewsletterIssueUpdateMaskParameter.self
+                ))
                 let headers: Operations.NewsletterIssueUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.NewsletterIssuePatchRequestBody
@@ -1531,6 +1564,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.NewsletterIssueUpdate.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -1540,6 +1574,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -2289,6 +2341,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                         as: Components.Parameters.NewsletterSubscriberEmailParameter.self
                     )
                 )
+                let query: Operations.NewsletterSubscriberUpdate.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.NewsletterSubscriberUpdateMaskParameter.self
+                ))
                 let headers: Operations.NewsletterSubscriberUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.NewsletterSubscriberPatchRequestBody
@@ -2312,6 +2371,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.NewsletterSubscriberUpdate.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -2321,6 +2381,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {

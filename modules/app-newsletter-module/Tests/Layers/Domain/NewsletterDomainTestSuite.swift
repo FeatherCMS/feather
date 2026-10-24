@@ -1,4 +1,5 @@
 import Testing
+import NewsletterModule
 
 import struct Foundation.Date
 
@@ -8,7 +9,7 @@ import struct Foundation.Date
 struct NewsletterDomainTestSuite {
     @Test
     func newsletterValidatesName() throws {
-        let newsletter = try Campaign.create(
+        let newsletter = try Campaign.Model.create(
             key: "product-updates",
             name: "Product updates"
         )
@@ -18,12 +19,12 @@ struct NewsletterDomainTestSuite {
     @Test
     func subscriberCanUnsubscribeAndResubscribe() throws {
         let date = Date(timeIntervalSince1970: 100)
-        let subscriber = try Subscriber.create(
+        let subscriber = try Subscriber.Model.create(
             newsletterId: "newsletter-1",
             email: "person@example.com",
             subscriptionDate: date
         )
-        var model = Subscriber(
+        var model = Subscriber.Model(
             newsletterId: subscriber.newsletterId,
             email: subscriber.email,
             status: subscriber.status,
@@ -46,12 +47,12 @@ struct NewsletterDomainTestSuite {
 
     @Test
     func issueRejectsPastSchedule() throws {
-        let issue = try Issue.create(
+        let issue = try Issue.Model.create(
             newsletterId: "newsletter-1",
             subject: "Updates",
             content: "Body"
         )
-        var model = Issue(
+        var model = Issue.Model(
             id: "issue-1",
             newsletterId: issue.newsletterId,
             subject: issue.subject,
@@ -63,7 +64,7 @@ struct NewsletterDomainTestSuite {
             createdAt: .distantPast,
             updatedAt: .distantPast
         )
-        #expect(throws: Issue.Error.invalidSchedule) {
+        #expect(throws: Issue.Model.Error.invalidSchedule) {
             try model.schedule(
                 at: Date(timeIntervalSince1970: 99),
                 now: Date(timeIntervalSince1970: 100)

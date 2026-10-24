@@ -4,7 +4,7 @@ import MediaAdminAPI
 import MediaModule
 
 extension Variant.Edit.Interactor {
-    struct Default: Variant.Edit.Interactor.Interface {
+    struct Default: Interface {
         let repository: any Variant.Edit.Repository.Interface
 
         func load(id: String) async throws

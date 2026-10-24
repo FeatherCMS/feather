@@ -26,7 +26,7 @@ extension Page.Edit {
                                     environment: environment,
                                     requestContext: context
                                 ),
-                                mediaAPI: MediaAdminAPIClient(
+                                mediaAPI: MediaWebAdmin.API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )

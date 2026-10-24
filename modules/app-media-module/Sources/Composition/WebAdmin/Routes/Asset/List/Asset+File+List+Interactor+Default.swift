@@ -13,7 +13,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.List.Interactor {
-    struct Default: Asset.File.List.Interactor.Interface {
+    struct Default: Interface {
         let repository: Asset.File.List.Repository.OpenAPI
 
         func listMediaAssets(

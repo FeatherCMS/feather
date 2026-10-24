@@ -2,6 +2,7 @@ import AccountDomain
 public import AccountModule
 import AuthDomain
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 import UserDomain
 
@@ -42,7 +43,8 @@ extension Invitation.Edit {
                     throw Error(message: "Invitation not found")
                 }
 
-                for roleID in input.roleIDs ?? [] {
+                let roleIDs = input.roleIDs.apply(to: model.roleIDs)
+                for roleID in roleIDs {
                     guard try await scope.role.findBy(id: roleID) != nil else {
                         throw Error(message: "Role not found: \(roleID)")
                     }

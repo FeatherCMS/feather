@@ -16,7 +16,7 @@ extension Author.Get {
         public let content: String
         public let links: [Author.Link.Model]
         public let posts: [Post.Summary.Model]
-        public let metadata: AppPublicMetadataModel
+        public let metadata: Public.Metadata.Model
 
         public init(
             title: String,
@@ -25,7 +25,7 @@ extension Author.Get {
             content: String,
             links: [Author.Link.Model],
             posts: [Post.Summary.Model],
-            metadata: AppPublicMetadataModel
+            metadata: Public.Metadata.Model
         ) {
             self.title = title
             self.subtitle = subtitle

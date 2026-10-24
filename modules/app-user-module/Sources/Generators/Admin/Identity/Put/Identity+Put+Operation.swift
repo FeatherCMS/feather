@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import UserOpenAPIGeneratorSupport
 
 extension Identity.Put {
     struct Operation: Identity.IdentifiableOperation {

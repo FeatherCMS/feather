@@ -6,8 +6,8 @@ extension AuthorLink.Patch {
         var operationId: String? { "blogAuthorLinkPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                BlogAuthorLinkAuthorIdParameter().reference(),
-                BlogAuthorLinkIdParameter().reference(),
+                AuthorLink.Parameters.AuthorID().reference(),
+                AuthorLink.Parameters.ID().reference(),
                 AuthorLink.Parameters.UpdateMask().reference(),
             ]
         }

@@ -16,7 +16,7 @@ extension Post.Get {
         public let publishedAt: String?
         public let authors: [Author.Summary.Model]
         public let tags: [Tag.Summary.Model]
-        public let metadata: AppPublicMetadataModel
+        public let metadata: Public.Metadata.Model
 
         public init(
             title: String,
@@ -26,7 +26,7 @@ extension Post.Get {
             publishedAt: String?,
             authors: [Author.Summary.Model],
             tags: [Tag.Summary.Model],
-            metadata: AppPublicMetadataModel
+            metadata: Public.Metadata.Model
         ) {
             self.title = title
             self.excerpt = excerpt

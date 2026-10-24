@@ -354,7 +354,7 @@ struct AccountApplicationTestSuite {
             input: .init(ids: [invitation.id])
         )
 
-        #expect(removedIDs == [invitation.id])
+        #expect(removedIDs.ids == [invitation.id])
         #expect(await authEmailRepository.deleteCallCount == 1)
         #expect(await authEmailRepository.emailCount() == 0)
     }

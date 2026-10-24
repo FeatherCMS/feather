@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 extension Metadata {
     protocol Operation: APIOperation {}

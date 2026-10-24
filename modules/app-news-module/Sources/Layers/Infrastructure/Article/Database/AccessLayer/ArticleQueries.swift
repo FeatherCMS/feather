@@ -37,32 +37,6 @@ struct ArticleQueries {
 
     let connection: any DatabaseConnection
 
-    func list(
-        search: String?,
-        orderBy: String,
-        limit: Int,
-        offset: Int
-    ) async throws -> [Row] {
-        try await connection.run(
-            query: #"""
-                SELECT *
-                FROM news_article
-                WHERE (
-                    \#(search == nil)
-                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(title) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(excerpt) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(content) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                )
-                ORDER BY \#(unescaped: orderBy)
-                LIMIT \#(limit)
-                OFFSET \#(offset);
-                """#
-        ) { sequence in
-            try await sequence.collect().map { try Row(from: $0) }
-        }
-    }
-
     func listPublic(
         search: String?,
         categoryID: String?,

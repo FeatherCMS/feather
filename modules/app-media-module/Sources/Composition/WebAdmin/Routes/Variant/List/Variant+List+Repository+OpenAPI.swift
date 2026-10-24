@@ -6,7 +6,7 @@ import OpenAPIRuntime
 
 extension Variant.List.Repository {
     struct OpenAPI: Variant.List.Repository.Interface {
-        let api: MediaAdminAPIClient
+        let api: API.Client
 
         func listMediaVariants(
             page: Int,

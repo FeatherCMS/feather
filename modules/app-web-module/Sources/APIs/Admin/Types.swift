@@ -99,8 +99,8 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/get(settingsGet)`.
     func settingsGet(_ input: Operations.SettingsGet.Input) async throws -> Operations.SettingsGet.Output
     /// - Remark: HTTP `PUT /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)`.
-    func settingsUpdate(_ input: Operations.SettingsUpdate.Input) async throws -> Operations.SettingsUpdate.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsPut)`.
+    func settingsPut(_ input: Operations.SettingsPut.Input) async throws -> Operations.SettingsPut.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -158,11 +158,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/patch(menuPatch)`.
     public func menuPatch(
         path: Operations.MenuPatch.Input.Path,
+        query: Operations.MenuPatch.Input.Query,
         headers: Operations.MenuPatch.Input.Headers = .init(),
         body: Components.RequestBodies.MenuPatchRequestBody
     ) async throws -> Operations.MenuPatch.Output {
         try await menuPatch(Operations.MenuPatch.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))
@@ -447,12 +449,12 @@ extension APIProtocol {
         try await settingsGet(Operations.SettingsGet.Input(headers: headers))
     }
     /// - Remark: HTTP `PUT /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)`.
-    public func settingsUpdate(
-        headers: Operations.SettingsUpdate.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsPut)`.
+    public func settingsPut(
+        headers: Operations.SettingsPut.Input.Headers = .init(),
         body: Components.RequestBodies.SettingsUpdateRequestBody
-    ) async throws -> Operations.SettingsUpdate.Output {
-        try await settingsUpdate(Operations.SettingsUpdate.Input(
+    ) async throws -> Operations.SettingsPut.Output {
+        try await settingsPut(Operations.SettingsPut.Input(
             headers: headers,
             body: body
         ))

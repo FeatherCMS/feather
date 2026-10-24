@@ -1,6 +1,7 @@
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import NewsletterAdminAPI
@@ -125,6 +126,7 @@ extension Campaign.Subscriber {
                         newsletterCampaignKey: newsletterId,
                         email: email
                     ),
+                    query: .init(updateMask: "firstName,lastName,status"),
                     body: .json(
                         .init(
                             firstName: form.firstName,
@@ -135,6 +137,14 @@ extension Campaign.Subscriber {
                 )
                 switch response {
                 case .ok: return
+                case .badRequest(let response):
+                    let data = try JSONEncoder().encode(
+                        try response.body.json
+                    )
+                    throw OpenAPIRepositoryError.parsedFailure(
+                        statusCode: 400,
+                        responseBody: String(data: data, encoding: .utf8)
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:

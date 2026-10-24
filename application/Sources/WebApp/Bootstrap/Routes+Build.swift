@@ -44,7 +44,6 @@ func buildRouter(
 ) async throws -> Hummingbird.Router<DefaultRequestContext> {
 
     let router = Hummingbird.Router(context: DefaultRequestContext.self)
-    let apiBuilder = APIBuilder(environment: environment)
     let mediaResolver = MediaResolver(
         mediaBaseURL: environment.publicOrigins.mediaBaseURL
     )
@@ -97,7 +96,7 @@ func buildRouter(
         routes: systemRoutes
     )
     AccountWebAdmin.Event.Handlers.register(in: &adminEvents)
-    AuthModule.Event.Handlers.registerMenu(in: &adminEvents)
+    AuthWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     UserModule.Event.Handlers.register(in: &adminEvents)
     MediaWebAdmin.Event.Handlers.register(in: &adminEvents)
     AnalyticsWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
@@ -110,11 +109,11 @@ func buildRouter(
     NewsletterWebAdmin.Event.Handlers.registerRichContentEditor(
         in: &adminEvents
     )
-    ContactModule.Event.Handlers.registerRichContentEditor(
+    ContactWebAdmin.Event.Handlers.registerRichContentEditor(
         in: &adminEvents
     )
     NewsletterWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
-    ContactModule.Event.Handlers.registerMenu(in: &adminEvents)
+    ContactWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
     WebModule.Event.Handlers.registerMenu(in: &adminEvents)
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(
@@ -185,7 +184,6 @@ func buildRouter(
         ),
         themeRenderer: themeRenderer,
         publicContentEvents: publicContentEvents,
-        apiBuilder: apiBuilder,
         mediaResolver: mediaResolver,
         publicOrigins: environment.publicOrigins
     )
@@ -213,7 +211,6 @@ func buildRouter(
         environment: environment,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents,
-        apiBuilder: apiBuilder,
         systemRoutes: systemRoutes,
         redirectRoutes: redirectRoutes,
         newsRoutes: newsRoutes

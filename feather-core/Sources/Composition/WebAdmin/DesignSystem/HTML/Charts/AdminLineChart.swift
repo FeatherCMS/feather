@@ -6,6 +6,11 @@ import WebBuilders
 public import WebComponents
 
 public struct AdminLineChart: Component {
+    private struct Coordinate {
+        let x: Double
+        let y: Double
+    }
+
     public struct Point: Sendable {
         public let label: String
         public let value: Int
@@ -77,13 +82,20 @@ public struct AdminLineChart: Component {
                 let y =
                     Double(height) - bottomInset
                     - (Double(point.value) / maxValue) * chartHeight
-                return (x: x, y: y)
+                return Coordinate(x: x, y: y)
             }
         let polylinePoints = chartPoints.flatMap { [$0.x, $0.y] }
         let areaPoints =
-            ([(x: yAxisGuideStart, y: Double(height) - bottomInset)]
-            + chartPoints + [
-                (x: Double(width) - rightInset, y: Double(height) - bottomInset)
+            ([
+                Coordinate(
+                    x: yAxisGuideStart,
+                    y: Double(height) - bottomInset
+                )
+            ] + chartPoints + [
+                Coordinate(
+                    x: Double(width) - rightInset,
+                    y: Double(height) - bottomInset
+                )
             ])
             .flatMap { [$0.x, $0.y] }
 

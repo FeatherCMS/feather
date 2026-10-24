@@ -13,7 +13,7 @@ extension Asset.File.View {
     struct Infrastructure: Sendable {
         let repository: Asset.File.View.Repository.OpenAPI
 
-        init(api: MediaAdminAPIClient) {
+        init(api: API.Client) {
             self.repository = .init(api: api)
         }
     }

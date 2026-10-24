@@ -134,7 +134,6 @@ public func buildMigrations(
             context: context,
             events: events
         ),
-        AnalyticsInfrastructure.TableSeedMigration(context: context),
         ContactInfrastructure.TableSeedMigration(context: context),
         BlogInfrastructure.TableSeedMigration(context: context),
         NewsInfrastructure.TableSeedMigration(context: context),

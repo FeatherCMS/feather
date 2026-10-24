@@ -1,10 +1,19 @@
+import FeatherBackend
+import FeatherDomain
 import FeatherModuleKit
 import Foundation
 public import NewsletterAdminAPI
 import NewsletterApplication
 import NewsletterDomain
+import Hummingbird
 
 extension AdminAPIGateway {
+    private enum UpdateMaskFields: String, Sendable {
+        case subject
+        case content
+        case scheduledAt
+    }
+
     public func newsletterIssueUpdate(
         _ input: Operations.NewsletterIssueUpdate.Input
     ) async throws -> Operations.NewsletterIssueUpdate.Output {
@@ -12,6 +21,13 @@ extension AdminAPIGateway {
         let body: Components.Schemas.NewsletterIssuePatchSchema
         switch input.body {
         case .json(let value): body = value
+        }
+        let fields: UpdateMask<UpdateMaskFields>
+        do {
+            fields = try .init(input.query.updateMask)
+        }
+        catch {
+            throw HTTPError(.badRequest)
         }
         let current = try await self.useCases.makeDetailNewsletterIssue()
             .execute(
@@ -27,11 +43,22 @@ extension AdminAPIGateway {
                 input: .init(
                     campaignKey: input.path.newsletterCampaignKey,
                     id: current.id,
-                    subject: body.subject ?? current.subject,
-                    content: body.content ?? current.content,
-                    scheduledDate: body.scheduledAt.map {
-                        Date(timeIntervalSince1970: $0)
-                    } ?? current.scheduledDate
+                    subject: try FieldChange(
+                        value: body.subject,
+                        shouldApply: fields.contains(.subject),
+                        onMissing: { HTTPError(.badRequest) }
+                    ),
+                    content: try FieldChange(
+                        value: body.content,
+                        shouldApply: fields.contains(.content),
+                        onMissing: { HTTPError(.badRequest) }
+                    ),
+                    scheduledDate: OptionalFieldChange(
+                        value: body.scheduledAt.map {
+                            Date(timeIntervalSince1970: $0)
+                        },
+                        shouldApply: fields.contains(.scheduledAt)
+                    )
                 )
             )
         if current.scheduledDate == nil {

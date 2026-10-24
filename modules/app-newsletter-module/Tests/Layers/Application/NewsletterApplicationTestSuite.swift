@@ -1,4 +1,5 @@
 import Testing
+import NewsletterModule
 
 @testable import NewsletterApplication
 

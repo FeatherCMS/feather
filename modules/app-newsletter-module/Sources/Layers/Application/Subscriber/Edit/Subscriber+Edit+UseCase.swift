@@ -40,16 +40,12 @@ extension Subscriber.Edit {
                         email: input.email
                     )
                 else { throw Error(message: "Newsletter subscriber not found") }
-                model.firstName = input.firstName
-                model.lastName = input.lastName
-                if input.status == .subscribed && model.status != .subscribed {
-                    model.subscribe(at: now)
-                }
-                if input.status == .unsubscribed
-                    && model.status != .unsubscribed
-                {
-                    model.unsubscribe(at: now)
-                }
+                model.update(
+                    firstName: input.firstName,
+                    lastName: input.lastName,
+                    status: input.status,
+                    at: now
+                )
                 return .init(model: try await scope.subscriber.update(model))
             }
         }

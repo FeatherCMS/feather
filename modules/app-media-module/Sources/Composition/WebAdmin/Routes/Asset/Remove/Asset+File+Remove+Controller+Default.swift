@@ -11,7 +11,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.Remove.Controller {
-    struct Default: Asset.File.Remove.Controller.Interface {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Asset.File.Remove.Interactor.Interface,

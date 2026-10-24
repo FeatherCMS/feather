@@ -5,6 +5,12 @@ extension Invitation.Patch {
     struct Operation: Invitation.IdentifiableOperation, BearerProtectedOperation
     {
         var operationId: String? { "accountInvitationPatch" }
+        var parameters: [any ParameterRepresentable] {
+            [
+                Invitation.Parameters.ID().reference(),
+                Invitation.Parameters.UpdateMask().reference(),
+            ]
+        }
         var requestBody: (any RequestBodyRepresentable)? {
             RequestBody().reference()
         }

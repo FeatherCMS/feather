@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 extension Settings.Get {
     struct Operation: Settings.Operation {

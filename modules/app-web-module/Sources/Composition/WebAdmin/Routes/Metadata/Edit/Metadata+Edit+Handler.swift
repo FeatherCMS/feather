@@ -2,7 +2,7 @@ public import FeatherModuleKit
 public import FeatherWebAdmin
 public import FeatherWebShared
 public import Hummingbird
-import WebModule
+public import WebModule
 
 extension WebModule.Metadata.Edit {
     public struct Handler: Sendable {

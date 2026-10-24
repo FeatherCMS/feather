@@ -15,6 +15,6 @@ extension Author.ID {
 
 extension Author.ID.Operation {
     var parameters: [any ParameterRepresentable] {
-        [BlogAuthorIdParameter().reference()]
+        [Author.Parameters.ID().reference()]
     }
 }

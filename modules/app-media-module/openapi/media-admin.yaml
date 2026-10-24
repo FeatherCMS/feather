@@ -224,6 +224,29 @@ paths:
       security:
       - bearerAuth: []
   /api/v1/admin/media/folders:
+    get:
+      tags:
+      - MediaFolders
+      operationId: mediaFolderList
+      parameters:
+      - $ref: '#/components/parameters/MediaFolderParentIDParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/MediaFolderListResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
     post:
       tags:
       - MediaFolders
@@ -1132,6 +1155,63 @@ components:
       - name
       - extension
       - url
+    MediaFolderNullableIdField:
+      type: string
+      nullable: true
+    MediaFolderListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MediaFolderListItemSchema'
+    MediaFolderListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaFolderIdField'
+        parentId:
+          type: string
+          nullable: true
+        name:
+          $ref: '#/components/schemas/MediaFolderNameField'
+        slug:
+          $ref: '#/components/schemas/MediaFolderSlugField'
+        slugPath:
+          $ref: '#/components/schemas/MediaFolderSlugPathField'
+        assetCount:
+          $ref: '#/components/schemas/MediaFolderCountField'
+        totalSizeBytes:
+          $ref: '#/components/schemas/MediaFolderBytesField'
+        createdAt:
+          $ref: '#/components/schemas/MediaFolderTimestampField'
+        updatedAt:
+          $ref: '#/components/schemas/MediaFolderTimestampField'
+      required:
+      - id
+      - name
+      - slug
+      - slugPath
+      - assetCount
+      - totalSizeBytes
+      - createdAt
+      - updatedAt
+    MediaFolderNameField:
+      type: string
+      example: Posts
+    MediaFolderSlugField:
+      type: string
+      example: posts
+    MediaFolderSlugPathField:
+      type: string
+      example: blog/posts
+    MediaFolderCountField:
+      type: integer
+      example: 3
+    MediaFolderBytesField:
+      type: integer
+      format: int64
+    MediaFolderTimestampField:
+      type: number
+      format: double
+      example: 1.717171717e+9
     MediaFolderCreateSchema:
       type: object
       properties:
@@ -1321,9 +1401,6 @@ components:
       properties:
         name:
           $ref: '#/components/schemas/MediaFolderNameField'
-    MediaFolderNameField:
-      type: string
-      example: Posts
     MediaVariantCreateSchema:
       type: object
       properties:
@@ -1759,6 +1836,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaAssetVariantListSchema'
+    MediaFolderListResponse:
+      description: Media folder list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaFolderListSchema'
     MediaFolderDetailResponse:
       description: MediaFolder response
       content:
@@ -1844,6 +1927,13 @@ components:
         $ref: '#/components/schemas/MediaAssetUpdateMaskField'
       description: Comma-separated fields to update. Include an optional field to
         clear it when omitted from the body.
+    MediaFolderParentIDParameter:
+      name: parentId
+      allowEmptyValue: true
+      in: query
+      schema:
+        $ref: '#/components/schemas/MediaFolderNullableIdField'
+      description: Filter folders by their parent folder.
     MediaFolderIdParameter:
       name: mediaFolderId
       in: path

@@ -11,7 +11,7 @@ extension AuthorLink.Operation {
 
 extension AuthorLink.Operation {
     var parameters: [any ParameterRepresentable] {
-        [BlogAuthorLinkAuthorIdParameter().reference()]
+        [AuthorLink.Parameters.AuthorID().reference()]
     }
 }
 
@@ -22,8 +22,8 @@ extension AuthorLink.ID {
 extension AuthorLink.ID.Operation {
     var parameters: [any ParameterRepresentable] {
         [
-            BlogAuthorLinkAuthorIdParameter().reference(),
-            BlogAuthorLinkIdParameter().reference(),
+            AuthorLink.Parameters.AuthorID().reference(),
+            AuthorLink.Parameters.ID().reference(),
         ]
     }
 }

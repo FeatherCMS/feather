@@ -1,5 +1,6 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
+import MediaOpenAPIGeneratorSupport
 
 public struct BlogPostIdField: StringSchemaRepresentable {
     public var example: String? = "blog_post_1"
@@ -39,7 +40,7 @@ public struct BlogPostSummarySchema: ObjectSchemaRepresentable {
             "id": BlogPostIdField().reference(),
             "excerpt": BlogPostExcerptField().reference(),
             "imageURL": BlogPostImageURLField().reference(),
-            "media": MediaAssetSchema().reference(required: false),
+            "media": Media.Asset.Schema().reference(required: false),
             "metadata": WebMetadataContentSchema().reference(),
             "authors": BlogAuthorSummaryListSchema().reference(),
             "tags": BlogTagSummaryListSchema().reference(),
@@ -56,7 +57,7 @@ public struct BlogPostDetailSchema: ObjectSchemaRepresentable {
             "excerpt": BlogPostExcerptField().reference(),
             "content": BlogPostContentField().reference(),
             "imageURL": BlogPostImageURLField().reference(),
-            "media": MediaAssetSchema().reference(required: false),
+            "media": Media.Asset.Schema().reference(required: false),
             "metadata": WebMetadataContentSchema().reference(),
             "authors": BlogAuthorSummaryListSchema().reference(),
             "tags": BlogTagSummaryListSchema().reference(),

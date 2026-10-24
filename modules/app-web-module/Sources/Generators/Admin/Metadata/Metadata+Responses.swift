@@ -1,6 +1,6 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 struct MetadataDetailResponse: JSONResponseRepresentable {
     var description: String = "Metadata response"

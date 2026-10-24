@@ -13,7 +13,7 @@ extension Log.List {
         struct State {
             let canAccess: Bool
             let permissions: AdminListActions
-            let logs: [Components.Schemas.AnalyticsLogListItemSchema]
+            let logs: [Components.Schemas.AnalyticsLogQueryItemSchema]
             let pageState: AdminListPageState
             let search: String
             let source: String

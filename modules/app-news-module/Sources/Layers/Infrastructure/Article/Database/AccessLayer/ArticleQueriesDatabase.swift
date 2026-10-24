@@ -14,7 +14,7 @@ public import WebApplication
 import WebDomain
 public import WebModule
 
-extension ArticleQueries.Row {
+extension Article.Table.List {
     var asQueryListItem: Article.List.Output.Item {
         .init(
             id: id,
@@ -110,11 +110,12 @@ public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
         id: String
     ) async throws -> Article.Detail.Output {
         let accessLayer = DatabaseAccessLayer<Article.Table>(context: context)
-        guard let row = try await accessLayer.selectFirst(by: \.id, equals: id) else {
+        guard let row = try await accessLayer.selectFirst(by: \.id, equals: id)
+        else {
             throw RepositoryError.notFound
         }
         let categoryIds = try await ArticleCategoryTable(context: context)
-        .listCategoryIDs(articleID: id)
+            .listCategoryIDs(articleID: id)
         guard
             let metadata = try await metadata.find(
                 referenceType: "news.article",
@@ -140,19 +141,26 @@ public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
         ids: [String]
     ) async throws -> NewsApplication.Public.Article.Resolve.Query.Output {
         guard !ids.isEmpty else { return .init(items: []) }
-        let rows = try await DatabaseAccessLayer<Article.Table>(context: context)
-            .select { $0.where(\.id, in: ids) }
-        let itemsByID = Dictionary(uniqueKeysWithValues: rows.map {
-            ($0.id, NewsApplication.Public.Article.Item(
-                id: $0.id,
-                title: $0.title,
-                excerpt: $0.excerpt,
-                content: $0.content,
-                imageAssetId: $0.imageAssetId,
-                createdAt: $0.createdAt,
-                updatedAt: $0.updatedAt
-            ))
-        })
+        let rows = try await DatabaseAccessLayer<Article.Table>(
+            context: context
+        )
+        .select { $0.where(\.id, in: ids) }
+        let itemsByID = Dictionary(
+            uniqueKeysWithValues: rows.map {
+                (
+                    $0.id,
+                    NewsApplication.Public.Article.Item(
+                        id: $0.id,
+                        title: $0.title,
+                        excerpt: $0.excerpt,
+                        content: $0.content,
+                        imageAssetId: $0.imageAssetId,
+                        createdAt: $0.createdAt,
+                        updatedAt: $0.updatedAt
+                    )
+                )
+            }
+        )
         return .init(items: ids.compactMap { itemsByID[$0] })
     }
 
@@ -165,15 +173,52 @@ public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
             pageIndex > Int.max / page.size
             ? Int.max
             : pageIndex * page.size
-        let queries = ArticleQueries(connection: context.connection)
-        let items =
-            try await queries.list(
-                search: query.search,
-                orderBy: orderByArticle(query),
-                limit: page.size,
-                offset: offset
-            )
-            .map(\.asQueryListItem)
+        let items = try await DatabaseAccessLayer<Article.Table>(
+            context: context
+        )
+        .select(as: Article.Table.List.self) { initial in
+            var result = initial
+            if let search = query.search {
+                result = result.where(
+                    searchText: search,
+                    columns: [
+                        DatabaseQueryTextColumn<Article.Table>(\.id),
+                        DatabaseQueryTextColumn<Article.Table>(\.title),
+                        DatabaseQueryTextColumn<Article.Table>(\.excerpt),
+                        DatabaseQueryTextColumn<Article.Table>(\.content),
+                    ]
+                )
+            }
+            var orders = query.sort.map { rule in
+                let direction: DatabaseQueryDirection =
+                    rule.direction == .asc ? .ascending : .descending
+                return switch rule.field {
+                case .id:
+                    DatabaseQueryOrder<Article.Table>(by: \.id, direction)
+                case .title:
+                    DatabaseQueryOrder<Article.Table>(by: \.title, direction)
+                case .createdAt:
+                    DatabaseQueryOrder<Article.Table>(
+                        by: \.createdAt,
+                        direction
+                    )
+                case .updatedAt:
+                    DatabaseQueryOrder<Article.Table>(
+                        by: \.updatedAt,
+                        direction
+                    )
+                }
+            }
+            if !query.sort.contains(where: { $0.field == .id }) {
+                orders.append(.init(by: \.id, .ascending))
+            }
+            return
+                result
+                .order(by: orders)
+                .limit(page.size)
+                .offset(offset)
+        }
+        .map(\.asQueryListItem)
 
         return .init(items: items)
     }
@@ -247,10 +292,11 @@ public struct ArticleDatabaseQueries: Article.Detail.Query.Interface,
         query: Article.Search.Input.Query,
         categoryID: String?
     ) async throws -> Int {
-        try await ArticleQueries(connection: context.connection).countPublic(
-            search: query.search,
-            categoryID: categoryID
-        )
+        try await ArticleQueries(connection: context.connection)
+            .countPublic(
+                search: query.search,
+                categoryID: categoryID
+            )
     }
 
     public func searchPublic(

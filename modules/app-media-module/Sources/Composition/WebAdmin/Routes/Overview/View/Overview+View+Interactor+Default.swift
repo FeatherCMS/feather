@@ -10,7 +10,7 @@ import WebBuilders
 import WebComponents
 
 extension Overview.View.Interactor {
-    struct Default: Overview.View.Interactor.Interface {
+    struct Default: Interface {
         func getOverview() async throws -> Overview.View.Model {
             .init(title: "Media management")
         }

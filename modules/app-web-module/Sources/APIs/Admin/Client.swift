@@ -590,6 +590,13 @@ public struct Client: APIProtocol {
                     method: .patch
                 )
                 suppressMutabilityWarning(&request)
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    value: input.query.updateMask
+                )
                 converter.setAcceptHeader(
                     in: &request.headerFields,
                     contentTypes: input.headers.accept
@@ -629,6 +636,28 @@ public struct Client: APIProtocol {
                         preconditionFailure("bestContentType chose an invalid content type.")
                     }
                     return .ok(.init(body: body))
+                case 400:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.MenuPatch.Output.BadRequest.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure("bestContentType chose an invalid content type.")
+                    }
+                    return .badRequest(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
                     let body: Operations.MenuPatch.Output.NotFound.Body
@@ -3616,11 +3645,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `PUT /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)`.
-    public func settingsUpdate(_ input: Operations.SettingsUpdate.Input) async throws -> Operations.SettingsUpdate.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsPut)`.
+    public func settingsPut(_ input: Operations.SettingsPut.Input) async throws -> Operations.SettingsPut.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.SettingsUpdate.id,
+            forOperation: Operations.SettingsPut.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/settings",
@@ -3672,7 +3701,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.SettingsUpdate.Output.Unauthorized.Body
+                    let body: Operations.SettingsPut.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -3694,7 +3723,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.SettingsUpdate.Output.Forbidden.Body
+                    let body: Operations.SettingsPut.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [

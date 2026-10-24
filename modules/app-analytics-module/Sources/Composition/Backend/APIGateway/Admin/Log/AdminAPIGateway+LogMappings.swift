@@ -25,8 +25,8 @@ extension AdminAPIGateway {
     }
 
     func mapResponseQuery(
-        _ query: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema
-    ) -> Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema {
+        _ query: Components.Schemas.AnalyticsLogQueryItemSearchRequestQuerySchema
+    ) -> Components.Schemas.AnalyticsLogQueryItemSearchResponseQuerySchema {
         let page = map(query.page).normalized()
         return .init(
             page: .init(size: page.size, number: page.number),
@@ -49,11 +49,11 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ query: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema
-    ) -> Log.List.Input.Query {
+        _ query: Components.Schemas.AnalyticsLogQueryItemSearchRequestQuerySchema
+    ) -> Log.Search.Input.Query {
         let sort = (query.sort ?? [])
             .map { item in
-                let field: Log.List.Input.Query.Sort.Field
+                let field: Log.Search.Input.Query.Sort.Field
                 switch item.field {
                 case .id:
                     field = .id
@@ -74,7 +74,7 @@ extension AdminAPIGateway {
                 case .createdAt:
                     field = .createdAt
                 }
-                return Log.List.Input.Query.Sort(
+                return Log.Search.Input.Query.Sort(
                     field: field,
                     direction: mapSortDirection(item.direction)
                 )
@@ -110,7 +110,7 @@ extension AdminAPIGateway {
 
     func map(
         _ item: Log.Search.Output.Item
-    ) -> Components.Schemas.AnalyticsLogListItemSchema {
+    ) -> Components.Schemas.AnalyticsLogQueryItemSchema {
         .init(
             id: item.id,
             accountId: item.accountId ?? "",

@@ -69,6 +69,22 @@ extension Issue {
 
 extension Issue.Model {
 
+    public mutating func update(
+        subject: FieldChange<String>,
+        content: FieldChange<String>,
+        scheduledDate: OptionalFieldChange<Date>
+    ) throws(Self.Error) {
+        let newSubject = subject.apply(to: self.subject)
+        let newContent = content.apply(to: self.content)
+        let newScheduledDate = scheduledDate.apply(to: self.scheduledDate)
+
+        try Self.validate(subject: newSubject, content: newContent)
+        self.subject = newSubject
+        self.content = newContent
+        self.scheduledDate = newScheduledDate
+        self.status = newScheduledDate == nil ? .draft : .scheduled
+    }
+
     private static func validate(
         subject: String,
         content: String

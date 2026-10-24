@@ -11,7 +11,7 @@ extension Profile.Edit.Repository {
         Profile.Edit.Repository.Interface
     {
         let api: API.Client
-        let mediaAPI: MediaAdminAPIClient
+        let mediaAPI: MediaWebAdmin.API.Client
 
         func get() async throws -> Profile.WebAdminModel {
             try await api.withOpenAPIRepositoryErrorMapping { client in

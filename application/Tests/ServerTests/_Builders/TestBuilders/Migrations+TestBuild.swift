@@ -105,7 +105,6 @@ public func buildTestMigrations(
             platform: PostgresDatabasePlatform(),
             events: events
         ),
-        AnalyticsInfrastructure.TableSeedMigration(context: context),
         WebInfrastructure.TableSeedMigration(
             context: context,
             events: events

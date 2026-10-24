@@ -6,6 +6,7 @@
 
 import Testing
 import WebDomain
+import WebModule
 
 import struct Foundation.Date
 
@@ -23,7 +24,7 @@ struct ResolvedMetadataTestSuite {
         )
 
         let result = Metadata.Snapshot.Resolved(
-            metadata: metadata.asSnapshot,
+            metadata: metadata,
             fallbackTitle: "Fallback title",
             fallbackExcerpt: "Fallback excerpt",
             fallbackImageURL: "/fallback-image.png"
@@ -43,7 +44,7 @@ struct ResolvedMetadataTestSuite {
         )
 
         let result = Metadata.Snapshot.Resolved(
-            metadata: metadata.asSnapshot,
+            metadata: metadata,
             fallbackTitle: "Fallback title",
             fallbackExcerpt: "Fallback excerpt",
             fallbackImageURL: "/fallback-image.png"
@@ -59,7 +60,7 @@ private func makeMetadataDetail(
     title: String?,
     excerpt: String?,
     imageURL: String?
-) -> Metadata.Detail.Output {
+) -> Metadata.Snapshot {
     let now = Date()
     return .init(
         id: "metadata-1",

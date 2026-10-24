@@ -39,19 +39,11 @@ extension Issue.Edit {
                 else {
                     throw Error.notFound
                 }
-                guard !input.subject.isEmpty else {
-                    throw Issue.Model.Error.subjectTooShort
-                }
-                guard input.subject.count < 255 else {
-                    throw Issue.Model.Error.subjectTooLong
-                }
-                guard !input.content.isEmpty else {
-                    throw Issue.Model.Error.contentTooShort
-                }
-                issue.subject = input.subject
-                issue.content = input.content
-                issue.scheduledDate = input.scheduledDate
-                issue.status = input.scheduledDate == nil ? .draft : .scheduled
+                try issue.update(
+                    subject: input.subject,
+                    content: input.content,
+                    scheduledDate: input.scheduledDate
+                )
                 return .init(model: try await scope.issue.update(issue))
             }
         }

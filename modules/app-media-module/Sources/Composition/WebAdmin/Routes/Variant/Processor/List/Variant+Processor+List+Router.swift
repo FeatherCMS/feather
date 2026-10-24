@@ -3,8 +3,6 @@ import FeatherWebShared
 import Hummingbird
 import MediaModule
 
-
-
 extension Variant.Processor.List {
     struct Router {
         private let routes: Variant.Router.Routes
@@ -23,7 +21,7 @@ extension Variant.Processor.List {
                             Variant.Processor.List.Interactor.Default(
                                 repository:
                                     Variant.Processor.List.Repository.OpenAPI(
-                                        api: MediaAdminAPIClient(
+                                        api: API.Client(
                                             environment: environment,
                                             requestContext: context
                                         )

@@ -1,3 +1,0 @@
-extension ContactSubmission {
-    enum Query {}
-}

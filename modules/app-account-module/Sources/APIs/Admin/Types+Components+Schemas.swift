@@ -731,6 +731,8 @@ extension Components {
                 case roleIds
             }
         }
+        /// - Remark: Generated from `#/components/schemas/InvitationUpdateMask`.
+        public typealias InvitationUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/InvitationPatchSchema`.
         public struct InvitationPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/InvitationPatchSchema/email`.

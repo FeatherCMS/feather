@@ -174,7 +174,7 @@ extension Tag.Add.Controller {
 
         private func slugPrefix(
             context: AuthenticatedRequestContext,
-            keyPath: KeyPath<Settings.PublicRoutes, String>
+            keyPath: KeyPath<BlogModule.Settings.PublicRoutes, String>
         ) async throws -> String {
             let schema = try await PublicContent.Repository
                 .OpenAPI(
@@ -184,7 +184,7 @@ extension Tag.Add.Controller {
                     )
                 )
                 .getRouteSettings()
-            let settings = Settings.PublicRoutes(schema: schema)
+            let settings = BlogModule.Settings.PublicRoutes(schema: schema)
             let prefix = settings[keyPath: keyPath]
             return prefix.isEmpty ? "/" : "/\(prefix)/"
         }

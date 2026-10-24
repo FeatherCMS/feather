@@ -423,6 +423,10 @@ let package = Package(
                     package: "app-newsletter-module"
                 ),
                 .product(
+                    name: "NewsletterModule",
+                    package: "app-newsletter-module"
+                ),
+                .product(
                     name: "ContactWebAdmin",
                     package: "app-contact-module"
                 ),

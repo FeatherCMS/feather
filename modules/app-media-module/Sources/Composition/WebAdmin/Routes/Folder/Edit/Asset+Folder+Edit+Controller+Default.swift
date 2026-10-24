@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.Folder.Edit.Controller {
-    struct Default: Asset.Folder.Edit.Controller.Interface {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Asset.Folder.Edit.Interactor.Interface,

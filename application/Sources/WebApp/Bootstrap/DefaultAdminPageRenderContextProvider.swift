@@ -41,10 +41,12 @@ struct DefaultAdminPageRenderContextProvider:
                 }
 
             if let profileID {
-                let asset = try await MediaAdminAPIClient(
-                    environment: environment,
-                    requestContext: context
-                ).loadImageAsset(assetId: profileID)
+                let asset = try await MediaWebAdmin.API
+                    .Client(
+                        environment: environment,
+                        requestContext: context
+                    )
+                    .loadImageAsset(assetId: profileID)
                 topBarState = .init(
                     profileImageURL: asset?.previewURL
                         .flatMap {

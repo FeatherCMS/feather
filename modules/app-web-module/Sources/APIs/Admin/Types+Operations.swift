@@ -1037,6 +1037,21 @@ public enum Operations {
                 }
             }
             public var path: Operations.MenuPatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/query`.
+            public struct Query: Sendable, Hashable {
+                /// Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/query/updateMask`.
+                public var updateMask: Components.Parameters.MenuParametersUpdateMask
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - updateMask: Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+                public init(updateMask: Components.Parameters.MenuParametersUpdateMask) {
+                    self.updateMask = updateMask
+                }
+            }
+            public var query: Operations.MenuPatch.Input.Query
             /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.MenuPatch.AcceptableContentType>]
@@ -1054,14 +1069,17 @@ public enum Operations {
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
                 path: Operations.MenuPatch.Input.Path,
+                query: Operations.MenuPatch.Input.Query,
                 headers: Operations.MenuPatch.Input.Headers = .init(),
                 body: Components.RequestBodies.MenuPatchRequestBody
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -1085,6 +1103,57 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/web/menus/{menuId}/PATCH/responses/400/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.MenuPatch.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.MenuPatch.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Bad Request
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/patch(menuPatch)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.MenuPatch.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.MenuPatch.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
                             response: self
                         )
                     }
@@ -6859,22 +6928,22 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `PUT /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)`.
-    public enum SettingsUpdate {
-        public static let id: Swift.String = "settingsUpdate"
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsPut)`.
+    public enum SettingsPut {
+        public static let id: Swift.String = "settingsPut"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/web/settings/PUT/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.SettingsUpdate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.SettingsPut.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.SettingsUpdate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.SettingsPut.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.SettingsUpdate.Input.Headers
+            public var headers: Operations.SettingsPut.Input.Headers
             public var body: Components.RequestBodies.SettingsUpdateRequestBody
             /// Creates a new `Input`.
             ///
@@ -6882,7 +6951,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.SettingsUpdate.Input.Headers = .init(),
+                headers: Operations.SettingsPut.Input.Headers = .init(),
                 body: Components.RequestBodies.SettingsUpdateRequestBody
             ) {
                 self.headers = headers
@@ -6892,7 +6961,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Settings response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsPut)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.SettingsDetailResponse)
@@ -6932,26 +7001,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.SettingsUpdate.Output.Unauthorized.Body
+                public var body: Operations.SettingsPut.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.SettingsUpdate.Output.Unauthorized.Body) {
+                public init(body: Operations.SettingsPut.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsPut)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.SettingsUpdate.Output.Unauthorized)
+            case unauthorized(Operations.SettingsPut.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.SettingsUpdate.Output.Unauthorized {
+            public var unauthorized: Operations.SettingsPut.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -6983,26 +7052,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.SettingsUpdate.Output.Forbidden.Body
+                public var body: Operations.SettingsPut.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.SettingsUpdate.Output.Forbidden.Body) {
+                public init(body: Operations.SettingsPut.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsPut)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.SettingsUpdate.Output.Forbidden)
+            case forbidden(Operations.SettingsPut.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.SettingsUpdate.Output.Forbidden {
+            public var forbidden: Operations.SettingsPut.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):

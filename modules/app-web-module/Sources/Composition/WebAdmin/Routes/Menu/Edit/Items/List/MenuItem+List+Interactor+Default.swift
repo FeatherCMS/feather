@@ -1,6 +1,7 @@
 import FeatherWebAdmin
 import Hummingbird
 import OpenAPIRuntime
+import WebModule
 
 extension MenuItem.List.Interactor {
     struct Default: Interface {

@@ -15,6 +15,6 @@ extension Post.ID {
 
 extension Post.ID.Operation {
     var parameters: [any ParameterRepresentable] {
-        [BlogPostIdParameter().reference()]
+        [Post.Parameters.ID().reference()]
     }
 }

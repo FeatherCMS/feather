@@ -17,8 +17,7 @@ struct NewsletterIssueSchema: ObjectSchemaRepresentable {
             "subject": NewsletterSubjectField(),
             "content": NewsletterContentField(),
             "status": NewsletterIssueStatusField(),
-            "scheduledAt": NewsletterTimestampField()
-                .reference(required: false),
+            "scheduledAt": NewsletterTimestampField().reference(required: false),
             "sentAt": NewsletterTimestampField().reference(required: false),
             "createdAt": NewsletterTimestampField(),
             "updatedAt": NewsletterTimestampField(),
@@ -36,8 +35,7 @@ struct NewsletterIssueCreateSchema: ObjectSchemaRepresentable {
         [
             "subject": NewsletterSubjectField(),
             "content": NewsletterContentField(),
-            "scheduledAt": NewsletterTimestampField()
-                .reference(required: false),
+            "scheduledAt": NewsletterTimestampField().reference(required: false),
         ]
     }
 }
@@ -46,7 +44,7 @@ struct NewsletterIssuePatchSchema: ObjectSchemaRepresentable {
         [
             "subject": NewsletterSubjectField().reference(required: false),
             "content": NewsletterContentField().reference(required: false),
-            "scheduledAt": NewsletterTimestampField()
+            "scheduledAt": NewsletterNullableTimestampField()
                 .reference(required: false),
         ]
     }

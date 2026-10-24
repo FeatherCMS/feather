@@ -2,7 +2,7 @@ public import FeatherOpenAPI
 
 extension Page {
     struct PathItem: PathItemRepresentable {
-        var post: (any OperationRepresentable)? { PageCreateOperation() }
-        var delete: (any OperationRepresentable)? { PageRemoveOperation() }
+        var post: (any OperationRepresentable)? { Page.Post.Operation() }
+        var delete: (any OperationRepresentable)? { Page.Delete.Operation() }
     }
 }

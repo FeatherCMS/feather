@@ -12,6 +12,6 @@ extension Tag.Operation {
 
 extension Tag.IdentifiableOperation {
     var parameters: [any ParameterRepresentable] {
-        [BlogTagIdParameter().reference()]
+        [Tag.Parameters.ID().reference()]
     }
 }

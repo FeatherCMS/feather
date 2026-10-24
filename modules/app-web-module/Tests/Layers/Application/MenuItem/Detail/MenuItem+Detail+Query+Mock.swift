@@ -1,5 +1,6 @@
 import WebApplication
 import WebDomain
+import WebModule
 
 extension MenuItem.Detail.Query {
     struct Mock: Interface {

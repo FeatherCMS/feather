@@ -6,7 +6,7 @@ import MediaModule
 import WebComponents
 
 extension Variant.List.Presenter {
-    struct Default: Variant.List.Presenter.Interface {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine

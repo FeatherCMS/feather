@@ -7,7 +7,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 public import WebComponents
-import WebModule
+public import WebModule
 
 extension WebModule.Metadata {
     public struct Fields: Component {

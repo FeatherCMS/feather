@@ -7,6 +7,7 @@ import FeatherTesting
 import Testing
 import WebApplication
 import WebDomain
+import WebModule
 
 @testable import WebInfrastructure
 

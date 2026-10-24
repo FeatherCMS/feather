@@ -1,0 +1,3 @@
+extension Page {
+    enum Delete {}
+}

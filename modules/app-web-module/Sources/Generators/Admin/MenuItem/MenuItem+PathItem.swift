@@ -2,9 +2,9 @@ public import FeatherOpenAPI
 
 extension MenuItem {
     struct PathItem: PathItemRepresentable {
-        var post: (any OperationRepresentable)? { MenuItemCreateOperation() }
+        var post: (any OperationRepresentable)? { MenuItem.Post.Operation() }
         var delete: (any OperationRepresentable)? {
-            MenuItemRemoveOperation()
+            MenuItem.Delete.Operation()
         }
     }
 }

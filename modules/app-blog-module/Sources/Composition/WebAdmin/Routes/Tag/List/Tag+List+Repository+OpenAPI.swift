@@ -14,6 +14,11 @@ import WebModuleWebAdmin
 
 extension Tag.List.Repository {
     struct OpenAPI: Interface {
+        private struct IndexedItem: Sendable {
+            let index: Int
+            let item: Tag.List.Item
+        }
+
         let api: API.Client
 
         func query(page: Int, search: String?) async throws -> Tag.List.Model {
@@ -57,16 +62,14 @@ extension Tag.List.Repository {
             _ items: [BlogAdminAPI.Components.Schemas.TagQueryItemSchema]
         ) async throws -> [Tag.List.Item] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                try await withThrowingTaskGroup(
-                    of: (Int, Tag.List.Item).self
-                ) { group in
+                try await withThrowingTaskGroup(of: IndexedItem.self) { group in
                     let repository = Tag.View.Repository.OpenAPI(api: api)
                     for (index, item) in items.enumerated() {
                         group.addTask {
                             let details = try await repository.get(id: item.id)
-                            return (
-                                index,
-                                .init(
+                            return IndexedItem(
+                                index: index,
+                                item: .init(
                                     id: item.id,
                                     title: item.title,
                                     metadata: details.metadata
@@ -79,8 +82,8 @@ extension Tag.List.Repository {
                         repeating: nil,
                         count: items.count
                     )
-                    for try await (index, item) in group {
-                        enrichedItems[index] = item
+                    for try await result in group {
+                        enrichedItems[result.index] = result.item
                     }
                     return enrichedItems.compactMap { $0 }
                 }

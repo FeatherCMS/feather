@@ -5,7 +5,7 @@ import OpenAPIRuntime
 import SystemModule
 import SystemWebAdmin
 import WebAdminAPI
-import WebModule
+public import WebModule
 
 extension WebModule.Event.Handlers {
     public static func registerDashboard(

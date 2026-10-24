@@ -6,6 +6,9 @@ struct NewsletterKeyField: StringSchemaRepresentable {}
 struct NewsletterNameField: StringSchemaRepresentable {}
 struct NewsletterEmailField: StringSchemaRepresentable {}
 struct NewsletterTimestampField: DoubleSchemaRepresentable {}
+struct NewsletterNullableTimestampField: DoubleSchemaRepresentable {
+    var nullable: Bool? { true }
+}
 
 struct NewsletterJSONField: SchemaRepresentable {
     func openAPISchema() -> JSONSchema {

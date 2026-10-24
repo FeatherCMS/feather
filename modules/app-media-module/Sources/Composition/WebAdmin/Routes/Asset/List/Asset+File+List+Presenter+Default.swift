@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.List.Presenter {
-    struct Default: Asset.File.List.Presenter.Interface {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine

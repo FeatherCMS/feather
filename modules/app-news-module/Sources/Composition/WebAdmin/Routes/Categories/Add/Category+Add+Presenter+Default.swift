@@ -1,15 +1,15 @@
-import NewsApplication
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import MediaWebAdmin
+import NewsApplication
 import NewsModule
 
 extension Category.Add.Presenter {
     struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
-        let mediaAPI: MediaAdminAPIClient
+        let mediaAPI: MediaWebAdmin.API.Client
         let renderingEngine: any RenderingEngine
         let routes: Category.Router.Routes
 

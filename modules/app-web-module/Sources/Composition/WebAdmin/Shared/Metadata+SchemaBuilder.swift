@@ -4,7 +4,7 @@ public import FeatherWebAdmin
 import Foundation
 import OpenAPIRuntime
 public import WebAdminAPI
-import WebModule
+public import WebModule
 
 extension WebModule.Metadata {
     public struct SchemaBuilder {

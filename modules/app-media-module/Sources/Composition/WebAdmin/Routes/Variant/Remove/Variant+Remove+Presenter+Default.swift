@@ -4,7 +4,7 @@ import Hummingbird
 import MediaModule
 
 extension Variant.Remove.Presenter {
-    struct Default: Variant.Remove.Presenter.Interface {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine

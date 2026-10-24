@@ -309,6 +309,12 @@ Within a route feature, keep its files together under
   operation IDs that match the HTTP verb and resource, regenerate YAML and Swift
   API sources from the generator, and remove obsolete generated operations
   rather than preserving compatibility routes by accident.
+  Keep schemas, parameters, request bodies, and responses under the owning
+  entity and operation namespaces (for example, `Article.Schemas.Detail`,
+  `Article.Parameters.ID`, and `Article.Get.Response`) instead of flat,
+  resource-prefixed declarations. When renaming generator types, preserve the
+  public OpenAPI component identifiers explicitly unless the API contract is
+  intentionally changing.
 
 ## Composition and WebAdmin
 

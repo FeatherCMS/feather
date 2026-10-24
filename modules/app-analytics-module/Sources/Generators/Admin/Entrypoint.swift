@@ -1,4 +1,3 @@
-import AnalyticsSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import Foundation

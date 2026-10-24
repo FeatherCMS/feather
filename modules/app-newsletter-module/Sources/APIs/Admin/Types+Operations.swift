@@ -1033,6 +1033,21 @@ public enum Operations {
                 }
             }
             public var path: Operations.NewsletterCampaignUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/query`.
+            public struct Query: Sendable, Hashable {
+                /// Comma-separated list of fields to update.
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/query/updateMask`.
+                public var updateMask: Components.Parameters.NewsletterCampaignUpdateMaskParameter
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - updateMask: Comma-separated list of fields to update.
+                public init(updateMask: Components.Parameters.NewsletterCampaignUpdateMaskParameter) {
+                    self.updateMask = updateMask
+                }
+            }
+            public var query: Operations.NewsletterCampaignUpdate.Input.Query
             /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterCampaignUpdate.AcceptableContentType>]
@@ -1050,14 +1065,17 @@ public enum Operations {
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
                 path: Operations.NewsletterCampaignUpdate.Input.Path,
+                query: Operations.NewsletterCampaignUpdate.Input.Query,
                 headers: Operations.NewsletterCampaignUpdate.Input.Headers = .init(),
                 body: Components.RequestBodies.NewsletterCampaignPatchRequestBody
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -1081,6 +1099,57 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/400/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.NewsletterCampaignUpdate.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.NewsletterCampaignUpdate.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Bad Request
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.NewsletterCampaignUpdate.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.NewsletterCampaignUpdate.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
                             response: self
                         )
                     }
@@ -2594,6 +2663,21 @@ public enum Operations {
                 }
             }
             public var path: Operations.NewsletterIssueUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/query`.
+            public struct Query: Sendable, Hashable {
+                /// Comma-separated list of fields to update.
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/query/updateMask`.
+                public var updateMask: Components.Parameters.NewsletterIssueUpdateMaskParameter
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - updateMask: Comma-separated list of fields to update.
+                public init(updateMask: Components.Parameters.NewsletterIssueUpdateMaskParameter) {
+                    self.updateMask = updateMask
+                }
+            }
+            public var query: Operations.NewsletterIssueUpdate.Input.Query
             /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueUpdate.AcceptableContentType>]
@@ -2611,14 +2695,17 @@ public enum Operations {
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
                 path: Operations.NewsletterIssueUpdate.Input.Path,
+                query: Operations.NewsletterIssueUpdate.Input.Query,
                 headers: Operations.NewsletterIssueUpdate.Input.Headers = .init(),
                 body: Components.RequestBodies.NewsletterIssuePatchRequestBody
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -2642,6 +2729,57 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/400/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.NewsletterIssueUpdate.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.NewsletterIssueUpdate.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Bad Request
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.NewsletterIssueUpdate.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.NewsletterIssueUpdate.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
                             response: self
                         )
                     }
@@ -4262,6 +4400,21 @@ public enum Operations {
                 }
             }
             public var path: Operations.NewsletterSubscriberUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/query`.
+            public struct Query: Sendable, Hashable {
+                /// Comma-separated list of fields to update.
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/query/updateMask`.
+                public var updateMask: Components.Parameters.NewsletterSubscriberUpdateMaskParameter
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - updateMask: Comma-separated list of fields to update.
+                public init(updateMask: Components.Parameters.NewsletterSubscriberUpdateMaskParameter) {
+                    self.updateMask = updateMask
+                }
+            }
+            public var query: Operations.NewsletterSubscriberUpdate.Input.Query
             /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterSubscriberUpdate.AcceptableContentType>]
@@ -4279,14 +4432,17 @@ public enum Operations {
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
                 path: Operations.NewsletterSubscriberUpdate.Input.Path,
+                query: Operations.NewsletterSubscriberUpdate.Input.Query,
                 headers: Operations.NewsletterSubscriberUpdate.Input.Headers = .init(),
                 body: Components.RequestBodies.NewsletterSubscriberPatchRequestBody
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -4310,6 +4466,57 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/400/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.NewsletterSubscriberUpdate.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.NewsletterSubscriberUpdate.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Bad Request
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.NewsletterSubscriberUpdate.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.NewsletterSubscriberUpdate.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
                             response: self
                         )
                     }

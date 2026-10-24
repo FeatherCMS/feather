@@ -44,7 +44,8 @@ struct NewsletterSubscriberPatchSchema: ObjectSchemaRepresentable {
         [
             "firstName": NewsletterNameField().reference(required: false),
             "lastName": NewsletterNameField().reference(required: false),
-            "status": NewsletterSubscriberStatusField(),
+            "status": NewsletterSubscriberStatusField()
+                .reference(required: false),
         ]
     }
 }

@@ -1,6 +1,6 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 struct PageDetailResponse: JSONResponseRepresentable {
     var description: String = "Page response"

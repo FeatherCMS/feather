@@ -31,20 +31,21 @@ extension NewsArticleExtension {
         contexts: [NewsArticleExtensionContext]
     ) async throws -> [String: Detail] {
         try await withThrowingTaskGroup(
-            of: (String, Detail).self
+            of: [String: Detail].self
         ) { group in
             for context in contexts {
                 group.addTask {
-                    (
-                        context.articleID,
-                        try await load(context: context)
-                    )
+                    [
+                        context.articleID: try await load(context: context)
+                    ]
                 }
             }
 
             var result: [String: Detail] = [:]
-            for try await (articleID, detail) in group {
-                result[articleID] = detail
+            for try await details in group {
+                for entry in details {
+                    result[entry.key] = entry.value
+                }
             }
             return result
         }

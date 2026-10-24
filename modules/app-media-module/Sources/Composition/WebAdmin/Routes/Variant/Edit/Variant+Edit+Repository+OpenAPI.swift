@@ -8,7 +8,7 @@ import OpenAPIRuntime
 
 extension Variant.Edit.Repository {
     struct OpenAPI: Variant.Edit.Repository.Interface {
-        let api: MediaAdminAPIClient
+        let api: API.Client
 
         func load(id: String) async throws
             -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema

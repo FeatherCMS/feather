@@ -142,11 +142,18 @@ paths:
       operationId: newsletterCampaignUpdate
       parameters:
       - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignUpdateMaskParameter'
       requestBody:
         $ref: '#/components/requestBodies/NewsletterCampaignPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/NewsletterCampaignResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Newsletter not found
           content:
@@ -335,11 +342,18 @@ paths:
       parameters:
       - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
       - $ref: '#/components/parameters/NewsletterIssueIdParameter'
+      - $ref: '#/components/parameters/NewsletterIssueUpdateMaskParameter'
       requestBody:
         $ref: '#/components/requestBodies/NewsletterIssuePatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/NewsletterIssueResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Newsletter issue not found
           content:
@@ -536,11 +550,18 @@ paths:
       parameters:
       - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
       - $ref: '#/components/parameters/NewsletterSubscriberEmailParameter'
+      - $ref: '#/components/parameters/NewsletterSubscriberUpdateMaskParameter'
       requestBody:
         $ref: '#/components/requestBodies/NewsletterSubscriberPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/NewsletterSubscriberResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Newsletter subscriber not found
           content:
@@ -838,6 +859,10 @@ components:
       type: string
     NewsletterEmailField:
       type: string
+    NewsletterCampaignUpdateMask:
+      type: string
+      examples:
+      - key,name,fromEmail
     NewsletterCampaignPatchSchema:
       type: object
       properties:
@@ -1042,6 +1067,10 @@ components:
       - subject
       - content
       minProperties: 3
+    NewsletterIssueUpdateMask:
+      type: string
+      examples:
+      - subject,content,scheduledAt
     NewsletterIssuePatchSchema:
       type: object
       properties:
@@ -1050,10 +1079,15 @@ components:
         content:
           $ref: '#/components/schemas/NewsletterContentField'
         scheduledAt:
-          $ref: '#/components/schemas/NewsletterTimestampField'
+          $ref: '#/components/schemas/NewsletterNullableTimestampField'
       minProperties: 0
     NewsletterContentField:
       type: string
+    NewsletterNullableTimestampField:
+      type:
+      - number
+      - 'null'
+      format: double
     NewsletterDeliveryListSchema:
       type: array
       items:
@@ -1140,6 +1174,10 @@ components:
       minProperties: 1
     NewsletterSubscriberStatusField:
       type: string
+    NewsletterSubscriberUpdateMask:
+      type: string
+      examples:
+      - firstName,lastName,status
     NewsletterSubscriberPatchSchema:
       type: object
       properties:
@@ -1148,10 +1186,8 @@ components:
         lastName:
           $ref: '#/components/schemas/NewsletterNameField'
         status:
-          type: string
-      required:
-      - status
-      minProperties: 1
+          $ref: '#/components/schemas/NewsletterSubscriberStatusField'
+      minProperties: 0
   responses:
     NewsletterCampaignListResponse:
       description: Newsletter list response
@@ -1216,18 +1252,42 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/NewsletterKeyField'
+    NewsletterCampaignUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/NewsletterCampaignUpdateMask'
+      description: Comma-separated list of fields to update.
     NewsletterIssueIdParameter:
       name: newsletterIssueId
       in: path
       required: true
       schema:
         $ref: '#/components/schemas/NewsletterIdField'
+    NewsletterIssueUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/NewsletterIssueUpdateMask'
+      description: Comma-separated list of fields to update.
     NewsletterSubscriberEmailParameter:
       name: email
       in: path
       required: true
       schema:
         $ref: '#/components/schemas/NewsletterEmailField'
+    NewsletterSubscriberUpdateMaskParameter:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/NewsletterSubscriberUpdateMask'
+      description: Comma-separated list of fields to update.
   requestBodies:
     NewsletterCampaignCreateRequestBody:
       content:

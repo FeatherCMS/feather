@@ -1770,7 +1770,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     contactFormSubmissionId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "contactFormSubmissionId",
-                        as: Components.Parameters.ContactFormSubmissionIdParameter.self
+                        as: Components.Parameters.ContactSubmissionParametersID.self
                     )
                 )
                 let headers: Operations.ContactFormSubmissionGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
@@ -1884,9 +1884,16 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     contactFormSubmissionId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "contactFormSubmissionId",
-                        as: Components.Parameters.ContactFormSubmissionIdParameter.self
+                        as: Components.Parameters.ContactSubmissionParametersID.self
                     )
                 )
+                let query: Operations.ContactFormSubmissionUpdate.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.ContactSubmissionParametersUpdateMask.self
+                ))
                 let headers: Operations.ContactFormSubmissionUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.ContactFormSubmissionPatchRequestBody
@@ -1910,6 +1917,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.ContactFormSubmissionUpdate.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -1919,6 +1927,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {

@@ -1,4 +1,5 @@
 public import FeatherApplication
+public import FeatherDomain
 public import NewsletterModule
 
 public import struct Foundation.Date
@@ -7,16 +8,16 @@ extension Issue.Edit {
     public struct Input: DTO {
         public let campaignKey: String
         public let id: String
-        public let subject: String
-        public let content: String
-        public let scheduledDate: Date?
+        public let subject: FieldChange<String>
+        public let content: FieldChange<String>
+        public let scheduledDate: OptionalFieldChange<Date>
 
         public init(
             campaignKey: String,
             id: String,
-            subject: String,
-            content: String,
-            scheduledDate: Date?
+            subject: FieldChange<String>,
+            content: FieldChange<String>,
+            scheduledDate: OptionalFieldChange<Date>
         ) {
             self.campaignKey = campaignKey
             self.id = id

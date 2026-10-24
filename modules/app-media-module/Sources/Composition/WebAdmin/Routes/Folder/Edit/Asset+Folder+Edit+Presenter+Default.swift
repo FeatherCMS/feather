@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.Folder.Edit.Presenter {
-    struct Default: Asset.Folder.Edit.Presenter.Interface {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine

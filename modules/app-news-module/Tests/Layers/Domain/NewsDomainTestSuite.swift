@@ -1,5 +1,6 @@
 import Testing
 import WebDomain
+import NewsModule
 
 @testable import NewsDomain
 
@@ -21,7 +22,7 @@ struct NewsDomainTestSuite {
 
     @Test
     func articleRejectsEmptyTitle() {
-        #expect(throws: Article.Error.titleTooShort) {
+        #expect(throws: Article.Model.Error.titleTooShort) {
             try Article.Model.create(
                 title: "",
                 excerpt: "A short update",

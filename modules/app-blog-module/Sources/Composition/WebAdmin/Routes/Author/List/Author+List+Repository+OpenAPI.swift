@@ -15,6 +15,11 @@ import WebModuleWebAdmin
 
 extension Author.List.Repository {
     struct OpenAPI: Interface {
+        private struct IndexedItem: Sendable {
+            let index: Int
+            let item: Author.List.Item
+        }
+
         let api: API.Client
 
         func list(
@@ -61,16 +66,14 @@ extension Author.List.Repository {
             _ items: [BlogAdminAPI.Components.Schemas.AuthorQueryItemSchema]
         ) async throws -> [Author.List.Item] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                try await withThrowingTaskGroup(
-                    of: (Int, Author.List.Item).self
-                ) { group in
+                try await withThrowingTaskGroup(of: IndexedItem.self) { group in
                     let repository = Author.View.Repository.OpenAPI(api: api)
                     for (index, item) in items.enumerated() {
                         group.addTask {
                             let details = try await repository.get(id: item.id)
-                            return (
-                                index,
-                                Author.List.Item(
+                            return IndexedItem(
+                                index: index,
+                                item: Author.List.Item(
                                     id: item.id,
                                     name: item.name,
                                     profileImageAssetId: item
@@ -86,8 +89,8 @@ extension Author.List.Repository {
                         repeating: nil,
                         count: items.count
                     )
-                    for try await (index, item) in group {
-                        enrichedItems[index] = item
+                    for try await result in group {
+                        enrichedItems[result.index] = result.item
                     }
                     return enrichedItems.compactMap { $0 }
                 }

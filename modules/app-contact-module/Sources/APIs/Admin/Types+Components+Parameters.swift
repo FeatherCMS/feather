@@ -14,7 +14,13 @@ extension Components {
         public typealias FormFieldListFilterParameter = Components.Schemas.ContactFormKeyField
         /// - Remark: Generated from `#/components/parameters/FormFieldIdParameter`.
         public typealias FormFieldIdParameter = Components.Schemas.ContactIdField
-        /// - Remark: Generated from `#/components/parameters/ContactFormSubmissionIdParameter`.
-        public typealias ContactFormSubmissionIdParameter = Components.Schemas.ContactIdField
+        /// The ID of the contact form submission.
+        ///
+        /// - Remark: Generated from `#/components/parameters/ContactSubmissionParametersID`.
+        public typealias ContactSubmissionParametersID = Components.Schemas.ContactIdField
+        /// Comma-separated list of fields to update.
+        ///
+        /// - Remark: Generated from `#/components/parameters/ContactSubmissionParametersUpdateMask`.
+        public typealias ContactSubmissionParametersUpdateMask = Components.Schemas.ContactFormSubmissionUpdateMask
     }
 }

@@ -204,11 +204,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/patch(accountInvitationPatch)`.
     public func accountInvitationPatch(
         path: Operations.AccountInvitationPatch.Input.Path,
+        query: Operations.AccountInvitationPatch.Input.Query,
         headers: Operations.AccountInvitationPatch.Input.Headers = .init(),
         body: Components.RequestBodies.InvitationPatchRequestBody
     ) async throws -> Operations.AccountInvitationPatch.Output {
         try await accountInvitationPatch(Operations.AccountInvitationPatch.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))

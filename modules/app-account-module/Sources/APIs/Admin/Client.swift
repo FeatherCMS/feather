@@ -1561,6 +1561,13 @@ public struct Client: APIProtocol {
                     method: .patch
                 )
                 suppressMutabilityWarning(&request)
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    value: input.query.updateMask
+                )
                 converter.setAcceptHeader(
                     in: &request.headerFields,
                     contentTypes: input.headers.accept

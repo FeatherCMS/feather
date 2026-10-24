@@ -14,7 +14,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.Add.Controller {
-    struct Default: Asset.File.Add.Controller.Interface {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Asset.File.Add.Interactor.Interface,

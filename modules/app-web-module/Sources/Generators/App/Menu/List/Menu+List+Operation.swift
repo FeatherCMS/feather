@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 extension Menu.List {
     struct Operation: Menu.Operation {

@@ -2,9 +2,9 @@ public import FeatherOpenAPI
 
 extension Metadata {
     struct PathItem: PathItemRepresentable {
-        var post: (any OperationRepresentable)? { MetadataCreateOperation() }
+        var post: (any OperationRepresentable)? { Metadata.Post.Operation() }
         var delete: (any OperationRepresentable)? {
-            MetadataRemoveOperation()
+            Metadata.Delete.Operation()
         }
     }
 }

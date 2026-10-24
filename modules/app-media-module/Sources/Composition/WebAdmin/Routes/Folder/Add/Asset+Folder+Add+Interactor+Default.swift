@@ -11,7 +11,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.Folder.Add.Interactor {
-    struct Default: Asset.Folder.Add.Interactor.Interface {
+    struct Default: Interface {
         let repository: Asset.Folder.Add.Repository.OpenAPI
 
         func getAddMediaFolder(

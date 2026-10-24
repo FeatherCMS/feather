@@ -1595,6 +1595,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     name: "accountInvitationId",
                     as: Components.Parameters.InvitationParametersID.self
                 ))
+                let query: Operations.AccountInvitationPatch.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.InvitationParametersUpdateMask.self
+                ))
                 let headers: Operations.AccountInvitationPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.InvitationPatchRequestBody
@@ -1618,6 +1625,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.AccountInvitationPatch.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )

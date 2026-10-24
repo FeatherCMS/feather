@@ -4,7 +4,7 @@ import MediaAdminAPI
 import MediaModule
 
 extension Variant.Add.Interactor {
-    struct Default: Variant.Add.Interactor.Interface {
+    struct Default: Interface {
         let repository: any Variant.Add.Repository.Interface
 
         func add(input: MediaVariantFormInput) async throws {

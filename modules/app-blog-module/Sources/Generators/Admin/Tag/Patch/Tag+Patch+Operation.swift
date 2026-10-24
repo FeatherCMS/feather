@@ -6,7 +6,7 @@ extension Tag.Patch {
         var operationId: String? { "blogTagPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                BlogTagIdParameter().reference(),
+                Tag.Parameters.ID().reference(),
                 Tag.Parameters.UpdateMask().reference(),
             ]
         }

@@ -8,9 +8,9 @@ import NewsModule
 import WebApplication
 
 extension AdminAPIGateway {
-    public func newsCategoryCreate(
-        _ input: Operations.NewsCategoryCreate.Input
-    ) async throws -> Operations.NewsCategoryCreate.Output {
+    public func newsCategoryPost(
+        _ input: Operations.NewsCategoryPost.Input
+    ) async throws -> Operations.NewsCategoryPost.Output {
         let body: Components.Schemas.NewsCategoryCreateSchema =
             switch input.body {
             case .json(let value): value
@@ -36,11 +36,11 @@ extension AdminAPIGateway {
         return .ok(.init(body: .json(result.items.map(map))))
     }
 
-    public func newsCategorySearch(
-        _ input: Operations.NewsCategorySearch.Input
-    ) async throws -> Operations.NewsCategorySearch.Output {
+    public func newsCategoryQuery(
+        _ input: Operations.NewsCategoryQuery.Input
+    ) async throws -> Operations.NewsCategoryQuery.Output {
         let query:
-            Components.Schemas.NewsCategoryListItemSearchRequestQuerySchema =
+            Components.Schemas.NewsCategoryQueryItemSearchRequestQuerySchema =
                 switch input.body {
                 case .json(let value): value
                 }
@@ -84,9 +84,9 @@ extension AdminAPIGateway {
         return .ok(.init(body: .json(map(result))))
     }
 
-    public func newsCategoryUpdate(
-        _ input: Operations.NewsCategoryUpdate.Input
-    ) async throws -> Operations.NewsCategoryUpdate.Output {
+    public func newsCategoryPut(
+        _ input: Operations.NewsCategoryPut.Input
+    ) async throws -> Operations.NewsCategoryPut.Output {
         let body: Components.Schemas.NewsCategoryCreateSchema =
             switch input.body {
             case .json(let value): value
@@ -100,9 +100,9 @@ extension AdminAPIGateway {
         return .ok(.init(body: .json(map(result))))
     }
 
-    public func newsCategoryRemove(
-        _ input: Operations.NewsCategoryRemove.Input
-    ) async throws -> Operations.NewsCategoryRemove.Output {
+    public func newsCategoryDelete(
+        _ input: Operations.NewsCategoryDelete.Input
+    ) async throws -> Operations.NewsCategoryDelete.Output {
         let body: Components.Schemas.DeleteRequestSchema =
             switch input.body {
             case .json(let value): value
@@ -175,7 +175,7 @@ extension AdminAPIGateway {
 
     fileprivate func mapSearch(
         _ item: NewsModule.Category.Search.Output.Item
-    ) -> Components.Schemas.NewsCategoryListItemSchema {
+    ) -> Components.Schemas.NewsCategoryQueryItemSchema {
         .init(
             id: item.id,
             title: item.title,
@@ -216,9 +216,9 @@ extension AdminAPIGateway {
 
 }
 
-extension Components.Schemas.NewsCategoryListItemSearchRequestQuerySchema {
+extension Components.Schemas.NewsCategoryQueryItemSearchRequestQuerySchema {
     fileprivate var asResponse:
-        Components.Schemas.NewsCategoryListItemSearchResponseQuerySchema
+        Components.Schemas.NewsCategoryQueryItemSearchResponseQuerySchema
     {
         .init(
             page: .init(size: page?.size ?? 20, number: page?.number ?? 1),

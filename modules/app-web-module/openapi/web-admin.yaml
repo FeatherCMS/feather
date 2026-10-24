@@ -182,11 +182,18 @@ paths:
       operationId: menuPatch
       parameters:
       - $ref: '#/components/parameters/MenuIdParameter'
+      - $ref: '#/components/parameters/MenuParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/MenuPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/MenuDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Menu not found
           content:
@@ -867,7 +874,7 @@ paths:
     put:
       tags:
       - Settings
-      operationId: settingsUpdate
+      operationId: settingsPut
       requestBody:
         $ref: '#/components/requestBodies/SettingsUpdateRequestBody'
       responses:
@@ -1174,6 +1181,9 @@ components:
       - name
       - createdAt
       - updatedAt
+    WebMenuUpdateMask:
+      type: string
+      example: key,name,notes
     MenuPatchSchema:
       type: object
       properties:
@@ -1182,7 +1192,11 @@ components:
         name:
           $ref: '#/components/schemas/MenuNameField'
         notes:
-          $ref: '#/components/schemas/MenuNotesField'
+          $ref: '#/components/schemas/MenuNotesFieldNullable'
+    MenuNotesFieldNullable:
+      type: string
+      example: Primary site navigation.
+      nullable: true
     MenuItemCreateSchema:
       type: object
       properties:
@@ -2354,6 +2368,15 @@ components:
       schema:
         $ref: '#/components/schemas/MenuIdField'
       description: Menu id
+    MenuParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMenuUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
     MenuItemMenuIdParameter:
       name: menuId
       in: path

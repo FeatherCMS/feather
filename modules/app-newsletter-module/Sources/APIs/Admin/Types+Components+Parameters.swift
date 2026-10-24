@@ -8,9 +8,21 @@ extension Components {
     public enum Parameters {
         /// - Remark: Generated from `#/components/parameters/NewsletterCampaignKeyParameter`.
         public typealias NewsletterCampaignKeyParameter = Components.Schemas.NewsletterKeyField
+        /// Comma-separated list of fields to update.
+        ///
+        /// - Remark: Generated from `#/components/parameters/NewsletterCampaignUpdateMaskParameter`.
+        public typealias NewsletterCampaignUpdateMaskParameter = Components.Schemas.NewsletterCampaignUpdateMask
         /// - Remark: Generated from `#/components/parameters/NewsletterIssueIdParameter`.
         public typealias NewsletterIssueIdParameter = Components.Schemas.NewsletterIdField
+        /// Comma-separated list of fields to update.
+        ///
+        /// - Remark: Generated from `#/components/parameters/NewsletterIssueUpdateMaskParameter`.
+        public typealias NewsletterIssueUpdateMaskParameter = Components.Schemas.NewsletterIssueUpdateMask
         /// - Remark: Generated from `#/components/parameters/NewsletterSubscriberEmailParameter`.
         public typealias NewsletterSubscriberEmailParameter = Components.Schemas.NewsletterEmailField
+        /// Comma-separated list of fields to update.
+        ///
+        /// - Remark: Generated from `#/components/parameters/NewsletterSubscriberUpdateMaskParameter`.
+        public typealias NewsletterSubscriberUpdateMaskParameter = Components.Schemas.NewsletterSubscriberUpdateMask
     }
 }

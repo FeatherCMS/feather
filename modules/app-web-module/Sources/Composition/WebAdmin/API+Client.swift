@@ -12,15 +12,17 @@ import WebModuleWebShared
 extension API {
     public struct Client: Sendable {
         public let client: WebAdminAPI.Client
-        public let sessionToken: String?
+        private let requestContext: AuthenticatedRequestContext
         public let apiBaseURL: URL
+        private let environment: AppEnvironment
 
         public init(
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
+            self.environment = environment
             self.apiBaseURL = environment.apiBaseURL
-            self.sessionToken = requestContext.sessionToken
+            self.requestContext = requestContext
             self.client = .init(
                 serverURL: environment.apiBaseURL,
                 transport: AsyncHTTPClientTransport(
@@ -56,8 +58,8 @@ extension API {
             )
         }
 
-        public func mediaAdminAPI() -> MediaAdminAPIClient {
-            .init(apiBaseURL: apiBaseURL, sessionToken: sessionToken)
+        public func mediaAdminAPI() -> MediaWebAdmin.API.Client {
+            .init(environment: environment, requestContext: requestContext)
         }
     }
 }

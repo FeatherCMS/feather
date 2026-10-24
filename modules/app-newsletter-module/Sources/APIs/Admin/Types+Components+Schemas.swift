@@ -491,6 +491,8 @@ extension Components {
         public typealias NewsletterNameField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterEmailField`.
         public typealias NewsletterEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/NewsletterCampaignUpdateMask`.
+        public typealias NewsletterCampaignUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterCampaignPatchSchema`.
         public struct NewsletterCampaignPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsletterCampaignPatchSchema/key`.
@@ -890,6 +892,8 @@ extension Components {
                 case content
             }
         }
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueUpdateMask`.
+        public typealias NewsletterIssueUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterIssuePatchSchema`.
         public struct NewsletterIssuePatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsletterIssuePatchSchema/subject`.
@@ -897,7 +901,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsletterIssuePatchSchema/content`.
             public var content: Components.Schemas.NewsletterContentField?
             /// - Remark: Generated from `#/components/schemas/NewsletterIssuePatchSchema/scheduledAt`.
-            public var scheduledAt: Components.Schemas.NewsletterTimestampField?
+            public var scheduledAt: Components.Schemas.NewsletterNullableTimestampField?
             /// Creates a new `NewsletterIssuePatchSchema`.
             ///
             /// - Parameters:
@@ -907,7 +911,7 @@ extension Components {
             public init(
                 subject: Components.Schemas.NewsletterSubjectField? = nil,
                 content: Components.Schemas.NewsletterContentField? = nil,
-                scheduledAt: Components.Schemas.NewsletterTimestampField? = nil
+                scheduledAt: Components.Schemas.NewsletterNullableTimestampField? = nil
             ) {
                 self.subject = subject
                 self.content = content
@@ -921,6 +925,8 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterContentField`.
         public typealias NewsletterContentField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/NewsletterNullableTimestampField`.
+        public typealias NewsletterNullableTimestampField = Swift.Double
         /// - Remark: Generated from `#/components/schemas/NewsletterDeliveryListSchema`.
         public typealias NewsletterDeliveryListSchema = [Components.Schemas.NewsletterDeliverySchema]
         /// - Remark: Generated from `#/components/schemas/NewsletterDeliverySchema`.
@@ -1080,6 +1086,8 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberStatusField`.
         public typealias NewsletterSubscriberStatusField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberUpdateMask`.
+        public typealias NewsletterSubscriberUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberPatchSchema`.
         public struct NewsletterSubscriberPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberPatchSchema/firstName`.
@@ -1087,7 +1095,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberPatchSchema/lastName`.
             public var lastName: Components.Schemas.NewsletterNameField?
             /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberPatchSchema/status`.
-            public var status: Swift.String
+            public var status: Components.Schemas.NewsletterSubscriberStatusField?
             /// Creates a new `NewsletterSubscriberPatchSchema`.
             ///
             /// - Parameters:
@@ -1097,7 +1105,7 @@ extension Components {
             public init(
                 firstName: Components.Schemas.NewsletterNameField? = nil,
                 lastName: Components.Schemas.NewsletterNameField? = nil,
-                status: Swift.String
+                status: Components.Schemas.NewsletterSubscriberStatusField? = nil
             ) {
                 self.firstName = firstName
                 self.lastName = lastName

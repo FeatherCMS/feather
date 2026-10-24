@@ -1,7 +1,7 @@
 import FeatherModuleKit
 public import FeatherWebAdmin
 import OpenAPIRuntime
-import WebModule
+public import WebModule
 
 extension WebModule.Metadata.Edit {
     public struct Input: Codable, Sendable, Equatable, Hashable {

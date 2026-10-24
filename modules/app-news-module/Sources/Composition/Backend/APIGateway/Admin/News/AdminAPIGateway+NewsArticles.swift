@@ -8,9 +8,9 @@ import NewsModule
 import WebApplication
 
 extension AdminAPIGateway {
-    public func newsArticleCreate(
-        _ input: Operations.NewsArticleCreate.Input
-    ) async throws -> Operations.NewsArticleCreate.Output {
+    public func newsArticlePost(
+        _ input: Operations.NewsArticlePost.Input
+    ) async throws -> Operations.NewsArticlePost.Output {
         let body: Components.Schemas.NewsArticleCreateSchema =
             switch input.body {
             case .json(let value): value
@@ -36,11 +36,11 @@ extension AdminAPIGateway {
         return .ok(.init(body: .json(result.items.map(map))))
     }
 
-    public func newsArticleSearch(
-        _ input: Operations.NewsArticleSearch.Input
-    ) async throws -> Operations.NewsArticleSearch.Output {
+    public func newsArticleQuery(
+        _ input: Operations.NewsArticleQuery.Input
+    ) async throws -> Operations.NewsArticleQuery.Output {
         let query:
-            Components.Schemas.NewsArticleListItemSearchRequestQuerySchema =
+            Components.Schemas.NewsArticleQueryItemSearchRequestQuerySchema =
                 switch input.body {
                 case .json(let value): value
                 }
@@ -84,9 +84,9 @@ extension AdminAPIGateway {
         return .ok(.init(body: .json(map(result))))
     }
 
-    public func newsArticleUpdate(
-        _ input: Operations.NewsArticleUpdate.Input
-    ) async throws -> Operations.NewsArticleUpdate.Output {
+    public func newsArticlePut(
+        _ input: Operations.NewsArticlePut.Input
+    ) async throws -> Operations.NewsArticlePut.Output {
         let body: Components.Schemas.NewsArticleCreateSchema =
             switch input.body {
             case .json(let value): value
@@ -100,9 +100,9 @@ extension AdminAPIGateway {
         return .ok(.init(body: .json(map(result))))
     }
 
-    public func newsArticleRemove(
-        _ input: Operations.NewsArticleRemove.Input
-    ) async throws -> Operations.NewsArticleRemove.Output {
+    public func newsArticleDelete(
+        _ input: Operations.NewsArticleDelete.Input
+    ) async throws -> Operations.NewsArticleDelete.Output {
         let body: Components.Schemas.DeleteRequestSchema =
             switch input.body {
             case .json(let value): value
@@ -142,9 +142,9 @@ extension Components.Schemas.NewsArticleCreateSchema {
     }
 }
 
-extension Components.Schemas.NewsArticleListItemSearchRequestQuerySchema {
+extension Components.Schemas.NewsArticleQueryItemSearchRequestQuerySchema {
     fileprivate var asResponse:
-        Components.Schemas.NewsArticleListItemSearchResponseQuerySchema
+        Components.Schemas.NewsArticleQueryItemSearchResponseQuerySchema
     {
         .init(
             page: .init(size: page?.size ?? 20, number: page?.number ?? 1),
@@ -195,7 +195,7 @@ extension AdminAPIGateway {
 
     fileprivate func mapSearch(
         _ item: Article.Search.Output.Item
-    ) -> Components.Schemas.NewsArticleListItemSchema {
+    ) -> Components.Schemas.NewsArticleQueryItemSchema {
         .init(
             id: item.id,
             title: item.title,

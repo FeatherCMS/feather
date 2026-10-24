@@ -10,7 +10,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.Remove.Interactor {
-    struct Default: Asset.File.Remove.Interactor.Interface {
+    struct Default: Interface {
         let repository: Asset.File.Remove.Repository.OpenAPI
 
         func remove(ids: [String]) async throws {

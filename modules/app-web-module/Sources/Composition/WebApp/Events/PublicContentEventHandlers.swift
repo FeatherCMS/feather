@@ -51,10 +51,8 @@ public enum PublicContentEventHandlers {
                 )
             }
         }
-        let (siteSettings, menus) = try await (
-            siteSettingsTask,
-            menusTask
-        )
+        let siteSettings = try await siteSettingsTask
+        let menus = try await menusTask
         let origins = context.runtime.publicOrigins
         let mediaResolver = context.runtime.mediaResolver
         var menusContext: [String: any Sendable] = [:]

@@ -1,6 +1,7 @@
 import FeatherDatabaseTesting
 import FeatherHTTP
 import Foundation
+import HTTPTypes
 import Testing
 
 @Suite
@@ -61,7 +62,9 @@ struct ProfileCurrentUserTests {
         try await connection.assertAllResponsesConsumed()
     }
 
-    private static var profileResponse: MockDatabaseConnection<QueryKey>.Response {
+    private static var profileResponse:
+        MockDatabaseConnection<QueryKey>.Response
+    {
         .init(
             key: .detail,
             rows: [

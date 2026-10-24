@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import UserOpenAPIGeneratorSupport
 
 extension Identity.Query {
     enum Schemas {}
@@ -10,9 +9,9 @@ extension Identity.Query.Schemas {
         var openAPIIdentifier: String { "UserIdentityQueryItemSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": IdentityIDField().reference(),
-                "name": IdentityNameField().reference(),
-                "status": IdentityStatusField().reference(),
+                "id": Identity.Schemas.ID().reference(),
+                "name": Identity.Schemas.Name().reference(),
+                "status": Identity.Schemas.Status().reference(),
                 "roles": Identity.Schemas.RoleNames().reference(),
             ]
         }

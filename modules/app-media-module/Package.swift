@@ -46,6 +46,7 @@ let package = Package(
         .library(name: "MediaInfrastructure", targets: ["MediaInfrastructure"]),
         .library(name: "MediaAdminAPI", targets: ["MediaAdminAPI"]),
         .library(name: "MediaAppAPI", targets: ["MediaAppAPI"]),
+        .library(name: "MediaOpenAPIGeneratorSupport", targets: ["MediaOpenAPIGeneratorSupport"]),
         .executable(name: "MediaAdminOpenAPIGenerator", targets: ["MediaAdminOpenAPIGenerator"]),
         .executable(name: "MediaAppOpenAPIGenerator", targets: ["MediaAppOpenAPIGenerator"]),
         .library(name: "MediaBackend", targets: ["MediaBackend"]),
@@ -162,6 +163,15 @@ let package = Package(
             ],
             path: "Sources/APIs/App",
             swiftSettings: generatedAPISwiftSettings
+        ),
+        .target(
+            name: "MediaOpenAPIGeneratorSupport",
+            dependencies: [
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
+            ],
+            path: "Sources/Generators/SchemaSupport",
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "MediaAdminOpenAPIGenerator",

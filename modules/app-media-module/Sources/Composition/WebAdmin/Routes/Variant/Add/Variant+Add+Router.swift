@@ -3,7 +3,6 @@ import FeatherWebShared
 import Hummingbird
 import MediaModule
 
-
 extension Variant.Add {
     struct Router {
         private let routes: Variant.Router.Routes
@@ -20,7 +19,7 @@ extension Variant.Add {
                     WebAdminRuntime(
                         interactor: Variant.Add.Interactor.Default(
                             repository: Variant.Add.Repository.OpenAPI(
-                                api: MediaAdminAPIClient(
+                                api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )

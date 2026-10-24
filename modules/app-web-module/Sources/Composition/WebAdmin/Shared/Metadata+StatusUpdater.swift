@@ -2,7 +2,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import OpenAPIRuntime
 import WebAdminAPI
-import WebModule
+public import WebModule
 
 extension WebModule.Metadata {
     public struct StatusUpdater: Sendable {

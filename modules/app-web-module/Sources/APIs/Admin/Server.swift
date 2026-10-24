@@ -367,7 +367,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.settingsUpdate(
+                try await server.settingsPut(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -888,6 +888,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     name: "menuId",
                     as: Components.Parameters.MenuIdParameter.self
                 ))
+                let query: Operations.MenuPatch.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.MenuParametersUpdateMask.self
+                ))
                 let headers: Operations.MenuPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.MenuPatchRequestBody
@@ -911,6 +918,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.MenuPatch.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -920,6 +928,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -3707,8 +3733,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `PUT /api/v1/admin/web/settings`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsUpdate)`.
-    func settingsUpdate(
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/settings/put(settingsPut)`.
+    func settingsPut(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -3717,12 +3743,12 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.SettingsUpdate.id,
+            forOperation: Operations.SettingsPut.id,
             using: {
-                APIHandler.settingsUpdate($0)
+                APIHandler.settingsPut($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.SettingsUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.SettingsPut.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.SettingsUpdateRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -3743,7 +3769,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.SettingsUpdate.Input(
+                return Operations.SettingsPut.Input(
                     headers: headers,
                     body: body
                 )

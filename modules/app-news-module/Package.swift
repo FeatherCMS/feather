@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -19,6 +18,10 @@ let swiftSettings: [SwiftSetting] = [
         ["-cross-module-optimization"],
         .when(configuration: .release)
     ),
+]
+
+let swiftSettings = sharedSwiftSettings + [
+    .treatAllWarnings(as: .error)
 ]
 
 let package = Package(
@@ -38,8 +41,8 @@ let package = Package(
         .library(name: "NewsAdminAPI", targets: ["NewsAdminAPI"]),
         .library(name: "NewsAppAPI", targets: ["NewsAppAPI"]),
         .library(
-            name: "NewsSharedOpenAPIGenerator",
-            targets: ["NewsSharedOpenAPIGenerator"]
+            name: "NewsOpenAPIGeneratorSupport",
+            targets: ["NewsOpenAPIGeneratorSupport"]
         ),
         .executable(
             name: "NewsAdminOpenAPIGenerator",
@@ -181,7 +184,9 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "NewsAdminAPI",
@@ -192,20 +197,11 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         // MARK: -
-        .target(
-            name: "NewsSharedOpenAPIGenerator",
-            dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                )
-            ],
-            path: "Sources/Generators/Shared",
-            swiftSettings: swiftSettings
-        ),
         .executableTarget(
             name: "NewsAdminOpenAPIGenerator",
             dependencies: [
@@ -222,12 +218,28 @@ let package = Package(
         .executableTarget(
             name: "NewsAppOpenAPIGenerator",
             dependencies: [
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "NewsSharedOpenAPIGenerator"),
+                .target(name: "NewsOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/App",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "NewsOpenAPIGeneratorSupport",
+            dependencies: [
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
+            ],
+            path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
         ),
         // MARK: -
@@ -322,7 +334,8 @@ let package = Package(
         .testTarget(
             name: "NewsDomainTests",
             dependencies: [
-                .target(name: "NewsDomain")
+                .target(name: "NewsDomain"),
+                .target(name: "NewsModule"),
             ],
             path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
@@ -330,6 +343,10 @@ let package = Package(
         .testTarget(
             name: "NewsWebAdminTests",
             dependencies: [
+                .product(
+                    name: "FeatherWebShared",
+                    package: "feather-core"
+                ),
                 .target(name: "NewsWebAdmin"),
                 .product(name: "Hummingbird", package: "hummingbird"),
             ],

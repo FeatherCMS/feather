@@ -290,7 +290,8 @@ let package = Package(
         .testTarget(
             name: "NewsletterDomainTests",
             dependencies: [
-                .target(name: "NewsletterDomain")
+                .target(name: "NewsletterDomain"),
+                .target(name: "NewsletterModule"),
             ],
             path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
@@ -298,7 +299,8 @@ let package = Package(
         .testTarget(
             name: "NewsletterApplicationTests",
             dependencies: [
-                .target(name: "NewsletterApplication")
+                .target(name: "NewsletterApplication"),
+                .target(name: "NewsletterModule"),
             ],
             path: "Tests/Layers/Application",
             swiftSettings: swiftSettings

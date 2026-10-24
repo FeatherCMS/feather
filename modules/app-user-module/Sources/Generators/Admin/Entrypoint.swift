@@ -2,7 +2,6 @@ import FeatherOpenAPI
 import Foundation
 import OpenAPIKit
 import OpenAPIKitCompat
-import UserOpenAPIGeneratorSupport
 import Yams
 
 @main

@@ -79,18 +79,16 @@ extension Campaign.Model {
     }
 
     public mutating func update(
-        key: String? = nil,
-        name: String? = nil,
-        fromEmail: String? = nil
+        key: FieldChange<String>,
+        name: FieldChange<String>,
+        fromEmail: FieldChange<String>
     ) throws(Self.Error) {
-        let newKey = key ?? self.key
-        let newName = name ?? self.name
+        let newKey = key.apply(to: self.key)
+        let newName = name.apply(to: self.name)
         try Self.validate(key: newKey)
         try Self.validate(name: newName)
         self.key = newKey
         self.name = newName
-        if let fromEmail {
-            self.fromEmail = fromEmail
-        }
+        self.fromEmail = fromEmail.apply(to: self.fromEmail)
     }
 }

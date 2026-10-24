@@ -1,4 +1,3 @@
-public import AuthModule
 public import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
@@ -6,7 +5,11 @@ import Hummingbird
 import SystemModule
 import SystemWebAdmin
 
-extension AuthModule.Event.Handlers {
+extension Event {
+    public enum Handlers {}
+}
+
+extension Event.Handlers {
     public static func registerMenu(in events: inout EventRegistry) {
         events.register(
             event: SystemWebAdmin.Admin.Menu.Group.Provider.self,

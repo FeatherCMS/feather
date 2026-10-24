@@ -1,6 +1,5 @@
 public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
-import UserOpenAPIGeneratorSupport
 
 extension Identity {
     public protocol Operation: BearerProtectedOperation {}
@@ -8,11 +7,11 @@ extension Identity {
 }
 
 extension Identity.Operation {
-    public var tags: [any TagRepresentable] { [IdentityTag()] }
+    public var tags: [any TagRepresentable] { [Identity.Tag()] }
 }
 
 extension Identity.IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
-        [IdentityIdParameter().reference()]
+        [Identity.Parameters.ID().reference()]
     }
 }

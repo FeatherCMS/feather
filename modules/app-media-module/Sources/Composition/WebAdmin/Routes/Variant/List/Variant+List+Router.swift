@@ -3,8 +3,6 @@ import FeatherWebShared
 import Hummingbird
 import MediaModule
 
-
-
 extension Variant.List {
     struct Router {
         static let pageSize = 20
@@ -22,7 +20,7 @@ extension Variant.List {
                     WebAdminRuntime(
                         interactor: Variant.List.Interactor.Default(
                             repository: Variant.List.Repository.OpenAPI(
-                                api: MediaAdminAPIClient(
+                                api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )

@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -20,6 +19,11 @@ let swiftSettings: [SwiftSetting] = [
         .when(configuration: .release)
     ),
 ]
+
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
 
 let package = Package(
     name: "app-analytics-module",
@@ -149,7 +153,10 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "AnalyticsAppAPI",
@@ -160,26 +167,20 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
-        ),
-        .target(
-            name: "AnalyticsSharedOpenAPIGenerator",
-            dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                )
-            ],
-            path: "Sources/Generators/Shared",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                // https://github.com/apple/swift-openapi-generator/issues/946
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .executableTarget(
             name: "AnalyticsAdminOpenAPIGenerator",
             dependencies: [
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "AnalyticsSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -187,10 +188,12 @@ let package = Package(
         .executableTarget(
             name: "AnalyticsAppOpenAPIGenerator",
             dependencies: [
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "AnalyticsSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings

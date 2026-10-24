@@ -13,7 +13,7 @@ extension Category.Add.Repository {
             input: Components.Schemas.NewsCategoryCreateSchema
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.newsCategoryCreate(
+                let response = try await client.newsCategoryPost(
                     .init(body: .json(input))
                 )
                 switch response {

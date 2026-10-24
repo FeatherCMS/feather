@@ -24,7 +24,6 @@ func buildAdminRoutes(
     environment: AppEnvironment,
     renderingEngine: any RenderingEngine,
     adminEvents: any EventPublisher,
-    apiBuilder: APIBuilder,
     systemRoutes: SystemWebAdmin.Router.Routes,
     redirectRoutes: RedirectWebAdmin.Router.Routes,
     newsRoutes: NewsWebAdmin.Router.Routes

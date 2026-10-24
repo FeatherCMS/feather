@@ -7,6 +7,11 @@ import WebModule
 
 extension Settings.Edit.Repository {
     struct OpenAPI: Interface {
+        private struct IndexedHomePage: Sendable {
+            let index: Int
+            let page: Settings.Edit.Model.HomePage
+        }
+
         let api: API.Client
         private let loadUnauthorizedMessage =
             "Please sign in again to load web settings."
@@ -63,7 +68,7 @@ extension Settings.Edit.Repository {
             input: Settings.Edit.FormInput
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.settingsUpdate(
+                let response = try await client.settingsPut(
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
@@ -141,50 +146,29 @@ extension Settings.Edit.Repository {
             -> [Settings.Edit.Model.HomePage]
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let pageSize = 100
-                var pageNumber = 1
-                var items: [Components.Schemas.PageQueryItemSchema] = []
-
-                while true {
-                    let response = try await client.pageQuery(
-                        headers: .init(accept: [.init(contentType: .json)]),
-                        body: .json(
-                            .init(
-                                page: .init(size: pageSize, number: pageNumber),
-                                filters: .init(search: nil)
-                            )
-                        )
+                let response = try await client.pageList(
+                    headers: .init(accept: [.init(contentType: .json)])
+                )
+                let items: [Components.Schemas.PageListItemSchema]
+                switch response {
+                case .ok(let okResponse):
+                    items = try okResponse.body.json
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
                     )
-
-                    let body: Components.Schemas.PageQueryItemSearchSchema
-                    switch response {
-                    case .ok(let okResponse):
-                        body = try okResponse.body.json
-                    case .unauthorized:
-                        throw OpenAPIRepositoryError.unauthorized
-                    case .forbidden:
-                        throw OpenAPIRepositoryError.forbidden
-                    case .undocumented(let statusCode, let response):
-                        throw try await api.failure(
-                            statusCode: statusCode,
-                            responseBody: response.body
-                        )
-                    }
-
-                    items.append(contentsOf: body.data.items)
-                    if items.count >= body.data.total
-                        || body.data.items.count < pageSize
-                    {
-                        break
-                    }
-                    pageNumber += 1
                 }
 
                 let detailsRepository = Page.Repository.AdminAPI.OpenAPI(
                     api: api
                 )
                 return try await withThrowingTaskGroup(
-                    of: (Int, Settings.Edit.Model.HomePage).self
+                    of: IndexedHomePage.self
                 ) { group in
                     for (index, item) in items.enumerated() {
                         group.addTask {
@@ -192,9 +176,9 @@ extension Settings.Edit.Repository {
                                 try await detailsRepository.loadMetadata(
                                     id: item.id
                                 )
-                            return (
-                                index,
-                                .init(
+                            return IndexedHomePage(
+                                index: index,
+                                page: .init(
                                     id: item.id,
                                     title: item.title,
                                     slug: details.slug
@@ -207,8 +191,8 @@ extension Settings.Edit.Repository {
                         repeating: nil,
                         count: items.count
                     )
-                    for try await (index, option) in group {
-                        options[index] = option
+                    for try await result in group {
+                        options[result.index] = result.page
                     }
                     return options.compactMap { $0 }
                 }

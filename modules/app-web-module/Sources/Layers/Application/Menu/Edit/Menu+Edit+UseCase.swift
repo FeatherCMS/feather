@@ -1,4 +1,5 @@
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 import WebDomain
 public import WebModule
@@ -29,11 +30,19 @@ extension Menu.Edit {
                 guard var model = try await scope.menu.find(id: input.id) else {
                     throw Error(message: "Menu not found")
                 }
-                if let key = input.key,
-                    let existing = try await scope.menu.find(key: key),
-                    existing.id != input.id
-                {
-                    throw Error(message: "Menu key already exists")
+                let keyToCheck: String?
+                switch input.key {
+                case .unchanged:
+                    keyToCheck = nil
+                case .set(let key):
+                    keyToCheck = key
+                }
+                if let key = keyToCheck {
+                    if let existing = try await scope.menu.find(key: key),
+                        existing.id != input.id
+                    {
+                        throw Error(message: "Menu key already exists")
+                    }
                 }
                 try model.update(
                     key: input.key,

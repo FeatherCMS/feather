@@ -103,13 +103,13 @@ extension Menu.Model {
     }
 
     public mutating func update(
-        key: String? = nil,
-        name: String? = nil,
-        notes: String? = nil
+        key: FieldChange<String>,
+        name: FieldChange<String>,
+        notes: OptionalFieldChange<String>
     ) throws(Self.Error) {
-        let newKey = key ?? self.key
-        let newName = name ?? self.name
-        let newNotes = notes ?? self.notes
+        let newKey = key.apply(to: self.key)
+        let newName = name.apply(to: self.name)
+        let newNotes = notes.apply(to: self.notes)
 
         try Self.validate(key: newKey)
         try Self.validate(name: newName)

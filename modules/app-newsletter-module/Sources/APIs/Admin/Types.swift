@@ -122,11 +122,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)`.
     public func newsletterCampaignUpdate(
         path: Operations.NewsletterCampaignUpdate.Input.Path,
+        query: Operations.NewsletterCampaignUpdate.Input.Query,
         headers: Operations.NewsletterCampaignUpdate.Input.Headers = .init(),
         body: Components.RequestBodies.NewsletterCampaignPatchRequestBody
     ) async throws -> Operations.NewsletterCampaignUpdate.Output {
         try await newsletterCampaignUpdate(Operations.NewsletterCampaignUpdate.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))
@@ -209,11 +211,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
     public func newsletterIssueUpdate(
         path: Operations.NewsletterIssueUpdate.Input.Path,
+        query: Operations.NewsletterIssueUpdate.Input.Query,
         headers: Operations.NewsletterIssueUpdate.Input.Headers = .init(),
         body: Components.RequestBodies.NewsletterIssuePatchRequestBody
     ) async throws -> Operations.NewsletterIssueUpdate.Output {
         try await newsletterIssueUpdate(Operations.NewsletterIssueUpdate.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))
@@ -294,11 +298,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)`.
     public func newsletterSubscriberUpdate(
         path: Operations.NewsletterSubscriberUpdate.Input.Path,
+        query: Operations.NewsletterSubscriberUpdate.Input.Query,
         headers: Operations.NewsletterSubscriberUpdate.Input.Headers = .init(),
         body: Components.RequestBodies.NewsletterSubscriberPatchRequestBody
     ) async throws -> Operations.NewsletterSubscriberUpdate.Output {
         try await newsletterSubscriberUpdate(Operations.NewsletterSubscriberUpdate.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))

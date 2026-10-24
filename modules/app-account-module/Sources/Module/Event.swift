@@ -1,3 +1,1 @@
-public enum Event {
-    public enum Seed {}
-}
+public enum Event {}

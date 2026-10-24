@@ -6,7 +6,7 @@ import MediaAdminAPI
 import MediaModule
 
 extension Variant.Edit.Controller {
-    struct Default: Variant.Edit.Controller.Interface {
+    struct Default: Interface {
         let routes: Variant.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<

@@ -1,6 +1,6 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 struct MenuItemDetailResponse: JSONResponseRepresentable {
     var description: String = "MenuItem response"

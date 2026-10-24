@@ -28,7 +28,7 @@ extension Log.List.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
-                    .analyticsLogSearch(
+                    .analyticsLogQuery(
                         headers: .init(accept: [.init(contentType: .json)]),
                         body: .json(
                             .init(

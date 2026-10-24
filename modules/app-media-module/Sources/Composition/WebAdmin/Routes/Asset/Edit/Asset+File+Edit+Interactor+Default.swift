@@ -10,7 +10,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.Edit.Interactor {
-    struct Default: Asset.File.Edit.Interactor.Interface {
+    struct Default: Interface {
         let repository: Asset.File.Edit.Repository.OpenAPI
 
         func load(

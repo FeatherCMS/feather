@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import NewsletterAdminAPI
 import NewsletterModule
 import OpenAPIRuntime
@@ -88,6 +89,7 @@ extension Campaign {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterCampaignUpdate(
                     path: .init(newsletterCampaignKey: id),
+                    query: .init(updateMask: "key,name,fromEmail"),
                     body: .json(
                         .init(key: newKey, name: name, fromEmail: fromEmail)
                     )
@@ -99,6 +101,14 @@ extension Campaign {
                         id: item.key,
                         name: item.name,
                         fromEmail: item.fromEmail
+                    )
+                case .badRequest(let response):
+                    let data = try JSONEncoder().encode(
+                        try response.body.json
+                    )
+                    throw OpenAPIRepositoryError.parsedFailure(
+                        statusCode: 400,
+                        responseBody: String(data: data, encoding: .utf8)
                     )
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized

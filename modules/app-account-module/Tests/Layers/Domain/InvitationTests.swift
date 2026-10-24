@@ -1,4 +1,5 @@
 import AccountModule
+import FeatherDomain
 import Foundation
 import Testing
 
@@ -65,7 +66,10 @@ struct InvitationTests {
             updatedAt: Date()
         )
 
-        try invitation.update(email: nil, roleIDs: ["role-editor"])
+        try invitation.update(
+            email: .unchanged,
+            roleIDs: .set(["role-editor"])
+        )
 
         #expect(invitation.email == "user@example.com")
         #expect(invitation.roleIDs == ["role-editor"])

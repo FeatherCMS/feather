@@ -1,10 +1,10 @@
-import NewsApplication
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import MediaWebAdmin
 import NewsAdminAPI
+import NewsApplication
 import NewsModule
 
 extension Category {
@@ -18,7 +18,7 @@ extension Category.Presenter {
     {
         let request: Request
         let context: AuthenticatedRequestContext
-        let mediaAPI: MediaAdminAPIClient
+        let mediaAPI: MediaWebAdmin.API.Client
         let renderingEngine: any RenderingEngine
         let routes: Category.Router.Routes
 

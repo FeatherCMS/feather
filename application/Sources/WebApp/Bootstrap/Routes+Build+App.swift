@@ -1,11 +1,13 @@
 import AccountWebApp
 import ContactWebApp
+import ContactModule
 import FeatherApplication
 import FeatherModuleKit
 import FeatherWebApp
 import FeatherWebShared
 import Hummingbird
 import NewsletterWebApp
+import NewsletterModule
 import WebApplication
 import WebModuleWebApp
 
@@ -15,7 +17,6 @@ func buildAppRoutes(
     publicPageRenderer: any PublicPageRenderer,
     themeRenderer: DefaultThemeRenderer,
     publicContentEvents: any EventPublisher,
-    apiBuilder: APIBuilder,
     mediaResolver: MediaResolver,
     publicOrigins: AppPublicOriginConfiguration
 ) {
@@ -25,21 +26,22 @@ func buildAppRoutes(
     )
     .route(on: router)
 
-    AppContactFormSubmission(environment: environment).route(on: router)
+    Submission.Router(environment: environment).route(on: router)
 
-    AppNewsletterCampaignSubscription(apiBuilder: apiBuilder.newsletterApp)
+    Campaign.Subscription.Router(environment: environment)
         .route(on: router)
 
-    AppPublicContent(
-        events: publicContentEvents,
-        themeRenderer: themeRenderer,
-        contentRenderer: DefaultMarkdownRenderer(
+    Public.Content
+        .Router(
             events: publicContentEvents,
+            themeRenderer: themeRenderer,
+            contentRenderer: DefaultMarkdownRenderer(
+                events: publicContentEvents,
+                mediaResolver: mediaResolver
+            ),
+            apiBaseURL: environment.apiBaseURL,
+            publicOrigins: publicOrigins,
             mediaResolver: mediaResolver
-        ),
-        apiBaseURL: environment.apiBaseURL,
-        publicOrigins: publicOrigins,
-        mediaResolver: mediaResolver
-    )
-    .controller.route(on: router)
+        )
+        .route(on: router)
 }

@@ -1,10 +1,13 @@
-public import ContactModule
 public import FeatherModuleKit
 import FeatherWebAdmin
 import SystemModule
 import SystemWebAdmin
 
-extension ContactModule.Event.Handlers {
+extension Event {
+    public enum Handlers {}
+}
+
+extension Event.Handlers {
     public static func registerMenu(in events: inout EventRegistry) {
         events.register(
             event: SystemWebAdmin.Admin.Menu.Group.Provider.self,

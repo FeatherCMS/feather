@@ -14,5 +14,9 @@ extension Components {
         ///
         /// - Remark: Generated from `#/components/parameters/InvitationParametersID`.
         public typealias InvitationParametersID = Components.Schemas.InvitationSchemasID
+        /// Comma-separated list of fields to update.
+        ///
+        /// - Remark: Generated from `#/components/parameters/InvitationParametersUpdateMask`.
+        public typealias InvitationParametersUpdateMask = Components.Schemas.InvitationUpdateMask
     }
 }

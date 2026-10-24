@@ -1,10 +1,9 @@
-public import ContactModule
 public import FeatherModuleKit
 import FeatherWebAdmin
 import SystemModule
 import SystemWebAdmin
 
-extension ContactModule.Event.Handlers {
+extension Event.Handlers {
     public static func registerRichContentEditor(
         in registry: inout EventRegistry
     ) {

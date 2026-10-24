@@ -78,6 +78,23 @@ extension Subscriber {
 
 extension Subscriber.Model {
 
+    public mutating func update(
+        firstName: FieldChange<String>,
+        lastName: FieldChange<String>,
+        status: FieldChange<Status>,
+        at date: Date
+    ) {
+        self.firstName = firstName.apply(to: self.firstName)
+        self.lastName = lastName.apply(to: self.lastName)
+
+        guard case .set(let newStatus) = status else { return }
+        if newStatus == .subscribed && self.status != .subscribed {
+            subscribe(at: date)
+        } else if newStatus == .unsubscribed && self.status != .unsubscribed {
+            unsubscribe(at: date)
+        }
+    }
+
     private static func validate(
         email: String
     ) throws(Self.Error) {

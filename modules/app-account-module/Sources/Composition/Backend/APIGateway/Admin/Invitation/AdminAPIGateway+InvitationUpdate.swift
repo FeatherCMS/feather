@@ -1,6 +1,7 @@
 public import AccountAdminAPI
 import AccountApplication
 import AccountModule
+import FeatherDomain
 import FeatherModuleKit
 
 extension AdminAPIGateway {
@@ -20,8 +21,8 @@ extension AdminAPIGateway {
             subject: subject,
             input: Invitation.Edit.Input(
                 id: input.path.accountInvitationId,
-                email: body.email,
-                roleIDs: body.roleIds
+                email: .set(body.email),
+                roleIDs: .set(body.roleIds ?? [])
             )
         )
 

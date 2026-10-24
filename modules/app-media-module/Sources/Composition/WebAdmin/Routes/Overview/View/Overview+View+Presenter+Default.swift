@@ -11,7 +11,7 @@ import WebBuilders
 import WebComponents
 
 extension Overview.View.Presenter {
-    struct Default: Overview.View.Presenter.Interface {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine

@@ -53,6 +53,10 @@ extension Submission {
 }
 
 extension Submission.Model {
+    public mutating func update(status: FieldChange<Status>) {
+        self.status = status.apply(to: self.status)
+    }
+
     public static func create(
         formId: String,
         valuesJSON: String,

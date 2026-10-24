@@ -13,7 +13,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.Folder.Add.Controller {
-    struct Default: Asset.Folder.Add.Controller.Interface {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Asset.Folder.Add.Interactor.Interface,

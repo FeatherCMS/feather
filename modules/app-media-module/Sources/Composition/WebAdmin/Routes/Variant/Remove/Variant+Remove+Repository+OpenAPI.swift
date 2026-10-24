@@ -8,7 +8,7 @@ extension Variant.Remove.Repository {
     struct OpenAPI:
         Variant.Remove.Repository.Interface
     {
-        let api: MediaAdminAPIClient
+        let api: API.Client
 
         func delete(ids: [String]) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in

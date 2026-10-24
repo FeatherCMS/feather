@@ -181,9 +181,10 @@ let package = Package(
                     package: "feather-core"
                 )
             ],
-            path: "Sources/Generators/Shared",
+            path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
         ),
+        // MARK: -
         .executableTarget(
             name: "UserAdminOpenAPIGenerator",
             dependencies: [
@@ -193,8 +194,6 @@ let package = Package(
                 ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "UserOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings

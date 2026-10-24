@@ -8,7 +8,7 @@ extension Variant.Processor.List.Repository {
     struct OpenAPI:
         Variant.Processor.List.Repository.Interface
     {
-        let api: MediaAdminAPIClient
+        let api: API.Client
 
         func list(
             variantId: String,

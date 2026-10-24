@@ -1,6 +1,7 @@
 import FeatherWebAdmin
 import HTML
 import OpenAPIRuntime
+import WebModule
 
 extension MenuItem.Edit {
     enum Presenter {}

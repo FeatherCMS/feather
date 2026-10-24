@@ -240,11 +240,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
     public func contactFormSubmissionUpdate(
         path: Operations.ContactFormSubmissionUpdate.Input.Path,
+        query: Operations.ContactFormSubmissionUpdate.Input.Query,
         headers: Operations.ContactFormSubmissionUpdate.Input.Headers = .init(),
         body: Components.RequestBodies.ContactFormSubmissionPatchRequestBody
     ) async throws -> Operations.ContactFormSubmissionUpdate.Output {
         try await contactFormSubmissionUpdate(Operations.ContactFormSubmissionUpdate.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))

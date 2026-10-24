@@ -16,7 +16,7 @@ struct MenuEdit: Component {
         let id: String
         let form: MenuForm.State
         let breadcrumb: [AdminBreadcrumb.Link]
-        let routes: WebModule.Menu.Router.Routes
+        let routes: MenuItem.Router.Routes
     }
 
     let state: State
@@ -35,19 +35,16 @@ struct MenuEdit: Component {
             context.build(
                 MenuItem.TabBar(
                     active: .details,
-                    detailsPath: state.routes.editPath(state.id),
-                    itemsPath: state.routes.items.path(
-                        parameter: "id",
-                        value: state.id
-                    )
+                    detailsPath: state.routes.menu.editPath(state.id),
+                    itemsPath: state.routes.itemsPath(state.id)
                 )
             )
             context.build(
                 MenuForm(
                     state: state.form,
-                    action: state.routes.editPath(state.id),
+                    action: state.routes.menu.editPath(state.id),
                     submitLabel: "Edit menu",
-                    removeHref: state.routes.detailsRemovePath(state.id),
+                    removeHref: state.routes.menu.detailsRemovePath(state.id),
                     removeLabel: "Remove menu"
                 )
             )

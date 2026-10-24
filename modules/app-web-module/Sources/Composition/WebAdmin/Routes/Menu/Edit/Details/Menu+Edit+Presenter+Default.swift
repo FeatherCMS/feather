@@ -30,7 +30,7 @@ extension WebModule.Menu.Edit.Presenter {
                         id: id,
                         form: state,
                         breadcrumb: routes.breadcrumb,
-                        routes: routes
+                        routes: MenuItem.Router.Routes(menu: routes)
                     )
                 )
             )

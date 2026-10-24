@@ -6,6 +6,11 @@ import OpenAPIRuntime
 
 extension Post.List.Repository {
     struct OpenAPI: Interface {
+        private struct IndexedItem: Sendable {
+            let index: Int
+            let item: Post.List.Item
+        }
+
         let api: API.Client
 
         func list(page: Int, search: String?) async throws -> Post.List.Model {
@@ -46,7 +51,7 @@ extension Post.List.Repository {
         private func loadItems(
             _ items: [BlogAdminAPI.Components.Schemas.PostQueryItemSchema]
         ) async throws -> [Post.List.Item] {
-            try await withThrowingTaskGroup(of: (Int, Post.List.Item).self) {
+            try await withThrowingTaskGroup(of: IndexedItem.self) {
                 group in
                 for (index, item) in items.enumerated() {
                     group.addTask {
@@ -55,9 +60,9 @@ extension Post.List.Repository {
                                 api: api
                             )
                             .get(id: item.id)
-                        return (
-                            index,
-                            .init(
+                        return IndexedItem(
+                            index: index,
+                            item: .init(
                                 id: item.id,
                                 title: item.title,
                                 metadata: details.metadata
@@ -70,8 +75,8 @@ extension Post.List.Repository {
                     repeating: nil,
                     count: items.count
                 )
-                for try await (index, item) in group {
-                    enrichedItems[index] = item
+                for try await result in group {
+                    enrichedItems[result.index] = result.item
                 }
                 return enrichedItems.compactMap { $0 }
             }

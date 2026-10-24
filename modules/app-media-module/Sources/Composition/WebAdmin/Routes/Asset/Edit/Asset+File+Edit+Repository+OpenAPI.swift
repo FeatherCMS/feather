@@ -13,7 +13,7 @@ import WebComponents
 
 extension Asset.File.Edit.Repository {
     struct OpenAPI {
-        let api: MediaAdminAPIClient
+        let api: API.Client
 
         func getAsset(
             id: String

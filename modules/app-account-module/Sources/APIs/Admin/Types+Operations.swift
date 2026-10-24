@@ -2773,6 +2773,21 @@ public enum Operations {
                 }
             }
             public var path: Operations.AccountInvitationPatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PATCH/query`.
+            public struct Query: Sendable, Hashable {
+                /// Comma-separated list of fields to update.
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PATCH/query/updateMask`.
+                public var updateMask: Components.Parameters.InvitationParametersUpdateMask
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - updateMask: Comma-separated list of fields to update.
+                public init(updateMask: Components.Parameters.InvitationParametersUpdateMask) {
+                    self.updateMask = updateMask
+                }
+            }
+            public var query: Operations.AccountInvitationPatch.Input.Query
             /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AccountInvitationPatch.AcceptableContentType>]
@@ -2790,14 +2805,17 @@ public enum Operations {
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
                 path: Operations.AccountInvitationPatch.Input.Path,
+                query: Operations.AccountInvitationPatch.Input.Query,
                 headers: Operations.AccountInvitationPatch.Input.Headers = .init(),
                 body: Components.RequestBodies.InvitationPatchRequestBody
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
                 self.body = body
             }

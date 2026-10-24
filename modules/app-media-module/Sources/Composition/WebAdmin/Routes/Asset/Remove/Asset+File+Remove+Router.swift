@@ -10,7 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-
 extension Asset.File.Remove {
     struct Router {
         private let routes: Asset.Router.Routes
@@ -27,7 +26,7 @@ extension Asset.File.Remove {
                     WebAdminRuntime(
                         interactor: Asset.File.Remove.Interactor.Default(
                             repository: Asset.File.Remove.Repository.OpenAPI(
-                                api: MediaAdminAPIClient(
+                                api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )

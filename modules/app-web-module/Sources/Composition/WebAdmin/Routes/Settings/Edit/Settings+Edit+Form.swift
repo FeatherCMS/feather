@@ -79,7 +79,7 @@ extension Settings.Edit {
         let action: String
         var submitLabel: String = "Save settings"
 
-        func html(context: inout BuilderContext) -> Form {
+        func html(context: inout BuilderContext) -> HTML.Form {
             let form = AdminForm(action: action) {
                 if let success = state.success {
                     P(success).class("admin-form__success")

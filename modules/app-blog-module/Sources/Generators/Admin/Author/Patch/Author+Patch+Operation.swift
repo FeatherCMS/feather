@@ -6,7 +6,7 @@ extension Author.Patch {
         var operationId: String? { "blogAuthorPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                BlogAuthorIdParameter().reference(),
+                Author.Parameters.ID().reference(),
                 Author.Parameters.UpdateMask().reference(),
             ]
         }

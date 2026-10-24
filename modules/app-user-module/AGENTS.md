@@ -54,11 +54,13 @@ module's current implementation.
   semantics and cover malformed masks, missing selected values, and nullable
   field clearing in composition tests.
 - WebAdmin routes live under
-  `Sources/Composition/WebAdmin/Routes/<Entity>/<Operation>/`, extending
-  `Identity.<Operation>` or `Role.<Operation>` with feature abstractions,
-  implementations, and a router. Keep the `Router` responsible for construction
-  and registration; do not add `Feature`, `Abstraction/`, or
-  `Implementation/` wrapper structures.
+  `Sources/Composition/WebAdmin/Routes/<Entity>/<Operation>/`. Extend the
+  `Identity.<Operation>` or `Role.<Operation>` namespace with
+  `Controller.Interface|Default`, `Interactor.Interface|Default`,
+  `Presenter.Interface|Default`, `Repository.Interface|OpenAPI`, and `Router`
+  as applicable. Keep the `Router` responsible for construction and
+  registration; do not add `Feature`, `Abstraction/`, or `Implementation/`
+  wrapper structures.
 - Pass `AppEnvironment` through the router tree. Construct the API client at
   the authenticated request boundary from the environment and
   `AuthenticatedRequestContext`; do not pass only a URL through every feature

@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import UserOpenAPIGeneratorSupport
 
 public enum Role {
 

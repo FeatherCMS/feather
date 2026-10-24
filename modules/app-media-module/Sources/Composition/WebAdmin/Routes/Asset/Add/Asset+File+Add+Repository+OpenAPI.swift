@@ -13,24 +13,18 @@ import WebComponents
 
 extension Asset.File.Add.Repository {
     struct OpenAPI {
-        let api: MediaAdminAPIClient
+        let api: API.Client
 
         func listFolders(
             parentId: String?
-        ) async throws -> [Components.Schemas.MediaFolderQueryItemSchema] {
+        ) async throws -> [Components.Schemas.MediaFolderListItemSchema] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.mediaFolderQuery(
-                    body: .json(
-                        .init(
-                            page: .init(size: 100, number: 1),
-                            sort: [.init(field: .name, direction: .asc)],
-                            filters: .init(parentId: parentId)
-                        )
-                    )
+                let response = try await client.mediaFolderList(
+                    .init(query: .init(parentId: parentId))
                 )
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json.data.items
+                    return try ok.body.json
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:

@@ -7,14 +7,14 @@ extension Author.Summary {
         public let excerpt: String
         public let href: String
         public let imageURL: String?
-        public let metadata: AppPublicMetadataModel
+        public let metadata: Public.Metadata.Model
 
         public init(
             name: String,
             excerpt: String,
             href: String,
             imageURL: String?,
-            metadata: AppPublicMetadataModel
+            metadata: Public.Metadata.Model
         ) {
             self.name = name
             self.excerpt = excerpt

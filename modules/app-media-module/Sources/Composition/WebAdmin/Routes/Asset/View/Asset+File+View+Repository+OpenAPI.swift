@@ -12,9 +12,9 @@ import WebComponents
 
 extension Asset.File.View.Repository {
     public struct OpenAPI: Sendable {
-        let api: MediaAdminAPIClient
+        let api: API.Client
 
-        public init(api: MediaAdminAPIClient) {
+        public init(api: API.Client) {
             self.api = api
         }
 

@@ -10,7 +10,6 @@ import SGML
 import WebBuilders
 import WebComponents
 
-
 extension Asset.File.Add {
     struct Router {
         private let routes: Asset.Router.Routes
@@ -27,7 +26,7 @@ extension Asset.File.Add {
                     WebAdminRuntime(
                         interactor: Asset.File.Add.Interactor.Default(
                             repository: Asset.File.Add.Repository.OpenAPI(
-                                api: MediaAdminAPIClient(
+                                api: API.Client(
                                     environment: environment,
                                     requestContext: context,
                                     timeoutSeconds: 60 * 60

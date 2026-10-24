@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import UserOpenAPIGeneratorSupport
 
 extension Identity.List {
     struct Schema: ArraySchemaRepresentable {
@@ -13,9 +12,9 @@ extension Identity.List {
         var openAPIIdentifier: String { "UserIdentityListItemSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": IdentityIDField().reference(),
-                "name": IdentityNameField().reference(),
-                "status": IdentityStatusField().reference(),
+                "id": Identity.Schemas.ID().reference(),
+                "name": Identity.Schemas.Name().reference(),
+                "status": Identity.Schemas.Status().reference(),
                 "roles": Identity.Schemas.RoleNames().reference(),
             ]
         }

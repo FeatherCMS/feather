@@ -6,7 +6,7 @@ import OpenAPIRuntime
 
 extension Variant.Add.Repository {
     struct OpenAPI: Variant.Add.Repository.Interface {
-        let api: MediaAdminAPIClient
+        let api: API.Client
 
         func create(
             input: MediaAdminAPI.Components.Schemas.MediaVariantCreateSchema

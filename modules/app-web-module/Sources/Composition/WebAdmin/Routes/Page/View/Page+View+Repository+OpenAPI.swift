@@ -9,7 +9,7 @@ import WebModule
 extension Page.View.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
-        let mediaAPI: MediaAdminAPIClient
+        let mediaAPI: MediaWebAdmin.API.Client
 
         func get(
             id: String

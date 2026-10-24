@@ -127,11 +127,12 @@ extension Invitation.Model {
     }
 
     public mutating func update(
-        email: String?,
-        roleIDs: [String]? = nil
+        email: FieldChange<String>,
+        roleIDs: FieldChange<[String]>
     ) throws(Self.Error) {
-        let updatedEmail = email ?? self.email
-        guard email != nil || roleIDs != nil else {
+        let updatedEmail = email.apply(to: self.email)
+        let updatedRoleIDs = roleIDs.apply(to: self.roleIDs)
+        if case .unchanged = email, case .unchanged = roleIDs {
             return
         }
 
@@ -141,7 +142,7 @@ extension Invitation.Model {
             userId: userId,
             email: updatedEmail,
             token: token,
-            roleIDs: roleIDs ?? self.roleIDs,
+            roleIDs: updatedRoleIDs,
             expiresAt: expiresAt,
             createdAt: createdAt,
             updatedAt: .init()

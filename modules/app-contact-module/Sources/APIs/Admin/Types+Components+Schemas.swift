@@ -1445,20 +1445,24 @@ extension Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionUpdateMask`.
+        public typealias ContactFormSubmissionUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionPatchSchema`.
         public struct ContactFormSubmissionPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionPatchSchema/status`.
-            public var status: Swift.String
+            public var status: Components.Schemas.ContactSubmissionSchemasStatus?
             /// Creates a new `ContactFormSubmissionPatchSchema`.
             ///
             /// - Parameters:
             ///   - status:
-            public init(status: Swift.String) {
+            public init(status: Components.Schemas.ContactSubmissionSchemasStatus? = nil) {
                 self.status = status
             }
             public enum CodingKeys: String, CodingKey {
                 case status
             }
         }
+        /// - Remark: Generated from `#/components/schemas/ContactSubmissionSchemasStatus`.
+        public typealias ContactSubmissionSchemasStatus = Swift.String
     }
 }

@@ -554,6 +554,8 @@ extension Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/WebMenuUpdateMask`.
+        public typealias WebMenuUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/MenuPatchSchema`.
         public struct MenuPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MenuPatchSchema/key`.
@@ -561,7 +563,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/MenuPatchSchema/name`.
             public var name: Components.Schemas.MenuNameField?
             /// - Remark: Generated from `#/components/schemas/MenuPatchSchema/notes`.
-            public var notes: Components.Schemas.MenuNotesField?
+            public var notes: Components.Schemas.MenuNotesFieldNullable?
             /// Creates a new `MenuPatchSchema`.
             ///
             /// - Parameters:
@@ -571,7 +573,7 @@ extension Components {
             public init(
                 key: Components.Schemas.MenuKeyField? = nil,
                 name: Components.Schemas.MenuNameField? = nil,
-                notes: Components.Schemas.MenuNotesField? = nil
+                notes: Components.Schemas.MenuNotesFieldNullable? = nil
             ) {
                 self.key = key
                 self.name = name
@@ -583,6 +585,8 @@ extension Components {
                 case notes
             }
         }
+        /// - Remark: Generated from `#/components/schemas/MenuNotesFieldNullable`.
+        public typealias MenuNotesFieldNullable = Swift.String
         /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema`.
         public struct MenuItemCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MenuItemCreateSchema/label`.

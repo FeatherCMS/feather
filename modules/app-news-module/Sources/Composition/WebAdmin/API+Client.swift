@@ -1,7 +1,6 @@
 import AsyncHTTPClient
 public import FeatherWebAdmin
 public import FeatherWebShared
-public import Foundation
 public import MediaWebAdmin
 import NIOCore
 public import NewsAdminAPI
@@ -11,15 +10,15 @@ public import OpenAPIRuntime
 extension API {
     public struct Client: Sendable {
         public let client: NewsAdminAPI.Client
-        private let apiBaseURL: URL
-        private let sessionToken: String?
+        private let environment: AppEnvironment
+        private let requestContext: AuthenticatedRequestContext
 
         public init(
             environment: AppEnvironment,
             requestContext: AuthenticatedRequestContext
         ) {
-            apiBaseURL = environment.apiBaseURL
-            sessionToken = requestContext.sessionToken
+            self.environment = environment
+            self.requestContext = requestContext
             client = .init(
                 serverURL: environment.apiBaseURL,
                 transport: AsyncHTTPClientTransport(
@@ -36,10 +35,10 @@ extension API {
             )
         }
 
-        public func mediaAdminAPI() -> MediaAdminAPIClient {
+        public func mediaAdminAPI() -> MediaWebAdmin.API.Client {
             .init(
-                apiBaseURL: apiBaseURL,
-                sessionToken: sessionToken
+                environment: environment,
+                requestContext: requestContext
             )
         }
 

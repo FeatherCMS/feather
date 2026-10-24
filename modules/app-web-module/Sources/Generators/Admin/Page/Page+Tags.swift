@@ -1,6 +1,8 @@
 public import FeatherOpenAPI
 
-struct PageTag: TagRepresentable {
-    var name: String = "Pages"
-    var description: String? = "Manage web pages."
+extension Page {
+    struct Tag: TagRepresentable {
+        var name: String = "Pages"
+        var description: String? = "Manage web pages."
+    }
 }

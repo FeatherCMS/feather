@@ -6,7 +6,7 @@ extension Post.Patch {
         var operationId: String? { "blogPostPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                BlogPostIdParameter().reference(),
+                Post.Parameters.ID().reference(),
                 Post.Parameters.UpdateMask().reference(),
             ]
         }

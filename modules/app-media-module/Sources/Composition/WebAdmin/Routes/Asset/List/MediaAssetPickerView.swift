@@ -2,6 +2,7 @@ import CSS
 import FeatherModuleKit
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -10,7 +11,6 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-import FeatherWebShared
 
 struct MediaAssetPickerView: Component {
     struct State {
@@ -308,9 +308,9 @@ struct MediaAssetPickerView: Component {
             state.picker.resetSelection ? "true" : "false"
         )
     }
-    }
+}
 
-    extension MediaAssetPickerView {
+extension MediaAssetPickerView {
     fileprivate var hasAnyResults: Bool {
         !state.entries.isEmpty || state.currentFolder != nil
     }
@@ -683,7 +683,7 @@ struct MediaAssetPickerView: Component {
     }
 
     fileprivate func folderCard(
-        _ folder: Components.Schemas.MediaFolderQueryItemSchema,
+        _ folder: Components.Schemas.MediaFolderListItemSchema,
         context: inout BuilderContext
     ) -> Div {
         let href = browsePath(parentId: folder.id)
@@ -825,7 +825,7 @@ struct MediaAssetPickerView: Component {
     }
 
     fileprivate func folderRow(
-        _ folder: Components.Schemas.MediaFolderQueryItemSchema,
+        _ folder: Components.Schemas.MediaFolderListItemSchema,
         context: inout BuilderContext
     ) -> Tr {
         let href = browsePath(parentId: folder.id)
@@ -910,9 +910,9 @@ struct MediaAssetPickerView: Component {
     ) -> String {
         item._extension.isEmpty ? item.name : "\(item.name).\(item._extension)"
     }
-    }
+}
 
-    private struct MediaAssetPickerSelectButton: Component {
+private struct MediaAssetPickerSelectButton: Component {
     let item: Components.Schemas.MediaAssetQueryItemFileSchema
     let field: String
     let preview: Components.Schemas.MediaAssetResolveVariantSchema?

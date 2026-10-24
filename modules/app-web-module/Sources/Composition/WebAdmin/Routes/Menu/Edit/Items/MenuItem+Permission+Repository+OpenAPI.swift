@@ -1,5 +1,8 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
+import OpenAPIRuntime
+import SystemAdminAPI
 import SystemWebAdmin
 import WebModule
 
@@ -11,19 +14,17 @@ extension MenuItem.Permission.Repository {
             ) async throws -> [String]
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.systemPermissionQuery(
-                    headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(
-                        .init(
-                            page: .init(size: 300, number: 1),
-                            filters: .init(search: nil)
-                        )
+                let response = try await client.systemPermissionList(
+                    .init(
+                        query: .init(limit: 100),
+                        headers: .init(accept: [.init(contentType: .json)])
                     )
                 )
 
                 switch response {
-                case .ok(let okResponse):
-                    let items = try okResponse.body.json.data.items
+                case SystemAdminAPI.Operations.SystemPermissionList.Output
+                    .ok(let okResponse):
+                    let items = try okResponse.body.json
                     return
                         items
                         .compactMap(\.name)
@@ -32,11 +33,14 @@ extension MenuItem.Permission.Repository {
                             $0.localizedCaseInsensitiveCompare($1)
                                 == .orderedAscending
                         }
-                case .unauthorized:
+                case SystemAdminAPI.Operations.SystemPermissionList.Output
+                    .unauthorized(_):
                     throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
+                case SystemAdminAPI.Operations.SystemPermissionList.Output
+                    .forbidden(_):
                     throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
+                case SystemAdminAPI.Operations.SystemPermissionList.Output
+                    .undocumented(let statusCode, let response):
                     throw try await api.failure(
                         statusCode: statusCode,
                         responseBody: response.body

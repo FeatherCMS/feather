@@ -246,6 +246,7 @@ let package = Package(
                 .product(name: "HTTPTypes", package: "swift-http-types"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
 
+                .target(name: "ContactModule"),
                 .target(name: "ContactAppAPI"),
             ],
             path: "Sources/Composition/WebApp",

@@ -1,0 +1,3 @@
+extension Category {
+    enum Query {}
+}

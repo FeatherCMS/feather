@@ -8,7 +8,7 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 struct Info: InfoRepresentable {
     var title: String { "Admin API" }

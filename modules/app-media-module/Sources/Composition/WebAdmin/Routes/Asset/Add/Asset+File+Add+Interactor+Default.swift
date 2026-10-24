@@ -13,7 +13,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.Add.Interactor {
-    struct Default: Asset.File.Add.Interactor.Interface {
+    struct Default: Interface {
         let repository: Asset.File.Add.Repository.OpenAPI
         let routes: Asset.Router.Routes
 

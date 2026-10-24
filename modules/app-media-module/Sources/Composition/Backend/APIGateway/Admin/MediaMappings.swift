@@ -444,6 +444,22 @@ extension AdminAPIGateway {
         )
     }
 
+    func mapFolderListItem(_ item: Asset.Folder.List.Output.Item)
+        -> MediaAdminAPI.Components.Schemas.MediaFolderListItemSchema
+    {
+        .init(
+            id: item.id,
+            parentId: item.parentId,
+            name: item.name,
+            slug: item.slug,
+            slugPath: item.slugPath,
+            assetCount: item.assetCount,
+            totalSizeBytes: item.totalSizeBytes,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
     func mapAssetFolder(_ item: Asset.File.Search.Output.FolderItem)
         -> MediaAdminAPI.Components.Schemas.MediaAssetQueryItemFolderSchema
     {

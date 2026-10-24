@@ -11,7 +11,7 @@ import WebComponents
 
 extension Asset.File.Remove.Repository {
     struct OpenAPI {
-        let api: MediaAdminAPIClient
+        let api: API.Client
 
         func deleteAsset(
             id: String

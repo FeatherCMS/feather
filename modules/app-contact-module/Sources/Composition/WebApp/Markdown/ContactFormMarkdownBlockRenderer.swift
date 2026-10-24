@@ -1,4 +1,5 @@
 import ContactAppAPI
+import ContactModule
 import Foundation
 import HTML
 import Hummingbird
@@ -35,7 +36,8 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
             let form = try value.body.json
             let displayMode = request.arguments["displayMode"]?.lowercased()
             let legacyMode = request.arguments["mode"]?.lowercased()
-            let usesCustomLayout = displayMode == "custom"
+            let usesCustomLayout =
+                displayMode == "custom"
                 || (displayMode == nil && legacyMode == "custom")
             return render(
                 form: form,
@@ -56,7 +58,7 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
         layoutChildren: [MarkdownBlockRendererRequest.Child]? = nil
     ) -> String {
         let fields = form.items.sorted { $0.position < $1.position }
-        let action = ContactAppRoutes.submissionAction(for: form.key)
+        let action = Submission.Router.Routes.submissionAction(for: form.key)
         var children: [any Element] = []
         children.append(Input().type(.hidden).name("nonce").value(nonce))
         var customLayout: String?
@@ -112,7 +114,9 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
         form: ContactAppAPI.Components.Schemas.AppContactFormSchema,
         feedback: FormSubmissionFeedback?
     ) -> String? {
-        let fieldsByKey = Dictionary(uniqueKeysWithValues: fields.map { ($0.key, $0) })
+        let fieldsByKey = Dictionary(
+            uniqueKeysWithValues: fields.map { ($0.key, $0) }
+        )
         var fieldCounts: [String: Int] = [:]
         var hasInvalidField = false
         var submitCount = 0
@@ -137,7 +141,8 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
                     root: Button("Submit")
                         .type(.submit)
                         .setClass("button primary")
-                ).render()
+                )
+                .render()
             case "contactformerror":
                 errorCount += 1
                 return feedbackElement(feedback, form: form, status: .failure)
@@ -154,16 +159,23 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
                 return Document(
                     root: Div {}.class("cf-turnstile")
                         .data("sitekey", turnstileSiteKey)
-                ).render()
+                )
+                .render()
             case "grid":
-                let cells = child.children.filter { $0.name.lowercased() == "cell" }
+                let cells = child.children.filter {
+                    $0.name.lowercased() == "cell"
+                }
                 guard !cells.isEmpty else { return nil }
-                let desktop = columnCount(child.arguments["desktop"], fallback: 3)
+                let desktop = columnCount(
+                    child.arguments["desktop"],
+                    fallback: 3
+                )
                 let tablet = columnCount(child.arguments["tablet"], fallback: 2)
                 let mobile = columnCount(child.arguments["mobile"], fallback: 1)
                 let renderedCells = cells.compactMap(render)
                     .map { "<div>\($0)</div>" }.joined()
-                return "<div class=\"grid grid-\(desktop)\(tablet)\(mobile)\">\(renderedCells)</div>"
+                return
+                    "<div class=\"grid grid-\(desktop)\(tablet)\(mobile)\">\(renderedCells)</div>"
             case "cell":
                 return child.children.compactMap(render).joined()
             default:
@@ -187,10 +199,13 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
         if let turnstileSiteKey, !turnstileSiteKey.isEmpty {
             result += Document(
                 root: Script()
-                    .src("https://challenges.cloudflare.com/turnstile/v0/api.js")
+                    .src(
+                        "https://challenges.cloudflare.com/turnstile/v0/api.js"
+                    )
                     .async()
                     .defer()
-            ).render()
+            )
+            .render()
         }
         return result
     }
@@ -218,12 +233,14 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
         let messageClass: String
         switch feedback.status {
         case .success:
-            message = form.successMessage.isEmpty
+            message =
+                form.successMessage.isEmpty
                 ? "Your message has been sent."
                 : form.successMessage
             messageClass = "web-form-feedback web-form-feedback--success"
         case .failure:
-            message = form.failureMessage.isEmpty
+            message =
+                form.failureMessage.isEmpty
                 ? "Your message could not be sent. Please try again."
                 : form.failureMessage
             messageClass = "web-form-feedback web-form-feedback--failure"

@@ -214,14 +214,14 @@ let package = Package(
         ),
         // MARK: -
         .target(
-            name: "WebSharedOpenAPIGenerator",
+            name: "WebOpenAPIGeneratorSupport",
             dependencies: [
                 .product(
                     name: "FeatherOpenAPIGenerator",
                     package: "feather-core"
                 )
             ],
-            path: "Sources/Generators/Shared",
+            path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
         ),
         .executableTarget(
@@ -234,7 +234,7 @@ let package = Package(
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
 
-                .target(name: "WebSharedOpenAPIGenerator"),
+                .target(name: "WebOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -249,7 +249,7 @@ let package = Package(
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
 
-                .target(name: "WebSharedOpenAPIGenerator"),
+                .target(name: "WebOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings
@@ -353,7 +353,8 @@ let package = Package(
         .testTarget(
             name: "WebDomainTests",
             dependencies: [
-                .target(name: "WebDomain")
+                .target(name: "WebDomain"),
+                .target(name: "WebModule"),
             ],
             path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
@@ -384,7 +385,9 @@ let package = Package(
             name: "WebModuleWebAdminTests",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
                 .target(name: "WebDomain"),
+                .target(name: "WebModule"),
                 .target(name: "WebModuleWebAdmin"),
             ],
             path: "Tests/Composition/WebAdmin",

@@ -10,6 +10,10 @@ extension Components {
         ///
         /// - Remark: Generated from `#/components/parameters/MenuIdParameter`.
         public typealias MenuIdParameter = Components.Schemas.MenuIdField
+        /// Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+        ///
+        /// - Remark: Generated from `#/components/parameters/MenuParametersUpdateMask`.
+        public typealias MenuParametersUpdateMask = Components.Schemas.WebMenuUpdateMask
         /// Menu id
         ///
         /// - Remark: Generated from `#/components/parameters/MenuItemMenuIdParameter`.

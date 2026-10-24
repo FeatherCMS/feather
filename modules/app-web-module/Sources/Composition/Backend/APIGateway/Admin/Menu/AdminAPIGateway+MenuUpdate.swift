@@ -1,3 +1,4 @@
+import FeatherDomain
 import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
@@ -19,9 +20,9 @@ extension AdminAPIGateway {
             subject: subject,
             input: .init(
                 id: input.path.menuId,
-                key: body.key,
-                name: body.name,
-                notes: body.notes
+                key: .set(body.key),
+                name: .set(body.name),
+                notes: .init(value: body.notes, shouldApply: true)
             )
         )
 

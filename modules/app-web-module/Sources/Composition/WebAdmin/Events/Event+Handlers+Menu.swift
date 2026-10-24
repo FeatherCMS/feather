@@ -2,7 +2,7 @@ public import FeatherModuleKit
 import FeatherWebAdmin
 import SystemModule
 import SystemWebAdmin
-import WebModule
+public import WebModule
 
 extension WebModule.Event.Handlers {
     public static func registerMenu(in events: inout EventRegistry) {

@@ -1,6 +1,6 @@
 public import FeatherWebAdmin
 import OpenAPIRuntime
-import WebModule
+public import WebModule
 
 extension WebModule.Metadata {
     public struct FieldStateFactory {

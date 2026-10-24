@@ -1,13 +1,12 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import UserOpenAPIGeneratorSupport
 
 extension Identity.Patch {
     struct Operation: Identity.IdentifiableOperation {
         var operationId: String? { "userIdentityPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                IdentityIdParameter().reference(),
+                Identity.Parameters.ID().reference(),
                 Identity.Parameters.UpdateMask().reference(),
             ]
         }
@@ -38,10 +37,10 @@ extension Identity.Patch {
         var openAPIIdentifier: String { "UserIdentityPatchSchema" }
         var propertyMap: SchemaMap {
             [
-                "name": IdentityNameField().reference(required: false),
+                "name": Identity.Schemas.Name().reference(required: false),
                 "roleIds": Identity.Schemas.RoleIDs()
                     .reference(required: false),
-                "status": IdentityStatusField().reference(required: false),
+                "status": Identity.Schemas.Status().reference(required: false),
             ]
         }
     }

@@ -12,7 +12,7 @@ import WebComponents
 
 extension Asset.Folder.Add.Repository {
     struct OpenAPI {
-        let api: MediaAdminAPIClient
+        let api: API.Client
         private let unauthorizedMessage =
             "Please sign in again to create a media folder."
 

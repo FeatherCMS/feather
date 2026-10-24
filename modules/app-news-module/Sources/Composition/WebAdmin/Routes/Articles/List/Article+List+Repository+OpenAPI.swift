@@ -14,7 +14,7 @@ extension Article.List.Repository {
             search: String?
         ) async throws -> Article.List.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.newsArticleSearch(
+                let response = try await client.newsArticleQuery(
                     .init(
                         body: .json(
                             .init(

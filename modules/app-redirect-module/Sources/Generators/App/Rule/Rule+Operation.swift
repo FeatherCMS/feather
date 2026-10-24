@@ -1,17 +1,8 @@
-public import FeatherOpenAPI
+import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
-struct RedirectRuleGetOperation: OperationRepresentable {
-    var operationId: String? { "redirectRuleGet" }
-
-    var parameters: [any ParameterRepresentable] {
-        [RedirectSourceParameter().reference()]
-    }
-
-    var responseMap: ResponseMap {
-        [
-            200: RedirectRuleResponse().reference(),
-            404: CustomResponse(description: "Redirect rule not found"),
-        ]
+extension Rule {
+    protocol Operation: OperationRepresentable {
+        var operationId: String? { get }
     }
 }

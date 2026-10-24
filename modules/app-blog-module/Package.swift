@@ -221,6 +221,7 @@ let package = Package(
         .target(
             name: "BlogSharedOpenAPIGenerator",
             dependencies: [
+                .product(name: "MediaOpenAPIGeneratorSupport", package: "app-media-module"),
                 .product(
                     name: "FeatherOpenAPIGenerator",
                     package: "feather-core"
@@ -453,6 +454,7 @@ let package = Package(
             name: "BlogWebAdminTests",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .target(name: "BlogWebAdmin"),
             ],

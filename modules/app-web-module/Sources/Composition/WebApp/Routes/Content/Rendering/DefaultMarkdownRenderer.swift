@@ -6,6 +6,12 @@ import WebModule
 
 public struct DefaultMarkdownRenderer: ContentRenderer {
 
+    private struct RenderedMarkup {
+        let html: String
+        let usesFormSubmissionNonce: Bool
+        let node: MarkdownBlockRendererRequest.Child?
+    }
+
     private let events: any EventPublisher
     private let mediaResolver: MediaResolver
 
@@ -30,9 +36,12 @@ public struct DefaultMarkdownRenderer: ContentRenderer {
     public func render(
         markdown: String,
         context: MarkdownRenderingContext
-    ) async -> (html: String, usesFormSubmissionNonce: Bool) {
+    ) async -> ContentRenderingOutput {
         guard !markdown.isEmpty else {
-            return (markdown, false)
+            return ContentRenderingOutput(
+                html: markdown,
+                usesFormSubmissionNonce: false
+            )
         }
         var source = markdown
         let transformers =
@@ -62,7 +71,10 @@ public struct DefaultMarkdownRenderer: ContentRenderer {
                     "error": .string(String(describing: error))
                 ]
             )
-            return (markdown, false)
+            return ContentRenderingOutput(
+                html: markdown,
+                usesFormSubmissionNonce: false
+            )
         }
         if renderers.isEmpty && source.contains("@") {
             Logger.current.error(
@@ -80,7 +92,10 @@ public struct DefaultMarkdownRenderer: ContentRenderer {
             Logger.current.warning(
                 "Markdown rendering produced empty output.",
             )
-            return (markdown, false)
+            return ContentRenderingOutput(
+                html: markdown,
+                usesFormSubmissionNonce: false
+            )
         }
         return output
     }
@@ -89,7 +104,7 @@ public struct DefaultMarkdownRenderer: ContentRenderer {
         source: String,
         renderers: [any MarkdownBlockRenderer],
         context: MarkdownRenderingContext
-    ) async -> (html: String, usesFormSubmissionNonce: Bool) {
+    ) async -> ContentRenderingOutput {
         let normalizedSource =
             source
             .replacingOccurrences(of: "\r\n", with: "\n")
@@ -110,19 +125,23 @@ public struct DefaultMarkdownRenderer: ContentRenderer {
             usesFormSubmissionNonce =
                 usesFormSubmissionNonce || rendered.usesFormSubmissionNonce
         }
-        return (output, usesFormSubmissionNonce)
+        return ContentRenderingOutput(
+            html: output,
+            usesFormSubmissionNonce: usesFormSubmissionNonce
+        )
     }
 
     private func render(
         _ markup: any Markup,
         renderers: [any MarkdownBlockRenderer],
         context: MarkdownRenderingContext
-    ) async -> (
-        html: String, usesFormSubmissionNonce: Bool,
-        node: MarkdownBlockRendererRequest.Child?
-    ) {
+    ) async -> RenderedMarkup {
         guard let directive = markup as? BlockDirective else {
-            return (HTMLFormatter.format(markup), false, nil)
+            return RenderedMarkup(
+                html: HTMLFormatter.format(markup),
+                usesFormSubmissionNonce: false,
+                node: nil
+            )
         }
 
         let arguments = directiveArguments(from: directive.argumentText)
@@ -163,21 +182,23 @@ public struct DefaultMarkdownRenderer: ContentRenderer {
             })
         else {
             if directive.name.caseInsensitiveCompare("Cell") == .orderedSame {
-                return (
-                    children.map { $0.html }.joined(),
-                    childUsesFormSubmissionNonce,
-                    .init(
+                let html = children.map { $0.html }.joined()
+                return RenderedMarkup(
+                    html: html,
+                    usesFormSubmissionNonce: childUsesFormSubmissionNonce,
+                    node: .init(
                         name: directive.name,
                         arguments: arguments,
-                        html: children.map { $0.html }.joined(),
+                        html: html,
                         children: children
                     )
                 )
             }
             let html = HTMLFormatter.format(markup)
-            return (
-                html, false,
-                .init(
+            return RenderedMarkup(
+                html: html,
+                usesFormSubmissionNonce: false,
+                node: .init(
                     name: directive.name,
                     arguments: arguments,
                     html: html,
@@ -187,9 +208,10 @@ public struct DefaultMarkdownRenderer: ContentRenderer {
         }
         guard let html = await renderer.render(request: request) else {
             let html = HTMLFormatter.format(markup)
-            return (
-                html, false,
-                .init(
+            return RenderedMarkup(
+                html: html,
+                usesFormSubmissionNonce: false,
+                node: .init(
                     name: directive.name,
                     arguments: arguments,
                     html: html,
@@ -197,12 +219,12 @@ public struct DefaultMarkdownRenderer: ContentRenderer {
                 )
             )
         }
-        return (
-            html,
-            childUsesFormSubmissionNonce
+        return RenderedMarkup(
+            html: html,
+            usesFormSubmissionNonce: childUsesFormSubmissionNonce
                 || (renderer.usesFormSubmissionNonce
                     && context.formSubmissionNonce != nil),
-            .init(
+            node: .init(
                 name: directive.name,
                 arguments: arguments,
                 html: html,
@@ -214,11 +236,14 @@ public struct DefaultMarkdownRenderer: ContentRenderer {
     private func directiveArguments(
         from arguments: DirectiveArgumentText
     ) -> [String: String] {
-        Dictionary(
-            uniqueKeysWithValues:
-                arguments
-                .parseNameValueArguments()
-                .map { ($0.name, $0.value) }
-        )
+        var result: [String: String] = [:]
+        for argument in arguments.parseNameValueArguments() {
+            precondition(
+                result[argument.name] == nil,
+                "Duplicate markdown directive argument: \(argument.name)"
+            )
+            result[argument.name] = argument.value
+        }
+        return result
     }
 }

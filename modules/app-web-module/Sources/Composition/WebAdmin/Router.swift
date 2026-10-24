@@ -102,11 +102,5 @@ public struct Router {
         )
         .route(on: router)
 
-        MenuItem.Router(
-            environment: environment,
-            renderingEngine: renderingEngine,
-            routes: menuRoutes
-        )
-        .route(on: router)
     }
 }

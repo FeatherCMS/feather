@@ -67,7 +67,7 @@ struct MenuItemDetails: Component {
             context.build(
                 MenuItem.TabBar(
                     active: .items,
-                    detailsPath: state.routes.editPath(state.item.menuId),
+                    detailsPath: state.routes.menu.editPath(state.item.menuId),
                     itemsPath: state.routes.itemsPath(state.item.menuId)
                 )
             )

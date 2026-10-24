@@ -6,20 +6,20 @@ struct PathCollection: PathCollectionRepresentable {
 
     var pathMap: PathMap {
         [
-            "api/v1/admin/contact/form": ContactFormPathItems(),
-            "api/v1/admin/contact/form/query": ContactForm.Query.PathItem(),
+            "api/v1/admin/contact/form": Contact.Form.PathItem(),
+            "api/v1/admin/contact/form/query": Contact.Form.Query.PathItem(),
             "api/v1/admin/contact/submission/query":
-                ContactSubmission.Query.PathItem(),
+                Contact.Submission.Query.PathItem(),
             "api/v1/admin/contact/form/{contactFormKey}":
-                ContactFormIDPathItems(),
-            "api/v1/admin/contact/field": ContactFieldPathItems(),
-            "api/v1/admin/contact/field/query": ContactField.Query.PathItem(),
+                Contact.Form.ID.PathItem(),
+            "api/v1/admin/contact/field": Contact.Field.PathItem(),
+            "api/v1/admin/contact/field/query": Contact.Field.Query.PathItem(),
             "api/v1/admin/contact/field/{formFieldId}":
-                ContactFieldIDPathItems(),
+                Contact.Field.ID.PathItem(),
             "api/v1/admin/contact/form/{contactFormKey}/submission":
-                ContactFormSubmissionPathItems(),
+                Contact.Submission.PathItem(),
             "api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}":
-                ContactFormSubmissionIDPathItems(),
+                Contact.Submission.ID.PathItem(),
         ]
     }
 }

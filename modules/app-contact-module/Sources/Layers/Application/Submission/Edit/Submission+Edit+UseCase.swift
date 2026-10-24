@@ -36,7 +36,7 @@ extension Submission.Edit {
                 else {
                     throw Error.submissionNotFound
                 }
-                value.status = input.status
+                value.update(status: input.status)
                 return .init(model: try await scope.submission.update(value))
             }
         }

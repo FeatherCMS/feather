@@ -1,5 +1,5 @@
 public import FeatherWebAdmin
-import WebModule
+public import WebModule
 
 extension WebModule.Metadata.Edit {
     public struct Configuration: Sendable {

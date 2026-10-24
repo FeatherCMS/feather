@@ -32,19 +32,13 @@ extension Post.Add.OptionRepository {
             -> [Post.Association.Option]
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.blogAuthorQuery(
-                    headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(
-                        .init(
-                            page: .init(size: 100, number: 1),
-                            filters: .init(search: nil)
-                        )
-                    )
+                let response = try await client.blogAuthorList(
+                    .init(headers: .init(accept: [.init(contentType: .json)]))
                 )
 
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json.data.items.map {
+                    return try ok.body.json.map {
                         .init(id: $0.id, label: $0.name)
                     }
                 case .unauthorized:
@@ -62,19 +56,13 @@ extension Post.Add.OptionRepository {
 
         private func loadTags() async throws -> [Post.Association.Option] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.blogTagQuery(
-                    headers: .init(accept: [.init(contentType: .json)]),
-                    body: .json(
-                        .init(
-                            page: .init(size: 100, number: 1),
-                            filters: .init(search: nil)
-                        )
-                    )
+                let response = try await client.blogTagList(
+                    .init(headers: .init(accept: [.init(contentType: .json)]))
                 )
 
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json.data.items.map {
+                    return try ok.body.json.map {
                         .init(id: $0.id, label: $0.title)
                     }
                 case .unauthorized:

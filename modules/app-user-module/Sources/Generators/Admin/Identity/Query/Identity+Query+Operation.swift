@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import UserOpenAPIGeneratorSupport
 
 extension Identity.Query {
     struct Operation: Identity.Operation {

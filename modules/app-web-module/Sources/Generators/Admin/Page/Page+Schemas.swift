@@ -1,6 +1,6 @@
 public import FeatherOpenAPI
 import OpenAPIKit30
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 struct PageIdField: StringSchemaRepresentable {
     var example: String? = "wp_home"

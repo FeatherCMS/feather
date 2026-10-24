@@ -5,7 +5,7 @@ import Hummingbird
 import MediaModule
 
 extension Variant.Add.Controller {
-    struct Default: Variant.Add.Controller.Interface {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Variant.Add.Interactor.Interface,

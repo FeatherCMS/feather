@@ -4,7 +4,7 @@ info:
   version: 0.1.0
 tags:
 - name: AnalyticsLogs
-  description: Browse analytics logs.
+  description: Manage analytics logs.
 servers:
 - url: http://127.0.0.1:8080/
 security:
@@ -56,20 +56,20 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/analytics/logs/search:
+  /api/v1/admin/analytics/logs/query:
     post:
       tags:
       - AnalyticsLogs
-      operationId: analyticsLogSearch
+      operationId: analyticsLogQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema'
+              $ref: '#/components/schemas/AnalyticsLogQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/AnalyticsLogListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/AnalyticsLogQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -381,7 +381,7 @@ components:
       - label
       - count
       - share
-    AnalyticsLogListItemSearchRequestQuerySchema:
+    AnalyticsLogQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -412,9 +412,9 @@ components:
         filters:
           type: object
           example:
+            source: web_app
             search: /articles/hello-world/
             method: GET
-            source: web_app
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'
@@ -471,18 +471,18 @@ components:
       type: number
       format: double
       example: 1.717171717e+9
-    AnalyticsLogListItemSearchSchema:
+    AnalyticsLogQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema'
+          $ref: '#/components/schemas/AnalyticsLogQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/AnalyticsLogListItemSchema'
+                $ref: '#/components/schemas/AnalyticsLogQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -492,7 +492,7 @@ components:
       required:
       - query
       - data
-    AnalyticsLogListItemSearchResponseQuerySchema:
+    AnalyticsLogQueryItemSearchResponseQuerySchema:
       type: object
       properties:
         page:
@@ -523,9 +523,9 @@ components:
         filters:
           type: object
           example:
+            source: web_app
             search: /articles/hello-world/
             method: GET
-            source: web_app
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'
@@ -552,6 +552,46 @@ components:
       required:
       - size
       - number
+    AnalyticsLogQueryItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/AnalyticsLogIdField'
+        accountId:
+          type: string
+          example: account-01
+        source:
+          type: string
+          example: web_app
+        method:
+          type: string
+          example: GET
+        path:
+          type: string
+          example: /articles/hello-world/
+        responseCode:
+          type: integer
+          example: 200
+        ip:
+          type: string
+          example: 203.0.113.10
+        browserName:
+          type: string
+          example: Safari
+        createdAt:
+          type: number
+          format: double
+          example: 1.717171717e+9
+      required:
+      - id
+      - accountId
+      - source
+      - method
+      - path
+      - responseCode
+      - ip
+      - browserName
+      - createdAt
     AnalyticsLogDetailSchema:
       type: object
       properties:
@@ -678,12 +718,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AnalyticsLogOverviewSchema'
-    AnalyticsLogListItemSearchSchemaSearchResponse:
+    AnalyticsLogQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AnalyticsLogListItemSearchSchema'
+            $ref: '#/components/schemas/AnalyticsLogQueryItemSearchSchema'
     AnalyticsLogDetailResponse:
       description: AnalyticsLog detail response
       content:

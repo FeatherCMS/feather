@@ -3169,16 +3169,18 @@ public enum Operations {
             public struct Path: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/path/contactFormKey`.
                 public var contactFormKey: Components.Parameters.ContactFormKeyParameter
+                /// The ID of the contact form submission.
+                ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/path/contactFormSubmissionId`.
-                public var contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                public var contactFormSubmissionId: Components.Parameters.ContactSubmissionParametersID
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - contactFormKey:
-                ///   - contactFormSubmissionId:
+                ///   - contactFormSubmissionId: The ID of the contact form submission.
                 public init(
                     contactFormKey: Components.Parameters.ContactFormKeyParameter,
-                    contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                    contactFormSubmissionId: Components.Parameters.ContactSubmissionParametersID
                 ) {
                     self.contactFormKey = contactFormKey
                     self.contactFormSubmissionId = contactFormSubmissionId
@@ -3427,22 +3429,39 @@ public enum Operations {
             public struct Path: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/path/contactFormKey`.
                 public var contactFormKey: Components.Parameters.ContactFormKeyParameter
+                /// The ID of the contact form submission.
+                ///
                 /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/path/contactFormSubmissionId`.
-                public var contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                public var contactFormSubmissionId: Components.Parameters.ContactSubmissionParametersID
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
                 ///   - contactFormKey:
-                ///   - contactFormSubmissionId:
+                ///   - contactFormSubmissionId: The ID of the contact form submission.
                 public init(
                     contactFormKey: Components.Parameters.ContactFormKeyParameter,
-                    contactFormSubmissionId: Components.Parameters.ContactFormSubmissionIdParameter
+                    contactFormSubmissionId: Components.Parameters.ContactSubmissionParametersID
                 ) {
                     self.contactFormKey = contactFormKey
                     self.contactFormSubmissionId = contactFormSubmissionId
                 }
             }
             public var path: Operations.ContactFormSubmissionUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/query`.
+            public struct Query: Sendable, Hashable {
+                /// Comma-separated list of fields to update.
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/query/updateMask`.
+                public var updateMask: Components.Parameters.ContactSubmissionParametersUpdateMask
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - updateMask: Comma-separated list of fields to update.
+                public init(updateMask: Components.Parameters.ContactSubmissionParametersUpdateMask) {
+                    self.updateMask = updateMask
+                }
+            }
+            public var query: Operations.ContactFormSubmissionUpdate.Input.Query
             /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFormSubmissionUpdate.AcceptableContentType>]
@@ -3460,14 +3479,17 @@ public enum Operations {
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
                 path: Operations.ContactFormSubmissionUpdate.Input.Path,
+                query: Operations.ContactFormSubmissionUpdate.Input.Query,
                 headers: Operations.ContactFormSubmissionUpdate.Input.Headers = .init(),
                 body: Components.RequestBodies.ContactFormSubmissionPatchRequestBody
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -3491,6 +3513,57 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/responses/400/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionUpdate.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionUpdate.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Bad Request
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.ContactFormSubmissionUpdate.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.ContactFormSubmissionUpdate.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
                             response: self
                         )
                     }

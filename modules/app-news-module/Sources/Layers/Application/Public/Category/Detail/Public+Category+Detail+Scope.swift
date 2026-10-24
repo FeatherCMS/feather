@@ -9,7 +9,6 @@ extension Public.Category.Detail {
         public let article: any Public.Article.List.Query.Interface
         public let articleCategoryIDs:
             any Public.Article.CategoryIDs.Query.Interface
-        public let metadata: any WebModule.Metadata.Resolve.Query.Interface
         public let metadataDetails:
             any WebModule.Metadata.Resolve.Detail.Query.Interface
 
@@ -18,14 +17,12 @@ extension Public.Category.Detail {
             article: any Public.Article.List.Query.Interface,
             articleCategoryIDs: any Public.Article.CategoryIDs.Query
                 .Interface,
-            metadata: any WebModule.Metadata.Resolve.Query.Interface,
             metadataDetails: any WebModule.Metadata.Resolve.Detail.Query
                 .Interface
         ) {
             self.category = category
             self.article = article
             self.articleCategoryIDs = articleCategoryIDs
-            self.metadata = metadata
             self.metadataDetails = metadataDetails
         }
     }

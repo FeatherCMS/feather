@@ -53,7 +53,7 @@ extension Asset.File.List {
 
         enum EntryItem: Sendable {
             case asset(AssetItem)
-            case folder(Components.Schemas.MediaFolderQueryItemSchema)
+            case folder(Components.Schemas.MediaFolderListItemSchema)
         }
 
         let entries: [EntryItem]

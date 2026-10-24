@@ -2,6 +2,6 @@ public import FeatherOpenAPI
 
 extension Page.Query {
     struct PathItem: PathItemRepresentable {
-        var post: (any OperationRepresentable)? { PageQueryOperation() }
+        var post: (any OperationRepresentable)? { Page.Query.Operation() }
     }
 }

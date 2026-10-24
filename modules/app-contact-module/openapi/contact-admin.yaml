@@ -410,7 +410,7 @@ paths:
       operationId: contactFormSubmissionGet
       parameters:
       - $ref: '#/components/parameters/ContactFormKeyParameter'
-      - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
+      - $ref: '#/components/parameters/ContactSubmissionParametersID'
       responses:
         200:
           $ref: '#/components/responses/ContactFormSubmissionResponse'
@@ -440,12 +440,19 @@ paths:
       operationId: contactFormSubmissionUpdate
       parameters:
       - $ref: '#/components/parameters/ContactFormKeyParameter'
-      - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
+      - $ref: '#/components/parameters/ContactSubmissionParametersID'
+      - $ref: '#/components/parameters/ContactSubmissionParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/ContactFormSubmissionPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/ContactFormSubmissionResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Contact form submission not found
           content:
@@ -1131,13 +1138,16 @@ components:
       - status
       - createdAt
       - updatedAt
+    ContactFormSubmissionUpdateMask:
+      type: string
+      example: status
     ContactFormSubmissionPatchSchema:
       type: object
       properties:
         status:
-          type: string
-      required:
-      - status
+          $ref: '#/components/schemas/ContactSubmissionSchemasStatus'
+    ContactSubmissionSchemasStatus:
+      type: string
   responses:
     ContactFormListResponse:
       description: Contact form list response
@@ -1216,12 +1226,21 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/ContactIdField'
-    ContactFormSubmissionIdParameter:
+    ContactSubmissionParametersID:
       name: contactFormSubmissionId
       in: path
       required: true
       schema:
         $ref: '#/components/schemas/ContactIdField'
+      description: The ID of the contact form submission.
+    ContactSubmissionParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/ContactFormSubmissionUpdateMask'
+      description: Comma-separated list of fields to update.
   requestBodies:
     ContactFormCreateRequestBody:
       content:

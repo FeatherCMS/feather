@@ -1,6 +1,6 @@
 public import FeatherOpenAPI
 import OpenAPIKit30
-import WebSharedOpenAPIGenerator
+import WebOpenAPIGeneratorSupport
 
 public struct MetadataSlugField: StringSchemaRepresentable {
     public init() {}

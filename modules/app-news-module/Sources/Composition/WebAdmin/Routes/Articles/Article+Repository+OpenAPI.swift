@@ -42,7 +42,7 @@ extension Article.Detail.Repository {
 
         func categories() async throws -> [Article.Form.CategoryOption] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.newsCategorySearch(
+                let response = try await client.newsCategoryQuery(
                     .init(
                         body: .json(
                             .init(
@@ -75,7 +75,7 @@ extension Article.Detail.Repository {
             input: Components.Schemas.NewsArticleCreateSchema
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.newsArticleCreate(
+                let response = try await client.newsArticlePost(
                     .init(body: .json(input))
                 )
                 switch response {
@@ -99,7 +99,7 @@ extension Article.Detail.Repository {
             input: Components.Schemas.NewsArticleCreateSchema
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.newsArticleUpdate(
+                let response = try await client.newsArticlePut(
                     .init(
                         path: .init(newsArticleId: id),
                         body: .json(input)
@@ -127,7 +127,7 @@ extension Article.Detail.Repository {
             id: String
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.newsArticleRemove(
+                let response = try await client.newsArticleDelete(
                     .init(
                         body: .json(
                             .init(ids: [id])

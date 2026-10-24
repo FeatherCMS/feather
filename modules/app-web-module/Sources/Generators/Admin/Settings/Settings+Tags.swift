@@ -1,6 +1,8 @@
 public import FeatherOpenAPI
 
-struct SettingsTag: TagRepresentable {
-    var name: String = "Settings"
-    var description: String? = "Manage web settings."
+extension Settings {
+    public struct Tag: TagRepresentable {
+        public var name: String = "Settings"
+        public var description: String? = "Manage web settings."
+    }
 }

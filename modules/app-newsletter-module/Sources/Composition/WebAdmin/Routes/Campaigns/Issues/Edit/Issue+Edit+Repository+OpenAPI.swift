@@ -74,6 +74,7 @@ extension Issue.Edit.Repository {
                         newsletterCampaignKey: newsletterId,
                         newsletterIssueId: issueId
                     ),
+                    query: .init(updateMask: "subject,content,scheduledAt"),
                     body: .json(
                         .init(
                             subject: form.normalizedSubject,
@@ -84,6 +85,14 @@ extension Issue.Edit.Repository {
                 )
                 switch response {
                 case .ok: return
+                case .badRequest(let response):
+                    let data = try JSONEncoder().encode(
+                        try response.body.json
+                    )
+                    throw OpenAPIRepositoryError.parsedFailure(
+                        statusCode: 400,
+                        responseBody: String(data: data, encoding: .utf8)
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:

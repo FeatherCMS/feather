@@ -12,7 +12,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.List.Controller {
-    struct Default: Asset.File.List.Controller.Interface {
+    struct Default: Interface {
         private static let viewCookieName = "admin_media_assets_view"
 
         let buildRuntime:

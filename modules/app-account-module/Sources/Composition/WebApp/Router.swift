@@ -1,5 +1,6 @@
-public import FeatherWebShared
+import AccountModule
 public import FeatherWebApp
+public import FeatherWebShared
 public import Hummingbird
 
 public struct Router {
@@ -17,10 +18,11 @@ public struct Router {
     public func route(
         on router: Hummingbird.Router<DefaultRequestContext>
     ) {
-        AppAcceptAccountInvitation(
-            environment: environment,
-            pageRenderer: pageRenderer
-        )
-        .route(on: router)
+        Invitation.Accept
+            .Router(
+                environment: environment,
+                pageRenderer: pageRenderer
+            )
+            .route(on: router)
     }
 }

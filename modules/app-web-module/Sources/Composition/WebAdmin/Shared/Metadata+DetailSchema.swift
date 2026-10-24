@@ -1,5 +1,5 @@
 import WebAdminAPI
-import WebModule
+public import WebModule
 
 extension WebModule.Metadata {
     public protocol DetailSchema {

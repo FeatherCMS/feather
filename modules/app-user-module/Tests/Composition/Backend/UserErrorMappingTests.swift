@@ -2,6 +2,7 @@ import FeatherBackend
 import NIOHTTP1
 import Testing
 import UserApplication
+import UserBackend
 import UserDomain
 import UserModule
 

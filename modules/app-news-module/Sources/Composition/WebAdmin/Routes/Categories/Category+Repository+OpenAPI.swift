@@ -44,7 +44,7 @@ extension Category.Detail.Repository {
             input: Components.Schemas.NewsCategoryCreateSchema
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.newsCategoryUpdate(
+                let response = try await client.newsCategoryPut(
                     .init(path: .init(newsCategoryId: id), body: .json(input))
                 )
                 switch response {
@@ -69,7 +69,7 @@ extension Category.Detail.Repository {
             id: String
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.newsCategoryRemove(
+                let response = try await client.newsCategoryDelete(
                     .init(
                         body: .json(
                             .init(ids: [id])

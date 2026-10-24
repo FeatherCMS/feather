@@ -3,10 +3,16 @@ import ContactModule
 import ContactApplication
 import ContactDomain
 import FeatherApplication
+import FeatherBackend
+import FeatherDomain
 import FeatherModuleKit
 import Hummingbird
 
 extension AdminAPIGateway {
+    private enum UpdateMaskFields: String, Sendable {
+        case status
+    }
+
     public func contactFormSubmissionUpdate(
         _ input: Operations.ContactFormSubmissionUpdate.Input
     ) async throws -> Operations.ContactFormSubmissionUpdate.Output {
@@ -14,8 +20,18 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        guard let status = Submission.Model.Status(rawValue: body.status)
-        else { throw HTTPError(.badRequest) }
+        let fields: UpdateMask<UpdateMaskFields>
+        do {
+            fields = try .init(input.query.updateMask)
+        }
+        catch {
+            throw HTTPError(.badRequest)
+        }
+        let status = try FieldChange(
+            value: body.status.flatMap(Submission.Model.Status.init(rawValue:)),
+            shouldApply: fields.contains(.status),
+            onMissing: { HTTPError(.badRequest) }
+        )
         let result = try await self.useCases.makeUpdateContactFormSubmission()
             .execute(
                 subject: try await CurrentSubject.require(),

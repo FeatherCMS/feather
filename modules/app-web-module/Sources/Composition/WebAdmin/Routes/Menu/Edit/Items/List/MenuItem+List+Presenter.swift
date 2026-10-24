@@ -11,7 +11,7 @@ extension MenuItem.List.Presenter {
     protocol Interface: Sendable {
         func renderListPage(
             menuId: String,
-            model: Model,
+            model: MenuItem.List.Model,
             permissions: Set<String>,
             search: String?,
             error: String?

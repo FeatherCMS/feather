@@ -11,7 +11,7 @@ import WebBuilders
 import WebComponents
 
 extension Asset.File.Remove.Presenter {
-    struct Default: Asset.File.Remove.Presenter.Interface {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine

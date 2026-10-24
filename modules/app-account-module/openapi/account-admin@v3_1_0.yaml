@@ -391,6 +391,7 @@ paths:
       operationId: accountInvitationPatch
       parameters:
       - $ref: '#/components/parameters/InvitationParametersID'
+      - $ref: '#/components/parameters/InvitationParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/InvitationPatchRequestBody'
       responses:
@@ -882,6 +883,10 @@ components:
       required:
       - email
       minProperties: 1
+    InvitationUpdateMask:
+      type: string
+      examples:
+      - email,roleIds
     InvitationPatchSchema:
       type: object
       properties:
@@ -949,6 +954,14 @@ components:
       schema:
         $ref: '#/components/schemas/InvitationSchemasID'
       description: Account invitation ID
+    InvitationParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/InvitationUpdateMask'
+      description: Comma-separated list of fields to update.
   requestBodies:
     AccountCreateRequestBody:
       content:
