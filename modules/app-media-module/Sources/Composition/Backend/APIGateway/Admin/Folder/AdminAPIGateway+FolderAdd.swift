@@ -1,4 +1,5 @@
 import FeatherModuleKit
+import Foundation
 public import MediaAdminAPI
 import MediaApplication
 import MediaModule
@@ -23,7 +24,7 @@ extension AdminAPIGateway {
                         name: body.name
                     )
                 )
-            return .created(.init(body: .json(map(result))))
+            return .created(.init(body: .json(mapAddedFolder(result))))
         }
         catch let error as Asset.Folder.Add.Error {
             switch error {
@@ -43,5 +44,21 @@ extension AdminAPIGateway {
                 throw error
             }
         }
+    }
+
+    private func mapAddedFolder(
+        _ detail: Asset.Folder.Add.Output
+    ) -> Components.Schemas.MediaFolderDetailSchema {
+        .init(
+            id: detail.id,
+            parentId: detail.parentId,
+            name: detail.name,
+            slug: detail.slug,
+            slugPath: detail.slugPath,
+            assetCount: detail.assetCount,
+            totalSizeBytes: detail.totalSizeBytes,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

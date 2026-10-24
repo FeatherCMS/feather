@@ -16,7 +16,7 @@ extension Profile.Detail.Controller {
                 any Profile.Detail.Presenter.Interface
             >
 
-        func getProfile(
+        func getDetail(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {

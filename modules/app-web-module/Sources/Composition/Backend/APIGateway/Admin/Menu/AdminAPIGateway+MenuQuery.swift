@@ -2,6 +2,8 @@ import FeatherApplication
 import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
+import Foundation
+import WebModule
 
 extension AdminAPIGateway {
 
@@ -15,7 +17,7 @@ extension AdminAPIGateway {
         }
 
         let useCase = useCases.makeSearchMenus()
-        let objectQuery = map(query)
+        let objectQuery = mapMenuSearchQuery(query)
         let subject = try await CurrentSubject.require()
 
         let result = try await useCase.execute(
@@ -53,12 +55,49 @@ extension AdminAPIGateway {
                             filters: .init(search: query.filters.search)
                         ),
                         data: .init(
-                            items: result.items.map(mapQuery),
+                            items: result.items.map(mapMenuSearchItem),
                             total: result.total
                         )
                     )
                 )
             )
+        )
+    }
+
+    private func mapMenuSearchQuery(
+        _ query: Components.Schemas.MenuQueryItemSearchRequestQuerySchema
+    ) -> Menu.Search.Input.Query {
+        .init(
+            page: .init(
+                size: query.page?.size ?? 20,
+                number: query.page?.number ?? 1
+            ),
+            sort: query.sort?.compactMap { sort in
+                guard
+                    let field = Menu.Search.Input.Query.Sort.Field(
+                        rawValue: sort.field.rawValue
+                    )
+                else {
+                    return nil
+                }
+                return .init(
+                    field: field,
+                    direction: sort.direction == .asc ? .asc : .desc
+                )
+            } ?? [],
+            search: query.filters.search
+        )
+    }
+
+    private func mapMenuSearchItem(
+        _ item: Menu.Search.Output.Item
+    ) -> Components.Schemas.MenuQueryItemSchema {
+        .init(
+            id: item.id,
+            key: item.key,
+            name: item.name,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
         )
     }
 }

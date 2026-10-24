@@ -46,7 +46,7 @@ extension Profile.Detail {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
                 routes.profile.routerPath,
-                use: controller.getProfile
+                use: controller.getDetail
             )
         }
     }

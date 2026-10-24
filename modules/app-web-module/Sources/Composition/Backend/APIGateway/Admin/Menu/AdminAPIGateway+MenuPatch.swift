@@ -57,6 +57,7 @@ extension AdminAPIGateway {
             )
         )
 
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(mapEditedMenu(result))))
     }
+
 }

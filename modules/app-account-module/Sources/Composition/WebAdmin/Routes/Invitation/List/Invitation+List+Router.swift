@@ -39,7 +39,7 @@ extension Invitation.List {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
                 routes.invitations.routerPath,
-                use: controller.getAccountInvitations
+                use: controller.getList
             )
         }
     }

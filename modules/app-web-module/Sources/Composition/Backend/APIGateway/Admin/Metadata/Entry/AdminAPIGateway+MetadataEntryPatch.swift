@@ -124,7 +124,7 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(mapEditedMetadata(result))
             )
         )
     }

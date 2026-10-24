@@ -1,8 +1,10 @@
 import FeatherDomain
 import FeatherModuleKit
+import Foundation
 import Hummingbird
 public import WebAdminAPI
 import WebApplication
+import WebModule
 
 extension AdminAPIGateway {
 
@@ -48,6 +50,21 @@ extension AdminAPIGateway {
             )
         )
 
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(mapEditedPage(result))))
+    }
+
+    func mapEditedPage(
+        _ detail: Page.Edit.Output
+    ) -> Components.Schemas.PageDetailSchema {
+        .init(
+            id: detail.id,
+            title: detail.title,
+            excerpt: detail.excerpt,
+            content: detail.content,
+            imageAssetId: detail.imageAssetId,
+            metadata: mapMetadataSnapshot(detail.metadata),
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

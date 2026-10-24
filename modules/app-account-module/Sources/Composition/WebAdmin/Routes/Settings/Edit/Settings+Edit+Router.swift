@@ -44,19 +44,19 @@ extension Settings.Edit {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
                 routes.settings.routerPath,
-                use: controller.getEditSettings
+                use: controller.getEdit
             )
             router.post(
                 routes.settings.routerPath,
-                use: controller.postEditSettings
+                use: controller.postEdit
             )
             router.get(
                 routes.userSettingsPattern.routerPath,
-                use: controller.getEditSettings
+                use: controller.getEdit
             )
             router.post(
                 routes.userSettingsPattern.routerPath,
-                use: controller.postEditSettings
+                use: controller.postEdit
             )
         }
     }

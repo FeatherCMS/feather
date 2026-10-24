@@ -1,7 +1,9 @@
 import FeatherApplication
 import FeatherModuleKit
+import Foundation
 public import WebAdminAPI
 import WebApplication
+import WebModule
 
 extension AdminAPIGateway {
 
@@ -15,7 +17,7 @@ extension AdminAPIGateway {
         }
 
         let useCase = useCases.makeSearchPages()
-        let objectQuery = map(query)
+        let objectQuery = mapPageSearchQuery(query)
         let subject = try await CurrentSubject.require()
 
         let result = try await useCase.execute(
@@ -52,12 +54,50 @@ extension AdminAPIGateway {
                             filters: .init(search: objectQuery.search)
                         ),
                         data: .init(
-                            items: result.items.map(mapQuery),
+                            items: result.items.map(mapPageSearchItem),
                             total: result.total
                         )
                     )
                 )
             )
+        )
+    }
+
+    private func mapPageSearchQuery(
+        _ query: Components.Schemas.PageQueryItemSearchRequestQuerySchema
+    ) -> Page.Search.Input.Query {
+        .init(
+            page: .init(
+                size: query.page?.size ?? 20,
+                number: query.page?.number ?? 1
+            ),
+            sort: query.sort?.compactMap { sort in
+                guard
+                    let field = Page.Search.Input.Query.Sort.Field(
+                        rawValue: sort.field.rawValue
+                    )
+                else {
+                    return nil
+                }
+                return .init(
+                    field: field,
+                    direction: sort.direction == .asc ? .asc : .desc
+                )
+            } ?? [],
+            search: query.filters.search
+        )
+    }
+
+    private func mapPageSearchItem(
+        _ item: Page.Search.Output.Item
+    ) -> Components.Schemas.PageQueryItemSchema {
+        .init(
+            id: item.id,
+            title: item.title,
+            excerpt: item.excerpt,
+            imageAssetId: item.imageAssetId,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
         )
     }
 }

@@ -16,7 +16,7 @@ extension Profile.Edit.Controller {
                 any Profile.Edit.Presenter.Interface
             >
 
-        func getEditProfile(
+        func getEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
@@ -43,7 +43,7 @@ extension Profile.Edit.Controller {
             )
         }
 
-        func postEditProfile(
+        func postEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

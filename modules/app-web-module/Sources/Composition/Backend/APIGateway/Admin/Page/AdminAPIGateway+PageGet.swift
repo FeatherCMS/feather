@@ -1,6 +1,8 @@
 import FeatherModuleKit
+import Foundation
 public import WebAdminAPI
 import WebApplication
+import WebModule
 
 extension AdminAPIGateway {
 
@@ -14,6 +16,21 @@ extension AdminAPIGateway {
             input: .init(id: input.path.pageId)
         )
 
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(mapPageDetail(result))))
+    }
+
+    private func mapPageDetail(
+        _ detail: Page.Detail.Output
+    ) -> Components.Schemas.PageDetailSchema {
+        .init(
+            id: detail.id,
+            title: detail.title,
+            excerpt: detail.excerpt,
+            content: detail.content,
+            imageAssetId: detail.imageAssetId,
+            metadata: mapMetadataSnapshot(detail.metadata),
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

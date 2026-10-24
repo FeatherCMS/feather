@@ -2,6 +2,7 @@ import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
 import Hummingbird
+import Foundation
 public import MediaAdminAPI
 import MediaApplication
 
@@ -45,6 +46,27 @@ extension AdminAPIGateway {
                 )
             )
 
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(mapEditedAsset(result))))
+    }
+
+    private func mapEditedAsset(
+        _ detail: Asset.File.Edit.Output
+    ) -> Components.Schemas.MediaAssetDetailSchema {
+        .init(
+            id: detail.id,
+            folderId: detail.folderId,
+            name: detail.name,
+            slug: detail.slug,
+            slugPath: detail.slugPath,
+            url: mediaResolver.resolve(imagePath: detail.url) ?? detail.url,
+            _extension: detail.extension,
+            contentType: detail.contentType,
+            sizeBytes: detail.sizeBytes,
+            status: detail.status,
+            title: detail.title,
+            altText: detail.altText,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

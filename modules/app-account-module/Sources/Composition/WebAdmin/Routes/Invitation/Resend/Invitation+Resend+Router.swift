@@ -32,7 +32,7 @@ extension Invitation.Resend {
         ) {
             router.get(
                 routes.invitationResendPattern.routerPath,
-                use: controller.resend
+                use: controller.postResend
             )
         }
     }

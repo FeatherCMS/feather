@@ -1,6 +1,8 @@
 import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
+import Foundation
+import WebModule
 
 extension AdminAPIGateway {
 
@@ -17,6 +19,24 @@ extension AdminAPIGateway {
             )
         )
 
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(mapMenuItemDetail(result))))
+    }
+
+    private func mapMenuItemDetail(
+        _ detail: MenuItem.Detail.Output
+    ) -> Components.Schemas.MenuItemDetailSchema {
+        .init(
+            id: detail.id,
+            menuId: detail.menuId,
+            label: detail.label,
+            url: detail.url,
+            priority: detail.priority,
+            isBlank: detail.isBlank,
+            permission: detail.permission,
+            authentication: detail.authentication.rawValue,
+            notes: detail.notes,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

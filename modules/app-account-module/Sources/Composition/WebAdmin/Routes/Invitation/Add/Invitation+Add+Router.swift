@@ -41,8 +41,8 @@ extension Invitation.Add {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             let path = routes.invitationAdd.routerPath
-            router.get(path, use: controller.getAddAccountInvitation)
-            router.post(path, use: controller.postAddAccountInvitation)
+            router.get(path, use: controller.getAdd)
+            router.post(path, use: controller.postAdd)
         }
     }
 }

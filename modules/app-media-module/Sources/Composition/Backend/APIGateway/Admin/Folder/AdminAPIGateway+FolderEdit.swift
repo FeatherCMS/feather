@@ -1,6 +1,7 @@
 import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
+import Foundation
 import Hummingbird
 public import MediaAdminAPI
 import MediaApplication
@@ -43,7 +44,7 @@ extension AdminAPIGateway {
                         name: name
                     )
                 )
-            return .ok(.init(body: .json(map(result))))
+            return .ok(.init(body: .json(mapEditedFolder(result))))
         }
         catch let error as Asset.Folder.Edit.Error {
             switch error {
@@ -64,5 +65,21 @@ extension AdminAPIGateway {
                 throw error
             }
         }
+    }
+
+    private func mapEditedFolder(
+        _ detail: Asset.Folder.Edit.Output
+    ) -> Components.Schemas.MediaFolderDetailSchema {
+        .init(
+            id: detail.id,
+            parentId: detail.parentId,
+            name: detail.name,
+            slug: detail.slug,
+            slugPath: detail.slugPath,
+            assetCount: detail.assetCount,
+            totalSizeBytes: detail.totalSizeBytes,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

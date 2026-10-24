@@ -1,4 +1,5 @@
 import FeatherModuleKit
+import Foundation
 public import MediaAdminAPI
 import MediaApplication
 
@@ -14,6 +15,22 @@ extension AdminAPIGateway {
             )
         return .ok(
             .init(body: .json(result.items.map(mapFolderListItem)))
+        )
+    }
+
+    private func mapFolderListItem(
+        _ item: Asset.Folder.List.Output.Item
+    ) -> Components.Schemas.MediaFolderListItemSchema {
+        .init(
+            id: item.id,
+            parentId: item.parentId,
+            name: item.name,
+            slug: item.slug,
+            slugPath: item.slugPath,
+            assetCount: item.assetCount,
+            totalSizeBytes: item.totalSizeBytes,
+            createdAt: item.createdAt.timeIntervalSince1970,
+            updatedAt: item.updatedAt.timeIntervalSince1970
         )
     }
 }

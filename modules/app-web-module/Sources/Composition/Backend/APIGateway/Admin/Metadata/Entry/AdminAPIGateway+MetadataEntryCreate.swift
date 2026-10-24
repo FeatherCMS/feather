@@ -57,8 +57,41 @@ extension AdminAPIGateway {
 
         return .created(
             .init(
-                body: .json(map(result))
+                body: .json(mapAddedMetadata(result))
             )
+        )
+    }
+
+    private func mapAddedMetadata(
+        _ output: Metadata.Add.Output
+    ) -> Components.Schemas.MetadataDetailSchema {
+        let availability = Metadata.Model.Availability(
+            status: output.status,
+            publicationDate: output.publicationDate,
+            expirationDate: output.expirationDate,
+            at: .now
+        )
+        return .init(
+            id: output.id,
+            referenceType: output.referenceType,
+            referenceId: output.referenceID,
+            slug: output.slug,
+            template: output.template,
+            publicationDate: output.publicationDate.timeIntervalSince1970,
+            expirationDate: output.expirationDate?.timeIntervalSince1970,
+            status: output.status.rawValue,
+            availability: .init(rawValue: availability.rawValue) ?? .draft,
+            title: output.title,
+            excerpt: output.excerpt,
+            imageUrl: output.imageURL,
+            canonicalUrl: output.canonicalURL,
+            noIndex: output.noIndex,
+            primaryKeyword: output.primaryKeyword ?? "",
+            cssCodeInjection: output.cssCodeInjection,
+            javascriptCodeInjection: output.javascriptCodeInjection,
+            structuredDataCodeInjection: output.structuredDataCodeInjection,
+            createdAt: output.createdAt.timeIntervalSince1970,
+            updatedAt: output.updatedAt.timeIntervalSince1970
         )
     }
 }

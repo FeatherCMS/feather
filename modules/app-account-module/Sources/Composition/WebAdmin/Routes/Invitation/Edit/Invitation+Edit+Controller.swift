@@ -11,12 +11,12 @@ extension Invitation.Edit.Controller {
 
     protocol Interface: Sendable {
 
-        func getEditAccountInvitation(
+        func getEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
 
-        func postEditAccountInvitation(
+        func postEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response

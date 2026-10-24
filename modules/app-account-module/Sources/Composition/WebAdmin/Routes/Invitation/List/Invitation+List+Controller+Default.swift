@@ -14,7 +14,7 @@ extension Invitation.List.Controller {
                 any Invitation.List.Presenter.Interface
             >
 
-        func getAccountInvitations(
+        func getList(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {

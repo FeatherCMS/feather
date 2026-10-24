@@ -15,7 +15,7 @@ extension Invitation.Remove.Controller {
                 any Invitation.Remove.Presenter.Interface
             >
 
-        func postRemoveAccountInvitation(
+        func postRemove(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

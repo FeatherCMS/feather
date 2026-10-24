@@ -1,4 +1,3 @@
-import BlogAppAPI
 import BlogApplication
 import FeatherModuleKit
 import MediaApplication
@@ -39,25 +38,6 @@ extension AppAPIGateway {
             defaultURL: defaultURL,
             variants: variants.map {
                 .init(key: $0.key, url: $0.url)
-            }
-        )
-    }
-
-    func mapPublicMedia(
-        _ media: WebApplication.Public.Media?
-    ) -> BlogAppAPI.Components.Schemas.MediaAssetSchema? {
-        guard let media else {
-            return nil
-        }
-        return .init(
-            assetId: media.assetId,
-            originalURL: media.originalURL,
-            defaultURL: media.defaultURL,
-            variants: media.variants.map {
-                .init(
-                    key: $0.key,
-                    url: $0.url
-                )
             }
         )
     }

@@ -2,6 +2,7 @@ import FeatherDomain
 import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
+import Foundation
 import WebDomain
 import WebModule
 
@@ -37,6 +38,24 @@ extension AdminAPIGateway {
             )
         )
 
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(mapEditedMenuItem(result))))
+    }
+
+    func mapEditedMenuItem(
+        _ output: MenuItem.Edit.Output
+    ) -> Components.Schemas.MenuItemDetailSchema {
+        .init(
+            id: output.id,
+            menuId: output.menuId,
+            label: output.label,
+            url: output.url,
+            priority: output.priority,
+            isBlank: output.isBlank,
+            permission: output.permission,
+            authentication: output.authentication.rawValue,
+            notes: output.notes,
+            createdAt: output.createdAt.timeIntervalSince1970,
+            updatedAt: output.updatedAt.timeIntervalSince1970
+        )
     }
 }

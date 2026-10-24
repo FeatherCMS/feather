@@ -1,5 +1,6 @@
 import FeatherModuleKit
 public import MediaAdminAPI
+import MediaBackend
 
 extension AdminAPIGateway {
     public func mediaAssetVariantQuery(
@@ -14,7 +15,7 @@ extension AdminAPIGateway {
                 .init(
                     body: .json(
                         .init(
-                            items: items.map(map)
+                            items: items.map(mapAssociatedVariant)
                         )
                     )
                 )
@@ -32,5 +33,16 @@ extension AdminAPIGateway {
                 )
             )
         }
+    }
+
+    private func mapAssociatedVariant(
+        _ item: MediaBackend.UseCases.AssociatedVariantFile
+    ) -> Components.Schemas.MediaAssetVariantListItemSchema {
+        .init(
+            variantId: item.variantId,
+            name: item.name,
+            _extension: item.extension,
+            url: mediaResolver.resolve(imagePath: item.url) ?? item.url
+        )
     }
 }

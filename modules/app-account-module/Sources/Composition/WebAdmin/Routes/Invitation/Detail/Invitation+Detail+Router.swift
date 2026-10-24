@@ -69,7 +69,7 @@ extension Invitation.Detail {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(
                 routes.invitationDetailsPattern.routerPath,
-                use: controller.getAccountInvitation
+                use: controller.getDetail
             )
         }
     }

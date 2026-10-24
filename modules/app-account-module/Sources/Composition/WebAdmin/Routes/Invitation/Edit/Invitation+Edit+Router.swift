@@ -40,8 +40,8 @@ extension Invitation.Edit {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             let path = routes.invitationEditPattern.routerPath
-            router.get(path, use: controller.getEditAccountInvitation)
-            router.post(path, use: controller.postEditAccountInvitation)
+            router.get(path, use: controller.getEdit)
+            router.post(path, use: controller.postEdit)
         }
     }
 }

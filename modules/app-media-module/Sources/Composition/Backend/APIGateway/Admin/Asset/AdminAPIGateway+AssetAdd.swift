@@ -1,5 +1,6 @@
 import FeatherModuleKit
 import FeatherStorage
+import Foundation
 public import MediaAdminAPI
 import MediaApplication
 import MediaModule
@@ -63,7 +64,7 @@ extension AdminAPIGateway {
 
             return .created(
                 .init(
-                    body: .json(map(result))
+                    body: .json(mapAddedAsset(result))
                 )
             )
         }
@@ -83,5 +84,26 @@ extension AdminAPIGateway {
                 )
             }
         }
+    }
+
+    private func mapAddedAsset(
+        _ detail: Asset.File.Add.Output
+    ) -> Components.Schemas.MediaAssetDetailSchema {
+        .init(
+            id: detail.id,
+            folderId: detail.folderId,
+            name: detail.name,
+            slug: detail.slug,
+            slugPath: detail.slugPath,
+            url: mediaResolver.resolve(imagePath: detail.url) ?? detail.url,
+            _extension: detail.extension,
+            contentType: detail.contentType,
+            sizeBytes: detail.sizeBytes,
+            status: detail.status,
+            title: detail.title,
+            altText: detail.altText,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

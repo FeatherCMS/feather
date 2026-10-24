@@ -41,7 +41,7 @@ extension Invitation.Remove {
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.post(
                 routes.invitationRemoveBulk.routerPath,
-                use: controller.postRemoveAccountInvitation
+                use: controller.postRemove
             )
         }
     }

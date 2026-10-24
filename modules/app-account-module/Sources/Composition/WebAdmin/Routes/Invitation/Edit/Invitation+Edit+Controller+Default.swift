@@ -20,7 +20,7 @@ extension Invitation.Edit.Controller {
                 any Invitation.Edit.Presenter.Interface
             >
 
-        func getEditAccountInvitation(
+        func getEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
@@ -56,7 +56,7 @@ extension Invitation.Edit.Controller {
             }
         }
 
-        func postEditAccountInvitation(
+        func postEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

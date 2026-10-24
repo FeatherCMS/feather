@@ -3,6 +3,7 @@ import BlogApplication
 import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
+import Foundation
 
 extension AdminAPIGateway {
 
@@ -151,6 +152,23 @@ extension AdminAPIGateway {
             )
         )
 
-        return .ok(.init(body: .json(map(result))))
+        return .ok(.init(body: .json(mapEditedAuthorLink(result))))
+    }
+
+    private func mapEditedAuthorLink(
+        _ detail: AuthorLink.Edit.Output
+    ) -> Components.Schemas.AuthorLinkGetSchema {
+        .init(
+            id: detail.id,
+            menuId: detail.authorId,
+            label: detail.label,
+            url: detail.url,
+            priority: detail.priority,
+            isBlank: detail.isBlank,
+            permission: detail.permission,
+            notes: detail.notes,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

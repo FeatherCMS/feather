@@ -20,7 +20,7 @@ extension Invitation.Add.Controller {
                 any Invitation.Add.Presenter.Interface
             >
 
-        func getAddAccountInvitation(
+        func getAdd(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
@@ -35,7 +35,7 @@ extension Invitation.Add.Controller {
             )
         }
 
-        func postAddAccountInvitation(
+        func postAdd(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

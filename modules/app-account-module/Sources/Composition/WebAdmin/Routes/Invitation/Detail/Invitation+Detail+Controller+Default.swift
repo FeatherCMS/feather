@@ -14,7 +14,7 @@ extension Invitation.Detail.Controller {
                 any Invitation.Detail.Presenter.Interface
             >
 
-        func getAccountInvitation(
+        func getDetail(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {

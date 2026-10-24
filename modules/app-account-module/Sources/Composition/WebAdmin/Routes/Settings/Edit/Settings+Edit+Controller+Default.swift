@@ -15,7 +15,7 @@ extension Settings.Edit.Controller {
                 any Settings.Edit.Presenter.Interface
             >
 
-        func getEditSettings(
+        func getEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse {
@@ -77,7 +77,7 @@ extension Settings.Edit.Controller {
             )
         }
 
-        func postEditSettings(
+        func postEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

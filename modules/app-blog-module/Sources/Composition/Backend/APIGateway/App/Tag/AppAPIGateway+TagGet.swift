@@ -1,6 +1,8 @@
 public import BlogAppAPI
 import BlogApplication
+import Foundation
 import WebApplication
+import WebModule
 
 extension AppAPIGateway {
     public func blogTagGet(
@@ -23,8 +25,17 @@ extension AppAPIGateway {
                             excerpt: detail.excerpt,
                             content: detail.content,
                             imageURL: media?.defaultURL ?? detail.imageURL,
-                            media: mapPublicMedia(media),
-                            metadata: mapPublicMetadata(
+                            media: media.map {
+                                .init(
+                                    assetId: $0.assetId,
+                                    originalURL: $0.originalURL,
+                                    defaultURL: $0.defaultURL,
+                                    variants: $0.variants.map {
+                                        .init(key: $0.key, url: $0.url)
+                                    }
+                                )
+                            },
+                            metadata: mapPublicTagMetadata(
                                 detail.metadata,
                                 title: detail.title,
                                 excerpt: detail.excerpt,
@@ -48,5 +59,46 @@ extension AppAPIGateway {
                 )
             )
         }
+    }
+
+    private func mapPublicTagMetadata(
+        _ metadata: WebModule.Metadata.Snapshot,
+        title: String,
+        excerpt: String,
+        imageURL: String
+    ) -> Components.Schemas.WebMetadataContentSchema {
+        let resolved = WebModule.Metadata.Snapshot.Resolved(
+            metadata: metadata,
+            fallbackTitle: title,
+            fallbackExcerpt: excerpt,
+            fallbackImageURL: imageURL
+        )
+        let template: String
+        if metadata.template != "default" {
+            template = metadata.template
+        }
+        else {
+            switch metadata.referenceType {
+            case "blog.post": template = "blog.post"
+            case "blog.author": template = "blog.author"
+            case "blog.tag": template = "blog.tag"
+            default: template = metadata.template
+            }
+        }
+        return .init(
+            slug: metadata.slug,
+            template: template,
+            publicationDate: metadata.publicationDate?.timeIntervalSince1970,
+            expirationDate: metadata.expirationDate?.timeIntervalSince1970,
+            status: metadata.status.rawValue,
+            title: resolved.title,
+            excerpt: resolved.excerpt,
+            imageURL: resolved.imageURL ?? "",
+            canonicalURL: metadata.canonicalURL,
+            noIndex: metadata.noIndex,
+            cssCodeInjection: metadata.cssCodeInjection,
+            javascriptCodeInjection: metadata.javascriptCodeInjection,
+            structuredDataCodeInjection: metadata.structuredDataCodeInjection
+        )
     }
 }

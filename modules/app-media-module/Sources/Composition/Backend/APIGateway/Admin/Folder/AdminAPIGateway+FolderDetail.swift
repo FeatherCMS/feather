@@ -1,4 +1,5 @@
 import FeatherModuleKit
+import Foundation
 public import MediaAdminAPI
 import MediaApplication
 
@@ -13,7 +14,7 @@ extension AdminAPIGateway {
                     subject: subject,
                     input: .init(id: input.path.mediaFolderId)
                 )
-            return .ok(.init(body: .json(map(result))))
+            return .ok(.init(body: .json(mapFolderDetail(result))))
         }
         catch {
             return .notFound(
@@ -27,5 +28,21 @@ extension AdminAPIGateway {
                 )
             )
         }
+    }
+
+    private func mapFolderDetail(
+        _ detail: Asset.Folder.Detail.Output
+    ) -> Components.Schemas.MediaFolderDetailSchema {
+        .init(
+            id: detail.id,
+            parentId: detail.parentId,
+            name: detail.name,
+            slug: detail.slug,
+            slugPath: detail.slugPath,
+            assetCount: detail.assetCount,
+            totalSizeBytes: detail.totalSizeBytes,
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
     }
 }

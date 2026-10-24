@@ -45,8 +45,8 @@ extension Profile.Edit {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             let path = routes.profileEdit.routerPath
-            router.get(path, use: controller.getEditProfile)
-            router.post(path, use: controller.postEditProfile)
+            router.get(path, use: controller.getEdit)
+            router.post(path, use: controller.postEdit)
         }
     }
 }

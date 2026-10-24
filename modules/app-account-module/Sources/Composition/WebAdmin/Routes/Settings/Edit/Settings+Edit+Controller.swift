@@ -11,12 +11,12 @@ extension Settings.Edit.Controller {
 
     protocol Interface: Sendable {
 
-        func getEditSettings(
+        func getEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
 
-        func postEditSettings(
+        func postEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response

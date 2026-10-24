@@ -11,7 +11,7 @@ extension Invitation.List.Controller {
 
     protocol Interface: Sendable {
 
-        func getAccountInvitations(
+        func getList(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse

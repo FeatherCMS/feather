@@ -11,12 +11,12 @@ extension Invitation.Add.Controller {
 
     protocol Interface: Sendable {
 
-        func getAddAccountInvitation(
+        func getAdd(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
 
-        func postAddAccountInvitation(
+        func postAdd(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response

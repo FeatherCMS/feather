@@ -12,7 +12,7 @@ extension Profile.Detail.Controller {
 
     protocol Interface: Sendable {
 
-        func getProfile(
+        func getDetail(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse

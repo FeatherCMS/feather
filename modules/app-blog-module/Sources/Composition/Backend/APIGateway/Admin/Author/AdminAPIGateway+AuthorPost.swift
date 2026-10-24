@@ -1,6 +1,8 @@
 public import BlogAdminAPI
 import BlogApplication
 import FeatherModuleKit
+import Foundation
+import WebModule
 
 extension AdminAPIGateway {
 
@@ -22,13 +24,69 @@ extension AdminAPIGateway {
                 excerpt: body.excerpt ?? "",
                 content: body.content ?? "",
                 profileImageAssetId: body.profileImageAssetId,
-                metadata: defaultBlogMetadata(
+                metadata: defaultAuthorMetadata(
                     title: body.name,
                     excerpt: body.excerpt ?? ""
                 )
             )
         )
 
-        return .created(.init(body: .json(map(result))))
+        return .created(.init(body: .json(mapAddedAuthor(result))))
+    }
+
+    private func mapAddedAuthor(
+        _ detail: Author.Add.Output
+    ) -> Components.Schemas.AuthorGetSchema {
+        .init(
+            id: detail.id,
+            name: detail.name,
+            excerpt: detail.excerpt,
+            content: detail.content,
+            profileImageAssetId: detail.profileImageAssetId,
+            metadata: .init(
+                id: detail.metadata.id,
+                referenceType: detail.metadata.referenceType,
+                referenceId: detail.metadata.referenceID,
+                slug: detail.metadata.slug,
+                template: detail.metadata.template,
+                publicationDate: detail.metadata.publicationDate.timeIntervalSince1970,
+                expirationDate: detail.metadata.expirationDate?.timeIntervalSince1970,
+                status: detail.metadata.status.rawValue,
+                title: detail.metadata.title,
+                excerpt: detail.metadata.excerpt,
+                imageUrl: detail.metadata.imageURL,
+                canonicalUrl: detail.metadata.canonicalURL,
+                noIndex: detail.metadata.noIndex,
+                primaryKeyword: detail.metadata.primaryKeyword ?? "",
+                cssCodeInjection: detail.metadata.cssCodeInjection,
+                javascriptCodeInjection: detail.metadata.javascriptCodeInjection,
+                structuredDataCodeInjection: detail.metadata.structuredDataCodeInjection,
+                createdAt: detail.metadata.createdAt.timeIntervalSince1970,
+                updatedAt: detail.metadata.updatedAt.timeIntervalSince1970
+            ),
+            createdAt: detail.createdAt.timeIntervalSince1970,
+            updatedAt: detail.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    private func defaultAuthorMetadata(
+        title: String,
+        excerpt: String
+    ) -> WebModule.Metadata.Input {
+        .init(
+            slug: title.slugified,
+            publicationDate: nil,
+            expirationDate: nil,
+            status: .draft,
+            title: title,
+            excerpt: excerpt,
+            imageURL: nil,
+            canonicalURL: "",
+            noIndex: false,
+            primaryKeyword: "",
+            cssCodeInjection: "",
+            javascriptCodeInjection: "",
+            structuredDataCodeInjection: ""
+        )
     }
 }

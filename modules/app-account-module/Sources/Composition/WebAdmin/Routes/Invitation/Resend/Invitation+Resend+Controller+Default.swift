@@ -11,7 +11,7 @@ extension Invitation.Resend.Controller {
             @Sendable (AuthenticatedRequestContext) ->
                 any Invitation.Resend.Repository.Interface
 
-        func resend(
+        func postResend(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
