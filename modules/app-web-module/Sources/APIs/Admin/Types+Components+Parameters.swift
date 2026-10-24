@@ -22,13 +22,25 @@ extension Components {
         ///
         /// - Remark: Generated from `#/components/parameters/MenuItemIdParameter`.
         public typealias MenuItemIdParameter = Components.Schemas.MenuItemIdField
+        /// Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+        ///
+        /// - Remark: Generated from `#/components/parameters/MenuItemParametersUpdateMask`.
+        public typealias MenuItemParametersUpdateMask = Components.Schemas.WebMenuItemUpdateMask
         /// Metadata id
         ///
         /// - Remark: Generated from `#/components/parameters/MetadataIdParameter`.
         public typealias MetadataIdParameter = Components.Schemas.MetadataIdField
+        /// Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+        ///
+        /// - Remark: Generated from `#/components/parameters/MetadataParametersUpdateMask`.
+        public typealias MetadataParametersUpdateMask = Components.Schemas.WebMetadataUpdateMask
         /// Page id
         ///
         /// - Remark: Generated from `#/components/parameters/PageIdParameter`.
         public typealias PageIdParameter = Components.Schemas.PageIdField
+        /// Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+        ///
+        /// - Remark: Generated from `#/components/parameters/PageParametersUpdateMask`.
+        public typealias PageParametersUpdateMask = Components.Schemas.WebPageUpdateMask
     }
 }

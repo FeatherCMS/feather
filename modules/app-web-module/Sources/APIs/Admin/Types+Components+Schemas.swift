@@ -1085,6 +1085,8 @@ extension Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/WebMenuItemUpdateMask`.
+        public typealias WebMenuItemUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema`.
         public struct MenuItemPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/label`.
@@ -1100,7 +1102,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/authentication`.
             public var authentication: Components.Schemas.MenuItemAuthenticationField?
             /// - Remark: Generated from `#/components/schemas/MenuItemPatchSchema/notes`.
-            public var notes: Components.Schemas.MenuItemNotesField?
+            public var notes: Components.Schemas.MenuItemNotesFieldNullable?
             /// Creates a new `MenuItemPatchSchema`.
             ///
             /// - Parameters:
@@ -1118,7 +1120,7 @@ extension Components {
                 isBlank: Components.Schemas.MenuItemIsBlankField? = nil,
                 permission: Components.Schemas.MenuItemPermissionField? = nil,
                 authentication: Components.Schemas.MenuItemAuthenticationField? = nil,
-                notes: Components.Schemas.MenuItemNotesField? = nil
+                notes: Components.Schemas.MenuItemNotesFieldNullable? = nil
             ) {
                 self.label = label
                 self.url = url
@@ -1138,6 +1140,8 @@ extension Components {
                 case notes
             }
         }
+        /// - Remark: Generated from `#/components/schemas/MenuItemNotesFieldNullable`.
+        public typealias MenuItemNotesFieldNullable = Swift.String
         /// - Remark: Generated from `#/components/schemas/MenuItemMoveSchema`.
         public struct MenuItemMoveSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MenuItemMoveSchema/beforeItemId`.
@@ -1867,16 +1871,14 @@ extension Components {
                 case availability
             }
         }
+        /// - Remark: Generated from `#/components/schemas/WebMetadataUpdateMask`.
+        public typealias WebMetadataUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema`.
         public struct MetadataPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/slug`.
             public var slug: Components.Schemas.MetadataSlugField?
             /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/template`.
             public var template: Components.Schemas.MetadataTemplateField?
-            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/referenceType`.
-            public var referenceType: Components.Schemas.MetadataReferenceTypeField?
-            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/referenceId`.
-            public var referenceId: Components.Schemas.MetadataReferenceIDField?
             /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/publicationDate`.
             public var publicationDate: Swift.Double?
             /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/expirationDate`.
@@ -1906,8 +1908,6 @@ extension Components {
             /// - Parameters:
             ///   - slug:
             ///   - template:
-            ///   - referenceType:
-            ///   - referenceId:
             ///   - publicationDate:
             ///   - expirationDate:
             ///   - status:
@@ -1923,8 +1923,6 @@ extension Components {
             public init(
                 slug: Components.Schemas.MetadataSlugField? = nil,
                 template: Components.Schemas.MetadataTemplateField? = nil,
-                referenceType: Components.Schemas.MetadataReferenceTypeField? = nil,
-                referenceId: Components.Schemas.MetadataReferenceIDField? = nil,
                 publicationDate: Swift.Double? = nil,
                 expirationDate: Swift.Double? = nil,
                 status: Components.Schemas.MetadataStatusField? = nil,
@@ -1940,8 +1938,6 @@ extension Components {
             ) {
                 self.slug = slug
                 self.template = template
-                self.referenceType = referenceType
-                self.referenceId = referenceId
                 self.publicationDate = publicationDate
                 self.expirationDate = expirationDate
                 self.status = status
@@ -1958,8 +1954,6 @@ extension Components {
             public enum CodingKeys: String, CodingKey {
                 case slug
                 case template
-                case referenceType
-                case referenceId
                 case publicationDate
                 case expirationDate
                 case status
@@ -2411,6 +2405,8 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/PageContentField`.
         public typealias PageContentField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/WebPageUpdateMask`.
+        public typealias WebPageUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema`.
         public struct SettingsDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SettingsDetailSchema/logo`.

@@ -389,11 +389,18 @@ paths:
       parameters:
       - $ref: '#/components/parameters/MenuItemMenuIdParameter'
       - $ref: '#/components/parameters/MenuItemIdParameter'
+      - $ref: '#/components/parameters/MenuItemParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/MenuItemPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/MenuItemDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: MenuItem not found
           content:
@@ -635,11 +642,18 @@ paths:
       operationId: metadataPatch
       parameters:
       - $ref: '#/components/parameters/MetadataIdParameter'
+      - $ref: '#/components/parameters/MetadataParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/MetadataPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/MetadataDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Metadata not found
           content:
@@ -824,11 +838,18 @@ paths:
       operationId: pagePatch
       parameters:
       - $ref: '#/components/parameters/PageIdParameter'
+      - $ref: '#/components/parameters/PageParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/PagePatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/PageDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: Page not found
           content:
@@ -1573,6 +1594,10 @@ components:
       - createdAt
       - updatedAt
       minProperties: 10
+    WebMenuItemUpdateMask:
+      type: string
+      examples:
+      - label,url,notes
     MenuItemPatchSchema:
       type: object
       properties:
@@ -1589,8 +1614,14 @@ components:
         authentication:
           $ref: '#/components/schemas/MenuItemAuthenticationField'
         notes:
-          $ref: '#/components/schemas/MenuItemNotesField'
+          $ref: '#/components/schemas/MenuItemNotesFieldNullable'
       minProperties: 0
+    MenuItemNotesFieldNullable:
+      type:
+      - string
+      - 'null'
+      examples:
+      - Visible for all visitors.
     MenuItemMoveSchema:
       type: object
       properties:
@@ -2056,6 +2087,10 @@ components:
       - status
       - availability
       minProperties: 5
+    WebMetadataUpdateMask:
+      type: string
+      examples:
+      - title,slug,status,publicationDate
     MetadataPatchSchema:
       type: object
       properties:
@@ -2063,10 +2098,6 @@ components:
           $ref: '#/components/schemas/MetadataSlugField'
         template:
           $ref: '#/components/schemas/MetadataTemplateField'
-        referenceType:
-          $ref: '#/components/schemas/MetadataReferenceTypeField'
-        referenceId:
-          $ref: '#/components/schemas/MetadataReferenceIDField'
         publicationDate:
           type:
           - number
@@ -2371,6 +2402,10 @@ components:
       type: string
       examples:
       - <h1>Homepage</h1>
+    WebPageUpdateMask:
+      type: string
+      examples:
+      - title,content,imageAssetId
     SettingsDetailSchema:
       type: object
       properties:
@@ -2662,6 +2697,15 @@ components:
       schema:
         $ref: '#/components/schemas/MenuItemIdField'
       description: MenuItem id
+    MenuItemParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMenuItemUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
     MetadataIdParameter:
       name: metadataId
       in: path
@@ -2669,6 +2713,15 @@ components:
       schema:
         $ref: '#/components/schemas/MetadataIdField'
       description: Metadata id
+    MetadataParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMetadataUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
     PageIdParameter:
       name: pageId
       in: path
@@ -2676,6 +2729,15 @@ components:
       schema:
         $ref: '#/components/schemas/PageIdField'
       description: Page id
+    PageParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebPageUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
   requestBodies:
     MenuRequestBody:
       content:

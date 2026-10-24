@@ -1,4 +1,5 @@
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 import WebDomain
 public import WebModule
@@ -45,22 +46,48 @@ extension Page.Edit {
                 )
                 if let metadataInput = input.metadata {
                     try metadata.update(
-                        template: metadataInput.template,
-                        slug: metadataInput.slug,
-                        publicationDate: metadataInput.publicationDate,
-                        expirationDate: metadataInput.expirationDate,
-                        status: metadataInput.status,
-                        title: metadataInput.title,
-                        excerpt: metadataInput.excerpt,
-                        imageURL: metadataInput.imageURL,
-                        canonicalURL: metadataInput.canonicalURL,
-                        noIndex: metadataInput.noIndex,
-                        primaryKeyword: metadataInput.primaryKeyword,
-                        cssCodeInjection: metadataInput.cssCodeInjection,
-                        javascriptCodeInjection: metadataInput
-                            .javascriptCodeInjection,
-                        structuredDataCodeInjection: metadataInput
-                            .structuredDataCodeInjection
+                        template: .set(metadataInput.template),
+                        slug: .set(metadataInput.slug),
+                        publicationDate: metadataInput.publicationDate
+                            .map(FieldChange.set) ?? .unchanged,
+                        expirationDate: .init(
+                            value: metadataInput.expirationDate,
+                            shouldApply: true
+                        ),
+                        status: .set(metadataInput.status),
+                        title: .init(
+                            value: metadataInput.title,
+                            shouldApply: true
+                        ),
+                        excerpt: .init(
+                            value: metadataInput.excerpt,
+                            shouldApply: true
+                        ),
+                        imageURL: .init(
+                            value: metadataInput.imageURL,
+                            shouldApply: true
+                        ),
+                        canonicalURL: .init(
+                            value: metadataInput.canonicalURL,
+                            shouldApply: true
+                        ),
+                        noIndex: .set(metadataInput.noIndex),
+                        primaryKeyword: .init(
+                            value: metadataInput.primaryKeyword,
+                            shouldApply: true
+                        ),
+                        cssCodeInjection: .init(
+                            value: metadataInput.cssCodeInjection,
+                            shouldApply: true
+                        ),
+                        javascriptCodeInjection: .init(
+                            value: metadataInput.javascriptCodeInjection,
+                            shouldApply: true
+                        ),
+                        structuredDataCodeInjection: .init(
+                            value: metadataInput.structuredDataCodeInjection,
+                            shouldApply: true
+                        )
                     )
                 }
                 let updatedModel = try await scope.page.update(model)

@@ -247,11 +247,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{menuId}/items/{menuItemId}/patch(menuItemPatch)`.
     public func menuItemPatch(
         path: Operations.MenuItemPatch.Input.Path,
+        query: Operations.MenuItemPatch.Input.Query,
         headers: Operations.MenuItemPatch.Input.Headers = .init(),
         body: Components.RequestBodies.MenuItemPatchRequestBody
     ) async throws -> Operations.MenuItemPatch.Output {
         try await menuItemPatch(Operations.MenuItemPatch.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))
@@ -346,11 +348,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{metadataId}/patch(metadataPatch)`.
     public func metadataPatch(
         path: Operations.MetadataPatch.Input.Path,
+        query: Operations.MetadataPatch.Input.Query,
         headers: Operations.MetadataPatch.Input.Headers = .init(),
         body: Components.RequestBodies.MetadataPatchRequestBody
     ) async throws -> Operations.MetadataPatch.Output {
         try await metadataPatch(Operations.MetadataPatch.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))
@@ -421,11 +425,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/{pageId}/patch(pagePatch)`.
     public func pagePatch(
         path: Operations.PagePatch.Input.Path,
+        query: Operations.PagePatch.Input.Query,
         headers: Operations.PagePatch.Input.Headers = .init(),
         body: Components.RequestBodies.PagePatchRequestBody
     ) async throws -> Operations.PagePatch.Output {
         try await pagePatch(Operations.PagePatch.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))

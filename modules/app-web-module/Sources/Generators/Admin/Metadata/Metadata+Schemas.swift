@@ -94,10 +94,6 @@ public struct MetadataPatchSchema: ObjectSchemaRepresentable {
         [
             "slug": MetadataSlugField().reference(required: false),
             "template": MetadataTemplateField().reference(required: false),
-            "referenceType": MetadataReferenceTypeField()
-                .reference(required: false),
-            "referenceId": MetadataReferenceIDField()
-                .reference(required: false),
             "publicationDate": MetadataNullableTimestampField(
                 required: false
             ),

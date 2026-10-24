@@ -1,4 +1,5 @@
 public import FeatherOpenAPI
+import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 struct MenuItemIdField: StringSchemaRepresentable {
@@ -67,7 +68,7 @@ struct MenuItemPatchSchema: ObjectSchemaRepresentable {
                 .reference(required: false),
             "authentication": MenuItemAuthenticationField()
                 .reference(required: false),
-            "notes": MenuItemNotesField().reference(required: false),
+            "notes": MenuItemNotesField().nullable().reference(required: false),
         ]
     }
 }

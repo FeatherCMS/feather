@@ -454,48 +454,46 @@ extension Metadata.Model {
     }
 
     public mutating func update(
-        template: String? = nil,
-        slug: String? = nil,
-        publicationDate: Date? = nil,
-        expirationDate: Date? = nil,
-        status: Status? = nil,
-        title: String? = nil,
-        excerpt: String? = nil,
-        imageURL: String? = nil,
-        canonicalURL: String? = nil,
-        noIndex: Bool? = nil,
-        primaryKeyword: String? = nil,
-        cssCodeInjection: String? = nil,
-        javascriptCodeInjection: String? = nil,
-        structuredDataCodeInjection: String? = nil
+        template: FieldChange<String> = .unchanged,
+        slug: FieldChange<String> = .unchanged,
+        publicationDate: FieldChange<Date> = .unchanged,
+        expirationDate: OptionalFieldChange<Date> = .unchanged,
+        status: FieldChange<Status> = .unchanged,
+        title: OptionalFieldChange<String> = .unchanged,
+        excerpt: OptionalFieldChange<String> = .unchanged,
+        imageURL: OptionalFieldChange<String> = .unchanged,
+        canonicalURL: OptionalFieldChange<String> = .unchanged,
+        noIndex: FieldChange<Bool> = .unchanged,
+        primaryKeyword: OptionalFieldChange<String> = .unchanged,
+        cssCodeInjection: OptionalFieldChange<String> = .unchanged,
+        javascriptCodeInjection: OptionalFieldChange<String> = .unchanged,
+        structuredDataCodeInjection: OptionalFieldChange<String> = .unchanged
     ) throws(Self.Error) {
-        let newTemplate = template ?? self.template
-        let newSlug = slug ?? self.slug
-        let newPublicationDate = publicationDate ?? self.publicationDate
-        let newExpirationDate = expirationDate ?? self.expirationDate
-        let newStatus = status ?? self.status
-        let newTitle = title ?? self.title
-        let newExcerpt = excerpt ?? self.excerpt
-        let newImageURL: String?
-        if let imageURL {
-            newImageURL = imageURL.emptyToNil
-        }
-        else {
-            newImageURL = self.imageURL
-        }
-        let newCanonicalURL =
-            canonicalURL?.emptyToNil ?? self.canonicalURL
-        let newNoIndex = noIndex ?? self.noIndex
-        let newPrimaryKeyword =
-            primaryKeyword?.emptyToNil ?? self.primaryKeyword
-        let newCSSCodeInjection =
-            cssCodeInjection?.emptyToNil ?? self.cssCodeInjection
-        let newJavaScriptCodeInjection =
-            javascriptCodeInjection?.emptyToNil
-            ?? self.javascriptCodeInjection
-        let newStructuredDataCodeInjection =
-            structuredDataCodeInjection?.emptyToNil
-            ?? self.structuredDataCodeInjection
+        let newTemplate = template.apply(to: self.template)
+        let newSlug = slug.apply(to: self.slug)
+        let newPublicationDate = publicationDate.apply(to: self.publicationDate)
+        let newExpirationDate = expirationDate.apply(to: self.expirationDate)
+        let newStatus = status.apply(to: self.status)
+        let newTitle = title.apply(to: self.title)?.emptyToNil
+        let newExcerpt = excerpt.apply(to: self.excerpt)?.emptyToNil
+        let newImageURL = imageURL.apply(to: self.imageURL)?.emptyToNil
+        let newCanonicalURL = canonicalURL.apply(to: self.canonicalURL)?
+            .emptyToNil
+        let newNoIndex = noIndex.apply(to: self.noIndex)
+        let newPrimaryKeyword = primaryKeyword.apply(to: self.primaryKeyword)?
+            .emptyToNil
+        let newCSSCodeInjection = cssCodeInjection.apply(
+            to: self.cssCodeInjection
+        )?
+        .emptyToNil
+        let newJavaScriptCodeInjection = javascriptCodeInjection.apply(
+            to: self.javascriptCodeInjection
+        )?
+        .emptyToNil
+        let newStructuredDataCodeInjection = structuredDataCodeInjection.apply(
+            to: self.structuredDataCodeInjection
+        )?
+        .emptyToNil
 
         try Self.validate(slug: newSlug)
         try Self.validate(

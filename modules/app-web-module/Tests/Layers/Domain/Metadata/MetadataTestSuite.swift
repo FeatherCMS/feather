@@ -84,7 +84,7 @@ struct MetadataTestSuite {
             updatedAt: Date()
         )
 
-        try metadata.update(slug: "about", status: .published)
+        try metadata.update(slug: .set("about"), status: .set(.published))
 
         #expect(metadata.slug == "about")
         #expect(metadata.status == .published)
@@ -113,7 +113,7 @@ struct MetadataTestSuite {
             updatedAt: Date()
         )
 
-        try metadata.update(imageURL: "")
+        try metadata.update(imageURL: .set(""))
 
         #expect(metadata.imageURL == nil)
     }

@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import OpenAPIRuntime
 import WebAdminAPI
 public import WebModule
@@ -55,12 +56,22 @@ extension WebModule.Metadata {
 
                 let patchResponse = try await client.metadataPatch(
                     path: .init(metadataId: metadataID),
+                    query: .init(updateMask: "status"),
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(.init(status: status))
                 )
                 switch patchResponse {
                 case .ok:
                     return
+                case .badRequest(let response):
+                    let data = try JSONEncoder()
+                        .encode(
+                            try response.body.json
+                        )
+                    throw OpenAPIRepositoryError.parsedFailure(
+                        statusCode: 400,
+                        responseBody: String(data: data, encoding: .utf8)
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:

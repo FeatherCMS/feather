@@ -120,14 +120,15 @@ extension Page.Model {
     }
 
     public mutating func update(
-        title: String? = nil,
-        excerpt: String? = nil,
-        content: String? = nil,
-        imageAssetId: String? = nil
+        title: FieldChange<String> = .unchanged,
+        excerpt: FieldChange<String> = .unchanged,
+        content: FieldChange<String> = .unchanged,
+        imageAssetId: OptionalFieldChange<String> = .unchanged
     ) throws(Self.Error) {
-        let newTitle = title ?? self.title
-        let newExcerpt = excerpt ?? self.excerpt
-        let newContent = content ?? self.content
+        let newTitle = title.apply(to: self.title)
+        let newExcerpt = excerpt.apply(to: self.excerpt)
+        let newContent = content.apply(to: self.content)
+        let newImageAssetId = imageAssetId.apply(to: self.imageAssetId)
 
         try Self.validate(title: newTitle)
         try Self.validate(excerpt: newExcerpt)
@@ -136,8 +137,6 @@ extension Page.Model {
         self.title = newTitle
         self.excerpt = newExcerpt
         self.content = newContent
-        if let imageAssetId {
-            self.imageAssetId = imageAssetId.emptyToNil
-        }
+        self.imageAssetId = newImageAssetId?.emptyToNil
     }
 }

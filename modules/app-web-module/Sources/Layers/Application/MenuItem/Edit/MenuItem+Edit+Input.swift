@@ -1,28 +1,29 @@
 public import FeatherApplication
+public import FeatherDomain
 public import WebModule
 
 extension MenuItem.Edit {
     public struct Input: DTO {
         public let id: String
         public let menuId: String
-        public let label: String?
-        public let url: String?
-        public let priority: Int?
-        public let isBlank: Bool?
-        public let permission: String?
-        public let authentication: MenuItem.Authentication?
-        public let notes: String?
+        public let label: FieldChange<String>
+        public let url: FieldChange<String>
+        public let priority: FieldChange<Int>
+        public let isBlank: FieldChange<Bool>
+        public let permission: FieldChange<String>
+        public let authentication: FieldChange<MenuItem.Authentication>
+        public let notes: OptionalFieldChange<String>
 
         public init(
             id: String,
             menuId: String,
-            label: String?,
-            url: String?,
-            priority: Int?,
-            isBlank: Bool?,
-            permission: String?,
-            authentication: MenuItem.Authentication? = nil,
-            notes: String?
+            label: FieldChange<String> = .unchanged,
+            url: FieldChange<String> = .unchanged,
+            priority: FieldChange<Int> = .unchanged,
+            isBlank: FieldChange<Bool> = .unchanged,
+            permission: FieldChange<String> = .unchanged,
+            authentication: FieldChange<MenuItem.Authentication> = .unchanged,
+            notes: OptionalFieldChange<String> = .unchanged
         ) {
             self.id = id
             self.menuId = menuId

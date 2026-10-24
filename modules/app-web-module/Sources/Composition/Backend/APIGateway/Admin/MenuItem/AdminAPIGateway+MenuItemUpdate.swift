@@ -1,3 +1,4 @@
+import FeatherDomain
 import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
@@ -22,15 +23,17 @@ extension AdminAPIGateway {
             input: .init(
                 id: input.path.menuItemId,
                 menuId: input.path.menuId,
-                label: body.label,
-                url: body.url,
-                priority: body.priority,
-                isBlank: body.isBlank,
-                permission: body.permission,
-                authentication: MenuItem.Authentication(
-                    rawValue: body.authentication ?? "any"
-                ) ?? .any,
-                notes: body.notes
+                label: .set(body.label),
+                url: .set(body.url),
+                priority: .set(body.priority),
+                isBlank: .set(body.isBlank),
+                permission: .set(body.permission),
+                authentication: .set(
+                    MenuItem.Authentication(
+                        rawValue: body.authentication ?? "any"
+                    ) ?? .any
+                ),
+                notes: .init(value: body.notes, shouldApply: true)
             )
         )
 
