@@ -28,7 +28,8 @@ extension AuthorLink.View {
                             description: "Review this author link."
                         ),
                         fields: [
-                            .init(label: "Label", value: state.model.label),
+                            .init(label: "Label", value: state.model.label)
+                                .setAsRemoveConfirmationLabel(),
                             .init(label: "URL", value: state.model.url),
                             .init(
                                 label: "Priority",
@@ -86,7 +87,6 @@ extension AuthorLink.View {
                                 )
                         ),
                         style: .destructive,
-                        confirmationItem: state.model.label
                     )
                 )
             }

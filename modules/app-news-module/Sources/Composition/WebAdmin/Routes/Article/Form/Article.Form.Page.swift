@@ -49,6 +49,7 @@ extension NewsModule.Article.Form {
                                 isRequired: true
                             )
                         )
+                        .setAsRemoveConfirmationLabel()
                     )
                     context.build(
                         AdminFormFieldTextArea(
@@ -83,7 +84,9 @@ extension NewsModule.Article.Form {
                                     isRequired: false
                                 ),
                                 selectedAsset: selectedImageAsset,
-                                browsePath: routes.imagePickerPath("imageAssetId"),
+                                browsePath: routes.imagePickerPath(
+                                    "imageAssetId"
+                                ),
                                 defaultFolderPath: "news/articles",
                                 allowedExtensions: .images,
                                 previewStyle: .wide

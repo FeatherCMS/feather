@@ -32,7 +32,8 @@ extension Tag.View {
                             description: "Review the blog tag configuration."
                         ),
                         fields: [
-                            .init(label: "Title", value: state.model.title),
+                            .init(label: "Title", value: state.model.title)
+                                .setAsRemoveConfirmationLabel(),
                             .init(
                                 label: "Status",
                                 value: state.model.metadata.status.capitalized
@@ -62,7 +63,9 @@ extension Tag.View {
                         context.build(
                             AdminStatusSelectFormDefinition(
                                 id: formID,
-                                action: state.routes.tagStatusPath(state.model.id),
+                                action: state.routes.tagStatusPath(
+                                    state.model.id
+                                ),
                                 returnTo: state.routes.tagPath(state.model.id)
                             )
                         )
@@ -101,7 +104,6 @@ extension Tag.View {
                         label: "Remove tag",
                         href: state.routes.tagRemovePath(state.model.id),
                         style: .destructive,
-                        confirmationItem: state.model.title
                     )
                 )
             }

@@ -55,6 +55,7 @@ extension ContactModule.Form.View {
                                     label: "Name",
                                     value: item.name
                                 )
+                                .setAsRemoveConfirmationLabel()
                             )
                             context.build(
                                 AdminDetailField(
@@ -96,7 +97,6 @@ extension ContactModule.Form.View {
                                         action.label,
                                         href: action.href,
                                         style: action.style,
-                                        confirmationItem: action.confirmationItem
                                     )
                                     context.build(button)
                                 }
@@ -145,7 +145,6 @@ extension ContactModule.Form.View {
                                 routes.formDetailsPagePath(item.key)
                         ),
                         style: .destructive,
-                        confirmationItem: item.name
                     )
                 )
             }

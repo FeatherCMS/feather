@@ -9,45 +9,34 @@ public struct AdminButton: Component {
         public let label: String
         public let href: String?
         public let style: AdminButtonStyle
-        public let confirmationItem: String?
 
         public init(
             label: String,
             href: String? = nil,
-            style: AdminButtonStyle = .primary,
-            confirmationItem: String? = nil
+            style: AdminButtonStyle = .primary
         ) {
             self.label = label
             self.href = href
             self.style = style
-            self.confirmationItem = confirmationItem
         }
     }
 
     public let label: String
     public let href: String?
     public let style: AdminButtonStyle
-    public let confirmationItem: String?
 
     public init(
         _ label: String,
         href: String? = nil,
-        style: AdminButtonStyle = .primary,
-        confirmationItem: String? = nil
+        style: AdminButtonStyle = .primary
     ) {
         self.label = label
         self.href = href
         self.style = style
-        self.confirmationItem = confirmationItem
     }
 
     public init(state: State) {
-        self.init(
-            state.label,
-            href: state.href,
-            style: state.style,
-            confirmationItem: state.confirmationItem
-        )
+        self.init(state.label, href: state.href, style: state.style)
     }
 
     public func html(context: inout BuilderContext) -> A {
@@ -59,9 +48,6 @@ public struct AdminButton: Component {
             link = link
                 .data("admin-dialog-url", href)
                 .data("admin-remove-confirm", "true")
-            if let confirmationItem {
-                link = link.data("remove-label", confirmationItem)
-            }
         }
         return link.class("button", style.className)
     }

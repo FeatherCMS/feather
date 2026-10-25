@@ -162,10 +162,7 @@ extension Post.List {
                                                                 "label",
                                                                 "Title"
                                                             )
-                                                            .data(
-                                                                "remove-label",
-                                                                "true"
-                                                            )
+                                                            .setAsRemoveConfirmationLabel()
                                                             Td {
                                                                 if state.canEdit
                                                                 {

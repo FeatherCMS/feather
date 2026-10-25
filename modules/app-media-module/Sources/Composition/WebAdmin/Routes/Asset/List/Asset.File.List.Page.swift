@@ -1354,7 +1354,7 @@ extension Asset.File.List.Page {
     ) -> some BasicTag {
         Td(folder.name)
             .data("label", "Name")
-            .data("remove-label", "true")
+            .setAsRemoveConfirmationLabel()
     }
 
     fileprivate func assetTitleCell(
@@ -1378,6 +1378,6 @@ extension Asset.File.List.Page {
             )
         }
         .data("label", "Name")
-        .data("remove-label", "true")
+        .setAsRemoveConfirmationLabel()
     }
 }

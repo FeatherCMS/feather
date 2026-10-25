@@ -20,7 +20,7 @@ extension Identity.List {
                 Td(identity.id).data("label", "ID")
                 Td(identity.name)
                     .data("label", "Name")
-                    .data("remove-label", "true")
+                    .setAsRemoveConfirmationLabel()
                 Td {
                     context.build(
                         Identity.StatusChip.make(

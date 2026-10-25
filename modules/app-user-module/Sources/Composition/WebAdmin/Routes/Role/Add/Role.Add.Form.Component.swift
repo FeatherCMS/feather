@@ -66,7 +66,10 @@ extension Role.Add.Form {
                     P(error).class("admin-form__error")
                 }
                 context.build(AdminFormFieldInput(state: state.key))
-                context.build(AdminFormFieldInput(state: state.name))
+                context.build(
+                    AdminFormFieldInput(state: state.name)
+                        .setAsRemoveConfirmationLabel()
+                )
                 context.build(AdminFormFieldTextArea(state: state.notes))
                 Div {
                     context.build(

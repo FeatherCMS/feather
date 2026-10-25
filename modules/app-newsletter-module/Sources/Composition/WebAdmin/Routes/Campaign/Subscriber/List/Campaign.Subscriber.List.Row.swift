@@ -20,7 +20,7 @@ extension Campaign.Subscriber.List {
                 }
                 Td(item.email)
                     .data("label", "Email")
-                    .data("remove-label", "true")
+                    .setAsRemoveConfirmationLabel()
                 Td(item.name).data("label", "Name")
                 Td(item.status).data("label", "Status")
                 context.build(

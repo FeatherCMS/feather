@@ -28,8 +28,7 @@ extension Role.Detail {
                         label: "Remove",
                         href: routes.removePath(role.id)
                             .description,
-                    style: .destructive,
-                    confirmationItem: role.name.emptyToNil ?? role.key
+                        style: .destructive,
                     )
                 )
             }
@@ -41,11 +40,14 @@ extension Role.Detail {
                         description: "Inspect this user role."
                     ),
                     fields: [
-                        .init(label: "Key", value: role.key),
-                        .init(
-                            label: "Name",
-                            value: role.name.emptyToNil ?? "—"
-                        ),
+                        .init(label: "Key", value: role.key)
+                            .setAsRemoveConfirmationLabel(
+                                role.name.emptyToNil == nil
+                            ),
+                        .init(label: "Name", value: role.name.emptyToNil ?? "—")
+                            .setAsRemoveConfirmationLabel(
+                                role.name.emptyToNil != nil
+                            ),
                         .init(
                             label: "Notes",
                             value: role.notes.emptyToNil ?? "—"

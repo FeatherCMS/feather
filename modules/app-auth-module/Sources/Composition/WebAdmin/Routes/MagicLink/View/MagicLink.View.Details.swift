@@ -29,7 +29,8 @@ extension MagicLink.View {
                         .init(
                             label: "Credential ID",
                             value: state.link.credentialId
-                        ),
+                        )
+                        .setAsRemoveConfirmationLabel(),
                         .init(
                             label: "Persistent",
                             value: state.link.isPersistent ? "Yes" : "No"
@@ -61,7 +62,6 @@ extension MagicLink.View {
                         label: "Remove magic link",
                         href: state.routes.removePath(state.link.id),
                         style: .destructive,
-                        confirmationItem: state.link.credentialId
                     )
                 )
             }

@@ -57,6 +57,7 @@ extension AuthorLink {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
                 context.build(
                     AdminFormFieldInput(

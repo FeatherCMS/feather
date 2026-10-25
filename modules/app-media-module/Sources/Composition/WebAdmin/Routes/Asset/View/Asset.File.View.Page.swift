@@ -37,10 +37,8 @@ extension Asset.File.View {
                     )
                 )
                 context.build(
-                    AdminDetailField(
-                        label: "URL",
-                        value: item.url
-                    )
+                    AdminDetailField(label: "URL", value: item.url)
+                        .setAsRemoveConfirmationLabel(item.title == nil)
                 )
                 context.build(
                     AdminDetailField(
@@ -60,6 +58,7 @@ extension Asset.File.View {
                 if let title = item.title {
                     context.build(
                         AdminDetailField(label: "Title", value: title)
+                            .setAsRemoveConfirmationLabel()
                     )
                 }
                 if let altText = item.altText {
@@ -141,7 +140,6 @@ extension Asset.File.View {
                             "Remove",
                             href: routes.file.removePath(item.id),
                             style: .destructive,
-                            confirmationItem: item.title ?? item.url
                         )
                         context.build(button)
                     }

@@ -63,8 +63,18 @@ extension Permission.Edit {
                 if let error = state.error {
                     P(error).class("admin-form__error")
                 }
-                context.build(AdminFormFieldInput(state: state.key))
-                context.build(AdminFormFieldInput(state: state.name))
+                context.build(
+                    AdminFormFieldInput(state: state.key)
+                        .setAsRemoveConfirmationLabel(
+                            state.name.value?.isEmpty != false
+                        )
+                )
+                context.build(
+                    AdminFormFieldInput(state: state.name)
+                        .setAsRemoveConfirmationLabel(
+                            state.name.value?.isEmpty == false
+                        )
+                )
                 context.build(AdminFormFieldTextArea(state: state.notes))
                 Div {
                     context.build(

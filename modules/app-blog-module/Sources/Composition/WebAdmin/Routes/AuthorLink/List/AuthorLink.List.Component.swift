@@ -164,10 +164,7 @@ extension AuthorLink.List {
                                                                     "label",
                                                                     "Label"
                                                                 )
-                                                                .data(
-                                                                    "remove-label",
-                                                                    "true"
-                                                                )
+                                                                .setAsRemoveConfirmationLabel()
                                                             Td(item.url)
                                                                 .data(
                                                                     "label",

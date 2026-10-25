@@ -2,8 +2,8 @@ import FeatherWebAdmin
 import FeatherWebShared
 import HTML
 import Hummingbird
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 import SGML
 import WebBuilders
 import WebComponents
@@ -45,7 +45,7 @@ extension Subscriber.List {
                 }
                 Td(item.email)
                     .data("label", "Email")
-                    .data("remove-label", "true")
+                    .setAsRemoveConfirmationLabel()
                 Td(item.name).data("label", "Name")
                 Td {
                     for campaign in item.newsletters {

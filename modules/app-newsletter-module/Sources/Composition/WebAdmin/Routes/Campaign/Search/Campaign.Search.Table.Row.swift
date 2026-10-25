@@ -1,8 +1,8 @@
 import FeatherWebAdmin
 import HTML
 import Hummingbird
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 import WebBuilders
 import WebComponents
 
@@ -34,7 +34,7 @@ extension Campaign.Search.Table {
                 else {
                     Td(item.name)
                         .data("label", "Name")
-                        .data("remove-label", "true")
+                        .setAsRemoveConfirmationLabel()
                 }
                 context.build(
                     AdminListRowActions(

@@ -82,7 +82,11 @@ extension MenuItem.View {
                         )
                     ) {
                         Div {
-                            detailField(label: "Label", value: state.item.label)
+                            detailField(
+                                label: "Label",
+                                value: state.item.label,
+                                isRemovalLabel: true
+                            )
                             detailField(label: "URL", value: state.item.url)
                             detailField(
                                 label: "Priority",
@@ -125,7 +129,6 @@ extension MenuItem.View {
                                     origin: .view
                                 ),
                                 style: .destructive,
-                                confirmationItem: state.item.label
                             )
                             context.build(button)
                         }
@@ -136,10 +139,21 @@ extension MenuItem.View {
             .class("cms-section")
         }
 
-        private func detailField(label: String, value: String) -> Div {
+        private func detailField(
+            label: String,
+            value: String,
+            isRemovalLabel: Bool = false
+        ) -> Div {
             Div {
                 P(label).class("web-menu-item-details-field-label")
-                P(value).class("web-menu-item-details-field-value")
+                let valueView = P(value)
+                    .class("web-menu-item-details-field-value")
+                if isRemovalLabel {
+                    valueView.setAsRemoveConfirmationLabel()
+                }
+                else {
+                    valueView
+                }
             }
             .class("web-menu-item-details-field")
         }

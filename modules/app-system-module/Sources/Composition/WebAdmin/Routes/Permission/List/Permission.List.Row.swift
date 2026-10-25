@@ -39,7 +39,7 @@ extension Permission.List {
                 }
                 Td(permission.key)
                     .data("label", "Key")
-                    .data("remove-label", "true")
+                    .setAsRemoveConfirmationLabel()
                 Td(permission.name?.emptyToNil ?? "—")
                     .data("label", "Name")
                 context.build(

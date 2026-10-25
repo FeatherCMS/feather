@@ -38,7 +38,6 @@ extension Subscriber.View {
                             returnTo: routes.detailsPath(model.id)
                         ),
                         style: .destructive,
-                        confirmationItem: model.email
                     )
                 )
             }
@@ -53,7 +52,8 @@ extension Subscriber.View {
                             "Review campaign subscriptions for this email address."
                     ),
                     fields: [
-                        .init(label: "Email", value: model.email),
+                        .init(label: "Email", value: model.email)
+                            .setAsRemoveConfirmationLabel(),
                         .init(label: "Name", value: model.name),
                         .init(
                             label: "Campaigns",

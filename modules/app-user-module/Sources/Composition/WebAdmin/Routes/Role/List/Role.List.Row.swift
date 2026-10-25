@@ -19,7 +19,7 @@ extension Role.List {
                 }
                 Td(role.name ?? "—")
                     .data("label", "Name")
-                    .data("remove-label", "true")
+                    .setAsRemoveConfirmationLabel()
                 context.build(
                     AdminListRowActions(
                         label: "Actions",

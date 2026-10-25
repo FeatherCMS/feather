@@ -39,7 +39,6 @@ extension Issue.View {
                             issueId: issueId
                         ),
                         style: .destructive,
-                        confirmationItem: model.subject
                     )
                 )
             }
@@ -82,6 +81,7 @@ extension Issue.View {
                                     label: "Subject",
                                     value: model.subject
                                 )
+                                .setAsRemoveConfirmationLabel()
                             )
                             context.build(
                                 AdminDetailField(
@@ -105,7 +105,6 @@ extension Issue.View {
                                         action.label,
                                         href: action.href,
                                         style: action.style,
-                                        confirmationItem: action.confirmationItem
                                     )
                                     context.build(button)
                                 }

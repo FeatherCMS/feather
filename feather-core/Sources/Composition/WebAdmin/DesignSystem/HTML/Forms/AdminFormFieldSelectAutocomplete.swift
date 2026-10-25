@@ -74,9 +74,16 @@ public struct AdminFormFieldSelectAutocomplete: Component {
     }
 
     public let state: State
+    private var isRemovalLabel = false
 
     public init(state: State) {
         self.state = state
+    }
+
+    public func setAsRemoveConfirmationLabel(_ condition: Bool = true) -> Self {
+        var field = self
+        field.isRemovalLabel = condition
+        return field
     }
 
     public func selectors() -> [any CSS.Selector] {
@@ -421,6 +428,7 @@ public struct AdminFormFieldSelectAutocomplete: Component {
         }
         .if(state.error != nil) { $0.class("has-error") }
         .class("admin-autocomplete")
+        .setAsRemoveConfirmationLabel(isRemovalLabel)
         .data("name", state.name)
         .data("mode", state.selectionMode.rawValue)
         .data("required", state.isRequired ? "true" : "false")

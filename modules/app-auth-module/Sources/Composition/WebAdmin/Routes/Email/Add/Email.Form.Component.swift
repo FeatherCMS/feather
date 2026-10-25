@@ -99,6 +99,7 @@ extension Email.Form {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
 
                 Section {

@@ -92,6 +92,7 @@ extension Author {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
                 context.build(
                     AdminFormFieldTextArea(

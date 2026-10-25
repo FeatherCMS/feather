@@ -1,9 +1,9 @@
-import NewsApplication
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import HTML
 import Hummingbird
+import NewsApplication
 import NewsModule
 import SGML
 import WebBuilders
@@ -77,10 +77,7 @@ extension NewsModule.Category.List {
                                                                     "label",
                                                                     "Title"
                                                                 )
-                                                                .data(
-                                                                    "remove-label",
-                                                                    "true"
-                                                                )
+                                                                .setAsRemoveConfirmationLabel()
                                                             Td(item.excerpt)
                                                                 .data(
                                                                     "label",
@@ -104,7 +101,8 @@ extension NewsModule.Category.List {
                                                                                     .primary
                                                                                 ),
                                                                             permission:
-                                                                                NewsModule.Category
+                                                                                NewsModule
+                                                                                .Category
                                                                                 .Permissions
                                                                                 .read
                                                                         ),
@@ -121,7 +119,8 @@ extension NewsModule.Category.List {
                                                                                     .secondary
                                                                                 ),
                                                                             permission:
-                                                                                NewsModule.Category
+                                                                                NewsModule
+                                                                                .Category
                                                                                 .Permissions
                                                                                 .update
                                                                         ),

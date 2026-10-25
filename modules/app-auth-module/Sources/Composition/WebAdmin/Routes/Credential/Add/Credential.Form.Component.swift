@@ -77,6 +77,7 @@ extension Credential.Form {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
                 context.build(AdminFormFieldInput(state: password))
                 Div {

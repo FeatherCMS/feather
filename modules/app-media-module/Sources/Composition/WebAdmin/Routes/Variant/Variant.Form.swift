@@ -144,7 +144,10 @@ extension Variant {
                     P(error).class("admin-form__error")
                 }
                 context.build(AdminFormFieldInput(state: state.key))
-                context.build(AdminFormFieldInput(state: state.name))
+                context.build(
+                    AdminFormFieldInput(state: state.name)
+                        .setAsRemoveConfirmationLabel()
+                )
                 context.build(AdminFormFieldCheckbox(state: state.isRequired))
                 context.build(AdminFormFieldCheckbox(state: state.isActive))
                 Div {

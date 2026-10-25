@@ -31,7 +31,8 @@ extension WebModule.Menu.View {
                         ),
                         fields: [
                             .init(label: "Key", value: state.menu.key),
-                            .init(label: "Name", value: state.menu.name),
+                            .init(label: "Name", value: state.menu.name)
+                                .setAsRemoveConfirmationLabel(),
                             .init(
                                 label: "Notes",
                                 value: state.menu.notes ?? "—"
@@ -48,8 +49,7 @@ extension WebModule.Menu.View {
                                 href: state.routes.detailsRemovePath(
                                     state.menu.id
                                 ),
-                    style: .destructive,
-                    confirmationItem: state.menu.name
+                                style: .destructive,
                             ),
                         ]
                     )

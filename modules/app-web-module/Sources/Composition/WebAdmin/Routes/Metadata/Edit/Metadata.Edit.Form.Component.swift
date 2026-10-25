@@ -86,93 +86,98 @@ extension WebModule.Metadata.Edit.Form {
 
                 context.build(
                     WebModule.Metadata.Fields(
-                        state: .init(
-                            slug: .init(
-                                key: state.slug.key,
-                                label: state.slug.label,
-                                value: state.slug.value,
-                                error: state.slug.error
+                        state:
+                            .init(
+                                slug: .init(
+                                    key: state.slug.key,
+                                    label: state.slug.label,
+                                    value: state.slug.value,
+                                    error: state.slug.error
+                                ),
+                                template: .init(
+                                    key: state.template.key,
+                                    label: state.template.label,
+                                    value: state.template.value,
+                                    error: state.template.error
+                                ),
+                                publicationDate: .init(
+                                    key: state.publicationDate.key,
+                                    label: state.publicationDate.label,
+                                    value: state.publicationDate.value,
+                                    error: state.publicationDate.error
+                                ),
+                                expirationDate: .init(
+                                    key: state.expirationDate.key,
+                                    label: state.expirationDate.label,
+                                    value: state.expirationDate.value,
+                                    error: state.expirationDate.error
+                                ),
+                                status: .init(
+                                    key: state.status.key,
+                                    label: state.status.label,
+                                    value: state.status.value,
+                                    error: state.status.error
+                                ),
+                                title: .init(
+                                    key: state.title.key,
+                                    label: state.title.label,
+                                    value: state.title.value,
+                                    error: state.title.error
+                                ),
+                                excerpt: .init(
+                                    key: state.excerpt.key,
+                                    label: state.excerpt.label,
+                                    value: state.excerpt.value,
+                                    error: state.excerpt.error
+                                ),
+                                imageUrl: .init(
+                                    key: state.imageUrl.key,
+                                    label: state.imageUrl.label,
+                                    value: state.imageUrl.value,
+                                    error: state.imageUrl.error
+                                ),
+                                selectedImageAsset: state.selectedImageAsset,
+                                canonicalUrl: .init(
+                                    key: state.canonicalUrl.key,
+                                    label: state.canonicalUrl.label,
+                                    value: state.canonicalUrl.value,
+                                    error: state.canonicalUrl.error
+                                ),
+                                noIndex: .init(
+                                    key: state.noIndex.key,
+                                    label: state.noIndex.label,
+                                    value: state.noIndex.value,
+                                    error: state.noIndex.error
+                                ),
+                                primaryKeyword: .init(
+                                    key: state.primaryKeyword.key,
+                                    label: state.primaryKeyword.label,
+                                    value: state.primaryKeyword.value,
+                                    error: state.primaryKeyword.error
+                                ),
+                                cssCodeInjection: .init(
+                                    key: state.cssCodeInjection.key,
+                                    label: state.cssCodeInjection.label,
+                                    value: state.cssCodeInjection.value,
+                                    error: state.cssCodeInjection.error
+                                ),
+                                javascriptCodeInjection: .init(
+                                    key: state.javascriptCodeInjection.key,
+                                    label: state.javascriptCodeInjection.label,
+                                    value: state.javascriptCodeInjection.value,
+                                    error: state.javascriptCodeInjection.error
+                                ),
+                                structuredDataCodeInjection: .init(
+                                    key: state.structuredDataCodeInjection.key,
+                                    label: state.structuredDataCodeInjection
+                                        .label,
+                                    value: state.structuredDataCodeInjection
+                                        .value,
+                                    error: state.structuredDataCodeInjection
+                                        .error
+                                ),
+                                isRemovalLabel: true
                             ),
-                            template: .init(
-                                key: state.template.key,
-                                label: state.template.label,
-                                value: state.template.value,
-                                error: state.template.error
-                            ),
-                            publicationDate: .init(
-                                key: state.publicationDate.key,
-                                label: state.publicationDate.label,
-                                value: state.publicationDate.value,
-                                error: state.publicationDate.error
-                            ),
-                            expirationDate: .init(
-                                key: state.expirationDate.key,
-                                label: state.expirationDate.label,
-                                value: state.expirationDate.value,
-                                error: state.expirationDate.error
-                            ),
-                            status: .init(
-                                key: state.status.key,
-                                label: state.status.label,
-                                value: state.status.value,
-                                error: state.status.error
-                            ),
-                            title: .init(
-                                key: state.title.key,
-                                label: state.title.label,
-                                value: state.title.value,
-                                error: state.title.error
-                            ),
-                            excerpt: .init(
-                                key: state.excerpt.key,
-                                label: state.excerpt.label,
-                                value: state.excerpt.value,
-                                error: state.excerpt.error
-                            ),
-                            imageUrl: .init(
-                                key: state.imageUrl.key,
-                                label: state.imageUrl.label,
-                                value: state.imageUrl.value,
-                                error: state.imageUrl.error
-                            ),
-                            selectedImageAsset: state.selectedImageAsset,
-                            canonicalUrl: .init(
-                                key: state.canonicalUrl.key,
-                                label: state.canonicalUrl.label,
-                                value: state.canonicalUrl.value,
-                                error: state.canonicalUrl.error
-                            ),
-                            noIndex: .init(
-                                key: state.noIndex.key,
-                                label: state.noIndex.label,
-                                value: state.noIndex.value,
-                                error: state.noIndex.error
-                            ),
-                            primaryKeyword: .init(
-                                key: state.primaryKeyword.key,
-                                label: state.primaryKeyword.label,
-                                value: state.primaryKeyword.value,
-                                error: state.primaryKeyword.error
-                            ),
-                            cssCodeInjection: .init(
-                                key: state.cssCodeInjection.key,
-                                label: state.cssCodeInjection.label,
-                                value: state.cssCodeInjection.value,
-                                error: state.cssCodeInjection.error
-                            ),
-                            javascriptCodeInjection: .init(
-                                key: state.javascriptCodeInjection.key,
-                                label: state.javascriptCodeInjection.label,
-                                value: state.javascriptCodeInjection.value,
-                                error: state.javascriptCodeInjection.error
-                            ),
-                            structuredDataCodeInjection: .init(
-                                key: state.structuredDataCodeInjection.key,
-                                label: state.structuredDataCodeInjection.label,
-                                value: state.structuredDataCodeInjection.value,
-                                error: state.structuredDataCodeInjection.error
-                            )
-                        ),
                         showTitle: true,
                         showTemplate: true,
                         templateOptions: state.templateOptions.map {

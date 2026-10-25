@@ -90,6 +90,7 @@ extension BlogModule.Tag {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
                 context.build(
                     AdminFormFieldTextArea(

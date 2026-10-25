@@ -68,6 +68,7 @@ extension WebModule.Metadata {
             public var cssCodeInjection: FieldState
             public var javascriptCodeInjection: FieldState
             public var structuredDataCodeInjection: FieldState
+            public var isRemovalLabel: Bool
 
             public init(
                 slug: FieldState,
@@ -85,7 +86,8 @@ extension WebModule.Metadata {
                 primaryKeyword: FieldState,
                 cssCodeInjection: FieldState,
                 javascriptCodeInjection: FieldState,
-                structuredDataCodeInjection: FieldState
+                structuredDataCodeInjection: FieldState,
+                isRemovalLabel: Bool = false
             ) {
                 self.slug = slug
                 self.template = template
@@ -103,6 +105,7 @@ extension WebModule.Metadata {
                 self.cssCodeInjection = cssCodeInjection
                 self.javascriptCodeInjection = javascriptCodeInjection
                 self.structuredDataCodeInjection = structuredDataCodeInjection
+                self.isRemovalLabel = isRemovalLabel
             }
 
             public mutating func apply(errors: [String: String]) {
@@ -286,6 +289,9 @@ extension WebModule.Metadata {
                                             error: state.title.error,
                                             isRequired: titleRequired
                                         )
+                                    )
+                                    .setAsRemoveConfirmationLabel(
+                                        state.isRemovalLabel
                                     )
                                 )
                             }

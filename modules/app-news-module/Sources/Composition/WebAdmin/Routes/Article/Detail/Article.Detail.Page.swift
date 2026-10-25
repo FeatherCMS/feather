@@ -23,7 +23,8 @@ extension NewsModule.Article.Detail {
                         description: "News article details."
                     ),
                     fields: [
-                        .init(label: "Title", value: item.title),
+                        .init(label: "Title", value: item.title)
+                            .setAsRemoveConfirmationLabel(),
                         .init(label: "Excerpt", value: item.excerpt),
                         .init(label: "Content", value: item.content),
                         .init(
@@ -56,7 +57,6 @@ extension NewsModule.Article.Detail {
                         label: "Remove",
                         href: routes.removePath(item.id),
                         style: .destructive,
-                        confirmationItem: item.title
                     )
                 )
             }

@@ -88,6 +88,7 @@ extension MagicLink.Add {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
 
                 context.build(

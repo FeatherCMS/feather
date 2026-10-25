@@ -99,7 +99,10 @@ extension Identity.Add.Form {
                 if let error = state.error {
                     P(error).class("admin-form__error")
                 }
-                context.build(AdminFormFieldInput(state: state.name))
+                context.build(
+                    AdminFormFieldInput(state: state.name)
+                        .setAsRemoveConfirmationLabel()
+                )
                 context.build(AdminFormFieldSelect(state: state.status))
                 if !state.roleOptions.isEmpty {
                     context.build(

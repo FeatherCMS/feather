@@ -61,6 +61,7 @@ extension Invitation.Form {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
                 if state.roleOptions.isEmpty {
                     P("No roles available.")

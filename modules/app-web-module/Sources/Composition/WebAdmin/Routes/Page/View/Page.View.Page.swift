@@ -29,10 +29,8 @@ extension Page.View {
                             description: "Review the web page content."
                         ),
                         fields: [
-                            .init(
-                                label: "Title",
-                                value: state.rule.title
-                            ),
+                            .init(label: "Title", value: state.rule.title)
+                                .setAsRemoveConfirmationLabel(),
                             .init(
                                 label: "Excerpt",
                                 value: state.rule.excerpt.isEmpty
@@ -68,7 +66,6 @@ extension Page.View {
                         label: "Remove page",
                         href: state.routes.detailsRemovePath(state.rule.id),
                         style: .destructive,
-                        confirmationItem: state.rule.title
                     )
                 )
             }

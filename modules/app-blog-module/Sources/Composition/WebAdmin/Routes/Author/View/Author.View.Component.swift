@@ -34,7 +34,8 @@ extension Author.View {
                                 "Review the author profile and publishing settings."
                         ),
                         fields: [
-                            .init(label: "Name", value: state.author.name),
+                            .init(label: "Name", value: state.author.name)
+                                .setAsRemoveConfirmationLabel(),
                             .init(
                                 label: "Status",
                                 value: state.author.metadata.status.capitalized
@@ -70,7 +71,9 @@ extension Author.View {
                                 action: state.routes.authorStatusPath(
                                     state.author.id
                                 ),
-                                returnTo: state.routes.authorPath(state.author.id)
+                                returnTo: state.routes.authorPath(
+                                    state.author.id
+                                )
                             )
                         )
                         context.build(
@@ -150,7 +153,6 @@ extension Author.View {
                         label: "Remove author",
                         href: state.routes.authorRemovePath(state.author.id),
                         style: .destructive,
-                        confirmationItem: state.author.name
                     )
                 )
             }

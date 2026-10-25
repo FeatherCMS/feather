@@ -31,8 +31,7 @@ extension Identity.Detail {
                         label: "Remove",
                         href: routes.removePath(identity.id)
                             .description,
-                    style: .destructive,
-                    confirmationItem: identity.name
+                        style: .destructive,
                     )
                 )
             }
@@ -45,7 +44,8 @@ extension Identity.Detail {
                     ),
                     fields: [
                         .init(label: "ID", value: identity.id),
-                        .init(label: "Name", value: identity.name),
+                        .init(label: "Name", value: identity.name)
+                            .setAsRemoveConfirmationLabel(),
                         .init(
                             label: "Status",
                             chip: .init(

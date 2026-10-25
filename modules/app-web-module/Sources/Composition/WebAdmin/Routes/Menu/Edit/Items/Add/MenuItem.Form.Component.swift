@@ -72,6 +72,7 @@ extension WebModule.MenuItem.Form {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
                 context.build(
                     AdminFormFieldInput(

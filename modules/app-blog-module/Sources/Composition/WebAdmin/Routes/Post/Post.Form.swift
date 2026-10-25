@@ -103,6 +103,7 @@ extension Post {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
                 context.build(
                     AdminFormFieldTextArea(

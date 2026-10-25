@@ -34,7 +34,8 @@ extension Post.View {
                             description: "Review the blog post configuration."
                         ),
                         fields: [
-                            .init(label: "Title", value: state.model.title),
+                            .init(label: "Title", value: state.model.title)
+                                .setAsRemoveConfirmationLabel(),
                             .init(
                                 label: "Status",
                                 value: state.model.metadata.status.capitalized
@@ -78,7 +79,9 @@ extension Post.View {
                         context.build(
                             AdminStatusSelectFormDefinition(
                                 id: formID,
-                                action: state.routes.postStatusPath(state.model.id),
+                                action: state.routes.postStatusPath(
+                                    state.model.id
+                                ),
                                 returnTo: state.routes.postPath(state.model.id)
                             )
                         )
@@ -117,7 +120,6 @@ extension Post.View {
                         label: "Remove post",
                         href: state.routes.postRemovePath(state.model.id),
                         style: .destructive,
-                        confirmationItem: state.model.title
                     )
                 )
             }

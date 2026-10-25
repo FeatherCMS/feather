@@ -122,62 +122,25 @@ public struct AdminDialogHost: Component {
                     return fallback;
                 }
 
-                function formContextLabel(trigger) {
-                    var form = trigger.closest("form");
-                    if (!form) { return null; }
-                    var preferred = [
-                        "name", "title", "email", "subject", "label",
-                        "username", "slug", "key", "url", "source",
-                        "destination", "filename", "file name", "path"
-                    ];
-                    var ignored = [
-                        "id", "status", "created", "created at", "updated at",
-                        "expires at", "roles", "permissions"
-                    ];
-                    var candidates = [];
-                    form.querySelectorAll(".admin-form-field").forEach(
-                        function (field) {
-                            var control = field.querySelector(
-                                "input:not([type='hidden']), select, textarea"
-                            );
-                            var label = field.querySelector(
-                                ".admin-form-field-label"
-                            );
-                            if (!control || !label) { return; }
-                            var labelText = (label.innerText || label.textContent || "")
-                                .trim()
-                                .replace(/\s+/g, " ")
-                                .replace(/\s*\(optional\)$/, "");
-                            var value = control.value || "";
-                            if (
-                                control.tagName === "SELECT" &&
-                                control.selectedOptions.length
-                            ) {
-                                value = control.selectedOptions[0].textContent || value;
-                            }
-                            value = value.trim().replace(/\s+/g, " ");
-                            var normalizedLabel = labelText.toLowerCase();
-                            if (
-                                !labelText || !value || value === "—" ||
-                                ignored.indexOf(normalizedLabel) >= 0
-                            ) {
-                                return;
-                            }
-                            candidates.push({
-                                label: labelText,
-                                value: value
-                            });
-                        }
+                function markedContextLabel(container) {
+                    if (!container) { return null; }
+                    var marked = container.querySelector("[data-remove-label]");
+                    if (!marked) { return null; }
+                    var control = marked.matches(
+                        "input:not([type='hidden']), select, textarea"
+                    ) ? marked : marked.querySelector(
+                        "input:not([type='hidden']), select, textarea"
                     );
-                    var candidate = null;
-                    for (var index = 0; index < preferred.length; index += 1) {
-                        candidate = candidates.find(function (item) {
-                            return item.label.toLowerCase() === preferred[index];
-                        });
-                        if (candidate) { break; }
+                    var value = control ? control.value :
+                        (marked.innerText || marked.textContent || "");
+                    if (
+                        control && control.tagName === "SELECT" &&
+                        control.selectedOptions.length
+                    ) {
+                        value = control.selectedOptions[0].textContent || value;
                     }
-                    candidate = candidate || candidates[0];
-                    return candidate ? candidate.value : null;
+                    value = value.trim().replace(/\s+/g, " ");
+                    return value && value !== "—" ? value : null;
                 }
 
                 function makeButton(label, classes, action) {
@@ -355,7 +318,9 @@ public struct AdminDialogHost: Component {
                             removeLabel = rowLabel(removeRow, "Selected item");
                         }
                         if (removeLabel === "Selected item") {
-                            removeLabel = formContextLabel(removeTrigger) || removeLabel;
+                            var removeScope = removeTrigger.closest("form") ||
+                                removeTrigger.closest(".cms-section") || document;
+                            removeLabel = markedContextLabel(removeScope) || removeLabel;
                         }
                         showRemoveConfirmation([removeLabel], function () {
                             var form = document.createElement("form");

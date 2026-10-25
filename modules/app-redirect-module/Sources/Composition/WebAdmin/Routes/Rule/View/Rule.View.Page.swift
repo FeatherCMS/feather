@@ -23,7 +23,8 @@ extension Rule.View {
                                 "Review the redirect rule configuration."
                         ),
                         fields: [
-                            .init(label: "Source", value: rule.source),
+                            .init(label: "Source", value: rule.source)
+                                .setAsRemoveConfirmationLabel(),
                             .init(
                                 label: "Destination",
                                 value: rule.destination
@@ -58,7 +59,6 @@ extension Rule.View {
                         label: "Remove rule",
                         href: routes.removePath(rule.id),
                         style: .destructive,
-                        confirmationItem: "\(rule.source) → \(rule.destination)"
                     )
                 )
             }

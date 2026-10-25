@@ -40,9 +40,16 @@ public struct AdminFormFieldInput: Component {
     }
 
     public let state: State
+    private var isRemovalLabel = false
 
     public init(state: State) {
         self.state = state
+    }
+
+    public func setAsRemoveConfirmationLabel(_ condition: Bool = true) -> Self {
+        var field = self
+        field.isRemovalLabel = condition
+        return field
     }
 
     public func selectors() -> [any Selector] {
@@ -124,6 +131,7 @@ public struct AdminFormFieldInput: Component {
             }
         }
         .if(state.error != nil) { $0.class("has-error") }
+        .setAsRemoveConfirmationLabel(isRemovalLabel)
         .class("admin-form-field")
     }
 }

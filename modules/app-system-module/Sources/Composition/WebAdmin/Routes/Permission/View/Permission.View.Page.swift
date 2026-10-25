@@ -27,10 +27,16 @@ extension Permission.View {
                         description: "System permission details."
                     ),
                     fields: [
-                        .init(label: "Key", value: state.permission.key),
+                        .init(label: "Key", value: state.permission.key)
+                            .setAsRemoveConfirmationLabel(
+                                state.permission.name?.emptyToNil == nil
+                            ),
                         .init(
                             label: "Name",
                             value: state.permission.name?.emptyToNil ?? "—"
+                        )
+                        .setAsRemoveConfirmationLabel(
+                            state.permission.name?.emptyToNil != nil
                         ),
                         .init(
                             label: "Notes",
@@ -69,8 +75,6 @@ extension Permission.View {
                                 state.routes.detailsPath(state.permission.id)
                         ),
                         style: .destructive,
-                        confirmationItem:
-                            state.permission.name?.emptyToNil ?? state.permission.key
                     )
                 )
             }

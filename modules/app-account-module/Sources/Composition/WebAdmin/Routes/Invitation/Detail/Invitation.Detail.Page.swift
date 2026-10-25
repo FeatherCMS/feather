@@ -26,10 +26,8 @@ extension Invitation.Detail {
                                 "Review invitation status and assigned roles."
                         ),
                         fields: [
-                            .init(
-                                label: "Email",
-                                value: state.invitation.email
-                            ),
+                            .init(label: "Email", value: state.invitation.email)
+                                .setAsRemoveConfirmationLabel(),
                             .init(
                                 label: "Roles",
                                 value: state.invitation.roleNames.isEmpty
@@ -60,7 +58,6 @@ extension Invitation.Detail {
                                     state.invitation.id
                                 ),
                                 style: .destructive,
-                                confirmationItem: state.invitation.email
                             ),
                         ]
                     )

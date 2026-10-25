@@ -135,6 +135,7 @@ extension WebModule.Page.Form {
                             isRequired: true
                         )
                     )
+                    .setAsRemoveConfirmationLabel()
                 )
                 context.build(textarea(state.excerpt, rows: 4))
                 context.build(

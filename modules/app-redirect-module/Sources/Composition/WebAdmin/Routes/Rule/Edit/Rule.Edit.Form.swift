@@ -1,7 +1,7 @@
 import FeatherWebAdmin
 import HTML
-import RedirectDomain
 import RedirectApplication
+import RedirectDomain
 import RedirectModule
 import WebBuilders
 import WebComponents
@@ -95,7 +95,10 @@ extension Rule.Edit {
                 if let error = state.error {
                     P(error).class("admin-form__error")
                 }
-                context.build(AdminFormFieldInput(state: state.source))
+                context.build(
+                    AdminFormFieldInput(state: state.source)
+                        .setAsRemoveConfirmationLabel()
+                )
                 context.build(AdminFormFieldInput(state: state.destination))
                 context.build(AdminFormFieldSelect(state: state.statusCode))
                 context.build(AdminFormFieldTextArea(state: state.notes))

@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 import WebBuilders
 import WebComponents
 
@@ -17,7 +17,10 @@ extension Rule.List {
         let routes: Rule.Router.Routes
 
         private var statusChip: AdminChip {
-            guard let statusCode = Rule.Model.StatusCode(rawValue: rule.statusCode)
+            guard
+                let statusCode = Rule.Model.StatusCode(
+                    rawValue: rule.statusCode
+                )
             else {
                 return AdminChip(
                     label: String(rule.statusCode),
@@ -44,7 +47,7 @@ extension Rule.List {
                 }
                 Td(rule.source)
                     .data("label", "Source")
-                    .data("remove-label", "true")
+                    .setAsRemoveConfirmationLabel()
                 Td(rule.destination).data("label", "Destination")
                 Td {
                     context.build(statusChip)

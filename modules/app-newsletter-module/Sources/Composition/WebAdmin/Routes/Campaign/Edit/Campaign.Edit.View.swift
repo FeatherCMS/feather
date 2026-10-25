@@ -62,6 +62,7 @@ extension Campaign.Edit {
                                         label: "Name",
                                         value: state.form.name
                                     )
+                                    .setAsRemoveConfirmationLabel()
                                 )
                                 context.build(
                                     AdminDetailField(

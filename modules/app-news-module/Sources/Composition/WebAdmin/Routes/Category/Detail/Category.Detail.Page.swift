@@ -1,7 +1,7 @@
-import NewsApplication
 import FeatherWebAdmin
 import HTML
 import Hummingbird
+import NewsApplication
 import NewsModule
 import SGML
 import WebBuilders
@@ -22,7 +22,8 @@ extension NewsModule.Category.Detail {
                         description: "News category details."
                     ),
                     fields: [
-                        .init(label: "Title", value: item.title),
+                        .init(label: "Title", value: item.title)
+                            .setAsRemoveConfirmationLabel(),
                         .init(label: "Excerpt", value: item.excerpt),
                         .init(label: "Content", value: item.content),
                         .init(label: "Slug", value: item.metadata.slug),
@@ -50,7 +51,6 @@ extension NewsModule.Category.Detail {
                         label: "Remove",
                         href: routes.removePath(item.id),
                         style: .destructive,
-                        confirmationItem: item.title
                     )
                 )
             }

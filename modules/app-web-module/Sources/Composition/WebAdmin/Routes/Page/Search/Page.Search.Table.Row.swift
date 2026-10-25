@@ -75,7 +75,7 @@ extension Page.Search.Table {
                 }
             }
             .data("label", "Title")
-            .data("remove-label", "true")
+            .setAsRemoveConfirmationLabel()
         }
 
         private func statusCell(context: inout BuilderContext) -> Td {

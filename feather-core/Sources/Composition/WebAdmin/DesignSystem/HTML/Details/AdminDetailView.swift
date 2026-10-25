@@ -21,6 +21,7 @@ public struct AdminDetailView: Component {
         public let chip: Chip?
         public let chips: [Chip]?
         public let imageURL: String?
+        fileprivate var isRemovalLabel = false
 
         public init(label: String, value: String) {
             self.label = label
@@ -53,22 +54,23 @@ public struct AdminDetailView: Component {
             self.chips = nil
             self.imageURL = imageURL
         }
+
+        public func setAsRemoveConfirmationLabel(_ condition: Bool = true)
+            -> Self
+        {
+            var field = self
+            field.isRemovalLabel = condition
+            return field
+        }
     }
     public struct Action: Sendable {
         public let label: String
         public let href: String
         public let style: AdminButtonStyle
-        public let confirmationItem: String?
-        public init(
-            label: String,
-            href: String,
-            style: AdminButtonStyle,
-            confirmationItem: String? = nil
-        ) {
+        public init(label: String, href: String, style: AdminButtonStyle) {
             self.label = label
             self.href = href
             self.style = style
-            self.confirmationItem = confirmationItem
         }
     }
     public let breadcrumb: [AdminBreadcrumb.Link]
@@ -93,7 +95,7 @@ public struct AdminDetailView: Component {
             context.build(AdminPageHeader(state: pageHeader))
             Div {
                 for field in fields {
-                    Div {
+                    let fieldView = Div {
                         P(field.label).class("admin-detail-view-field-label")
                         if let imageURL = field.imageURL {
                             Img(src: imageURL, alt: field.label)
@@ -123,13 +125,18 @@ public struct AdminDetailView: Component {
                             )
                         }
                         else {
-                            P(field.value)
-                                .class(
-                                    "admin-detail-view-field-value"
-                                )
+                            let value = P(field.value)
+                                .class("admin-detail-view-field-value")
+                            if field.isRemovalLabel {
+                                value.setAsRemoveConfirmationLabel()
+                            }
+                            else {
+                                value
+                            }
                         }
                     }
                     .class("admin-detail-view-field")
+                    fieldView
                 }
             }
             .class("admin-detail-view-fields")
@@ -140,7 +147,6 @@ public struct AdminDetailView: Component {
                             action.label,
                             href: action.href,
                             style: action.style,
-                            confirmationItem: action.confirmationItem
                         )
                         context.build(button)
                     }

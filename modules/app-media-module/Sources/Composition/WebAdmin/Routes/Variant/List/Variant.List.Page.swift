@@ -247,7 +247,7 @@ extension Variant.List.Page {
                 }
                 Td(variant.key)
                     .data("label", "Key")
-                    .data("remove-label", "true")
+                    .setAsRemoveConfirmationLabel()
                 Td(variant.name).data("label", "Name")
                 Td(variant.isRequired ? "Yes" : "No").data("label", "Required")
                 Td(variant.isActive ? "Yes" : "No").data("label", "Active")
