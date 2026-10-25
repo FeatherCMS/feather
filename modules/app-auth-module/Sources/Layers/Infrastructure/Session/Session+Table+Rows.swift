@@ -39,6 +39,9 @@ extension Session.Table: DatabaseTableWithInsert {
         let authenticationReference: String
         let isPersistent: Bool
         let expiresAt: Date
+        func afterEncode(values: inout DatabaseTableRowValues) throws {
+            values[Session.Table.columns.expiresAt] = .value(expiresAt)
+        }
 
         enum CodingKeys: String, CodingKey {
             case id
@@ -63,6 +66,8 @@ extension Session.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Session.Table.columns.updatedAt] = .currentTimestamp
+
+            values[Session.Table.columns.expiresAt] = .value(expiresAt)
         }
 
         enum CodingKeys: String, CodingKey {

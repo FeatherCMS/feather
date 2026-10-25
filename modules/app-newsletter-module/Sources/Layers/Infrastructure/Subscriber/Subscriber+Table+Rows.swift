@@ -16,6 +16,33 @@ extension Subscriber.Table: DatabaseTableWithInsert {
         public let unsubscribeToken: String?
         public let source: String?
         public let lastSentAt: Date?
+        public func afterEncode(values: inout DatabaseTableRowValues) throws {
+            values[Subscriber.Table.columns.subscriptionDate] = .value(
+                subscriptionDate
+            )
+            if let unsubscriptionDate {
+                values[Subscriber.Table.columns.unsubscriptionDate] = .value(
+                    unsubscriptionDate
+                )
+            }
+            else {
+                values[Subscriber.Table.columns.unsubscriptionDate] = .null
+            }
+            if let confirmedAt {
+                values[Subscriber.Table.columns.confirmedAt] = .value(
+                    confirmedAt
+                )
+            }
+            else {
+                values[Subscriber.Table.columns.confirmedAt] = .null
+            }
+            if let lastSentAt {
+                values[Subscriber.Table.columns.lastSentAt] = .value(lastSentAt)
+            }
+            else {
+                values[Subscriber.Table.columns.lastSentAt] = .null
+            }
+        }
 
         enum CodingKeys: String, CodingKey {
             case newsletterId = "newsletter_id"
@@ -47,6 +74,32 @@ extension Subscriber.Table: DatabaseTableWithUpdate {
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Subscriber.Table.columns.updatedAt] = .currentTimestamp
+
+            values[Subscriber.Table.columns.subscriptionDate] = .value(
+                subscriptionDate
+            )
+            if let unsubscriptionDate {
+                values[Subscriber.Table.columns.unsubscriptionDate] = .value(
+                    unsubscriptionDate
+                )
+            }
+            else {
+                values[Subscriber.Table.columns.unsubscriptionDate] = .null
+            }
+            if let confirmedAt {
+                values[Subscriber.Table.columns.confirmedAt] = .value(
+                    confirmedAt
+                )
+            }
+            else {
+                values[Subscriber.Table.columns.confirmedAt] = .null
+            }
+            if let lastSentAt {
+                values[Subscriber.Table.columns.lastSentAt] = .value(lastSentAt)
+            }
+            else {
+                values[Subscriber.Table.columns.lastSentAt] = .null
+            }
         }
 
         enum CodingKeys: String, CodingKey {

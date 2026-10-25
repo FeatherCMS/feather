@@ -3,6 +3,7 @@ public import ContactModule
 import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
+import Foundation
 
 extension Submission.Table.Detail {
     var asDomain: Submission.Model {
@@ -69,9 +70,9 @@ extension Submission.Repository {
             let row = Submission.Table.Insert(
                 id: context.idGenerator.generate(),
                 formId: model.formId,
-                values: model.valuesJSON,
-                itemsSnapshot: model.itemsSnapshotJSON,
-                metadata: model.metadataJSON,
+                values: try Self.decodeJSON(model.valuesJSON),
+                itemsSnapshot: try Self.decodeJSON(model.itemsSnapshotJSON),
+                metadata: try model.metadataJSON.map(Self.decodeJSON),
                 status: model.status.rawValue
             )
             try await accessLayer.insert(row)
@@ -119,6 +120,15 @@ extension Submission.Repository {
                 .map(\.id)
             try await accessLayer.delete(where: \.id, in: ids)
             return existingIDs
+        }
+
+        private static func decodeJSON(_ string: String) throws
+            -> Submission.Table.JSONValue
+        {
+            try JSONDecoder().decode(
+                Submission.Table.JSONValue.self,
+                from: Data(string.utf8)
+            )
         }
     }
 }

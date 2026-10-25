@@ -28,7 +28,6 @@ extension StorageObject.Table: DatabaseTableWithDetail {
         let contentType: String
         let sizeInBytes: Int64
         let createdAt: Date
-
         enum CodingKeys: String, CodingKey {
             case id
             case key
@@ -48,7 +47,6 @@ extension StorageObject.Table: DatabaseTableWithList {
         let contentType: String
         let sizeInBytes: Int64
         let createdAt: Date
-
         enum CodingKeys: String, CodingKey {
             case id
             case key

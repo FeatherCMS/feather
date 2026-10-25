@@ -9,6 +9,10 @@ extension AuthModule.Authorization.Roles.Query {
     public struct Database: Interface {
         private struct RoleID: DatabaseTableRowDecodable {
             let roleId: String
+
+            enum CodingKeys: String, CodingKey {
+                case roleId = "role_id"
+            }
         }
 
         private struct RoleName: DatabaseTableRowDecodable {

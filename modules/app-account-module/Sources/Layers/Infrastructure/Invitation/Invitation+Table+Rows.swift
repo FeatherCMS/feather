@@ -36,6 +36,9 @@ extension Invitation.Table: DatabaseTableWithInsert {
         let token: String
         let roleIds: String
         let expiresAt: Date
+        func afterEncode(values: inout DatabaseTableRowValues) throws {
+            values[Invitation.Table.columns.expiresAt] = .value(expiresAt)
+        }
 
         enum CodingKeys: String, CodingKey {
             case id
@@ -58,6 +61,8 @@ extension Invitation.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Invitation.Table.columns.updatedAt] = .currentTimestamp
+
+            values[Invitation.Table.columns.expiresAt] = .value(expiresAt)
         }
 
         enum CodingKeys: String, CodingKey {

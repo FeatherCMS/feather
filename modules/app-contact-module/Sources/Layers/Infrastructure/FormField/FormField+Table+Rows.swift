@@ -1,3 +1,4 @@
+public import ContactDomain
 public import ContactModule
 public import FeatherDBAL
 
@@ -9,7 +10,7 @@ extension FormField.Table: DatabaseTableWithInsert {
         public let key: String
         public let type: String
         public let label: String
-        public let allowedValues: String
+        public let allowedValues: [FormField.Model.Option]
         public let isRequired: Bool
 
         enum CodingKeys: String, CodingKey {
@@ -28,7 +29,7 @@ extension FormField.Table: DatabaseTableWithUpdate {
         public let key: String
         public let type: String
         public let label: String
-        public let allowedValues: String
+        public let allowedValues: [FormField.Model.Option]
         public let isRequired: Bool
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {

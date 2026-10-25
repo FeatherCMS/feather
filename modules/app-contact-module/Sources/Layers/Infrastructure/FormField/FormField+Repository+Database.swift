@@ -87,9 +87,7 @@ extension FormField.Repository {
                 key: model.key,
                 type: model.type.rawValue,
                 label: model.label,
-                allowedValues: try FormField.AccessLayer.jsonString(
-                    model.allowedValues
-                ),
+                allowedValues: model.allowedValues,
                 isRequired: model.isRequired
             )
             try await accessLayer.insert(row)
@@ -174,9 +172,7 @@ extension FormField.Repository {
                     key: model.key,
                     type: model.type.rawValue,
                     label: model.label,
-                    allowedValues: try FormField.AccessLayer.jsonString(
-                        model.allowedValues
-                    ),
+                    allowedValues: model.allowedValues,
                     isRequired: model.isRequired
                 ),
                 where: \.id,

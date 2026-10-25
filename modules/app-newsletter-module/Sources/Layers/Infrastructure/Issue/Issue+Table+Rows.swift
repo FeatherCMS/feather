@@ -12,6 +12,16 @@ extension Issue.Table: DatabaseTableWithInsert {
         public let content: String
         public let status: String
         public let scheduledDate: Date?
+        public func afterEncode(values: inout DatabaseTableRowValues) throws {
+            if let scheduledDate {
+                values[Issue.Table.columns.scheduledDate] = .value(
+                    scheduledDate
+                )
+            }
+            else {
+                values[Issue.Table.columns.scheduledDate] = .null
+            }
+        }
 
         enum CodingKeys: String, CodingKey {
             case id
@@ -36,6 +46,21 @@ extension Issue.Table: DatabaseTableWithUpdate {
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Issue.Table.columns.updatedAt] = .currentTimestamp
+
+            if let scheduledDate {
+                values[Issue.Table.columns.scheduledDate] = .value(
+                    scheduledDate
+                )
+            }
+            else {
+                values[Issue.Table.columns.scheduledDate] = .null
+            }
+            if let sentDate {
+                values[Issue.Table.columns.sentDate] = .value(sentDate)
+            }
+            else {
+                values[Issue.Table.columns.sentDate] = .null
+            }
         }
 
         enum CodingKeys: String, CodingKey {

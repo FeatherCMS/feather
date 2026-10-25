@@ -11,6 +11,14 @@ extension Delivery.Table: DatabaseTableWithInsert {
         public let status: String
         public let sentDate: Date?
         public let failureReason: String?
+        public func afterEncode(values: inout DatabaseTableRowValues) throws {
+            if let sentDate {
+                values[Delivery.Table.columns.sentDate] = .value(sentDate)
+            }
+            else {
+                values[Delivery.Table.columns.sentDate] = .null
+            }
+        }
 
         enum CodingKeys: String, CodingKey {
             case issueId = "issue_id"
@@ -31,6 +39,13 @@ extension Delivery.Table: DatabaseTableWithUpdate {
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Delivery.Table.columns.updatedAt] = .currentTimestamp
+
+            if let sentDate {
+                values[Delivery.Table.columns.sentDate] = .value(sentDate)
+            }
+            else {
+                values[Delivery.Table.columns.sentDate] = .null
+            }
         }
 
         enum CodingKeys: String, CodingKey {

@@ -23,6 +23,19 @@ extension Metadata.Table: DatabaseTableWithInsert {
         let cssCodeInjection: String?
         let javascriptCodeInjection: String?
         let structuredDataCodeInjection: String?
+        func afterEncode(values: inout DatabaseTableRowValues) throws {
+            values[Metadata.Table.columns.publicationDate] = .value(
+                publicationDate
+            )
+            if let expirationDate {
+                values[Metadata.Table.columns.expirationDate] = .value(
+                    expirationDate
+                )
+            }
+            else {
+                values[Metadata.Table.columns.expirationDate] = .null
+            }
+        }
 
         enum CodingKeys: String, CodingKey {
             case id
@@ -67,6 +80,18 @@ extension Metadata.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Metadata.Table.columns.updatedAt] = .currentTimestamp
+
+            values[Metadata.Table.columns.publicationDate] = .value(
+                publicationDate
+            )
+            if let expirationDate {
+                values[Metadata.Table.columns.expirationDate] = .value(
+                    expirationDate
+                )
+            }
+            else {
+                values[Metadata.Table.columns.expirationDate] = .null
+            }
         }
 
         enum CodingKeys: String, CodingKey {
@@ -111,6 +136,28 @@ extension Metadata.Table: DatabaseTableWithDetail {
         let structuredDataCodeInjection: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case referenceType = "reference_type"
+            case referenceID = "reference_id"
+            case template
+            case slug
+            case publicationDate = "publication_date"
+            case expirationDate = "expiration_date"
+            case status
+            case titleOverride = "title_override"
+            case excerptOverride = "excerpt_override"
+            case imageURLOverride = "image_url_override"
+            case canonicalURL = "canonical_url"
+            case noIndex = "no_index"
+            case primaryKeyword = "primary_keyword"
+            case cssCodeInjection = "css_code_injection"
+            case javascriptCodeInjection = "javascript_code_injection"
+            case structuredDataCodeInjection = "structured_data_code_injection"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -126,6 +173,19 @@ extension Metadata.Table: DatabaseTableWithList {
         let titleOverride: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case referenceType = "reference_type"
+            case referenceID = "reference_id"
+            case slug
+            case publicationDate = "publication_date"
+            case expirationDate = "expiration_date"
+            case status
+            case titleOverride = "title_override"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

@@ -15,10 +15,18 @@ extension AuthModule.Authorization.Permissions.Query {
 
         private struct RoleID: DatabaseTableRowDecodable {
             let roleId: String
+
+            enum CodingKeys: String, CodingKey {
+                case roleId = "role_id"
+            }
         }
 
         private struct PermissionID: DatabaseTableRowDecodable {
             let permissionId: String
+
+            enum CodingKeys: String, CodingKey {
+                case permissionId = "permission_id"
+            }
         }
 
         private struct PermissionName: DatabaseTableRowDecodable {
