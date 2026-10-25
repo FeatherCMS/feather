@@ -129,8 +129,8 @@ extension Components.Schemas.NewsArticleCreateSchema {
             imageAssetId: imageAssetId,
             categoryIds: Array(categoryIds ?? []),
             metadata: .init(
-                slug: metadata.slug,
                 template: "news.article",
+                slug: metadata.slug,
                 publicationDate: metadata.publicationDate.map(
                     Date.init(timeIntervalSince1970:)
                 ) ?? .init(),
@@ -168,8 +168,8 @@ extension Components.Schemas.NewsArticleCreateSchema {
             categoryIds: .set(Array(categoryIds ?? [])),
             metadata: .set(
                 .init(
-                    slug: metadata.slug,
                     template: "news.article",
+                    slug: metadata.slug,
                     publicationDate: metadata.publicationDate.map(
                         Date.init(timeIntervalSince1970:)
                     ) ?? .init(),

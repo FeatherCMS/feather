@@ -46,6 +46,16 @@ extension API {
                 .loadImageAsset(assetId: assetId, variants: variants)
         }
 
+        public func resolveAssets(
+            ids: [String],
+            variants: [String]? = nil
+        ) async throws -> [MediaAdminAPI.Components.Schemas
+            .MediaAssetResolveItemSchema]
+        {
+            try await Asset.File.List.Repository.OpenAPI(api: self)
+                .resolveAssets(ids: ids, variants: variants)
+        }
+
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (MediaAdminAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
