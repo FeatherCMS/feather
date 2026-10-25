@@ -110,7 +110,7 @@ extension Campaign.Subscriber.List {
                                                     "newsletter-campaign-subscribers",
                                                 columns: [
                                                     .fraction(2), .fraction(2),
-                                                    .fraction(1), .fixed(240),
+                                                    .fraction(1), .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

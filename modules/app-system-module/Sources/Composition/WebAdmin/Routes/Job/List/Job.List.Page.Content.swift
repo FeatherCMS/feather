@@ -72,7 +72,7 @@ extension Job.List.Page {
                                         .fraction(1),
                                         .fraction(2),
                                         .fixed(140),
-                                        .fixed(220),
+                                        .actions,
                                     ]
                                 ),
                                 table: Table {

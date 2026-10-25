@@ -114,7 +114,7 @@ extension Page.Search.Table {
                                                         .fixed(140),
                                                         .fixed(180),
                                                         .fixed(120),
-                                                        .fixed(250),
+                                                        .actions,
                                                     ]
                                                 ),
                                                 hasSelection: canDelete,

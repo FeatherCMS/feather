@@ -103,7 +103,7 @@ extension WebModule.Menu.List.Page {
                                                 name: "web-menus",
                                                 columns: [
                                                     .fraction(1), .fraction(2),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

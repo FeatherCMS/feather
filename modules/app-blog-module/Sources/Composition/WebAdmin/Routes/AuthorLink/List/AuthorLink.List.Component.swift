@@ -128,7 +128,7 @@ extension AuthorLink.List {
                                                 columns: [
                                                     .fraction(2), .fraction(2),
                                                     .fixed(100), .fixed(110),
-                                                    .fraction(1), .fixed(220),
+                                                    .fraction(1), .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

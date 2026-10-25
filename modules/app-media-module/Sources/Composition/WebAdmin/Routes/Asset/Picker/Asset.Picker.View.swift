@@ -762,7 +762,7 @@ extension Asset.Picker.View {
             AdminListShell(
                 layout: .init(
                     name: "media-asset-picker-list",
-                    columns: [.fixed(84), .fraction(1), .fixed(160)]
+                    columns: [.fixed(84), .fraction(1), .actions]
                 ),
                 hasSelection: false,
                 table: Table {

@@ -100,7 +100,7 @@ extension Identity.List {
                                                     .fixed(220),
                                                     .fixed(120),
                                                     .fraction(1),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ],
                                                 minimumWidth: 1000
                                             ),

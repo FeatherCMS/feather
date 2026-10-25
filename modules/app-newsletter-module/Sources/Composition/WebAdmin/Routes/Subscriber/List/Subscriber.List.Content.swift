@@ -119,7 +119,7 @@ extension Subscriber.List.Table {
                                                 name: "newsletter-subscribers",
                                                 columns: [
                                                     .fraction(2), .fraction(1),
-                                                    .fraction(2), .fixed(280),
+                                                    .fraction(2), .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

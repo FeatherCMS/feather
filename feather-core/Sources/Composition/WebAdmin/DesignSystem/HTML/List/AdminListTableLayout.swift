@@ -5,6 +5,7 @@ public struct AdminListTableLayout: Sendable, Equatable {
     public enum Column: Sendable, Equatable {
         case fixed(Int)
         case fraction(Int)
+        case actions
 
         fileprivate var track: String {
             switch self {
@@ -12,6 +13,8 @@ public struct AdminListTableLayout: Sendable, Equatable {
                 "\(value)px"
             case .fraction(let value):
                 "minmax(0, \(value)fr)"
+            case .actions:
+                "160px"
             }
         }
     }

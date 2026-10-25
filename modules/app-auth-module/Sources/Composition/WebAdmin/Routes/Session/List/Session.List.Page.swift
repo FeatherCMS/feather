@@ -78,7 +78,7 @@ extension Session.List {
                                 name: "auth-sessions",
                                 columns: [
                                     .fraction(2), .fraction(2), .fraction(1),
-                                    .fixed(180),
+                                    .actions,
                                 ]
                             ),
                             table: Table {

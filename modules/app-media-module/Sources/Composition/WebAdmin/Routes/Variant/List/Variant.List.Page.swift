@@ -145,7 +145,7 @@ extension Variant.List.Page {
                                                 columns: [
                                                     .fraction(2), .fraction(2),
                                                     .fraction(1), .fraction(1),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

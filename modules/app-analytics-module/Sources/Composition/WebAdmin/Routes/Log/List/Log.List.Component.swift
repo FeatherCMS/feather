@@ -304,7 +304,7 @@ extension Log.List {
                                     name: "analytics-logs",
                                     columns: [
                                         .fixed(90), .fixed(100), .fixed(120),
-                                        .fraction(2), .fraction(1), .fixed(160),
+                                        .fraction(2), .fraction(1), .actions,
                                     ]
                                 ),
                                 table: Table {

@@ -96,7 +96,7 @@ extension ContactModule.Form.Search.Page {
                                                 name: "contact-forms",
                                                 columns: [
                                                     .fraction(1), .fraction(2),
-                                                    .fixed(250),
+                                                    .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

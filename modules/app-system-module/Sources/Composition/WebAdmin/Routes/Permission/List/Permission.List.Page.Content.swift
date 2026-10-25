@@ -112,7 +112,7 @@ extension Permission.List.Page {
                                                 columns: [
                                                     .fraction(1),
                                                     .fraction(2),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

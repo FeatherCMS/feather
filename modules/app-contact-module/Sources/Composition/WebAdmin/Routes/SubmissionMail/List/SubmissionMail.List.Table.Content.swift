@@ -69,7 +69,7 @@ extension SubmissionMail.List.Table {
                                                 name: "contact-form-emails",
                                                 columns: [
                                                     .fraction(1), .fraction(1),
-                                                    .fraction(1), .fixed(220),
+                                                    .fraction(1), .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

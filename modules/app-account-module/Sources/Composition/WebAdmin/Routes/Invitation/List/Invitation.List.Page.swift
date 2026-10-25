@@ -125,7 +125,7 @@ extension Invitation.List {
                                                     columns: [
                                                         .fixed(260),
                                                         .fraction(1),
-                                                        .fixed(220),
+                                                        .actions,
                                                     ]
                                                 ),
                                                 hasSelection: canDelete,

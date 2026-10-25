@@ -95,7 +95,7 @@ extension Role.List {
                                                 name: "user-roles",
                                                 columns: [
                                                     .fraction(1),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

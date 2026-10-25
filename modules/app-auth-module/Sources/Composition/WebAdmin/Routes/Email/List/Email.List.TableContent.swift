@@ -60,7 +60,7 @@ extension Email.List {
                                         columns: [
                                             .fraction(2),
                                             .fraction(2),
-                                            .fixed(220),
+                                            .actions,
                                         ]
                                     ),
                                     hasSelection: canDelete,

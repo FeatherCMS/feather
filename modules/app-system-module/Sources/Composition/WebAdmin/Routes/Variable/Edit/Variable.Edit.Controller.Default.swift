@@ -85,9 +85,7 @@ extension Variable.Edit.Controller {
                 try await payload.input.validate()
                 try await runtime.interactor.edit(id: id, input: payload.input)
 
-                return runtime.presenter.renderSuccess(
-                    id: payload.input.normalizedKey
-                )
+                return runtime.presenter.renderSuccess(id: id)
             }
             catch let error as ValidationError {
                 return try await runtime.presenter

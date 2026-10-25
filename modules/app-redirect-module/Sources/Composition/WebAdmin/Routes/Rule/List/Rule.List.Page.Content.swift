@@ -112,7 +112,7 @@ extension Rule.List.Page {
                                                     .fraction(1),
                                                     .fraction(2),
                                                     .fixed(190),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ],
                                                 minimumWidth: 760
                                             ),

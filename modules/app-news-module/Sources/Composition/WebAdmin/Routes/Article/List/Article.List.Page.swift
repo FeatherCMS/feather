@@ -58,7 +58,7 @@ extension NewsModule.Article.List {
                                                 name: "news-articles",
                                                 columns: [
                                                     .fraction(1), .fraction(1),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ]
                                             ),
                                             table: Table {

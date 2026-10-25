@@ -85,7 +85,7 @@ extension Submission.Search.Table {
                                                 columns: [
                                                     .fraction(1), .fraction(1),
                                                     .fraction(1), .fixed(150),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

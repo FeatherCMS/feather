@@ -85,7 +85,7 @@ extension Issue.Search.Table {
                                         columns: [
                                             .fraction(2), .fraction(1),
                                             .fraction(1), .fraction(1),
-                                            .fixed(240),
+                                            .actions,
                                         ]
                                     ),
                                     hasSelection: false,

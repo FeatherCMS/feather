@@ -119,7 +119,7 @@ extension Author.List {
                                                 columns: [
                                                     .fixed(84), .fraction(2),
                                                     .fraction(1), .fraction(1),
-                                                    .fraction(1), .fixed(220),
+                                                    .fraction(1), .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

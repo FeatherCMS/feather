@@ -68,7 +68,7 @@ extension Credential.List {
                                         columns: [
                                             .fraction(2),
                                             .fraction(2),
-                                            .fixed(220),
+                                            .actions,
                                         ]
                                     ),
                                     table: Table {

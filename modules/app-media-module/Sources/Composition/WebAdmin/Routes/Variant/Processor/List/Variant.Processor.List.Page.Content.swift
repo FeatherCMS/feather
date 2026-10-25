@@ -97,7 +97,7 @@ extension Variant.Processor.List.Page {
                                                 columns: [
                                                     .fraction(2), .fraction(2),
                                                     .fraction(3), .fraction(1),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

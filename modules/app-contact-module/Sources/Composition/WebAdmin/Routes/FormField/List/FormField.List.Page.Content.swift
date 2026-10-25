@@ -119,7 +119,7 @@ extension ContactModule.FormField.List.Page {
                                                 columns: [
                                                     .fraction(1), .fraction(1),
                                                     .fraction(1), .fixed(110),
-                                                    .fixed(220),
+                                                    .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

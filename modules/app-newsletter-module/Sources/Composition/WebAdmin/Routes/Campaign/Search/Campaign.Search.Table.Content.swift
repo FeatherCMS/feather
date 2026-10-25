@@ -106,7 +106,7 @@ extension Campaign.Search.Table {
                                                 columns: [
                                                     .fraction(1),
                                                     .fraction(2),
-                                                    .fixed(240),
+                                                    .actions,
                                                 ]
                                             ),
                                             hasSelection: canDelete,

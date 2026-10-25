@@ -797,7 +797,7 @@ extension Asset.File.List.Page {
                                 .fraction(2),
                                 .fixed(100),
                                 .fixed(120),
-                                .fixed(260),
+                                .actions,
                             ]
                         ),
                         hasSelection: canRemove,
