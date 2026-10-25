@@ -59,7 +59,7 @@ extension AppAPIGateway {
                 template: route.template
             )
         }
-        catch is WebRoute.Resolve.Error {
+        catch is WebApplication.WebRoute.Resolve.Error {
             return nil
         }
     }

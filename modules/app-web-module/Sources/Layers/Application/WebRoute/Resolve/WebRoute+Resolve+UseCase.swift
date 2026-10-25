@@ -20,25 +20,18 @@ extension WebRoute.Resolve {
 
         public func execute(input: Input) async throws -> Output {
             let now = Date()
-            return try await query.run { scope in
-                guard
-                    let metadata = try await scope.metadata.resolve(
-                        slug: input.slug
-                    ),
-                    metadata.isDirectlyAccessible(at: now)
-                else {
-                    throw Error(message: "Route not found")
-                }
-                let referenceType = metadata.referenceType
-                let referenceID = metadata.referenceID
-
-                return .init(
-                    referenceType: referenceType,
-                    referenceID: referenceID,
-                    slug: metadata.slug,
-                    template: metadata.template
-                )
+            let metadata = try await query.run { scope in
+                try await scope.metadata.resolve(slug: input.slug)
             }
+            guard let metadata, metadata.isDirectlyAccessible(at: now) else {
+                throw Error(message: "Route not found")
+            }
+            return .init(
+                referenceType: metadata.referenceType,
+                referenceID: metadata.referenceID,
+                slug: metadata.slug,
+                template: metadata.template
+            )
         }
     }
 }
