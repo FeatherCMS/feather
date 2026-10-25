@@ -27,7 +27,10 @@ extension Email.Remove {
                     ),
                     selectedItems: [state.item.label],
                     action: state.routes.removePath(state.item.id),
-                    nonceToken: state.nonceToken
+                    nonceToken: state.nonceToken,
+                    hiddenFields: [
+                        .init(name: "ids", value: state.item.id)
+                    ]
                 )
             )
         }

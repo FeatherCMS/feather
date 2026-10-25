@@ -27,6 +27,40 @@ extension Email.Remove.Controller {
                 any Email.Remove.Presenter.Interface
             >
 
+        func getAuthEmailsRemove(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let runtime = buildRuntime(request, context)
+            guard
+                context.isCurrentUserAllowed(
+                    to: Email.Permissions.delete
+                )
+            else {
+                return Response(status: .forbidden)
+            }
+            guard
+                let id = request.uri.queryParameters["id"].map(String.init)
+            else {
+                return Response(status: .badRequest)
+            }
+            do {
+                let item = try await runtime.interactor.get(id: id)
+                return try await runtime.presenter.renderPage(
+                    item: .init(id: item.id, label: item.email),
+                    identityId: item.identityId
+                )
+                .response(from: request, context: context)
+            }
+            catch let error as OpenAPIRepositoryError {
+                return try await runtime.presenter.renderError(
+                    item: .init(id: id, label: ""),
+                    error: error
+                )
+                .response(from: request, context: context)
+            }
+        }
+
         func postAuthEmailsRemove(
             request: Request,
             context: AuthenticatedRequestContext

@@ -23,6 +23,11 @@ extension Email.Remove {
 extension Email.Remove.Controller {
     protocol Interface: Sendable {
 
+        func getAuthEmailsRemove(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
+
         func postAuthEmailsRemove(
             request: Request,
             context: AuthenticatedRequestContext

@@ -107,7 +107,7 @@ public struct WebRoute: Hashable, Sendable {
         }
         precondition(
             didResolveParameter,
-            "The route does not contain the named parameter."
+            "Route '\(pattern)' does not contain the named parameter '\(name)'."
         )
         return Self.withTrailingSlash("/" + resolved.joined(separator: "/"))
     }

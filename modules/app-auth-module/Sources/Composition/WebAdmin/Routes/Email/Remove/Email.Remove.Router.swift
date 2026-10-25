@@ -51,6 +51,10 @@ extension Email.Remove {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+            router.get(
+                routes.remove.routerPath,
+                use: controller.getAuthEmailsRemove
+            )
             router.post(
                 routes.remove.routerPath,
                 use: controller.postAuthEmailsRemove

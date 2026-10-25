@@ -1,6 +1,7 @@
 import AuthModule
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import Hummingbird
 
 extension Email {
@@ -88,7 +89,10 @@ extension Email {
             }
 
             func removePath(_ id: String) -> String {
-                remove.path(parameter: "id", value: id)
+                var components = URLComponents()
+                components.path = remove.path
+                components.queryItems = [URLQueryItem(name: "id", value: id)]
+                return components.string ?? remove.path
             }
 
         }
