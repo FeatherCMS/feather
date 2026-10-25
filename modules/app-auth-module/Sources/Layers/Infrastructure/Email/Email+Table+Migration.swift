@@ -42,14 +42,6 @@ extension Email.Table {
                     onDelete: .cascade,
                     onUpdate: nil
                 )
-            ],
-            indexes: [
-                .init(
-                    name: "auth_email_identity_id_idx",
-                    columns: [
-                        .init(name: columns.identityId.name, type: .string)
-                    ]
-                )
             ]
         )
     }

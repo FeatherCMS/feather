@@ -29,7 +29,7 @@ extension MenuItem.Table {
                 ),
                 .init(
                     name: columns.priority.name,
-                    type: .integer,
+                    type: .int32,
                     constraints: [.notNull]
                 ),
                 .init(

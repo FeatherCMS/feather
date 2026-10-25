@@ -19,12 +19,12 @@ extension RolePermission.Table {
                 .init(
                     name: columns.createdAt.name,
                     type: .timestamp,
-                    constraints: [.notNull, .default(.currentTimestamp)]
+                    constraints: [.notNull]
                 ),
                 .init(
                     name: columns.updatedAt.name,
                     type: .timestamp,
-                    constraints: [.notNull, .default(.currentTimestamp)]
+                    constraints: [.notNull]
                 ),
             ],
             constraints: [

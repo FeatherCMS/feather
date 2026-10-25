@@ -23,7 +23,7 @@ extension Rule.Table {
                 ),
                 .init(
                     name: columns.statusCode.name,
-                    type: .integer,
+                    type: .int32,
                     constraints: [.notNull]
                 ),
                 .init(name: columns.notes.name, type: .string),

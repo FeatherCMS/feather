@@ -7,7 +7,7 @@ extension Asset.Folder.Table {
             name: name,
             columns: [
                 .init(name: columns.assetNodeId.name, type: .string),
-                .init(name: columns.assetCount.name, type: .integer, constraints: [.notNull, .default(.value(0))]),
+                .init(name: columns.assetCount.name, type: .int32, constraints: [.notNull, .default(.value(0))]),
                 .init(name: columns.totalSizeBytes.name, type: .integer, constraints: [.notNull, .default(.value(0))]),
             ],
             constraints: [

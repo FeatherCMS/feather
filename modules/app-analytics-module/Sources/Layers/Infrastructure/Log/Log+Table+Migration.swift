@@ -18,7 +18,7 @@ extension Log.Table {
                 .init(name: columns.origin.name, type: .string),
                 .init(name: columns.acceptLanguage.name, type: .string),
                 .init(name: columns.userAgent.name, type: .string),
-                .init(name: columns.trafficCategory.name, type: .string, constraints: [.notNull, .default(.value("human"))]),
+                .init(name: columns.trafficCategory.name, type: .string, constraints: [.default(.value("human"))]),
                 .init(name: columns.language.name, type: .string),
                 .init(name: columns.region.name, type: .string),
                 .init(name: columns.osName.name, type: .string),

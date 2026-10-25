@@ -6,6 +6,11 @@ extension RolePermission.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let roleId: String
         let permissionId: String
+
+        func afterEncode(values: inout DatabaseTableRowValues) throws {
+            values[RolePermission.Table.columns.createdAt] = .currentTimestamp
+            values[RolePermission.Table.columns.updatedAt] = .currentTimestamp
+        }
     }
     }
 

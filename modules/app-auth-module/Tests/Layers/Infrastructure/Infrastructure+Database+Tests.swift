@@ -204,7 +204,7 @@ struct InfrastructureDatabaseTests {
                 }
             }
         )
-        for schema in schemas {
+        for (index, schema) in schemas.enumerated() {
             for name in ["created_at", "updated_at"] {
                 let column = schema.columns.first { $0.name == name }
                 #expect(column?.type == .timestamp)
@@ -212,11 +212,13 @@ struct InfrastructureDatabaseTests {
                     guard case .notNull = $0 else { return false }
                     return true
                 } == true)
-                #expect(column?.constraints.contains {
-                    guard case .default(let value) = $0 else { return false }
-                    if case .currentTimestamp = value.storage { return true }
-                    return false
-                } == true)
+                if index != 3 {
+                    #expect(column?.constraints.contains {
+                        guard case .default(let value) = $0 else { return false }
+                        if case .currentTimestamp = value.storage { return true }
+                        return false
+                    } == true)
+                }
             }
         }
         for schema in [schemas[2], schemas[4]] {
@@ -231,8 +233,7 @@ struct InfrastructureDatabaseTests {
             }
         }
         #expect(
-            schemas[0].indexes.map(\.name)
-                == ["auth_email_identity_id_idx"]
+            schemas[0].indexes.map(\.name) == []
         )
         #expect(
             schemas[1].indexes.map(\.name)

@@ -28,7 +28,7 @@ extension Settings.Table {
                 ),
                 .init(
                     name: columns.pageSize.name,
-                    type: .int,
+                    type: .int32,
                     constraints: [.notNull, .default(.value(20))]
                 ),
                 .init(

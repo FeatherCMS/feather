@@ -16,7 +16,7 @@ extension FormFieldAssignment.Table {
         )
         let position = DatabaseTableColumnSchema(
             name: columns.position.name,
-            type: .integer,
+            type: .int32,
             constraints: [.notNull, .default(.value(0))]
         )
 
