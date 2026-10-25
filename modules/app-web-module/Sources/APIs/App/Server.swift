@@ -419,7 +419,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 let path: Operations.PageGet.Input.Path = .init(id: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "id",
-                    as: Components.Parameters.MetadataIdParameter.self
+                    as: Components.Parameters.PageIDParameter.self
                 ))
                 let headers: Operations.PageGet.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 return Operations.PageGet.Input(

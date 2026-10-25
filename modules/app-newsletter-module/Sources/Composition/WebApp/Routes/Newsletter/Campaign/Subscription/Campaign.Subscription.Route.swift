@@ -1,51 +1,46 @@
-import Foundation
-public import Hummingbird
-import NewsletterModule
+public import FeatherWebShared
+public import NewsletterModule
 
 extension Campaign.Subscription {
     public struct Route: Sendable {
         public static let standard = Route(
-            prefix: RouterPath("api/v1/newsletter/campaigns"),
+            prefix: WebRoute.root
+                .appending(pathComponent: "api")
+                .appending(pathComponent: "v1")
+                .appending(pathComponent: "newsletter")
+                .appending(pathComponent: "campaigns"),
             parameterName: "campaignKey",
-            suffix: RouterPath("subscribe")
+            suffix: "subscribe"
         )
 
-        private let prefix: RouterPath
+        private let prefix: WebRoute
         public let parameterName: String
-        private let suffix: RouterPath
+        private let suffix: String
 
         public init(
-            prefix: RouterPath,
+            prefix: WebRoute,
             parameterName: String,
-            suffix: RouterPath
+            suffix: String
         ) {
             self.prefix = prefix
             self.parameterName = parameterName
             self.suffix = suffix
         }
 
-        public var routerPath: RouterPath {
+        private var route: WebRoute {
             prefix
-                .appendingPath(RouterPath("{\(parameterName)}"))
-                .appendingPath(suffix)
+                .appending(parameter: parameterName)
+                .appending(pathComponent: suffix)
+        }
+
+        public var webRoute: WebRoute {
+            route
         }
 
         public func actionPath(
             for value: String
         ) -> String {
-            let allowedCharacters = CharacterSet(
-                charactersIn:
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"
-            )
-            let encodedValue =
-                value.addingPercentEncoding(
-                    withAllowedCharacters: allowedCharacters
-                ) ?? ""
-            return
-                prefix
-                .appendingPath(RouterPath(encodedValue))
-                .appendingPath(suffix)
-                .description
+            route.path(parameter: parameterName, value: value)
         }
     }
 }

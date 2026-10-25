@@ -1,26 +1,15 @@
 import FeatherOpenAPI
 
-public enum Role {
-
-
-
-
-
-
-
-
-
-
-}
+public enum Role {}
 
 extension Role {
     struct Tag: TagRepresentable {
         var name: String { "UserRoles" }
         var description: String? { "Manage user roles." }
     }
-    }
+}
 
-    extension Role.Parameters {
+extension Role.Parameters {
     struct ID: PathParameterRepresentable {
         var name: String { "userRoleId" }
         var description: String? { "UserRole id" }

@@ -20,7 +20,7 @@ extension Tag.List {
             let canAccess: Bool
             let canEdit: Bool
             let canAdd: Bool
-            let items: [Tag.List.Item]
+            let items: [Item]
             let pageState: AdminListPageState
             let search: String
             let permissions: AdminListActions
@@ -57,7 +57,7 @@ extension Tag.List {
                     if let error = state.error {
                         P(error).class("admin-form__error")
                     }
-                    context.build(Tag.List.TableContent(state: state))
+                    context.build(TableContent(state: state))
                 }
             }
             .class("cms-section")
@@ -92,7 +92,7 @@ extension Tag.List {
                                             id: statusFormID(item.id),
                                             action:
                                                 state.routes
-                                                .tagStatus(item.id),
+                                                .tagStatusPath(item.id),
                                             returnTo: state.routes.tags.path
                                         )
                                     )
@@ -101,7 +101,7 @@ extension Tag.List {
                             context.build(
                                 AdminListSelectionForm(
                                     state: .init(
-                                        action: state.routes.tagRemove(),
+                                        action: state.routes.tagRemovePath(),
                                         pageState: state.pageState,
                                         search: state.search,
                                         button: .init(
@@ -152,7 +152,7 @@ extension Tag.List {
                                                                     .href(
                                                                         state
                                                                             .routes
-                                                                            .tag(
+                                                                            .tagPath(
                                                                                 item
                                                                                     .id
                                                                             )
@@ -231,7 +231,7 @@ extension Tag.List {
                                                                             href:
                                                                                 state
                                                                                 .routes
-                                                                                .tag(
+                                                                                .tagPath(
                                                                                     item
                                                                                         .id
                                                                                 ),
@@ -249,7 +249,7 @@ extension Tag.List {
                                                                             href:
                                                                                 state
                                                                                 .routes
-                                                                                .tagEdit(
+                                                                                .tagEditPath(
                                                                                     item
                                                                                         .id
                                                                                 ),
@@ -270,7 +270,7 @@ extension Tag.List {
                                                                                     path:
                                                                                         state
                                                                                         .routes
-                                                                                        .tagRemove(),
+                                                                                        .tagRemovePath(),
                                                                                     ids: [
                                                                                         item
                                                                                             .id
@@ -326,7 +326,7 @@ extension Tag.List {
                                     context.build(
                                         AdminButton(
                                             "Add tag",
-                                            href: state.routes.tagAdd()
+                                            href: state.routes.tagAddPath()
                                         )
                                     )
                                 }

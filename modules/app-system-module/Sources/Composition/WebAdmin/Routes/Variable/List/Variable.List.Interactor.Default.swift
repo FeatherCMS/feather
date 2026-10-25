@@ -5,9 +5,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Variable.List.Interactor {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let repository: any Variable.List.Repository.Interface
 
         func listSystemVariables(

@@ -12,7 +12,7 @@ extension Post.Add {
         public let imageAssetId: String?
         public let authorIds: [String]
         public let tagIds: [String]
-        public let metadata: Metadata.Input
+        public let metadata: Metadata.Model.Base
 
         public init(
             title: String,
@@ -21,7 +21,7 @@ extension Post.Add {
             imageAssetId: String?,
             authorIds: [String],
             tagIds: [String],
-            metadata: Metadata.Input
+            metadata: Metadata.Model.Base
         ) {
             self.title = title
             self.excerpt = excerpt

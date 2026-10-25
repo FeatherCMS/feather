@@ -1,7 +1,5 @@
-import FeatherModuleKit
 import FeatherWebAdmin
 import Foundation
-import NewsAdminAPI
 import WebModule
 import WebModuleWebAdmin
 
@@ -51,23 +49,36 @@ extension News.Metadata.Form {
             self.structuredDataCodeInjection = structuredDataCodeInjection
         }
 
-        init(metadata: Components.Schemas.NewsMetadataDetailSchema) {
+        init(
+            metadataSlug: String,
+            status: String,
+            publicationTimestamp: Double,
+            expirationTimestamp: Double?,
+            title: String?,
+            excerpt: String?,
+            imageURL: String?,
+            canonicalURL: String?,
+            noIndex: Bool,
+            primaryKeyword: String?,
+            cssCodeInjection: String?,
+            javascriptCodeInjection: String?,
+            structuredDataCodeInjection: String?
+        ) {
             self.init(
-                slug: metadata.slug,
-                status: metadata.status,
-                publicationDate: Self.formatDate(metadata.publicationDate),
-                expirationDate: metadata.expirationDate.map(Self.formatDate)
+                slug: metadataSlug,
+                status: status,
+                publicationDate: Self.formatDate(publicationTimestamp),
+                expirationDate: expirationTimestamp.map(Self.formatDate)
                     ?? "",
-                metaTitle: metadata.title ?? "",
-                metaExcerpt: metadata.excerpt ?? "",
-                imageURL: metadata.imageURL ?? "",
-                canonicalURL: metadata.canonicalURL ?? "",
-                noIndex: metadata.noIndex,
-                primaryKeyword: metadata.primaryKeyword ?? "",
-                cssCodeInjection: metadata.cssCodeInjection ?? "",
-                javascriptCodeInjection: metadata.javascriptCodeInjection ?? "",
-                structuredDataCodeInjection:
-                    metadata.structuredDataCodeInjection ?? ""
+                metaTitle: title ?? "",
+                metaExcerpt: excerpt ?? "",
+                imageURL: imageURL ?? "",
+                canonicalURL: canonicalURL ?? "",
+                noIndex: noIndex,
+                primaryKeyword: primaryKeyword ?? "",
+                cssCodeInjection: cssCodeInjection ?? "",
+                javascriptCodeInjection: javascriptCodeInjection ?? "",
+                structuredDataCodeInjection: structuredDataCodeInjection ?? ""
             )
         }
 
@@ -100,30 +111,6 @@ extension News.Metadata.Form {
             state.imageUrl.key = "imageURL"
             state.canonicalUrl.key = "canonicalURL"
             return state
-        }
-
-        var schema: Components.Schemas.NewsMetadataInputSchema {
-            .init(
-                slug: slug.trimmingCharacters(in: .whitespacesAndNewlines),
-                status: status,
-                publicationDate: WebModule.Metadata.SchemaBuilder
-                    .parseTimestamp(
-                        publicationDate
-                    ),
-                expirationDate: WebModule.Metadata.SchemaBuilder.parseTimestamp(
-                    expirationDate
-                ),
-                title: metaTitle.emptyToNil,
-                excerpt: metaExcerpt.emptyToNil,
-                imageURL: imageURL.emptyToNil,
-                canonicalURL: canonicalURL.emptyToNil,
-                noIndex: noIndex ?? false,
-                primaryKeyword: primaryKeyword.emptyToNil,
-                cssCodeInjection: cssCodeInjection.emptyToNil,
-                javascriptCodeInjection: javascriptCodeInjection.emptyToNil,
-                structuredDataCodeInjection:
-                    structuredDataCodeInjection.emptyToNil
-            )
         }
 
         private static func formatDate(

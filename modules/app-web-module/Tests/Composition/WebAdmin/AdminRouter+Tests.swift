@@ -23,7 +23,10 @@ struct AdminRouterTests {
             .appending(pathComponent: "website")
         let routes = Page.Router.Routes(
             root: root.appending(pathComponent: "pages"),
-            breadcrumb: []
+            breadcrumb: [],
+            mediaAssetList: root
+                .appending(pathComponent: "media")
+                .appending(pathComponent: "assets")
         )
 
         #expect(routes.list.path == "/control/website/pages/")

@@ -19,7 +19,7 @@ import WebComponents
 extension MagicLink.Remove {
     struct Router {
         let routes: MagicLink.Router.Routes
-        let controller: any MagicLink.Remove.Controller.Interface
+        let controller: any Controller.Interface
 
         init(
             environment: AppEnvironment,
@@ -27,19 +27,20 @@ extension MagicLink.Remove {
             routes: MagicLink.Router.Routes
         ) {
             self.routes = routes
-            self.controller = MagicLink.Remove.Controller.Default(
+            self.controller = Controller.Default(
+                routes: routes,
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: MagicLink.Remove.Interactor.Default(
+                        interactor: Interactor.Default(
                             repository:
-                                MagicLink.Remove.Repository.OpenAPI(
+                                Repository.OpenAPI(
                                     api: API.Client(
                                         environment: environment,
                                         requestContext: context
                                     )
                                 )
                         ),
-                        presenter: MagicLink.Remove.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,
@@ -51,7 +52,10 @@ extension MagicLink.Remove {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            controller.route(on: router, routes: routes)
+            router.post(
+                routes.remove.routerPath,
+                use: controller.postAuthMagicLinksRemove
+            )
         }
     }
 }

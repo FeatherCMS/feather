@@ -15,12 +15,12 @@ extension Campaign {
 
         let id: String
         let active: Tab
-        let routes: Campaign.Router.Routes
+        let routes: Router.Routes
 
         init(
             id: String,
             active: Tab,
-            routes: Campaign.Router.Routes = .standard
+            routes: Router.Routes = .standard
         ) {
             self.id = id
             self.active = active

@@ -64,7 +64,7 @@ extension Category.Edit.Controller {
                     .response(from: request, context: context)
             }
             do {
-                try await runtime.interactor.update(id: id, input: input.schema)
+                try await runtime.interactor.update(id: id, input: input)
                 return runtime.presenter.renderUpdated(id: id)
             }
             catch {

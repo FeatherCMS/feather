@@ -255,16 +255,15 @@ struct AuthApplicationUseCasesTests {
     }
 
     @Test
-    func listMagicLinksForbidden() async throws {
+    func searchMagicLinksForbidden() async throws {
         let queries = MockMagicLinkQueries(
-            listResult: .init(items: []),
-            countResult: 0
+            searchResult: .init(items: [], total: 0)
         )
         let queryExecutor = MockQueryExecutor(
-            context: MagicLink.List.Scope(magicLink: queries)
+            context: MagicLink.Search.Scope(magicLink: queries)
         )
         let authorizer = MockAuthorizer(result: false)
-        let useCase = MagicLink.List.UseCase(
+        let useCase = MagicLink.Search.UseCase(
             authorizer: authorizer,
             query: queryExecutor
         )
@@ -279,39 +278,37 @@ struct AuthApplicationUseCasesTests {
     }
 
     @Test
-    func listMagicLinksCountSuccess() async throws {
+    func searchMagicLinksReturnsTotal() async throws {
         let queries = MockMagicLinkQueries(
-            listResult: .init(items: []),
-            countResult: 4
+            searchResult: .init(items: [], total: 4)
         )
         let queryExecutor = MockQueryExecutor(
-            context: MagicLink.List.Scope(magicLink: queries)
+            context: MagicLink.Search.Scope(magicLink: queries)
         )
         let authorizer = MockAuthorizer(result: true)
-        let useCase = MagicLink.List.UseCase(
+        let useCase = MagicLink.Search.UseCase(
             authorizer: authorizer,
             query: queryExecutor
         )
 
-        let count = try await useCase.count(
+        let result = try await useCase.execute(
             subject: Subject(id: "subject-3"),
             input: .init(query: .init())
         )
 
-        #expect(count == 4)
-        #expect(await queries.countCallCount == 1)
+        #expect(result.total == 4)
+        #expect(await queries.searchCallCount == 1)
     }
 
     @Test
-    func listMagicLinksPreservesUserFilter() async throws {
+    func searchMagicLinksPreservesUserFilter() async throws {
         let queries = MockMagicLinkQueries(
-            listResult: .init(items: []),
-            countResult: 0
+            searchResult: .init(items: [], total: 0)
         )
         let queryExecutor = MockQueryExecutor(
-            context: MagicLink.List.Scope(magicLink: queries)
+            context: MagicLink.Search.Scope(magicLink: queries)
         )
-        let useCase = MagicLink.List.UseCase(
+        let useCase = MagicLink.Search.UseCase(
             authorizer: MockAuthorizer(result: true),
             query: queryExecutor
         )
@@ -321,7 +318,7 @@ struct AuthApplicationUseCasesTests {
             input: .init(query: .init(userId: "user-4"))
         )
 
-        #expect(await queries.lastListQuery?.userId == "user-4")
+        #expect(await queries.lastSearchQuery?.userId == "user-4")
     }
 
     @Test
@@ -460,24 +457,24 @@ struct AuthApplicationUseCasesTests {
         await #expect(throws: AuthError.self) {
             _ = try await useCase.execute(
                 subject: Subject(id: "subject-9"),
-                input: .init(query: .init())
+                input: .init(identityId: "identity-1")
             )
         }
         #expect(await sessionQueries.listCallCount == 0)
     }
 
     @Test
-    func listIdentitySessionsScopesQueryToIdentity() async throws {
+    func listSessionsScopesQueryToIdentity() async throws {
         let sessionQueries = MockSessionQueries(
             listResult: .init(
                 items: [makeSessionListItem(identityId: "identity-1")]
             )
         )
         let queryExecutor = MockQueryExecutor(
-            context: Session.ListByIdentity.Scope(session: sessionQueries)
+            context: Session.List.Scope(session: sessionQueries)
         )
         let authorizer = MockAuthorizer(result: true)
-        let useCase = Session.ListByIdentity.UseCase(
+        let useCase = Session.List.UseCase(
             authorizer: authorizer,
             query: queryExecutor
         )
@@ -488,7 +485,7 @@ struct AuthApplicationUseCasesTests {
         )
 
         #expect(result.items.count == 1)
-        #expect(await sessionQueries.lastQuery?.identityId == "identity-1")
+        #expect(await sessionQueries.lastIdentityId == "identity-1")
     }
 
     @Test

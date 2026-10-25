@@ -5,9 +5,9 @@ extension Profile.Get {
         public var openAPIIdentifier: String { "AccountProfileResponseSchema" }
         public var propertyMap: SchemaMap {
             [
-                "firstName": Profile.Fields.Name(required: false),
-                "lastName": Profile.Fields.Name(required: false),
-                "profileImageAssetId": Profile.Fields.ImageAssetID(
+                "firstName": Profile.Schemas.Name(required: false),
+                "lastName": Profile.Schemas.Name(required: false),
+                "profileImageAssetId": Profile.Schemas.ImageAssetID(
                     required: false
                 ),
             ]

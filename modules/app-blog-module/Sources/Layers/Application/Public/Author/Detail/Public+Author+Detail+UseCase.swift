@@ -30,12 +30,12 @@ extension Public.Author.Detail {
                     ),
                     metadata.isDirectlyAccessible(at: now)
                 else {
-                    throw Public.Author.Detail.Error(message: "Author not found")
+                    throw Error(message: "Author not found")
                 }
 
                 let authorID = id
                 let author = try await scope.author.find(id: authorID)
-                let links = try await scope.authorLink.list(authorId: authorID)
+                let links = try await scope.author.links(authorID: authorID)
                 let posts = try await Self.publicPosts(
                     matchingAuthorID: authorID,
                     now: now,
@@ -50,7 +50,7 @@ extension Public.Author.Detail {
                     imageURL: "",
                     media: nil,
                     metadata: metadata,
-                    links: links.items.map {
+                    links: links.map {
                         .init(label: $0.label, url: $0.url, isBlank: $0.isBlank)
                     },
                     posts: posts
@@ -60,23 +60,19 @@ extension Public.Author.Detail {
     }
 }
 
-extension UseCase {
+extension Public.Author.Detail.UseCase {
     fileprivate static func publicPosts(
         matchingAuthorID authorID: String,
         now: Date,
-        context: Scope
+        context: Public.Author.Detail.Scope
     ) async throws -> [Public.Post.Summary.Item] {
-        let posts = try await context.postList.list()
+        let posts = try await context.author.posts(authorID: authorID)
         var result: [Public.Post.Summary.Item] = []
-        for item in posts.items {
-            let post = try await context.postDetail.find(id: item.id)
-            guard post.authorIds.contains(authorID) else {
-                continue
-            }
+        for post in posts {
             guard
                 let metadata = try await context.metadata.find(
                     referenceType: "blog.post",
-                    referenceID: item.id
+                    referenceID: post.id
                 ),
                 metadata.isPublic(at: now)
             else {
@@ -84,9 +80,9 @@ extension UseCase {
             }
             result.append(
                 .init(
-                    id: item.id,
-                    title: item.title,
-                    excerpt: item.excerpt,
+                    id: post.id,
+                    title: post.title,
+                    excerpt: post.excerpt,
                     imageAssetId: post.imageAssetId,
                     imageURL: "",
                     media: nil,

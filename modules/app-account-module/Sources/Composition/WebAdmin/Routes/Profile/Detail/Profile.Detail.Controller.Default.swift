@@ -6,9 +6,7 @@ import Hummingbird
 
 extension Profile.Detail.Controller {
 
-    struct Default:
-        Profile.Detail.Controller.Interface
-    {
+    struct Default: Interface {
         let routes: Profile.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<

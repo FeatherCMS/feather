@@ -10,13 +10,12 @@ extension AdminAPIGateway {
         _ input: Operations.UserIdentityList.Input
     ) async throws -> Operations.UserIdentityList.Output {
         let subject = try await CurrentSubject.require()
-        let limit = min(max(input.query.limit ?? 20, 1), 100)
         let result = try await useCases.makeListIdentities()
             .execute(
                 subject: subject,
                 input: .init(
                     query: .init(
-                        page: .init(size: limit),
+                        limit: input.query.limit,
                         search: input.query.search,
                         role: input.query.role
                     )

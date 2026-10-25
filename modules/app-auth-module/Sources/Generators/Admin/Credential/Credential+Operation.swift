@@ -11,7 +11,7 @@ extension Credential.Operation {
 }
 
 extension Credential {
-    public protocol IdentifiableOperation: Credential.Operation {}
+    public protocol IdentifiableOperation: Operation {}
 }
 
 extension Credential.IdentifiableOperation {

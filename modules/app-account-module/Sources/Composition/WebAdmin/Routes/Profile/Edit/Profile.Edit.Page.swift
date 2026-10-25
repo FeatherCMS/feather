@@ -13,7 +13,7 @@ extension Profile.Edit {
         struct State {
             let id: String
             let isEdited: Bool
-            var form: Profile.Edit.Form.Component.State
+            var form: Form.Component.State
             let breadcrumb: [AdminBreadcrumb.Link]
         }
 
@@ -37,7 +37,7 @@ extension Profile.Edit {
                 }
 
                 context.build(
-                    Profile.Edit.Form.Component(
+                    Form.Component(
                         routes: routes,
                         state: state.form,
                         action: routes.profileEdit.path + "/",

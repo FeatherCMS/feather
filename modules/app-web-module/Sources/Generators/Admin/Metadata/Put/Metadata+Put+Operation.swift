@@ -6,11 +6,11 @@ extension Metadata.Put {
     struct Operation: Metadata.IdentifiableOperation, BearerProtectedOperation {
         var operationId: String? { "metadataUpdate" }
         var requestBody: (any RequestBodyRepresentable)? {
-            MetadataUpdateRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: MetadataDetailResponse().reference(),
+                200: Metadata.Get.Response().reference(),
                 404: CustomResponse(description: "Metadata not found"),
             ]
         }

@@ -15,13 +15,13 @@ extension Post.List {
     struct ItemSchema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "id": BlogPostIdField().reference(),
-                "title": BlogPostTitleField().reference(),
-                "excerpt": BlogPostExcerptField().reference(),
-                "imageAssetId": BlogPostImageAssetIdField()
+                "id": Post.Schemas.ID().reference(),
+                "title": Post.Schemas.Title().reference(),
+                "excerpt": Post.Schemas.Excerpt().reference(),
+                "imageAssetId": Post.Schemas.ImageAssetID()
                     .reference(required: false),
-                "createdAt": BlogPostCreatedAtField().reference(),
-                "updatedAt": BlogPostUpdatedAtField().reference(),
+                "createdAt": Post.Schemas.CreatedAt().reference(),
+                "updatedAt": Post.Schemas.UpdatedAt().reference(),
             ]
         }
     }

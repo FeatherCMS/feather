@@ -1,10 +1,11 @@
 import FeatherValidation
-import FeatherWebAdmin
+import FeatherModuleKit
+public import FeatherWebAdmin
 import FeatherWebShared
 import HTML
 import Hummingbird
 import MediaAdminAPI
-import MediaModule
+public import MediaModule
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -21,7 +22,7 @@ extension Asset.File.View.Repository {
         public func getAsset(
             id: String
         ) async throws
-            -> MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema
+            -> AdminMediaAsset
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
@@ -31,7 +32,20 @@ extension Asset.File.View.Repository {
                     )
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json
+                    let asset = try ok.body.json
+                    let title = asset.title?.whitespaceTrimmed
+                    return AdminMediaAsset(
+                        id: asset.id,
+                        name: asset.name,
+                        slugPath: asset.slugPath,
+                        url: asset.url,
+                        extension: asset._extension,
+                        contentType: asset.contentType,
+                        sizeBytes: asset.sizeBytes,
+                        title: title?.isEmpty == false ? title : asset.name,
+                        altText: asset.altText,
+                        status: asset.status
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:
@@ -85,9 +99,18 @@ extension Asset.File.View.Repository {
                         extension: $0._extension
                     )
                 } ?? []
-            return .init(
-                schema: asset,
-                variants: variants
+            return AdminMediaAsset(
+                id: asset.id,
+                name: asset.name,
+                slugPath: asset.slugPath,
+                url: asset.url,
+                extension: asset.`extension`,
+                contentType: asset.contentType,
+                sizeBytes: asset.sizeBytes,
+                variants: variants,
+                title: asset.title,
+                altText: asset.altText,
+                status: asset.status
             )
         }
 
@@ -102,9 +125,9 @@ extension Asset.File.View.Repository {
             )
         }
 
-        func getVariants(
+        public func getVariants(
             id: String
-        ) async throws -> [Components.Schemas.MediaAssetVariantListItemSchema] {
+        ) async throws -> [Asset.File.View.Variant] {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
@@ -113,7 +136,13 @@ extension Asset.File.View.Repository {
                     )
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json.items
+                    return try ok.body.json.items.map {
+                        Asset.File.View.Variant(
+                            name: $0.name,
+                            fileExtension: $0._extension,
+                            url: $0.url
+                        )
+                    }
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:

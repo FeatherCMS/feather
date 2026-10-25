@@ -10,7 +10,7 @@ extension AppAPIGateway {
         _ input: Operations.BlogTagGet.Input
     ) async throws -> Operations.BlogTagGet.Output {
         do {
-            let detail = try await self.useCases.makeGetPublicTag()
+            let detail = try await self.useCases.makeDetailPublicTag()
                 .execute(input: .init(id: input.path.id))
             let media = await publicMedia(assetId: detail.imageAssetId)
             var posts: [Components.Schemas.BlogPostSummarySchema] = []

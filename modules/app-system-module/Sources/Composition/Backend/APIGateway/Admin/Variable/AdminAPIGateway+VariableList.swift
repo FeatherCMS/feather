@@ -15,7 +15,7 @@ extension AdminAPIGateway {
                 subject: subject,
                 input: .init(
                     query: .init(
-                        page: .init(size: input.query.limit ?? 20),
+                        limit: input.query.limit,
                         search: input.query.search,
                         ids: input.query.ids
                     )

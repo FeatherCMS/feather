@@ -1,6 +1,7 @@
-import Foundation
+public import FeatherApplication
+public import Foundation
 public import FeatherMail
-import NewsletterModule
+public import NewsletterModule
 
 extension Issue {
     public enum JobController {}

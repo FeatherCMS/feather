@@ -8,42 +8,57 @@ extension Session.List.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func list(identityID: String) async throws -> Session.List.Model {
+        func search(identityID: String) async throws -> Session.List.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.userIdentitySessionList(
-                    path: .init(userIdentityId: identityID),
-                    headers: .init(accept: [.init(contentType: .json)])
-                )
-                switch response {
-                case .ok(let value):
-                    let body = try value.body.json
-                    return .init(
-                        identityID: identityID,
-                        items: body.items.map {
+                var items: [Session.List.Model.Item] = []
+                var total = Int.max
+                var pageNumber = 1
+                var hasMore = true
+
+                while hasMore && items.count < total {
+                    let response = try await client.userIdentitySessionQuery(
+                        path: .init(userIdentityId: identityID),
+                        headers: .init(accept: [.init(contentType: .json)]),
+                        body: .json(
                             .init(
-                                id: $0.id,
-                                authenticationType: $0.authenticationType,
-                                authenticationReference: $0
-                                    .authenticationReference,
-                                expiresAt: $0.expiresAt,
-                                isPersistent: $0.isPersistent,
-                                createdAt: $0.createdAt,
-                                updatedAt: $0.updatedAt
+                                page: .init(size: 100, number: pageNumber),
+                                filters: .init()
                             )
-                        }
+                        )
                     )
-                case .notFound:
-                    throw OpenAPIRepositoryError.notFound
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
+                    switch response {
+                    case .ok(let value):
+                        let data = try value.body.json.data
+                        total = data.total
+                        hasMore = !data.items.isEmpty
+                        items.append(
+                            contentsOf: data.items.map {
+                                .init(
+                                    id: $0.id,
+                                    authenticationType: $0.authenticationType,
+                                    authenticationReference: $0
+                                        .authenticationReference,
+                                    expiresAt: $0.expiresAt,
+                                    isPersistent: $0.isPersistent,
+                                    createdAt: $0.createdAt,
+                                    updatedAt: $0.updatedAt
+                                )
+                            }
+                        )
+                    case .unauthorized:
+                        throw OpenAPIRepositoryError.unauthorized
+                    case .forbidden:
+                        throw OpenAPIRepositoryError.forbidden
+                    case .undocumented(let statusCode, let response):
+                        throw try await api.failure(
+                            statusCode: statusCode,
+                            responseBody: response.body
+                        )
+                    }
+                    pageNumber += 1
                 }
+
+                return .init(identityID: identityID, items: items)
             }
         }
     }

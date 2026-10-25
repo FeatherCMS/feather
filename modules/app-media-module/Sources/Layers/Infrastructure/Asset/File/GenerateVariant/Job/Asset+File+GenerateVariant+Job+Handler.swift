@@ -3,7 +3,7 @@ import FeatherDBAL
 public import FeatherInfrastructure
 import FeatherStorage
 public import Jobs
-import MediaApplication
+public import MediaApplication
 import MediaDomain
 public import MediaModule
 

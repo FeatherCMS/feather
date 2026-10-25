@@ -10,15 +10,15 @@ extension Tag.Get {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "id": BlogTagIdField(),
-                "title": BlogTagTitleField(),
-                "excerpt": BlogTagExcerptField(),
-                "content": BlogTagContentField(),
-                "imageAssetId": BlogTagImageAssetIdField()
+                "id": Tag.Schemas.ID(),
+                "title": Tag.Schemas.Title(),
+                "excerpt": Tag.Schemas.Excerpt(),
+                "content": Tag.Schemas.Content(),
+                "imageAssetId": Tag.Schemas.ImageAssetID()
                     .reference(required: false),
                 "metadata": WebMetadataDetailSchema().reference(),
-                "createdAt": BlogTagCreatedAtField(),
-                "updatedAt": BlogTagUpdatedAtField(),
+                "createdAt": Tag.Schemas.CreatedAt(),
+                "updatedAt": Tag.Schemas.UpdatedAt(),
             ]
         }
     }

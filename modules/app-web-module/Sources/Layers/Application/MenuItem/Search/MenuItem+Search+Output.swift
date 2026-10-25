@@ -1,4 +1,5 @@
 public import FeatherApplication
+public import WebDomain
 public import WebModule
 
 public import struct Foundation.Date
@@ -13,7 +14,7 @@ extension MenuItem.Search {
             public let priority: Int
             public let isBlank: Bool
             public let permission: String
-            public let authentication: MenuItem.Authentication
+            public let authentication: MenuItem.Model.Authentication
             public let createdAt: Date
             public let updatedAt: Date
 
@@ -25,7 +26,7 @@ extension MenuItem.Search {
                 priority: Int,
                 isBlank: Bool,
                 permission: String,
-                authentication: MenuItem.Authentication,
+                authentication: MenuItem.Model.Authentication,
                 createdAt: Date,
                 updatedAt: Date
             ) {

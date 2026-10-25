@@ -1,9 +1,10 @@
 import AsyncHTTPClient
 public import FeatherWebShared
-import Foundation
+public import Foundation
+public import HTTPTypes
 import NIOCore
-import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIAsyncHTTPClient
+public import OpenAPIRuntime
 
 public enum AccountAPIClientSupport {
     public struct Configuration {

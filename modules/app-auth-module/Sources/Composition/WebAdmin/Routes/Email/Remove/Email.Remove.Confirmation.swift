@@ -13,6 +13,7 @@ extension Email.Remove {
             let identityId: String
             let breadcrumb: [AdminBreadcrumb.Link]
             let nonceToken: String?
+            let routes: Email.Router.Routes
         }
 
         let state: State
@@ -25,7 +26,7 @@ extension Email.Remove {
                         description: "This action cannot be undone."
                     ),
                     selectedItems: [state.item.label],
-                    action: "/admin/auth/emails/\(state.item.id)/remove/",
+                    action: state.routes.removePath(state.item.id),
                     nonceToken: state.nonceToken
                 )
             )

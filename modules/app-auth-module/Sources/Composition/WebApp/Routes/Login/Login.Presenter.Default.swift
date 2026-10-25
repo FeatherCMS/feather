@@ -4,19 +4,20 @@ import Foundation
 extension Login.Presenter {
     struct Default: Interface {
         let templateRenderer: any TemplateRenderer
+        let routes: Login.Router.Routes
 
         func renderPage(
             form: Login.Form.State,
             message: String?
         ) throws -> WebAppHTMLResponse {
             var components = URLComponents()
-            components.path = "/login/"
+            components.path = routes.login.path
             if form.redirectPath != "/" {
                 components.queryItems = [
                     URLQueryItem(name: "redirect", value: form.redirectPath)
                 ]
             }
-            let action = components.string ?? "/login/"
+            let action = components.string ?? routes.login.path
             return WebAppHTMLResponse(
                 content: try templateRenderer.render(
                     template: "pages/login",

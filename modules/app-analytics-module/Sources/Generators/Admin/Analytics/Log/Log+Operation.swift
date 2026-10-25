@@ -12,6 +12,6 @@ extension Analytics.Log.Operation {
 
 extension Analytics.Log.IdentifiableOperation {
     var parameters: [any ParameterRepresentable] {
-        [AnalyticsLogIdParameter().reference()]
+        [Analytics.Log.Parameters.ID().reference()]
     }
 }

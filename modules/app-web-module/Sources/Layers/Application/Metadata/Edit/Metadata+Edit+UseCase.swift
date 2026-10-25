@@ -37,7 +37,7 @@ extension Metadata.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.metadata.find(id: input.id)
                 else {
-                    throw Metadata.Edit.Error(message: "Metadata not found")
+                    throw Error(message: "Metadata not found")
                 }
 
                 try model.update(

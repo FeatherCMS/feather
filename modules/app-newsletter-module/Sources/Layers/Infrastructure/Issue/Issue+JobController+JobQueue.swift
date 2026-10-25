@@ -3,7 +3,7 @@ public import FeatherInfrastructure
 public import FeatherMail
 public import Jobs
 public import NewsletterApplication
-import NewsletterModule
+public import NewsletterModule
 
 public import struct Foundation.Date
 

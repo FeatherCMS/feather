@@ -1,21 +1,42 @@
 public import BlogModule
 public import FeatherWebAdmin
 public import FeatherWebShared
+import Foundation
 import Hummingbird
 
 extension Tag {
     public enum Router {
         public struct Routes: Sendable {
             let tags: WebRoute
+            let mediaAssetList: WebRoute
             let tagsBreadcrumb: [AdminBreadcrumb.Link]
 
-            public init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
+            public init(
+                root: WebRoute,
+                breadcrumb: [AdminBreadcrumb.Link],
+                mediaAssetList: WebRoute
+            ) {
                 let tags = root.appending(pathComponent: "tags")
                 self.tags = tags
+                self.mediaAssetList = mediaAssetList
                 self.tagsBreadcrumb =
                     breadcrumb + [
                         .init(label: "Tags", link: tags.path)
                     ]
+            }
+
+            func imagePickerPath(_ field: String) -> String {
+                var components = URLComponents()
+                components.path = mediaAssetList.path
+                components.queryItems = [
+                    URLQueryItem(name: "picker", value: "1"),
+                    URLQueryItem(name: "field", value: field),
+                    URLQueryItem(
+                        name: "extensions",
+                        value: AllowedExtensions.images.queryValue
+                    ),
+                ]
+                return components.string ?? components.path
             }
 
             var tagAddRoute: WebRoute {
@@ -36,32 +57,32 @@ extension Tag {
                     .appending(pathComponent: "status")
             }
 
-            func tag(_ id: String) -> String {
+            func tagPath(_ id: String) -> String {
                 tags.appending(parameter: "id")
                     .path(parameter: "id", value: id)
             }
 
-            func tagAdd() -> String {
+            func tagAddPath() -> String {
                 tagAddRoute.path
             }
 
-            func tagRemove() -> String {
+            func tagRemovePath() -> String {
                 tagRemoveRoute.path
             }
 
-            func tagRemove(_ id: String) -> String {
+            func tagRemovePath(_ id: String) -> String {
                 tagRemoveByIDRoute
                     .path(parameter: "id", value: id)
             }
 
-            func tagEdit(_ id: String) -> String {
+            func tagEditPath(_ id: String) -> String {
                 tags.appending(parameter: "id")
                     .appending(pathComponent: "edit")
                     .path(parameter: "id", value: id)
             }
 
-            func tagEditMetadata(_ id: String, _ metadataID: String) -> String {
-                resolved(
+            func tagEditMetadataPath(_ id: String, _ metadataID: String) -> String {
+                resolvedPath(
                     tags.appending(parameter: "id")
                         .appending(pathComponent: "edit")
                         .appending(pathComponent: "metadata")
@@ -80,13 +101,13 @@ extension Tag {
                     .appending(parameter: "metadataID")
             }
 
-            func tagStatus(_ id: String) -> String {
+            func tagStatusPath(_ id: String) -> String {
                 tags.appending(parameter: "id")
                     .appending(pathComponent: "status")
                     .path(parameter: "id", value: id)
             }
 
-            private func resolved(
+            private func resolvedPath(
                 _ route: WebRoute,
                 parameters: [String: String]
             ) -> String {

@@ -6,7 +6,7 @@ import Hummingbird
 extension Invitation.Resend {
     struct Router {
 
-        let controller: Invitation.Resend.Controller.Default
+        let controller: Controller.Default
         let routes: Invitation.Router.Routes
 
         init(
@@ -17,7 +17,7 @@ extension Invitation.Resend {
             self.controller = .init(
                 routes: routes,
                 buildRepository: { context in
-                    Invitation.Resend.Repository.OpenAPI(
+                    Repository.OpenAPI(
                         api: API.Client(
                             environment: environment,
                             requestContext: context

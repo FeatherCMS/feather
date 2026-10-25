@@ -6,14 +6,17 @@ import UserWebAdmin
 
 extension Session.Remove {
     struct Router {
-        let controller: any Session.Remove.Controller.Interface
+        let controller: any Controller.Interface
+        let routes: Session.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             routes: Session.Router.Routes
         ) {
-            self.controller = Session.Remove.Controller.Default(
+            self.routes = routes
+            self.controller = Controller.Default(
+                routes: routes,
                 buildRuntime: { request, context in
                     let api = API.Client(
                         environment: environment,
@@ -24,14 +27,14 @@ extension Session.Remove {
                         requestContext: context
                     )
                     return WebAdminRuntime(
-                        interactor: Session.Remove.Interactor.Default(
+                        interactor: Interactor.Default(
                             repository:
-                                Session.Remove.Repository.OpenAPI(
+                                Repository.OpenAPI(
                                     api: api,
                                     userAPI: userAPI
                                 )
                         ),
-                        presenter: Session.Remove.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderingEngine: renderingEngine,
@@ -39,6 +42,13 @@ extension Session.Remove {
                         )
                     )
                 }
+            )
+        }
+
+        func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+            router.post(
+                routes.remove.routerPath,
+                use: controller.postRemoveAuthSession
             )
         }
     }

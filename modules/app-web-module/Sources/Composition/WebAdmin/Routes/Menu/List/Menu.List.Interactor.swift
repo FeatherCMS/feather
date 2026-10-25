@@ -10,7 +10,7 @@ extension WebModule.Menu.List {
             func listMenus(
                 page: Int,
                 search: String?
-            ) async throws -> WebModule.Menu.List.Model
+            ) async throws -> Model
         }
     }
 }

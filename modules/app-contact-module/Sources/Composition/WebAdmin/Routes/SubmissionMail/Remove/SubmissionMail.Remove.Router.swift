@@ -1,6 +1,5 @@
 import ContactApplication
 import ContactModule
-import FeatherWebShared
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
@@ -46,7 +45,7 @@ extension SubmissionMail.Remove {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            controller.route(on: router, routes: routes)
+            router.post(routes.formEmailRemove.routerPath, use: controller.remove)
         }
     }
 }

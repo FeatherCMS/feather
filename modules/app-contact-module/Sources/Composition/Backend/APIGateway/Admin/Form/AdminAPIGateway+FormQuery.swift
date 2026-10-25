@@ -23,7 +23,7 @@ extension AdminAPIGateway {
                     direction: searchSortDirection(from: rule.direction)
                 )
             }
-        let result = try await useCases.makeSearchContactForms()
+        let result = try await useCases.makeSearchForms()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input: .init(

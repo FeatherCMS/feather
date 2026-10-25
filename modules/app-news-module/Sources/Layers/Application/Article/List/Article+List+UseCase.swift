@@ -33,10 +33,8 @@ extension Article.List {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
 
-            let inputQuery = input.query
-
             return try await query.run { scope in
-                let articles = try await scope.article.list(query: inputQuery)
+                let articles = try await scope.article.list()
                 var items: [Output.Item] = []
                 items.reserveCapacity(articles.items.count)
                 for item in articles.items {
@@ -56,24 +54,5 @@ extension Article.List {
             }
         }
 
-        public func count(
-            subject: Subject,
-            input: Input
-        ) async throws -> Int {
-            let action = Action()
-
-            guard try await authorizer.can(subject: subject, perform: action)
-            else {
-                throw AuthError(kind: .forbidden, message: action.key.rawValue)
-            }
-
-            let inputQuery = input.query
-
-            return try await query.run { scope in
-                try await scope.article.count(
-                    query: inputQuery
-                )
-            }
-        }
     }
 }

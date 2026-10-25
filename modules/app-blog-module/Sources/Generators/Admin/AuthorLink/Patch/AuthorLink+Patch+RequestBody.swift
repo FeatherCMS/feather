@@ -10,15 +10,15 @@ extension AuthorLink.Patch {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "label": BlogAuthorLinkLabelField().reference(required: false),
-                "url": BlogAuthorLinkURLField().reference(required: false),
-                "priority": BlogAuthorLinkPriorityField()
+                "label": AuthorLink.Schemas.Label().reference(required: false),
+                "url": AuthorLink.Schemas.URL().reference(required: false),
+                "priority": AuthorLink.Schemas.Priority()
                     .reference(required: false),
-                "isBlank": BlogAuthorLinkIsBlankField()
+                "isBlank": AuthorLink.Schemas.IsBlank()
                     .reference(required: false),
-                "permission": BlogAuthorLinkPermissionField()
+                "permission": AuthorLink.Schemas.Permission()
                     .reference(required: false),
-                "notes": BlogAuthorLinkNotesField().reference(required: false),
+                "notes": AuthorLink.Schemas.Notes().reference(required: false),
             ]
         }
     }

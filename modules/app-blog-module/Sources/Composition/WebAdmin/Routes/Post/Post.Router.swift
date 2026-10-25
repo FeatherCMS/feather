@@ -1,21 +1,42 @@
 public import BlogModule
 public import FeatherWebAdmin
 public import FeatherWebShared
+import Foundation
 import Hummingbird
 
 extension Post {
     public enum Router {
         public struct Routes: Sendable {
             let posts: WebRoute
+            let mediaAssetList: WebRoute
             let postsBreadcrumb: [AdminBreadcrumb.Link]
 
-            public init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
+            public init(
+                root: WebRoute,
+                breadcrumb: [AdminBreadcrumb.Link],
+                mediaAssetList: WebRoute
+            ) {
                 let posts = root.appending(pathComponent: "posts")
                 self.posts = posts
+                self.mediaAssetList = mediaAssetList
                 self.postsBreadcrumb =
                     breadcrumb + [
                         .init(label: "Posts", link: posts.path)
                     ]
+            }
+
+            func imagePickerPath(_ field: String) -> String {
+                var components = URLComponents()
+                components.path = mediaAssetList.path
+                components.queryItems = [
+                    URLQueryItem(name: "picker", value: "1"),
+                    URLQueryItem(name: "field", value: field),
+                    URLQueryItem(
+                        name: "extensions",
+                        value: AllowedExtensions.images.queryValue
+                    ),
+                ]
+                return components.string ?? components.path
             }
 
             var postAddRoute: WebRoute {
@@ -36,34 +57,34 @@ extension Post {
                     .appending(pathComponent: "status")
             }
 
-            func post(_ id: String) -> String {
+            func postPath(_ id: String) -> String {
                 posts.appending(parameter: "id")
                     .path(parameter: "id", value: id)
             }
 
-            func postAdd() -> String {
+            func postAddPath() -> String {
                 postAddRoute.path
             }
 
-            func postRemove() -> String {
+            func postRemovePath() -> String {
                 postRemoveRoute.path
             }
 
-            func postRemove(_ id: String) -> String {
+            func postRemovePath(_ id: String) -> String {
                 postRemoveByIDRoute
                     .path(parameter: "id", value: id)
             }
 
-            func postEdit(_ id: String) -> String {
+            func postEditPath(_ id: String) -> String {
                 posts.appending(parameter: "id")
                     .appending(pathComponent: "edit")
                     .path(parameter: "id", value: id)
             }
 
-            func postEditMetadata(_ id: String, _ metadataID: String)
+            func postEditMetadataPath(_ id: String, _ metadataID: String)
                 -> String
             {
-                resolved(
+                resolvedPath(
                     posts.appending(parameter: "id")
                         .appending(pathComponent: "edit")
                         .appending(pathComponent: "metadata")
@@ -82,13 +103,13 @@ extension Post {
                     .appending(parameter: "metadataID")
             }
 
-            func postStatus(_ id: String) -> String {
+            func postStatusPath(_ id: String) -> String {
                 posts.appending(parameter: "id")
                     .appending(pathComponent: "status")
                     .path(parameter: "id", value: id)
             }
 
-            private func resolved(
+            private func resolvedPath(
                 _ route: WebRoute,
                 parameters: [String: String]
             ) -> String {

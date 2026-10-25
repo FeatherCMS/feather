@@ -19,14 +19,14 @@ import struct Foundation.CharacterSet
 extension Asset.File.List {
     struct Page: Component {
         struct State {
-            let entries: [Asset.File.List.Model.EntryItem]
+            let entries: [Model.EntryItem]
             let pageState: AdminListPageState
             let search: String
             let parentId: String?
-            let currentFolder: Components.Schemas.MediaFolderDetailSchema?
-            let ancestors: [Components.Schemas.MediaFolderDetailSchema]
-            let view: Asset.File.List.Model.ViewMode
-            let picker: Asset.File.List.Model.PickerState
+            let currentFolder: Asset.Folder.Detail.Model?
+            let ancestors: [Asset.Folder.Detail.Model]
+            let view: Model.ViewMode
+            let picker: Model.PickerState
             let permissions: AdminListActions
             let routes: Asset.Router.Routes
         }
@@ -340,113 +340,126 @@ extension Asset.File.List.Page {
         return items
     }
 
-    fileprivate func addAssetPath() -> String {
-        var suffix: [String] = []
+    fileprivate func addAssetPath(isDialog: Bool = false) -> String {
+        var queryItems: [URLQueryItem] = []
         if let parentId = state.parentId {
-            suffix.append("parent_id=\(parentId.queryEncoded())")
+            queryItems.append(.init(name: "parent_id", value: parentId))
         }
         if state.view != .grid {
-            suffix.append("view=\(state.view.rawValue)")
+            queryItems.append(.init(name: "view", value: state.view.rawValue))
         }
         if state.picker.isEnabled {
-            suffix.append("picker=1")
+            queryItems.append(.init(name: "picker", value: "1"))
         }
         if let field = state.picker.field {
-            suffix.append("field=\(field.queryEncoded())")
+            queryItems.append(.init(name: "field", value: field))
         }
         if !state.picker.allowedExtensions.isAnything {
-            suffix.append(
-                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
+            queryItems.append(
+                .init(
+                    name: "extensions",
+                    value: state.picker.allowedExtensions.queryValue
+                )
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
-            suffix.append(
-                "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            queryItems.append(
+                .init(name: "default_folder_path", value: defaultFolderPath)
             )
         }
         if let previewVariant = state.picker.previewVariant {
-            suffix.append(
-                "preview_variant=\(previewVariant.queryEncoded())"
+            queryItems.append(
+                .init(name: "preview_variant", value: previewVariant)
             )
         }
-        let path = state.routes.file.add.path
-        return suffix.isEmpty
-            ? path
-            : "\(path)?\(suffix.joined(separator: "&"))"
+        if isDialog {
+            queryItems.append(.init(name: "presentation", value: "dialog"))
+        }
+        var components = URLComponents()
+        components.path = state.routes.file.add.path
+        components.queryItems = queryItems.isEmpty ? nil : queryItems
+        return components.string ?? components.path
     }
 
     fileprivate func addAssetDialogPath() -> String {
-        let path = addAssetPath()
-        let separator = path.contains("?") ? "&" : "?"
-        return "\(path)\(separator)presentation=dialog"
+        addAssetPath(isDialog: true)
     }
 
     fileprivate func assetActionSuffix() -> String {
-        var suffix: [String] = []
+        var queryItems: [URLQueryItem] = []
         if let parentId = state.parentId {
-            suffix.append("parent_id=\(parentId.queryEncoded())")
+            queryItems.append(.init(name: "parent_id", value: parentId))
         }
         if state.view != .grid {
-            suffix.append("view=\(state.view.rawValue)")
+            queryItems.append(.init(name: "view", value: state.view.rawValue))
         }
         if state.picker.isEnabled {
-            suffix.append("picker=1")
+            queryItems.append(.init(name: "picker", value: "1"))
         }
         if let field = state.picker.field {
-            suffix.append("field=\(field.queryEncoded())")
+            queryItems.append(.init(name: "field", value: field))
         }
         if !state.picker.allowedExtensions.isAnything {
-            suffix.append(
-                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
+            queryItems.append(
+                .init(
+                    name: "extensions",
+                    value: state.picker.allowedExtensions.queryValue
+                )
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
-            suffix.append(
-                "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            queryItems.append(
+                .init(name: "default_folder_path", value: defaultFolderPath)
             )
         }
         if let previewVariant = state.picker.previewVariant {
-            suffix.append(
-                "preview_variant=\(previewVariant.queryEncoded())"
+            queryItems.append(
+                .init(name: "preview_variant", value: previewVariant)
             )
         }
-        return suffix.isEmpty ? "" : "?\(suffix.joined(separator: "&"))"
+        var components = URLComponents()
+        components.queryItems = queryItems.isEmpty ? nil : queryItems
+        return components.percentEncodedQuery.map { "?\($0)" } ?? ""
     }
 
-    fileprivate func addFolderPath() -> String {
-        var suffix: [String] = []
+    fileprivate func addFolderPath(isDialog: Bool = false) -> String {
+        var queryItems: [URLQueryItem] = []
         if let parentId = state.parentId {
-            suffix.append("parent_id=\(parentId.queryEncoded())")
+            queryItems.append(.init(name: "parent_id", value: parentId))
         }
         if state.view != .grid {
-            suffix.append("view=\(state.view.rawValue)")
+            queryItems.append(.init(name: "view", value: state.view.rawValue))
         }
         if state.picker.isEnabled {
-            suffix.append("picker=1")
+            queryItems.append(.init(name: "picker", value: "1"))
         }
         if let field = state.picker.field {
-            suffix.append("field=\(field.queryEncoded())")
+            queryItems.append(.init(name: "field", value: field))
         }
         if !state.picker.allowedExtensions.isAnything {
-            suffix.append(
-                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
+            queryItems.append(
+                .init(
+                    name: "extensions",
+                    value: state.picker.allowedExtensions.queryValue
+                )
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
-            suffix.append(
-                "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            queryItems.append(
+                .init(name: "default_folder_path", value: defaultFolderPath)
             )
         }
-        let path = state.routes.folder.add.path
-        return suffix.isEmpty
-            ? path
-            : "\(path)?\(suffix.joined(separator: "&"))"
+        if isDialog {
+            queryItems.append(.init(name: "presentation", value: "dialog"))
+        }
+        var components = URLComponents()
+        components.path = state.routes.folder.add.path
+        components.queryItems = queryItems.isEmpty ? nil : queryItems
+        return components.string ?? components.path
     }
 
     fileprivate func addFolderDialogPath() -> String {
-        let path = addFolderPath()
-        let separator = path.contains("?") ? "&" : "?"
-        return "\(path)\(separator)presentation=dialog"
+        addFolderPath(isDialog: true)
     }
 
     fileprivate func browsePath(
@@ -464,11 +477,12 @@ extension Asset.File.List.Page {
             page: page,
             includeView: includeView
         )
-        let encoded = query.map { "\($0.name)=\($0.value.queryEncoded())" }
-        let path = state.routes.file.list.path
-        return encoded.isEmpty
-            ? path
-            : "\(path)?\(encoded.joined(separator: "&"))"
+        var components = URLComponents()
+        components.path = state.routes.file.list.path
+        components.queryItems = query.map {
+            URLQueryItem(name: $0.name, value: $0.value)
+        }
+        return components.string ?? components.path
     }
 
     fileprivate func previewLink(

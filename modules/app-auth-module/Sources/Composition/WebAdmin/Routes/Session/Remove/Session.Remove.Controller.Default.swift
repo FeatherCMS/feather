@@ -6,6 +6,8 @@ import Hummingbird
 
 extension Session.Remove.Controller {
     struct Default: Interface {
+        let routes: Session.Router.Routes
+
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Session.Remove.Interactor.Interface,
@@ -61,7 +63,7 @@ extension Session.Remove.Controller {
                     )
                 )
                 return AdminNotificationFlash.redirect(
-                    to: "/admin/user/identities/\(identityId)/",
+                    to: routes.identityPath(identityId),
                     notification: .init(
                         title: "Removed",
                         message: "Session removed successfully."

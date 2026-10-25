@@ -16,7 +16,7 @@ extension ContactModule.Form {
             var redirectUrl: String?
             var fieldIDs: [String]
             var availableFields: [ContactModule.FormField.Option]
-            var mails: [ContactModule.Form.Email]
+            var mails: [Email]
             var error: String?
             var success: String?
         }

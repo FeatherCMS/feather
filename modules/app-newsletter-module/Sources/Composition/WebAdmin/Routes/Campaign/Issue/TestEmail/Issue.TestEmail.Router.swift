@@ -25,7 +25,8 @@ extension Issue.TestEmail {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            controller.route(on: router, routes: routes)
+            router.post(routes.issueTestEmail.routerPath, use: controller.send)
+            router.post(routes.issueDetailTestEmail.routerPath, use: controller.send)
         }
     }
 }

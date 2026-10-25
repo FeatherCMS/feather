@@ -4,9 +4,7 @@ import Hummingbird
 import SystemModule
 
 extension Permission.List.Interactor {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let repository:
             any Permission.List.Repository
                 .Interface

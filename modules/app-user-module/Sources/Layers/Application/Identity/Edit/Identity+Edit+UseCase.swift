@@ -37,7 +37,7 @@ extension Identity.Edit {
             return try await transaction.run { scope in
                 guard var model = try await scope.identity.findBy(id: input.id)
                 else {
-                    throw Identity.Edit.Error.identityNotFound
+                    throw Error.identityNotFound
                 }
 
                 model.update(name: input.name, status: input.status)
@@ -51,7 +51,7 @@ extension Identity.Edit {
                 for roleId in roleIds {
                     guard try await scope.role.findBy(id: roleId) != nil
                     else {
-                        throw Identity.Edit.Error.roleNotFound
+                        throw Error.roleNotFound
                     }
                 }
                 let persistedRoleIds: [String]

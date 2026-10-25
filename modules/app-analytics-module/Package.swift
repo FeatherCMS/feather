@@ -104,6 +104,10 @@ let package = Package(
                 "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
         ),
+        .package(
+            url: "https://github.com/apple/swift-nio",
+            from: "2.101.3"
+        ),
         .package(path: "../../feather-core"),
         .package(
             url: "https://github.com/feather-framework/feather-database",
@@ -138,11 +142,6 @@ let package = Package(
             name: "AnalyticsApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
-                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsDomain"),
@@ -202,6 +201,7 @@ let package = Package(
                     name: "FeatherOpenAPIGenerator",
                     package: "feather-core"
                 ),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
             ],
@@ -224,8 +224,6 @@ let package = Package(
         .target(
             name: "AnalyticsBackend",
             dependencies: [
-                .product(name: "FeatherBackend", package: "feather-core"),
-
                 .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsInfrastructure"),
                 .target(name: "AnalyticsAdminAPI"),
@@ -242,6 +240,7 @@ let package = Package(
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "NIOCore", package: "swift-nio"),
             ],
             path: "Sources/Composition/WebShared",
             swiftSettings: swiftSettings
@@ -269,12 +268,7 @@ let package = Package(
             dependencies: [
                 .target(name: "AnalyticsWebShared"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
-                .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(
-                    name: "OpenAPIRuntime",
-                    package: "swift-openapi-runtime"
-                ),
                 .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsAppAPI"),
             ],
@@ -316,7 +310,6 @@ let package = Package(
         .testTarget(
             name: "AnalyticsBackendTests",
             dependencies: [
-                .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherHTTP", package: "feather-http"),
                 .product(name: "HTTPTypes", package: "swift-http-types"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),

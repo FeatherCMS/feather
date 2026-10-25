@@ -1,5 +1,4 @@
 public import AccountApplication
-public import AccountDomain
 public import AccountModule
 import FeatherDBAL
 import FeatherDomain
@@ -13,7 +12,7 @@ extension Profile.Detail.Query {
             self.context = context
         }
 
-        public func get(userId: String) async throws -> Profile.Model {
+        public func find(userId: String) async throws -> Profile.Detail.Output {
             guard
                 let detail = try await DatabaseAccessLayer<
                     Profile.Table

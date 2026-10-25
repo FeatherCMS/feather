@@ -35,19 +35,3 @@ extension MagicLink.Edit.Controller {
     }
 }
 
-extension MagicLink.Edit.Controller.Interface {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: MagicLink.Router.Routes
-    ) {
-        router.get(
-            routes.edit.routerPath,
-            use: getEditAuthMagicLink
-        )
-        router.post(
-            routes.edit.routerPath,
-            use: postEditAuthMagicLink
-        )
-    }
-}

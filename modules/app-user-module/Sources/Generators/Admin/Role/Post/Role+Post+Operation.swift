@@ -5,7 +5,7 @@ extension Role.Post {
     struct Operation: Role.Operation {
         var operationId: String? { "userRolePost" }
         var requestBody: (any RequestBodyRepresentable)? {
-            Role.Post.RequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [

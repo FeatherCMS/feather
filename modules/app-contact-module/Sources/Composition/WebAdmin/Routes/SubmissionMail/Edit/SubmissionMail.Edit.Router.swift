@@ -1,6 +1,5 @@
 import ContactApplication
 import ContactModule
-import FeatherWebShared
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
@@ -46,7 +45,8 @@ extension SubmissionMail.Edit {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            controller.route(on: router, routes: routes)
+            router.get(routes.formEmailEdit.routerPath, use: controller.edit)
+            router.post(routes.formEmailEdit.routerPath, use: controller.update)
         }
     }
 }

@@ -247,6 +247,8 @@ extension Components {
         public typealias MetadataTemplateField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MetadataSlugListSchema`.
         public typealias MetadataSlugListSchema = [Components.Schemas.MetadataSlugField]
+        /// - Remark: Generated from `#/components/schemas/PageIdField`.
+        public typealias PageIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/PageDetailSchema`.
         public struct PageDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/PageDetailSchema/id`.
@@ -300,8 +302,6 @@ extension Components {
                 case metadata
             }
         }
-        /// - Remark: Generated from `#/components/schemas/PageIdField`.
-        public typealias PageIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/PageTitleField`.
         public typealias PageTitleField = Swift.String
         /// - Remark: Generated from `#/components/schemas/PageExcerptField`.

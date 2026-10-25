@@ -14,7 +14,7 @@ extension UseCases {
                 databaseContext: databaseContext,
                 scope: { context in
                     Public.Category.List.Scope(
-                        category: NewsModule.Category.List.Query.Database(
+                        category: Public.Category.List.Query.Database(
                             context: context
                         ),
                         metadataDetails: WebModule.Metadata.Resolve.Detail.Query

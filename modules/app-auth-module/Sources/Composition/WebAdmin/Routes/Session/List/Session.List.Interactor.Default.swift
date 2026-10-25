@@ -7,7 +7,7 @@ extension Session.List.Interactor {
         func list(
             identityID: String
         ) async throws -> Session.List.Model {
-            try await repository.list(identityID: identityID)
+            try await repository.search(identityID: identityID)
         }
     }
 }

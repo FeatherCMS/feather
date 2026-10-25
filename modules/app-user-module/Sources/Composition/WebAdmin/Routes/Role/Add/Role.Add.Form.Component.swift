@@ -27,7 +27,7 @@ extension Role.Add.Form {
                 )
             }
 
-            static func from(input: Role.Add.Form.Input) -> Self {
+            static func from(input: Input) -> Self {
                 .init(
                     key: .init(
                         name: "key",

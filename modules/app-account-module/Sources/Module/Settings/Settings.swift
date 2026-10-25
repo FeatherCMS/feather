@@ -1,4 +1,1 @@
-public enum Settings {
-
-
-}
+public enum Settings {}

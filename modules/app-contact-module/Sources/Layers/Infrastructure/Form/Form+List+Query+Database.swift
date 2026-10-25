@@ -26,7 +26,7 @@ extension Form.List.Query {
 
             var items: [Form.List.Output.Item] = []
             for form in forms {
-                let fieldRows = try await FormFieldTable(
+                let fieldRows = try await FormField.AccessLayer(
                     connection: context.connection
                 )
                 .list(formId: form.id)

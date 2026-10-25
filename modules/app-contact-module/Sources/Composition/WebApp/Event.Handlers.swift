@@ -1,4 +1,5 @@
 public import FeatherModuleKit
+public import ContactModule
 import WebModuleWebApp
 
 public enum Event {
@@ -6,6 +7,7 @@ public enum Event {
         public static func registerMarkdown(
             in registry: inout EventRegistry,
             api: API.Client,
+            routes: Submission.Router.Routes = .standard,
             turnstileSiteKey: String? = nil
         ) {
             registry.register(
@@ -14,6 +16,7 @@ public enum Event {
             ) { _, _ in
                 ContactFormMarkdownBlockRenderer(
                     api: api,
+                    routes: routes,
                     turnstileSiteKey: turnstileSiteKey
                 )
             }

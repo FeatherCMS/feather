@@ -9,7 +9,7 @@ extension Role.Edit {
     struct Page: Component {
         let routes: Role.Router.Routes
         let id: String
-        let form: Role.Edit.Form.Component.State
+        let form: Form.Component.State
         let permissions: AdminListActions
         let nonceToken: String?
 
@@ -25,7 +25,7 @@ extension Role.Edit {
                     )
                 )
                 context.build(
-                    Role.Edit.Form.Component(
+                    Form.Component(
                         state: form,
                         action: routes.editPath(id),
                         submitLabel: "Save changes",

@@ -37,7 +37,7 @@ extension Permission.Edit {
                 guard
                     var model = try await scope.permission.find(id: input.id)
                 else {
-                    throw Permission.Edit.Error.notFound
+                    throw Error.notFound
                 }
 
                 try model.update(

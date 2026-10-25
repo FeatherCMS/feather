@@ -30,28 +30,28 @@ extension Event {
                         menuKey: "analytics",
                         label: "Web",
                         icon: "monitor",
-                        link: "/admin/analytics/web/",
+                        link: Router.Routes.web.path,
                         permission: "analytics:insights:list"
                     ),
                     .init(
                         menuKey: "analytics",
                         label: "API",
                         icon: "server",
-                        link: "/admin/analytics/api/",
+                        link: Router.Routes.api.path,
                         permission: "analytics:insights:list"
                     ),
                     .init(
                         menuKey: "analytics",
                         label: "Logs",
                         icon: "activity",
-                        link: "/admin/analytics/logs/",
+                        link: Router.Routes.logs.path,
                         permission: "analytics:logs:list"
                     ),
                     .init(
                         menuKey: "analytics",
                         label: "404s",
                         icon: "alertCircle",
-                        link: "/admin/analytics/not-found/",
+                        link: Router.Routes.notFound.path,
                         permission: "analytics:not-found:list"
                     ),
                 ]

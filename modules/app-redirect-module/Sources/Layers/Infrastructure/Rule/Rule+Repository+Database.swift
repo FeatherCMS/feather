@@ -73,7 +73,7 @@ extension Rule.Repository {
             _ row: Rule.Table.Detail
         ) throws -> Rule.Model {
             guard
-                let statusCode = Rule.StatusCode(
+                let statusCode = Rule.Model.StatusCode(
                     rawValue: row.statusCode
                 )
             else {

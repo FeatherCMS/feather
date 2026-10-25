@@ -7,6 +7,6 @@ extension Menu.ID {
 
 extension Menu.ID.Operation {
     var parameters: [any ParameterRepresentable] {
-        [MenuIdParameter().reference()]
+        [Menu.Parameters.ID().reference()]
     }
 }

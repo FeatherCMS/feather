@@ -4,6 +4,7 @@ import FeatherWebShared
 import Hummingbird
 import RedirectApplication
 import RedirectModule
+import RedirectDomain
 
 extension Rule.List.Controller {
     struct Default: Interface {
@@ -31,7 +32,7 @@ extension Rule.List.Controller {
             let rawStatusCode = request.queryString("statusCode")?
                 .whitespaceTrimmed
             let statusCode = rawStatusCode.flatMap(Int.init)
-                .flatMap(Rule.StatusCode.init(rawValue:))
+                .flatMap(Rule.Model.StatusCode.init(rawValue:))
             do {
                 let model = try await interactor.listRedirectRules(
                     page: request.queryPage(),

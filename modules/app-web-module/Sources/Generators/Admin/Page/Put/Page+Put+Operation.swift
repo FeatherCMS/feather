@@ -7,12 +7,12 @@ extension Page.Put {
         var operationId: String? { "pageUpdate" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            PageUpdateRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                200: PageDetailResponse().reference(),
+                200: Page.Get.Response().reference(),
                 404: CustomResponse(description: "Page not found"),
             ]
         }

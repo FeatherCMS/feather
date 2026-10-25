@@ -10,7 +10,7 @@ import WebComponents
 
 extension MagicLink.List {
     struct TableContent: WebComponents.Component {
-        let state: MagicLink.List.Component.State
+        let state: Component.State
 
         func html(context: inout BuilderContext) -> Div {
             let actions = AdminListActions(
@@ -104,8 +104,11 @@ extension MagicLink.List {
                                                             actions: [
                                                                 .init(
                                                                     "View",
-                                                                    href:
-                                                                        "/admin/auth/magic-links/\(link.id)/",
+                                                                    href: state
+                                                                        .routes
+                                                                        .detailsPath(
+                                                                            link.id
+                                                                        ),
                                                                     style:
                                                                         .ghost(
                                                                             .primary
@@ -117,8 +120,9 @@ extension MagicLink.List {
                                                                 ),
                                                                 .init(
                                                                     "Edit",
-                                                                    href:
-                                                                        "/admin/auth/magic-links/\(link.id)/edit/",
+                                                                    href: state.routes.editPath(
+                                                                        link.id
+                                                                    ),
                                                                     style:
                                                                         .ghost(
                                                                             .secondary
@@ -145,7 +149,7 @@ extension MagicLink.List {
                         context.build(
                             AdminListSearch(
                                 state: .init(
-                                    action: "/admin/auth/magic-links/",
+                                    action: state.routes.list.path,
                                     placeholder: "Quick search magic links",
                                     search: state.search,
                                     queryItems: state.userID.map {
@@ -162,7 +166,7 @@ extension MagicLink.List {
                                     context.build(
                                         AdminButton(
                                             "Add new",
-                                            href: "/admin/auth/magic-links/add/"
+                                            href: state.routes.add.path
                                         )
                                     )
                                 }
@@ -173,7 +177,7 @@ extension MagicLink.List {
                         context.build(
                             AdminListPagination(
                                 state: .init(
-                                    path: "/admin/auth/magic-links/",
+                                    path: state.routes.list.path,
                                     pageState: pageState,
                                     search: state.search,
                                     queryItems: state.userID.map {

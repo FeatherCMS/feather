@@ -27,7 +27,7 @@ extension Event {
                         groupKey: "admin",
                         label: "Dashboard",
                         icon: "home",
-                        link: "/admin/",
+                        link: routes.admin.path,
                         permission: "system.admin.access",
                         priority: 0
                     ),

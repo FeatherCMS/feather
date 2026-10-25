@@ -1,4 +1,3 @@
-import NewsAdminAPI
 import NewsApplication
 import NewsModule
 
@@ -8,7 +7,7 @@ extension Article.Remove.Interactor {
 
         func get(
             id: String
-        ) async throws -> Components.Schemas.NewsArticleDetailSchema {
+        ) async throws -> Article.Detail.Model {
             try await repository.get(id: id)
         }
 

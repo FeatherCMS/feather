@@ -19,7 +19,7 @@ extension Asset.File.List.Repository {
             search: String?,
             parentId: String?,
             allowedExtensions: [String]
-        ) async throws -> Asset.File.List.Repository.Result {
+        ) async throws -> Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let normalizedExtensions = Set(
                     allowedExtensions.map { $0.lowercased() }
@@ -148,7 +148,7 @@ extension Asset.File.List.Repository {
 
         func getFolder(
             id: String
-        ) async throws -> Components.Schemas.MediaFolderDetailSchema {
+        ) async throws -> Asset.Folder.Detail.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
@@ -157,7 +157,16 @@ extension Asset.File.List.Repository {
                     )
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json
+                    let folder = try ok.body.json
+                    return Asset.Folder.Detail.Model(
+                        id: folder.id,
+                        parentId: folder.parentId,
+                        name: folder.name,
+                        slug: folder.slug,
+                        slugPath: folder.slugPath,
+                        assetCount: folder.assetCount,
+                        totalSizeBytes: folder.totalSizeBytes
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:
@@ -247,7 +256,7 @@ extension Asset.File.List.Repository.OpenAPI {
             var total = 0
 
             while true {
-                let response = try await searchAssets(
+                let response = try await queryAssets(
                     page: backendPage,
                     size: backendPageSize,
                     search: search,

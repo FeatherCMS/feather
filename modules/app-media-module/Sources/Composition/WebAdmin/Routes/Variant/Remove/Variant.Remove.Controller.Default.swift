@@ -4,9 +4,7 @@ import Hummingbird
 import MediaModule
 
 extension Variant.Remove.Controller {
-    struct Default:
-        Variant.Remove.Controller.Interface
-    {
+    struct Default: Interface {
         let routes: Variant.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<

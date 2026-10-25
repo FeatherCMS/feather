@@ -36,7 +36,7 @@ extension AuthorLink.Detail {
             return try await query.run { scope in
                 let detail = try await scope.authorLink.find(id: input.id)
                 guard detail.authorId == input.authorId else {
-                    throw AuthorLink.Detail.Error(message: "Menu item not found")
+                    throw Error(message: "Menu item not found")
                 }
                 return detail
             }

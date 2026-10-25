@@ -36,6 +36,7 @@ extension Page.Add {
                 context.build(
                     Page.Form.Component(
                         state: state.form,
+                        mediaAssetList: state.routes.mediaAssetList,
                         action: state.routes.add.path,
                         submitLabel: "Add page"
                     )

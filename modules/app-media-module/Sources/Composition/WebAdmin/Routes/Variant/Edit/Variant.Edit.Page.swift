@@ -1,7 +1,6 @@
 import FeatherWebAdmin
 import HTML
 import Hummingbird
-import MediaAdminAPI
 import MediaModule
 import SGML
 import WebBuilders
@@ -10,7 +9,7 @@ import WebComponents
 extension Variant.Edit {
     struct Page: Component {
         let id: String
-        let detail: MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
+        let detail: Model
         let form: Variant.Form
         let routes: Variant.Router.Routes
 

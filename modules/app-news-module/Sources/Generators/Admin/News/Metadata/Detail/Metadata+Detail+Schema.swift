@@ -5,34 +5,34 @@ extension Metadata.Detail {
         var openAPIIdentifier: String { "NewsMetadataDetailSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": NewsAdminOpenAPIComponents.StringField(),
-                "referenceType": NewsAdminOpenAPIComponents.StringField(),
-                "referenceID": NewsAdminOpenAPIComponents.StringField(),
-                "slug": NewsAdminOpenAPIComponents.StringField(),
-                "template": NewsAdminOpenAPIComponents.StringField(),
-                "publicationDate": NewsAdminOpenAPIComponents.TimestampField(),
-                "expirationDate": NewsAdminOpenAPIComponents.TimestampField()
+                "id": Metadata.Schemas.StringField(),
+                "referenceType": Metadata.Schemas.StringField(),
+                "referenceID": Metadata.Schemas.StringField(),
+                "slug": Metadata.Schemas.StringField(),
+                "template": Metadata.Schemas.StringField(),
+                "publicationDate": Metadata.Schemas.TimestampField(),
+                "expirationDate": Metadata.Schemas.TimestampField()
                     .reference(required: false),
-                "status": NewsAdminOpenAPIComponents.StatusField(),
-                "title": NewsAdminOpenAPIComponents.StringField()
+                "status": Metadata.Schemas.StatusField(),
+                "title": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "excerpt": NewsAdminOpenAPIComponents.StringField()
+                "excerpt": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "imageURL": NewsAdminOpenAPIComponents.StringField()
+                "imageURL": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "canonicalURL": NewsAdminOpenAPIComponents.StringField()
+                "canonicalURL": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "noIndex": NewsAdminOpenAPIComponents.BooleanField(),
-                "primaryKeyword": NewsAdminOpenAPIComponents.StringField()
+                "noIndex": Metadata.Schemas.BooleanField(),
+                "primaryKeyword": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "cssCodeInjection": NewsAdminOpenAPIComponents.StringField()
+                "cssCodeInjection": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "javascriptCodeInjection": NewsAdminOpenAPIComponents.StringField()
+                "javascriptCodeInjection": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "structuredDataCodeInjection": NewsAdminOpenAPIComponents.StringField()
+                "structuredDataCodeInjection": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "createdAt": NewsAdminOpenAPIComponents.TimestampField(),
-                "updatedAt": NewsAdminOpenAPIComponents.TimestampField(),
+                "createdAt": Metadata.Schemas.TimestampField(),
+                "updatedAt": Metadata.Schemas.TimestampField(),
             ]
         }
     }

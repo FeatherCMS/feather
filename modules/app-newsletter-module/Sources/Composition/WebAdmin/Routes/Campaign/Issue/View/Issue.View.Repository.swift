@@ -1,4 +1,5 @@
 import NewsletterModule
+import NewsletterApplication
 
 extension Issue.View.Repository {
     protocol Interface: Sendable {

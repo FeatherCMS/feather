@@ -26,11 +26,36 @@ extension FormField.Remove.Repository {
         let api: API.Client
 
         func get(id: String) async throws -> FormField.Model {
-            try await FormField.List.Repository.OpenAPI(api: api)
-                .list().first { $0.id == id }
-                ?? {
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.contactFieldGet(
+                    path: .init(formFieldId: id)
+                )
+
+                switch response {
+                case .ok(let value):
+                    let field = try value.body.json
+                    return FormField.Model(
+                        id: field.id,
+                        key: field.key,
+                        type: field._type,
+                        label: field.label,
+                        allowedValues: field.allowedValues ?? [],
+                        isRequired: field.isRequired,
+                        position: String(field.position)
+                    )
+                case .notFound:
                     throw OpenAPIRepositoryError.notFound
-                }()
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
         }
 
         func remove(id: String) async throws {

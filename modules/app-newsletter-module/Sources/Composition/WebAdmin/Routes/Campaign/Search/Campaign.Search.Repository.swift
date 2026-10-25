@@ -4,7 +4,7 @@ import NewsletterModule
 
 extension Campaign.Search.Repository {
     protocol Interface: Sendable {
-        func searchCampaigns(
+        func search(
             page: Int,
             search: String?
         ) async throws -> Campaign.Search.Model

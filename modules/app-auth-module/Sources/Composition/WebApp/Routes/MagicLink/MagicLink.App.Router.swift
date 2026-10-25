@@ -48,7 +48,9 @@ extension MagicLink.App {
         }
 
         func route(on router: Hummingbird.Router<DefaultRequestContext>) {
-            controller.route(on: router, routes: routes)
+            router.get(routes.request.routerPath, use: controller.getRequest)
+            router.post(routes.request.routerPath, use: controller.postRequest)
+            router.get(routes.verify.routerPath, use: controller.verify)
         }
     }
 }

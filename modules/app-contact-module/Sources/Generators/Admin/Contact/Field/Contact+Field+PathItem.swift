@@ -13,8 +13,8 @@ extension Contact.Field.ID {
         var get: (any OperationRepresentable)? {
             Contact.Field.Get.Operation()
         }
-        var put: (any OperationRepresentable)? {
-            Contact.Field.Put.Operation()
+        var patch: (any OperationRepresentable)? {
+            Contact.Field.Patch.Operation()
         }
     }
 }

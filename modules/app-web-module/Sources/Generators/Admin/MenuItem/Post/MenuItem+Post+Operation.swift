@@ -6,12 +6,12 @@ extension MenuItem.Post {
     struct Operation: MenuItem.MenuOperation, BearerProtectedOperation {
         var operationId: String? { "menuItemCreate" }
         var requestBody: (any RequestBodyRepresentable)? {
-            MenuItemRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                201: MenuItemDetailResponse().reference()
+                201: MenuItem.Get.Response().reference()
             ]
         }
     }

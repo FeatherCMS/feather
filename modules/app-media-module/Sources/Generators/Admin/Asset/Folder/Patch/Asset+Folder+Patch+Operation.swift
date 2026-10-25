@@ -6,16 +6,16 @@ extension Asset.Folder.Patch {
         var operationId: String? { "mediaFolderPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                MediaFolderIdParameter().reference(),
-                MediaFolderUpdateMaskParameter().reference(),
+                Asset.Folder.Parameters.ID().reference(),
+                Asset.Folder.Parameters.UpdateMask().reference(),
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            MediaFolderPatchRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: MediaFolderDetailResponse().reference(),
+                200: Asset.Folder.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Invalid update mask"
                 ),

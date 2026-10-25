@@ -7,7 +7,7 @@ extension MenuItem.Move {
             "menuItemMove"
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            MenuItemMoveRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {

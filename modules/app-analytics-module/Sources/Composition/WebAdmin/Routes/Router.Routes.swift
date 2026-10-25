@@ -1,26 +1,23 @@
 import FeatherWebAdmin
-import Hummingbird
+import FeatherWebShared
 
 extension Router {
     struct Routes {
-        static let admin = RouterPath("admin")
-        static let analytics = admin.appendingPath(RouterPath("analytics"))
-        static let web = analytics.appendingPath(RouterPath("web"))
-        static let api = analytics.appendingPath(RouterPath("api"))
-        static let logs = analytics.appendingPath(RouterPath("logs"))
-        static let notFound = analytics.appendingPath(RouterPath("not-found"))
-
-        static func log(_ id: RouterPath) -> RouterPath {
-            logs.appendingPath(id)
-        }
+        static let admin = WebRoute.root.appending(pathComponent: "admin")
+        static let analytics = admin.appending(pathComponent: "analytics")
+        static let web = analytics.appending(pathComponent: "web")
+        static let api = analytics.appending(pathComponent: "api")
+        static let logs = analytics.appending(pathComponent: "logs")
+        static let log = logs.appending(parameter: "id")
+        static let notFound = analytics.appending(pathComponent: "not-found")
 
         static let adminBreadcrumb: [AdminBreadcrumb.Link] = [
-            .init(label: "Admin", link: "/admin/")
+            .init(label: "Admin", link: admin.path)
         ]
 
         static let breadcrumb: [AdminBreadcrumb.Link] = [
             adminBreadcrumb[0],
-            .init(label: "Analytics", link: "/admin/analytics/"),
+            .init(label: "Analytics", link: analytics.path),
         ]
     }
 }

@@ -7,7 +7,7 @@ extension Page.Query {
         var operationId: String? { "pageQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: PageQueryItemSchema(),
+                items: Schemas.Item(),
                 sortFieldKeys: [
                     "id",
                     "title",

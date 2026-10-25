@@ -33,15 +33,18 @@ extension Tag.Edit {
                 context.build(
                     Tag.Form(
                         state: state.form,
+                        browsePath: state.routes.imagePickerPath(
+                            state.form.imageAssetId.key
+                        ),
                         metadataHref: state.routes
-                            .tagEditMetadata(
+                            .tagEditMetadataPath(
                                 state.id,
                                 state.id
                             ),
-                        action: state.routes.tagEdit(state.id),
+                        action: state.routes.tagEditPath(state.id),
                         submitLabel: "Edit tag",
                         removeHref: state.routes
-                            .tagRemove(state.id),
+                            .tagRemovePath(state.id),
                         removeLabel: "Remove tag"
                     )
                 )

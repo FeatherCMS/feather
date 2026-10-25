@@ -2,7 +2,6 @@ import NewsApplication
 import FeatherWebAdmin
 import HTML
 import Hummingbird
-import NewsAdminAPI
 import NewsModule
 import SGML
 import WebBuilders
@@ -10,7 +9,7 @@ import WebComponents
 
 extension NewsModule.Category.Detail {
     struct Page: Component {
-        let item: Components.Schemas.NewsCategoryDetailSchema
+        let item: Category.Detail.Model
         let permissions: AdminListActions
         let routes: NewsModule.Category.Router.Routes
 

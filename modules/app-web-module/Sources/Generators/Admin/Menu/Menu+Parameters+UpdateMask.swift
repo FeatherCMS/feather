@@ -9,7 +9,7 @@ extension Menu {
                 "Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body."
             }
             var schema: any OpenAPISchemaRepresentable {
-                Menu.Schemas.UpdateMask().reference()
+                Schemas.UpdateMask().reference()
             }
         }
     }

@@ -28,7 +28,7 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        let result = try await useCases.makeAddAuthEmail()
+        let result = try await useCases.makeAddEmail()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input: .init(
@@ -52,7 +52,7 @@ extension AdminAPIGateway {
     public func authEmailList(
         _ input: Operations.AuthEmailList.Input
     ) async throws -> Operations.AuthEmailList.Output {
-        let result = try await useCases.makeListAuthEmails()
+        let result = try await useCases.makeListEmails()
             .execute(subject: try await CurrentSubject.require())
         return .ok(
             .init(
@@ -72,7 +72,7 @@ extension AdminAPIGateway {
     public func authEmailGet(
         _ input: Operations.AuthEmailGet.Input
     ) async throws -> Operations.AuthEmailGet.Output {
-        let result = try await useCases.makeDetailAuthEmail()
+        let result = try await useCases.makeDetailEmail()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input: .init(id: input.path.authEmailId)
@@ -117,7 +117,7 @@ extension AdminAPIGateway {
             onMissing: { HTTPError(.badRequest) }
         )
 
-        let result = try await useCases.makeEditAuthEmail()
+        let result = try await useCases.makeEditEmail()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input: .init(
@@ -146,7 +146,7 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        _ = try await useCases.makeRemoveAuthEmails()
+        _ = try await useCases.makeRemoveEmails()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input: .init(ids: body.ids)

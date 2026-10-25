@@ -11,7 +11,7 @@ extension Page.Search.Interactor {
             page: Int,
             search: String?
         ) async throws -> Page.Search.Model {
-            try await repository.searchPages(page: page, search: search)
+            try await repository.search(page: page, search: search)
         }
 
     }

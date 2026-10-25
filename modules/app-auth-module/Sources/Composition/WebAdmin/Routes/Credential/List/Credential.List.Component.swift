@@ -19,6 +19,7 @@ extension Credential.List {
             let total: Int
             let search: String
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: Credential.Router.Routes
         }
 
         let state: State
@@ -34,7 +35,7 @@ extension Credential.List {
                         )
                     )
                 )
-                context.build(Credential.List.TableContent(state: state))
+                context.build(TableContent(state: state))
             }
             .class("cms-section")
         }

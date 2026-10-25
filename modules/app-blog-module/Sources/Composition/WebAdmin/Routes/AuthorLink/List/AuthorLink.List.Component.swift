@@ -89,7 +89,7 @@ extension AuthorLink.List {
             let canDelete = state.permissions.allows(
                 AuthorLink.Permissions.delete
             )
-            let links = state.routes.authorLinks(
+            let links = state.routes.authorLinksPath(
                 state.authorID
             )
             return context.build(
@@ -110,7 +110,7 @@ extension AuthorLink.List {
                                     state: .init(
                                         action:
                                             state.routes
-                                            .authorLinkRemove(
+                                            .authorLinkRemovePath(
                                                 state.authorID
                                             ),
                                         pageState: state.pageState,
@@ -207,7 +207,7 @@ extension AuthorLink.List {
                                                                             href:
                                                                                 state
                                                                                 .routes
-                                                                                .authorLink(
+                                                                                .authorLinkPath(
                                                                                     state
                                                                                         .authorID,
                                                                                     item
@@ -223,7 +223,7 @@ extension AuthorLink.List {
                                                                             href:
                                                                                 state
                                                                                 .routes
-                                                                                .authorLinkEdit(
+                                                                                .authorLinkEditPath(
                                                                                     state
                                                                                         .authorID,
                                                                                     item
@@ -278,7 +278,7 @@ extension AuthorLink.List {
                                             "Add link",
                                             href:
                                                 state.routes
-                                                .authorLinkAdd(
+                                                .authorLinkAddPath(
                                                     state.authorID
                                                 )
                                         )

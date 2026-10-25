@@ -8,7 +8,7 @@ extension WebModule.Menu.List {
     enum Presenter {
         protocol Interface: Sendable {
             func renderListPage(
-                model: WebModule.Menu.List.Model,
+                model: Model,
                 permissions: Set<String>,
                 search: String?,
                 error: String?

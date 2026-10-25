@@ -1,4 +1,0 @@
-
-extension Credential {
-    enum List {}
-}

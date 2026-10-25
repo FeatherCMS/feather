@@ -1,20 +1,11 @@
-import FeatherValidation
-import FeatherWebAdmin
-import FeatherWebShared
-import HTML
-import Hummingbird
-import MediaAdminAPI
-import MediaModule
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+public import FeatherWebAdmin
+public import MediaModule
 
 extension Asset.File.View.Repository {
-    protocol Interface: Sendable {
+    public protocol Interface: Sendable {
         func getAsset(
             id: String
-        ) async throws -> Components.Schemas.MediaAssetDetailSchema
+        ) async throws -> AdminMediaAsset
 
         func getAssetWithPreview(
             id: String,
@@ -28,10 +19,10 @@ extension Asset.File.View.Repository {
 
         func getVariants(
             id: String
-        ) async throws -> [Components.Schemas.MediaAssetVariantListItemSchema]
+        ) async throws -> [Asset.File.View.Variant]
     }
 }
 
 extension Asset.File.View {
-    enum Repository {}
+    public enum Repository {}
 }

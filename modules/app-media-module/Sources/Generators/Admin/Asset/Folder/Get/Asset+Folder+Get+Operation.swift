@@ -6,7 +6,7 @@ extension Asset.Folder.Get {
         var operationId: String? { "mediaFolderGet" }
         var responseMap: ResponseMap {
             [
-                200: MediaFolderDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "MediaFolder not found"),
             ]
         }

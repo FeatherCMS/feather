@@ -1,4 +1,3 @@
-import ContactAdminAPI
 import ContactApplication
 import ContactModule
 import FeatherWebAdmin
@@ -19,15 +18,7 @@ extension FormField.List {
         }
 
         let environment: AppEnvironment
-        let routes: FormField.Router.Routes
-
-        func route(
-            on router: any RouterMethods<AuthenticatedRequestContext>
-        ) {
-            router.get(routes.formFieldsData.routerPath, use: get)
-        }
-
-        private func get(
+        func get(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
@@ -36,15 +27,12 @@ extension FormField.List {
                 environment: environment,
                 requestContext: context
             )
-            let result = try await api.client.contactFormGet(
-                path: .init(contactFormKey: formKey)
-            )
+            let repository = Repository.OpenAPI(api: api)
 
-            switch result {
-            case .ok(let response):
-                let form = try response.body.json
+            do {
                 let payload = Payload(
-                    items: (form.items ?? [])
+                    items: try await repository
+                        .formFieldOptions(formKey: formKey)
                         .map {
                             .init(key: $0.key, label: $0.label)
                         }
@@ -57,14 +45,9 @@ extension FormField.List {
                     headers: [.contentType: "application/json; charset=utf-8"],
                     body: .init(byteBuffer: buffer)
                 )
-            case .notFound:
-                return Response(status: .notFound)
-            case .unauthorized:
-                return Response(status: .unauthorized)
-            case .forbidden:
-                return Response(status: .forbidden)
-            case .undocumented:
-                return Response(status: .badGateway)
+            }
+            catch let error as OpenAPIRepositoryError {
+                return Response(status: error.httpStatus)
             }
         }
     }

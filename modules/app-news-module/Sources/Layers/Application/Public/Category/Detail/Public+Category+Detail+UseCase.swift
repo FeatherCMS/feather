@@ -5,6 +5,7 @@ import NewsDomain
 import NewsModule
 import WebApplication
 import WebDomain
+import WebModule
 
 extension Public.Category.Detail {
     public struct UseCase: FeatherApplication.UseCase {
@@ -51,7 +52,7 @@ extension Public.Category.Detail {
     }
 }
 
-extension UseCase {
+extension Public.Category.Detail.UseCase {
     fileprivate struct PublicArticlePage: Sendable {
         let items: [Public.Article.Summary.Item]
         let total: Int
@@ -62,24 +63,18 @@ extension UseCase {
     fileprivate static func publicArticles(
         matchingCategoryID categoryID: String,
         now: Date,
-        context: Scope,
+        context: Public.Category.Detail.Scope,
         pageNumber: Int,
         pageSize: Int
     ) async throws -> PublicArticlePage {
         let resolvedPageSize = max(1, pageSize)
         let requestedPage = max(1, pageNumber)
-        async let totalTask = context.article.countPublic(
+        async let totalTask = context.article.countPublicArticles(
             categoryID: categoryID
         )
-        async let requestedArticlesTask = context.article.listPublic(
-            query: .init(
-                page: .init(
-                    size: resolvedPageSize,
-                    number: requestedPage
-                ),
-                sort: [],
-                categoryID: categoryID
-            )
+        async let requestedArticlesTask = context.article.listPublicArticles(
+            categoryID: categoryID,
+            page: .init(size: resolvedPageSize, number: requestedPage)
         )
         let total = try await totalTask
         let requestedArticles = try await requestedArticlesTask
@@ -93,15 +88,9 @@ extension UseCase {
             articleItems = requestedArticles.items
         }
         else {
-            articleItems = try await context.article.listPublic(
-                query: .init(
-                    page: .init(
-                        size: resolvedPageSize,
-                        number: currentPage
-                    ),
-                    sort: [],
-                    categoryID: categoryID
-                )
+            articleItems = try await context.article.listPublicArticles(
+                categoryID: categoryID,
+                page: .init(size: resolvedPageSize, number: currentPage)
             )
         }
         async let categoryIDsTask = context.articleCategoryIDs.categoryIDs(

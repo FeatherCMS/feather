@@ -31,7 +31,7 @@ extension WebModule.Metadata {
             )
         }
 
-        public static func formValue<Detail: WebModule.Metadata.DetailSchema>(
+        public static func formValue<Detail: DetailSchema>(
             from detail: Detail
         ) -> AdminMetadataFormValue {
             .init(
@@ -53,7 +53,7 @@ extension WebModule.Metadata {
             )
         }
 
-        public static func formValue<Detail: WebModule.Metadata.DetailSchema>(
+        public static func formValue<Detail: DetailSchema>(
             from detail: Detail,
             fallbackTitle: String,
             fallbackExcerpt: String

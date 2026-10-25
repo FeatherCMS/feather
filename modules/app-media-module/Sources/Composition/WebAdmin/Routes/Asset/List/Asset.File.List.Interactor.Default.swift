@@ -41,7 +41,7 @@ extension Asset.File.List.Interactor {
                 allowedExtensions: picker.allowedExtensions.values
             )
 
-            let currentFolder: Components.Schemas.MediaFolderDetailSchema?
+            let currentFolder: Asset.Folder.Detail.Model?
             if let effectiveParentId {
                 currentFolder = try await repository.getFolder(
                     id: effectiveParentId
@@ -117,9 +117,9 @@ extension Asset.File.List.Interactor.Default {
     }
 
     fileprivate func loadAncestors(
-        for currentFolder: Components.Schemas.MediaFolderDetailSchema?
-    ) async throws -> [Components.Schemas.MediaFolderDetailSchema] {
-        var result: [Components.Schemas.MediaFolderDetailSchema] = []
+        for currentFolder: Asset.Folder.Detail.Model?
+    ) async throws -> [Asset.Folder.Detail.Model] {
+        var result: [Asset.Folder.Detail.Model] = []
         var cursor = currentFolder
         while let parentId = cursor?.parentId {
             let parent = try await repository.getFolder(id: parentId)

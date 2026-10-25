@@ -18,6 +18,7 @@ import WebComponents
 
 extension MagicLink.Add.Controller {
     struct Default: Interface {
+        let routes: MagicLink.Router.Routes
 
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
@@ -99,7 +100,7 @@ extension MagicLink.Add.Controller {
                     )
                 )
                 return AdminNotificationFlash.redirect(
-                    to: "/admin/auth/magic-links/",
+                    to: routes.list.path,
                     notification: .init(
                         title: "Added",
                         message: "User magic link added successfully."

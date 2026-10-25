@@ -123,6 +123,10 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
+            url: "https://github.com/apple/swift-nio",
+            from: "2.0.0"
+        ),
+        .package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
         ),
@@ -153,11 +157,6 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherMail", package: "feather-mail"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
-                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "NewsletterModule"),
                 .target(name: "NewsletterDomain"),
@@ -224,6 +223,7 @@ let package = Package(
                     package: "feather-core"
                 ),
 
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
             ],
@@ -238,6 +238,7 @@ let package = Package(
                     package: "feather-core"
                 ),
 
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
             ],
@@ -249,11 +250,6 @@ let package = Package(
             name: "NewsletterBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
-                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "NewsletterModule"),
                 .target(name: "NewsletterInfrastructure"),
@@ -268,6 +264,7 @@ let package = Package(
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
@@ -282,13 +279,8 @@ let package = Package(
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
 
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .target(name: "NewsletterApplication"),
                 .target(name: "NewsletterModule"),
                 .target(name: "NewsletterAdminAPI"),
@@ -359,7 +351,6 @@ let package = Package(
         .testTarget(
             name: "NewsletterBackendTests",
             dependencies: [
-                .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(
                     name: "FeatherDatabaseTesting",

@@ -1,4 +1,5 @@
 import NewsletterModule
+import NewsletterApplication
 
 extension Campaign.Subscriber.List {
     enum Repository {}

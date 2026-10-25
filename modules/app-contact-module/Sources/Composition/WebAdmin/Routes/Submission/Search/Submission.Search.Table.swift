@@ -10,7 +10,7 @@ import WebComponents
 extension Submission.Search {
     struct Table: Component {
         struct State {
-            let items: [Submission.Search.Model.Item]
+            let items: [Model.Item]
             let pageState: AdminListPageState
             let search: String
             let formKey: String?
@@ -41,6 +41,7 @@ extension Submission.Search {
                     context.build(
                         ContactModule.Form.TabBar(
                             formId: formKey,
+                            routes: state.routes.formRoutes,
                             active: .submissions
                         )
                     )

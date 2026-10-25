@@ -6,175 +6,6 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogListSchema`.
-        public typealias AnalyticsLogListSchema = [Components.Schemas.AnalyticsLogListItemSchema]
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema`.
-        public struct AnalyticsLogListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/id`.
-            public var id: Components.Schemas.AnalyticsLogIdField
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/accountId`.
-            public var accountId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/source`.
-            public var source: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/method`.
-            public var method: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/path`.
-            public var path: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/responseCode`.
-            public var responseCode: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/ip`.
-            public var ip: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/browserName`.
-            public var browserName: Swift.String
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSchema/createdAt`.
-            public var createdAt: Swift.Double
-            /// Creates a new `AnalyticsLogListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - accountId:
-            ///   - source:
-            ///   - method:
-            ///   - path:
-            ///   - responseCode:
-            ///   - ip:
-            ///   - browserName:
-            ///   - createdAt:
-            public init(
-                id: Components.Schemas.AnalyticsLogIdField,
-                accountId: Swift.String,
-                source: Swift.String,
-                method: Swift.String,
-                path: Swift.String,
-                responseCode: Swift.Int,
-                ip: Swift.String,
-                browserName: Swift.String,
-                createdAt: Swift.Double
-            ) {
-                self.id = id
-                self.accountId = accountId
-                self.source = source
-                self.method = method
-                self.path = path
-                self.responseCode = responseCode
-                self.ip = ip
-                self.browserName = browserName
-                self.createdAt = createdAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case accountId
-                case source
-                case method
-                case path
-                case responseCode
-                case ip
-                case browserName
-                case createdAt
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogIdField`.
-        public typealias AnalyticsLogIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
-        public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
-            public var error: Components.Schemas.DefaultHTTPErrorContentSchema
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/trace`.
-            public var trace: Components.Schemas.ErrorTraceSchema?
-            /// Creates a new `DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
-            ///
-            /// - Parameters:
-            ///   - error:
-            ///   - trace:
-            public init(
-                error: Components.Schemas.DefaultHTTPErrorContentSchema,
-                trace: Components.Schemas.ErrorTraceSchema? = nil
-            ) {
-                self.error = error
-                self.trace = trace
-            }
-            public enum CodingKeys: String, CodingKey {
-                case error
-                case trace
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema`.
-        public struct DefaultHTTPErrorContentSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/message`.
-            public var message: Swift.String
-            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/reason`.
-            public var reason: Swift.String
-            /// Creates a new `DefaultHTTPErrorContentSchema`.
-            ///
-            /// - Parameters:
-            ///   - message:
-            ///   - reason:
-            public init(
-                message: Swift.String,
-                reason: Swift.String
-            ) {
-                self.message = message
-                self.reason = reason
-            }
-            public enum CodingKeys: String, CodingKey {
-                case message
-                case reason
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema`.
-        public struct ErrorTraceSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/message`.
-            public var message: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/reasons`.
-            public var reasons: Components.Schemas.ErrorTraceReasonsSchema?
-            /// Creates a new `ErrorTraceSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - message:
-            ///   - reasons:
-            public init(
-                id: Swift.String,
-                message: Swift.String,
-                reasons: Components.Schemas.ErrorTraceReasonsSchema? = nil
-            ) {
-                self.id = id
-                self.message = message
-                self.reasons = reasons
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case message
-                case reasons
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonsSchema`.
-        public typealias ErrorTraceReasonsSchema = [Components.Schemas.ErrorTraceReasonSchema]
-        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema`.
-        public struct ErrorTraceReasonSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/message`.
-            public var message: Swift.String
-            /// Creates a new `ErrorTraceReasonSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - message:
-            public init(
-                id: Swift.String,
-                message: Swift.String
-            ) {
-                self.id = id
-                self.message = message
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case message
-            }
-        }
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewQuerySchema`.
         public struct AnalyticsLogOverviewQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewQuerySchema/source`.
@@ -468,6 +299,106 @@ extension Components {
                 case label
                 case count
                 case share
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+        public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
+            public var error: Components.Schemas.DefaultHTTPErrorContentSchema
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/trace`.
+            public var trace: Components.Schemas.ErrorTraceSchema?
+            /// Creates a new `DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+            ///
+            /// - Parameters:
+            ///   - error:
+            ///   - trace:
+            public init(
+                error: Components.Schemas.DefaultHTTPErrorContentSchema,
+                trace: Components.Schemas.ErrorTraceSchema? = nil
+            ) {
+                self.error = error
+                self.trace = trace
+            }
+            public enum CodingKeys: String, CodingKey {
+                case error
+                case trace
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema`.
+        public struct DefaultHTTPErrorContentSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/reason`.
+            public var reason: Swift.String
+            /// Creates a new `DefaultHTTPErrorContentSchema`.
+            ///
+            /// - Parameters:
+            ///   - message:
+            ///   - reason:
+            public init(
+                message: Swift.String,
+                reason: Swift.String
+            ) {
+                self.message = message
+                self.reason = reason
+            }
+            public enum CodingKeys: String, CodingKey {
+                case message
+                case reason
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema`.
+        public struct ErrorTraceSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/reasons`.
+            public var reasons: Components.Schemas.ErrorTraceReasonsSchema?
+            /// Creates a new `ErrorTraceSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            ///   - reasons:
+            public init(
+                id: Swift.String,
+                message: Swift.String,
+                reasons: Components.Schemas.ErrorTraceReasonsSchema? = nil
+            ) {
+                self.id = id
+                self.message = message
+                self.reasons = reasons
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+                case reasons
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonsSchema`.
+        public typealias ErrorTraceReasonsSchema = [Components.Schemas.ErrorTraceReasonSchema]
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema`.
+        public struct ErrorTraceReasonSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/message`.
+            public var message: Swift.String
+            /// Creates a new `ErrorTraceReasonSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            public init(
+                id: Swift.String,
+                message: Swift.String
+            ) {
+                self.id = id
+                self.message = message
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
             }
         }
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogQueryItemSearchRequestQuerySchema`.
@@ -876,6 +807,8 @@ extension Components {
                 case createdAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogIdField`.
+        public typealias AnalyticsLogIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogDetailSchema`.
         public struct AnalyticsLogDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogDetailSchema/id`.

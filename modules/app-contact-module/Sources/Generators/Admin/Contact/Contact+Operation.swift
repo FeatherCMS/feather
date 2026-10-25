@@ -6,5 +6,5 @@ extension Contact {
 }
 
 extension Contact.Operation {
-    var tags: [any TagRepresentable] { [ContactFormsTag()] }
+    var tags: [any TagRepresentable] { [Contact.Tag()] }
 }

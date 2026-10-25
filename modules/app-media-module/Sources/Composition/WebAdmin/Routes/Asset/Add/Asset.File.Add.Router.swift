@@ -13,7 +13,7 @@ import WebComponents
 extension Asset.File.Add {
     struct Router {
         private let routes: Asset.Router.Routes
-        let controller: any Asset.File.Add.Controller.Interface
+        let controller: any Controller.Interface
 
         init(
             environment: AppEnvironment,
@@ -21,11 +21,11 @@ extension Asset.File.Add {
             routes: Asset.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Asset.File.Add.Controller.Default(
+            self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Asset.File.Add.Interactor.Default(
-                            repository: Asset.File.Add.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context,
@@ -34,7 +34,7 @@ extension Asset.File.Add {
                             ),
                             routes: routes
                         ),
-                        presenter: Asset.File.Add.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,

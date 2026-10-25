@@ -41,7 +41,7 @@ extension Email.List {
                         )
                     )
                 )
-                context.build(Email.List.TableContent(state: state))
+                context.build(TableContent(state: state))
             }
             .class("cms-section")
         }

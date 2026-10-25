@@ -9,7 +9,7 @@ import WebComponents
 
 extension Asset.Picker.Dialog {
     struct View<Content: Component>: Component {
-        let navigation: Asset.Picker.Dialog.Navigation
+        let navigation: Navigation
         let content: Content
 
         func rules() -> [any CSS.Rule] {

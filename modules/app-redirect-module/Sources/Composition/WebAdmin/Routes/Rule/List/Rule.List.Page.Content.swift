@@ -1,3 +1,4 @@
+import Foundation
 import FeatherWebAdmin
 import FeatherWebShared
 import HTML
@@ -10,7 +11,7 @@ import WebComponents
 
 extension Rule.List.Page {
     struct Content: Component {
-        let state: Rule.List.Page.State
+        let state: State
 
         private var searchValue: String { state.search ?? "" }
 

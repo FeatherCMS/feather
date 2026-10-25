@@ -12,7 +12,7 @@ extension AppAPIGateway {
         _ input: Operations.PageGet.Input
     ) async throws -> Operations.PageGet.Output {
         do {
-            let detail = try await useCases.makeGetPublicPageByID()
+            let detail = try await useCases.makeDetailPublicPageByID()
                 .execute(
                     input: .init(id: input.path.id)
                 )

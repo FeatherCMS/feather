@@ -1,21 +1,42 @@
 public import BlogModule
 public import FeatherWebAdmin
 public import FeatherWebShared
+import Foundation
 import Hummingbird
 
 extension Author {
     public enum Router {
         public struct Routes: Sendable {
             let authors: WebRoute
+            let mediaAssetList: WebRoute
             let authorsBreadcrumb: [AdminBreadcrumb.Link]
 
-            public init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
+            public init(
+                root: WebRoute,
+                breadcrumb: [AdminBreadcrumb.Link],
+                mediaAssetList: WebRoute
+            ) {
                 let authors = root.appending(pathComponent: "authors")
                 self.authors = authors
+                self.mediaAssetList = mediaAssetList
                 self.authorsBreadcrumb =
                     breadcrumb + [
                         .init(label: "Authors", link: authors.path)
                     ]
+            }
+
+            func imagePickerPath(_ field: String) -> String {
+                var components = URLComponents()
+                components.path = mediaAssetList.path
+                components.queryItems = [
+                    URLQueryItem(name: "picker", value: "1"),
+                    URLQueryItem(name: "field", value: field),
+                    URLQueryItem(
+                        name: "extensions",
+                        value: AllowedExtensions.images.queryValue
+                    ),
+                ]
+                return components.string ?? components.path
             }
 
             var authorAddRoute: WebRoute {
@@ -36,34 +57,34 @@ extension Author {
                     .appending(pathComponent: "status")
             }
 
-            func author(_ id: String) -> String {
+            func authorPath(_ id: String) -> String {
                 authors.appending(parameter: "id")
                     .path(parameter: "id", value: id)
             }
 
-            func authorAdd() -> String {
+            func authorAddPath() -> String {
                 authorAddRoute.path
             }
 
-            func authorRemove() -> String {
+            func authorRemovePath() -> String {
                 authorRemoveRoute.path
             }
 
-            func authorRemove(_ id: String) -> String {
+            func authorRemovePath(_ id: String) -> String {
                 authorRemoveByIDRoute
                     .path(parameter: "id", value: id)
             }
 
-            func authorEdit(_ id: String) -> String {
+            func authorEditPath(_ id: String) -> String {
                 authors.appending(parameter: "id")
                     .appending(pathComponent: "edit")
                     .path(parameter: "id", value: id)
             }
 
-            func authorEditMetadata(_ id: String, _ metadataID: String)
+            func authorEditMetadataPath(_ id: String, _ metadataID: String)
                 -> String
             {
-                resolved(
+                resolvedPath(
                     authors.appending(parameter: "id")
                         .appending(pathComponent: "edit")
                         .appending(pathComponent: "metadata")
@@ -82,13 +103,13 @@ extension Author {
                     .appending(parameter: "metadataID")
             }
 
-            func authorStatus(_ id: String) -> String {
+            func authorStatusPath(_ id: String) -> String {
                 authors.appending(parameter: "id")
                     .appending(pathComponent: "status")
                     .path(parameter: "id", value: id)
             }
 
-            private func resolved(
+            private func resolvedPath(
                 _ route: WebRoute,
                 parameters: [String: String]
             ) -> String {

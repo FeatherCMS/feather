@@ -32,7 +32,10 @@ extension Author.Add {
                 context.build(
                     Author.Form(
                         state: state.form,
-                        action: state.routes.authorAdd(),
+                        browsePath: state.routes.imagePickerPath(
+                            state.form.profileImageAssetId.key
+                        ),
+                        action: state.routes.authorAddPath(),
                         submitLabel: "Add author"
                     )
                 )

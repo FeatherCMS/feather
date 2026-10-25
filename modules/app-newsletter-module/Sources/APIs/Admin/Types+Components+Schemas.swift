@@ -523,28 +523,28 @@ extension Components {
             }
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterIssueListSchema`.
-        public typealias NewsletterIssueListSchema = [Components.Schemas.NewsletterIssueSchema]
-        /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema`.
-        public struct NewsletterIssueSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/id`.
+        public typealias NewsletterIssueListSchema = [Components.Schemas.NewsletterIssueListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema`.
+        public struct NewsletterIssueListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/campaignKey`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema/campaignKey`.
             public var campaignKey: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/subject`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema/subject`.
             public var subject: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/content`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema/content`.
             public var content: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/status`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema/status`.
             public var status: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/scheduledAt`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema/scheduledAt`.
             public var scheduledAt: Components.Schemas.NewsletterTimestampField?
-            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/sentAt`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema/sentAt`.
             public var sentAt: Components.Schemas.NewsletterTimestampField?
-            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueListItemSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `NewsletterIssueSchema`.
+            /// Creates a new `NewsletterIssueListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -618,6 +618,71 @@ extension Components {
                 case subject
                 case content
                 case scheduledAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema`.
+        public struct NewsletterIssueSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/campaignKey`.
+            public var campaignKey: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/subject`.
+            public var subject: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/content`.
+            public var content: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/status`.
+            public var status: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/scheduledAt`.
+            public var scheduledAt: Components.Schemas.NewsletterTimestampField?
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/sentAt`.
+            public var sentAt: Components.Schemas.NewsletterTimestampField?
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `NewsletterIssueSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - campaignKey:
+            ///   - subject:
+            ///   - content:
+            ///   - status:
+            ///   - scheduledAt:
+            ///   - sentAt:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                campaignKey: Swift.String,
+                subject: Swift.String,
+                content: Swift.String,
+                status: Swift.String,
+                scheduledAt: Components.Schemas.NewsletterTimestampField? = nil,
+                sentAt: Components.Schemas.NewsletterTimestampField? = nil,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.campaignKey = campaignKey
+                self.subject = subject
+                self.content = content
+                self.status = status
+                self.scheduledAt = scheduledAt
+                self.sentAt = sentAt
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case campaignKey
+                case subject
+                case content
+                case status
+                case scheduledAt
+                case sentAt
+                case createdAt
+                case updatedAt
             }
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterIssueQueryItemSearchRequestQuerySchema`.
@@ -934,7 +999,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsletterDeliverySchema/subscriberEmail`.
             public var subscriberEmail: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsletterDeliverySchema/status`.
-            public var status: Swift.String
+            public var status: Components.Schemas.NewsletterDeliveryStatusField
             /// - Remark: Generated from `#/components/schemas/NewsletterDeliverySchema/sentAt`.
             public var sentAt: Components.Schemas.NewsletterTimestampField?
             /// - Remark: Generated from `#/components/schemas/NewsletterDeliverySchema/failureReason`.
@@ -954,7 +1019,7 @@ extension Components {
             ///   - updatedAt:
             public init(
                 subscriberEmail: Swift.String,
-                status: Swift.String,
+                status: Components.Schemas.NewsletterDeliveryStatusField,
                 sentAt: Components.Schemas.NewsletterTimestampField? = nil,
                 failureReason: Components.Schemas.NewsletterContentField? = nil,
                 createdAt: Swift.Double,
@@ -976,31 +1041,33 @@ extension Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/NewsletterDeliveryStatusField`.
+        public typealias NewsletterDeliveryStatusField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListSchema`.
-        public typealias NewsletterSubscriberListSchema = [Components.Schemas.NewsletterSubscriberSchema]
-        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema`.
-        public struct NewsletterSubscriberSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/id`.
+        public typealias NewsletterSubscriberListSchema = [Components.Schemas.NewsletterSubscriberListItemSchema]
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema`.
+        public struct NewsletterSubscriberListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/campaignKey`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/campaignKey`.
             public var campaignKey: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/email`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/email`.
             public var email: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/status`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/status`.
             public var status: Swift.String
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/subscriptionDate`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/subscriptionDate`.
             public var subscriptionDate: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/unsubscriptionDate`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/unsubscriptionDate`.
             public var unsubscriptionDate: Components.Schemas.NewsletterTimestampField?
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/firstName`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/firstName`.
             public var firstName: Components.Schemas.NewsletterNameField?
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/lastName`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/lastName`.
             public var lastName: Components.Schemas.NewsletterNameField?
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberListItemSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `NewsletterSubscriberSchema`.
+            /// Creates a new `NewsletterSubscriberListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -1086,6 +1153,77 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberStatusField`.
         public typealias NewsletterSubscriberStatusField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema`.
+        public struct NewsletterSubscriberSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/campaignKey`.
+            public var campaignKey: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/email`.
+            public var email: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/status`.
+            public var status: Swift.String
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/subscriptionDate`.
+            public var subscriptionDate: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/unsubscriptionDate`.
+            public var unsubscriptionDate: Components.Schemas.NewsletterTimestampField?
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/firstName`.
+            public var firstName: Components.Schemas.NewsletterNameField?
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/lastName`.
+            public var lastName: Components.Schemas.NewsletterNameField?
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `NewsletterSubscriberSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - campaignKey:
+            ///   - email:
+            ///   - status:
+            ///   - subscriptionDate:
+            ///   - unsubscriptionDate:
+            ///   - firstName:
+            ///   - lastName:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Swift.String,
+                campaignKey: Swift.String,
+                email: Swift.String,
+                status: Swift.String,
+                subscriptionDate: Swift.Double,
+                unsubscriptionDate: Components.Schemas.NewsletterTimestampField? = nil,
+                firstName: Components.Schemas.NewsletterNameField? = nil,
+                lastName: Components.Schemas.NewsletterNameField? = nil,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.campaignKey = campaignKey
+                self.email = email
+                self.status = status
+                self.subscriptionDate = subscriptionDate
+                self.unsubscriptionDate = unsubscriptionDate
+                self.firstName = firstName
+                self.lastName = lastName
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case campaignKey
+                case email
+                case status
+                case subscriptionDate
+                case unsubscriptionDate
+                case firstName
+                case lastName
+                case createdAt
+                case updatedAt
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema`.
         public struct NewsletterSubscriberQueryItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/page`.
@@ -1095,7 +1233,6 @@ extension Components {
                 /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case email = "email"
-                    case name = "name"
                 }
                 /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchRequestQuerySchema/SortPayload/field`.
                 public var field: Components.Schemas.NewsletterSubscriberQueryItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
@@ -1229,7 +1366,6 @@ extension Components {
                 /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case email = "email"
-                    case name = "name"
                 }
                 /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryItemSearchResponseQuerySchema/SortPayload/field`.
                 public var field: Components.Schemas.NewsletterSubscriberQueryItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload

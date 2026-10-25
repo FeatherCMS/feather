@@ -6,9 +6,7 @@ import OpenAPIRuntime
 
 extension Invitation.Edit.Repository {
 
-    struct OpenAPI:
-        Invitation.Edit.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func get(

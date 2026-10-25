@@ -21,15 +21,10 @@ extension Public.Category.List {
         public func execute() async throws -> Output {
             let now = Date()
             return try await query.run { scope in
-                let categories = try await scope.category.list(
-                    query: .init(
-                        page: .init(size: 10000, number: 1),
-                        sort: [.init(field: .createdAt, direction: .desc)]
-                    )
-                )
+                let categories = try await scope.category.list()
                 let metadata = try await scope.metadataDetails.resolveDetails(
                     referenceType: "news.category",
-                    referenceIDs: Array(Set(categories.items.map(\.id)))
+                    referenceIDs: Array(Set(categories.map(\.id)))
                 )
                 var metadataByID: [String: WebModule.Metadata.Snapshot] = [:]
                 for item in metadata where item.isPublic(at: now) {
@@ -40,7 +35,7 @@ extension Public.Category.List {
                         ) == nil
                     )
                 }
-                let items: [Public.Category.Summary.Item] = categories.items
+                let items: [Public.Category.Summary.Item] = categories
                     .compactMap { item -> Public.Category.Summary.Item? in
                     guard let metadata = metadataByID[item.id] else {
                         return nil

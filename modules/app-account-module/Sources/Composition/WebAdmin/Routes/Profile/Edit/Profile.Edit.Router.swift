@@ -3,10 +3,11 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import MediaWebAdmin
+import MediaModule
 
 extension Profile.Edit {
     struct Router {
-        let controller: any Profile.Edit.Controller.Interface
+        let controller: any Controller.Interface
         let routes: Profile.Router.Routes
 
         init(
@@ -15,24 +16,27 @@ extension Profile.Edit {
             routes: Profile.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Profile.Edit.Controller.Default(
+            self.controller = Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Profile.Edit.Interactor.Default(
+                        interactor: Interactor.Default(
                             profileRepository:
-                                Profile.Edit.Repository.OpenAPI(
+                                Repository.OpenAPI(
                                     api: API.Client(
                                         environment: environment,
                                         requestContext: context
                                     ),
-                                    mediaAPI: MediaWebAdmin.API.Client(
-                                        environment: environment,
-                                        requestContext: context
-                                    )
+                                    mediaRepository: MediaModule.Asset.File.View
+                                        .Repository.OpenAPI(
+                                            api: MediaWebAdmin.API.Client(
+                                                environment: environment,
+                                                requestContext: context
+                                            )
+                                        )
                                 )
                         ),
-                        presenter: Profile.Edit.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,

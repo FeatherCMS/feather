@@ -164,13 +164,14 @@ extension Settings.Edit.Repository {
                     )
                 }
 
-                let detailsRepository = Page.Metadata.Repository.OpenAPI(
+                let detailsRepository = WebModule.Page.Metadata.Repository.OpenAPI(
                     api: api
                 )
                 return try await withThrowingTaskGroup(
                     of: IndexedHomePage.self
                 ) { group in
-                    for (index, item) in items.enumerated() {
+                    for index in items.indices {
+                        let item = items[index]
                         group.addTask {
                             let details =
                                 try await detailsRepository.load(id: item.id)

@@ -5,9 +5,7 @@ import Hummingbird
 import SystemModule
 
 extension Permission.Edit.Controller {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Permission.Edit.Interactor.Interface,

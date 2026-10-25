@@ -21,7 +21,7 @@ extension Author.View {
                 buildRuntime: { request, context in
                     WebAdminRuntime(
                         interactor: Interactor.Default(
-                            repository: Author.View.Repository.OpenAPI(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context

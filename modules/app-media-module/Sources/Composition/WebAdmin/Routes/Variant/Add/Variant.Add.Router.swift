@@ -6,7 +6,7 @@ import MediaModule
 extension Variant.Add {
     struct Router {
         private let routes: Variant.Router.Routes
-        let controller: any Variant.Add.Controller.Interface
+        let controller: any Controller.Interface
 
         init(
             environment: AppEnvironment,
@@ -14,18 +14,18 @@ extension Variant.Add {
             routes: Variant.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Variant.Add.Controller.Default(
+            self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Variant.Add.Interactor.Default(
-                            repository: Variant.Add.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )
                             )
                         ),
-                        presenter: Variant.Add.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderingEngine: renderingEngine,

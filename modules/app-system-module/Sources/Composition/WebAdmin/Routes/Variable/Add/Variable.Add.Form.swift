@@ -53,7 +53,7 @@ extension Variable.Add {
             )
         }
 
-        static func from(input: Variable.Add.Form.Input) -> Self {
+        static func from(input: Form.Input) -> Self {
             .init(
                 key: .init(
                     name: "key",

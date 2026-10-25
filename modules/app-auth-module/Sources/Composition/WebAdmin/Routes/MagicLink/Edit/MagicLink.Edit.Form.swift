@@ -27,6 +27,7 @@ extension MagicLink.Edit.Form {
             let isEdited: Bool
             let form: MagicLink.Add.Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: MagicLink.Router.Routes
         }
 
         let state: State
@@ -47,10 +48,9 @@ extension MagicLink.Edit.Form {
                 context.build(
                     MagicLink.Add.Form(
                         state: state.form,
-                        action: "/admin/auth/magic-links/\(state.id)/edit/",
+                        action: state.routes.editPath(state.id),
                         submitLabel: "Edit magic link",
-                        removeHref:
-                            "/admin/auth/magic-links/\(state.id)/remove/",
+                        removeHref: state.routes.removePath(state.id),
                         removeLabel: "Remove magic link"
                     )
                 )

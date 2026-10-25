@@ -9,7 +9,7 @@ extension AdminAPIGateway {
         _ input: Operations.SystemVariableGet.Input
     ) async throws -> Operations.SystemVariableGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = self.useCases.makeGetVariable()
+        let useCase = self.useCases.makeDetailVariable()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.systemVariableId)

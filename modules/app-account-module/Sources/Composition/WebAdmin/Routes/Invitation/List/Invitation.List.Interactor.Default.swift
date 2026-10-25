@@ -3,9 +3,7 @@ import AccountModule
 
 extension Invitation.List.Interactor {
 
-    struct Default:
-        Invitation.List.Interactor.Interface
-    {
+    struct Default: Interface {
         let repository: any Invitation.List.Repository.Interface
 
         func execute(

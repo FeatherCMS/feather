@@ -53,7 +53,8 @@ extension Post.List.Repository {
         ) async throws -> [Post.List.Item] {
             try await withThrowingTaskGroup(of: IndexedItem.self) {
                 group in
-                for (index, item) in items.enumerated() {
+                for index in items.indices {
+                    let item = items[index]
                     group.addTask {
                         let details = try await Post.View.Repository
                             .OpenAPI(

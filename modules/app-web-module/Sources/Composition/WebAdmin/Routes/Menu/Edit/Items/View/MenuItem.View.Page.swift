@@ -12,7 +12,7 @@ import WebModule
 extension MenuItem.View {
     struct Page: WebComponents.Component {
         struct State {
-            let item: MenuItem.View.Model
+            let item: Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let routes: MenuItem.Router.Routes
         }

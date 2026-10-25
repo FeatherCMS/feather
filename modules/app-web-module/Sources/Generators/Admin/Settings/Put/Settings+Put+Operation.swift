@@ -7,11 +7,11 @@ extension Settings.Put {
         var operationId: String? { "settingsPut" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            SettingsUpdateRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
-            [200: SettingsDetailResponse().reference()]
+            [200: Settings.Get.Response().reference()]
         }
     }
 }

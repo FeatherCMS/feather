@@ -4,7 +4,7 @@ import AccountModule
 import FeatherInfrastructure
 
 extension UseCases {
-    func makeEditAccountProfile() -> Profile.Edit.UseCase {
+    func makeEditProfile() -> Profile.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in

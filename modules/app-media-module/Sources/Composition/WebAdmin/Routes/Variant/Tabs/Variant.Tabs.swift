@@ -13,7 +13,7 @@ extension Variant {
 
         let id: String
         let active: Tab
-        let routes: Variant.Router.Routes
+        let routes: Router.Routes
 
         var links: [AdminTabBar.Link] {
             [

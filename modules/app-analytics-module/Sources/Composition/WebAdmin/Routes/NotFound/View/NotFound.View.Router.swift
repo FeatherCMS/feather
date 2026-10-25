@@ -37,7 +37,7 @@ extension NotFound.View {
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
             router.get(
-                AnalyticsWebAdmin.Router.Routes.notFound,
+                AnalyticsWebAdmin.Router.Routes.notFound.routerPath,
                 use: controller.getNotFound
             )
         }

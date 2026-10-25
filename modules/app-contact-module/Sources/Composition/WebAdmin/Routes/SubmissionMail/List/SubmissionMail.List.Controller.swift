@@ -22,11 +22,3 @@ extension SubmissionMail.List.Controller {
     }
 }
 
-extension SubmissionMail.List.Controller.Interface {
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: SubmissionMail.Router.Routes
-    ) {
-        router.get(routes.formEmails.routerPath, use: list)
-    }
-}

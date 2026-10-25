@@ -9,7 +9,7 @@ extension Variable.Get {
         }
         var responseMap: ResponseMap {
             [
-                200: Variable.Get.Response().reference(),
+                200: Response().reference(),
                 404: DefaultHTTPErrorContentResponse(
                     description: "SystemVariable not found"
                 ),

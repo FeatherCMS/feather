@@ -8,7 +8,7 @@ import WebComponents
 extension Role.Detail {
     struct Details: Component {
         let routes: Role.Router.Routes
-        let role: Role.Detail.Repository.Model
+        let role: Repository.Model
         let permissions: AdminListActions
 
         func html(context: inout BuilderContext) -> Section {

@@ -5,9 +5,7 @@ import Hummingbird
 
 extension Settings.Edit.Presenter {
 
-    struct Default:
-        Settings.Edit.Presenter.Interface
-    {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine

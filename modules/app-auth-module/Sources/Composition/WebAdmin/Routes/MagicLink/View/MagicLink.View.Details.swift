@@ -9,9 +9,10 @@ import WebComponents
 extension MagicLink.View {
     struct Details: WebComponents.Component {
         struct State {
-            let link: MagicLink.View.Detail
+            let link: Detail
             let permissions: Set<String>
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: MagicLink.Router.Routes
         }
 
         let state: State
@@ -47,7 +48,7 @@ extension MagicLink.View {
                 actions.append(
                     .init(
                         label: "Edit magic link",
-                        href: "/admin/auth/magic-links/\(state.link.id)/edit/",
+                        href: state.routes.editPath(state.link.id),
                         style: .primary
                     )
                 )
@@ -58,8 +59,7 @@ extension MagicLink.View {
                 actions.append(
                     .init(
                         label: "Remove magic link",
-                        href:
-                            "/admin/auth/magic-links/\(state.link.id)/remove/",
+                        href: state.routes.removePath(state.link.id),
                         style: .destructive
                     )
                 )

@@ -4,13 +4,13 @@ extension Tag.Query {
     struct ItemSchema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "id": BlogTagIdField().reference(),
-                "title": BlogTagTitleField().reference(),
-                "excerpt": BlogTagExcerptField().reference(),
-                "imageAssetId": BlogTagImageAssetIdField()
+                "id": Tag.Schemas.ID().reference(),
+                "title": Tag.Schemas.Title().reference(),
+                "excerpt": Tag.Schemas.Excerpt().reference(),
+                "imageAssetId": Tag.Schemas.ImageAssetID()
                     .reference(required: false),
-                "createdAt": BlogTagCreatedAtField().reference(),
-                "updatedAt": BlogTagUpdatedAtField().reference(),
+                "createdAt": Tag.Schemas.CreatedAt().reference(),
+                "updatedAt": Tag.Schemas.UpdatedAt().reference(),
             ]
         }
     }

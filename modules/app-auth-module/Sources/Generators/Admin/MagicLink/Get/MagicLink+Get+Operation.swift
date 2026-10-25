@@ -9,7 +9,7 @@ extension MagicLink.Get {
 
         var responseMap: ResponseMap {
             [
-                200: MagicLink.Get.Response().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "AuthMagicLink not found"),
             ]
         }

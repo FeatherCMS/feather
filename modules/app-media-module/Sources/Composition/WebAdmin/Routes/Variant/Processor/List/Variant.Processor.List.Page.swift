@@ -40,7 +40,7 @@ extension Variant.Processor.List {
                     )
                 )
                 context.build(
-                    Variant.Processor.List.Page.Content(
+                    Page.Content(
                         variantId: variantId,
                         processors: processors,
                         pageState: pageState,

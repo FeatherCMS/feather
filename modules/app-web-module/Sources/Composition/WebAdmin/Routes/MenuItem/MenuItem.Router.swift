@@ -1,3 +1,4 @@
+import Foundation
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
@@ -101,7 +102,7 @@ extension MenuItem {
         let routes: Routes
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            MenuItem.List
+            List
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,
@@ -109,7 +110,7 @@ extension MenuItem {
                 )
                 .route(on: router)
 
-            MenuItem.View
+            View
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,
@@ -117,7 +118,7 @@ extension MenuItem {
                 )
                 .route(on: router)
 
-            MenuItem.Add
+            Add
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,
@@ -125,7 +126,7 @@ extension MenuItem {
                 )
                 .route(on: router)
 
-            MenuItem.Edit
+            Edit
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,
@@ -133,7 +134,7 @@ extension MenuItem {
                 )
                 .route(on: router)
 
-            MenuItem.Remove
+            Remove
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,

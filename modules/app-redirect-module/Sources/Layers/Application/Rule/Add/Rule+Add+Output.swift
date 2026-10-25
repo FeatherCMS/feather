@@ -1,19 +1,20 @@
 public import FeatherApplication
 public import RedirectModule
+public import RedirectDomain
 
 extension Rule.Add {
     public struct Output: DTO {
         public let id: String
         public let source: String
         public let destination: String
-        public let statusCode: Rule.StatusCode
+        public let statusCode: Rule.Model.StatusCode
         public let notes: String?
 
         package init(
             id: String,
             source: String,
             destination: String,
-            statusCode: Rule.StatusCode,
+            statusCode: Rule.Model.StatusCode,
             notes: String?
         ) {
             self.id = id

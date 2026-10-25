@@ -17,7 +17,7 @@ extension Asset.File.List.Repository {
             search: String?,
             parentId: String?,
             allowedExtensions: [String]
-        ) async throws -> Asset.File.List.Repository.Result
+        ) async throws -> Result
 
         func listFolders(
             parentId: String?
@@ -35,7 +35,7 @@ extension Asset.File.List.Repository {
 
         func getFolder(
             id: String
-        ) async throws -> Components.Schemas.MediaFolderDetailSchema
+        ) async throws -> Asset.Folder.Detail.Model
     }
 }
 

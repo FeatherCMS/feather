@@ -94,7 +94,7 @@ extension Asset.File.Remove {
     }
 }
 
-extension UseCase {
+extension Asset.File.Remove.UseCase {
     fileprivate func adjustFolderAggregates(
         folders: any Asset.Folder.Repository.Interface,
         folderId: String?,

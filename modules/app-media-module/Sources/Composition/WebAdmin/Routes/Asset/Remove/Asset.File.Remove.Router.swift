@@ -13,7 +13,7 @@ import WebComponents
 extension Asset.File.Remove {
     struct Router {
         private let routes: Asset.Router.Routes
-        let controller: any Asset.File.Remove.Controller.Interface
+        let controller: any Controller.Interface
 
         init(
             environment: AppEnvironment,
@@ -21,18 +21,18 @@ extension Asset.File.Remove {
             routes: Asset.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Asset.File.Remove.Controller.Default(
+            self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Asset.File.Remove.Interactor.Default(
-                            repository: Asset.File.Remove.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )
                             )
                         ),
-                        presenter: Asset.File.Remove.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,

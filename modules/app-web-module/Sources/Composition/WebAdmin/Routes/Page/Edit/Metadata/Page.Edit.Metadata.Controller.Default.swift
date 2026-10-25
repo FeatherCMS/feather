@@ -19,7 +19,8 @@ extension Page.Edit.Metadata.Controller {
             self.handler = WebModule.Metadata.Edit.Handler(
                 environment: environment,
                 renderingEngine: renderingEngine,
-                adminEvents: events
+                adminEvents: events,
+                mediaAssetList: routes.mediaAssetList
             )
             self.routes = routes
         }

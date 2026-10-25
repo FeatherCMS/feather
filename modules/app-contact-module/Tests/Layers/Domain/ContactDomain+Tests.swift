@@ -60,6 +60,30 @@ struct ContactDomainTests {
     }
 
     @Test
+    func formFieldUpdateLeavesUnchangedFieldsUntouched() throws {
+        let date = Date(timeIntervalSince1970: 0)
+        var field = FormField.Model(
+            id: "field-1",
+            formId: "form-1",
+            key: "name",
+            type: .text,
+            label: "Name",
+            allowedValues: [],
+            isRequired: false,
+            position: 1,
+            createdAt: date,
+            updatedAt: date
+        )
+
+        try field.update(isRequired: .set(true))
+
+        #expect(field.key == "name")
+        #expect(field.label == "Name")
+        #expect(field.isRequired)
+        #expect(field.position == 1)
+    }
+
+    @Test
     func submissionPreservesPayloadAndSnapshot() {
         let submission = Submission.Model.create(
             formId: "form-1",

@@ -108,7 +108,7 @@ extension MenuItem.Search.Query {
                         priority: $0.priority,
                         isBlank: $0.isBlank,
                         permission: $0.permission,
-                        authentication: MenuItem.Authentication(
+                        authentication: MenuItem.Model.Authentication(
                             rawValue: $0.authentication
                         ) ?? .any,
                         createdAt: $0.createdAt,

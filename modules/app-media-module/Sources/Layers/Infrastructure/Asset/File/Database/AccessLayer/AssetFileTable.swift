@@ -180,7 +180,7 @@ extension Asset.File {
 
         func delete(ids: [String]) async throws -> [String] {
             guard !ids.isEmpty else { return [] }
-            return try await AssetFileDeleteQuery(connection: connection)
+            return try await DeleteQuery(connection: connection)
                 .delete(ids: ids)
         }
 

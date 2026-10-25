@@ -43,7 +43,7 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
             return response
         }
 
-        let useCase = analytics.makeLogTrack()
+        let useCase = analytics.makeTrackLog()
         let accountId = await resolveAccountID(request)
         let headers = Self.storedHeaders(from: request)
         let acceptLanguage = request.headers[.acceptLanguage]

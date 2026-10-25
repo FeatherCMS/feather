@@ -10,7 +10,7 @@ extension AdminAPIGateway {
     public func contactFormGet(
         _ input: Operations.ContactFormGet.Input
     ) async throws -> Operations.ContactFormGet.Output {
-        let result = try await self.useCases.makeGetContactForm()
+        let result = try await self.useCases.makeDetailForm()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input: .init(key: input.path.contactFormKey)

@@ -43,14 +43,14 @@ extension AuthorLink.Edit {
                             state: state.form,
                             action:
                                 state.routes
-                                .authorLinkEdit(
+                                .authorLinkEditPath(
                                     state.authorID,
                                     state.id
                                 ),
                             submitLabel: "Edit link",
                             removeHref:
                                 state.routes
-                                .authorLinkRemove(
+                                .authorLinkRemovePath(
                                     state.authorID
                                 ),
                             removeLabel: "Remove link"

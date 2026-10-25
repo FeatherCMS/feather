@@ -31,7 +31,7 @@ extension Page.Add {
                         excerpt: input.excerpt,
                         content: input.content,
                         imageAssetId: input.imageAssetId,
-                        metadata: input.metadata.asMetadataBase()
+                        metadata: input.metadata
                     )
                 )
             }

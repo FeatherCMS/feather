@@ -37,12 +37,12 @@ extension Login.Form {
     }
     }
 
-    extension Login.Form.Input {
+    extension Input {
 
     private var validator: GroupValidator {
         GroupValidator {
-            Login.Form.Validator.email(email, required: true)
-            Login.Form.Validator.password(password, required: true)
+            Validator.email(email, required: true)
+            Validator.password(password, required: true)
         }
     }
 

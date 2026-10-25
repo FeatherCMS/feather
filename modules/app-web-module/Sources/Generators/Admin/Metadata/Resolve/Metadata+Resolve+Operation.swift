@@ -6,12 +6,12 @@ extension Metadata.Resolve {
     struct Operation: Metadata.Operation, BearerProtectedOperation {
         var operationId: String? { "metadataResolve" }
         var requestBody: (any RequestBodyRepresentable)? {
-            MetadataResolveRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                200: MetadataResolveResponse().reference()
+                200: Response().reference()
             ]
         }
     }

@@ -13,24 +13,24 @@ extension Metadata {
 
             func find(
                 id: String
-            ) async throws -> Metadata.Model?
+            ) async throws -> Model?
 
             func find(
                 slug: String
-            ) async throws -> Metadata.Model?
+            ) async throws -> Model?
 
             func find(
                 referenceType: String,
                 referenceId: String
-            ) async throws -> Metadata.Model?
+            ) async throws -> Model?
 
             func insert(
-                _ model: Metadata.Model.New
-            ) async throws -> Metadata.Model
+                _ model: Model.New
+            ) async throws -> Model
 
             func update(
-                _ model: Metadata.Model
-            ) async throws -> Metadata.Model
+                _ model: Model
+            ) async throws -> Model
 
             func delete(
                 ids: [String]

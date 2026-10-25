@@ -3,9 +3,7 @@ import FeatherWebShared
 import SystemModule
 
 extension Permission.Remove.Interactor {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let repository:
             any Permission.Remove.Repository
                 .Interface

@@ -47,7 +47,7 @@ extension FormField.Table.List {
     }
 }
 
-extension FormFieldTable.Row {
+extension FormField.AccessLayer.Row {
     var asDomain: FormField.Model {
         get throws {
             guard let type = FormField.Model.ItemType(rawValue: type) else {
@@ -87,7 +87,7 @@ extension FormField.Repository {
                 key: model.key,
                 type: model.type.rawValue,
                 label: model.label,
-                allowedValues: try FormField.Model.Option.jsonString(
+                allowedValues: try FormField.AccessLayer.jsonString(
                     model.allowedValues
                 ),
                 isRequired: model.isRequired
@@ -111,7 +111,10 @@ extension FormField.Repository {
             -> FormField.Model?
         {
             if let formId {
-                return try await FormFieldTable(connection: context.connection)
+                return
+                    try await FormField.AccessLayer(
+                        connection: context.connection
+                    )
                     .find(id: id, formId: formId)
                     .map { try $0.asDomain }
             }
@@ -121,7 +124,10 @@ extension FormField.Repository {
 
         public func listBy(formId: String?) async throws -> [FormField.Model] {
             if let formId {
-                return try await FormFieldTable(connection: context.connection)
+                return
+                    try await FormField.AccessLayer(
+                        connection: context.connection
+                    )
                     .list(formId: formId)
                     .map { try $0.asDomain }
             }
@@ -130,7 +136,7 @@ extension FormField.Repository {
         }
 
         public func listUnassigned() async throws -> [FormField.Model] {
-            try await FormFieldTable(connection: context.connection)
+            try await FormField.AccessLayer(connection: context.connection)
                 .listUnassigned()
                 .map { try $0.asDomain }
         }
@@ -168,7 +174,7 @@ extension FormField.Repository {
                     key: model.key,
                     type: model.type.rawValue,
                     label: model.label,
-                    allowedValues: try FormField.Model.Option.jsonString(
+                    allowedValues: try FormField.AccessLayer.jsonString(
                         model.allowedValues
                     ),
                     isRequired: model.isRequired
@@ -203,7 +209,8 @@ extension FormField.Repository {
                 try await accessLayer.delete(where: \.id, in: ids)
                 return existingIDs
             }
-            return try await FormFieldTable(connection: context.connection)
+            return
+                try await FormField.AccessLayer(connection: context.connection)
                 .delete(ids: ids, formId: formId)
         }
     }

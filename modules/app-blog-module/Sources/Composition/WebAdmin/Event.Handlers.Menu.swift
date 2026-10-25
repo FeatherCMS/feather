@@ -1,10 +1,14 @@
 public import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import SystemModule
 import SystemWebAdmin
 
 extension Event.Handlers {
-    public static func registerMenu(in events: inout EventRegistry) {
+    public static func registerMenu(
+        in events: inout EventRegistry,
+        routes: Router.Routes
+    ) {
         events.register(
             event: SystemWebAdmin.Admin.Menu.Group.Provider.self,
             context: SystemWebAdmin.Admin.Menu.Context.self
@@ -29,28 +33,28 @@ extension Event.Handlers {
                     menuKey: "blog",
                     label: "Posts",
                     icon: "fileText",
-                    link: "/admin/blog/posts/",
+                    link: routes.post.posts.path,
                     permission: "blog:posts:list"
                 ),
                 .init(
                     menuKey: "blog",
                     label: "Authors",
                     icon: "users",
-                    link: "/admin/blog/authors/",
+                    link: routes.author.authors.path,
                     permission: "blog:authors:list"
                 ),
                 .init(
                     menuKey: "blog",
                     label: "Tags",
                     icon: "tag",
-                    link: "/admin/blog/tags/",
+                    link: routes.tag.tags.path,
                     permission: "blog:tags:list"
                 ),
                 .init(
                     menuKey: "blog",
                     label: "Settings",
                     icon: "settings",
-                    link: "/admin/blog/settings/",
+                    link: routes.settings.settings.path,
                     permission: "blog:settings:read"
                 ),
             ]

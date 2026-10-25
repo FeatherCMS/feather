@@ -23,6 +23,7 @@ extension Email.Edit {
             let isEdited: Bool
             let form: Email.Form.Component.State
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: Email.Router.Routes
         }
 
         let state: State
@@ -43,9 +44,9 @@ extension Email.Edit {
                 context.build(
                     Email.Form.Component(
                         state: state.form,
-                        action: "/admin/auth/emails/\(state.id)/edit/",
+                        action: state.routes.editPath(state.id),
                         submitLabel: "Edit email",
-                        removeHref: "/admin/auth/emails/\(state.id)/remove/",
+                        removeHref: state.routes.removePath(state.id),
                         removeLabel: "Remove email"
                     )
                 )

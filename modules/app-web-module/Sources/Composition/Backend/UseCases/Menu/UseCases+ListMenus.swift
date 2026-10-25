@@ -24,21 +24,4 @@ extension UseCases {
         )
         return .init(authorizer: authorizer, query: query)
     }
-
-    func makeSearchMenus() -> Menu.Search.UseCase {
-        let query = DatabaseQueryExecutor(
-            databaseContext: databaseContext,
-            scope: { context in
-                Menu.Search.Scope(
-                    menu: Menu.Search.Query.Database(
-                        context: context
-                    )
-                )
-            }
-        )
-        return .init(
-            authorizer: authorizer,
-            query: query
-        )
-    }
 }

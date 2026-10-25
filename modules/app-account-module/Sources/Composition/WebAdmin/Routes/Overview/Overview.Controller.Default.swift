@@ -4,9 +4,7 @@ import Hummingbird
 
 extension Overview.Controller {
 
-    struct Default:
-        Overview.Controller.Interface
-    {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Overview.Interactor.Interface,

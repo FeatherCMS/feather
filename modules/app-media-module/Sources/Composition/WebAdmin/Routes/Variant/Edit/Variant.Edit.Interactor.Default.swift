@@ -7,16 +7,13 @@ extension Variant.Edit.Interactor {
     struct Default: Interface {
         let repository: any Variant.Edit.Repository.Interface
 
-        func load(id: String) async throws
-            -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
-        {
+        func load(id: String) async throws -> Variant.Edit.Model {
             do { return try await repository.load(id: id) }
             catch let error as OpenAPIRepositoryError { throw map(error) }
         }
 
         func loadProcessor(variantId: String, id: String) async throws
-            -> MediaAdminAPI.Components.Schemas
-            .MediaVariantProcessorDetailSchema
+            -> Variant.Processor.Edit.Model
         {
             do {
                 return try await repository.loadProcessor(

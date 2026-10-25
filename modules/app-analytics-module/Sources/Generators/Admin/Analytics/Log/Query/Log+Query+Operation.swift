@@ -6,12 +6,12 @@ extension Analytics.Log.Query {
         var operationId: String? { "analyticsLogQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: AnalyticsLogQueryItemSchema(),
+                items: Schemas.Item(),
                 sortFieldKeys: [
                     "id", "accountId", "method", "source", "path",
                     "responseCode", "ip", "browserName", "createdAt",
                 ],
-                filters: AnalyticsLogFilterSchema()
+                filters: Schemas.Filter()
             )
         }
         var requestBody: (any RequestBodyRepresentable)? {

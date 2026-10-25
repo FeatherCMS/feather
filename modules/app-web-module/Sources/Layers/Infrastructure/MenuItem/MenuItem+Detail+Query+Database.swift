@@ -29,7 +29,7 @@ extension MenuItem.Detail.Query {
                 priority: row.priority,
                 isBlank: row.isBlank,
                 permission: row.permission,
-                authentication: MenuItem.Authentication(
+                authentication: MenuItem.Model.Authentication(
                     rawValue: row.authentication
                 ) ?? .any,
                 notes: row.notes,

@@ -21,6 +21,7 @@ extension Credential.Edit {
             let id: String
             let form: Credential.Form.Component.State
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: Credential.Router.Routes
         }
 
         let state: State
@@ -39,10 +40,9 @@ extension Credential.Edit {
                 context.build(
                     Credential.Form.Component(
                         state: state.form,
-                        action: "/admin/auth/credentials/\(state.id)/edit/",
+                        action: state.routes.editPath(state.id),
                         submitLabel: "Edit credential",
-                        removeHref:
-                            "/admin/auth/credentials/\(state.id)/remove/"
+                        removeHref: state.routes.removePath(state.id)
                     )
                 )
             }

@@ -2,9 +2,7 @@ import AccountModule
 
 extension Invitation.Add.Interactor {
 
-    struct Default:
-        Invitation.Add.Interactor.Interface
-    {
+    struct Default: Interface {
         let repository: any Invitation.Add.Repository.Interface
 
         func execute(

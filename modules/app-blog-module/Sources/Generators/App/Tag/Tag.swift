@@ -1,3 +1,3 @@
 enum Tag {
-
+    enum Parameters {}
 }

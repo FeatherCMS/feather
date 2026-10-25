@@ -18,6 +18,8 @@ import WebComponents
 
 extension Credential.Add.Controller {
     struct Default: Interface {
+        let routes: Credential.Router.Routes
+
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Credential.Add.Interactor.Interface,
@@ -108,7 +110,7 @@ extension Credential.Add.Controller {
                     )
                 )
                 return AdminNotificationFlash.redirect(
-                    to: "/admin/auth/credentials/",
+                    to: routes.list.path,
                     notification: .init(
                         title: "Added",
                         message: "User credential added successfully."

@@ -6,9 +6,7 @@ import Hummingbird
 import UserModule
 
 extension Identity.Remove.Controller {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let routes: Identity.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<

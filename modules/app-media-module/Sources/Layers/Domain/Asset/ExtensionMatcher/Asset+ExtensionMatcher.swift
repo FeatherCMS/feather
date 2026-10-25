@@ -12,7 +12,7 @@ extension Asset {
     public enum ExtensionMatcher {
         public static func matches(
             `extension`: String,
-            processor: Variant.Processor.Model
+            processor: MediaModule.Variant.Processor.Model
         ) -> Bool {
             let assetExtension = canonicalExtension(from: `extension`) ?? "bin"
             let acceptedExtensions = processor.matchExtensions

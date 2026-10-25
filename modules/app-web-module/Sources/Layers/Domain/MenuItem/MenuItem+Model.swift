@@ -12,6 +12,11 @@ public import struct Foundation.Date
 
 extension MenuItem {
     public struct Model: FeatherDomain.Model {
+        public enum Authentication: String, Sendable, Codable, CaseIterable {
+            case any
+            case anonymous
+            case authenticated
+        }
 
         public enum Error: DomainError {
             case labelTooShort
@@ -29,7 +34,7 @@ extension MenuItem {
             public let priority: Int
             public let isBlank: Bool
             public let permission: String
-            public let authentication: MenuItem.Authentication
+            public let authentication: Authentication
             public let notes: String?
 
             public init(
@@ -39,7 +44,7 @@ extension MenuItem {
                 priority: Int,
                 isBlank: Bool,
                 permission: String,
-                authentication: MenuItem.Authentication,
+                authentication: Authentication,
                 notes: String?
             ) {
                 self.menuId = menuId
@@ -60,7 +65,7 @@ extension MenuItem {
         public var priority: Int
         public var isBlank: Bool
         public var permission: String
-        public var authentication: MenuItem.Authentication
+        public var authentication: Authentication
         public var notes: String?
         public let createdAt: Date
         public let updatedAt: Date
@@ -73,7 +78,7 @@ extension MenuItem {
             priority: Int,
             isBlank: Bool,
             permission: String,
-            authentication: MenuItem.Authentication,
+            authentication: Authentication,
             notes: String?,
             createdAt: Date,
             updatedAt: Date
@@ -149,7 +154,7 @@ extension MenuItem.Model {
         priority: Int,
         isBlank: Bool,
         permission: String,
-        authentication: MenuItem.Authentication = .any,
+        authentication: Model.Authentication = .any,
         notes: String?
     ) throws(Self.Error) -> Self.New {
         try validate(label: label)
@@ -175,7 +180,7 @@ extension MenuItem.Model {
         priority: FieldChange<Int> = .unchanged,
         isBlank: FieldChange<Bool> = .unchanged,
         permission: FieldChange<String> = .unchanged,
-        authentication: FieldChange<MenuItem.Authentication> = .unchanged,
+        authentication: FieldChange<Model.Authentication> = .unchanged,
         notes: OptionalFieldChange<String> = .unchanged
     ) throws(Self.Error) {
         let newLabel = label.apply(to: self.label)

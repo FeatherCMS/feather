@@ -53,7 +53,7 @@ extension Variable.Edit {
             )
         }
 
-        static func from(variable: Variable.Edit.Model) -> Self {
+        static func from(variable: Model) -> Self {
             .init(
                 key: .init(
                     name: "key",
@@ -83,7 +83,7 @@ extension Variable.Edit {
             )
         }
 
-        static func from(input: Variable.Edit.Form.Input) -> Self {
+        static func from(input: Form.Input) -> Self {
             .init(
                 key: .init(
                     name: "key",

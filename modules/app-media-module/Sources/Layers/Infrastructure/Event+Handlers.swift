@@ -5,9 +5,9 @@ import SystemModule
 
 extension MediaModule.Event {
     public enum Handlers {}
-    }
+}
 
-    extension MediaModule.Event.Handlers {
+extension MediaModule.Event.Handlers {
     public static func register(
         in registry: inout EventRegistry
     ) {

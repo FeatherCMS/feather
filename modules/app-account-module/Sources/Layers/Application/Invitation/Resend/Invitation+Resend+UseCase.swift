@@ -46,7 +46,7 @@ extension Invitation.Resend {
                         id: input.id
                     )
                 else {
-                    throw Invitation.Resend.Error.invitationNotFound
+                    throw Error.invitationNotFound
                 }
                 guard
                     let mailFromAddress = try await scope.variable.get(
@@ -55,7 +55,7 @@ extension Invitation.Resend {
                     .whitespaceTrimmed,
                     !mailFromAddress.isEmpty
                 else {
-                    throw Invitation.Resend.Error.mailFromNotConfigured
+                    throw Error.mailFromNotConfigured
                 }
                 let mailFromName = try await scope.variable.get(
                     "system-settings-mail-from-name"

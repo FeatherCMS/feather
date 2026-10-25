@@ -8,7 +8,7 @@ extension Page.List {
 
         var responseMap: ResponseMap {
             [
-                200: PageListResponse().reference()
+                200: Response().reference()
             ]
         }
     }

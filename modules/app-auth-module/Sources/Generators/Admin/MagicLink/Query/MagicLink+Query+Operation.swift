@@ -9,7 +9,7 @@ extension MagicLink.Query {
 
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: MagicLink.Query.Schemas.Item(),
+                items: Schemas.Item(),
                 sortFieldKeys: [
                     "id",
                     "credentialId",
@@ -20,7 +20,7 @@ extension MagicLink.Query {
                 ],
                 filters: SearchFilterSchema(
                     additionalProperties: [
-                        "userId": MagicLink.Query.Schemas
+                        "userId": Schemas
                             .UserID()
                             .reference(required: false)
                     ]

@@ -5,11 +5,13 @@ import Hummingbird
 enum Overview {
     struct Router {
         struct Routes {
+            let admin: WebRoute
             let overview: WebRoute
             let identities: WebRoute
             let roles: WebRoute
 
-            init(root: WebRoute) {
+            init(admin: WebRoute, root: WebRoute) {
+                self.admin = admin
                 self.overview = root
                 self.identities = root.appending(pathComponent: "identities")
                 self.roles = root.appending(pathComponent: "roles")

@@ -20,6 +20,7 @@ extension Credential.Add {
         struct State {
             let form: Credential.Form.Component.State
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: Credential.Router.Routes
         }
 
         let state: State
@@ -38,7 +39,7 @@ extension Credential.Add {
                 context.build(
                     Credential.Form.Component(
                         state: state.form,
-                        action: "/admin/auth/credentials/add/",
+                        action: state.routes.add.path,
                         submitLabel: "Add credential",
                         removeHref: nil
                     )

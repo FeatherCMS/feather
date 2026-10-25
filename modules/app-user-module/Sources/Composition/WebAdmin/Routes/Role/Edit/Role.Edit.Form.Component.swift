@@ -34,7 +34,7 @@ extension Role.Edit.Form {
                 )
             }
 
-            static func from(input: Role.Edit.Form.Input) -> Self {
+            static func from(input: Input) -> Self {
                 .init(
                     name: .init(
                         name: "name",

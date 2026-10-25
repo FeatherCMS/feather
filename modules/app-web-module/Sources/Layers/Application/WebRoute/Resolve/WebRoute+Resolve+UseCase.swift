@@ -27,7 +27,7 @@ extension WebRoute.Resolve {
                     ),
                     metadata.isDirectlyAccessible(at: now)
                 else {
-                    throw WebRoute.Resolve.Error(message: "Route not found")
+                    throw Error(message: "Route not found")
                 }
                 let referenceType = metadata.referenceType
                 let referenceID = metadata.referenceID

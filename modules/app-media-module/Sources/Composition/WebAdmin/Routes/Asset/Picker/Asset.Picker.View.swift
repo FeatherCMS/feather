@@ -3,6 +3,7 @@ import FeatherModuleKit
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -19,8 +20,8 @@ extension Asset.Picker {
             let pageState: AdminListPageState
             let search: String
             let parentId: String?
-            let currentFolder: Components.Schemas.MediaFolderDetailSchema?
-            let ancestors: [Components.Schemas.MediaFolderDetailSchema]
+            let currentFolder: Asset.Folder.Detail.Model?
+            let ancestors: [Asset.Folder.Detail.Model]
             let view: Asset.File.List.Model.ViewMode
             let picker: Asset.File.List.Model.PickerState
             let routes: Asset.Router.Routes
@@ -381,13 +382,12 @@ extension Asset.Picker.View {
             search: search,
             page: page
         )
-        let encoded = items.map {
-            "\($0.name)=\($0.value.queryEncoded())"
+        var components = URLComponents()
+        components.path = state.routes.file.list.path
+        components.queryItems = items.map {
+            URLQueryItem(name: $0.name, value: $0.value)
         }
-        let path = state.routes.file.list.path
-        return encoded.isEmpty
-            ? path
-            : "\(path)?\(encoded.joined(separator: "&"))"
+        return components.string ?? components.path
     }
 
     fileprivate func folderPathItems() -> [AdminPathBreadcrumb.Item] {

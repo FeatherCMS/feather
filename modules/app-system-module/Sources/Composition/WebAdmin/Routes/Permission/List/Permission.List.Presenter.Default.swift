@@ -8,9 +8,7 @@ import WebBuilders
 import WebComponents
 
 extension Permission.List.Presenter {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine

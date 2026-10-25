@@ -9,7 +9,7 @@ import WebComponents
 
 extension Overview {
     struct Page: WebComponents.Component {
-        let routes: Overview.Router.Routes
+        let routes: Router.Routes
         struct Destination {
             let title: String
             let description: String

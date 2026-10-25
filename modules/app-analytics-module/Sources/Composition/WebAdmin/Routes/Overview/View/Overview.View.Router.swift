@@ -22,7 +22,7 @@ extension Overview.View {
                 }
             )
             router.get(
-                AnalyticsWebAdmin.Router.Routes.analytics,
+                AnalyticsWebAdmin.Router.Routes.analytics.routerPath,
                 use: controller.getOverview
             )
         }

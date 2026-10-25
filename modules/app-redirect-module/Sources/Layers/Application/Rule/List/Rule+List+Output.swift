@@ -6,6 +6,7 @@
 
 public import FeatherApplication
 public import RedirectModule
+public import RedirectDomain
 
 extension Rule.List {
     public struct Output: DTO {
@@ -13,13 +14,13 @@ extension Rule.List {
             public let id: String
             public let source: String
             public let destination: String
-            public let statusCode: Rule.StatusCode
+            public let statusCode: Rule.Model.StatusCode
 
             package init(
                 id: String,
                 source: String,
                 destination: String,
-                statusCode: Rule.StatusCode
+                statusCode: Rule.Model.StatusCode
             ) {
                 self.id = id
                 self.source = source

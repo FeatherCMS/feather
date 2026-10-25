@@ -6,7 +6,7 @@ extension Auth.Me {
         var operationId: String? { "authMe" }
 
         var responseMap: ResponseMap {
-            [200: Auth.Me.Response().reference()]
+            [200: Response().reference()]
         }
     }
 }

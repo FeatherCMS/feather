@@ -18,6 +18,8 @@ import WebComponents
 
 extension Credential.Edit.Controller {
     struct Default: Interface {
+        let routes: Credential.Router.Routes
+
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Credential.Edit.Interactor.Interface,
@@ -130,7 +132,7 @@ extension Credential.Edit.Controller {
                     )
                 )
                 return AdminNotificationFlash.redirect(
-                    to: "/admin/auth/credentials/\(id)/edit/",
+                    to: routes.editPath(id),
                     notification: .init(
                         title: "Saved",
                         message: "User credential edited successfully."

@@ -7,19 +7,19 @@ extension AuthorLink {
 extension AuthorLink.Parameters {
     struct AuthorID: PathParameterRepresentable {
         var openAPIIdentifier: String { "BlogAuthorLinkAuthorIdParameter" }
-        var name: String { "authorId" }
+        var name: String { "blogAuthorId" }
         var description: String? { "Blog author identifier" }
         var schema: any OpenAPISchemaRepresentable {
-            BlogAuthorIdField().reference()
+            Author.Schemas.ID().reference()
         }
     }
 
     struct ID: PathParameterRepresentable {
         var openAPIIdentifier: String { "BlogAuthorLinkIdParameter" }
-        var name: String { "id" }
+        var name: String { "blogAuthorLinkId" }
         var description: String? { "Blog author link identifier" }
         var schema: any OpenAPISchemaRepresentable {
-            BlogAuthorLinkIdField().reference()
+            AuthorLink.Schemas.ID().reference()
         }
     }
 }

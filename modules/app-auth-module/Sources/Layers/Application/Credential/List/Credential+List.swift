@@ -1,5 +1,0 @@
-public import AuthModule
-
-extension Credential {
-    public enum List {}
-}

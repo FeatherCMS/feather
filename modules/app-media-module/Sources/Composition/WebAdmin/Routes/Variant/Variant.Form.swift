@@ -1,6 +1,5 @@
 import FeatherWebAdmin
 import HTML
-import MediaAdminAPI
 import MediaModule
 import SGML
 import WebBuilders
@@ -45,7 +44,7 @@ extension Variant {
                 )
             }
 
-            static func from(input: Variant.Form.Input?) -> Self {
+            static func from(input: Form.Input?) -> Self {
                 guard let input else { return .empty() }
                 return .init(
                     key: .init(
@@ -77,8 +76,7 @@ extension Variant {
             }
 
             static func from(
-                detail: MediaAdminAPI.Components.Schemas
-                    .MediaVariantDetailSchema
+                detail: Edit.Model
             ) -> Self {
                 .init(
                     key: .init(

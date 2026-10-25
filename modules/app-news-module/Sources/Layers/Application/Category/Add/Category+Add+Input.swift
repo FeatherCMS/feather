@@ -15,14 +15,14 @@ extension Category.Add {
         public let excerpt: String
         public let content: String
         public let imageAssetId: String?
-        public let metadata: Metadata.Input
+        public let metadata: Metadata.Model.Base
 
         public init(
             title: String,
             excerpt: String,
             content: String,
             imageAssetId: String?,
-            metadata: Metadata.Input
+            metadata: Metadata.Model.Base
         ) {
             self.title = title
             self.excerpt = excerpt

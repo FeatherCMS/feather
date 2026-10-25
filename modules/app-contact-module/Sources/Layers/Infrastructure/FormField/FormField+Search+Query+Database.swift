@@ -31,7 +31,7 @@ extension FormField.Search.Query {
                     .replacingOccurrences(of: "_", with: "!_")
                     + "%"
             }
-            let searchTable = FormFieldSearchQueryTable(
+            let searchTable = AccessLayer(
                 connection: context.connection
             )
             let rows = try await searchTable.items(

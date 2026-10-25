@@ -9,9 +9,9 @@ extension Credential.Query {
 
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: Credential.Query.Schemas.Item(),
+                items: Schemas.Item(),
                 sortFieldKeys: ["userId", "email"],
-                filters: Credential.Query.Schemas
+                filters: Schemas
                     .Filter()
             )
         }

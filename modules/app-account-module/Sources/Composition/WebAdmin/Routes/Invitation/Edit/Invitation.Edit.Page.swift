@@ -34,9 +34,9 @@ extension Invitation.Edit {
                 context.build(
                     Invitation.Form.Component(
                         state: state.form,
-                        action: routes.invitationEdit(state.id) + "/",
+                        action: routes.invitationEditPath(state.id) + "/",
                         submitLabel: "Edit invitation",
-                        removeHref: routes.invitationRemove(state.id) + "/",
+                        removeHref: routes.invitationRemovePath(state.id) + "/",
                         removeLabel: "Remove invitation"
                     )
                 )

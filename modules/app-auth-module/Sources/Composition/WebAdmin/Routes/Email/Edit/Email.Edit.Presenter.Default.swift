@@ -72,7 +72,8 @@ extension Email.Edit.Presenter {
                         id: id,
                         isEdited: isEdited,
                         form: form,
-                        breadcrumb: routes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
                     )
                 )
             )

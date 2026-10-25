@@ -27,7 +27,7 @@ extension Page.Edit {
             }
             return try await transaction.run { scope in
                 guard var model = try await scope.page.find(id: input.id) else {
-                    throw Page.Edit.Error(message: "Page not found")
+                    throw Error(message: "Page not found")
                 }
                 guard
                     var metadata = try await scope.metadata.find(
@@ -35,7 +35,7 @@ extension Page.Edit {
                         referenceId: input.id
                     )
                 else {
-                    throw Page.Edit.Error(message: "Page metadata not found")
+                    throw Error(message: "Page metadata not found")
                 }
 
                 try model.update(
@@ -48,8 +48,7 @@ extension Page.Edit {
                     try metadata.update(
                         template: .set(metadataInput.template),
                         slug: .set(metadataInput.slug),
-                        publicationDate: metadataInput.publicationDate
-                            .map(FieldChange.set) ?? .unchanged,
+                        publicationDate: input.metadataPublicationDate,
                         expirationDate: .init(
                             value: metadataInput.expirationDate,
                             shouldApply: true

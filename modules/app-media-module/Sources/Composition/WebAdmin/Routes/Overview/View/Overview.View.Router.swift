@@ -21,18 +21,18 @@ extension Overview.View {
             let variants: WebRoute
         }
 
-        let controller: any Overview.View.Controller.Interface
+        let controller: any Controller.Interface
 
         init(
             routes: Routes,
             renderingEngine: any RenderingEngine
         ) {
             self.routes = routes
-            self.controller = Overview.View.Controller.Default(
+            self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Overview.View.Interactor.Default(),
-                        presenter: Overview.View.Presenter.Default(
+                        interactor: Interactor.Default(),
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,

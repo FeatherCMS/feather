@@ -147,9 +147,19 @@ extension Asset.File.Add.Repository {
                 resolvedVariants = []
             }
 
+            let title = asset.title?.whitespaceTrimmed
             return AdminMediaAsset(
-                schema: asset,
-                variants: resolvedVariants
+                id: asset.id,
+                name: asset.name,
+                slugPath: asset.slugPath,
+                url: asset.url,
+                extension: asset._extension,
+                contentType: asset.contentType,
+                sizeBytes: asset.sizeBytes,
+                variants: resolvedVariants,
+                title: title?.isEmpty == false ? title : asset.name,
+                altText: asset.altText,
+                status: asset.status
             )
         }
     }

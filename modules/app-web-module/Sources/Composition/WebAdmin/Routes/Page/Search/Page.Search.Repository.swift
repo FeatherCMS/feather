@@ -9,7 +9,7 @@ extension Page.Search {
 
 extension Page.Search.Repository {
     protocol Interface: Sendable {
-        func searchPages(
+        func search(
             page: Int,
             search: String?
         ) async throws -> Page.Search.Model

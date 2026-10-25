@@ -16,7 +16,7 @@ extension Invitation.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
 
-        func postEdit(
+        func postEditPath(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response

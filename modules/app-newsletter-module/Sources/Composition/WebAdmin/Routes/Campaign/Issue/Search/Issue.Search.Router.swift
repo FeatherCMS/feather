@@ -19,7 +19,7 @@ extension Issue.Search {
                 buildRuntime: { request, context in
                     WebAdminRuntime(
                         interactor: Interactor.Default(
-                            repository: .init(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
@@ -38,7 +38,7 @@ extension Issue.Search {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            controller.route(on: router, at: routes.issues)
+            router.get(routes.issues.routerPath, use: controller.search)
         }
     }
 }

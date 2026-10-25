@@ -1,29 +1,48 @@
 import FeatherWebApp
+import FeatherWebShared
+import Hummingbird
 
 extension Login {
     struct Router {
-        let controller: any Login.Controller.Interface
+        struct Routes {
+            let login: WebRoute
+
+            init(root: WebRoute = .root) {
+                login = root.appending(pathComponent: "login")
+            }
+        }
+
+        let routes: Routes
+        let controller: any Controller.Interface
 
         init(
-            repository: any Login.Repository.Interface,
+            repository: any Repository.Interface,
             templateRenderer: any TemplateRenderer,
             usesSecureCookies: Bool,
-            turnstileVerifier: (any AuthTurnstileVerifier)? = nil
+            turnstileVerifier: (any AuthTurnstileVerifier)? = nil,
+            routes: Routes = .init()
         ) {
-            self.controller = Login.Controller.Default(
+            self.routes = routes
+            self.controller = Controller.Default(
                 usesSecureCookies: usesSecureCookies,
                 turnstileVerifier: turnstileVerifier,
                 buildRuntime: { _, _ in
                     WebAppRuntime(
-                        interactor: Login.Interactor.Default(
+                        interactor: Interactor.Default(
                             repository: repository
                         ),
-                        presenter: Login.Presenter.Default(
-                            templateRenderer: templateRenderer
+                        presenter: Presenter.Default(
+                            templateRenderer: templateRenderer,
+                            routes: routes
                         )
                     )
                 }
             )
+        }
+
+        func route(on router: any RouterMethods<DefaultRequestContext>) {
+            router.get(routes.login.routerPath, use: controller.getLogin)
+            router.post(routes.login.routerPath, use: controller.postLogin)
         }
     }
 }

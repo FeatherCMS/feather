@@ -63,9 +63,9 @@ extension AuthorLink.Form.Input {
 
     private var validator: GroupValidator {
         GroupValidator {
-            AuthorLink.Form.Input.Validation.label(label, required: true)
-            AuthorLink.Form.Input.Validation.url(url, required: true)
-            AuthorLink.Form.Input.Validation.priority(priority, required: true)
+            Validation.label(label, required: true)
+            Validation.url(url, required: true)
+            Validation.priority(priority, required: true)
         }
     }
 

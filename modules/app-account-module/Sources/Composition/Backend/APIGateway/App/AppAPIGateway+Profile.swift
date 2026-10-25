@@ -8,7 +8,7 @@ extension AppAPIGateway {
         _ input: Operations.AccountProfileGet.Input
     ) async throws -> Operations.AccountProfileGet.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeGetAccountProfile()
+        let result = try await useCases.makeDetailProfile()
             .execute(
                 subject: subject,
                 input: .init()
@@ -35,7 +35,7 @@ extension AppAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeEditAccountProfile()
+        let result = try await useCases.makeEditProfile()
             .execute(
                 subject: subject,
                 input: .init(

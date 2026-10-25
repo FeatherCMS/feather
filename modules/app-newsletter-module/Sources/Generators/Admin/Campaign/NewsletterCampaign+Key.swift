@@ -1,3 +1,0 @@
-extension NewsletterCampaign {
-    enum Key {}
-}

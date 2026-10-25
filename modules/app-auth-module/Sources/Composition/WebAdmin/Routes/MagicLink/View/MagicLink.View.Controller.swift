@@ -30,15 +30,3 @@ extension MagicLink.View.Controller {
     }
 }
 
-extension MagicLink.View.Controller.Interface {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: MagicLink.Router.Routes
-    ) {
-        router.get(
-            routes.details.routerPath,
-            use: getAuthMagicLink
-        )
-    }
-}

@@ -5,9 +5,7 @@ import FeatherWebShared
 
 extension Profile.Detail.Interactor {
 
-    struct Default:
-        Profile.Detail.Interactor.Interface
-    {
+    struct Default: Interface {
         let profileRepository: any Profile.Detail.Repository.Interface
 
         func getProfile() async throws -> Profile.Remote.Model {

@@ -88,7 +88,7 @@ extension Overview {
                 context.build(
                     AdminBreadcrumb(
                         links: [
-                            .init(label: "Admin", link: "/admin/")
+                            .init(label: "Admin", link: routes.admin.path)
                         ]
                     )
                 )

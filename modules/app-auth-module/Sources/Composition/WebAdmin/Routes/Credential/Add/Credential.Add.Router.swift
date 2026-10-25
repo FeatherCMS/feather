@@ -28,6 +28,7 @@ extension Credential.Add {
         ) {
             self.routes = routes
             controller = Controller.Default(
+                routes: routes,
                 buildRuntime: { request, context in
                     WebAdminRuntime(
                         interactor: Interactor.Default(

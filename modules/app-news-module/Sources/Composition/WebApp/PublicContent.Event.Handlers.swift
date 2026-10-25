@@ -13,8 +13,8 @@ public enum PublicContent {
                 in registry: inout EventRegistry
             ) {
                 registry.register(
-                    event: PublicContentProvider.self,
-                    context: PublicContentEventContext<
+                    event: WebModule.Public.Content.Event.Provider.self,
+                    context: WebModule.Public.Content.Event.Context<
                         PublicContentRuntimeContext
                     >
                     .self
@@ -22,8 +22,8 @@ public enum PublicContent {
                     try await resolve(context)
                 }
                 registry.register(
-                    event: RSSContentProvider.self,
-                    context: RSSContentEventContext<PublicContentRuntimeContext>
+                    event: WebModule.Public.RSS.Event.Provider.self,
+                    context: WebModule.Public.RSS.Event.Context<PublicContentRuntimeContext>
                         .self
                 ) { _, context in
                     try await resolveRSS(context)
@@ -31,8 +31,8 @@ public enum PublicContent {
             }
 
             private static func resolveRSS(
-                _ context: RSSContentEventContext<PublicContentRuntimeContext>
-            ) async throws -> [RSSItem] {
+                _ context: WebModule.Public.RSS.Event.Context<PublicContentRuntimeContext>
+            ) async throws -> [WebModule.Public.RSS.Item] {
                 let configuration = NewsAPIClientSupport.configuration(
                     sessionToken: context.runtime.context.sessionToken
                 )
@@ -51,7 +51,7 @@ public enum PublicContent {
                         slug: article.metadata.canonicalURL?.emptyToNil
                             ?? article.metadata.slug
                     )
-                    return RSSItem(
+                    return WebModule.Public.RSS.Item(
                         title: article.metadata.title,
                         description: article.metadata.excerpt,
                         url: url,
@@ -63,10 +63,10 @@ public enum PublicContent {
             }
 
             private static func resolve(
-                _ context: PublicContentEventContext<
+                _ context: WebModule.Public.Content.Event.Context<
                     PublicContentRuntimeContext
                 >
-            ) async throws -> PublicContentResult? {
+            ) async throws -> WebModule.Public.Content.Result? {
                 let mediaResolver = context.runtime.mediaResolver
                 // TODO: fix this
                 let configuration = NewsAPIClientSupport.configuration(
@@ -131,10 +131,10 @@ public enum PublicContent {
             }
 
             private static func resolveArticle(
-                context: PublicContentEventContext<PublicContentRuntimeContext>,
+                context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
                 client: NewsAppAPI.Client,
                 mediaResolver: MediaResolver
-            ) async throws -> PublicContentResult? {
+            ) async throws -> WebModule.Public.Content.Result? {
                 guard !context.baseMetadata.referenceId.isEmpty else {
                     return nil
                 }
@@ -154,10 +154,10 @@ public enum PublicContent {
             }
 
             private static func resolveCategory(
-                context: PublicContentEventContext<PublicContentRuntimeContext>,
+                context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
                 client: NewsAppAPI.Client,
                 mediaResolver: MediaResolver
-            ) async throws -> PublicContentResult? {
+            ) async throws -> WebModule.Public.Content.Result? {
                 guard !context.baseMetadata.referenceId.isEmpty else {
                     return nil
                 }

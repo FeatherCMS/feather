@@ -1,5 +1,5 @@
 public import FeatherModuleKit
-import NewsletterModule
+public import NewsletterModule
 import WebModuleWebApp
 
 extension Event {

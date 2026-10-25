@@ -27,6 +27,7 @@ extension MagicLink.List {
             let deniedInfo: String
             let deniedMessage: String
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: MagicLink.Router.Routes
         }
 
         let state: State
@@ -42,7 +43,7 @@ extension MagicLink.List {
                         )
                     )
                 )
-                context.build(MagicLink.List.TableContent(state: state))
+                context.build(TableContent(state: state))
             }
             .class("cms-section")
         }

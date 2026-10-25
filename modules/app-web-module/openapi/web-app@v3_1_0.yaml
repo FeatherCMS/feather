@@ -76,7 +76,7 @@ paths:
       - Web
       operationId: pageGet
       parameters:
-      - $ref: '#/components/parameters/MetadataIdParameter'
+      - $ref: '#/components/parameters/PageIDParameter'
       responses:
         200:
           $ref: '#/components/responses/PageDetailResponse'
@@ -266,6 +266,10 @@ components:
         $ref: '#/components/schemas/MetadataSlugField'
       minItems: 0
       uniqueItems: false
+    PageIdField:
+      type: string
+      examples:
+      - wp_home
     PageDetailSchema:
       type: object
       properties:
@@ -291,10 +295,6 @@ components:
       - imageURL
       - metadata
       minProperties: 6
-    PageIdField:
-      type: string
-      examples:
-      - wp_home
     PageTitleField:
       type: string
       examples:
@@ -588,10 +588,9 @@ components:
       schema:
         $ref: '#/components/schemas/MetadataSlugField'
       description: Web metadata slug
-    MetadataIdParameter:
+    PageIDParameter:
       name: id
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/MetadataReferenceIDField'
-      description: Web metadata identifier
+        $ref: '#/components/schemas/PageIdField'

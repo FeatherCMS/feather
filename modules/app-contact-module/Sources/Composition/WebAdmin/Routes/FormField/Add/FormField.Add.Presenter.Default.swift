@@ -41,7 +41,8 @@ extension FormField.Add.Presenter {
                             request.queryString("form")?.whitespaceTrimmed
                                 .emptyToNil
                         ),
-                        addPath: routes.fieldAdd.path
+                        addPath: routes.fieldAdd.path,
+                        formRoutes: routes.formRoutes
                     )
                 )
             )

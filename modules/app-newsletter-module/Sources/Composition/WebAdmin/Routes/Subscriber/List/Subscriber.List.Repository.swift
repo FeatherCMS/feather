@@ -1,6 +1,10 @@
 import NewsletterApplication
 import NewsletterModule
 
+extension Subscriber.List {
+    enum Repository {}
+}
+
 extension Subscriber.List.Repository {
     struct SearchResult: Sendable {
         let items: [Subscriber.List.Model.Item]

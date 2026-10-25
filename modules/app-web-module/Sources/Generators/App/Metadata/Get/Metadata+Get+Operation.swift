@@ -6,11 +6,11 @@ extension Metadata.Get {
     struct Operation: Metadata.Operation {
         var operationId: String? { "metadataGet" }
         var parameters: [any ParameterRepresentable] {
-            [MetadataSlugParameter().reference()]
+            [Metadata.Parameters.Slug().reference()]
         }
         var responseMap: ResponseMap {
             [
-                200: MetadataResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "Web metadata not found"),
             ]
         }

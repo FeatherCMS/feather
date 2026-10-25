@@ -1,8 +1,8 @@
 public import FeatherModuleKit
-import ContactModule
+public import ContactModule
 
 extension Form.Submit {
-    public struct MailTemplateValuesProvider: Event {
+    public struct MailTemplateValuesProvider: FeatherModuleKit.Event {
         public let formKey: String
 
         public struct Output: Sendable {

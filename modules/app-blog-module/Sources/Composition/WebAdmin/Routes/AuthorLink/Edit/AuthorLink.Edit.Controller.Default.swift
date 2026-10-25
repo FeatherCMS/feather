@@ -106,7 +106,7 @@ extension AuthorLink.Edit.Controller {
 
                 return AdminNotificationFlash.redirect(
                     to:
-                        routes.authorLinkEdit(
+                        routes.authorLinkEditPath(
                             authorID,
                             id
                         ),

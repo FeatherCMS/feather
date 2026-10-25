@@ -1,5 +1,6 @@
 import FeatherWebAdmin
 import NewsletterModule
+import NewsletterApplication
 
 extension Issue.Search.Repository {
     protocol Interface: Sendable {

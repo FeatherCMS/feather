@@ -14,7 +14,7 @@ extension Settings.Edit {
         struct State {
             let userID: String?
             let canEdit: Bool
-            var form: Settings.Edit.Form.Component.State
+            var form: Form.Component.State
             let breadcrumb: [AdminBreadcrumb.Link]
         }
 
@@ -38,24 +38,22 @@ extension Settings.Edit {
                         AdminTabBar(links: [
                             .init(
                                 label: "Details",
-                                href: "/admin/user/identities/\(userID)/",
+                                href: routes.userIdentityPath(userID),
                                 isCurrent: false
                             ),
                             .init(
                                 label: "Settings",
-                                href: routes.userSettings(userID) + "/",
+                                href: routes.userSettingsPath(userID) + "/",
                                 isCurrent: true
                             ),
                             .init(
                                 label: "Sessions",
-                                href:
-                                    "/admin/user/identities/\(userID)/sessions/",
+                                href: routes.userSessionsPath(userID),
                                 isCurrent: false
                             ),
                             .init(
                                 label: "Magic links",
-                                href:
-                                    "/admin/auth/magic-links/?userId=\(userID)",
+                                href: routes.magicLinksPath(userID),
                                 isCurrent: false
                             ),
                         ])
@@ -68,13 +66,10 @@ extension Settings.Edit {
                     )
                 }
 
-                let action =
-                    state.userID.map {
-                        routes.userSettings($0)
-                            + "/"
-                    } ?? routes.settings.path + "/"
+                let action = state.userID.map { routes.userSettingsPath($0) }
+                    ?? routes.settings.path
                 context.build(
-                    Settings.Edit.Form.Component(
+                    Form.Component(
                         state: state.form,
                         action: action
                     )

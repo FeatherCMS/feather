@@ -1,4 +1,3 @@
-import NewsAdminAPI
 import NewsApplication
 import NewsModule
 
@@ -9,7 +8,6 @@ extension Article.Add {
 extension Article.Add.Interactor {
     protocol Interface: Sendable {
         func categories() async throws -> [Article.Form.CategoryOption]
-        func create(input: Components.Schemas.NewsArticleCreateSchema)
-            async throws
+        func create(input: Article.Form.Input) async throws
     }
 }

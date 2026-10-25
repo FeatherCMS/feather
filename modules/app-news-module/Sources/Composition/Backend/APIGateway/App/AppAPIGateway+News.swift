@@ -21,7 +21,7 @@ extension AppAPIGateway {
         _ input: Operations.NewsArticleGet.Input
     ) async throws -> Operations.NewsArticleGet.Output {
         do {
-            let item = try await useCases.makePublicArticleDetail()
+            let item = try await useCases.makeDetailPublicArticle()
                 .execute(input: .init(id: input.path.id))
             return .ok(.init(body: .json(mapArticleDetail(item))))
         }
@@ -50,7 +50,7 @@ extension AppAPIGateway {
         _ input: Operations.NewsCategoryGet.Input
     ) async throws -> Operations.NewsCategoryGet.Output {
         do {
-            let item = try await useCases.makePublicCategoryDetail()
+            let item = try await useCases.makeDetailPublicCategory()
                 .execute(input: .init(id: input.path.id))
             return .ok(.init(body: .json(mapCategoryDetail(item))))
         }

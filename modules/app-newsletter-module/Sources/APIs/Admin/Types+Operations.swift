@@ -2969,264 +2969,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
-    public enum NewsletterIssueDeliveryList {
-        public static let id: Swift.String = "newsletterIssueDeliveryList"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/path/newsletterIssueId`.
-                public var newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - newsletterCampaignKey:
-                ///   - newsletterIssueId:
-                public init(
-                    newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter,
-                    newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
-                ) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
-                    self.newsletterIssueId = newsletterIssueId
-                }
-            }
-            public var path: Operations.NewsletterIssueDeliveryList.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueDeliveryList.AcceptableContentType>]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueDeliveryList.AcceptableContentType>] = .defaultValues()) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.NewsletterIssueDeliveryList.Input.Headers
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            public init(
-                path: Operations.NewsletterIssueDeliveryList.Input.Path,
-                headers: Operations.NewsletterIssueDeliveryList.Input.Headers = .init()
-            ) {
-                self.path = path
-                self.headers = headers
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// Newsletter delivery list response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.NewsletterDeliveryListResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.NewsletterDeliveryListResponse {
-                get throws {
-                    switch self {
-                    case let .ok(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/404/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/404/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.NewsletterIssueDeliveryList.Output.NotFound.Body
-                /// Creates a new `NotFound`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.NewsletterIssueDeliveryList.Output.NotFound.Body) {
-                    self.body = body
-                }
-            }
-            /// Newsletter issue not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.NewsletterIssueDeliveryList.Output.NotFound)
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.NewsletterIssueDeliveryList.Output.NotFound {
-                get throws {
-                    switch self {
-                    case let .notFound(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/401/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/401/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.NewsletterIssueDeliveryList.Output.Unauthorized.Body
-                /// Creates a new `Unauthorized`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.NewsletterIssueDeliveryList.Output.Unauthorized.Body) {
-                    self.body = body
-                }
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.NewsletterIssueDeliveryList.Output.Unauthorized)
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.NewsletterIssueDeliveryList.Output.Unauthorized {
-                get throws {
-                    switch self {
-                    case let .unauthorized(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/403/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/403/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.NewsletterIssueDeliveryList.Output.Forbidden.Body
-                /// Creates a new `Forbidden`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.NewsletterIssueDeliveryList.Output.Forbidden.Body) {
-                    self.body = body
-                }
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.NewsletterIssueDeliveryList.Output.Forbidden)
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.NewsletterIssueDeliveryList.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case let .forbidden(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case let .other(string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
     /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
     public enum NewsletterIssueTestEmail {
@@ -3458,6 +3200,264 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.NewsletterIssueTestEmail.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
+    public enum NewsletterIssueDeliveryList {
+        public static let id: Swift.String = "newsletterIssueDeliveryList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/path/newsletterCampaignKey`.
+                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/path/newsletterIssueId`.
+                public var newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - newsletterCampaignKey:
+                ///   - newsletterIssueId:
+                public init(
+                    newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter,
+                    newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
+                ) {
+                    self.newsletterCampaignKey = newsletterCampaignKey
+                    self.newsletterIssueId = newsletterIssueId
+                }
+            }
+            public var path: Operations.NewsletterIssueDeliveryList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueDeliveryList.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueDeliveryList.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.NewsletterIssueDeliveryList.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.NewsletterIssueDeliveryList.Input.Path,
+                headers: Operations.NewsletterIssueDeliveryList.Input.Headers = .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Newsletter delivery list response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.NewsletterDeliveryListResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.NewsletterDeliveryListResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.NewsletterIssueDeliveryList.Output.NotFound.Body
+                /// Creates a new `NotFound`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.NewsletterIssueDeliveryList.Output.NotFound.Body) {
+                    self.body = body
+                }
+            }
+            /// Newsletter issue not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.NewsletterIssueDeliveryList.Output.NotFound)
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound: Operations.NewsletterIssueDeliveryList.Output.NotFound {
+                get throws {
+                    switch self {
+                    case let .notFound(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.NewsletterIssueDeliveryList.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.NewsletterIssueDeliveryList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.NewsletterIssueDeliveryList.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.NewsletterIssueDeliveryList.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.NewsletterIssueDeliveryList.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.NewsletterIssueDeliveryList.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.NewsletterIssueDeliveryList.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.NewsletterIssueDeliveryList.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):

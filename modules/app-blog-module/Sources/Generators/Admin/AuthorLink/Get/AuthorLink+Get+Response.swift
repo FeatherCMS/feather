@@ -9,16 +9,16 @@ extension AuthorLink.Get {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "id": BlogAuthorLinkIdField(),
-                "menuId": BlogAuthorIdField(),
-                "label": BlogAuthorLinkLabelField(),
-                "url": BlogAuthorLinkURLField(),
-                "priority": BlogAuthorLinkPriorityField(),
-                "isBlank": BlogAuthorLinkIsBlankField(),
-                "permission": BlogAuthorLinkPermissionField(),
-                "notes": BlogAuthorLinkNotesField(),
-                "createdAt": BlogAuthorLinkCreatedAtField(),
-                "updatedAt": BlogAuthorLinkUpdatedAtField(),
+                "id": AuthorLink.Schemas.ID(),
+                "menuId": Author.Schemas.ID(),
+                "label": AuthorLink.Schemas.Label(),
+                "url": AuthorLink.Schemas.URL(),
+                "priority": AuthorLink.Schemas.Priority(),
+                "isBlank": AuthorLink.Schemas.IsBlank(),
+                "permission": AuthorLink.Schemas.Permission(),
+                "notes": AuthorLink.Schemas.Notes(),
+                "createdAt": AuthorLink.Schemas.CreatedAt(),
+                "updatedAt": AuthorLink.Schemas.UpdatedAt(),
             ]
         }
     }

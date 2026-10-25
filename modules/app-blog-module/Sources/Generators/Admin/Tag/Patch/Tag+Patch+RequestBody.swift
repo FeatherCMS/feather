@@ -11,10 +11,10 @@ extension Tag.Patch {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "title": BlogTagTitleField().reference(required: false),
-                "excerpt": BlogTagExcerptField().reference(required: false),
-                "content": BlogTagContentField().reference(required: false),
-                "imageAssetId": BlogTagImageAssetIdField()
+                "title": Tag.Schemas.Title().reference(required: false),
+                "excerpt": Tag.Schemas.Excerpt().reference(required: false),
+                "content": Tag.Schemas.Content().reference(required: false),
+                "imageAssetId": Tag.Schemas.ImageAssetID()
                     .nullable().reference(required: false),
             ]
         }

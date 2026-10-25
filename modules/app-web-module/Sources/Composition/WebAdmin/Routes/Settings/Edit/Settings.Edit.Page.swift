@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import OpenAPIRuntime
 import SGML
@@ -11,7 +12,8 @@ extension Settings.Edit {
 
         struct State {
             let canEdit: Bool
-            let form: Settings.Edit.Form.Component.State
+            let form: Form.Component.State
+            let mediaAssetList: WebRoute
             let breadcrumb: [AdminBreadcrumb.Link]
             let action: String
         }
@@ -37,8 +39,9 @@ extension Settings.Edit {
                 }
 
                 context.build(
-                    Settings.Edit.Form.Component(
+                    Form.Component(
                         state: state.form,
+                        mediaAssetList: state.mediaAssetList,
                         action: state.action
                     )
                 )

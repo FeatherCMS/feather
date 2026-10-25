@@ -12,7 +12,7 @@ import WebComponents
 
 extension Email.List {
     struct TableContent: WebComponents.Component {
-        let state: Email.List.Component.State
+        let state: Component.State
 
         func html(context: inout BuilderContext) -> Div {
             let actions = AdminListActions(
@@ -181,7 +181,7 @@ extension Email.List {
                         context.build(
                             AdminListSearch(
                                 state: .init(
-                                    action: "/admin/auth/emails/",
+                                    action: state.routes.list.path,
                                     placeholder: "Quick search user emails",
                                     search: state.search,
                                     queryItems: state.userID.map {
@@ -198,7 +198,7 @@ extension Email.List {
                                     context.build(
                                         AdminButton(
                                             "Add new",
-                                            href: "/admin/auth/emails/add/"
+                                                href: state.routes.add.path
                                         )
                                     )
                                 }
@@ -209,7 +209,7 @@ extension Email.List {
                         context.build(
                             AdminListPagination(
                                 state: .init(
-                                    path: "/admin/auth/emails/",
+                                    path: state.routes.list.path,
                                     pageState: pageState,
                                     search: state.search,
                                     queryItems: state.userID.map {

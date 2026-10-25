@@ -38,6 +38,14 @@ extension Credential {
                 ]
             }
 
+            func editPath(_ id: String) -> String {
+                edit.path(parameter: "id", value: id)
+            }
+
+            func removePath(_ id: String) -> String {
+                remove.path(parameter: "id", value: id)
+            }
+
             func removeBreadcrumb(_ id: String) -> [AdminBreadcrumb.Link] {
                 detailsBreadcrumb(id) + [
                     .init(
@@ -65,28 +73,28 @@ extension Credential {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
-            Credential.List
+            List
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,
                     routes: routes
                 )
                 .route(on: router)
-            Credential.Add
+            Add
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,
                     routes: routes
                 )
                 .route(on: router)
-            Credential.Edit
+            Edit
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,
                     routes: routes
                 )
                 .route(on: router)
-            Credential.Remove
+            Remove
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,

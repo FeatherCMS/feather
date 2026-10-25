@@ -1,3 +1,4 @@
+public import WebDomain
 public import WebModule
 
 extension Menu.Public.List {
@@ -9,7 +10,7 @@ extension Menu.Public.List {
             public let priority: Int
             public let isBlank: Bool
             public let permission: String
-            public let authentication: MenuItem.Authentication
+            public let authentication: MenuItem.Model.Authentication
 
             public init(
                 id: String,
@@ -18,7 +19,7 @@ extension Menu.Public.List {
                 priority: Int,
                 isBlank: Bool,
                 permission: String,
-                authentication: MenuItem.Authentication
+                authentication: MenuItem.Model.Authentication
             ) {
                 self.id = id
                 self.label = label

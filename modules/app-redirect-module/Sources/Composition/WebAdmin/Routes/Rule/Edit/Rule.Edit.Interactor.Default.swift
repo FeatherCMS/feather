@@ -23,7 +23,7 @@ extension Rule.Edit.Interactor {
         }
 
         private func map(_ error: OpenAPIRepositoryError)
-            -> Rule.Edit.Error
+            -> Error
         {
             switch error {
             case .notFound: .notFound

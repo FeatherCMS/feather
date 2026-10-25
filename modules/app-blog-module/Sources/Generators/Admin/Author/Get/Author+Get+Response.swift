@@ -10,15 +10,15 @@ extension Author.Get {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "id": BlogAuthorIdField(),
-                "name": BlogAuthorNameField(),
-                "excerpt": BlogAuthorExcerptField(),
-                "content": BlogAuthorContentField(),
-                "profileImageAssetId": BlogAuthorProfileImageAssetIdField()
+                "id": Author.Schemas.ID(),
+                "name": Author.Schemas.Name(),
+                "excerpt": Author.Schemas.Excerpt(),
+                "content": Author.Schemas.Content(),
+                "profileImageAssetId": Author.Schemas.ProfileImageAssetID()
                     .reference(required: false),
                 "metadata": WebMetadataDetailSchema().reference(),
-                "createdAt": BlogAuthorCreatedAtField(),
-                "updatedAt": BlogAuthorUpdatedAtField(),
+                "createdAt": Author.Schemas.CreatedAt(),
+                "updatedAt": Author.Schemas.UpdatedAt(),
             ]
         }
     }

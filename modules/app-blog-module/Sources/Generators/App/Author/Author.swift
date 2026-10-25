@@ -1,3 +1,3 @@
 enum Author {
-
+    enum Parameters {}
 }

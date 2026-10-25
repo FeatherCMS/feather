@@ -5,9 +5,7 @@ import UserAdminAPI
 import UserModule
 
 extension Identity.Add.Repository.Role {
-    struct OpenAPI:
-        Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
         func list() async throws -> [Identity.Add.RoleOption] {
             try await api.withOpenAPIRepositoryErrorMapping { client in

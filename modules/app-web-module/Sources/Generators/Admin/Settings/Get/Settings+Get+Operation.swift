@@ -7,7 +7,7 @@ extension Settings.Get {
         var operationId: String? { "settingsGet" }
 
         var responseMap: ResponseMap {
-            [200: SettingsDetailResponse().reference()]
+            [200: Response().reference()]
         }
     }
 }

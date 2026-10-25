@@ -1,4 +1,0 @@
-
-extension Identity {
-    enum Put {}
-}

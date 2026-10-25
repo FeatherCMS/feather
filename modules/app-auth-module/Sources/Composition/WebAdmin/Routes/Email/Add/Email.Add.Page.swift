@@ -21,6 +21,7 @@ extension Email.Add {
         struct State {
             let form: Email.Form.Component.State
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: Email.Router.Routes
         }
 
         let state: State
@@ -41,7 +42,7 @@ extension Email.Add {
                 context.build(
                     Email.Form.Component(
                         state: state.form,
-                        action: "/admin/auth/emails/add/",
+                        action: state.routes.add.path,
                         submitLabel: "Add email"
                     )
                 )

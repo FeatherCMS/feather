@@ -5,9 +5,7 @@ import Hummingbird
 
 extension Invitation.Remove.Presenter {
 
-    struct Default:
-        Invitation.Remove.Presenter.Interface
-    {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderEngine: any RenderingEngine

@@ -3,9 +3,7 @@ import FeatherWebShared
 import MediaModule
 
 extension Variant.Remove.Interactor {
-    struct Default:
-        Variant.Remove.Interactor.Interface
-    {
+    struct Default: Interface {
         let repository: any Variant.Remove.Repository.Interface
 
         func delete(ids: [String]) async throws {

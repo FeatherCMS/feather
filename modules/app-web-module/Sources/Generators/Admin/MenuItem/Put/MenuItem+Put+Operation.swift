@@ -6,12 +6,12 @@ extension MenuItem.Put {
     struct Operation: MenuItem.IdentifiableOperation, BearerProtectedOperation {
         var operationId: String? { "menuItemUpdate" }
         var requestBody: (any RequestBodyRepresentable)? {
-            MenuItemUpdateRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                200: MenuItemDetailResponse().reference(),
+                200: MenuItem.Get.Response().reference(),
                 404: CustomResponse(description: "MenuItem not found"),
             ]
         }

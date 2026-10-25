@@ -5,9 +5,7 @@ import SystemModule
 import WebComponents
 
 extension Permission.Remove.Presenter {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine

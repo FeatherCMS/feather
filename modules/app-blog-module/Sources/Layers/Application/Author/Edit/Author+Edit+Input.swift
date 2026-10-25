@@ -5,6 +5,8 @@ public import WebApplication
 import WebDomain
 public import WebModule
 
+public import struct Foundation.Date
+
 extension Author.Edit {
     public struct Input: DTO {
         public let id: String
@@ -12,7 +14,8 @@ extension Author.Edit {
         public let excerpt: FieldChange<String>
         public let content: FieldChange<String>
         public let profileImageAssetId: OptionalFieldChange<String>
-        public let metadata: Metadata.Input?
+        public let metadata: Metadata.Model.Base?
+        public let metadataPublicationDate: FieldChange<Date>
 
         public init(
             id: String,
@@ -20,7 +23,8 @@ extension Author.Edit {
             excerpt: FieldChange<String>,
             content: FieldChange<String>,
             profileImageAssetId: OptionalFieldChange<String>,
-            metadata: Metadata.Input?
+            metadata: Metadata.Model.Base?,
+            metadataPublicationDate: FieldChange<Date> = .unchanged
         ) {
             self.id = id
             self.name = name
@@ -28,6 +32,7 @@ extension Author.Edit {
             self.content = content
             self.profileImageAssetId = profileImageAssetId
             self.metadata = metadata
+            self.metadataPublicationDate = metadataPublicationDate
         }
     }
 }

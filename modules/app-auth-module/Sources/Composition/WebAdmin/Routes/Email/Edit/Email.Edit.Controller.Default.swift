@@ -18,6 +18,8 @@ import WebComponents
 
 extension Email.Edit.Controller {
     struct Default: Interface {
+        let routes: Email.Router.Routes
+
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Email.Edit.Interactor.Interface,
@@ -128,7 +130,7 @@ extension Email.Edit.Controller {
                     )
                 )
                 return AdminNotificationFlash.redirect(
-                    to: "/admin/auth/emails/\(id)/edit/",
+                    to: routes.editPath(id),
                     notification: .init(
                         title: "Saved",
                         message: "User email edited successfully."

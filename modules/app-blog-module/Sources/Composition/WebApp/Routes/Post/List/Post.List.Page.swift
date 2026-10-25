@@ -10,7 +10,7 @@ import WebModuleWebApp
 
 extension Post.List {
     struct Page: Component {
-        let state: Post.List.Model
+        let state: Model
 
         func html(context: inout BuilderContext) -> some BasicTag {
             Main {

@@ -13,7 +13,7 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeEditAccountProfile()
+        let result = try await useCases.makeEditProfile()
             .execute(
                 subject: subject,
                 input: .init(

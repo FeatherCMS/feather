@@ -36,7 +36,7 @@ extension AuthModule.Authorization.SignIn.Credentials {
                     ),
                     user.status == .active
                 else {
-                    throw AuthModule.Authorization.SignIn.Credentials.Error.authenticationFailed
+                    throw Error.authenticationFailed
                 }
                 async let rolesTask = scope.roles.getRolesBy(
                     identityId: user.id

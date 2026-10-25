@@ -6,7 +6,7 @@ extension Variant.Processor.Get {
         var operationId: String? { "mediaVariantProcessorGet" }
         var responseMap: ResponseMap {
             [
-                200: MediaVariantProcessorDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(
                     description: "Media variant processor not found"
                 ),

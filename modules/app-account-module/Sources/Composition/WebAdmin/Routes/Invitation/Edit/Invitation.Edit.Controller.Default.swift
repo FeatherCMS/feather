@@ -3,17 +3,12 @@ import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import OpenAPIRuntime
-import UserAdminAPI
-import UserWebAdmin
 
 extension Invitation.Edit.Controller {
 
-    struct Default:
-        Invitation.Edit.Controller.Interface
-    {
-        let environment: AppEnvironment
+    struct Default: Interface {
         let routes: Invitation.Router.Routes
+        let roleRepository: @Sendable (AuthenticatedRequestContext) -> any Invitation.Form.Repository.Role.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Invitation.Edit.Interactor.Interface,
@@ -56,7 +51,7 @@ extension Invitation.Edit.Controller {
             }
         }
 
-        func postEdit(
+        func postEditPath(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
@@ -107,7 +102,7 @@ extension Invitation.Edit.Controller {
                     headers: [
                         .location: AdminNotificationRedirect.location(
                             defaultPath:
-                                routes.invitationEdit(id) + "/",
+                                routes.invitationEditPath(id) + "/",
                             title: "Saved",
                             message: "User invitation edited successfully."
                         )
@@ -167,27 +162,10 @@ extension Invitation.Edit.Controller {
             _ context: AuthenticatedRequestContext,
             selected: [String]
         ) async -> [Invitation.Form.Component.RoleOptionState] {
-            let userAPI = UserWebAdmin.API.Client(
-                environment: environment,
-                requestContext: context
-            )
-            guard
-                let response =
-                    try? await userAPI
-                    .withOpenAPIRepositoryErrorMapping({ client in
-                        try await client.userRoleList(
-                            query: .init(limit: 100),
-                            headers: .init(accept: [.init(contentType: .json)])
-                        )
-                    })
-            else { return [] }
-            guard case .ok(let value) = response,
-                let body = try? value.body.json
-            else { return [] }
-            return body.map {
+            await roleRepository(context).list().map {
                 .init(
                     value: $0.id,
-                    label: $0.name ?? $0.id,
+                    label: $0.name,
                     isSelected: selected.contains($0.id)
                 )
             }

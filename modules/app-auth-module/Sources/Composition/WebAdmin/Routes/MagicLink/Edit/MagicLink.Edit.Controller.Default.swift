@@ -18,6 +18,8 @@ import WebComponents
 
 extension MagicLink.Edit.Controller {
     struct Default: Interface {
+        let routes: MagicLink.Router.Routes
+
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any MagicLink.Edit.Interactor.Interface,
@@ -126,7 +128,7 @@ extension MagicLink.Edit.Controller {
                     )
                 )
                 return AdminNotificationFlash.redirect(
-                    to: "/admin/auth/magic-links/\(id)/edit/",
+                    to: routes.editPath(id),
                     notification: .init(
                         title: "Saved",
                         message: "User magic link edited successfully."

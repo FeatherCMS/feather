@@ -6,7 +6,7 @@ extension Variant.Get {
         var operationId: String? { "mediaVariantGet" }
         var responseMap: ResponseMap {
             [
-                200: MediaVariantDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "Media variant not found"),
             ]
         }

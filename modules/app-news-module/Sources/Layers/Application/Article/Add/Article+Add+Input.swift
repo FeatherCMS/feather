@@ -16,7 +16,7 @@ extension Article.Add {
         public let content: String
         public let imageAssetId: String?
         public let categoryIds: [String]
-        public let metadata: Metadata.Input
+        public let metadata: Metadata.Model.Base
 
         public init(
             title: String,
@@ -24,7 +24,7 @@ extension Article.Add {
             content: String,
             imageAssetId: String?,
             categoryIds: [String],
-            metadata: Metadata.Input
+            metadata: Metadata.Model.Base
         ) {
             self.title = title
             self.excerpt = excerpt

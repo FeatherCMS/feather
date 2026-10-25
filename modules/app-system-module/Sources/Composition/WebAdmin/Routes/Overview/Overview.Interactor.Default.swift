@@ -3,9 +3,7 @@ import Hummingbird
 import SystemModule
 
 extension Overview.Interactor {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         func getOverview() async throws
             -> Overview.Model
         {

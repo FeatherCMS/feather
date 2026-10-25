@@ -16,7 +16,7 @@ extension Overview {
             let icon: String
         }
 
-        let routes: Overview.Router.Routes
+        let routes: Router.Routes
 
         private var destinations: [Destination] {
             [
@@ -78,7 +78,7 @@ extension Overview {
             Section {
                 context.build(
                     AdminBreadcrumb(links: [
-                        .init(label: "Admin", link: "/admin/")
+                        .init(label: "Admin", link: routes.admin.path)
                     ])
                 )
                 context.build(

@@ -28,15 +28,18 @@ public struct Router {
         )
         let formFieldRoutes = FormField.Router.Routes(
             root: routes.root,
-            breadcrumb: routes.breadcrumb
+            breadcrumb: routes.breadcrumb,
+            formRoutes: formRoutes
         )
         let submissionRoutes = Submission.Router.Routes(
             root: routes.root,
-            breadcrumb: routes.breadcrumb
+            breadcrumb: routes.breadcrumb,
+            formRoutes: formRoutes
         )
         let submissionMailRoutes = SubmissionMail.Router.Routes(
             root: routes.root,
-            breadcrumb: routes.breadcrumb
+            breadcrumb: routes.breadcrumb,
+            formRoutes: formRoutes
         )
 
         Contact.Overview

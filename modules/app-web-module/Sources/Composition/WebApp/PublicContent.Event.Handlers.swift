@@ -14,8 +14,8 @@ public enum PublicContent {
                 in registry: inout EventRegistry
             ) {
                 registry.register(
-                    event: PublicContentProvider.self,
-                    context: PublicContentEventContext<
+                    event: WebModule.Public.Content.Event.Provider.self,
+                    context: WebModule.Public.Content.Event.Context<
                         PublicContentRuntimeContext
                     >
                     .self
@@ -25,10 +25,10 @@ public enum PublicContent {
             }
 
             private static func resolve(
-                _ context: PublicContentEventContext<
+                _ context: WebModule.Public.Content.Event.Context<
                     PublicContentRuntimeContext
                 >
-            ) async throws -> PublicContentResult? {
+            ) async throws -> WebModule.Public.Content.Result? {
                 let api = API.Client(
                     apiBaseURL: context.runtime.apiBaseURL,
                     sessionToken: context.runtime.context.sessionToken
@@ -169,7 +169,8 @@ public enum PublicContent {
                     "javascriptCodeInjection": settings.js,
                 ]
 
-                for (key, value) in values {
+                for key in values.keys {
+                    guard let value = values[key] else { continue }
                     if let value = value.emptyToNil {
                         context[key] = value
                     }

@@ -11,7 +11,7 @@ import WebModule
 extension WebModule.Menu.View {
     struct Page: WebComponents.Component {
         struct State {
-            let menu: WebModule.Menu.View.Model
+            let menu: Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
             let routes: WebModule.Menu.Router.Routes

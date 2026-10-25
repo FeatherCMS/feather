@@ -6,7 +6,7 @@ extension Asset.File.Variant.List {
         var operationId: String? { "mediaAssetVariantList" }
         var responseMap: ResponseMap {
             [
-                200: MediaAssetVariantListResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "MediaAsset not found"),
             ]
         }

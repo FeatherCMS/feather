@@ -20,7 +20,7 @@ extension MagicLink.Add {
         let credentialId: String
         let isPersistent: Bool
 
-        var payload: MagicLink.Add.Payload {
+        var payload: Payload {
             .init(credentialId: credentialId, isPersistent: isPersistent)
         }
     }

@@ -1,6 +1,7 @@
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import Hummingbird
 import WebDomain
 import WebModule
@@ -18,8 +19,13 @@ extension Page {
             let status: WebRoute
             let listBreadcrumb: [AdminBreadcrumb.Link]
             let breadcrumb: [AdminBreadcrumb.Link]
+            let mediaAssetList: WebRoute
 
-            init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
+            init(
+                root: WebRoute,
+                breadcrumb: [AdminBreadcrumb.Link],
+                mediaAssetList: WebRoute
+            ) {
                 self.list = root
                 self.add = root.appending(pathComponent: "add")
                 self.remove = root.appending(pathComponent: "remove")
@@ -32,10 +38,25 @@ extension Page {
                     .appending(parameter: "metadataID")
                 self.status = details.appending(pathComponent: "status")
                 self.listBreadcrumb = breadcrumb
+                self.mediaAssetList = mediaAssetList
                 self.breadcrumb =
                     breadcrumb + [
                         .init(label: "Pages", link: root.path)
                     ]
+            }
+
+            func imagePickerPath(_ field: String) -> String {
+                var components = URLComponents()
+                components.path = mediaAssetList.path
+                components.queryItems = [
+                    URLQueryItem(name: "picker", value: "1"),
+                    URLQueryItem(name: "field", value: field),
+                    URLQueryItem(
+                        name: "extensions",
+                        value: AllowedExtensions.images.queryValue
+                    ),
+                ]
+                return components.string ?? components.path
             }
 
             func detailsPath(_ id: String) -> String {
@@ -67,7 +88,7 @@ extension Page {
         let routes: Routes
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            Page.Search
+            Search
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,

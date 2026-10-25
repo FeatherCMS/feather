@@ -26,17 +26,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.analyticsLogList(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/analytics/logs")
-        )
-        try transport.register(
-            {
                 try await server.analyticsLogOverview(
                     request: $0,
                     body: $1,
@@ -72,87 +61,6 @@ extension APIProtocol {
 }
 
 fileprivate extension UniversalServer where APIHandler: APIProtocol {
-    /// - Remark: HTTP `GET /api/v1/admin/analytics/logs`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/get(analyticsLogList)`.
-    func analyticsLogList(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AnalyticsLogList.id,
-            using: {
-                APIHandler.analyticsLogList($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.AnalyticsLogList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.AnalyticsLogList.Input(headers: headers)
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/analytics/logs/overview`.
     /// - Remark: Generated from `#/paths//api/v1/admin/analytics/logs/overview/post(analyticsLogOverview)`.
     func analyticsLogOverview(

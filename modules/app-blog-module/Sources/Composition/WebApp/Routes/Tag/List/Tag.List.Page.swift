@@ -11,7 +11,7 @@ import protocol SGML.BasicTag
 
 extension Tag.List {
     struct Page: Component {
-        let state: Tag.List.Model
+        let state: Model
 
         func html(context: inout BuilderContext) -> some BasicTag {
             Main {

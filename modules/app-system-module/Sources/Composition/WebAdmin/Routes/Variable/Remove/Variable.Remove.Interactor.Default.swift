@@ -3,9 +3,7 @@ import FeatherWebShared
 import SystemModule
 
 extension Variable.Remove.Interactor {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let repository:
             any Variable.Remove.Repository
                 .Interface

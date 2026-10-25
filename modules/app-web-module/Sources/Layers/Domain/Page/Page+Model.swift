@@ -26,7 +26,7 @@ extension Page {
             public let excerpt: String
             public let content: String
             public let imageAssetId: String?
-            public let metadata: Metadata.Model.New
+            public let metadata: WebModule.Metadata.Model.New
         }
 
         public let id: String
@@ -34,7 +34,7 @@ extension Page {
         public var excerpt: String
         public var content: String
         public var imageAssetId: String?
-        public var metadata: Metadata.Model
+        public var metadata: WebModule.Metadata.Model
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -44,7 +44,7 @@ extension Page {
             excerpt: String,
             content: String,
             imageAssetId: String?,
-            metadata: Metadata.Model,
+            metadata: WebModule.Metadata.Model,
             createdAt: Date,
             updatedAt: Date
         ) {
@@ -94,13 +94,13 @@ extension Page.Model {
         excerpt: String,
         content: String,
         imageAssetId: String? = nil,
-        metadata: Metadata.Model.Base? = nil
+        metadata: WebModule.Metadata.Model.Base? = nil
     ) throws -> Self.New {
         try validate(title: title)
         try validate(excerpt: excerpt)
         try validate(content: content)
 
-        let metadataModel = try Metadata.Model.create(
+        let metadataModel = try WebModule.Metadata.Model.create(
             reference: .type("web.page"),
             base: metadata
                 ?? .init(

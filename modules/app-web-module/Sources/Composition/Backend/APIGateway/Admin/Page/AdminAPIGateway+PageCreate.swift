@@ -53,11 +53,11 @@ extension AdminAPIGateway {
     private func defaultPageMetadata(
         title: String,
         excerpt: String
-    ) -> Metadata.Input {
+    ) -> Metadata.Model.Base {
         .init(
             slug: title.slugified,
             template: "default",
-            publicationDate: nil,
+            publicationDate: .init(),
             expirationDate: nil,
             status: .draft,
             title: title,
@@ -65,7 +65,7 @@ extension AdminAPIGateway {
             imageURL: nil,
             canonicalURL: "",
             noIndex: false,
-            primaryKeyword: "",
+            primaryKeyword: nil,
             cssCodeInjection: "",
             javascriptCodeInjection: "",
             structuredDataCodeInjection: ""

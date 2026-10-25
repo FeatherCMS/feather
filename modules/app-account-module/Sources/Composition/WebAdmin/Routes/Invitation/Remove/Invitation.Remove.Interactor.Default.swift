@@ -2,9 +2,7 @@ import AccountModule
 
 extension Invitation.Remove.Interactor {
 
-    struct Default:
-        Invitation.Remove.Interactor.Interface
-    {
+    struct Default: Interface {
         let repository: any Invitation.Remove.Repository.Interface
 
         func get(

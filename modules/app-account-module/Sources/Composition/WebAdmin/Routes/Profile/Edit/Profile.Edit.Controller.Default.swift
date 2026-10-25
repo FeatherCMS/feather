@@ -6,9 +6,7 @@ import Hummingbird
 
 extension Profile.Edit.Controller {
 
-    struct Default:
-        Profile.Edit.Controller.Interface
-    {
+    struct Default: Interface {
         let routes: Profile.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
@@ -43,7 +41,7 @@ extension Profile.Edit.Controller {
             )
         }
 
-        func postEdit(
+        func postEditPath(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

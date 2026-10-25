@@ -13,23 +13,23 @@ extension Role {
 
             func findBy(
                 id: String
-            ) async throws -> Role.Model?
+            ) async throws -> Model?
 
             func findBy(
                 name: String
-            ) async throws -> Role.Model?
+            ) async throws -> Model?
 
             func findBy(
                 key: String
-            ) async throws -> Role.Model?
+            ) async throws -> Model?
 
             func insert(
-                _ model: Role.Model.New
-            ) async throws -> Role.Model
+                _ model: Model.New
+            ) async throws -> Model
 
             func update(
-                _ model: Role.Model
-            ) async throws -> Role.Model
+                _ model: Model
+            ) async throws -> Model
 
             func delete(
                 ids: [String]

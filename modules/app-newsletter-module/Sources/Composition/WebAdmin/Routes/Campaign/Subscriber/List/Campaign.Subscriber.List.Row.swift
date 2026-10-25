@@ -9,7 +9,7 @@ import WebComponents
 extension Campaign.Subscriber.List {
     struct Row: Component {
         let newsletterId: String
-        let item: Campaign.Subscriber.List.Item
+        let item: Item
         let permissions: AdminListActions
         let routes: Campaign.Router.Routes
 

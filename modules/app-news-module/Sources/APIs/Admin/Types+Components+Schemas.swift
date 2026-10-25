@@ -17,7 +17,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/excerpt`.
             public var excerpt: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageAssetId: Components.Schemas.ArticleSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/createdAt`.
             public var createdAt: Swift.Double
             /// - Remark: Generated from `#/components/schemas/NewsArticleListItemSchema/updatedAt`.
@@ -35,7 +35,7 @@ extension Components {
                 id: Swift.String,
                 title: Swift.String,
                 excerpt: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                imageAssetId: Components.Schemas.ArticleSchemasStringField? = nil,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
@@ -55,8 +55,8 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/NewsAdminOpenAPIComponentsStringField`.
-        public typealias NewsAdminOpenAPIComponentsStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ArticleSchemasStringField`.
+        public typealias ArticleSchemasStringField = Swift.String
         /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
         public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
@@ -166,9 +166,9 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsArticleCreateSchema/content`.
             public var content: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsArticleCreateSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageAssetId: Components.Schemas.ArticleSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsArticleCreateSchema/categoryIds`.
-            public var categoryIds: Components.Schemas.NewsAdminOpenAPIComponentsCategoryIDsField?
+            public var categoryIds: Components.Schemas.ArticleSchemasCategoryIDsField?
             /// - Remark: Generated from `#/components/schemas/NewsArticleCreateSchema/metadata`.
             public var metadata: Components.Schemas.NewsMetadataInputSchema
             /// Creates a new `NewsArticleCreateSchema`.
@@ -184,8 +184,8 @@ extension Components {
                 title: Swift.String,
                 excerpt: Swift.String,
                 content: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                categoryIds: Components.Schemas.NewsAdminOpenAPIComponentsCategoryIDsField? = nil,
+                imageAssetId: Components.Schemas.ArticleSchemasStringField? = nil,
+                categoryIds: Components.Schemas.ArticleSchemasCategoryIDsField? = nil,
                 metadata: Components.Schemas.NewsMetadataInputSchema
             ) {
                 self.title = title
@@ -204,8 +204,8 @@ extension Components {
                 case metadata
             }
         }
-        /// - Remark: Generated from `#/components/schemas/NewsAdminOpenAPIComponentsCategoryIDsField`.
-        public typealias NewsAdminOpenAPIComponentsCategoryIDsField = [Components.Schemas.NewsAdminOpenAPIComponentsStringField]
+        /// - Remark: Generated from `#/components/schemas/ArticleSchemasCategoryIDsField`.
+        public typealias ArticleSchemasCategoryIDsField = [Components.Schemas.ArticleSchemasStringField]
         /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema`.
         public struct NewsMetadataInputSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/slug`.
@@ -213,27 +213,27 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/status`.
             public var status: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/publicationDate`.
-            public var publicationDate: Components.Schemas.NewsAdminOpenAPIComponentsTimestampField?
+            public var publicationDate: Components.Schemas.MetadataSchemasTimestampField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/expirationDate`.
-            public var expirationDate: Components.Schemas.NewsAdminOpenAPIComponentsTimestampField?
+            public var expirationDate: Components.Schemas.MetadataSchemasTimestampField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/title`.
-            public var title: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var title: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/excerpt`.
-            public var excerpt: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var excerpt: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/imageURL`.
-            public var imageURL: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageURL: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/canonicalURL`.
-            public var canonicalURL: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var canonicalURL: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/noIndex`.
-            public var noIndex: Components.Schemas.NewsAdminOpenAPIComponentsBooleanField?
+            public var noIndex: Components.Schemas.MetadataSchemasBooleanField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/primaryKeyword`.
-            public var primaryKeyword: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var primaryKeyword: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/cssCodeInjection`.
-            public var cssCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var cssCodeInjection: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/javascriptCodeInjection`.
-            public var javascriptCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var javascriptCodeInjection: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataInputSchema/structuredDataCodeInjection`.
-            public var structuredDataCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var structuredDataCodeInjection: Components.Schemas.MetadataSchemasStringField?
             /// Creates a new `NewsMetadataInputSchema`.
             ///
             /// - Parameters:
@@ -253,17 +253,17 @@ extension Components {
             public init(
                 slug: Swift.String,
                 status: Swift.String,
-                publicationDate: Components.Schemas.NewsAdminOpenAPIComponentsTimestampField? = nil,
-                expirationDate: Components.Schemas.NewsAdminOpenAPIComponentsTimestampField? = nil,
-                title: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                excerpt: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                imageURL: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                canonicalURL: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                noIndex: Components.Schemas.NewsAdminOpenAPIComponentsBooleanField? = nil,
-                primaryKeyword: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                cssCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                javascriptCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                structuredDataCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil
+                publicationDate: Components.Schemas.MetadataSchemasTimestampField? = nil,
+                expirationDate: Components.Schemas.MetadataSchemasTimestampField? = nil,
+                title: Components.Schemas.MetadataSchemasStringField? = nil,
+                excerpt: Components.Schemas.MetadataSchemasStringField? = nil,
+                imageURL: Components.Schemas.MetadataSchemasStringField? = nil,
+                canonicalURL: Components.Schemas.MetadataSchemasStringField? = nil,
+                noIndex: Components.Schemas.MetadataSchemasBooleanField? = nil,
+                primaryKeyword: Components.Schemas.MetadataSchemasStringField? = nil,
+                cssCodeInjection: Components.Schemas.MetadataSchemasStringField? = nil,
+                javascriptCodeInjection: Components.Schemas.MetadataSchemasStringField? = nil,
+                structuredDataCodeInjection: Components.Schemas.MetadataSchemasStringField? = nil
             ) {
                 self.slug = slug
                 self.status = status
@@ -295,10 +295,12 @@ extension Components {
                 case structuredDataCodeInjection
             }
         }
-        /// - Remark: Generated from `#/components/schemas/NewsAdminOpenAPIComponentsTimestampField`.
-        public typealias NewsAdminOpenAPIComponentsTimestampField = Swift.Double
-        /// - Remark: Generated from `#/components/schemas/NewsAdminOpenAPIComponentsBooleanField`.
-        public typealias NewsAdminOpenAPIComponentsBooleanField = Swift.Bool
+        /// - Remark: Generated from `#/components/schemas/MetadataSchemasTimestampField`.
+        public typealias MetadataSchemasTimestampField = Swift.Double
+        /// - Remark: Generated from `#/components/schemas/MetadataSchemasStringField`.
+        public typealias MetadataSchemasStringField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MetadataSchemasBooleanField`.
+        public typealias MetadataSchemasBooleanField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/NewsArticleDetailSchema`.
         public struct NewsArticleDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsArticleDetailSchema/id`.
@@ -310,9 +312,9 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsArticleDetailSchema/content`.
             public var content: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsArticleDetailSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageAssetId: Components.Schemas.ArticleSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsArticleDetailSchema/categoryIds`.
-            public var categoryIds: [Components.Schemas.NewsAdminOpenAPIComponentsStringField]
+            public var categoryIds: [Components.Schemas.ArticleSchemasStringField]
             /// - Remark: Generated from `#/components/schemas/NewsArticleDetailSchema/metadata`.
             public var metadata: Components.Schemas.NewsMetadataDetailSchema
             /// - Remark: Generated from `#/components/schemas/NewsArticleDetailSchema/createdAt`.
@@ -336,8 +338,8 @@ extension Components {
                 title: Swift.String,
                 excerpt: Swift.String,
                 content: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                categoryIds: [Components.Schemas.NewsAdminOpenAPIComponentsStringField],
+                imageAssetId: Components.Schemas.ArticleSchemasStringField? = nil,
+                categoryIds: [Components.Schemas.ArticleSchemasStringField],
                 metadata: Components.Schemas.NewsMetadataDetailSchema,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
@@ -379,27 +381,27 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/publicationDate`.
             public var publicationDate: Swift.Double
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/expirationDate`.
-            public var expirationDate: Components.Schemas.NewsAdminOpenAPIComponentsTimestampField?
+            public var expirationDate: Components.Schemas.MetadataSchemasTimestampField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/status`.
             public var status: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/title`.
-            public var title: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var title: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/excerpt`.
-            public var excerpt: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var excerpt: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/imageURL`.
-            public var imageURL: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageURL: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/canonicalURL`.
-            public var canonicalURL: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var canonicalURL: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/noIndex`.
             public var noIndex: Swift.Bool
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/primaryKeyword`.
-            public var primaryKeyword: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var primaryKeyword: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/cssCodeInjection`.
-            public var cssCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var cssCodeInjection: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/javascriptCodeInjection`.
-            public var javascriptCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var javascriptCodeInjection: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/structuredDataCodeInjection`.
-            public var structuredDataCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var structuredDataCodeInjection: Components.Schemas.MetadataSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/createdAt`.
             public var createdAt: Swift.Double
             /// - Remark: Generated from `#/components/schemas/NewsMetadataDetailSchema/updatedAt`.
@@ -433,17 +435,17 @@ extension Components {
                 slug: Swift.String,
                 template: Swift.String,
                 publicationDate: Swift.Double,
-                expirationDate: Components.Schemas.NewsAdminOpenAPIComponentsTimestampField? = nil,
+                expirationDate: Components.Schemas.MetadataSchemasTimestampField? = nil,
                 status: Swift.String,
-                title: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                excerpt: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                imageURL: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                canonicalURL: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                title: Components.Schemas.MetadataSchemasStringField? = nil,
+                excerpt: Components.Schemas.MetadataSchemasStringField? = nil,
+                imageURL: Components.Schemas.MetadataSchemasStringField? = nil,
+                canonicalURL: Components.Schemas.MetadataSchemasStringField? = nil,
                 noIndex: Swift.Bool,
-                primaryKeyword: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                cssCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                javascriptCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
-                structuredDataCodeInjection: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                primaryKeyword: Components.Schemas.MetadataSchemasStringField? = nil,
+                cssCodeInjection: Components.Schemas.MetadataSchemasStringField? = nil,
+                javascriptCodeInjection: Components.Schemas.MetadataSchemasStringField? = nil,
+                structuredDataCodeInjection: Components.Schemas.MetadataSchemasStringField? = nil,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
@@ -772,7 +774,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSchema/excerpt`.
             public var excerpt: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageAssetId: Components.Schemas.ArticleSchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSchema/createdAt`.
             public var createdAt: Swift.Double
             /// - Remark: Generated from `#/components/schemas/NewsArticleQueryItemSchema/updatedAt`.
@@ -790,7 +792,7 @@ extension Components {
                 id: Swift.String,
                 title: Swift.String,
                 excerpt: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                imageAssetId: Components.Schemas.ArticleSchemasStringField? = nil,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
@@ -821,7 +823,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/excerpt`.
             public var excerpt: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageAssetId: Components.Schemas.CategorySchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/createdAt`.
             public var createdAt: Swift.Double
             /// - Remark: Generated from `#/components/schemas/NewsCategoryListItemSchema/updatedAt`.
@@ -839,7 +841,7 @@ extension Components {
                 id: Swift.String,
                 title: Swift.String,
                 excerpt: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                imageAssetId: Components.Schemas.CategorySchemasStringField? = nil,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
@@ -859,6 +861,8 @@ extension Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/CategorySchemasStringField`.
+        public typealias CategorySchemasStringField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsCategoryCreateSchema`.
         public struct NewsCategoryCreateSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsCategoryCreateSchema/title`.
@@ -868,7 +872,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsCategoryCreateSchema/content`.
             public var content: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsCategoryCreateSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageAssetId: Components.Schemas.CategorySchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsCategoryCreateSchema/metadata`.
             public var metadata: Components.Schemas.NewsMetadataInputSchema
             /// Creates a new `NewsCategoryCreateSchema`.
@@ -883,7 +887,7 @@ extension Components {
                 title: Swift.String,
                 excerpt: Swift.String,
                 content: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                imageAssetId: Components.Schemas.CategorySchemasStringField? = nil,
                 metadata: Components.Schemas.NewsMetadataInputSchema
             ) {
                 self.title = title
@@ -911,7 +915,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsCategoryDetailSchema/content`.
             public var content: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsCategoryDetailSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageAssetId: Components.Schemas.CategorySchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsCategoryDetailSchema/metadata`.
             public var metadata: Components.Schemas.NewsMetadataDetailSchema
             /// - Remark: Generated from `#/components/schemas/NewsCategoryDetailSchema/createdAt`.
@@ -934,7 +938,7 @@ extension Components {
                 title: Swift.String,
                 excerpt: Swift.String,
                 content: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                imageAssetId: Components.Schemas.CategorySchemasStringField? = nil,
                 metadata: Components.Schemas.NewsMetadataDetailSchema,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
@@ -1166,7 +1170,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSchema/excerpt`.
             public var excerpt: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSchema/imageAssetId`.
-            public var imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField?
+            public var imageAssetId: Components.Schemas.CategorySchemasStringField?
             /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSchema/createdAt`.
             public var createdAt: Swift.Double
             /// - Remark: Generated from `#/components/schemas/NewsCategoryQueryItemSchema/updatedAt`.
@@ -1184,7 +1188,7 @@ extension Components {
                 id: Swift.String,
                 title: Swift.String,
                 excerpt: Swift.String,
-                imageAssetId: Components.Schemas.NewsAdminOpenAPIComponentsStringField? = nil,
+                imageAssetId: Components.Schemas.CategorySchemasStringField? = nil,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {

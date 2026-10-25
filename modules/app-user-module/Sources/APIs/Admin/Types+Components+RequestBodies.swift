@@ -16,11 +16,6 @@ extension Components {
             /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
             case json(Components.Schemas.DeleteRequestSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/UserIdentityUpdateRequestBody`.
-        @frozen public enum UserIdentityUpdateRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/UserIdentityUpdateRequestBody/content/application\/json`.
-            case json(Components.Schemas.UserIdentityUpdateSchema)
-        }
         /// - Remark: Generated from `#/components/requestBodies/UserIdentityPatchRequestBody`.
         @frozen public enum UserIdentityPatchRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/UserIdentityPatchRequestBody/content/application\/json`.
@@ -30,11 +25,6 @@ extension Components {
         @frozen public enum UserRoleRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/UserRoleRequestBody/content/application\/json`.
             case json(Components.Schemas.UserRoleCreateSchema)
-        }
-        /// - Remark: Generated from `#/components/requestBodies/UserRoleUpdateRequestBody`.
-        @frozen public enum UserRoleUpdateRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/UserRoleUpdateRequestBody/content/application\/json`.
-            case json(Components.Schemas.UserRoleUpdateSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/UserRolePatchRequestBody`.
         @frozen public enum UserRolePatchRequestBody: Sendable, Hashable {

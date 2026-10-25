@@ -70,11 +70,27 @@ extension Issue.Send {
             }
             for subscriber in subscribers where subscriber.status == .subscribed
             {
-                let shouldEnqueue = try await createPendingDelivery(
-                    issueId: input.issueId,
-                    newsletterId: input.newsletterId,
-                    email: subscriber.email
-                )
+                let shouldEnqueue = try await transaction.run { context in
+                    guard
+                        try await context.delivery.findBy(
+                            issueId: input.issueId,
+                            subscriberEmail: subscriber.email
+                        ) == nil
+                    else {
+                        return false
+                    }
+                    _ = try await context.delivery.insert(
+                        .init(
+                            issueId: input.issueId,
+                            newsletterId: input.newsletterId,
+                            subscriberEmail: subscriber.email,
+                            status: .pending,
+                            sentDate: nil,
+                            failureReason: nil
+                        )
+                    )
+                    return true
+                }
                 guard shouldEnqueue else { continue }
                 try await jobs.enqueueIssue(
                     mail: .init(
@@ -87,34 +103,6 @@ extension Issue.Send {
                     newsletterId: input.newsletterId,
                     scheduledAt: input.scheduledDate
                 )
-            }
-        }
-
-        private func createPendingDelivery(
-            issueId: String,
-            newsletterId: String,
-            email: String
-        ) async throws -> Bool {
-            try await transaction.run { context in
-                guard
-                    try await context.delivery.findBy(
-                        issueId: issueId,
-                        subscriberEmail: email
-                    ) == nil
-                else {
-                    return false
-                }
-                _ = try await context.delivery.insert(
-                    .init(
-                        issueId: issueId,
-                        newsletterId: newsletterId,
-                        subscriberEmail: email,
-                        status: .pending,
-                        sentDate: nil,
-                        failureReason: nil
-                    )
-                )
-                return true
             }
         }
 

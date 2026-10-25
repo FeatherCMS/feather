@@ -10,7 +10,7 @@ extension AdminAPIGateway {
         _ input: Operations.UserIdentityGet.Input
     ) async throws -> Operations.UserIdentityGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeGetIdentity()
+        let useCase = useCases.makeDetailIdentity()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.userIdentityId)

@@ -12,11 +12,11 @@ extension Metadata.Patch {
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            MetadataPatchRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: MetadataDetailResponse().reference(),
+                200: Metadata.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),

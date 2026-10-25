@@ -9,7 +9,7 @@ extension AdminAPIGateway {
         _ input: Operations.NewsletterCampaignGet.Input
     ) async throws -> Operations.NewsletterCampaignGet.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await self.useCases.makeDetailNewsletterCampaign()
+        let result = try await self.useCases.makeDetailCampaign()
             .execute(
                 subject: subject,
                 input: .init(key: input.path.newsletterCampaignKey)

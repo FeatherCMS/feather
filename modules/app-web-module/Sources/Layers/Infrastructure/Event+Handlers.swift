@@ -12,7 +12,7 @@ extension WebModule.Event {
         ) {
             registry.register(
                 event: Menu.Provider.self,
-                context: WebModule.Event.Context.self
+                context: Context.self
             ) { _, _ in
                 [
                     .init(
@@ -42,7 +42,7 @@ extension WebModule.Event {
 
             registry.register(
                 event: Page.Provider.self,
-                context: WebModule.Event.Context.self
+                context: Context.self
             ) { _, _ in
                 [
                     .init(

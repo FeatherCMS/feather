@@ -87,7 +87,8 @@ extension MagicLink.List.Controller {
                     deniedInfo: "Forbidden",
                     deniedMessage:
                         "Your identity cannot access user magic links.",
-                    breadcrumb: routes.listBreadcrumb
+                    breadcrumb: routes.listBreadcrumb,
+                    routes: routes
                 )
                 return try await presenter.renderPage(state: state)
             }

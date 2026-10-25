@@ -34,7 +34,7 @@ extension Credential.Edit.Presenter {
         ) async throws -> HTMLResponse
         func formState(
             userId: String,
-            emails: [AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail],
+            emails: [Email.Option],
             email: String,
             password: String
         ) -> Credential.Form.Component.State

@@ -23,7 +23,7 @@ extension MagicLink.Add.Interactor {
     protocol Interface: Sendable {
 
         func listEmails() async throws
-            -> [AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail]
+            -> [Email.Option]
 
         func execute(
             entity: MagicLink.Add.Model

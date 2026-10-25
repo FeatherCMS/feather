@@ -6,9 +6,7 @@ import UserAdminAPI
 import UserModule
 
 extension Identity.Detail.Repository.Role {
-    struct OpenAPI:
-        Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func names(for ids: [String]) async throws -> [String] {

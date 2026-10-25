@@ -79,15 +79,13 @@ struct SystemApplicationUseCasesTests {
     }
 
     @Test
-    func listVariablesAndCountSuccess() async throws {
+    func listVariablesSuccess() async throws {
         let listQuery = SystemModule.Variable.List.Input.Query(
-            page: .init(size: 10, number: 2),
-            sort: [.init(field: .name, direction: .asc)],
+            limit: 10,
             search: "needle"
         )
         let queries = SystemModule.Variable.List.Query.Mock(
-            listResult: .init(items: []),
-            countResult: 42
+            listResult: .init(items: [])
         )
         let queryExecutor = FeatherTesting.QueryExecutor.Mock(
             context: SystemModule.Variable.List.Scope(variable: queries)
@@ -102,16 +100,10 @@ struct SystemApplicationUseCasesTests {
             subject: Subject(id: "subject-2"),
             input: SystemModule.Variable.List.Input(query: listQuery)
         )
-        let count = try await useCase.count(
-            subject: Subject(id: "subject-2"),
-            input: SystemModule.Variable.List.Input(query: listQuery)
-        )
-
         #expect(list.items.count == 0)
-        #expect(count == 42)
-        #expect(await queryExecutor.runCallCount == 2)
+        #expect(await queryExecutor.runCallCount == 1)
         #expect(await queries.listCallCount == 1)
-        #expect(await queries.countCallCount == 1)
+        #expect(await queries.lastListQuery?.limit == 10)
     }
 
     @Test
@@ -313,15 +305,13 @@ struct SystemApplicationUseCasesTests {
     }
 
     @Test
-    func listPermissionsAndCountSuccess() async throws {
+    func listPermissionsSuccess() async throws {
         let listQuery = SystemModule.Permission.List.Input.Query(
-            page: .init(size: 5, number: 1),
-            sort: [.init(field: .name, direction: .desc)],
+            limit: 5,
             search: "admin"
         )
         let queries = SystemModule.Permission.List.Query.Mock(
-            listResult: .init(items: []),
-            countResult: 9
+            listResult: .init(items: [])
         )
         let queryExecutor = FeatherTesting.QueryExecutor.Mock(
             context: SystemModule.Permission.List.Scope(
@@ -338,16 +328,10 @@ struct SystemApplicationUseCasesTests {
             subject: Subject(id: "subject-6"),
             input: SystemModule.Permission.List.Input(query: listQuery)
         )
-        let count = try await useCase.count(
-            subject: Subject(id: "subject-6"),
-            input: SystemModule.Permission.List.Input(query: listQuery)
-        )
-
         #expect(list.items.count == 0)
-        #expect(count == 9)
-        #expect(await queryExecutor.runCallCount == 2)
+        #expect(await queryExecutor.runCallCount == 1)
         #expect(await queries.listCallCount == 1)
-        #expect(await queries.countCallCount == 1)
+        #expect(await queries.lastListQuery?.limit == 5)
     }
 
     @Test

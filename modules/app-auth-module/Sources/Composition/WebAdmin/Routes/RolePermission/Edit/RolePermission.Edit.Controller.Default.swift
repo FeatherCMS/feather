@@ -20,6 +20,8 @@ import WebComponents
 
 extension RolePermission.Edit.Controller {
     struct Default: Interface {
+        let routes: RolePermission.Router.Routes
+
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any RolePermission.Edit.Interactor.Interface,
@@ -132,10 +134,11 @@ extension RolePermission.Edit.Controller {
                     let query =
                         search.isEmpty
                         ? [] : [URLQueryItem(name: "search", value: search)]
-                    let location =
-                        query.isEmpty
-                        ? "/admin/auth/access-control/"
-                        : "/admin/auth/access-control/?search=\(search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? search)"
+                    var components = URLComponents(
+                        string: routes.edit.path
+                    )!
+                    components.queryItems = query
+                    let location = components.string ?? routes.edit.path
                     return AdminNotificationFlash.redirect(
                         to: location,
                         notification: .init(

@@ -9,11 +9,11 @@ extension Variant.Query.Schemas {
         var openAPIIdentifier: String { "MediaVariantQueryItemSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": MediaVariantIdField().reference(),
-                "key": MediaVariantKeyField(),
-                "name": MediaVariantNameField(),
-                "isRequired": MediaVariantBooleanField(),
-                "isActive": MediaVariantBooleanField(),
+                "id": Variant.Schemas.ID().reference(),
+                "key": Variant.Schemas.Key(),
+                "name": Variant.Schemas.Name(),
+                "isRequired": Variant.Schemas.Boolean(),
+                "isActive": Variant.Schemas.Boolean(),
             ]
         }
     }

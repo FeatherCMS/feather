@@ -1,4 +1,5 @@
 public import FeatherApplication
+public import WebDomain
 public import WebModule
 
 extension MenuItem.Add {
@@ -9,7 +10,7 @@ extension MenuItem.Add {
         public let priority: Int
         public let isBlank: Bool
         public let permission: String
-        public let authentication: MenuItem.Authentication
+        public let authentication: MenuItem.Model.Authentication
         public let notes: String
 
         public init(
@@ -19,7 +20,7 @@ extension MenuItem.Add {
             priority: Int,
             isBlank: Bool,
             permission: String,
-            authentication: MenuItem.Authentication = .any,
+            authentication: MenuItem.Model.Authentication = .any,
             notes: String
         ) {
             self.menuId = menuId

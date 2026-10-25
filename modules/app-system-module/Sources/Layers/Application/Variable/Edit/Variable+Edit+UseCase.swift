@@ -31,7 +31,7 @@ extension Variable.Edit {
                         id: input.id
                     )
                 else {
-                    throw Variable.Edit.Error.notFound
+                    throw Error.notFound
                 }
                 try model.update(
                     key: input.key,

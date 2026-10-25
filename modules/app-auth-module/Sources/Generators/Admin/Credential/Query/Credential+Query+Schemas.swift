@@ -1,4 +1,5 @@
 import FeatherOpenAPI
+import OpenAPIKit30
 
 extension Credential.Query {
     enum Schemas {}
@@ -13,7 +14,7 @@ extension Credential.Query.Schemas {
         var openAPIIdentifier: String { "AuthCredentialQueryFilterSchema" }
         var propertyMap: SchemaMap {
             [
-                "search": Credential.Query.Schemas.Search()
+                "search": Search()
                     .reference(required: false),
                 "userId": Credential.Schemas.UserID()
                     .reference(required: false),

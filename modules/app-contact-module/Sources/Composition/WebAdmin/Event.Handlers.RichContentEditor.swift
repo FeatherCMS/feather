@@ -1,22 +1,30 @@
 public import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
+import Foundation
 import SystemModule
 import SystemWebAdmin
 
 extension Event.Handlers {
     public static func registerRichContentEditor(
-        in registry: inout EventRegistry
+        in registry: inout EventRegistry,
+        routes: Contact.Router.Routes
     ) {
         registry.register(
             event: AdminRichContentEditorBlockProvider.self,
             context: SystemWebAdmin.Admin.Menu.Context.self
         ) { _, _ in
-            AdminRichContentEditorBlockDefinition(
+            var components = URLComponents()
+            components.path = routes.forms.path
+            components.queryItems = [
+                URLQueryItem(name: "picker", value: "1")
+            ]
+            return AdminRichContentEditorBlockDefinition(
                 type: "contact-form",
                 title: "Contact form",
                 icon: "☏",
                 directive: "ContactForm",
-                pickerEndpoint: "/admin/contact/forms/?picker=1",
+                pickerEndpoint: components.string ?? components.path,
                 isContainer: true
             )
         }

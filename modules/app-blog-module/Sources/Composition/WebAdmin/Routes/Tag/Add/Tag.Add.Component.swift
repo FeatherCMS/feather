@@ -34,7 +34,10 @@ extension Tag.Add {
                     context.build(
                         Tag.Form(
                             state: state.form,
-                            action: state.routes.tagAdd(),
+                            browsePath: state.routes.imagePickerPath(
+                                state.form.imageAssetId.key
+                            ),
+                            action: state.routes.tagAddPath(),
                             submitLabel: "Add tag"
                         )
                     )

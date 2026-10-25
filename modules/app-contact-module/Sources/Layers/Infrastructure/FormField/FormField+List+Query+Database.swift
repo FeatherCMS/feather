@@ -20,7 +20,7 @@ extension FormField.List.Query {
             -> FormField.List.Output
         {
             if input.isUnassigned {
-                let rows = try await FormFieldTable(
+                let rows = try await FormField.AccessLayer(
                     connection: context.connection
                 )
                 .listUnassigned()
@@ -37,7 +37,7 @@ extension FormField.List.Query {
                 else {
                     return .init(items: [])
                 }
-                let rows = try await FormFieldTable(
+                let rows = try await FormField.AccessLayer(
                     connection: context.connection
                 )
                 .list(formId: form.id)
@@ -46,7 +46,7 @@ extension FormField.List.Query {
             }
 
             if let formId = input.formId {
-                let rows = try await FormFieldTable(
+                let rows = try await FormField.AccessLayer(
                     connection: context.connection
                 )
                 .list(formId: formId)

@@ -58,7 +58,8 @@ extension Credential.List.Controller {
                         pageSize: result.size,
                         total: result.total,
                         search: search ?? "",
-                        breadcrumb: routes.listBreadcrumb
+                        breadcrumb: routes.listBreadcrumb,
+                        routes: routes
                     )
                 )
             }

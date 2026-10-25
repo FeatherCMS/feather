@@ -62,7 +62,7 @@ extension Credential.Form {
                 if let error = state.error {
                     P(error).class("admin-form__error")
                 }
-                Credential.Form.hiddenInput()
+                hiddenInput()
                     .type(.hidden)
                     .name("userId")
                     .value(state.identity.value)

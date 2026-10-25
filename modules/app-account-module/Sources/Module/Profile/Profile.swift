@@ -1,4 +1,1 @@
-public enum Profile {
-
-
-}
+public enum Profile {}

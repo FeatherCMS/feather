@@ -1,3 +1,4 @@
+import Foundation
 import ContactApplication
 import ContactModule
 import FeatherWebAdmin
@@ -21,6 +22,7 @@ extension ContactModule.FormField.Add {
             let fieldErrors: [String: String]
             let breadcrumb: [AdminBreadcrumb.Link]
             let addPath: String
+            let formRoutes: ContactModule.Form.Router.Routes
         }
 
         let state: State
@@ -45,6 +47,7 @@ extension ContactModule.FormField.Add {
                     context.build(
                         ContactModule.Form.TabBar(
                             formId: formKey,
+                            routes: state.formRoutes,
                             active: .fields
                         )
                     )

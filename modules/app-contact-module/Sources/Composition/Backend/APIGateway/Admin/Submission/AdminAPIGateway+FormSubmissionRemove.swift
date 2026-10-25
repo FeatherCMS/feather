@@ -8,7 +8,7 @@ extension AdminAPIGateway {
     public func contactFormSubmissionRemove(
         _ input: Operations.ContactFormSubmissionRemove.Input
     ) async throws -> Operations.ContactFormSubmissionRemove.Output {
-        let useCase = self.useCases.makeRemoveContactFormSubmission()
+        let useCase = self.useCases.makeRemoveSubmission()
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value): body = value

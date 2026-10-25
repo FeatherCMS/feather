@@ -10,12 +10,12 @@ extension Settings.Put {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "postListPath": BlogSettingsPostListPathField(),
-                "authorListPath": BlogSettingsAuthorListPathField(),
-                "tagListPath": BlogSettingsTagListPathField(),
-                "postPathPrefix": BlogSettingsPostPathPrefixField(),
-                "authorPathPrefix": BlogSettingsAuthorPathPrefixField(),
-                "tagPathPrefix": BlogSettingsTagPathPrefixField(),
+                "postListPath": Settings.Schemas.PostListPath(),
+                "authorListPath": Settings.Schemas.AuthorListPath(),
+                "tagListPath": Settings.Schemas.TagListPath(),
+                "postPathPrefix": Settings.Schemas.PostPathPrefix(),
+                "authorPathPrefix": Settings.Schemas.AuthorPathPrefix(),
+                "tagPathPrefix": Settings.Schemas.TagPathPrefix(),
             ]
         }
     }

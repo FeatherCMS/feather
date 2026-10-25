@@ -23,7 +23,7 @@ extension MagicLink.Add.Repository {
     protocol Interface: Sendable {
 
         func listEmails() async throws
-            -> [AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail]
+            -> [Email.Option]
 
         func create(
             payload: MagicLink.Add.Payload

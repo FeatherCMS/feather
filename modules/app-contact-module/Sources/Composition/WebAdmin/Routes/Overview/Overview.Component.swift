@@ -14,7 +14,7 @@ extension Contact.Overview {
             let icon: String
         }
 
-        let routes: Contact.Overview.Router.Routes
+        let routes: Router.Routes
 
         private var destinations: [Destination] {
             [

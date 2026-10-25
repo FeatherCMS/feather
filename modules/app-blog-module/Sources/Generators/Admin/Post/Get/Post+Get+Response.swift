@@ -10,17 +10,17 @@ extension Post.Get {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "id": BlogPostIdField(),
-                "title": BlogPostTitleField(),
-                "excerpt": BlogPostExcerptField(),
-                "content": BlogPostContentField(),
-                "imageAssetId": BlogPostImageAssetIdField()
+                "id": Post.Schemas.ID(),
+                "title": Post.Schemas.Title(),
+                "excerpt": Post.Schemas.Excerpt(),
+                "content": Post.Schemas.Content(),
+                "imageAssetId": Post.Schemas.ImageAssetID()
                     .reference(required: false),
-                "authorIds": BlogPostAuthorIdsField().reference(),
-                "tagIds": BlogPostTagIdsField().reference(),
+                "authorIds": Post.Schemas.AuthorIDs().reference(),
+                "tagIds": Post.Schemas.TagIDs().reference(),
                 "metadata": WebMetadataDetailSchema().reference(),
-                "createdAt": BlogPostCreatedAtField(),
-                "updatedAt": BlogPostUpdatedAtField(),
+                "createdAt": Post.Schemas.CreatedAt(),
+                "updatedAt": Post.Schemas.UpdatedAt(),
             ]
         }
     }

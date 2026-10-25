@@ -13,21 +13,21 @@ extension Identity {
 
             func findBy(
                 id: String
-            ) async throws -> Identity.Model?
+            ) async throws -> Model?
 
-            func findRoot() async throws -> Identity.Model?
+            func findRoot() async throws -> Model?
 
             func findRoleIdsBy(
                 identityId: String
             ) async throws -> [String]
 
             func insert(
-                _ model: Identity.Model.New
-            ) async throws -> Identity.Model
+                _ model: Model.New
+            ) async throws -> Model
 
             func update(
-                _ model: Identity.Model
-            ) async throws -> Identity.Model
+                _ model: Model
+            ) async throws -> Model
 
             func replaceRoleIds(
                 identityId: String,

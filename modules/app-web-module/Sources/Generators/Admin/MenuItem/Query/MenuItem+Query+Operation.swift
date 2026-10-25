@@ -7,7 +7,7 @@ extension MenuItem.Query {
         var operationId: String? { "menuItemQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: MenuItemQueryItemSchema(),
+                items: ItemSchema(),
                 sortFieldKeys: [
                     "id",
                     "label",

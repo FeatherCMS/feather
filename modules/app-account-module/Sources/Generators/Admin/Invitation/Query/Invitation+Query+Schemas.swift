@@ -1,5 +1,9 @@
 import FeatherOpenAPI
 
+extension Invitation.Query {
+    enum Schemas {}
+}
+
 extension Invitation.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {

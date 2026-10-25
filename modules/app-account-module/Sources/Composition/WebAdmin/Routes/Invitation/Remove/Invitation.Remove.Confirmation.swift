@@ -24,7 +24,7 @@ extension Invitation.Remove {
                         description: "This action cannot be undone."
                     ),
                     selectedItems: [state.email],
-                    action: routes.invitationRemove(state.id) + "/",
+                    action: routes.invitationRemovePath(state.id) + "/",
                     submit: .init(
                         label: "Remove invitation",
                         style: .destructive

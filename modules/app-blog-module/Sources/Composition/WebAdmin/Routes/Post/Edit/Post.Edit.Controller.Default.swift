@@ -80,7 +80,7 @@ extension Post.Edit.Controller {
                 try await runtime.interactor.update(id: id, input: payload)
 
                 return AdminNotificationFlash.redirect(
-                    to: routes.postEdit(id),
+                    to: routes.postEditPath(id),
                     notification: .init(
                         title: "Saved",
                         message: "Post edited successfully."

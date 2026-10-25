@@ -19,22 +19,11 @@ extension AdminAPIGateway {
 
         let subject = try await CurrentSubject.require()
         let useCase = self.useCases.makeSearchMagicLinks()
-        let listQuery = mapMagicLinkSearchQuery(query)
-        let objectQuery = MagicLink.Search.Input.Query(
-            page: listQuery.page,
-            sort: listQuery.sort.map {
-                .init(
-                    field: .init(rawValue: $0.field.rawValue) ?? .id,
-                    direction: $0.direction
-                )
-            },
-            search: listQuery.search,
-            userId: listQuery.userId
-        )
+        let searchQuery = mapMagicLinkSearchQuery(query)
 
         let result = try await useCase.execute(
             subject: subject,
-            input: .init(query: objectQuery)
+            input: .init(query: searchQuery)
         )
 
         return .ok(
@@ -72,7 +61,7 @@ extension AdminAPIGateway {
     private func mapMagicLinkSearchQuery(
         _ query: Components.Schemas
             .AuthMagicLinkQueryItemSearchRequestQuerySchema
-    ) -> MagicLink.List.Input.Query {
+    ) -> MagicLink.Search.Input.Query {
         .init(
             page: .init(
                 size: query.page?.size ?? 20,
@@ -80,18 +69,19 @@ extension AdminAPIGateway {
             ),
             sort: (query.sort ?? [])
                 .map { rule in
-                    let field: MagicLink.List.Input.Query.Sort.Field
+                    let field: MagicLink.Search.Input.Query.Sort.Field
                     switch rule.field {
                     case .id, .credentialId, .token, .expiresAt, .isPersistent,
                         .isUsed:
-                        field = .id
+                        field = .init(rawValue: rule.field.rawValue) ?? .id
                     }
                     return .init(
                         field: field,
                         direction: mapMagicLinkSortDirection(rule.direction)
                     )
                 },
-            search: query.filters.search
+            search: query.filters.search,
+            userId: query.filters.userId
         )
     }
 

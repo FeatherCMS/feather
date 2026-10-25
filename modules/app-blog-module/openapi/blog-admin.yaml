@@ -144,37 +144,6 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-    put:
-      tags:
-      - BlogAuthors
-      operationId: blogAuthorPut
-      parameters:
-      - $ref: '#/components/parameters/BlogAuthorIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/AuthorPutRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/AuthorGetResponse'
-        404:
-          description: Blog author not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - BlogAuthors
@@ -545,37 +514,6 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-    put:
-      tags:
-      - BlogPosts
-      operationId: blogPostPut
-      parameters:
-      - $ref: '#/components/parameters/BlogPostIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/PostPutRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/PostGetResponse'
-        404:
-          description: Blog post not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - BlogPosts
@@ -762,37 +700,6 @@ paths:
       operationId: blogTagGet
       parameters:
       - $ref: '#/components/parameters/BlogTagIdParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/TagGetResponse'
-        404:
-          description: Blog tag not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-    put:
-      tags:
-      - BlogTags
-      operationId: blogTagPut
-      parameters:
-      - $ref: '#/components/parameters/BlogTagIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/TagPutRequestBody'
       responses:
         200:
           $ref: '#/components/responses/TagGetResponse'
@@ -1230,21 +1137,6 @@ components:
       - excerpt
       - createdAt
       - updatedAt
-    AuthorPutSchema:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/BlogAuthorNameField'
-        excerpt:
-          $ref: '#/components/schemas/BlogAuthorExcerptField'
-        content:
-          $ref: '#/components/schemas/BlogAuthorContentField'
-        profileImageAssetId:
-          $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdFieldNullable'
-    BlogAuthorProfileImageAssetIdFieldNullable:
-      type: string
-      example: media_asset_1
-      nullable: true
     BlogAuthorUpdateMaskField:
       type: string
       example: name,excerpt
@@ -1259,6 +1151,10 @@ components:
           $ref: '#/components/schemas/BlogAuthorContentField'
         profileImageAssetId:
           $ref: '#/components/schemas/BlogAuthorProfileImageAssetIdFieldNullable'
+    BlogAuthorProfileImageAssetIdFieldNullable:
+      type: string
+      example: media_asset_1
+      nullable: true
     AuthorLinkListSchema:
       type: array
       items:
@@ -1788,7 +1684,10 @@ components:
       - excerpt
       - createdAt
       - updatedAt
-    PostPutSchema:
+    BlogPostUpdateMaskField:
+      type: string
+      example: title,imageAssetId
+    PostPatchSchema:
       type: object
       properties:
         title:
@@ -1810,24 +1709,6 @@ components:
       type: string
       example: media_asset_1
       nullable: true
-    BlogPostUpdateMaskField:
-      type: string
-      example: title,imageAssetId
-    PostPatchSchema:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/BlogPostTitleField'
-        excerpt:
-          $ref: '#/components/schemas/BlogPostExcerptField'
-        content:
-          $ref: '#/components/schemas/BlogPostContentField'
-        imageAssetId:
-          $ref: '#/components/schemas/BlogPostImageAssetIdFieldNullable'
-        authorIds:
-          $ref: '#/components/schemas/BlogPostAuthorIdsField'
-        tagIds:
-          $ref: '#/components/schemas/BlogPostTagIdsField'
     SettingsGetSchema:
       type: object
       properties:
@@ -2086,7 +1967,10 @@ components:
       - excerpt
       - createdAt
       - updatedAt
-    TagPutSchema:
+    BlogTagUpdateMaskField:
+      type: string
+      example: title,imageAssetId
+    TagPatchSchema:
       type: object
       properties:
         title:
@@ -2104,20 +1988,6 @@ components:
       type: string
       example: media_asset_1
       nullable: true
-    BlogTagUpdateMaskField:
-      type: string
-      example: title,imageAssetId
-    TagPatchSchema:
-      type: object
-      properties:
-        title:
-          $ref: '#/components/schemas/BlogTagTitleField'
-        excerpt:
-          $ref: '#/components/schemas/BlogTagExcerptField'
-        content:
-          $ref: '#/components/schemas/BlogTagContentField'
-        imageAssetId:
-          $ref: '#/components/schemas/BlogTagImageAssetIdFieldNullable'
   responses:
     AuthorListResponse:
       description: Blog author list response
@@ -2206,7 +2076,7 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/BlogAuthorIdField'
-      description: BlogAuthor id
+      description: Blog author identifier
     BlogAuthorParametersUpdateMask:
       name: updateMask
       allowEmptyValue: true
@@ -2222,14 +2092,14 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/BlogAuthorIdField'
-      description: BlogAuthor id
+      description: Blog author identifier
     BlogAuthorLinkIdParameter:
       name: blogAuthorLinkId
       in: path
       required: true
       schema:
         $ref: '#/components/schemas/BlogAuthorLinkIdField'
-      description: BlogAuthorLink id
+      description: Blog author link identifier
     BlogAuthorLinkParametersUpdateMask:
       name: updateMask
       allowEmptyValue: true
@@ -2245,7 +2115,7 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/BlogPostIdField'
-      description: BlogPost id
+      description: Blog post identifier
     BlogPostParametersUpdateMask:
       name: updateMask
       allowEmptyValue: true
@@ -2261,7 +2131,7 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/BlogTagIdField'
-      description: BlogTag id
+      description: Blog tag identifier
     BlogTagParametersUpdateMask:
       name: updateMask
       allowEmptyValue: true
@@ -2283,12 +2153,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
-      required: true
-    AuthorPutRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthorPutSchema'
       required: true
     AuthorPatchRequestBody:
       content:
@@ -2320,12 +2184,6 @@ components:
           schema:
             $ref: '#/components/schemas/PostPostSchema'
       required: true
-    PostPutRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/PostPutSchema'
-      required: true
     PostPatchRequestBody:
       content:
         application/json:
@@ -2343,12 +2201,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/TagPostSchema'
-      required: true
-    TagPutRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TagPutSchema'
       required: true
     TagPatchRequestBody:
       content:

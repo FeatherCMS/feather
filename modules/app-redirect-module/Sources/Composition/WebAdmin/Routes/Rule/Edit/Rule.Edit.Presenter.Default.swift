@@ -2,8 +2,8 @@ import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import RedirectApplication
 import RedirectModule
+import RedirectApplication
 import WebComponents
 
 extension RedirectModule.Rule.Edit.Presenter {
@@ -62,7 +62,7 @@ extension RedirectModule.Rule.Edit.Presenter {
         func renderEditError(
             id: String,
             input: RedirectModule.Rule.Edit.Form.Input?,
-            error: RedirectModule.Rule.Edit.Error
+            error: RedirectModule.Rule.Edit.Interactor.Error
         ) async throws -> HTMLResponse {
             switch error {
             case .notFound:

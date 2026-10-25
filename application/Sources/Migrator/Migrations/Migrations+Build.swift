@@ -93,17 +93,17 @@ public func buildMigrations(
         ),
 
         // Media folder structure
-        WebInfrastructure.MediaFolderMigration(
+        WebInfrastructure.MediaFolderSeedMigration(
             platform: platform,
             connection: connection,
             idGenerator: idGenerator
         ),
-        BlogInfrastructure.MediaFolderMigration(
+        BlogInfrastructure.MediaFolderSeedMigration(
             platform: platform,
             connection: connection,
             idGenerator: idGenerator
         ),
-        NewsInfrastructure.MediaFolderMigration(
+        NewsInfrastructure.MediaFolderSeedMigration(
             platform: platform,
             connection: connection,
             idGenerator: idGenerator

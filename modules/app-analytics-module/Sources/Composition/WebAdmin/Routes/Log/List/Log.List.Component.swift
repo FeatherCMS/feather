@@ -362,13 +362,10 @@ extension Log.List {
                                                                     AnalyticsWebAdmin
                                                                     .Router
                                                                     .Routes
-                                                                    .log(
-                                                                        RouterPath(
-                                                                            log
-                                                                                .id
-                                                                        )
-                                                                    )
-                                                                    .description,
+                                                                    .log.path(
+                                                                        parameter: "id",
+                                                                        value: log.id
+                                                                    ),
                                                                 style: .ghost(
                                                                     .primary
                                                                 ),

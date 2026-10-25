@@ -1,6 +1,7 @@
 import RedirectAdminAPI
 import RedirectApplication
 import RedirectModule
+import RedirectDomain
 
 extension Rule.List {
     enum Repository {}
@@ -12,7 +13,7 @@ extension Rule.List.Repository {
         func search(
             page: Int,
             search: String?,
-            statusCode: Rule.StatusCode?
+            statusCode: Rule.Model.StatusCode?
         ) async throws
             -> RedirectAdminAPI.Components.Responses
             .RedirectRuleQueryItemSearchSchemaSearchResponse

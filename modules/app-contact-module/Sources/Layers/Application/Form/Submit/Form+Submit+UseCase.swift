@@ -100,14 +100,15 @@ extension Form.Submit {
             guard !mails.isEmpty else { return [:] }
 
             let providers = try await events.trigger(
-                event: Form.Submit.MailTemplateValuesProvider(
+                event: MailTemplateValuesProvider(
                     formKey: formKey
                 ),
                 using: context
             )
             var values: [String: String] = [:]
             for provider in providers {
-                for (key, value) in provider.values where values[key] == nil {
+                for key in provider.values.keys where values[key] == nil {
+                    guard let value = provider.values[key] else { continue }
                     values[key] = value
                 }
             }
@@ -126,7 +127,8 @@ extension Form.Submit {
             else {
                 return
             }
-            for (key, value) in templateValues where values[key] == nil {
+            for key in templateValues.keys where values[key] == nil {
+                guard let value = templateValues[key] else { continue }
                 values[key] = value
             }
 

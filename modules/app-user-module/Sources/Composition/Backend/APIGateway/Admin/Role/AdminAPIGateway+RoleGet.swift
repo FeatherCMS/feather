@@ -10,7 +10,7 @@ extension AdminAPIGateway {
         _ input: Operations.UserRoleGet.Input
     ) async throws -> Operations.UserRoleGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeGetRole()
+        let useCase = useCases.makeDetailRole()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.userRoleId)

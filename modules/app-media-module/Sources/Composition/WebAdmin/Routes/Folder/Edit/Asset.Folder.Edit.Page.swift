@@ -16,7 +16,7 @@ import class Foundation.ByteCountFormatter
 extension Asset.Folder.Edit {
     struct Page: Component {
         struct State {
-            let model: Asset.Folder.Edit.Model
+            let model: Model
             let permissions: AdminListActions
             let routes: Asset.Router.Routes
         }

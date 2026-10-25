@@ -29,7 +29,7 @@ extension AdminAPIGateway {
         catch {
             throw HTTPError(.badRequest)
         }
-        let result = try await self.useCases.makeEditNewsletterCampaign()
+        let result = try await self.useCases.makeEditCampaign()
             .execute(
                 subject: subject,
                 input: .init(

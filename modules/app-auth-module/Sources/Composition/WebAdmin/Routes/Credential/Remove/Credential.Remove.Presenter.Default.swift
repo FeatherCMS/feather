@@ -41,7 +41,8 @@ extension Credential.Remove.Presenter {
                         item: item,
                         identityId: model.userId,
                         breadcrumb: routes.detailsBreadcrumb(model.userId),
-                        nonceToken: nonceToken
+                        nonceToken: nonceToken,
+                        routes: routes
                     )
                 ),
                 size: .small

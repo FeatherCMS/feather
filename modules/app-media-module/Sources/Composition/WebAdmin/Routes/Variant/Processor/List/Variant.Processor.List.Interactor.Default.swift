@@ -4,9 +4,7 @@ import MediaAdminAPI
 import MediaModule
 
 extension Variant.Processor.List.Interactor {
-    struct Default:
-        Variant.Processor.List.Interactor.Interface
-    {
+    struct Default: Interface {
         let repository: any Variant.Processor.List.Repository.Interface
 
         func list(

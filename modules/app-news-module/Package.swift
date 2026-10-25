@@ -102,13 +102,13 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
+            url: "https://github.com/apple/swift-nio",
+            from: "2.0.0"
+        ),
+        .package(
             url:
                 "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
-        ),
-        .package(
-            url: "https://github.com/apple/swift-nio",
-            from: "2.0.0"
         ),
         .package(
             url: "https://github.com/apple/swift-nio-ssl",
@@ -233,6 +233,7 @@ let package = Package(
                     name: "FeatherOpenAPIGenerator",
                     package: "feather-core"
                 ),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
             ],
@@ -246,6 +247,7 @@ let package = Package(
                     name: "FeatherOpenAPIGenerator",
                     package: "feather-core"
                 ),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
                 .target(name: "NewsOpenAPIGeneratorSupport"),
@@ -256,10 +258,6 @@ let package = Package(
         .target(
             name: "NewsOpenAPIGeneratorSupport",
             dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
                 .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
             ],
             path: "Sources/Generators/SchemaSupport",
@@ -269,8 +267,8 @@ let package = Package(
         .target(
             name: "NewsBackend",
             dependencies: [
-                .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "WebApplication", package: "app-web-module"),
                 .product(name: "WebModule", package: "app-web-module"),
@@ -296,6 +294,7 @@ let package = Package(
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
@@ -312,10 +311,10 @@ let package = Package(
 
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "MediaWebAdmin", package: "app-media-module"),
+                .product(name: "MediaModule", package: "app-media-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "WebModule", package: "app-web-module"),
-                .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .product(
                     name: "OpenAPIRuntime",
@@ -340,7 +339,6 @@ let package = Package(
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
-                .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "WebModule", package: "app-web-module"),
                 .target(name: "NewsAppAPI"),
             ],

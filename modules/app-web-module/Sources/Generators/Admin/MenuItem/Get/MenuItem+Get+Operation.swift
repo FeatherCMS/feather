@@ -7,7 +7,7 @@ extension MenuItem.Get {
         var operationId: String? { "menuItemGet" }
         var responseMap: ResponseMap {
             [
-                200: MenuItemDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "MenuItem not found"),
             ]
         }

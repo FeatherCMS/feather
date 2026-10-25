@@ -6,11 +6,11 @@ extension Analytics.Log.Overview {
         var operationId: String? { "analyticsLogOverview" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            AnalyticsLogOverviewRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
-            [200: AnalyticsLogOverviewResponse().reference()]
+            [200: Response().reference()]
         }
     }
 }

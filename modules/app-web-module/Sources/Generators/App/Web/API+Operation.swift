@@ -4,5 +4,5 @@ import FeatherOpenAPIGenerator
 protocol APIOperation: OperationRepresentable {}
 
 extension APIOperation {
-    var tags: [any TagRepresentable] { [ContentTag()] }
+    var tags: [any TagRepresentable] { [Web.Tag()] }
 }

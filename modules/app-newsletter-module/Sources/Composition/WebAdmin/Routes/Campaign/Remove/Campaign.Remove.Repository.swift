@@ -1,4 +1,5 @@
 import NewsletterModule
+import NewsletterApplication
 
 extension Campaign.Remove.Repository {
     protocol Interface: Sendable {

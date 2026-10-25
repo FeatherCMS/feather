@@ -19,7 +19,7 @@ import WebComponents
 extension MagicLink.Add {
     struct Router {
         let routes: MagicLink.Router.Routes
-        let controller: any MagicLink.Add.Controller.Interface
+        let controller: any Controller.Interface
 
         init(
             environment: AppEnvironment,
@@ -27,18 +27,19 @@ extension MagicLink.Add {
             routes: MagicLink.Router.Routes
         ) {
             self.routes = routes
-            self.controller = MagicLink.Add.Controller.Default(
+            self.controller = Controller.Default(
+                routes: routes,
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: MagicLink.Add.Interactor.Default(
-                            repository: MagicLink.Add.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )
                             )
                         ),
-                        presenter: MagicLink.Add.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,
@@ -50,7 +51,14 @@ extension MagicLink.Add {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            controller.route(on: router, routes: routes)
+            router.get(
+                routes.add.routerPath,
+                use: controller.getAddAuthMagicLink
+            )
+            router.post(
+                routes.add.routerPath,
+                use: controller.postAddAuthMagicLink
+            )
         }
     }
 }

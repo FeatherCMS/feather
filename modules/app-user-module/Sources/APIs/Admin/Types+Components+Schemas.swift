@@ -554,35 +554,6 @@ extension Components {
                 case roles
             }
         }
-        /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema`.
-        public struct UserIdentityUpdateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema/name`.
-            public var name: Components.Schemas.UserIdentityNameField?
-            /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema/status`.
-            public var status: Components.Schemas.UserIdentityStatusField?
-            /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema/roleIds`.
-            public var roleIds: Components.Schemas.UserIdentityRoleIdsField?
-            /// Creates a new `UserIdentityUpdateSchema`.
-            ///
-            /// - Parameters:
-            ///   - name:
-            ///   - status:
-            ///   - roleIds:
-            public init(
-                name: Components.Schemas.UserIdentityNameField? = nil,
-                status: Components.Schemas.UserIdentityStatusField? = nil,
-                roleIds: Components.Schemas.UserIdentityRoleIdsField? = nil
-            ) {
-                self.name = name
-                self.status = status
-                self.roleIds = roleIds
-            }
-            public enum CodingKeys: String, CodingKey {
-                case name
-                case status
-                case roleIds
-            }
-        }
         /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateMask`.
         public typealias UserIdentityUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema`.
@@ -946,29 +917,6 @@ extension Components {
             public enum CodingKeys: String, CodingKey {
                 case id
                 case key
-                case name
-                case notes
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/UserRoleUpdateSchema`.
-        public struct UserRoleUpdateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserRoleUpdateSchema/name`.
-            public var name: Components.Schemas.UserRoleNameField?
-            /// - Remark: Generated from `#/components/schemas/UserRoleUpdateSchema/notes`.
-            public var notes: Components.Schemas.UserRoleNotesField?
-            /// Creates a new `UserRoleUpdateSchema`.
-            ///
-            /// - Parameters:
-            ///   - name:
-            ///   - notes:
-            public init(
-                name: Components.Schemas.UserRoleNameField? = nil,
-                notes: Components.Schemas.UserRoleNotesField? = nil
-            ) {
-                self.name = name
-                self.notes = notes
-            }
-            public enum CodingKeys: String, CodingKey {
                 case name
                 case notes
             }

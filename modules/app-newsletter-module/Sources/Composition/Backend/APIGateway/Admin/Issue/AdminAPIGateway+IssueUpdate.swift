@@ -30,7 +30,7 @@ extension AdminAPIGateway {
         catch {
             throw HTTPError(.badRequest)
         }
-        let current = try await self.useCases.makeDetailNewsletterIssue()
+        let current = try await self.useCases.makeDetailIssue()
             .execute(
                 subject: subject,
                 input: .init(
@@ -38,7 +38,7 @@ extension AdminAPIGateway {
                     id: input.path.newsletterIssueId
                 )
             )
-        let result = try await self.useCases.makeEditNewsletterIssue()
+        let result = try await self.useCases.makeEditIssue()
             .execute(
                 subject: subject,
                 input: .init(
@@ -63,7 +63,7 @@ extension AdminAPIGateway {
                 )
             )
         if current.scheduledDate == nil {
-            try await useCases.makeSendNewsletterIssueEmails()
+            try await useCases.makeSendIssueEmails()
                 .execute(
                     subject: subject,
                     input: .init(

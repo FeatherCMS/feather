@@ -8,6 +8,7 @@ extension Dashboard.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
+        let adminPath: String
 
         func renderPage(
             model: Dashboard.Model
@@ -16,7 +17,10 @@ extension Dashboard.Presenter {
                 request: request,
                 context: context,
                 title: model.title,
-                content: Dashboard.Component(model: model)
+                content: Dashboard.Component(
+                    model: model,
+                    adminPath: adminPath
+                )
             )
         }
     }

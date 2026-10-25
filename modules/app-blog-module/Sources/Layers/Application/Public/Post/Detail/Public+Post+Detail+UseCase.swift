@@ -30,7 +30,7 @@ extension Public.Post.Detail {
                     ),
                     metadata.isDirectlyAccessible(at: now)
                 else {
-                    throw Public.Post.Detail.Error(message: "Post not found")
+                    throw Error(message: "Post not found")
                 }
 
                 let postID = id
@@ -46,7 +46,7 @@ extension Public.Post.Detail {
                     else {
                         continue
                     }
-                    let author = try await scope.author.find(id: authorID)
+                    let author = try await scope.post.findAuthor(id: authorID)
                     authors.append(
                         .init(
                             id: author.id,
@@ -72,7 +72,7 @@ extension Public.Post.Detail {
                     else {
                         continue
                     }
-                    let tag = try await scope.tag.find(id: tagID)
+                    let tag = try await scope.post.findTag(id: tagID)
                     tags.append(
                         .init(
                             id: tag.id,
@@ -112,24 +112,25 @@ extension Public.Post.Detail {
     }
 }
 
-extension UseCase {
+extension Public.Post.Detail.UseCase {
     fileprivate static func relatedPosts(
         authorIDs: [String],
         tagIDs: [String],
         excluding postID: String,
         now: Date,
-        context: Scope
+        context: Public.Post.Detail.Scope
     ) async throws -> [Public.Post.Summary.Item] {
-        let posts = try await context.postList.list()
+        let candidates = try await context.post.relatedCandidates(
+            excludingID: postID
+        )
         var result: [Public.Post.Summary.Item] = []
-        for item in posts.items where item.id != postID {
-            let candidate = try await context.post.find(id: item.id)
+        for candidate in candidates {
             guard
                 candidate.authorIds.contains(where: authorIDs.contains)
                     || candidate.tagIds.contains(where: tagIDs.contains),
                 let metadata = try await context.metadata.find(
                     referenceType: "blog.post",
-                    referenceID: item.id
+                    referenceID: candidate.id
                 ),
                 metadata.isPublic(at: now)
             else { continue }

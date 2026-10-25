@@ -1,4 +1,3 @@
-import AnalyticsAdminAPI
 import AnalyticsModule
 import CSS
 import FeatherWebAdmin
@@ -10,7 +9,7 @@ import WebComponents
 
 extension Insight.View {
     struct Component: WebComponents.Component {
-        let page: Insight.View.Model
+        let page: Model
 
         func rules() -> [any Rule] {
             Media {
@@ -420,8 +419,7 @@ extension Insight.View {
 
         private func breakdown(
             _ title: String,
-            _ items: [AnalyticsAdminAPI.Components.Schemas
-                .AnalyticsLogOverviewBreakdownItemSchema]
+            _ items: [Overview.Model.BreakdownItem]
         ) -> AdminChartCard<AdminBarChart> {
             AdminChartCard(
                 title: title,

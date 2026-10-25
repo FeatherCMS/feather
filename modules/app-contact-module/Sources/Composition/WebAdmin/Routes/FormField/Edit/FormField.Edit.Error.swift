@@ -1,7 +1,7 @@
 import ContactApplication
 import ContactModule
 
-extension FormField.Edit {
+extension FormField.Edit.Interactor {
     enum Error: Swift.Error, Sendable {
         case notFound
         case unauthorized

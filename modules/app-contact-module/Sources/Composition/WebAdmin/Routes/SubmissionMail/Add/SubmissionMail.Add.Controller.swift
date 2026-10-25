@@ -23,12 +23,3 @@ extension SubmissionMail.Add.Controller {
     }
 }
 
-extension SubmissionMail.Add.Controller.Interface {
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: SubmissionMail.Router.Routes
-    ) {
-        router.get(routes.formEmailAdd.routerPath, use: add)
-        router.post(routes.formEmailAdd.routerPath, use: create)
-    }
-}

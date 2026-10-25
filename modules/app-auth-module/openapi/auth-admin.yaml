@@ -72,14 +72,22 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/auth/credentials:
-    get:
+  /api/v1/admin/user/identities/{userIdentityId}/sessions/query:
+    post:
       tags:
-      - AuthCredentials
-      operationId: authCredentialList
+      - UserIdentities
+      operationId: userIdentitySessionQuery
+      parameters:
+      - $ref: '#/components/parameters/UserIdentityIdParameter'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserIdentitySessionQueryItemSearchRequestQuerySchema'
+        required: true
       responses:
         200:
-          $ref: '#/components/responses/AuthCredentialListResponse'
+          $ref: '#/components/responses/UserIdentitySessionQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -94,6 +102,7 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
+  /api/v1/admin/auth/credentials:
     post:
       tags:
       - AuthCredentials
@@ -508,27 +517,6 @@ paths:
       - bearerAuth: []
   /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}: {}
   /api/v1/admin/auth/magic-links:
-    get:
-      tags:
-      - AuthMagicLinks
-      operationId: authMagicLinkList
-      responses:
-        200:
-          $ref: '#/components/responses/AuthMagicLinkListResponse'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
     post:
       tags:
       - AuthMagicLinks
@@ -807,38 +795,151 @@ components:
             example: id1
       required:
       - ids
-    AuthCredentialListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/AuthCredentialListItemSchema'
-    AuthCredentialListItemSchema:
+    UserIdentitySessionQueryItemSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - createdAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - filters
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+    SearchPageSizeField:
+      type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
+      example: 20
+    SearchPageNumberField:
+      type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
+      example: 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      example: asc
+    SearchStringField:
+      type: string
+      example: foo
+    UserIdentitySessionQueryItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/UserIdentitySessionQueryItemSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/UserIdentitySessionQueryItem'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    UserIdentitySessionQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - createdAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+    UserIdentitySessionQueryItem:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/AuthCredentialIdField'
-        userId:
-          $ref: '#/components/schemas/AuthCredentialUserIdField'
-        identityName:
-          $ref: '#/components/schemas/AuthCredentialIdentityNameField'
-        email:
-          $ref: '#/components/schemas/AuthCredentialEmailField'
+          $ref: '#/components/schemas/UserIdentityIDField'
+        authenticationType:
+          $ref: '#/components/schemas/UserAuthSessionAuthenticationTypeField'
+        authenticationReference:
+          $ref: '#/components/schemas/UserAuthSessionAuthenticationReferenceField'
+        expiresAt:
+          $ref: '#/components/schemas/UserAuthSessionTimestampField'
+        isPersistent:
+          $ref: '#/components/schemas/UserAuthSessionPersistentField'
+        createdAt:
+          $ref: '#/components/schemas/UserAuthSessionTimestampField'
+        updatedAt:
+          $ref: '#/components/schemas/UserAuthSessionTimestampField'
       required:
       - id
-      - userId
-      - identityName
-      - email
-    AuthCredentialIdField:
-      type: string
-      example: credential_7nL3xQ2v
-    AuthCredentialUserIdField:
-      type: string
-      example: user_7nL3xQ2v
-    AuthCredentialIdentityNameField:
-      type: string
-      example: Root User
-    AuthCredentialEmailField:
-      type: string
-      example: john.doe@example.com
+      - authenticationType
+      - authenticationReference
+      - expiresAt
+      - isPersistent
+      - createdAt
+      - updatedAt
     AuthCredentialCreateSchema:
       type: object
       properties:
@@ -904,34 +1005,12 @@ components:
               $ref: '#/components/schemas/AuthCredentialUserIdField'
       required:
       - filters
-    SearchPageSchema:
-      type: object
-      properties:
-        size:
-          $ref: '#/components/schemas/SearchPageSizeField'
-        number:
-          $ref: '#/components/schemas/SearchPageNumberField'
-    SearchPageSizeField:
-      type: integer
-      default: 20
-      description: Results per page. Defaults to 20 when omitted; values below 1 are
-        clamped to 1. Endpoint-specific maximums may apply.
-      example: 20
-    SearchPageNumberField:
-      type: integer
-      default: 1
-      description: 1-based page number. Defaults to 1 when omitted; values below 1
-        are clamped to 1.
-      example: 1
-    SortDirection:
-      type: string
-      enum:
-      - asc
-      - desc
-      example: asc
     AuthCredentialQueryField:
       type: string
       example: foo
+    AuthCredentialUserIdField:
+      type: string
+      example: user_7nL3xQ2v
     AuthCredentialQueryItemSearchSchema:
       type: object
       properties:
@@ -987,16 +1066,6 @@ components:
       required:
       - page
       - filters
-    SearchResponsePageSchema:
-      type: object
-      properties:
-        size:
-          $ref: '#/components/schemas/SearchPageSizeField'
-        number:
-          $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
     AuthCredentialQueryItemSchema:
       type: object
       properties:
@@ -1013,6 +1082,15 @@ components:
       - userId
       - identityName
       - email
+    AuthCredentialIdField:
+      type: string
+      example: credential_7nL3xQ2v
+    AuthCredentialIdentityNameField:
+      type: string
+      example: Root User
+    AuthCredentialEmailField:
+      type: string
+      example: john.doe@example.com
     AuthCredentialUpdateMaskField:
       type: string
       example: userId,email,password
@@ -1096,9 +1174,6 @@ components:
               $ref: '#/components/schemas/AuthEmailSchemasIdentityIDField'
       required:
       - filters
-    SearchStringField:
-      type: string
-      example: foo
     AuthEmailQuerySchemasItemSearchSchema:
       type: object
       properties:
@@ -1296,51 +1371,6 @@ components:
       required:
       - roleId
       - permissionId
-    AuthMagicLinkListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/AuthMagicLinkListItemSchema'
-    AuthMagicLinkListItemSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/AuthMagicLinkIdField'
-        credentialId:
-          $ref: '#/components/schemas/AuthMagicLinkCredentialIdField'
-        token:
-          $ref: '#/components/schemas/AuthMagicLinkTokenField'
-        expiresAt:
-          $ref: '#/components/schemas/AuthMagicLinkExpiresAtField'
-        isPersistent:
-          $ref: '#/components/schemas/AuthMagicLinkIsPersistentField'
-        isUsed:
-          $ref: '#/components/schemas/AuthMagicLinkIsUsedField'
-      required:
-      - id
-      - credentialId
-      - token
-      - expiresAt
-      - isPersistent
-      - isUsed
-    AuthMagicLinkIdField:
-      type: string
-      example: uml_k3P9qN2v
-    AuthMagicLinkCredentialIdField:
-      type: string
-      example: cred_k3P9qN2v
-    AuthMagicLinkTokenField:
-      type: string
-      example: mgl_3XbY...
-    AuthMagicLinkExpiresAtField:
-      type: number
-      format: double
-      example: 1.76e+9
-    AuthMagicLinkIsPersistentField:
-      type: boolean
-      example: true
-    AuthMagicLinkIsUsedField:
-      type: boolean
-      example: false
     AuthMagicLinkCreateSchema:
       type: object
       properties:
@@ -1500,6 +1530,25 @@ components:
       - expiresAt
       - isPersistent
       - isUsed
+    AuthMagicLinkIdField:
+      type: string
+      example: uml_k3P9qN2v
+    AuthMagicLinkCredentialIdField:
+      type: string
+      example: cred_k3P9qN2v
+    AuthMagicLinkTokenField:
+      type: string
+      example: mgl_3XbY...
+    AuthMagicLinkExpiresAtField:
+      type: number
+      format: double
+      example: 1.76e+9
+    AuthMagicLinkIsPersistentField:
+      type: boolean
+      example: true
+    AuthMagicLinkIsUsedField:
+      type: boolean
+      example: false
     AuthMagicLinkUpdateMaskField:
       type: string
       example: credentialId,isPersistent
@@ -1519,12 +1568,12 @@ components:
             $ref: '#/components/schemas/UserAuthSessionListSchema'
     NoContentResponse:
       description: Delete succeeded
-    AuthCredentialListResponse:
-      description: AuthCredential list response
+    UserIdentitySessionQueryItemSearchSchemaSearchResponse:
+      description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AuthCredentialListSchema'
+            $ref: '#/components/schemas/UserIdentitySessionQueryItemSearchSchema'
     AuthCredentialDetailResponse:
       description: User credential response
       content:
@@ -1567,12 +1616,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AuthRolePermissionQueryItemSearchSchema'
-    AuthMagicLinkListResponse:
-      description: AuthMagicLink list response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AuthMagicLinkListSchema'
     AuthMagicLinkDetailResponse:
       description: User magic link response
       content:

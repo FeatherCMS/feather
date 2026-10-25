@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
+import WebDomain
 public import WebModule
 
 extension Page.Detail {
@@ -23,7 +24,19 @@ extension Page.Detail {
             else {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
-            return try await query.run { try await $0.page.find(id: input.id) }
+            let page = try await query.run {
+                try await $0.page.find(id: input.id)
+            }
+            return .init(
+                id: page.id,
+                title: page.title,
+                excerpt: page.excerpt,
+                content: page.content,
+                imageAssetId: page.imageAssetId,
+                metadata: page.metadata.asSnapshot,
+                createdAt: page.createdAt,
+                updatedAt: page.updatedAt
+            )
         }
     }
 }

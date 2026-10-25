@@ -7,11 +7,11 @@ extension Asset.Folder {
 }
 
 extension Asset.Folder.Operation {
-    var tags: [any TagRepresentable] { [MediaFolderTag()] }
+    var tags: [any TagRepresentable] { [Asset.Folder.Tag()] }
 }
 
 extension Asset.Folder.IDOperation {
     var parameters: [any ParameterRepresentable] {
-        [MediaFolderIdParameter().reference()]
+        [Asset.Folder.Parameters.ID().reference()]
     }
 }

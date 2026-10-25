@@ -27,16 +27,5 @@ extension Role.List {
                 try await scope.role.list(query: input.query)
             }
         }
-
-        public func count(subject: Subject, input: Input) async throws -> Int {
-            let action = Action()
-            guard try await authorizer.can(subject: subject, perform: action)
-            else {
-                throw AuthError(kind: .forbidden, message: action.key.rawValue)
-            }
-            return try await query.run { scope in
-                try await scope.role.count(query: input.query)
-            }
-        }
     }
 }

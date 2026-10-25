@@ -10,7 +10,7 @@ import WebComponents
 
 extension Subscriber.Add {
     struct View: Component {
-        let model: Subscriber.Add.Model
+        let model: Model
         let isAdded: Bool
         let routes: Subscriber.Router.Routes
         func html(context: inout BuilderContext) -> some BasicTag {

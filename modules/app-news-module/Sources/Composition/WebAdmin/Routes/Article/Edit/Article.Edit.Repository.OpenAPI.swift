@@ -1,9 +1,13 @@
+import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import NewsAdminAPI
 import NewsApplication
 import NewsModule
 import OpenAPIRuntime
+import WebModuleWebAdmin
+import WebModule
 
 extension Article.Edit.Repository {
     struct OpenAPI: Interface {
@@ -11,14 +15,37 @@ extension Article.Edit.Repository {
 
         func get(
             id: String
-        ) async throws -> Components.Schemas.NewsArticleDetailSchema {
+        ) async throws -> Article.Detail.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsArticleGet(
                     .init(path: .init(newsArticleId: id))
                 )
                 switch response {
                 case .ok(let value):
-                    return try value.body.json
+                    let schema = try value.body.json
+                    return .init(
+                        id: schema.id,
+                        title: schema.title,
+                        excerpt: schema.excerpt,
+                        content: schema.content,
+                        imageAssetId: schema.imageAssetId,
+                        categoryIDs: schema.categoryIds,
+                        metadata: News.Metadata.Form.Input(
+                            metadataSlug: schema.metadata.slug,
+                            status: schema.metadata.status,
+                            publicationTimestamp: schema.metadata.publicationDate,
+                            expirationTimestamp: schema.metadata.expirationDate,
+                            title: schema.metadata.title,
+                            excerpt: schema.metadata.excerpt,
+                            imageURL: schema.metadata.imageURL,
+                            canonicalURL: schema.metadata.canonicalURL,
+                            noIndex: schema.metadata.noIndex,
+                            primaryKeyword: schema.metadata.primaryKeyword,
+                            cssCodeInjection: schema.metadata.cssCodeInjection,
+                            javascriptCodeInjection: schema.metadata.javascriptCodeInjection,
+                            structuredDataCodeInjection: schema.metadata.structuredDataCodeInjection
+                        )
+                    )
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:
@@ -60,13 +87,46 @@ extension Article.Edit.Repository {
 
         func update(
             id: String,
-            input: Components.Schemas.NewsArticleCreateSchema
+            input: Article.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsArticlePut(
                     .init(
                         path: .init(newsArticleId: id),
-                        body: .json(input)
+                        body: .json(
+                            .init(
+                                title: input.title.trimmingCharacters(
+                                    in: .whitespacesAndNewlines
+                                ),
+                                excerpt: input.excerpt.trimmingCharacters(
+                                    in: .whitespacesAndNewlines
+                                ),
+                                content: input.content,
+                                imageAssetId: input.imageAssetId.isEmpty
+                                    ? nil
+                                    : input.imageAssetId,
+                                categoryIds: input.categoryIds ?? [],
+                                metadata: .init(
+                                    slug: input.metadata.slug.trimmingCharacters(
+                                        in: .whitespacesAndNewlines
+                                    ),
+                                    status: input.metadata.status,
+                                    publicationDate: WebModule.Metadata.SchemaBuilder
+                                        .parseTimestamp(input.metadata.publicationDate),
+                                    expirationDate: WebModule.Metadata.SchemaBuilder
+                                        .parseTimestamp(input.metadata.expirationDate),
+                                    title: input.metadata.metaTitle.emptyToNil,
+                                    excerpt: input.metadata.metaExcerpt.emptyToNil,
+                                    imageURL: input.metadata.imageURL.emptyToNil,
+                                    canonicalURL: input.metadata.canonicalURL.emptyToNil,
+                                    noIndex: input.metadata.noIndex ?? false,
+                                    primaryKeyword: input.metadata.primaryKeyword.emptyToNil,
+                                    cssCodeInjection: input.metadata.cssCodeInjection.emptyToNil,
+                                    javascriptCodeInjection: input.metadata.javascriptCodeInjection.emptyToNil,
+                                    structuredDataCodeInjection: input.metadata.structuredDataCodeInjection.emptyToNil
+                                )
+                            )
+                        )
                     )
                 )
                 switch response {

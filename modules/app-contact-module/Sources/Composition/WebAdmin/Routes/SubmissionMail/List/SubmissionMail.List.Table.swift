@@ -34,7 +34,11 @@ extension SubmissionMail.List {
                     )
                 )
                 context.build(
-                    ContactModule.Form.TabBar(formId: state.id, active: .emails)
+                    ContactModule.Form.TabBar(
+                        formId: state.id,
+                        routes: state.routes.formRoutes,
+                        active: .emails
+                    )
                 )
                 context.build(
                     AdminRelationshipGroup(

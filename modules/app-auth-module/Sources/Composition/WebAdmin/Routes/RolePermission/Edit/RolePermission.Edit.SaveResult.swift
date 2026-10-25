@@ -18,6 +18,6 @@ import WebComponents
 extension RolePermission.Edit {
     enum SaveResult: Sendable {
         case edited
-        case render(RolePermission.Edit.State)
+        case render(State)
     }
 }

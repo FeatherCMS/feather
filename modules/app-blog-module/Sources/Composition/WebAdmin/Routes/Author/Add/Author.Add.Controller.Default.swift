@@ -17,8 +17,9 @@ import WebModuleWebAdmin
 
 extension Author.Add.Controller {
     struct Default: Interface {
-        let environment: AppEnvironment
         let routes: Author.Router.Routes
+        let buildPublicContentRepository:
+            @Sendable (AuthenticatedRequestContext) -> any PublicContent.Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Author.Add.Interactor.Interface,
@@ -178,15 +179,9 @@ extension Author.Add.Controller {
         private func slugPrefix(
             context: AuthenticatedRequestContext
         ) async throws -> String {
-            let schema = try await PublicContent.Repository
-                .OpenAPI(
-                    api: API.App.Client(
-                        environment: environment,
-                        requestContext: context
-                    )
-                )
+            let settings = try await buildPublicContentRepository(context)
                 .getRouteSettings()
-            let prefix = Settings.PublicRoutes(schema: schema).authorPathPrefix
+            let prefix = settings.authorPathPrefix
             return prefix.isEmpty ? "/" : "/\(prefix)/"
         }
     }

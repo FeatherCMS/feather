@@ -32,7 +32,7 @@ extension FormField.Edit {
                         formId: input.formId
                     )
                 else {
-                    throw FormField.Edit.Error(message: "Contact form field not found")
+                    throw Error(message: "Contact form field not found")
                 }
                 try value.update(
                     key: input.key,

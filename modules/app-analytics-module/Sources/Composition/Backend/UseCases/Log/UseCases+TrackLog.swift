@@ -6,7 +6,7 @@ import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeLogTrack() -> Log.Track.UseCase {
+    func makeTrackLog() -> Log.Track.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in

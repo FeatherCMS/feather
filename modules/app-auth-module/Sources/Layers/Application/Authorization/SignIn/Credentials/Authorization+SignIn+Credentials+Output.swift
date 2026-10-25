@@ -1,7 +1,8 @@
-import AuthDomain
+public import AuthDomain
 public import AuthModule
 public import FeatherApplication
-import UserDomain
+public import UserDomain
+public import UserModule
 
 extension AuthModule.Authorization.SignIn.Credentials {
     public struct Output: DTO, Sendable {

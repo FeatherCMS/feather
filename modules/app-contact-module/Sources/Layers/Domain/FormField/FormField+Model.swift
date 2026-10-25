@@ -132,17 +132,17 @@ extension FormField.Model {
     }
 
     public mutating func update(
-        key: String? = nil,
-        type: ItemType? = nil,
-        label: String? = nil,
-        allowedValues: [Option]? = nil,
-        isRequired: Bool? = nil,
-        position: Int? = nil
+        key: FieldChange<String> = .unchanged,
+        type: FieldChange<ItemType> = .unchanged,
+        label: FieldChange<String> = .unchanged,
+        allowedValues: FieldChange<[Option]> = .unchanged,
+        isRequired: FieldChange<Bool> = .unchanged,
+        position: FieldChange<Int> = .unchanged
     ) throws(Self.Error) {
-        let newKey = key ?? self.key
-        let newType = type ?? self.type
-        let newLabel = label ?? self.label
-        let newAllowedValues = allowedValues ?? self.allowedValues
+        let newKey = key.apply(to: self.key)
+        let newType = type.apply(to: self.type)
+        let newLabel = label.apply(to: self.label)
+        let newAllowedValues = allowedValues.apply(to: self.allowedValues)
         try Self.validate(
             key: newKey,
             label: newLabel,
@@ -153,7 +153,7 @@ extension FormField.Model {
         self.type = newType
         self.label = newLabel
         self.allowedValues = newAllowedValues
-        self.isRequired = isRequired ?? self.isRequired
-        self.position = position ?? self.position
+        self.isRequired = isRequired.apply(to: self.isRequired)
+        self.position = position.apply(to: self.position)
     }
 }

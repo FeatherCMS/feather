@@ -10,10 +10,10 @@ extension Tag.Post {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "title": BlogTagTitleField(),
-                "excerpt": BlogTagExcerptField(),
-                "content": BlogTagContentField(),
-                "imageAssetId": BlogTagImageAssetIdField()
+                "title": Tag.Schemas.Title(),
+                "excerpt": Tag.Schemas.Excerpt(),
+                "content": Tag.Schemas.Content(),
+                "imageAssetId": Tag.Schemas.ImageAssetID()
                     .reference(required: false),
             ]
         }

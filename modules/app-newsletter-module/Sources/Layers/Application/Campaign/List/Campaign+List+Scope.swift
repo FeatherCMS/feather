@@ -3,9 +3,9 @@ public import NewsletterModule
 
 extension Campaign.List {
     public struct Scope: FeatherModuleKit.Scope {
-        public let campaign: any Campaign.List.Query.Interface
+        public let campaign: any Query.Interface
 
-        public init(campaign: any Campaign.List.Query.Interface) {
+        public init(campaign: any Query.Interface) {
             self.campaign = campaign
         }
     }

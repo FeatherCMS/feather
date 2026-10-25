@@ -40,7 +40,8 @@ extension Credential.Edit.Presenter {
                     state: .init(
                         id: id,
                         form: form,
-                        breadcrumb: routes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
                     )
                 )
             )
@@ -67,7 +68,7 @@ extension Credential.Edit.Presenter {
 
         func formState(
             userId: String,
-            emails: [AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail],
+            emails: [Email.Option],
             email: String,
             password: String = ""
         )

@@ -36,7 +36,7 @@ extension Role.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.role.findBy(id: input.id)
                 else {
-                    throw Role.Edit.Error.notFound
+                    throw Error.notFound
                 }
 
                 try model.update(

@@ -1,4 +1,6 @@
 import FeatherWebAdmin
+import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -76,6 +78,7 @@ extension Settings.Edit.Form {
         }
 
         var state: State
+        let mediaAssetList: WebRoute
         let action: String
         var submitLabel: String = "Save settings"
 
@@ -94,8 +97,8 @@ extension Settings.Edit.Form {
                         title: "Branding",
                         persistsState: false
                     ) {
-                        imagePicker(state.logo, context: &context)
-                        imagePicker(state.logoDark, context: &context)
+                        imagePickerPath(state.logo, context: &context)
+                        imagePickerPath(state.logoDark, context: &context)
                     }
                 )
 
@@ -128,7 +131,7 @@ extension Settings.Edit.Form {
                             )
                         )
                         context.build(textarea(state.excerpt, rows: 4))
-                        imagePicker(state.metaImage, context: &context)
+                        imagePickerPath(state.metaImage, context: &context)
                     }
                 )
 
@@ -272,13 +275,22 @@ extension Settings.Edit.Form {
             )
         }
 
-        private func imagePicker(
+        private func imagePickerPath(
             _ field: FieldState,
             context: inout BuilderContext
         ) -> Section {
-
+            var browseComponents = URLComponents()
+            browseComponents.path = mediaAssetList.path
+            browseComponents.queryItems = [
+                URLQueryItem(name: "picker", value: "1"),
+                URLQueryItem(name: "field", value: field.key),
+                URLQueryItem(
+                    name: "extensions",
+                    value: AllowedExtensions.images.queryValue
+                ),
+            ]
             let browsePath =
-                "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)"
+                browseComponents.string ?? browseComponents.path
             return context.build(
                 AdminFormFieldMediaPicker(
                     state: .init(

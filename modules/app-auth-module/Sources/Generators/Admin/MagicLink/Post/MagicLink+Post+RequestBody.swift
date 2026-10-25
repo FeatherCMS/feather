@@ -7,7 +7,7 @@ extension MagicLink.Post {
         var contentMap: ContentMap {
             [
                 .json: Content(
-                    MagicLink.Post.Schema().reference()
+                    Schema().reference()
                 )
             ]
         }

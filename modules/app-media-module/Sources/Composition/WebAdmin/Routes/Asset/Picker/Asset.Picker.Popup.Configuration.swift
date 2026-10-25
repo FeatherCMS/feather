@@ -28,7 +28,7 @@ extension Asset.Picker.Popup {
             self.routes = routes
         }
 
-        func url(for action: Asset.Picker.Popup.Action) -> String {
+        func url(for action: Action) -> String {
             var components = URLComponents()
             components.path =
                 action == .choose

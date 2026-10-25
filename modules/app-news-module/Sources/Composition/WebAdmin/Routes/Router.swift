@@ -26,7 +26,11 @@ public struct Router: Sendable {
         Article.Router(
             environment: environment,
             renderingEngine: renderingEngine,
-            routes: .init(root: routes.articles, breadcrumb: routes.breadcrumb)
+            routes: .init(
+                root: routes.articles,
+                breadcrumb: routes.breadcrumb,
+                mediaAssetList: routes.mediaAssetList
+            )
         )
         .route(on: router)
 
@@ -35,7 +39,8 @@ public struct Router: Sendable {
             renderingEngine: renderingEngine,
             routes: .init(
                 root: routes.categories,
-                breadcrumb: routes.breadcrumb
+                breadcrumb: routes.breadcrumb,
+                mediaAssetList: routes.mediaAssetList
             )
         )
         .route(on: router)

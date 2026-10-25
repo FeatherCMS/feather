@@ -28,6 +28,7 @@ extension Email.Edit {
         ) {
             self.routes = routes
             self.controller = Controller.Default(
+                routes: routes,
                 buildRuntime: { request, context in
                     WebAdminRuntime(
                         interactor: Interactor.Default(

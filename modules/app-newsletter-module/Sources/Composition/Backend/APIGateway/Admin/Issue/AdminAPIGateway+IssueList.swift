@@ -10,7 +10,7 @@ extension AdminAPIGateway {
         _ input: Operations.NewsletterIssueList.Input
     ) async throws -> Operations.NewsletterIssueList.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await self.useCases.makeListNewsletterIssues()
+        let result = try await self.useCases.makeListIssues()
             .execute(
                 subject: subject,
                 input: .init(campaignKey: input.path.newsletterCampaignKey)
@@ -32,7 +32,7 @@ extension AdminAPIGateway {
     private func map(
         _ value: Issue.List.Item,
         campaignKey: String
-    ) -> Components.Schemas.NewsletterIssueSchema {
+    ) -> Components.Schemas.NewsletterIssueListItemSchema {
         .init(
             id: value.id,
             campaignKey: campaignKey,

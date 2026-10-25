@@ -6,7 +6,7 @@ extension Post.Get {
     struct Operation: BlogOperation {
         var operationId: String? { "blogPostGet" }
         var parameters: [any ParameterRepresentable] {
-            [BlogPostIdParameter().reference()]
+            [Post.Parameters.ID().reference()]
         }
         var responseMap: ResponseMap {
             [

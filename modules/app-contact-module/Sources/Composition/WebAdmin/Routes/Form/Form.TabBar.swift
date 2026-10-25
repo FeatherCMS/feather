@@ -10,6 +10,7 @@ extension ContactModule.Form {
         enum Tab { case details, fields, emails, submissions }
 
         let formId: String
+        let routes: Router.Routes
         let active: Tab
 
         func html(context: inout BuilderContext) -> Div {
@@ -17,22 +18,22 @@ extension ContactModule.Form {
                 AdminTabBar(links: [
                     .init(
                         label: "Details",
-                        href: "/admin/contact/forms/\(formId)/details/",
+                        href: routes.formDetailsPagePath(formId),
                         isCurrent: active == .details
                     ),
                     .init(
                         label: "Fields",
-                        href: "/admin/contact/forms/\(formId)/fields/",
+                        href: routes.formFieldsPath(formId),
                         isCurrent: active == .fields
                     ),
                     .init(
                         label: "Emails",
-                        href: "/admin/contact/forms/\(formId)/emails/",
+                        href: routes.formEmailsPath(formId),
                         isCurrent: active == .emails
                     ),
                     .init(
                         label: "Submissions",
-                        href: "/admin/contact/forms/\(formId)/submissions/",
+                        href: routes.formSubmissionsPath(formId),
                         isCurrent: active == .submissions
                     ),
                 ])

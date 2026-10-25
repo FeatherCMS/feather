@@ -185,7 +185,7 @@ extension Invitation.List {
                                                                                 "View",
                                                                                 href:
                                                                                     routes
-                                                                                    .invitationDetails(
+                                                                                    .invitationDetailsPath(
                                                                                         invitation
                                                                                             .id
                                                                                     ),
@@ -202,7 +202,7 @@ extension Invitation.List {
                                                                                 "Edit",
                                                                                 href:
                                                                                     routes
-                                                                                    .invitationEdit(
+                                                                                    .invitationEditPath(
                                                                                         invitation
                                                                                             .id
                                                                                     ),

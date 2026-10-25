@@ -32,7 +32,7 @@ extension FormField.Edit.Interactor {
 
         private func map(
             _ error: OpenAPIRepositoryError
-        ) -> FormField.Edit.Error {
+        ) -> Error {
             switch error {
             case .notFound:
                 .notFound

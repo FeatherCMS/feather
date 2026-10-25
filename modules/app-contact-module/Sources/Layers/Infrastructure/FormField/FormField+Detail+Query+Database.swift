@@ -22,7 +22,7 @@ extension FormField.Detail.Query {
         ) async throws -> FormField.Detail.Output {
             if let formId {
                 guard
-                    let row = try await FormFieldTable(
+                    let row = try await FormField.AccessLayer(
                         connection: context.connection
                     )
                     .find(id: id, formId: formId)

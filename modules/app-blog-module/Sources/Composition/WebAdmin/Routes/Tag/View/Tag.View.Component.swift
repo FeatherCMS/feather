@@ -14,7 +14,7 @@ import protocol SGML.BasicTag
 extension Tag.View {
     struct Component: WebComponents.Component {
         struct State {
-            let model: Tag.View.Model
+            let model: Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
             let routes: Tag.Router.Routes
@@ -62,8 +62,8 @@ extension Tag.View {
                         context.build(
                             AdminStatusSelectFormDefinition(
                                 id: formID,
-                                action: state.routes.tagStatus(state.model.id),
-                                returnTo: state.routes.tag(state.model.id)
+                                action: state.routes.tagStatusPath(state.model.id),
+                                returnTo: state.routes.tagPath(state.model.id)
                             )
                         )
                         context.build(
@@ -88,7 +88,7 @@ extension Tag.View {
                 result.append(
                     .init(
                         label: "Edit tag",
-                        href: state.routes.tagEdit(state.model.id),
+                        href: state.routes.tagEditPath(state.model.id),
                         style: .primary
                     )
                 )
@@ -99,7 +99,7 @@ extension Tag.View {
                 result.append(
                     .init(
                         label: "Remove tag",
-                        href: state.routes.tagRemove(state.model.id),
+                        href: state.routes.tagRemovePath(state.model.id),
                         style: .destructive
                     )
                 )

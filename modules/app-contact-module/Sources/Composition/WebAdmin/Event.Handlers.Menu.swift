@@ -1,5 +1,7 @@
 public import FeatherModuleKit
+import ContactModule
 import FeatherWebAdmin
+import FeatherWebShared
 import SystemModule
 import SystemWebAdmin
 
@@ -8,7 +10,10 @@ extension Event {
 }
 
 extension Event.Handlers {
-    public static func registerMenu(in events: inout EventRegistry) {
+    public static func registerMenu(
+        in events: inout EventRegistry,
+        routes: Contact.Router.Routes
+    ) {
         events.register(
             event: SystemWebAdmin.Admin.Menu.Group.Provider.self,
             context: SystemWebAdmin.Admin.Menu.Context.self
@@ -33,21 +38,21 @@ extension Event.Handlers {
                     menuKey: "contact",
                     label: "Forms",
                     icon: "clipboard",
-                    link: "/admin/contact/forms/",
+                    link: routes.forms.path,
                     permission: "contact:forms:list"
                 ),
                 .init(
                     menuKey: "contact",
                     label: "Fields",
                     icon: "list",
-                    link: "/admin/contact/fields/",
+                    link: routes.fields.path,
                     permission: "contact:form-fields:list"
                 ),
                 .init(
                     menuKey: "contact",
                     label: "Submissions",
                     icon: "inbox",
-                    link: "/admin/contact/submissions/",
+                    link: routes.submissions.path,
                     permission: "contact:form-submissions:list"
                 ),
             ]

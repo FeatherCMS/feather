@@ -6,7 +6,7 @@ import AccountModule
 actor MockAccountProfileRepository: Profile.Repository.Interface,
     Profile.Detail.Query.Interface
 {
-    private(set) var getCallCount = 0
+    private(set) var findCallCount = 0
     private(set) var getOrCreateCallCount = 0
     private(set) var requestedUserIds: [String] = []
     private(set) var createCallCount = 0
@@ -20,9 +20,21 @@ actor MockAccountProfileRepository: Profile.Repository.Interface,
     }
 
     func get(userId: String) async throws -> Profile.Model {
-        getCallCount += 1
         requestedUserIds.append(userId)
         return result
+    }
+
+    func find(userId: String) async throws -> Profile.Detail.Output {
+        findCallCount += 1
+        requestedUserIds.append(userId)
+        return .init(
+            userId: result.userId,
+            firstName: result.firstName,
+            lastName: result.lastName,
+            profileImageAssetId: result.profileImageAssetId,
+            createdAt: result.createdAt,
+            updatedAt: result.updatedAt
+        )
     }
 
     func getOrCreate(userId: String) async throws -> Profile.Model {

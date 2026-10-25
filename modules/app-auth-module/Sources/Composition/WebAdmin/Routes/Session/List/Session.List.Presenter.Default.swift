@@ -13,6 +13,7 @@ extension Session.List.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
+        let routes: Session.Router.Routes
 
         func render(
             model: Session.List.Model,
@@ -28,7 +29,8 @@ extension Session.List.Presenter {
                         items: model.items,
                         canRemove: permissions.contains(
                             Session.Permissions.delete.rawValue
-                        )
+                        ),
+                        routes: routes
                     )
                 )
             )

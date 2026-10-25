@@ -1,6 +1,7 @@
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -77,7 +78,12 @@ extension Asset.Folder.Add {
             guard state.isDialog else {
                 return state.routes.folder.add.path
             }
-            return "\(state.routes.folder.add.path)?presentation=dialog"
+            var components = URLComponents()
+            components.path = state.routes.folder.add.path
+            components.queryItems = [
+                URLQueryItem(name: "presentation", value: "dialog")
+            ]
+            return components.string ?? components.path
         }
     }
 }

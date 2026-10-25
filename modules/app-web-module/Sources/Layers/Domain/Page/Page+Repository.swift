@@ -13,15 +13,15 @@ extension Page {
 
             func find(
                 id: String
-            ) async throws -> Page.Model?
+            ) async throws -> Model?
 
             func insert(
-                _ model: Page.Model.New
-            ) async throws -> Page.Model
+                _ model: Model.New
+            ) async throws -> Model
 
             func update(
-                _ model: Page.Model
-            ) async throws -> Page.Model
+                _ model: Model
+            ) async throws -> Model
 
             func delete(ids: [String]) async throws -> [String]
         }

@@ -6,9 +6,7 @@ import SystemModule
 import WebComponents
 
 extension Permission.View.Presenter {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine

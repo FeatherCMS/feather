@@ -1,7 +1,6 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import NewsAdminAPI
 import NewsApplication
 import NewsModule
 
@@ -13,7 +12,7 @@ extension Category.Detail.Presenter {
         let routes: Category.Router.Routes
 
         func renderDetails(
-            item: Components.Schemas.NewsCategoryDetailSchema
+            item: Category.Detail.Model
         ) async throws -> HTMLResponse {
             try await renderingEngine.renderAdminPage(
                 request: request,

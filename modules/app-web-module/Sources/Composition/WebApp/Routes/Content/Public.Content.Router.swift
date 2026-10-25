@@ -9,6 +9,11 @@ public import struct Foundation.URL
 
 extension Public.Content {
     public struct Router {
+        private enum Routes {
+            static let rss = WebRoute.root.appending(pathComponent: "rss.xml")
+            static let sitemap = WebRoute.root.appending(pathComponent: "sitemap.xml")
+        }
+
         private let controller: any Controller.Interface
 
         public init(
@@ -52,9 +57,9 @@ extension Public.Content {
         public func route(
             on router: Hummingbird.Router<DefaultRequestContext>
         ) {
-            router.get("/rss.xml", use: controller.getRSS)
-            router.get("/sitemap.xml", use: controller.getSitemap)
-            router.get("/", use: controller.getContent)
+            router.get(Routes.rss.routerPath, use: controller.getRSS)
+            router.get(Routes.sitemap.routerPath, use: controller.getSitemap)
+            router.get(WebRoute.root.routerPath, use: controller.getContent)
             router.get("/**", use: controller.getContent)
         }
     }

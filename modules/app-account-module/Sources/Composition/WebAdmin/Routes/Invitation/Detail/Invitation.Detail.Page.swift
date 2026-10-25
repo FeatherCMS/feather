@@ -42,21 +42,21 @@ extension Invitation.Detail {
                         actions: [
                             .init(
                                 label: "Resend invitation",
-                                href: routes.invitationResend(
+                                href: routes.invitationResendPath(
                                     state.invitation.id
                                 ),
                                 style: .secondary
                             ),
                             .init(
                                 label: "Edit invitation",
-                                href: routes.invitationEdit(
+                                href: routes.invitationEditPath(
                                     state.invitation.id
                                 ),
                                 style: .primary
                             ),
                             .init(
                                 label: "Remove invitation",
-                                href: routes.invitationRemove(
+                                href: routes.invitationRemovePath(
                                     state.invitation.id
                                 ),
                                 style: .destructive

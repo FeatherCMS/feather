@@ -83,22 +83,22 @@ extension Admin {
         private static func load(
             from events: any EventPublisher
         ) async throws -> Definitions {
-            let context = Admin.Menu.Context(
+            let context = Menu.Context(
                 path: "",
                 permissions: []
             )
             let menus =
                 try await events.trigger(
-                    event: Admin.Menu.Group.Provider(),
+                    event: Menu.Group.Provider(),
                     using: context
                 )
                 .flatMap { $0 }
 
-            var items: [Admin.Menu.Item.Definition] = []
+            var items: [Menu.Item.Definition] = []
             for menu in menus {
                 items +=
                     try await events.trigger(
-                        event: Admin.Menu.Item.Provider(
+                        event: Menu.Item.Provider(
                             menuKey: menu.key
                         ),
                         using: context

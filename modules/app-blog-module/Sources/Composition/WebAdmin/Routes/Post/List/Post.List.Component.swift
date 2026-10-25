@@ -92,7 +92,7 @@ extension Post.List {
                                             id: statusFormID(item.id),
                                             action:
                                                 state.routes
-                                                .postStatus(item.id),
+                                                .postStatusPath(item.id),
                                             returnTo: state.routes.posts.path
                                         )
                                     )
@@ -101,7 +101,7 @@ extension Post.List {
                             context.build(
                                 AdminListSelectionForm(
                                     state: .init(
-                                        action: state.routes.postRemove(),
+                                        action: state.routes.postRemovePath(),
                                         pageState: state.pageState,
                                         search: state.search,
                                         button: .init(
@@ -249,7 +249,7 @@ extension Post.List {
                                                                             href:
                                                                                 state
                                                                                 .routes
-                                                                                .postEdit(
+                                                                                .postEditPath(
                                                                                     item
                                                                                         .id
                                                                                 ),
@@ -270,7 +270,7 @@ extension Post.List {
                                                                                     path:
                                                                                         state
                                                                                         .routes
-                                                                                        .postRemove(),
+                                                                                        .postRemovePath(),
                                                                                     ids: [
                                                                                         item
                                                                                             .id
@@ -326,7 +326,7 @@ extension Post.List {
                                     context.build(
                                         AdminButton(
                                             "Add post",
-                                            href: state.routes.postAdd()
+                                            href: state.routes.postAddPath()
                                         )
                                     )
                                 }

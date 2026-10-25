@@ -6,20 +6,20 @@ extension RolePermission {
     public protocol Operation: BearerProtectedOperation {}
     }
 
-    extension RolePermission.Operation {
-    public var tags: [any TagRepresentable] { [RolePermission.Tag()] }
+    extension Operation {
+    public var tags: [any TagRepresentable] { [Tag()] }
     }
 
     extension RolePermission {
-    public protocol IdentifiableOperation: RolePermission.Operation {}
+    public protocol IdentifiableOperation: Operation {}
     }
 
-    extension RolePermission.IdentifiableOperation {
+    extension IdentifiableOperation {
     public var parameters: [any ParameterRepresentable] {
         [
-            RolePermission.Parameters.RoleID()
+            Parameters.RoleID()
                 .reference(),
-            RolePermission.Parameters.PermissionID()
+            Parameters.PermissionID()
                 .reference(),
         ]
     }

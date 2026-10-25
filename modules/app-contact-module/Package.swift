@@ -141,12 +141,8 @@ let package = Package(
             name: "ContactApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherMail", package: "feather-mail"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
-                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "ContactModule"),
                 .target(name: "ContactDomain"),
@@ -207,6 +203,7 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
             ],
             path: "Sources/Generators/Admin",
@@ -220,6 +217,7 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
             ],
             path: "Sources/Generators/App",
@@ -244,6 +242,7 @@ let package = Package(
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
@@ -254,7 +253,6 @@ let package = Package(
             name: "ContactWebApp",
             dependencies: [
                 .target(name: "ContactWebShared"),
-                .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(
                     name: "FeatherValidation",
@@ -264,7 +262,6 @@ let package = Package(
                     name: "OpenAPIRuntime",
                     package: "swift-openapi-runtime"
                 ),
-                .product(name: "HTTPTypes", package: "swift-http-types"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
 
                 .target(name: "ContactModule"),
@@ -286,8 +283,6 @@ let package = Package(
                 ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "WebModuleWebApp", package: "app-web-module"),
-                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
 
                 .target(name: "ContactModule"),
                 .target(name: "ContactApplication"),

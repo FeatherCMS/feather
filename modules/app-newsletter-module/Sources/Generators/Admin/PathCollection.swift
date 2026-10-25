@@ -5,18 +5,18 @@ struct PathCollection: PathCollectionRepresentable {
 
     var pathMap: PathMap {
         var paths: PathMap = [:]
-        paths.merge(NewsletterCampaign.PathCollection().pathMap) {
+        paths.merge(Campaign.PathCollection().pathMap) {
             current,
             _ in current
         }
-        paths.merge(NewsletterIssue.PathCollection().pathMap) { current, _ in
+        paths.merge(Issue.PathCollection().pathMap) { current, _ in
             current
         }
-        paths.merge(NewsletterDelivery.PathCollection().pathMap) {
+        paths.merge(Delivery.PathCollection().pathMap) {
             current,
             _ in current
         }
-        paths.merge(NewsletterSubscriber.PathCollection().pathMap) {
+        paths.merge(Subscriber.PathCollection().pathMap) {
             current,
             _ in current
         }

@@ -6,16 +6,16 @@ extension Menu.ID.Patch {
         var operationId: String? { "menuPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                MenuIdParameter().reference(),
+                Menu.Parameters.ID().reference(),
                 Menu.Parameters.UpdateMask().reference(),
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            MenuPatchRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: MenuDetailResponse().reference(),
+                200: Menu.ID.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),

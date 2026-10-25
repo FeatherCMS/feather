@@ -4,7 +4,7 @@ extension Login {
         let password: String
         let isPersistent: Bool
 
-        var command: Login.Command {
+        var command: Command {
             .init(email: email, password: password, isPersistent: isPersistent)
         }
     }

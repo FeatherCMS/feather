@@ -36,6 +36,7 @@ extension BlogModule.Tag {
             }
         }
         var state: State
+        var browsePath: String
         var metadataHref: String?
         var action: String
         var submitLabel: String
@@ -72,8 +73,7 @@ extension BlogModule.Tag {
                                     status: $0.status
                                 )
                             },
-                            browsePath:
-                                "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)",
+                            browsePath: browsePath,
                             defaultFolderPath: "blog/tags",
                             allowedExtensions: .images,
                             previewStyle: .wide

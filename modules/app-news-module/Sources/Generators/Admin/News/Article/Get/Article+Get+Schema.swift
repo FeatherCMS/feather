@@ -5,16 +5,16 @@ extension Article.Get {
         var openAPIIdentifier: String { "NewsArticleDetailSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": NewsAdminOpenAPIComponents.StringField(),
-                "title": NewsAdminOpenAPIComponents.StringField(),
-                "excerpt": NewsAdminOpenAPIComponents.StringField(),
-                "content": NewsAdminOpenAPIComponents.StringField(),
-                "imageAssetId": NewsAdminOpenAPIComponents.StringField()
+                "id": Article.Schemas.StringField(),
+                "title": Article.Schemas.StringField(),
+                "excerpt": Article.Schemas.StringField(),
+                "content": Article.Schemas.StringField(),
+                "imageAssetId": Article.Schemas.StringField()
                     .reference(required: false),
-                "categoryIds": NewsAdminOpenAPIComponents.CategoryIDsField(),
+                "categoryIds": Article.Schemas.CategoryIDsField(),
                 "metadata": Metadata.Detail.Schema().reference(),
-                "createdAt": NewsAdminOpenAPIComponents.TimestampField(),
-                "updatedAt": NewsAdminOpenAPIComponents.TimestampField(),
+                "createdAt": Article.Schemas.TimestampField(),
+                "updatedAt": Article.Schemas.TimestampField(),
             ]
         }
     }

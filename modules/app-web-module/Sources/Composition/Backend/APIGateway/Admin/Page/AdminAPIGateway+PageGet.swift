@@ -9,7 +9,7 @@ extension AdminAPIGateway {
     public func pageGet(
         _ input: Operations.PageGet.Input
     ) async throws -> Operations.PageGet.Output {
-        let useCase = useCases.makePageDetail()
+        let useCase = useCases.makeDetailPage()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(
             subject: subject,

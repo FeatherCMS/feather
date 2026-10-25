@@ -54,11 +54,12 @@ extension Public.Content.Presenter {
         }
 
         private func buildContext(
-            from results: [PublicContentResult]
+            from results: [WebModule.Public.Content.Result]
         ) -> [String: any Sendable] {
             var context: [String: any Sendable] = [:]
             for result in results {
-                for (key, value) in result.payload {
+                for key in result.payload.keys {
+                    guard let value = result.payload[key] else { continue }
                     context[key] = value
                 }
             }

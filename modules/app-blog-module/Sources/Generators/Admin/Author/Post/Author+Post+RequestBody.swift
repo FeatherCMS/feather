@@ -10,10 +10,10 @@ extension Author.Post {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "name": BlogAuthorNameField(),
-                "excerpt": BlogAuthorExcerptField().reference(required: false),
-                "content": BlogAuthorContentField().reference(required: false),
-                "profileImageAssetId": BlogAuthorProfileImageAssetIdField()
+                "name": Author.Schemas.Name(),
+                "excerpt": Author.Schemas.Excerpt().reference(required: false),
+                "content": Author.Schemas.Content().reference(required: false),
+                "profileImageAssetId": Author.Schemas.ProfileImageAssetID()
                     .reference(required: false),
             ]
         }

@@ -38,6 +38,7 @@ extension Author {
             }
         }
         var state: State
+        var browsePath: String
         var metadataHref: String?
         var action: String
         var submitLabel: String
@@ -74,8 +75,7 @@ extension Author {
                                     status: $0.status
                                 )
                             },
-                            browsePath:
-                                "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)",
+                            browsePath: browsePath,
                             defaultFolderPath: "blog/authors",
                             allowedExtensions: .images,
                             previewStyle: .square

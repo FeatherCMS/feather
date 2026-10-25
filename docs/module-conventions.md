@@ -130,7 +130,9 @@ composition targets. For example, `Invitation.Add.swift` declares
 `Tag.Add.Controller`. Use the same dotted namespace path for implementations,
 such as `Invitation.Add.Controller.Default.swift` and
 `Invitation.Add.Repository.OpenAPI.swift`; do not use `+` separators in
-WebApp/WebAdmin composition filenames.
+WebApp/WebAdmin composition filenames. Do not repeat the imported target's
+module namespace in a filename: `WebModule.Menu.List.Router` belongs in
+`Menu.List.Router.swift`, not `WebModule.Menu.List.Router.swift`.
 
 ## Namespaces and symbols
 
@@ -138,12 +140,20 @@ WebApp/WebAdmin composition filenames.
   redundant same-named enum inside it. Define module-level `Event` and
   `Permissions` declarations directly in that target, and define domain entity
   namespace enums such as `Identity` and `Role` there. Avoid parallel flat
-  names when a type naturally belongs to an entity.
+  names when a type naturally belongs to an entity. Keep domain values such as
+  status codes and authentication modes under the owning `<Entity>.Model`; do
+  not place model-owned enums in the Module target.
 - A SwiftPM target/product name does not automatically namespace declarations.
   Decide explicitly which target owns each public namespace and keep
   composition-only namespaces out of the module/domain target when that would
   make them visible to unrelated layers. Do not add a second redundant module
   segment when the imported target/module already establishes that context.
+- Keep multi-part public concepts nested under their owning namespace rather
+  than flattening them into prefix-heavy symbols. For example, expose web
+  contracts as `Public.Content.Event.Provider`, `Public.RSS.Item`, and
+  `Template.Definition`, not `PublicContentProvider`, `RSSItem`, or
+  `TemplateDefinition`. Qualify the imported module namespace at consumers when
+  another dependency exports the same top-level name.
 - When moving a declaration between targets, update its namespace owner,
   imports, package dependencies, and every consumer together. A successful
   build of the defining target alone does not prove the public API migration is
@@ -167,7 +177,8 @@ WebApp/WebAdmin composition filenames.
   `Entity.Add`, `Entity.List`, `Entity.Public`, or similar operation shells
   there. This keeps operation APIs owned by the layer that implements them.
   Place pure domain-service namespaces beside their implementation in Domain,
-  rather than anchoring an empty service shell in Module.
+  rather than anchoring an empty service shell in Module. Application-only
+  service namespaces belong beside their implementation in Application.
   Read/search contracts belong under named query namespaces, not in unrelated
   list operation types. Every operation owns its `Action`, `Input`, `Output`,
   `Error`, `Scope`, and `UseCase` declarations as applicable. Keep each declaration in
@@ -227,11 +238,25 @@ WebApp/WebAdmin composition filenames.
   wrap entity tables, row representations, or migrations. When custom SQL is
   necessary, keep it in the required `Database/AccessLayer` directory below
   the owning entity or in the Infrastructure-level `Database/AccessLayer`
-  directory for cross-entity work.
+  directory for cross-entity work. Keep an entity's operation-specific query
+  adapters and repository adapter directly in that entity directory, matching
+  System; do not add per-operation subdirectories under Infrastructure. The
+  nested `Database/AccessLayer` directory is reserved for custom SQL access
+  types, not ordinary DBAL query implementations.
 - Keep entity repository adapters in the entity directory as
   `<Entity>+Repository+Database.swift`, extending
   `<Entity>.Repository` with `Database: Interface`. Do not add a nested
   `Repository/` folder or create flat `<Entity>DatabaseRepository` types.
+- Keep custom SQL access-layer types under their owning entity/query namespace,
+  rather than declaring flat prefixed helper types such as
+  `PageSearchQuery` or `ArticleQueries`. For query-specific SQL, use the
+  operation's query namespace (for example, `Page.Search.Query.AccessLayer`);
+  for SQL shared by one entity's public operations, use a scoped namespace such
+  as `Public.Article.AccessLayer`. Keep the implementation file under the
+  owning entity's `Database/AccessLayer/` directory and align its filename
+  with that namespace. This is an Infrastructure implementation detail, not
+  an Application query contract: do not combine distinct use-case query
+  interfaces into an entity-wide `Entity.Query` or `EntityQueries` type.
 - Give persistent many-to-many or association tables their own module/entity
   namespace and table (`IdentityRole.Table`, `ArticleCategory.Table`,
   `FormFieldAssignment.Table`) instead of a flat `*TableSchema` type or a
@@ -334,18 +359,24 @@ WebApp/WebAdmin composition filenames.
   Keep the HTTP/OpenAPI operation named `Query` (not `Search`); its application
   use-case remains `Entity.Search`, and the gateway translates the generated
   `Query` request into `Search.Input` and maps the result to the query response.
+- Keep application `List` use-cases aligned with the lightweight list contract:
+  simple filters and an optional limit are appropriate, but table sorting,
+  pagination, and total-count behavior belong to `Search`/the HTTP `Query`
+  operation. Do not retain paginated-list machinery in `List` merely because
+  the database adapter can share it with `Search`.
 - Keep application query contracts scoped to one use-case. Define them under
   that use-case namespace (`Entity.Detail.Query`, `Entity.List.Query`,
   `Entity.Search.Query`) and give each use-case its own Scope. Do not create an
   entity-wide `Entity.Query` or `EntityQueries` interface that combines detail,
   list, search, or unrelated lookup methods. A query interface may expose the
-  small set of operations that its single use-case needs (for example `list`
-  and `count` for one paginated list); separate use-cases must depend on
-  separate interfaces and operation-specific infrastructure adapters. Do not
-  make a `List` query accept a `Search.Input.Query`, make a `Search` query delegate
-  through a `List` query, or otherwise pass another operation's `Input` or
-  `Output` across the contract. Give each operation its own criteria and result
-  types; share only the lower-level table/access-layer work where appropriate.
+  small set of operations that its single use-case needs (for example, row
+  retrieval and `count` for one paginated search); separate use-cases must
+  depend on separate interfaces and operation-specific infrastructure
+  adapters. Do not make a `List` query accept a `Search.Input.Query`, make a
+  `Search` query delegate through a `List` query, or otherwise pass another
+  operation's `Input` or `Output` across the contract. Give each operation
+  its own criteria and result types; share only the lower-level
+  table/access-layer work where appropriate.
 - Implement partial updates consistently with System: every PATCH operation
   has a required, entity-specific `updateMask` query parameter listing the
   fields being changed, plus a PATCH-specific request schema and documented
@@ -360,7 +391,9 @@ WebApp/WebAdmin composition filenames.
   field, clearing a nullable field, and invalid or incomplete masks.
 - Organize OpenAPI generator source like the System generator: one directory per
   entity and one subdirectory per operation (`Identity/Query/`, `Identity/Get/`,
-  etc.), with operation definitions in their operation directories. A
+  etc.), with operation definitions and any operation-specific `PathItem` in
+  their operation directories. Keep the entity collection `PathItem`, ID
+  `PathItem`, `PathCollection`, and shared declarations at the entity level. A
   `PathItem` represents one URL and groups all HTTP methods for that URL; keep
   one entity `PathItem` for the collection, one `<Entity>+ID+PathItem` for an
   ID route, and one operation-specific `PathItem` for a distinct route such as
@@ -381,10 +414,20 @@ WebApp/WebAdmin composition filenames.
 ## Composition and WebAdmin
 
 Backend gateways adapt generated HTTP operations to application use cases;
-use-case factories are grouped under `UseCases/<Entity>/`. Put request and
-response mapping functions directly in the gateway operation file that invokes
-the corresponding use case. Do not create standalone mapping files (including
-entity-scoped `*Mappings.swift` files); keep each adapter beside its operation.
+use-case factories are grouped under `UseCases/<Entity>/`. Keep backend
+`UseCases` extensions as factories: public methods construct and return an
+Application use-case. Keep the shared `UseCases` value limited to construction
+dependencies; build each operation's query/transaction executor and scope in
+its feature factory rather than adding shared executor-builder helpers. Put
+business orchestration, database/storage work, and operation input/output
+types in the owning Application operation; keep HTTP
+request/response adaptation in the gateway operation that invokes it. Do not
+create standalone mapping files (including entity-scoped `*Mappings.swift`
+files); keep each adapter beside its operation.
+Name each factory and its file from the Application operation followed by the
+module entity, for example `makeDetailPage` in
+`UseCases+DetailPage.swift`. Do not reverse the order or repeat a module/API
+prefix when the entity namespace already identifies the use-case.
 The backend composition target owns backend gateway/factory namespaces;
 WebShared, WebApp, and WebAdmin own their corresponding shared, app, and admin
 composition namespaces. Keep app routes and middleware out of WebAdmin and
@@ -471,6 +514,9 @@ adaptation.
 - Keep route parameters in `WebRoute` templates and interpolate validated
   values through its path-building API. Do not construct paths by joining
   strings or reaching for Hummingbird `RouterPath` throughout feature code.
+  When a helper resolves a `WebRoute` template to a `String`, suffix its name
+  with `Path` (for example, `detailsPath` or `imagePickerPath`). Keep values
+  that are still `WebRoute` templates explicitly named with a `Route` suffix.
 - Prefer names relative to the current extension scope. Inside
   `extension Identity.Add`, write `Controller.Default`, not
   `Identity.Add.Controller.Default`; inside `extension Controller`, write

@@ -22,8 +22,7 @@ extension MagicLink.Edit {
 extension MagicLink.Edit.Interactor {
     protocol Interface: Sendable {
 
-        func listEmails() async throws -> [AuthAdminAPI.Components.Schemas
-            .AuthEmailSchemasDetail]
+        func listEmails() async throws -> [Email.Option]
 
         func get(
             id: String

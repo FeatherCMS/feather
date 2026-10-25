@@ -48,14 +48,14 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authCredentialList(
+                try await server.userIdentitySessionQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/credentials")
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/user/identities/{userIdentityId}/sessions/query")
         )
         try transport.register(
             {
@@ -221,17 +221,6 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/role-permissions/query")
-        )
-        try transport.register(
-            {
-                try await server.authMagicLinkList(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/auth/magic-links")
         )
         try transport.register(
             {
@@ -507,9 +496,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/get(authCredentialList)`.
-    func authCredentialList(
+    /// - Remark: HTTP `POST /api/v1/admin/user/identities/{userIdentityId}/sessions/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/query/post(userIdentitySessionQuery)`.
+    func userIdentitySessionQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -518,13 +507,42 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthCredentialList.id,
+            forOperation: Operations.UserIdentitySessionQuery.id,
             using: {
-                APIHandler.authCredentialList($0)
+                APIHandler.userIdentitySessionQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthCredentialList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.AuthCredentialList.Input(headers: headers)
+                let path: Operations.UserIdentitySessionQuery.Input.Path = .init(userIdentityId: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "userIdentityId",
+                    as: Components.Parameters.UserIdentityIdParameter.self
+                ))
+                let headers: Operations.UserIdentitySessionQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Operations.UserIdentitySessionQuery.Input.Body
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.UserIdentitySessionQueryItemSearchRequestQuerySchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.UserIdentitySessionQuery.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
             },
             serializer: { output, request in
                 switch output {
@@ -2153,87 +2171,6 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     headers: headers,
                     body: body
                 )
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/get(authMagicLinkList)`.
-    func authMagicLinkList(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthMagicLinkList.id,
-            using: {
-                APIHandler.authMagicLinkList($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthMagicLinkList.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                return Operations.AuthMagicLinkList.Input(headers: headers)
             },
             serializer: { output, request in
                 switch output {

@@ -16,8 +16,8 @@ public enum PublicContent {
                 in registry: inout EventRegistry
             ) {
                 registry.register(
-                    event: PublicContentProvider.self,
-                    context: PublicContentEventContext<
+                    event: WebModule.Public.Content.Event.Provider.self,
+                    context: WebModule.Public.Content.Event.Context<
                         PublicContentRuntimeContext
                     >
                     .self
@@ -29,8 +29,8 @@ public enum PublicContent {
     }
 
     private static func resolve(
-        _ context: PublicContentEventContext<PublicContentRuntimeContext>
-    ) async throws -> PublicContentResult? {
+        _ context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>
+    ) async throws -> WebModule.Public.Content.Result? {
         let api = API.Client(
             apiBaseURL: context.runtime.apiBaseURL,
             sessionToken: context.runtime.context.sessionToken
@@ -69,10 +69,10 @@ public enum PublicContent {
     }
 
     private static func resolvePost(
-        context: PublicContentEventContext<PublicContentRuntimeContext>,
+        context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
         api: API.Client,
         mediaResolver: MediaResolver
-    ) async throws -> PublicContentResult? {
+    ) async throws -> WebModule.Public.Content.Result? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
         let referenceID = context.baseMetadata.referenceId
         let response = try await api.withOpenAPIRepositoryErrorMapping {
@@ -91,10 +91,10 @@ public enum PublicContent {
     }
 
     private static func resolveAuthor(
-        context: PublicContentEventContext<PublicContentRuntimeContext>,
+        context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
         api: API.Client,
         mediaResolver: MediaResolver
-    ) async throws -> PublicContentResult? {
+    ) async throws -> WebModule.Public.Content.Result? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
         let referenceID = context.baseMetadata.referenceId
         let response = try await api.withOpenAPIRepositoryErrorMapping {
@@ -113,10 +113,10 @@ public enum PublicContent {
     }
 
     private static func resolveTag(
-        context: PublicContentEventContext<PublicContentRuntimeContext>,
+        context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
         api: API.Client,
         mediaResolver: MediaResolver
-    ) async throws -> PublicContentResult? {
+    ) async throws -> WebModule.Public.Content.Result? {
         guard !context.baseMetadata.referenceId.isEmpty else { return nil }
         let referenceID = context.baseMetadata.referenceId
         let response = try await api.withOpenAPIRepositoryErrorMapping {
@@ -138,7 +138,7 @@ public enum PublicContent {
         kind: Kind,
         api: API.Client,
         mediaResolver: MediaResolver
-    ) async throws -> PublicContentResult {
+    ) async throws -> WebModule.Public.Content.Result {
         switch kind {
         case .posts:
             let value = try await api.withOpenAPIRepositoryErrorMapping {
@@ -207,7 +207,7 @@ public enum PublicContent {
     }
 
     private static func kind(
-        for context: PublicContentEventContext<PublicContentRuntimeContext>
+        for context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>
     ) -> Kind? {
         switch context.baseMetadata.template {
         case "blog.posts":
@@ -224,7 +224,7 @@ public enum PublicContent {
     private static func listPayload(
         key: String,
         items: [[String: any Sendable]]
-    ) throws -> PublicContentResult {
+    ) throws -> WebModule.Public.Content.Result {
         .init(payload: [key: items])
     }
 

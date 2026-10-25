@@ -50,8 +50,9 @@ extension Role.Edit.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
-                    .userRolePut(
+                    .userRolePatch(
                         path: .init(userRoleId: id),
+                        query: .init(updateMask: "name,notes"),
                         headers: .init(accept: [.init(contentType: .json)]),
                         body: .json(
                             .init(name: payload.name, notes: payload.notes)

@@ -30,6 +30,7 @@ extension RolePermission.Edit {
             let search: String
             let breadcrumb: [AdminBreadcrumb.Link]
             let nonceToken: String?
+            let routes: RolePermission.Router.Routes
         }
 
         let state: State
@@ -77,7 +78,7 @@ extension RolePermission.Edit {
                     context.build(
                         AdminListSearch(
                             state: .init(
-                                action: "/admin/auth/access-control/",
+                                action: state.routes.edit.path,
                                 placeholder: "Quick search access control",
                                 search: state.search
                             )
@@ -98,7 +99,7 @@ extension RolePermission.Edit {
                 }
                 else if state.canEdit {
                     let form = AdminForm(
-                        action: "/admin/auth/access-control/",
+                        action: state.routes.edit.path,
                         nonceToken: state.nonceToken
                     ) {
                         context.build(
@@ -151,7 +152,7 @@ extension RolePermission.Edit {
         [SystemAdminAPI.Components.Schemas.SystemPermissionListItemSchema]
     }
 
-    extension RolePermission.Edit.Matrix {
+    extension Matrix {
     fileprivate func matrixTable(
         groups: [PermissionGroup],
         context: inout BuilderContext

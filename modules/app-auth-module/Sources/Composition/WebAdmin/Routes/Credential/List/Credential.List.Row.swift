@@ -12,6 +12,7 @@ extension Credential.List {
         let credential:
             AuthAdminAPI.Components.Schemas.AuthCredentialQueryItemSchema
         let actions: AdminListActions
+        let routes: Credential.Router.Routes
 
         func html(context: inout BuilderContext) -> Tr {
             Tr {
@@ -23,8 +24,7 @@ extension Credential.List {
                         actions: [
                             .init(
                                 "Edit",
-                                href:
-                                    "/admin/auth/credentials/\(credential.id)/edit/",
+                                href: routes.editPath(credential.id),
                                 style: .ghost(.secondary),
                                 permission: Credential.Permissions.update
                             )

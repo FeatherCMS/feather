@@ -151,10 +151,6 @@ let package = Package(
                 .target(name: "WebModule"),
 
                 .product(name: "SystemModule", package: "app-system-module"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
 
                 .target(name: "WebDomain"),
             ],
@@ -164,8 +160,10 @@ let package = Package(
         .target(
             name: "WebInfrastructure",
             dependencies: [
+                .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
                 .target(name: "WebModule"),
                 .product(name: "MediaDomain", package: "app-media-module"),
                 .product(
@@ -286,8 +284,8 @@ let package = Package(
             name: "WebModuleWebShared",
             dependencies: [
                 .product(name: "FeatherWebShared", package: "feather-core"),
-                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "NIOCore", package: "swift-nio"),
                 .product(
                     name: "OpenAPIAsyncHTTPClient",
                     package: "swift-openapi-async-http-client"
@@ -378,8 +376,6 @@ let package = Package(
             dependencies: [
                 .target(name: "WebModuleWebApp"),
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "CSS", package: "swift-web-standards"),
-                .product(name: "WebComponents", package: "swift-web-standards"),
             ],
             path: "Tests/Composition/WebApp",
             swiftSettings: swiftSettings

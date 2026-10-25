@@ -11,11 +11,11 @@ extension Variant.Processor.Query.Schemas {
         }
         var propertyMap: SchemaMap {
             [
-                "id": MediaVariantIdField().reference(),
-                "name": MediaVariantNameField(),
-                "matchExtensions": MediaVariantExtensionsField(),
-                "commandTemplate": MediaVariantCommandField(),
-                "isActive": MediaVariantBooleanField(),
+                "id": Variant.Schemas.ID().reference(),
+                "name": Variant.Schemas.Name(),
+                "matchExtensions": Variant.Schemas.Extensions(),
+                "commandTemplate": Variant.Schemas.Command(),
+                "isActive": Variant.Schemas.Boolean(),
             ]
         }
     }

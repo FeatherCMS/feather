@@ -8,7 +8,7 @@ extension MagicLink.Put {
         var operationId: String? { "authMagicLinkUpdate" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            MagicLink.Put.RequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {

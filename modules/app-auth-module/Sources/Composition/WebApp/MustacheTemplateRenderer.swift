@@ -15,12 +15,13 @@ public struct MustacheTemplateRenderer: TemplateRenderer {
             throw CocoaError(.fileNoSuchFile)
         }
         let templateFiles = [
-            ("pages/login", "login.mustache"),
-            ("pages/magic-link", "magic-link.mustache"),
-            ("partials/auth-styles", "auth-styles.mustache"),
+            "pages/login": "login.mustache",
+            "pages/magic-link": "magic-link.mustache",
+            "partials/auth-styles": "auth-styles.mustache",
         ]
         var templates: [String: MustacheTemplate] = [:]
-        for (identifier, filename) in templateFiles {
+        for identifier in templateFiles.keys {
+            guard let filename = templateFiles[identifier] else { continue }
             let fileURL =
                 templatesURL
                 .appendingPathComponent(filename)

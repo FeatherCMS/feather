@@ -10,7 +10,7 @@ import WebComponents
 
 extension Subscriber.List {
     struct Table: Component {
-        let model: Subscriber.List.Model
+        let model: Model
         let permissions: AdminListActions
         let routes: Subscriber.Router.Routes
 

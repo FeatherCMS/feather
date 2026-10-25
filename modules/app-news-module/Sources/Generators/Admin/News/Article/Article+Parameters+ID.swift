@@ -6,7 +6,7 @@ extension Article.Parameters {
         var name: String { "newsArticleId" }
         var description: String? { "News article identifier" }
         var schema: any OpenAPISchemaRepresentable {
-            NewsAdminOpenAPIComponents.StringField().reference()
+            Article.Schemas.StringField().reference()
         }
     }
 }

@@ -72,7 +72,7 @@ extension Author.Edit.Controller {
                 try await decoded.validate()
                 try await runtime.interactor.update(id: id, input: decoded)
                 return AdminNotificationFlash.redirect(
-                    to: routes.authorEdit(id),
+                    to: routes.authorEditPath(id),
                     notification: .init(
                         title: "Saved",
                         message: "Author edited successfully."

@@ -38,15 +38,18 @@ extension Post.Edit {
                 context.build(
                     Post.Form(
                         state: state.form,
+                        browsePath: state.routes.imagePickerPath(
+                            state.form.imageAssetId.key
+                        ),
                         metadataHref: state.routes
-                            .postEditMetadata(
+                            .postEditMetadataPath(
                                 state.id,
                                 state.id
                             ),
-                        action: state.routes.postEdit(state.id),
+                        action: state.routes.postEditPath(state.id),
                         submitLabel: "Edit post",
                         removeHref: state.routes
-                            .postRemove(state.id),
+                            .postRemovePath(state.id),
                         removeLabel: "Remove post"
                     )
                 )

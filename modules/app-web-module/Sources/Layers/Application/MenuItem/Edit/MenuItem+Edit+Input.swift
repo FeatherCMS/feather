@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherDomain
+public import WebDomain
 public import WebModule
 
 extension MenuItem.Edit {
@@ -11,7 +12,7 @@ extension MenuItem.Edit {
         public let priority: FieldChange<Int>
         public let isBlank: FieldChange<Bool>
         public let permission: FieldChange<String>
-        public let authentication: FieldChange<MenuItem.Authentication>
+        public let authentication: FieldChange<MenuItem.Model.Authentication>
         public let notes: OptionalFieldChange<String>
 
         public init(
@@ -22,7 +23,7 @@ extension MenuItem.Edit {
             priority: FieldChange<Int> = .unchanged,
             isBlank: FieldChange<Bool> = .unchanged,
             permission: FieldChange<String> = .unchanged,
-            authentication: FieldChange<MenuItem.Authentication> = .unchanged,
+            authentication: FieldChange<MenuItem.Model.Authentication> = .unchanged,
             notes: OptionalFieldChange<String> = .unchanged
         ) {
             self.id = id

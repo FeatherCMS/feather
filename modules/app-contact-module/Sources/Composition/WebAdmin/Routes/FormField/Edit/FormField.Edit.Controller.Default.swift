@@ -39,7 +39,7 @@ extension FormField.Edit.Controller {
                     permissions: context.currentUserPermissions
                 )
             }
-            catch let error as FormField.Edit.Error {
+            catch let error as FormField.Edit.Interactor.Error {
                 return try await presenter.renderErrorPage(error: error)
             }
         }
@@ -94,7 +94,7 @@ extension FormField.Edit.Controller {
                     ]
                 )
             }
-            catch let error as FormField.Edit.Error {
+            catch let error as FormField.Edit.Interactor.Error {
                 return
                     try await presenter.renderEditError(
                         field: .init(

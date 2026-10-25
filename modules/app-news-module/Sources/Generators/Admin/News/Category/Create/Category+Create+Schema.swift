@@ -5,10 +5,10 @@ extension Category.Schemas {
         var openAPIIdentifier: String { "NewsCategoryCreateSchema" }
         var propertyMap: SchemaMap {
             [
-                "title": NewsAdminOpenAPIComponents.StringField(),
-                "excerpt": NewsAdminOpenAPIComponents.StringField(),
-                "content": NewsAdminOpenAPIComponents.StringField(),
-                "imageAssetId": NewsAdminOpenAPIComponents.StringField()
+                "title": StringField(),
+                "excerpt": StringField(),
+                "content": StringField(),
+                "imageAssetId": StringField()
                     .reference(required: false),
                 "metadata": Metadata.Input.Schema().reference(),
             ]

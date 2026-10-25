@@ -3,15 +3,14 @@ import AccountModule
 import FeatherWebAdmin
 import FeatherWebShared
 import MediaWebAdmin
+import MediaModule
 import OpenAPIRuntime
 
 extension Profile.Edit.Repository {
 
-    struct OpenAPI:
-        Profile.Edit.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
-        let mediaAPI: MediaWebAdmin.API.Client
+        let mediaRepository: any MediaModule.Asset.File.View.Repository.Interface
 
         func get() async throws -> Profile.Remote.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
@@ -25,8 +24,9 @@ extension Profile.Edit.Repository {
                         firstName: body.firstName,
                         lastName: body.lastName,
                         profileImageAssetId: body.profileImageAssetId,
-                        profileImageAsset: try await mediaAPI.loadImageAsset(
-                            assetId: body.profileImageAssetId
+                        profileImageAsset: try await mediaRepository.loadImageAsset(
+                            assetId: body.profileImageAssetId,
+                            variants: ["preview"]
                         )
                     )
                 case .unauthorized:

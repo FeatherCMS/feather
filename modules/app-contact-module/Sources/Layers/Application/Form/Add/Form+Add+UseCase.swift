@@ -62,7 +62,8 @@ extension Form.Add {
                     redirectUrl: input.redirectUrl
                 )
                 let saved = try await scope.form.insert(model)
-                for (position, fieldId) in input.fieldIds.enumerated() {
+                for position in input.fieldIds.indices {
+                    let fieldId = input.fieldIds[position]
                     try await scope.field.assign(
                         formId: saved.id,
                         fieldId: fieldId,

@@ -38,7 +38,8 @@ extension Credential.Add.Presenter {
                 content: Credential.Add.Page(
                     state: .init(
                         form: form,
-                        breadcrumb: routes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
                     )
                 )
             )

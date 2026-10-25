@@ -4,9 +4,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Variable.Edit.Interactor {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let repository: any Variable.Edit.Repository.Interface
 
         func load(

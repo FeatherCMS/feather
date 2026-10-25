@@ -9,7 +9,7 @@ extension AdminAPIGateway {
         _ input: Operations.AuthCredentialGet.Input
     ) async throws -> Operations.AuthCredentialGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = self.useCases.makeGetCredential()
+        let useCase = self.useCases.makeDetailCredential()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.authCredentialId)

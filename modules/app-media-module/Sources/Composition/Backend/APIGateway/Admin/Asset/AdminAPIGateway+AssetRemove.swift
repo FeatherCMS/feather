@@ -10,9 +10,9 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        try await useCases.deleteAssetNodesAndFiles(
+        try await useCases.makeRemoveAsset().execute(
             subject: subject,
-            assetIds: body.ids
+            input: .init(ids: body.ids)
         )
         return .noContent(.init())
     }

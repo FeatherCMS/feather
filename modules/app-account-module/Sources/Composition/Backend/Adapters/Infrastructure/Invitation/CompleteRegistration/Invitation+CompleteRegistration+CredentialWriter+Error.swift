@@ -2,7 +2,7 @@ import AccountModule
 import AccountApplication
 
 extension Invitation.CompleteRegistration {
-    enum CredentialWriterError: Error {
+    enum CredentialWriterError: Swift.Error {
         case invalidTransactionContext
         case authEmailNotFound
     }

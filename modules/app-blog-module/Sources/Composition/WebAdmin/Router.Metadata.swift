@@ -13,6 +13,7 @@ extension Router {
             let referenceType: String
             let title: String
             let breadcrumb: [AdminBreadcrumb.Link]
+            let mediaAssetList: WebRoute
             let editPath: @Sendable (String) -> String
             let metadataPath: @Sendable (String, String) -> String
         }
@@ -22,9 +23,9 @@ extension Router {
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             events: any EventPublisher,
-            postRoutes: Post.Router.Routes,
-            authorRoutes: Author.Router.Routes,
-            tagRoutes: Tag.Router.Routes
+            postRoutes: Post.Routes,
+            authorRoutes: Author.Routes,
+            tagRoutes: Tag.Routes
         ) {
             let routes = [
                 Route(
@@ -32,6 +33,7 @@ extension Router {
                     referenceType: "blog.post",
                     title: "Edit post metadata",
                     breadcrumb: postRoutes.postsBreadcrumb,
+                    mediaAssetList: postRoutes.mediaAssetList,
                     editPath: postRoutes.postEdit,
                     metadataPath: postRoutes.postEditMetadata
                 ),
@@ -40,6 +42,7 @@ extension Router {
                     referenceType: "blog.author",
                     title: "Edit author metadata",
                     breadcrumb: authorRoutes.authorsBreadcrumb,
+                    mediaAssetList: authorRoutes.mediaAssetList,
                     editPath: authorRoutes.authorEdit,
                     metadataPath: authorRoutes.authorEditMetadata
                 ),
@@ -48,6 +51,7 @@ extension Router {
                     referenceType: "blog.tag",
                     title: "Edit tag metadata",
                     breadcrumb: tagRoutes.tagsBreadcrumb,
+                    mediaAssetList: tagRoutes.mediaAssetList,
                     editPath: tagRoutes.tagEdit,
                     metadataPath: tagRoutes.tagEditMetadata
                 ),
@@ -82,7 +86,8 @@ extension Router {
                     let handler = WebModule.Metadata.Edit.Handler(
                         environment: environment,
                         renderingEngine: renderingEngine,
-                        adminEvents: events
+                        adminEvents: events,
+                        mediaAssetList: route.mediaAssetList
                     )
                     return try await handler.get(
                         request: request,
@@ -119,7 +124,8 @@ extension Router {
                     let handler = WebModule.Metadata.Edit.Handler(
                         environment: environment,
                         renderingEngine: renderingEngine,
-                        adminEvents: events
+                        adminEvents: events,
+                        mediaAssetList: route.mediaAssetList
                     )
                     return try await handler.post(
                         request: request,

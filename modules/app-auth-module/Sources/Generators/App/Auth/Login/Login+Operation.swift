@@ -6,7 +6,7 @@ extension Auth.Login {
         var operationId: String? { "authLogin" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            Auth.Login.RequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {

@@ -10,14 +10,14 @@ extension Post.Post {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "title": BlogPostTitleField(),
-                "excerpt": BlogPostExcerptField(),
-                "content": BlogPostContentField(),
-                "imageAssetId": BlogPostImageAssetIdField()
+                "title": Post.Schemas.Title(),
+                "excerpt": Post.Schemas.Excerpt(),
+                "content": Post.Schemas.Content(),
+                "imageAssetId": Post.Schemas.ImageAssetID()
                     .reference(required: false),
-                "authorIds": BlogPostAuthorIdsField()
+                "authorIds": Post.Schemas.AuthorIDs()
                     .reference(required: false),
-                "tagIds": BlogPostTagIdsField().reference(required: false),
+                "tagIds": Post.Schemas.TagIDs().reference(required: false),
             ]
         }
     }

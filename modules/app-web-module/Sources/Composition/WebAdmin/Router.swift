@@ -3,6 +3,7 @@ public import FeatherWebAdmin
 public import FeatherWebShared
 public import Hummingbird
 import OpenAPIRuntime
+import MediaWebAdmin
 import WebDomain
 import WebModule
 
@@ -13,20 +14,28 @@ public struct Router {
         public let pages: WebRoute
         public let menus: WebRoute
         public let settings: WebRoute
+        public let mediaAssetList: WebRoute
 
-        public init(admin: WebRoute, root: WebRoute) {
+        public init(
+            admin: WebRoute,
+            root: WebRoute,
+            mediaAssetList: WebRoute? = nil
+        ) {
             self.admin = admin
             self.root = root
             self.pages = root.appending(pathComponent: "pages")
             self.menus = root.appending(pathComponent: "menus")
             self.settings = root.appending(pathComponent: "settings")
+            self.mediaAssetList =
+                mediaAssetList ?? MediaWebAdmin.Router.Routes.standard.assetList
         }
 
         public static let standard = Routes(
             admin: WebRoute.root.appending(pathComponent: "admin"),
             root: WebRoute.root
                 .appending(pathComponent: "admin")
-                .appending(pathComponent: "web")
+                .appending(pathComponent: "web"),
+            mediaAssetList: MediaWebAdmin.Router.Routes.standard.assetList
         )
 
         var breadcrumb: [AdminBreadcrumb.Link] {
@@ -79,7 +88,8 @@ public struct Router {
             renderingEngine: renderingEngine,
             routes: .init(
                 edit: routes.settings,
-                breadcrumb: routes.breadcrumb
+                breadcrumb: routes.breadcrumb,
+                mediaAssetList: routes.mediaAssetList
             )
         )
         .route(on: router)
@@ -90,7 +100,8 @@ public struct Router {
             events: adminEvents,
             routes: .init(
                 root: routes.pages,
-                breadcrumb: routes.breadcrumb
+                breadcrumb: routes.breadcrumb,
+                mediaAssetList: routes.mediaAssetList
             )
         )
         .route(on: router)

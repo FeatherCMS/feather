@@ -1544,6 +1544,122 @@ public struct Client: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
+    public func newsletterIssueTestEmail(_ input: Operations.NewsletterIssueTestEmail.Input) async throws -> Operations.NewsletterIssueTestEmail.Output {
+        try await client.send(
+            input: input,
+            forOperation: Operations.NewsletterIssueTestEmail.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/api/v1/admin/newsletter/campaign/{}/issues/{}/test-email",
+                    parameters: [
+                        input.path.newsletterCampaignKey,
+                        input.path.newsletterIssueId
+                    ]
+                )
+                var request: HTTPTypes.HTTPRequest = .init(
+                    soar_path: path,
+                    method: .post
+                )
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(
+                    in: &request.headerFields,
+                    contentTypes: input.headers.accept
+                )
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case let .json(value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 204:
+                    return .noContent(.init())
+                case 404:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.NewsletterIssueTestEmail.Output.NotFound.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure("bestContentType chose an invalid content type.")
+                    }
+                    return .notFound(.init(body: body))
+                case 401:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.NewsletterIssueTestEmail.Output.Unauthorized.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure("bestContentType chose an invalid content type.")
+                    }
+                    return .unauthorized(.init(body: body))
+                case 403:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.NewsletterIssueTestEmail.Output.Forbidden.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure("bestContentType chose an invalid content type.")
+                    }
+                    return .forbidden(.init(body: body))
+                default:
+                    return .undocumented(
+                        statusCode: response.status.code,
+                        .init(
+                            headerFields: response.headerFields,
+                            body: responseBody
+                        )
+                    )
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
     public func newsletterIssueDeliveryList(_ input: Operations.NewsletterIssueDeliveryList.Input) async throws -> Operations.NewsletterIssueDeliveryList.Output {
@@ -1640,122 +1756,6 @@ public struct Client: APIProtocol {
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
                     let body: Operations.NewsletterIssueDeliveryList.Output.Forbidden.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure("bestContentType chose an invalid content type.")
-                    }
-                    return .forbidden(.init(body: body))
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
-    public func newsletterIssueTestEmail(_ input: Operations.NewsletterIssueTestEmail.Input) async throws -> Operations.NewsletterIssueTestEmail.Output {
-        try await client.send(
-            input: input,
-            forOperation: Operations.NewsletterIssueTestEmail.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/newsletter/campaign/{}/issues/{}/test-email",
-                    parameters: [
-                        input.path.newsletterCampaignKey,
-                        input.path.newsletterIssueId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .post
-                )
-                suppressMutabilityWarning(&request)
-                converter.setAcceptHeader(
-                    in: &request.headerFields,
-                    contentTypes: input.headers.accept
-                )
-                let body: OpenAPIRuntime.HTTPBody?
-                switch input.body {
-                case let .json(value):
-                    body = try converter.setRequiredRequestBodyAsJSON(
-                        value,
-                        headerFields: &request.headerFields,
-                        contentType: "application/json; charset=utf-8"
-                    )
-                }
-                return (request, body)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 204:
-                    return .noContent(.init())
-                case 404:
-                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.NewsletterIssueTestEmail.Output.NotFound.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure("bestContentType chose an invalid content type.")
-                    }
-                    return .notFound(.init(body: body))
-                case 401:
-                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.NewsletterIssueTestEmail.Output.Unauthorized.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure("bestContentType chose an invalid content type.")
-                    }
-                    return .unauthorized(.init(body: body))
-                case 403:
-                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.NewsletterIssueTestEmail.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [

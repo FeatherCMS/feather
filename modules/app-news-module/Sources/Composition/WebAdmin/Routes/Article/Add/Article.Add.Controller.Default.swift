@@ -56,7 +56,7 @@ extension Article.Add.Controller {
                     .response(from: request, context: context)
             }
             do {
-                try await runtime.interactor.create(input: input.schema)
+                try await runtime.interactor.create(input: input)
                 return runtime.presenter.renderCreated()
             }
             catch {

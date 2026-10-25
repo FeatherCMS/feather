@@ -374,17 +374,19 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries:
-    get:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email:
+    post:
       tags:
       - Newsletter
-      operationId: newsletterIssueDeliveryList
+      operationId: newsletterIssueTestEmail
       parameters:
       - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
       - $ref: '#/components/parameters/NewsletterIssueIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/NewsletterIssueTestEmailRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/NewsletterDeliveryListResponse'
+        204:
+          description: Test email queued
         404:
           description: Newsletter issue not found
           content:
@@ -405,19 +407,17 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email:
-    post:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries:
+    get:
       tags:
       - Newsletter
-      operationId: newsletterIssueTestEmail
+      operationId: newsletterIssueDeliveryList
       parameters:
       - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
       - $ref: '#/components/parameters/NewsletterIssueIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/NewsletterIssueTestEmailRequestBody'
       responses:
-        204:
-          description: Test email queued
+        200:
+          $ref: '#/components/responses/NewsletterDeliveryListResponse'
         404:
           description: Newsletter issue not found
           content:
@@ -514,6 +514,8 @@ paths:
       - bearerAuth: []
   /api/v1/admin/newsletter/subscribers/query:
     post:
+      tags:
+      - Newsletter
       operationId: newsletterSubscriberQuery
       requestBody:
         content:
@@ -862,8 +864,8 @@ components:
     NewsletterIssueListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/NewsletterIssueSchema'
-    NewsletterIssueSchema:
+        $ref: '#/components/schemas/NewsletterIssueListItemSchema'
+    NewsletterIssueListItemSchema:
       type: object
       properties:
         id:
@@ -909,6 +911,37 @@ components:
       required:
       - subject
       - content
+    NewsletterIssueSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        campaignKey:
+          type: string
+        subject:
+          type: string
+        content:
+          type: string
+        status:
+          type: string
+        scheduledAt:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+        sentAt:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - campaignKey
+      - subject
+      - content
+      - status
+      - createdAt
+      - updatedAt
     NewsletterIssueQueryItemSearchRequestQuerySchema:
       type: object
       properties:
@@ -1058,7 +1091,7 @@ components:
         subscriberEmail:
           type: string
         status:
-          type: string
+          $ref: '#/components/schemas/NewsletterDeliveryStatusField'
         sentAt:
           $ref: '#/components/schemas/NewsletterTimestampField'
         failureReason:
@@ -1074,11 +1107,13 @@ components:
       - status
       - createdAt
       - updatedAt
+    NewsletterDeliveryStatusField:
+      type: string
     NewsletterSubscriberListSchema:
       type: array
       items:
-        $ref: '#/components/schemas/NewsletterSubscriberSchema'
-    NewsletterSubscriberSchema:
+        $ref: '#/components/schemas/NewsletterSubscriberListItemSchema'
+    NewsletterSubscriberListItemSchema:
       type: object
       properties:
         id:
@@ -1127,6 +1162,40 @@ components:
       - email
     NewsletterSubscriberStatusField:
       type: string
+    NewsletterSubscriberSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        campaignKey:
+          type: string
+        email:
+          type: string
+        status:
+          type: string
+        subscriptionDate:
+          type: number
+          format: double
+        unsubscriptionDate:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+        firstName:
+          $ref: '#/components/schemas/NewsletterNameField'
+        lastName:
+          $ref: '#/components/schemas/NewsletterNameField'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - campaignKey
+      - email
+      - status
+      - subscriptionDate
+      - createdAt
+      - updatedAt
     NewsletterSubscriberQueryItemSearchRequestQuerySchema:
       type: object
       properties:
@@ -1141,7 +1210,6 @@ components:
                 type: string
                 enum:
                 - email
-                - name
                 example: email
               direction:
                 $ref: '#/components/schemas/SortDirection'
@@ -1196,7 +1264,6 @@ components:
                 type: string
                 enum:
                 - email
-                - name
                 example: email
               direction:
                 $ref: '#/components/schemas/SortDirection'

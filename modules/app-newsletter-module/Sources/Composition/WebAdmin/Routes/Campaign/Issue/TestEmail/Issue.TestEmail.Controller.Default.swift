@@ -11,7 +11,7 @@ extension Issue.TestEmail.Controller {
         let repository:
             @Sendable (
                 AuthenticatedRequestContext
-            ) -> any Repository.Interface
+            ) -> any Issue.TestEmail.Repository.Interface
         let routes: Campaign.Router.Routes
 
         func send(request: Request, context: AuthenticatedRequestContext)

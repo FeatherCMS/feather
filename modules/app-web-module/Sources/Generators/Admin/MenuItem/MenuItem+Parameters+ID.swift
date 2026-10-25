@@ -6,7 +6,7 @@ extension MenuItem.Parameters {
         var name: String { "menuItemId" }
         var description: String? { "MenuItem id" }
         var schema: any OpenAPISchemaRepresentable {
-            MenuItemIdField().reference()
+            MenuItem.Schemas.ID().reference()
         }
     }
 }

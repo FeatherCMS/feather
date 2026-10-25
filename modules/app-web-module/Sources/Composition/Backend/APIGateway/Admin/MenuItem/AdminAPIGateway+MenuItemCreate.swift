@@ -27,7 +27,7 @@ extension AdminAPIGateway {
                 priority: body.priority,
                 isBlank: body.isBlank,
                 permission: body.permission,
-                authentication: MenuItem.Authentication(
+                authentication: MenuItem.Model.Authentication(
                     rawValue: body.authentication ?? "any"
                 ) ?? .any,
                 notes: body.notes ?? ""

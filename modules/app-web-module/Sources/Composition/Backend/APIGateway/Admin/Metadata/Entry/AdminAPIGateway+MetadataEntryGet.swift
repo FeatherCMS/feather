@@ -11,7 +11,7 @@ extension AdminAPIGateway {
         _ input: Operations.MetadataGet.Input
     ) async throws -> Operations.MetadataGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeGetMetadata()
+        let useCase = useCases.makeDetailMetadata()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.metadataId)

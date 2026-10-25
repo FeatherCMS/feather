@@ -1,11 +1,16 @@
 public import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
+import Foundation
 import SystemModule
 import SystemWebAdmin
 
 extension Event {
     public enum Handlers {
-        public static func registerMenu(in events: inout EventRegistry) {
+        public static func registerMenu(
+            in events: inout EventRegistry,
+            routes: Router.Routes
+        ) {
             events.register(
                 event: SystemWebAdmin.Admin.Menu.Group.Provider.self,
                 context: SystemWebAdmin.Admin.Menu.Context.self
@@ -30,14 +35,14 @@ extension Event {
                         menuKey: "newsletter",
                         label: "Campaigns",
                         icon: "send",
-                        link: "/admin/newsletter/campaigns/",
+                        link: routes.campaign.list.path,
                         permission: "newsletter:campaigns:list"
                     ),
                     .init(
                         menuKey: "newsletter",
                         label: "Subscribers",
                         icon: "users",
-                        link: "/admin/newsletter/subscribers/",
+                        link: routes.subscriber.list.path,
                         permission: "newsletter:subscribers:list"
                     ),
                 ]
@@ -45,18 +50,24 @@ extension Event {
         }
 
         public static func registerRichContentEditor(
-            in registry: inout EventRegistry
+            in registry: inout EventRegistry,
+            routes: Router.Routes
         ) {
             registry.register(
                 event: AdminRichContentEditorBlockProvider.self,
                 context: SystemWebAdmin.Admin.Menu.Context.self
             ) { _, _ in
-                AdminRichContentEditorBlockDefinition(
+                var components = URLComponents()
+                components.path = routes.campaign.list.path
+                components.queryItems = [
+                    URLQueryItem(name: "picker", value: "1")
+                ]
+                return AdminRichContentEditorBlockDefinition(
                     type: "newsletter",
                     title: "Newsletter campaign",
                     icon: "✉",
                     directive: "NewsletterCampaign",
-                    pickerEndpoint: "/admin/newsletter/campaigns/?picker=1"
+                    pickerEndpoint: components.string ?? components.path
                 )
             }
         }

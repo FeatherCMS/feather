@@ -1,5 +1,4 @@
 import NewsApplication
-import NewsAdminAPI
 import NewsModule
 
 extension Article.Edit.Interactor {
@@ -8,7 +7,7 @@ extension Article.Edit.Interactor {
 
         func get(
             id: String
-        ) async throws -> Components.Schemas.NewsArticleDetailSchema {
+        ) async throws -> Article.Detail.Model {
             try await repository.get(id: id)
         }
 
@@ -18,7 +17,7 @@ extension Article.Edit.Interactor {
 
         func update(
             id: String,
-            input: Components.Schemas.NewsArticleCreateSchema
+            input: Article.Form.Input
         ) async throws {
             try await repository.update(id: id, input: input)
         }

@@ -6,11 +6,11 @@ extension Metadata.Post {
     struct Operation: Metadata.Operation, BearerProtectedOperation {
         var operationId: String? { "metadataCreate" }
         var requestBody: (any RequestBodyRepresentable)? {
-            MetadataRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                201: MetadataDetailResponse().reference()
+                201: Metadata.Get.Response().reference()
             ]
         }
     }

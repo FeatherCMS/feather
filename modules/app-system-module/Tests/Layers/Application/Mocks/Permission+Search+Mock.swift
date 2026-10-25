@@ -5,17 +5,17 @@ import SystemModule
 extension SystemModule.Permission.Search {
     actor Mock: Query.Interface {
         private(set) var searchCallCount = 0
-        private(set) var lastQuery: SystemModule.Permission.Search.Input.Query?
+        private(set) var lastQuery: Input.Query?
 
-        private let result: SystemModule.Permission.Search.Output
+        private let result: Output
 
-        init(result: SystemModule.Permission.Search.Output) {
+        init(result: Output) {
             self.result = result
         }
 
         func search(
-            query: SystemModule.Permission.Search.Input.Query
-        ) async throws -> SystemModule.Permission.Search.Output {
+            query: Input.Query
+        ) async throws -> Output {
             searchCallCount += 1
             lastQuery = query
             return result

@@ -58,6 +58,32 @@ struct BlogInfrastructureTests {
         let author = Author.Table.tableCreationSchema
         let authorLink = AuthorLink.Table.tableCreationSchema
 
+        #expect(
+            post.columns.map(\.name) == [
+                "id", "title", "excerpt", "content", "image_asset_id",
+                "author_ids", "tag_ids", "created_at", "updated_at",
+            ]
+        )
+        #expect(
+            tag.columns.map(\.name) == [
+                "id", "title", "excerpt", "content", "image_asset_id",
+                "created_at", "updated_at",
+            ]
+        )
+        #expect(
+            author.columns.map(\.name) == [
+                "id", "key", "name", "notes", "excerpt",
+                "profile_image_asset_id", "content", "created_at",
+                "updated_at",
+            ]
+        )
+        #expect(
+            authorLink.columns.map(\.name) == [
+                "id", "author_id", "label", "url", "priority", "is_blank",
+                "permission", "notes", "created_at", "updated_at",
+            ]
+        )
+
         for schema in [post, tag, author, authorLink] {
             for name in ["created_at", "updated_at"] {
                 let column = schema.columns.first(where: { $0.name == name })
@@ -173,13 +199,14 @@ struct BlogInfrastructureTests {
         #expect(
             author.constraints.contains {
                 if case .foreignKey(
-                    columns: _,
+                    columns: let columns,
                     referencesTable: "media_asset_node_file",
-                    referencedColumns: _,
+                    referencedColumns: let referencedColumns,
                     onDelete: .setNull,
                     onUpdate: _
                 ) = $0 {
-                    true
+                    columns.map(\.name) == ["profile_image_asset_id"]
+                        && referencedColumns.map(\.name) == ["asset_node_id"]
                 }
                 else {
                     false
@@ -189,37 +216,54 @@ struct BlogInfrastructureTests {
         #expect(
             authorLink.constraints.contains {
                 if case .foreignKey(
-                    columns: _,
+                    columns: let columns,
                     referencesTable: "blog_author",
-                    referencedColumns: _,
+                    referencedColumns: let referencedColumns,
                     onDelete: .cascade,
                     onUpdate: _
                 ) = $0 {
-                    true
+                    columns.map(\.name) == ["author_id"]
+                        && referencedColumns.map(\.name) == ["id"]
                 }
                 else {
                     false
                 }
             }
         )
-        for schema in [post, tag] {
-            #expect(
-                schema.constraints.contains {
-                    if case .foreignKey(
-                        columns: _,
-                        referencesTable: "media_asset_node_file",
-                        referencedColumns: _,
-                        onDelete: .setNull,
-                        onUpdate: _
-                    ) = $0 {
-                        true
-                    }
-                    else {
-                        false
-                    }
+        #expect(
+            post.constraints.contains {
+                if case .foreignKey(
+                    columns: let columns,
+                    referencesTable: "media_asset_node_file",
+                    referencedColumns: let referencedColumns,
+                    onDelete: .setNull,
+                    onUpdate: _
+                ) = $0 {
+                    columns.map(\.name) == ["image_asset_id"]
+                        && referencedColumns.map(\.name) == ["asset_node_id"]
                 }
-            )
-        }
+                else {
+                    false
+                }
+            }
+        )
+        #expect(
+            tag.constraints.contains {
+                if case .foreignKey(
+                    columns: let columns,
+                    referencesTable: "media_asset_node_file",
+                    referencedColumns: let referencedColumns,
+                    onDelete: .setNull,
+                    onUpdate: _
+                ) = $0 {
+                    columns.map(\.name) == ["image_asset_id"]
+                        && referencedColumns.map(\.name) == ["asset_node_id"]
+                }
+                else {
+                    false
+                }
+            }
+        )
     }
 
     @Test

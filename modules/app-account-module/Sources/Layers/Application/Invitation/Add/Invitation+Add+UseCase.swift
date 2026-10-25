@@ -62,7 +62,7 @@ extension Invitation.Add {
                     .whitespaceTrimmed,
                     !mailFromAddress.isEmpty
                 else {
-                    throw Invitation.Add.Error.mailFromNotConfigured
+                    throw Error.mailFromNotConfigured
                 }
                 let mailFromName = try await scope.variable.get(
                     "system-settings-mail-from-name"
@@ -73,7 +73,7 @@ extension Invitation.Add {
                 for roleID in input.roleIDs {
                     guard try await roleRepository.findBy(id: roleID) != nil
                     else {
-                        throw Invitation.Add.Error.roleNotFound(roleID)
+                        throw Error.roleNotFound(roleID)
                     }
                 }
                 let token = Invitation.Token.generate()

@@ -9,7 +9,7 @@ import WebComponents
 extension Identity.Detail {
     struct Details: Component {
         let routes: Identity.Router.Routes
-        let identity: Identity.Detail.Model
+        let identity: Model
         let permissions: AdminListActions
 
         func html(context: inout BuilderContext) -> Section {

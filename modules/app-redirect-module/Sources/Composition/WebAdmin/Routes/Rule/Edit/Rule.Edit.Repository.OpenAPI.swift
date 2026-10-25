@@ -4,6 +4,7 @@ import OpenAPIRuntime
 import RedirectAdminAPI
 import RedirectApplication
 import RedirectModule
+import RedirectDomain
 
 extension Rule.Edit.Repository {
     struct OpenAPI: Interface {
@@ -24,7 +25,7 @@ extension Rule.Edit.Repository {
                         id: rule.id,
                         source: rule.source,
                         destination: rule.destination,
-                        statusCode: Rule.StatusCode(rawValue: rule.statusCode)!,
+                        statusCode: Rule.Model.StatusCode(rawValue: rule.statusCode)!,
                         notes: rule.notes
                     )
                 case .notFound:

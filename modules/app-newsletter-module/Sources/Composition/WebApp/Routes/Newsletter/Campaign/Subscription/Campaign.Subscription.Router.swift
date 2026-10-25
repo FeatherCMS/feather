@@ -30,7 +30,10 @@ extension Campaign.Subscription {
         public func route(
             on router: Hummingbird.Router<DefaultRequestContext>
         ) {
-            router.post(controller.route.routerPath, use: controller.subscribe)
+            router.post(
+                controller.route.webRoute.routerPath,
+                use: controller.subscribe
+            )
         }
     }
 }

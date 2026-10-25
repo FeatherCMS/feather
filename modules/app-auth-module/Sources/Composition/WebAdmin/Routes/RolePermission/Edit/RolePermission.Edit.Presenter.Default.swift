@@ -65,7 +65,8 @@ extension RolePermission.Edit.Presenter {
                         selectedPairs: state.selectedPairs,
                         search: normalizedSearch,
                         breadcrumb: routes.breadcrumb,
-                        nonceToken: nonceToken
+                        nonceToken: nonceToken,
+                        routes: routes
                     )
                 )
             )

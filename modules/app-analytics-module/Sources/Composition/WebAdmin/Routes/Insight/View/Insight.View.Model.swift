@@ -1,4 +1,3 @@
-import AnalyticsAdminAPI
 import AnalyticsModule
 import Foundation
 import Hummingbird
@@ -41,6 +40,6 @@ extension Insight.View {
         let source: Source
         let from: String
         let to: String
-        let overview: Components.Schemas.AnalyticsLogOverviewSchema
+        let overview: Overview.Model
     }
 }

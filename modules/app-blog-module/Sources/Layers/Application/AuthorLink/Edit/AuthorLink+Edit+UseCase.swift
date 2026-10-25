@@ -38,10 +38,10 @@ extension AuthorLink.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.authorLink.find(id: input.id)
                 else {
-                    throw AuthorLink.Edit.Error(message: "Menu item not found")
+                    throw Error(message: "Menu item not found")
                 }
                 guard model.authorId == input.authorId else {
-                    throw AuthorLink.Edit.Error(message: "Menu item not found")
+                    throw Error(message: "Menu item not found")
                 }
 
                 try model.update(

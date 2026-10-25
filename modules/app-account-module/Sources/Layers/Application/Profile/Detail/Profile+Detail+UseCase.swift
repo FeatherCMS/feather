@@ -27,15 +27,7 @@ extension Profile.Detail {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
             return try await query.run { scope in
-                let profile = try await scope.query.get(userId: userId)
-                return .init(
-                    userId: profile.userId,
-                    firstName: profile.firstName,
-                    lastName: profile.lastName,
-                    profileImageAssetId: profile.profileImageAssetId,
-                    createdAt: profile.createdAt,
-                    updatedAt: profile.updatedAt
-                )
+                try await scope.query.find(userId: userId)
             }
         }
     }

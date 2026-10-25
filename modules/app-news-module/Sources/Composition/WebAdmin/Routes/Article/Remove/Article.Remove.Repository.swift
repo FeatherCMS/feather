@@ -1,4 +1,3 @@
-import NewsAdminAPI
 import NewsApplication
 import NewsModule
 
@@ -10,7 +9,7 @@ extension Article.Remove.Repository {
     protocol Interface: Sendable {
         func get(
             id: String
-        ) async throws -> Components.Schemas.NewsArticleDetailSchema
+        ) async throws -> Article.Detail.Model
         func remove(id: String) async throws
     }
 }

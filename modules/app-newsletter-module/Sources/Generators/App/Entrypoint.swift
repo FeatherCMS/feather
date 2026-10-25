@@ -3,6 +3,7 @@ import FeatherOpenAPIGenerator
 import Foundation
 import OpenAPIKit
 import OpenAPIKitCompat
+import OpenAPIKit30
 import Yams
 
 @main

@@ -17,9 +17,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `POST /api/v1/admin/contact/form/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/query/post(contactFormQuery)`.
     func contactFormQuery(_ input: Operations.ContactFormQuery.Input) async throws -> Operations.ContactFormQuery.Output
-    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
-    func contactSubmissionQuery(_ input: Operations.ContactSubmissionQuery.Input) async throws -> Operations.ContactSubmissionQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     func contactFormGet(_ input: Operations.ContactFormGet.Input) async throws -> Operations.ContactFormGet.Output
@@ -41,9 +38,12 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `GET /api/v1/admin/contact/field/{formFieldId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/get(contactFieldGet)`.
     func contactFieldGet(_ input: Operations.ContactFieldGet.Input) async throws -> Operations.ContactFieldGet.Output
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)`.
-    func contactFieldUpdate(_ input: Operations.ContactFieldUpdate.Input) async throws -> Operations.ContactFieldUpdate.Output
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/field/{formFieldId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)`.
+    func contactFieldPatch(_ input: Operations.ContactFieldPatch.Input) async throws -> Operations.ContactFieldPatch.Output
+    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
+    func contactSubmissionQuery(_ input: Operations.ContactSubmissionQuery.Input) async throws -> Operations.ContactSubmissionQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)`.
     func contactFormSubmissionList(_ input: Operations.ContactFormSubmissionList.Input) async throws -> Operations.ContactFormSubmissionList.Output
@@ -94,17 +94,6 @@ extension APIProtocol {
         body: Operations.ContactFormQuery.Input.Body
     ) async throws -> Operations.ContactFormQuery.Output {
         try await contactFormQuery(Operations.ContactFormQuery.Input(
-            headers: headers,
-            body: body
-        ))
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
-    public func contactSubmissionQuery(
-        headers: Operations.ContactSubmissionQuery.Input.Headers = .init(),
-        body: Operations.ContactSubmissionQuery.Input.Body
-    ) async throws -> Operations.ContactSubmissionQuery.Output {
-        try await contactSubmissionQuery(Operations.ContactSubmissionQuery.Input(
             headers: headers,
             body: body
         ))
@@ -188,15 +177,28 @@ extension APIProtocol {
             headers: headers
         ))
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)`.
-    public func contactFieldUpdate(
-        path: Operations.ContactFieldUpdate.Input.Path,
-        headers: Operations.ContactFieldUpdate.Input.Headers = .init(),
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/field/{formFieldId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)`.
+    public func contactFieldPatch(
+        path: Operations.ContactFieldPatch.Input.Path,
+        query: Operations.ContactFieldPatch.Input.Query,
+        headers: Operations.ContactFieldPatch.Input.Headers = .init(),
         body: Components.RequestBodies.FormFieldPatchRequestBody
-    ) async throws -> Operations.ContactFieldUpdate.Output {
-        try await contactFieldUpdate(Operations.ContactFieldUpdate.Input(
+    ) async throws -> Operations.ContactFieldPatch.Output {
+        try await contactFieldPatch(Operations.ContactFieldPatch.Input(
             path: path,
+            query: query,
+            headers: headers,
+            body: body
+        ))
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
+    public func contactSubmissionQuery(
+        headers: Operations.ContactSubmissionQuery.Input.Headers = .init(),
+        body: Operations.ContactSubmissionQuery.Input.Body
+    ) async throws -> Operations.ContactSubmissionQuery.Output {
+        try await contactSubmissionQuery(Operations.ContactSubmissionQuery.Input(
             headers: headers,
             body: body
         ))

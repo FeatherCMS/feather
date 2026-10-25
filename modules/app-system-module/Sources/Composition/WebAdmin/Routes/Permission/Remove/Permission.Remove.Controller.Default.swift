@@ -4,9 +4,7 @@ import Hummingbird
 import SystemModule
 
 extension Permission.Remove.Controller {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let routes: Permission.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<

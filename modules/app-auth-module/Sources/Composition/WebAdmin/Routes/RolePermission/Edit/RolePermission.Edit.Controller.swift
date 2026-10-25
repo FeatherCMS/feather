@@ -35,19 +35,3 @@ extension RolePermission.Edit.Controller {
     }
 }
 
-extension RolePermission.Edit.Controller.Interface {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: RolePermission.Router.Routes
-    ) {
-        router.get(
-            routes.edit.routerPath,
-            use: getAuthAccessControl
-        )
-        router.post(
-            routes.edit.routerPath,
-            use: postAuthAccessControl
-        )
-    }
-}

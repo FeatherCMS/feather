@@ -13,12 +13,12 @@ extension Page.Patch {
         }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            PagePatchRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                200: PageDetailResponse().reference(),
+                200: Page.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),

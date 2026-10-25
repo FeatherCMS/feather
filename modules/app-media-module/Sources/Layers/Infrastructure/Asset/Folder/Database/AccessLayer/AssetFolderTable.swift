@@ -269,7 +269,7 @@ extension Asset.Folder {
 
         func delete(ids: [String]) async throws -> [String] {
             guard !ids.isEmpty else { return [] }
-            return try await AssetFolderDeleteQuery(connection: connection)
+            return try await DeleteQuery(connection: connection)
                 .delete(ids: ids)
         }
     }

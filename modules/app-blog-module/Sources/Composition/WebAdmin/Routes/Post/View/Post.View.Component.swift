@@ -78,8 +78,8 @@ extension Post.View {
                         context.build(
                             AdminStatusSelectFormDefinition(
                                 id: formID,
-                                action: state.routes.postStatus(state.model.id),
-                                returnTo: state.routes.post(state.model.id)
+                                action: state.routes.postStatusPath(state.model.id),
+                                returnTo: state.routes.postPath(state.model.id)
                             )
                         )
                         context.build(
@@ -104,7 +104,7 @@ extension Post.View {
                 result.append(
                     .init(
                         label: "Edit post",
-                        href: state.routes.postEdit(state.model.id),
+                        href: state.routes.postEditPath(state.model.id),
                         style: .primary
                     )
                 )
@@ -115,7 +115,7 @@ extension Post.View {
                 result.append(
                     .init(
                         label: "Remove post",
-                        href: state.routes.postRemove(state.model.id),
+                        href: state.routes.postRemovePath(state.model.id),
                         style: .destructive
                     )
                 )

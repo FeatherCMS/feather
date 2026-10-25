@@ -331,43 +331,52 @@ extension Asset.File.Add.Controller.Default {
         picker: PickerState,
         isDialog: Bool = false
     ) -> String {
-        var queryItems: [String] = []
+        var queryItems: [URLQueryItem] = []
         if let parentId, !parentId.isEmpty {
-            queryItems.append("parent_id=\(parentId.queryEncoded())")
+            queryItems.append(.init(name: "parent_id", value: parentId))
         }
         if view != "grid" {
-            queryItems.append("view=\(view.queryEncoded())")
+            queryItems.append(.init(name: "view", value: view))
         }
         if picker.isEnabled {
-            queryItems.append("picker=1")
+            queryItems.append(.init(name: "picker", value: "1"))
         }
         if let field = picker.field {
-            queryItems.append("field=\(field.queryEncoded())")
+            queryItems.append(.init(name: "field", value: field))
         }
         if !picker.allowedExtensions.isAnything {
             queryItems.append(
-                "extensions=\(picker.allowedExtensions.queryValue.queryEncoded())"
+                .init(
+                    name: "extensions",
+                    value: picker.allowedExtensions.queryValue
+                )
             )
         }
         if let defaultFolderPath = picker.defaultFolderPath {
             queryItems.append(
-                "default_folder_path=\(defaultFolderPath.queryEncoded())"
+                .init(
+                    name: "default_folder_path",
+                    value: defaultFolderPath
+                )
             )
         }
         if let previewVariant = picker.previewVariant {
             queryItems.append(
-                "preview_variant=\(previewVariant.queryEncoded())"
+                .init(name: "preview_variant", value: previewVariant)
             )
         }
         if picker.isEnabled {
-            queryItems.append("selection=\(picker.selectionMode.rawValue)")
+            queryItems.append(
+                .init(name: "selection", value: picker.selectionMode.rawValue)
+            )
         }
         if isDialog {
-            queryItems.append("presentation=dialog")
+            queryItems.append(.init(name: "presentation", value: "dialog"))
         }
-        return queryItems.isEmpty
-            ? routes.file.add.path
-            : "\(routes.file.add.path)?\(queryItems.joined(separator: "&"))"
+        var components = URLComponents()
+        components.path = routes.file.add.path
+        components.queryItems = queryItems.isEmpty ? nil : queryItems
+        return components.string ?? components.path
     }
 
     fileprivate func redirectLocation(

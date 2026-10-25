@@ -1,9 +1,1 @@
-public enum Asset {
-
-
-
-
-
-
-
-}
+public enum Asset {}

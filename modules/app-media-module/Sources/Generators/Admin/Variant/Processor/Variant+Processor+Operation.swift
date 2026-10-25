@@ -9,8 +9,8 @@ extension Variant.Processor {
 extension Variant.Processor.IDOperation {
     var parameters: [any ParameterRepresentable] {
         [
-            MediaVariantIdParameter().reference(),
-            MediaVariantProcessorIdParameter().reference(),
+            Variant.Parameters.ID().reference(),
+            Variant.Processor.Parameters.ID().reference(),
         ]
     }
 }

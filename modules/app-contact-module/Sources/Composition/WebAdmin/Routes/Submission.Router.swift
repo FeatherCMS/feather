@@ -51,10 +51,16 @@ extension Submission {
         struct Routes: Sendable {
             private let root: WebRoute
             let breadcrumb: [AdminBreadcrumb.Link]
+            let formRoutes: Form.Router.Routes
 
-            init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
+            init(
+                root: WebRoute,
+                breadcrumb: [AdminBreadcrumb.Link],
+                formRoutes: Form.Router.Routes
+            ) {
                 self.root = root
                 self.breadcrumb = breadcrumb
+                self.formRoutes = formRoutes
             }
 
             var submissions: WebRoute {

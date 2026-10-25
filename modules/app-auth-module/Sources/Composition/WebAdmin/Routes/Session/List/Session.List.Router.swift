@@ -5,31 +5,39 @@ import Hummingbird
 
 extension Session.List {
     struct Router {
-        let controller: any Session.List.Controller.Interface
+        let controller: any Controller.Interface
+        let routes: Session.Router.Routes
 
         init(
             environment: AppEnvironment,
-            renderingEngine: any RenderingEngine
+            renderingEngine: any RenderingEngine,
+            routes: Session.Router.Routes
         ) {
-            controller = Session.List.Controller.Default(
+            self.routes = routes
+            controller = Controller.Default(
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Session.List.Interactor.Default(
-                            repository: Session.List.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )
                             )
                         ),
-                        presenter: Session.List.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
-                            renderingEngine: renderingEngine
+                            renderingEngine: renderingEngine,
+                            routes: routes
                         )
                     )
                 }
             )
+        }
+
+        func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+            router.get(routes.list.routerPath, use: controller.get)
         }
     }
 }

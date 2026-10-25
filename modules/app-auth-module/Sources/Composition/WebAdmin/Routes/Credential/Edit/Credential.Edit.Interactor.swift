@@ -22,8 +22,7 @@ extension Credential.Edit {
 extension Credential.Edit.Interactor {
     protocol Interface: Sendable {
         func get(id: String) async throws -> Credential.Edit.Model
-        func listEmails() async throws -> [AuthAdminAPI.Components.Schemas
-            .AuthEmailSchemasDetail]
+        func listEmails() async throws -> [Email.Option]
         func execute(id: String, payload: Credential.Form.Payload)
             async throws
     }

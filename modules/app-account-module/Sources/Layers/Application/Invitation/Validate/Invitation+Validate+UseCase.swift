@@ -18,11 +18,11 @@ extension Invitation.Validate {
             input: Input
         ) async throws -> Output {
             try await query.run { scope in
-                let invitation = try await scope.query.getBy(
+                let invitation = try await scope.query.find(
                     token: input.token
                 )
                 guard invitation.expiresAt > .init() else {
-                    throw Invitation.Validate.Error(message: "Invitation not found")
+                    throw Error(message: "Invitation not found")
                 }
                 return invitation
             }

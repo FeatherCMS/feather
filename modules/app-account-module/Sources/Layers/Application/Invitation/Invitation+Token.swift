@@ -1,5 +1,9 @@
 import AccountModule
 
+extension Invitation {
+    public enum Token {}
+}
+
 extension Invitation.Token {
     static func generate(byteCount: Int = 32) -> String {
         precondition(byteCount > 0)

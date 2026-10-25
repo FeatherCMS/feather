@@ -63,7 +63,7 @@ extension AdminAPIGateway {
         )
         let authentication = try FieldChange(
             value: body.authentication.flatMap(
-                MenuItem.Authentication.init(rawValue:)
+                MenuItem.Model.Authentication.init(rawValue:)
             ),
             shouldApply: fields.contains(.authentication),
             onMissing: { HTTPError(.badRequest) }

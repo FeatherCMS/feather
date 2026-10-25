@@ -9,13 +9,12 @@ extension AdminAPIGateway {
         _ input: Operations.UserRoleList.Input
     ) async throws -> Operations.UserRoleList.Output {
         let subject = try await CurrentSubject.require()
-        let limit = min(max(input.query.limit ?? 20, 1), 100)
         let result = try await useCases.makeListRoles()
             .execute(
                 subject: subject,
                 input: .init(
                     query: .init(
-                        page: .init(size: limit),
+                        limit: input.query.limit,
                         search: input.query.search
                     )
                 )

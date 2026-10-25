@@ -38,7 +38,8 @@ extension Email.Add.Presenter {
                 content: Email.Add.Page(
                     state: .init(
                         form: form,
-                        breadcrumb: routes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
                     )
                 )
             )

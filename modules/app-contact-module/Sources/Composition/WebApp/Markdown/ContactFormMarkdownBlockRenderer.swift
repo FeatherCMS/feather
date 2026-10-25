@@ -12,6 +12,7 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
     let name = "ContactForm"
     let usesFormSubmissionNonce = true
     let api: API.Client
+    let routes: Submission.Router.Routes
     let turnstileSiteKey: String?
 
     func render(
@@ -58,7 +59,7 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
         layoutChildren: [MarkdownBlockRendererRequest.Child]? = nil
     ) -> String {
         let fields = form.items.sorted { $0.position < $1.position }
-        let action = Submission.Router.Routes.submissionAction(for: form.key)
+        let action = routes.submissionActionPath(for: form.key)
         var children: [any Element] = []
         children.append(Input().type(.hidden).name("nonce").value(nonce))
         var customLayout: String?

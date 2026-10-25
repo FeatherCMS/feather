@@ -21,14 +21,24 @@ extension Asset.Folder.Edit.Repository {
 
         func getFolder(
             id: String
-        ) async throws -> Components.Schemas.MediaFolderDetailSchema {
+        ) async throws -> Asset.Folder.Edit.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.mediaFolderGet(
                     path: .init(mediaFolderId: id)
                 )
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json
+                    let folder = try ok.body.json
+                    return Asset.Folder.Edit.Model(
+                        id: folder.id,
+                        parentId: folder.parentId,
+                        name: folder.name,
+                        slug: folder.slug,
+                        slugPath: folder.slugPath,
+                        assetCount: folder.assetCount,
+                        totalSizeBytes: folder.totalSizeBytes,
+                        error: nil
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:
@@ -47,7 +57,7 @@ extension Asset.Folder.Edit.Repository {
         func updateFolder(
             id: String,
             name: String
-        ) async throws -> Components.Schemas.MediaFolderDetailSchema {
+        ) async throws -> Asset.Folder.Edit.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.mediaFolderPatch(
                     path: .init(mediaFolderId: id),
@@ -56,7 +66,17 @@ extension Asset.Folder.Edit.Repository {
                 )
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json
+                    let folder = try ok.body.json
+                    return Asset.Folder.Edit.Model(
+                        id: folder.id,
+                        parentId: folder.parentId,
+                        name: folder.name,
+                        slug: folder.slug,
+                        slugPath: folder.slugPath,
+                        assetCount: folder.assetCount,
+                        totalSizeBytes: folder.totalSizeBytes,
+                        error: nil
+                    )
                 case .badRequest(let response):
                     let data = try JSONEncoder().encode(try response.body.json)
                     throw OpenAPIRepositoryError.parsedFailure(

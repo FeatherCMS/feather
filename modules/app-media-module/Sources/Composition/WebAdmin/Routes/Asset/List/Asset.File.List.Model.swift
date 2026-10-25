@@ -59,8 +59,8 @@ extension Asset.File.List {
         let entries: [EntryItem]
         let pageState: AdminListPageState
         let parentId: String?
-        let currentFolder: Components.Schemas.MediaFolderDetailSchema?
-        let ancestors: [Components.Schemas.MediaFolderDetailSchema]
+        let currentFolder: Asset.Folder.Detail.Model?
+        let ancestors: [Asset.Folder.Detail.Model]
         let view: ViewMode
         let picker: PickerState
     }

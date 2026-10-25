@@ -5,9 +5,7 @@ import Hummingbird
 
 extension Invitation.Remove.Controller {
 
-    struct Default:
-        Invitation.Remove.Controller.Interface
-    {
+    struct Default: Interface {
         let routes: Invitation.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
@@ -15,7 +13,7 @@ extension Invitation.Remove.Controller {
                 any Invitation.Remove.Presenter.Interface
             >
 
-        func postRemove(
+        func postRemovePath(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

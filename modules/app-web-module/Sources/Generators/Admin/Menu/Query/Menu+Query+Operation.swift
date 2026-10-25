@@ -6,7 +6,7 @@ extension Menu.Query {
         var operationId: String? { "menuQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: MenuQueryItemSchema(),
+                items: Schemas.Item(),
                 sortFieldKeys: ["id", "key", "name", "createdAt", "updatedAt"],
                 filters: SearchFilterSchema()
             )

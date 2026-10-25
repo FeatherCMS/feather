@@ -350,7 +350,7 @@ components:
           examples:
           - example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/ArticleSchemasStringField'
         createdAt:
           type: number
           format: double
@@ -368,7 +368,7 @@ components:
       - createdAt
       - updatedAt
       minProperties: 5
-    NewsAdminOpenAPIComponentsStringField:
+    ArticleSchemasStringField:
       type: string
       examples:
       - example
@@ -439,9 +439,9 @@ components:
           examples:
           - example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/ArticleSchemasStringField'
         categoryIds:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsCategoryIDsField'
+          $ref: '#/components/schemas/ArticleSchemasCategoryIDsField'
         metadata:
           $ref: '#/components/schemas/NewsMetadataInputSchema'
       required:
@@ -450,10 +450,10 @@ components:
       - content
       - metadata
       minProperties: 4
-    NewsAdminOpenAPIComponentsCategoryIDsField:
+    ArticleSchemasCategoryIDsField:
       type: array
       items:
-        $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+        $ref: '#/components/schemas/ArticleSchemasStringField'
       minItems: 0
       uniqueItems: false
     NewsMetadataInputSchema:
@@ -468,37 +468,41 @@ components:
           examples:
           - draft
         publicationDate:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsTimestampField'
+          $ref: '#/components/schemas/MetadataSchemasTimestampField'
         expirationDate:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsTimestampField'
+          $ref: '#/components/schemas/MetadataSchemasTimestampField'
         title:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         excerpt:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         imageURL:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         canonicalURL:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         noIndex:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsBooleanField'
+          $ref: '#/components/schemas/MetadataSchemasBooleanField'
         primaryKeyword:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         cssCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         javascriptCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         structuredDataCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
       required:
       - slug
       - status
       minProperties: 2
-    NewsAdminOpenAPIComponentsTimestampField:
+    MetadataSchemasTimestampField:
       type: number
       format: double
       examples:
       - 1.76e+9
-    NewsAdminOpenAPIComponentsBooleanField:
+    MetadataSchemasStringField:
+      type: string
+      examples:
+      - example
+    MetadataSchemasBooleanField:
       type: boolean
       examples:
       - false
@@ -522,11 +526,11 @@ components:
           examples:
           - example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/ArticleSchemasStringField'
         categoryIds:
           type: array
           items:
-            $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+            $ref: '#/components/schemas/ArticleSchemasStringField'
           minItems: 0
           uniqueItems: false
         metadata:
@@ -580,31 +584,31 @@ components:
           examples:
           - 1.76e+9
         expirationDate:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsTimestampField'
+          $ref: '#/components/schemas/MetadataSchemasTimestampField'
         status:
           type: string
           examples:
           - draft
         title:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         excerpt:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         imageURL:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         canonicalURL:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         noIndex:
           type: boolean
           examples:
           - false
         primaryKeyword:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         cssCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         javascriptCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         structuredDataCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         createdAt:
           type: number
           format: double
@@ -804,7 +808,7 @@ components:
           examples:
           - example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/ArticleSchemasStringField'
         createdAt:
           type: number
           format: double
@@ -844,7 +848,7 @@ components:
           examples:
           - example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/CategorySchemasStringField'
         createdAt:
           type: number
           format: double
@@ -862,6 +866,10 @@ components:
       - createdAt
       - updatedAt
       minProperties: 5
+    CategorySchemasStringField:
+      type: string
+      examples:
+      - example
     NewsCategoryCreateSchema:
       type: object
       properties:
@@ -878,7 +886,7 @@ components:
           examples:
           - example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/CategorySchemasStringField'
         metadata:
           $ref: '#/components/schemas/NewsMetadataInputSchema'
       required:
@@ -907,7 +915,7 @@ components:
           examples:
           - example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/CategorySchemasStringField'
         metadata:
           $ref: '#/components/schemas/NewsMetadataDetailSchema'
         createdAt:
@@ -1048,7 +1056,7 @@ components:
           examples:
           - example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/CategorySchemasStringField'
         createdAt:
           type: number
           format: double
@@ -1111,14 +1119,14 @@ components:
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+        $ref: '#/components/schemas/ArticleSchemasStringField'
       description: News article identifier
     NewsCategoryIDParameter:
       name: newsCategoryId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+        $ref: '#/components/schemas/CategorySchemasStringField'
       description: News category identifier
   requestBodies:
     NewsArticleRequestBody:

@@ -6,9 +6,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Variable.List.Controller {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Variable.List.Interactor.Interface,

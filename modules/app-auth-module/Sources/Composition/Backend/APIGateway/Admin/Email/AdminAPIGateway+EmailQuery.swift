@@ -15,7 +15,7 @@ extension AdminAPIGateway {
         case .json(let value): query = value
         }
 
-        let result = try await useCases.makeSearchAuthEmails()
+        let result = try await useCases.makeSearchEmails()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input: .init(query: mapEmailSearchQuery(query))

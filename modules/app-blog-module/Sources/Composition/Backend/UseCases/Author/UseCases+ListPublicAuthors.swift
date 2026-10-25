@@ -15,12 +15,6 @@ extension UseCases {
                     authorList: Public.Author.List.Query.Database(
                         context: context
                     ),
-                    authorDetail: Public.Author.Detail.Query.Database(
-                        context: context,
-                        metadata: WebModule.Metadata.Reference.Query.Database(
-                            context: context
-                        )
-                    ),
                     metadata: WebModule.Metadata.Reference.Query.Database(
                         context: context
                     )

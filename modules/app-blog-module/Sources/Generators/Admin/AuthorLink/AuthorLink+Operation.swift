@@ -6,7 +6,7 @@ extension AuthorLink {
 }
 
 extension AuthorLink.Operation {
-    var tags: [any TagRepresentable] { [BlogAuthorLinkTag()] }
+    var tags: [any TagRepresentable] { [AuthorLink.Tag()] }
 }
 
 extension AuthorLink.Operation {

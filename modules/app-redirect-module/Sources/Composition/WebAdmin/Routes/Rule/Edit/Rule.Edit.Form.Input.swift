@@ -1,6 +1,7 @@
 import FeatherModuleKit
 import RedirectApplication
 import RedirectModule
+import RedirectDomain
 
 extension RedirectModule.Rule.Edit.Form {
     public struct Input: Decodable, Sendable, Equatable, Hashable {
@@ -26,9 +27,9 @@ extension RedirectModule.Rule.Edit.Form {
             notes.whitespaceTrimmed
         }
 
-        var parsedStatusCode: Rule.StatusCode? {
+        var parsedStatusCode: Rule.Model.StatusCode? {
             guard let value = Int(normalizedStatusCode) else { return nil }
-            return Rule.StatusCode(rawValue: value)
+            return Rule.Model.StatusCode(rawValue: value)
         }
     }
 }

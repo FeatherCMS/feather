@@ -6,16 +6,16 @@ extension Variant.Patch {
         var operationId: String? { "mediaVariantPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                MediaVariantIdParameter().reference(),
-                MediaVariantUpdateMaskParameter().reference(),
+                Variant.Parameters.ID().reference(),
+                Variant.Parameters.UpdateMask().reference(),
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            MediaVariantPatchRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: MediaVariantDetailResponse().reference(),
+                200: Variant.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Invalid update mask"
                 ),

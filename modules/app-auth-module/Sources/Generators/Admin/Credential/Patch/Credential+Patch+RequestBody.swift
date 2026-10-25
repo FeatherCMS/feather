@@ -7,7 +7,7 @@ extension Credential.Patch {
         var contentMap: ContentMap {
             [
                 .json: Content(
-                    Credential.Patch.Schema().reference()
+                    Schema().reference()
                 )
             ]
         }

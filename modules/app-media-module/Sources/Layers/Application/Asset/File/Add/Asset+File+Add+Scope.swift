@@ -7,15 +7,18 @@ extension Asset.File.Add {
         public let folders: any Asset.Folder.Repository.Interface
         public let assets: any Asset.File.Repository.Interface
         public let storageObjects: any StorageObject.Repository.Interface
+        public let variantProcessors: any Variant.Processor.Repository.Interface
 
         public init(
             folders: any Asset.Folder.Repository.Interface,
             assets: any Asset.File.Repository.Interface,
-            storageObjects: any StorageObject.Repository.Interface
+            storageObjects: any StorageObject.Repository.Interface,
+            variantProcessors: any Variant.Processor.Repository.Interface
         ) {
             self.folders = folders
             self.assets = assets
             self.storageObjects = storageObjects
+            self.variantProcessors = variantProcessors
         }
     }
 }

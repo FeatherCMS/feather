@@ -1,4 +1,3 @@
-import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import UserApplication
@@ -17,11 +16,9 @@ extension Role.List.Query {
         {
             let items =
                 try await accessLayer.select { initial in
-                    paginatedQuery(
-                        applySearch(query.search, to: initial)
-                            .order(by: [.init(by: \.key, .ascending)]),
-                        page: query.page
-                    )
+                    applySearch(query.search, to: initial)
+                        .order(by: [.init(by: \.key, .ascending)])
+                        .limit(min(max(query.limit ?? 20, 1), 100))
                 }
                 .map {
                     Role.List.Output.Item(
@@ -31,12 +28,6 @@ extension Role.List.Query {
                     )
                 }
             return .init(items: items)
-        }
-
-        public func count(query: Role.List.Input.Query) async throws -> Int {
-            try await accessLayer.selectCount { initial in
-                applySearch(query.search, to: initial)
-            }
         }
 
         private func applySearch(
@@ -53,18 +44,6 @@ extension Role.List.Query {
                     DatabaseQueryTextColumn<Role.Table>(\.notes),
                 ]
             )
-        }
-
-        private func paginatedQuery(
-            _ query: DatabaseQuerySelect<Role.Table>,
-            page: Search.Page
-        ) -> DatabaseQuerySelect<Role.Table> {
-            let page = page.normalized()
-            let pageIndex = page.number - 1
-            let offset =
-                pageIndex > Int.max / page.size
-                ? Int.max : pageIndex * page.size
-            return query.limit(page.size).offset(offset)
         }
     }
 }

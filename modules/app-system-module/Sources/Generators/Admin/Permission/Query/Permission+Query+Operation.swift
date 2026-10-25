@@ -7,11 +7,11 @@ extension Permission.Query {
         var operationId: String? { "systemPermissionQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: Permission.Query.Schemas.Item(),
+                items: Schemas.Item(),
                 sortFieldKeys: ["key", "name", "notes"],
                 filters: SearchFilterSchema(
                     additionalProperties: [
-                        "ids": Permission.Query.Schemas.Filter()
+                        "ids": Schemas.Filter()
                     ]
                 )
             )

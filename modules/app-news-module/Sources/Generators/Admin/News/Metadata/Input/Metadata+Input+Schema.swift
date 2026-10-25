@@ -5,29 +5,29 @@ extension Metadata.Input {
         var openAPIIdentifier: String { "NewsMetadataInputSchema" }
         var propertyMap: SchemaMap {
             [
-                "slug": NewsAdminOpenAPIComponents.StringField(),
-                "status": NewsAdminOpenAPIComponents.StatusField(),
-                "publicationDate": NewsAdminOpenAPIComponents.TimestampField()
+                "slug": Metadata.Schemas.StringField(),
+                "status": Metadata.Schemas.StatusField(),
+                "publicationDate": Metadata.Schemas.TimestampField()
                     .reference(required: false),
-                "expirationDate": NewsAdminOpenAPIComponents.TimestampField()
+                "expirationDate": Metadata.Schemas.TimestampField()
                     .reference(required: false),
-                "title": NewsAdminOpenAPIComponents.StringField()
+                "title": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "excerpt": NewsAdminOpenAPIComponents.StringField()
+                "excerpt": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "imageURL": NewsAdminOpenAPIComponents.StringField()
+                "imageURL": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "canonicalURL": NewsAdminOpenAPIComponents.StringField()
+                "canonicalURL": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "noIndex": NewsAdminOpenAPIComponents.BooleanField()
+                "noIndex": Metadata.Schemas.BooleanField()
                     .reference(required: false),
-                "primaryKeyword": NewsAdminOpenAPIComponents.StringField()
+                "primaryKeyword": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "cssCodeInjection": NewsAdminOpenAPIComponents.StringField()
+                "cssCodeInjection": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "javascriptCodeInjection": NewsAdminOpenAPIComponents.StringField()
+                "javascriptCodeInjection": Metadata.Schemas.StringField()
                     .reference(required: false),
-                "structuredDataCodeInjection": NewsAdminOpenAPIComponents.StringField()
+                "structuredDataCodeInjection": Metadata.Schemas.StringField()
                     .reference(required: false),
             ]
         }

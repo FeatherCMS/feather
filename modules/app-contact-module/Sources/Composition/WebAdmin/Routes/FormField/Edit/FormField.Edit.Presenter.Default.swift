@@ -40,7 +40,7 @@ extension FormField.Edit.Presenter {
 
         func renderEditError(
             field: FormField.Model,
-            error: FormField.Edit.Error,
+            error: FormField.Edit.Interactor.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse {
             switch error {
@@ -66,7 +66,7 @@ extension FormField.Edit.Presenter {
         }
 
         func renderErrorPage(
-            error: FormField.Edit.Error
+            error: FormField.Edit.Interactor.Error
         ) async throws -> HTMLResponse {
             let state: AdminStatusView.State
             let status: HTTPResponse.Status

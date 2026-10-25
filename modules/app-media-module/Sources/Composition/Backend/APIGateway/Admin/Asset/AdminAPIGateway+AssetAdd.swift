@@ -49,7 +49,7 @@ extension AdminAPIGateway {
         )
         let subject = try await CurrentSubject.require()
         do {
-            let result = try await useCases.addAssetAndEnqueue(
+            let result = try await useCases.makeAddAsset().execute(
                 subject: subject,
                 input: .init(
                     folderId: input.headers.xMediaAssetParentID?.emptyToNil,

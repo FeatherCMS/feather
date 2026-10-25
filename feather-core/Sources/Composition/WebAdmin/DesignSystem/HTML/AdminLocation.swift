@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 public struct AdminLocation: Sendable {
 
@@ -12,7 +12,7 @@ public struct AdminLocation: Sendable {
             queryItems.append(.init(name: "ids", value: id))
         }
         queryItems.append(.init(name: "returnTo", value: returnTo))
-        url(
+        return url(
             path: path,
             queryItems: queryItems
         )

@@ -70,17 +70,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactSubmissionQuery(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/submission/query")
-        )
-        try transport.register(
-            {
                 try await server.contactFormGet(
                     request: $0,
                     body: $1,
@@ -158,14 +147,25 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactFieldUpdate(
+                try await server.contactFieldPatch(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
-            method: .put,
+            method: .patch,
             path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/field/{formFieldId}")
+        )
+        try transport.register(
+            {
+                try await server.contactSubmissionQuery(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/admin/contact/submission/query")
         )
         try transport.register(
             {
@@ -529,110 +529,6 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
                 return Operations.ContactFormQuery.Input(
-                    headers: headers,
-                    body: body
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case let .ok(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .unauthorized(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .forbidden(value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case let .json(value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case let .undocumented(statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
-    func contactSubmissionQuery(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.ContactSubmissionQuery.id,
-            using: {
-                APIHandler.contactSubmissionQuery($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.ContactSubmissionQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
-                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Operations.ContactSubmissionQuery.Input.Body
-                let chosenContentType = try converter.bestContentType(
-                    received: contentType,
-                    options: [
-                        "application/json"
-                    ]
-                )
-                switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.ContactSubmissionQueryItemSearchRequestQuerySchema.self,
-                        from: requestBody,
-                        transforming: { value in
-                            .json(value)
-                        }
-                    )
-                default:
-                    preconditionFailure("bestContentType chose an invalid content type.")
-                }
-                return Operations.ContactSubmissionQuery.Input(
                     headers: headers,
                     body: body
                 )
@@ -1431,9 +1327,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)`.
-    func contactFieldUpdate(
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/field/{formFieldId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)`.
+    func contactFieldPatch(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1442,17 +1338,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.ContactFieldUpdate.id,
+            forOperation: Operations.ContactFieldPatch.id,
             using: {
-                APIHandler.contactFieldUpdate($0)
+                APIHandler.contactFieldPatch($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.ContactFieldUpdate.Input.Path = .init(formFieldId: try converter.getPathParameterAsURI(
+                let path: Operations.ContactFieldPatch.Input.Path = .init(formFieldId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "formFieldId",
                     as: Components.Parameters.FormFieldIdParameter.self
                 ))
-                let headers: Operations.ContactFieldUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let query: Operations.ContactFieldPatch.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.ContactFieldParametersUpdateMask.self
+                ))
+                let headers: Operations.ContactFieldPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.FormFieldPatchRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -1473,8 +1376,9 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.ContactFieldUpdate.Input(
+                return Operations.ContactFieldPatch.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -1499,9 +1403,131 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .notFound(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .unauthorized(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .forbidden(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
+    func contactSubmissionQuery(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.ContactSubmissionQuery.id,
+            using: {
+                APIHandler.contactSubmissionQuery($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.ContactSubmissionQuery.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
+                let body: Operations.ContactSubmissionQuery.Input.Body
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.ContactSubmissionQueryItemSearchRequestQuerySchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure("bestContentType chose an invalid content type.")
+                }
+                return Operations.ContactSubmissionQuery.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {

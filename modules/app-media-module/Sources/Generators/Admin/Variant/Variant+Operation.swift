@@ -7,11 +7,11 @@ extension Variant {
 }
 
 extension Variant.Operation {
-    var tags: [any TagRepresentable] { [MediaVariantTag()] }
+    var tags: [any TagRepresentable] { [Variant.Tag()] }
 }
 
 extension Variant.IDOperation {
     var parameters: [any ParameterRepresentable] {
-        [MediaVariantIdParameter().reference()]
+        [Variant.Parameters.ID().reference()]
     }
 }

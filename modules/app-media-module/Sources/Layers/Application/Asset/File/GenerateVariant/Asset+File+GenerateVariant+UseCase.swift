@@ -217,11 +217,11 @@ extension Asset.File.GenerateVariant {
     }
 }
 
-extension UseCase {
+extension Asset.File.GenerateVariant.UseCase {
     private func prepare(assetID: String) async throws -> Prepared {
         try await transaction.run { scope in
             guard let asset = try await scope.assets.find(id: assetID) else {
-                throw Error.assetNotFound
+                throw Asset.File.GenerateVariant.Error.assetNotFound
             }
             let variants = try await scope.variantDefinitions.listActive()
             var variantsByID: [String: Variant.Model] = [:]
@@ -291,7 +291,7 @@ extension UseCase {
         )
         let result = try await commandRunner.run(command: command)
         guard result.exitCode == 0 else {
-            throw Error.commandFailed(
+            throw Asset.File.GenerateVariant.Error.commandFailed(
                 processorName: processor.name,
                 command: command,
                 status: result.exitCode,
@@ -301,7 +301,7 @@ extension UseCase {
         let resolvedURL = try resolveOutputURL(preferredURL: outputURL)
         defer { try? FileManager.default.removeItem(at: resolvedURL) }
         guard FileManager.default.fileExists(atPath: resolvedURL.path) else {
-            throw Error.outputMissing(
+            throw Asset.File.GenerateVariant.Error.outputMissing(
                 processorName: processor.name
             )
         }

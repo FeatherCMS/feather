@@ -5,15 +5,15 @@ extension Category.Get {
         var openAPIIdentifier: String { "NewsCategoryDetailSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": NewsAdminOpenAPIComponents.StringField(),
-                "title": NewsAdminOpenAPIComponents.StringField(),
-                "excerpt": NewsAdminOpenAPIComponents.StringField(),
-                "content": NewsAdminOpenAPIComponents.StringField(),
-                "imageAssetId": NewsAdminOpenAPIComponents.StringField()
+                "id": Category.Schemas.StringField(),
+                "title": Category.Schemas.StringField(),
+                "excerpt": Category.Schemas.StringField(),
+                "content": Category.Schemas.StringField(),
+                "imageAssetId": Category.Schemas.StringField()
                     .reference(required: false),
                 "metadata": Metadata.Detail.Schema().reference(),
-                "createdAt": NewsAdminOpenAPIComponents.TimestampField(),
-                "updatedAt": NewsAdminOpenAPIComponents.TimestampField(),
+                "createdAt": Category.Schemas.TimestampField(),
+                "updatedAt": Category.Schemas.TimestampField(),
             ]
         }
     }

@@ -1,4 +1,3 @@
-import NewsAdminAPI
 import NewsApplication
 import NewsModule
 
@@ -8,7 +7,6 @@ extension Category.Add {
 
 extension Category.Add.Repository {
     protocol Interface: Sendable {
-        func create(input: Components.Schemas.NewsCategoryCreateSchema)
-            async throws
+        func create(input: Category.Form.Input) async throws
     }
 }

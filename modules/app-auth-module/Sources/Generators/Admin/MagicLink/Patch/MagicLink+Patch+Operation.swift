@@ -16,7 +16,7 @@ extension MagicLink.Patch {
         }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            MagicLink.Patch.RequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {

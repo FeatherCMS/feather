@@ -1,5 +1,4 @@
 import NewsApplication
-import NewsAdminAPI
 import NewsModule
 
 extension Article.Detail.Interactor {
@@ -8,7 +7,7 @@ extension Article.Detail.Interactor {
 
         func get(
             id: String
-        ) async throws -> Components.Schemas.NewsArticleDetailSchema {
+        ) async throws -> Article.Detail.Model {
             try await repository.get(id: id)
         }
     }

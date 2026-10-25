@@ -15,8 +15,16 @@ extension Public.Page.Detail {
             let now = Date()
             return try await query.run { scope in
                 let page = try await scope.page.find(id: input.id)
-                guard page.metadata.isDirectlyAccessible(at: now) else {
-                    throw Public.Page.Detail.Error(message: "Page not found")
+                guard
+                    page.metadata.status == .draft
+                        || Metadata.Model.Availability(
+                            status: page.metadata.status,
+                            publicationDate: page.metadata.publicationDate,
+                            expirationDate: page.metadata.expirationDate,
+                            at: now
+                        ) == .live
+                else {
+                    throw Error(message: "Page not found")
                 }
                 return .init(
                     id: page.id,
@@ -26,7 +34,7 @@ extension Public.Page.Detail {
                     imageAssetId: page.imageAssetId,
                     imageURL: "",
                     media: nil,
-                    metadata: page.metadata
+                    metadata: page.metadata.asSnapshot
                 )
             }
         }

@@ -1,13 +1,5 @@
-import FeatherApplication
-import FeatherDatabase
-import FeatherDomain
 public import FeatherInfrastructure
 public import FeatherModuleKit
-import SystemInfrastructure
-import WebAdminAPI
-import WebAppAPI
-import WebApplication
-import WebInfrastructure
 
 public struct UseCases: Sendable {
 
@@ -21,9 +13,4 @@ public struct UseCases: Sendable {
         self.databaseContext = databaseContext
         self.authorizer = authorizer
     }
-
-}
-
-extension UseCases {
-
 }

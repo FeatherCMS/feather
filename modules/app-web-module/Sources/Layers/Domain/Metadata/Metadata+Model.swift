@@ -64,7 +64,7 @@ extension Metadata {
             case archived
 
             public init(
-                status: Metadata.Model.Status,
+                status: Model.Status,
                 publicationDate: Date,
                 expirationDate: Date?,
                 at date: Date
@@ -173,7 +173,7 @@ extension Metadata {
 
             public mutating func set(
                 referenceID id: String
-            ) throws(Metadata.Model.Error) {
+            ) throws(Model.Error) {
                 guard case .type(let type) = reference else {
                     throw .referenceIsNotType
                 }

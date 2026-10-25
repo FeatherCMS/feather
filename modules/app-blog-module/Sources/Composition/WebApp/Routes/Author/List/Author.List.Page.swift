@@ -10,7 +10,7 @@ import WebModuleWebApp
 
 extension Author.List {
     struct Page: Component {
-        let state: Author.List.Model
+        let state: Model
 
         func html(context: inout BuilderContext) -> some BasicTag {
             Main {

@@ -446,117 +446,6 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
-    public func contactSubmissionQuery(_ input: Operations.ContactSubmissionQuery.Input) async throws -> Operations.ContactSubmissionQuery.Output {
-        try await client.send(
-            input: input,
-            forOperation: Operations.ContactSubmissionQuery.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/contact/submission/query",
-                    parameters: []
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .post
-                )
-                suppressMutabilityWarning(&request)
-                converter.setAcceptHeader(
-                    in: &request.headerFields,
-                    contentTypes: input.headers.accept
-                )
-                let body: OpenAPIRuntime.HTTPBody?
-                switch input.body {
-                case let .json(value):
-                    body = try converter.setRequiredRequestBodyAsJSON(
-                        value,
-                        headerFields: &request.headerFields,
-                        contentType: "application/json; charset=utf-8"
-                    )
-                }
-                return (request, body)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 200:
-                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Components.Responses.ContactSubmissionQueryItemSearchSchemaSearchResponse.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.ContactSubmissionQueryItemSearchSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure("bestContentType chose an invalid content type.")
-                    }
-                    return .ok(.init(body: body))
-                case 401:
-                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.ContactSubmissionQuery.Output.Unauthorized.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure("bestContentType chose an invalid content type.")
-                    }
-                    return .unauthorized(.init(body: body))
-                case 403:
-                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.ContactSubmissionQuery.Output.Forbidden.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure("bestContentType chose an invalid content type.")
-                    }
-                    return .forbidden(.init(body: body))
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     public func contactFormGet(_ input: Operations.ContactFormGet.Input) async throws -> Operations.ContactFormGet.Output {
@@ -1366,12 +1255,12 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)`.
-    public func contactFieldUpdate(_ input: Operations.ContactFieldUpdate.Input) async throws -> Operations.ContactFieldUpdate.Output {
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/field/{formFieldId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)`.
+    public func contactFieldPatch(_ input: Operations.ContactFieldPatch.Input) async throws -> Operations.ContactFieldPatch.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.ContactFieldUpdate.id,
+            forOperation: Operations.ContactFieldPatch.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/field/{}",
@@ -1381,9 +1270,16 @@ public struct Client: APIProtocol {
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
                     soar_path: path,
-                    method: .put
+                    method: .patch
                 )
                 suppressMutabilityWarning(&request)
+                try converter.setQueryItemAsURI(
+                    in: &request,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    value: input.query.updateMask
+                )
                 converter.setAcceptHeader(
                     in: &request.headerFields,
                     contentTypes: input.headers.accept
@@ -1423,9 +1319,31 @@ public struct Client: APIProtocol {
                         preconditionFailure("bestContentType chose an invalid content type.")
                     }
                     return .ok(.init(body: body))
+                case 400:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.ContactFieldPatch.Output.BadRequest.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure("bestContentType chose an invalid content type.")
+                    }
+                    return .badRequest(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.ContactFieldUpdate.Output.NotFound.Body
+                    let body: Operations.ContactFieldPatch.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1447,7 +1365,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.ContactFieldUpdate.Output.Unauthorized.Body
+                    let body: Operations.ContactFieldPatch.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1469,7 +1387,118 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.ContactFieldUpdate.Output.Forbidden.Body
+                    let body: Operations.ContactFieldPatch.Output.Forbidden.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure("bestContentType chose an invalid content type.")
+                    }
+                    return .forbidden(.init(body: body))
+                default:
+                    return .undocumented(
+                        statusCode: response.status.code,
+                        .init(
+                            headerFields: response.headerFields,
+                            body: responseBody
+                        )
+                    )
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
+    public func contactSubmissionQuery(_ input: Operations.ContactSubmissionQuery.Input) async throws -> Operations.ContactSubmissionQuery.Output {
+        try await client.send(
+            input: input,
+            forOperation: Operations.ContactSubmissionQuery.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/api/v1/admin/contact/submission/query",
+                    parameters: []
+                )
+                var request: HTTPTypes.HTTPRequest = .init(
+                    soar_path: path,
+                    method: .post
+                )
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(
+                    in: &request.headerFields,
+                    contentTypes: input.headers.accept
+                )
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case let .json(value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Components.Responses.ContactSubmissionQueryItemSearchSchemaSearchResponse.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.ContactSubmissionQueryItemSearchSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure("bestContentType chose an invalid content type.")
+                    }
+                    return .ok(.init(body: body))
+                case 401:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.ContactSubmissionQuery.Output.Unauthorized.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure("bestContentType chose an invalid content type.")
+                    }
+                    return .unauthorized(.init(body: body))
+                case 403:
+                    let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
+                    let body: Operations.ContactSubmissionQuery.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [

@@ -62,7 +62,7 @@ extension StorageObject.Repository {
         }
 
         public func list(assetNodeFileIds: [String]) async throws -> [StorageObject.Model] {
-            try await StorageObjectAssociatedQuery(connection: context.connection)
+            try await StorageObject.AssociatedQuery(connection: context.connection)
                 .list(assetNodeFileIds: assetNodeFileIds)
                 .map(\.asDomain)
         }

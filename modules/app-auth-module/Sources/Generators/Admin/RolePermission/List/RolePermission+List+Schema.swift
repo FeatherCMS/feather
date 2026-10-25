@@ -15,7 +15,7 @@ extension RolePermission.List {
     struct Schema: ArraySchemaRepresentable {
         var openAPIIdentifier: String { "AuthRolePermissionListSchema" }
         var items: (any SchemaRepresentable)? {
-            RolePermission.List.Item()
+            Item()
                 .reference()
         }
     }

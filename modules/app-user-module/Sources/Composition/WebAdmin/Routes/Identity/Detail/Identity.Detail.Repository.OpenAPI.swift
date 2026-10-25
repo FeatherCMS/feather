@@ -11,7 +11,7 @@ extension Identity.Detail.Repository {
         let api: API.Client
         func load(
             id: String
-        ) async throws -> Identity.Detail.Repository.Model {
+        ) async throws -> Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.userIdentityGet(
                     path: .init(userIdentityId: id),

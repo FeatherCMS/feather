@@ -1,3 +1,3 @@
 enum Menu {
-
+    enum Parameters {}
 }

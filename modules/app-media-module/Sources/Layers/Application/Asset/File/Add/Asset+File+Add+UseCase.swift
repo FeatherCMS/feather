@@ -13,15 +13,18 @@ extension Asset.File.Add {
         let authorizer: any Authorizer
         let transaction: any TransactionExecutor<Scope>
         let storageContext: StorageClientContext
+        let jobs: any Asset.File.GenerateVariant.JobController.Interface
 
         public init(
             authorizer: any Authorizer,
             transaction: any TransactionExecutor<Scope>,
-            storageContext: StorageClientContext
+            storageContext: StorageClientContext,
+            jobs: any Asset.File.GenerateVariant.JobController.Interface
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
             self.storageContext = storageContext
+            self.jobs = jobs
         }
 
         public func execute(subject: Subject, input: Input) async throws
@@ -36,6 +39,35 @@ extension Asset.File.Add {
         }
 
         public func execute(input: Input) async throws -> Output {
+            try await execute(input: input, processors: nil)
+        }
+
+        public func execute(
+            input: Input,
+            processors: [Variant.Processor.Model]
+        ) async throws -> Output {
+            try await execute(input: input, processorOverride: processors)
+        }
+
+        private func execute(
+            input: Input,
+            processorOverride: [Variant.Processor.Model]?
+        ) async throws -> Output {
+            let processors: [Variant.Processor.Model]
+            if let processorOverride {
+                processors = processorOverride
+            }
+            else {
+                processors = try await transaction.run { scope in
+                    try await scope.variantProcessors.listActive()
+                }
+            }
+            let matchingProcessors = processors.filter {
+                Asset.ExtensionMatcher.matches(
+                    extension: input.extension,
+                    processor: $0
+                )
+            }
             let storageIdentity = try await transaction.run { scope in
                 scope.assets.prepareStorageIdentity()
             }
@@ -118,7 +150,18 @@ extension Asset.File.Add {
                         sizeDelta: input.contentLength,
                         assetCountDelta: 1
                     )
+                    let status: Asset.File.Model.Status =
+                        matchingProcessors.isEmpty ? .ready : .processing
+                    try await scope.assets.updateStatus(
+                        id: asset.id,
+                        status: status
+                    )
                     return asset
+                }
+                let status: Asset.File.Model.Status =
+                    matchingProcessors.isEmpty ? .ready : .processing
+                if !matchingProcessors.isEmpty {
+                    try await jobs.enqueue(assetId: asset.id)
                 }
                 return .init(
                     id: asset.id,
@@ -136,7 +179,7 @@ extension Asset.File.Add {
                     extension: asset.extension,
                     contentType: asset.contentType,
                     sizeBytes: asset.sizeBytes,
-                    status: asset.status.rawValue,
+                    status: status.rawValue,
                     title: asset.title,
                     altText: asset.altText,
                     createdAt: asset.createdAt,
@@ -151,7 +194,7 @@ extension Asset.File.Add {
     }
 }
 
-extension UseCase {
+extension Asset.File.Add.UseCase {
     fileprivate struct NormalizedFile {
         let name: String
         let slug: String

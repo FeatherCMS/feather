@@ -1,6 +1,5 @@
-import FeatherModuleKit
 import Foundation
-import NewsAdminAPI
+import NewsApplication
 import NewsModule
 
 extension Article {
@@ -30,13 +29,13 @@ extension Article.Form {
 
         init() {}
 
-        init(item: Components.Schemas.NewsArticleDetailSchema) {
+        init(item: Article.Detail.Model) {
             title = item.title
             excerpt = item.excerpt
             content = item.content
             imageAssetId = item.imageAssetId ?? ""
-            categoryIds = item.categoryIds
-            let metadata = News.Metadata.Form.Input(metadata: item.metadata)
+            categoryIds = item.categoryIDs
+            let metadata = item.metadata
             slug = metadata.slug
             status = metadata.status
             publicationDate = metadata.publicationDate
@@ -84,19 +83,6 @@ extension Article.Form {
                 return "Slug is required."
             }
             return nil
-        }
-
-        var schema: Components.Schemas.NewsArticleCreateSchema {
-            .init(
-                title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-                excerpt: excerpt.trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                ),
-                content: content,
-                imageAssetId: imageAssetId.emptyToNil,
-                categoryIds: categoryIds ?? [],
-                metadata: metadata.schema
-            )
         }
     }
 }

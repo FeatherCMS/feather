@@ -1,4 +1,3 @@
-public import BlogAppAPI
 public import BlogModule
 
 extension Settings {
@@ -11,14 +10,19 @@ extension Settings {
         public let tagPathPrefix: String
 
         public init(
-            schema: BlogAppAPI.Components.Schemas.BlogRouteSettingsSchema
+            postListPath: String,
+            authorListPath: String,
+            tagListPath: String,
+            postPathPrefix: String,
+            authorPathPrefix: String,
+            tagPathPrefix: String
         ) {
-            postListPath = schema.postListPath
-            authorListPath = schema.authorListPath
-            tagListPath = schema.tagListPath
-            postPathPrefix = schema.postPathPrefix
-            authorPathPrefix = schema.authorPathPrefix
-            tagPathPrefix = schema.tagPathPrefix
+            self.postListPath = postListPath
+            self.authorListPath = authorListPath
+            self.tagListPath = tagListPath
+            self.postPathPrefix = postPathPrefix
+            self.authorPathPrefix = authorPathPrefix
+            self.tagPathPrefix = tagPathPrefix
         }
     }
 }

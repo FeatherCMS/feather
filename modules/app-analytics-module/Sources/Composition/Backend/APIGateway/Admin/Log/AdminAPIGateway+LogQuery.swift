@@ -16,7 +16,7 @@ extension AdminAPIGateway {
             query = value
         }
 
-        let useCase = useCases.makeLogSearch()
+        let useCase = useCases.makeSearchLogs()
         let objectQuery = map(query)
         let subject = try await CurrentSubject.require()
 

@@ -48,7 +48,7 @@ extension MenuItem.List {
                         )
                     ) {
                         context.build(
-                            MenuItem.List.Page.Content(
+                            Page.Content(
                                 state: .init(
                                     menuId: state.menuId,
                                     permissions: state.permissions,

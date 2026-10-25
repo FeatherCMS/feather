@@ -17,7 +17,7 @@ extension AdminAPIGateway {
         guard let type = FormField.Model.ItemType(rawValue: body._type) else {
             throw FormField.Model.Error.optionsNotAllowed
         }
-        let result = try await self.useCases.makeCreateFormField()
+        let result = try await self.useCases.makeAddFormField()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input:

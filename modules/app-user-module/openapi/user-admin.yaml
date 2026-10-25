@@ -150,37 +150,6 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-    put:
-      tags:
-      - UserIdentities
-      operationId: userIdentityPut
-      parameters:
-      - $ref: '#/components/parameters/UserIdentityIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/UserIdentityUpdateRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/UserIdentityDetailResponse'
-        404:
-          description: UserIdentity not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
     patch:
       tags:
       - UserIdentities
@@ -340,43 +309,6 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/UserRoleDetailResponse'
-        404:
-          description: UserRole not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        401:
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
-      security:
-      - bearerAuth: []
-    put:
-      tags:
-      - UserRoles
-      operationId: userRolePut
-      parameters:
-      - $ref: '#/components/parameters/RoleParametersID'
-      requestBody:
-        $ref: '#/components/requestBodies/UserRoleUpdateRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/UserRoleDetailResponse'
-        400:
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: UserRole not found
           content:
@@ -718,15 +650,6 @@ components:
       - name
       - status
       - roles
-    UserIdentityUpdateSchema:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/UserIdentityNameField'
-        status:
-          $ref: '#/components/schemas/UserIdentityStatusField'
-        roleIds:
-          $ref: '#/components/schemas/UserIdentityRoleIdsField'
     UserIdentityUpdateMask:
       type: string
       example: name,status,roleIds
@@ -895,13 +818,6 @@ components:
       required:
       - id
       - key
-    UserRoleUpdateSchema:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/UserRoleNameField'
-        notes:
-          $ref: '#/components/schemas/UserRoleNotesField'
     UserRoleUpdateMask:
       type: string
       example: name,notes
@@ -1040,12 +956,6 @@ components:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
-    UserIdentityUpdateRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserIdentityUpdateSchema'
-      required: true
     UserIdentityPatchRequestBody:
       content:
         application/json:
@@ -1057,12 +967,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserRoleCreateSchema'
-      required: true
-    UserRoleUpdateRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/UserRoleUpdateSchema'
       required: true
     UserRolePatchRequestBody:
       content:

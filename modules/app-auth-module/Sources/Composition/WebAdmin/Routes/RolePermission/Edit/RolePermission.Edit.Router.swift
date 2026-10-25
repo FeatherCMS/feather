@@ -19,18 +19,21 @@ import WebComponents
 extension RolePermission.Edit {
     struct Router {
 
-        let controller: any RolePermission.Edit.Controller.Interface
+        let controller: any Controller.Interface
+        let routes: RolePermission.Router.Routes
 
         init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             routes: RolePermission.Router.Routes
         ) {
-            self.controller = RolePermission.Edit.Controller.Default(
+            self.routes = routes
+            self.controller = Controller.Default(
+                routes: routes,
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: RolePermission.Edit.Interactor.Default(
-                            repository: RolePermission.Edit.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
@@ -45,7 +48,7 @@ extension RolePermission.Edit {
                                 )
                             )
                         ),
-                        presenter: RolePermission.Edit.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,
@@ -53,6 +56,17 @@ extension RolePermission.Edit {
                         )
                     )
                 }
+            )
+        }
+
+        func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+            router.get(
+                routes.edit.routerPath,
+                use: controller.getAuthAccessControl
+            )
+            router.post(
+                routes.edit.routerPath,
+                use: controller.postAuthAccessControl
             )
         }
     }

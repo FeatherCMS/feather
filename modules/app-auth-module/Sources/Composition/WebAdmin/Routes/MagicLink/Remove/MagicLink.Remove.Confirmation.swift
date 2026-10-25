@@ -13,6 +13,7 @@ extension MagicLink.Remove {
             let credentialId: String
             let breadcrumb: [AdminBreadcrumb.Link]
             let nonceToken: String?
+            let routes: MagicLink.Router.Routes
         }
 
         let state: State
@@ -25,7 +26,7 @@ extension MagicLink.Remove {
                         description: "This action cannot be undone."
                     ),
                     selectedItems: [state.item.label],
-                    action: "/admin/auth/magic-links/\(state.item.id)/remove/",
+                    action: state.routes.removePath(state.item.id),
                     nonceToken: state.nonceToken
                 )
             )

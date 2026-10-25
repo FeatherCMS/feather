@@ -605,15 +605,13 @@ public enum Operations {
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/web/pages/{id}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// Web metadata identifier
-                ///
                 /// - Remark: Generated from `#/paths/api/v1/web/pages/{id}/GET/path/id`.
-                public var id: Components.Parameters.MetadataIdParameter
+                public var id: Components.Parameters.PageIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - id: Web metadata identifier
-                public init(id: Components.Parameters.MetadataIdParameter) {
+                ///   - id:
+                public init(id: Components.Parameters.PageIDParameter) {
                     self.id = id
                 }
             }

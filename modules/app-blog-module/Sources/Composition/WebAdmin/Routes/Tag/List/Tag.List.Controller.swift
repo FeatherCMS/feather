@@ -10,7 +10,7 @@ extension Tag.List.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
 
-        func postStatus(
+        func postStatusPath(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response

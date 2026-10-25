@@ -44,6 +44,9 @@ struct UserInfrastructureDatabaseTests {
         let role = Role.Table.tableCreationSchema
         let identityRole = IdentityRole.Table.tableCreationSchema
 
+        #expect(identity.name == "user_identity")
+        #expect(role.name == "user_role")
+        #expect(identityRole.name == "user_identity_role")
         #expect(
             identity.columns.map(\.name) == [
                 "id", "name", "status", "is_root", "created_at", "updated_at",
@@ -72,6 +75,12 @@ struct UserInfrastructureDatabaseTests {
                     }
                 }
         )
+        #expect(identity.columns[1].constraints.contains {
+            if case .notNull = $0 { true } else { false }
+        })
+        #expect(identity.columns[2].constraints.contains {
+            if case .notNull = $0 { true } else { false }
+        })
         #expect(identity.columns[4].type == .timestamp)
         #expect(
             identity.columns[4].constraints
@@ -101,11 +110,22 @@ struct UserInfrastructureDatabaseTests {
         )
         #expect(hasCurrentTimestampDefault(identity.columns[4].constraints))
         #expect(hasCurrentTimestampDefault(identity.columns[5].constraints))
+        for column in [identity.columns[4], identity.columns[5]] {
+            #expect(column.constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            })
+        }
 
         #expect(
             role.columns.map(\.name) == [
                 "id", "key", "name", "notes", "created_at", "updated_at",
             ]
+        )
+        #expect(
+            role.columns[0].constraints
+                .contains {
+                    if case .primaryKey = $0 { true } else { false }
+                }
         )
         #expect(
             role.columns[1].constraints
@@ -155,6 +175,11 @@ struct UserInfrastructureDatabaseTests {
         )
         #expect(hasCurrentTimestampDefault(role.columns[4].constraints))
         #expect(hasCurrentTimestampDefault(role.columns[5].constraints))
+        for column in [role.columns[4], role.columns[5]] {
+            #expect(column.constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            })
+        }
 
         #expect(
             identityRole.columns.map(\.name) == [
@@ -187,6 +212,11 @@ struct UserInfrastructureDatabaseTests {
         )
         #expect(hasCurrentTimestampDefault(identityRole.columns[2].constraints))
         #expect(hasCurrentTimestampDefault(identityRole.columns[3].constraints))
+        for column in [identityRole.columns[2], identityRole.columns[3]] {
+            #expect(column.constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            })
+        }
         #expect(
             identityRole.constraints.contains {
                 guard case .primaryKey(let columns) = $0 else { return false }

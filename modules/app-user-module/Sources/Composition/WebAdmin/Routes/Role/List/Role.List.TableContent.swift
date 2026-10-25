@@ -115,7 +115,7 @@ extension Role.List {
                                                     Tbody {
                                                         for role in roles {
                                                             context.build(
-                                                                Role.List.Row(
+                                                                Row(
                                                                     routes:
                                                                         routes,
                                                                     role: role,

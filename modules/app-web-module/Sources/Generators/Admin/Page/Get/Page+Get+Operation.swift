@@ -8,7 +8,7 @@ extension Page.Get {
 
         var responseMap: ResponseMap {
             [
-                200: PageDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "Page not found"),
             ]
         }

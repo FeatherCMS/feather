@@ -131,9 +131,7 @@ extension MenuItem.List.Page {
                                             icon: FeatherIcons.inbox(),
                                             action: {
                                                 if state.permissions.allows(
-                                                    WebModule.Permissions
-                                                        .MenuItems
-                                                        .create
+                                                    MenuItem.Permissions.create
                                                 ) {
                                                     context.build(
                                                         AdminButton(

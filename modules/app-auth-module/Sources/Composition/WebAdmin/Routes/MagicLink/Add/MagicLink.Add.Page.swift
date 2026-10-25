@@ -19,8 +19,9 @@ extension MagicLink.Add {
     struct Page: Component {
 
         struct State {
-            let form: MagicLink.Add.Form.State
+            let form: Form.State
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: MagicLink.Router.Routes
         }
 
         let state: State
@@ -38,9 +39,9 @@ extension MagicLink.Add {
                     )
                 )
                 context.build(
-                    MagicLink.Add.Form(
+                    Form(
                         state: state.form,
-                        action: "/admin/auth/magic-links/add/",
+                        action: state.routes.add.path,
                         submitLabel: "Add magic link"
                     )
                 )

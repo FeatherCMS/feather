@@ -8,8 +8,8 @@ extension Asset.File.Query.Schemas {
     struct Filters: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "search": MediaAssetNullableTextField(required: false),
-                "parentId": MediaFolderNullableIdField(),
+                "search": Asset.File.Schemas.NullableText(required: false),
+                "parentId": Asset.Folder.Schemas.NullableID(),
             ]
         }
     }
@@ -18,7 +18,7 @@ extension Asset.File.Query.Schemas {
         var openAPIIdentifier: String { "MediaAssetNodeQueryItemSchema" }
         var propertyMap: SchemaMap {
             [
-                "kind": MediaAssetSearchItemKindField(),
+                "kind": ItemKind(),
                 "file": File().reference(required: false),
                 "folder": Folder().reference(required: false),
             ]
@@ -29,20 +29,20 @@ extension Asset.File.Query.Schemas {
         var openAPIIdentifier: String { "MediaAssetQueryItemFileSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": MediaAssetIdField().reference(),
-                "folderId": MediaFolderNullableIdField(),
-                "name": MediaAssetFileNameField(),
-                "slug": MediaAssetSlugField(),
-                "slugPath": MediaAssetSlugPathField(),
-                "url": MediaAssetURLField(),
-                "extension": MediaAssetTypeField(),
-                "contentType": MediaAssetContentTypeField(),
-                "sizeBytes": MediaAssetSizeBytesField(),
-                "status": MediaAssetStatusField(),
-                "title": MediaAssetNullableTextField(required: false),
-                "altText": MediaAssetNullableTextField(required: false),
-                "createdAt": MediaAssetTimestampField(),
-                "updatedAt": MediaAssetTimestampField(),
+                "id": Asset.File.Schemas.ID().reference(),
+                "folderId": Asset.Folder.Schemas.NullableID(),
+                "name": Asset.File.Schemas.FileName(),
+                "slug": Asset.File.Schemas.Slug(),
+                "slugPath": Asset.File.Schemas.SlugPath(),
+                "url": Asset.File.Schemas.URL(),
+                "extension": Asset.File.Schemas.FileExtension(),
+                "contentType": Asset.File.Schemas.ContentType(),
+                "sizeBytes": Asset.File.Schemas.SizeBytes(),
+                "status": Asset.File.Schemas.Status(),
+                "title": Asset.File.Schemas.NullableText(required: false),
+                "altText": Asset.File.Schemas.NullableText(required: false),
+                "createdAt": Asset.File.Schemas.Timestamp(),
+                "updatedAt": Asset.File.Schemas.Timestamp(),
             ]
         }
     }
@@ -51,15 +51,15 @@ extension Asset.File.Query.Schemas {
         var openAPIIdentifier: String { "MediaAssetQueryItemFolderSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": MediaFolderIdField().reference(),
-                "parentId": MediaFolderNullableIdField(),
-                "name": MediaFolderNameField(),
-                "slug": MediaFolderSlugField(),
-                "slugPath": MediaFolderSlugPathField(),
-                "assetCount": MediaFolderCountField(),
-                "totalSizeBytes": MediaFolderBytesField(),
-                "createdAt": MediaFolderTimestampField(),
-                "updatedAt": MediaFolderTimestampField(),
+                "id": Asset.Folder.Schemas.ID().reference(),
+                "parentId": Asset.Folder.Schemas.NullableID(),
+                "name": Asset.Folder.Schemas.Name(),
+                "slug": Asset.Folder.Schemas.Slug(),
+                "slugPath": Asset.Folder.Schemas.SlugPath(),
+                "assetCount": Asset.Folder.Schemas.Count(),
+                "totalSizeBytes": Asset.Folder.Schemas.Bytes(),
+                "createdAt": Asset.Folder.Schemas.Timestamp(),
+                "updatedAt": Asset.Folder.Schemas.Timestamp(),
             ]
         }
     }

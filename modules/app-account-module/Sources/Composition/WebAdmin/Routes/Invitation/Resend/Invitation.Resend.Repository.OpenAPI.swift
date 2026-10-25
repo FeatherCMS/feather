@@ -6,9 +6,7 @@ import OpenAPIRuntime
 
 extension Invitation.Resend.Repository {
 
-    struct OpenAPI:
-        Invitation.Resend.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func resend(

@@ -32,7 +32,7 @@ extension AdminAPIGateway {
                     direction: rule.direction == .asc ? .asc : .desc
                 )
             }
-        let result = try await useCases.makeSearchContactSubmissions()
+        let result = try await useCases.makeSearchSubmissions()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input: .init(

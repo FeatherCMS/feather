@@ -28,7 +28,7 @@ extension Menu.Add {
 
             let model = try await transaction.run { scope in
                 if try await scope.menu.find(key: input.key) != nil {
-                    throw Menu.Add.Error(message: "Menu key already exists")
+                    throw Error(message: "Menu key already exists")
                 }
                 return try await scope.menu.insert(
                     Menu.Model.create(

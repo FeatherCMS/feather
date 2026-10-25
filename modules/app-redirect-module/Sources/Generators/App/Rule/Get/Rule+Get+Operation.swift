@@ -6,12 +6,12 @@ extension Rule.Get {
         var operationId: String? { "redirectRuleGet" }
 
         var parameters: [any ParameterRepresentable] {
-            [RedirectSourceParameter().reference()]
+            [Rule.Parameters.Source().reference()]
         }
 
         var responseMap: ResponseMap {
             [
-                200: RedirectRuleResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "Redirect rule not found"),
             ]
         }

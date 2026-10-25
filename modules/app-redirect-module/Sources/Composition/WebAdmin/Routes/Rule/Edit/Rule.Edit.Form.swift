@@ -54,7 +54,7 @@ extension Rule.Edit {
                 return state
             }
 
-            static func from(rule: Rule.Edit.Model) -> Self {
+            static func from(rule: Model) -> Self {
                 var state = Self.empty()
                 state.source.value = rule.source
                 state.destination.value = rule.destination

@@ -18,7 +18,7 @@ extension Log.View.Presenter {
                 context: context,
                 title: "Analytics log details",
                 content: Log.View.Component(
-                    log: model.log,
+                    log: model,
                     breadcrumb: AnalyticsWebAdmin.Router.Routes.breadcrumb
                 )
             )

@@ -6,7 +6,7 @@ extension Metadata.List {
     struct Operation: Metadata.Operation {
         var operationId: String? { "metadataList" }
         var responseMap: ResponseMap {
-            [200: MetadataListResponse().reference()]
+            [200: Response().reference()]
         }
     }
 }

@@ -83,8 +83,7 @@ extension NewsModule.Article.Form {
                                     isRequired: false
                                 ),
                                 selectedAsset: selectedImageAsset,
-                                browsePath:
-                                    "/admin/media/assets/?picker=1&field=imageAssetId&extensions=\(AllowedExtensions.images.queryValue)",
+                                browsePath: routes.imagePickerPath("imageAssetId"),
                                 defaultFolderPath: "news/articles",
                                 allowedExtensions: .images,
                                 previewStyle: .wide
@@ -112,7 +111,8 @@ extension NewsModule.Article.Form {
                     context.build(
                         WebModule.Metadata.Fields(
                             state: input.metadata.fields,
-                            showTitle: true
+                            showTitle: true,
+                            mediaAssetList: routes.mediaAssetList
                         )
                     )
                     Div {

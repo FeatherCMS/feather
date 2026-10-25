@@ -1,5 +1,3 @@
-import BlogAdminAPI
-import BlogAppAPI
 import BlogModule
 import FeatherValidation
 import FeatherWebAdmin
@@ -15,8 +13,11 @@ import WebModuleWebAdmin
 
 extension Tag.List.Controller {
     struct Default: Interface {
-        let environment: AppEnvironment
         let routes: Tag.Router.Routes
+        let buildViewRepository:
+            @Sendable (AuthenticatedRequestContext) -> any Tag.View.Repository.Interface
+        let buildStatusRepository:
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata.Status.Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Tag.List.Interactor.Interface,
@@ -69,7 +70,7 @@ extension Tag.List.Controller {
             )
         }
 
-        func postStatus(
+        func postStatusPath(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
@@ -78,29 +79,18 @@ extension Tag.List.Controller {
                 as: AdminStatusActionFormInput.self,
                 context: context
             )
-            let repository = Tag.View.Repository.OpenAPI(
-                api: API.Client(
-                    environment: environment,
-                    requestContext: context
-                )
-            )
+            let repository = buildViewRepository(context)
             let details = try await repository.get(id: id)
             let targetStatus = resolvedStatus(
                 from: payload,
                 current: details.metadata
             )
-            try await WebModule.Metadata
-                .StatusUpdater(
-                    api: WebModuleWebAdmin.API.Client(
-                        environment: environment,
-                        requestContext: context
-                    )
-                )
-                .update(
-                    referenceType: "blog.tag",
-                    referenceID: id,
-                    status: targetStatus
-                )
+            try await buildStatusRepository(context)
+            .update(
+                referenceType: "blog.tag",
+                referenceID: id,
+                status: targetStatus
+            )
             let toast = statusToastContent(for: targetStatus)
             return AdminNotificationFlash.redirect(
                 to: payload.normalizedReturnTo ?? routes.tags.path

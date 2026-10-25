@@ -123,8 +123,6 @@ let package = Package(
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "MIME", package: "swift-web-standards"),
                 .product(name: "NIOCore", package: "swift-nio"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "MediaDomain"),
                 .target(name: "MediaModule"),
@@ -167,7 +165,6 @@ let package = Package(
         .target(
             name: "MediaOpenAPIGeneratorSupport",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
             ],
             path: "Sources/Generators/SchemaSupport",
@@ -214,6 +211,7 @@ let package = Package(
         .target(
             name: "MediaWebAdmin",
             dependencies: [
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "WebBuilders", package: "swift-web-standards"),

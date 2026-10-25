@@ -2,11 +2,12 @@ import AccountModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import UserWebAdmin
 
 extension Invitation.Add {
     struct Router {
 
-        let controller: any Invitation.Add.Controller.Interface
+        let controller: any Controller.Interface
         let routes: Invitation.Router.Routes
 
         init(
@@ -15,20 +16,27 @@ extension Invitation.Add {
             routes: Invitation.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Invitation.Add.Controller.Default(
-                environment: environment,
+            self.controller = Controller.Default(
                 routes: routes,
+                roleRepository: { context in
+                    Invitation.Form.Repository.Role.OpenAPI(
+                        api: UserWebAdmin.API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                },
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Invitation.Add.Interactor.Default(
-                            repository: Invitation.Add.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )
                             )
                         ),
-                        presenter: Invitation.Add.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,

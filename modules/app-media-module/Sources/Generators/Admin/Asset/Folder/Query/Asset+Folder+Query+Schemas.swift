@@ -7,7 +7,7 @@ extension Asset.Folder.Query {
 extension Asset.Folder.Query.Schemas {
     struct Filters: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
-            ["parentId": MediaFolderNullableIdField()]
+            ["parentId": Asset.Folder.Schemas.NullableID()]
         }
     }
 
@@ -15,15 +15,15 @@ extension Asset.Folder.Query.Schemas {
         var openAPIIdentifier: String { "MediaFolderQueryItemSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": MediaFolderIdField().reference(),
-                "parentId": MediaFolderNullableIdField(),
-                "name": MediaFolderNameField(),
-                "slug": MediaFolderSlugField(),
-                "slugPath": MediaFolderSlugPathField(),
-                "assetCount": MediaFolderCountField(),
-                "totalSizeBytes": MediaFolderBytesField(),
-                "createdAt": MediaFolderTimestampField(),
-                "updatedAt": MediaFolderTimestampField(),
+                "id": Asset.Folder.Schemas.ID().reference(),
+                "parentId": Asset.Folder.Schemas.NullableID(),
+                "name": Asset.Folder.Schemas.Name(),
+                "slug": Asset.Folder.Schemas.Slug(),
+                "slugPath": Asset.Folder.Schemas.SlugPath(),
+                "assetCount": Asset.Folder.Schemas.Count(),
+                "totalSizeBytes": Asset.Folder.Schemas.Bytes(),
+                "createdAt": Asset.Folder.Schemas.Timestamp(),
+                "updatedAt": Asset.Folder.Schemas.Timestamp(),
             ]
         }
     }

@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
 import NewsletterAdminAPI
 import NewsletterModule
@@ -23,7 +24,7 @@ extension Subscriber.View.Repository {
                 throw OpenAPIRepositoryError.notFound
             }
 
-            try await api.withOpenAPIRepositoryErrorMapping { client in
+            return try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterSubscriberQuery(
                     body: .json(
                         .init(
@@ -40,7 +41,7 @@ extension Subscriber.View.Repository {
                     else {
                         throw OpenAPIRepositoryError.notFound
                     }
-                    return .init(
+                    return Subscriber.View.Model(
                         id: Data(subscriber.email.utf8)
                             .base64EncodedString()
                             .replacingOccurrences(of: "+", with: "-")
@@ -49,7 +50,7 @@ extension Subscriber.View.Repository {
                         email: subscriber.email,
                         name: subscriber.name,
                         newsletters: subscriber.memberships.map {
-                            .init(
+                            Subscriber.View.Model.Newsletter(
                                 id: $0.campaignKey,
                                 name: $0.campaignName,
                                 status: $0.status

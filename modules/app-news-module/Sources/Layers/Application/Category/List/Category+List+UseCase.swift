@@ -33,12 +33,8 @@ extension Category.List {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
 
-            let inputQuery = input.query
-
             return try await query.run { scope in
-                let categories = try await scope.category.list(
-                    query: inputQuery
-                )
+                let categories = try await scope.category.list()
                 var items: [Output.Item] = []
                 items.reserveCapacity(categories.items.count)
                 for item in categories.items {
@@ -57,24 +53,5 @@ extension Category.List {
             }
         }
 
-        public func count(
-            subject: Subject,
-            input: Input
-        ) async throws -> Int {
-            let action = Action()
-
-            guard try await authorizer.can(subject: subject, perform: action)
-            else {
-                throw AuthError(kind: .forbidden, message: action.key.rawValue)
-            }
-
-            let inputQuery = input.query
-
-            return try await query.run { scope in
-                try await scope.category.count(
-                    query: inputQuery
-                )
-            }
-        }
     }
 }

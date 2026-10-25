@@ -35,7 +35,7 @@ extension RedirectModule.Rule.Edit.Controller {
                     permissions: context.currentUserAdminListActions
                 )
             }
-            catch let error as RedirectModule.Rule.Edit.Error {
+            catch let error as RedirectModule.Rule.Edit.Interactor.Error {
                 return try await presenter.renderEditError(
                     id: id,
                     input: nil,
@@ -91,7 +91,7 @@ extension RedirectModule.Rule.Edit.Controller {
                     )
                     .response(from: request, context: context)
             }
-            catch let error as RedirectModule.Rule.Edit.Error {
+            catch let error as RedirectModule.Rule.Edit.Interactor.Error {
                 return
                     try await presenter.renderEditError(
                         id: id,

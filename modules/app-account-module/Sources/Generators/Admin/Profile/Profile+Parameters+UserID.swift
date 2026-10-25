@@ -5,7 +5,7 @@ extension Profile.Parameters {
         var openAPIIdentifier: String { "AccountProfileUserIDParameter" }
         var name: String { "userId" }
         var schema: any OpenAPISchemaRepresentable {
-            Profile.Fields.UserID().reference()
+            Profile.Schemas.UserID().reference()
         }
     }
 }

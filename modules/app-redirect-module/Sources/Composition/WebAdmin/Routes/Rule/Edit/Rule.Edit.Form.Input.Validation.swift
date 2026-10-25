@@ -1,6 +1,7 @@
 import FeatherValidation
 import RedirectApplication
 import RedirectModule
+import RedirectDomain
 
 extension RedirectModule.Rule.Edit.Form.Input {
     private enum FieldValidators {
@@ -50,7 +51,7 @@ extension RedirectModule.Rule.Edit.Form.Input {
                     {
                         value in
                         guard let code = Int(value),
-                            RedirectModule.Rule.StatusCode(rawValue: code)
+                            Rule.Model.StatusCode(rawValue: code)
                                 != nil
                         else {
                             throw RuleError.invalid

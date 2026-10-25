@@ -35,15 +35,7 @@ extension Settings.Detail {
             }
 
             return try await query.run { scope in
-                let settings = try await scope.query.get(userId: userId)
-                return .init(
-                    userId: settings.userId,
-                    language: settings.language,
-                    timezone: settings.timezone,
-                    pageSize: settings.pageSize,
-                    createdAt: settings.createdAt,
-                    updatedAt: settings.updatedAt
-                )
+                try await scope.query.find(userId: userId)
             }
         }
     }

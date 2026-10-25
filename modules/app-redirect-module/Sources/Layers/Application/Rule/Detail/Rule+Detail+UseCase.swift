@@ -23,7 +23,7 @@ extension Rule.Detail {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
             return try await query.run { scope in
-                try await scope.query.detail(id: input.id)
+                try await scope.query.find(id: input.id)
             }
         }
     }

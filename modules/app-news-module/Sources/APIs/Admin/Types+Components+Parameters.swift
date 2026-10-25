@@ -9,10 +9,10 @@ extension Components {
         /// News article identifier
         ///
         /// - Remark: Generated from `#/components/parameters/NewsArticleIDParameter`.
-        public typealias NewsArticleIDParameter = Components.Schemas.NewsAdminOpenAPIComponentsStringField
+        public typealias NewsArticleIDParameter = Components.Schemas.ArticleSchemasStringField
         /// News category identifier
         ///
         /// - Remark: Generated from `#/components/parameters/NewsCategoryIDParameter`.
-        public typealias NewsCategoryIDParameter = Components.Schemas.NewsAdminOpenAPIComponentsStringField
+        public typealias NewsCategoryIDParameter = Components.Schemas.CategorySchemasStringField
     }
 }

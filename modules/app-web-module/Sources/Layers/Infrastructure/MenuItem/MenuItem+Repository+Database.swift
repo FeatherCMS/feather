@@ -14,7 +14,7 @@ extension MenuItem.Table.Detail {
             priority: priority,
             isBlank: isBlank,
             permission: permission,
-            authentication: MenuItem.Authentication(rawValue: authentication)
+            authentication: MenuItem.Model.Authentication(rawValue: authentication)
                 ?? .any,
             notes: notes,
             createdAt: createdAt,
@@ -126,8 +126,9 @@ extension MenuItem.Repository {
                 } ?? items.endIndex
             items.insert(source, at: destinationIndex)
 
-            for (priority, item) in items.enumerated()
-            where item.priority != priority {
+            for priority in items.indices {
+                let item = items[priority]
+                guard item.priority != priority else { continue }
                 try await accessLayer.update(
                     MenuItem.Table.Update(
                         menuId: item.menuId,

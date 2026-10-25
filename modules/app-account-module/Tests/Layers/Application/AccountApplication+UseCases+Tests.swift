@@ -518,7 +518,7 @@ struct AccountApplicationUseCasesTests {
         #expect(result.userId == profile.userId)
         #expect(result.firstName == profile.firstName)
         #expect(result.lastName == profile.lastName)
-        #expect(await repository.getCallCount == 1)
+        #expect(await repository.findCallCount == 1)
         #expect(await repository.requestedUserIds == [profile.userId])
         #expect(await query.runCallCount == 1)
         #expect(await authorizer.canCallCount == 1)
@@ -542,7 +542,7 @@ struct AccountApplicationUseCasesTests {
             input: .init()
         )
 
-        #expect(await repository.getCallCount == 1)
+        #expect(await repository.findCallCount == 1)
         #expect(await query.runCallCount == 1)
         #expect(await authorizer.canCallCount == 1)
     }
@@ -815,7 +815,7 @@ struct AccountApplicationUseCasesTests {
             input: .init(userId: settings.userId)
         )
 
-        #expect(await repository.getCallCount == 1)
+        #expect(await repository.findCallCount == 1)
         #expect(await authorizer.canCallCount == 1)
     }
 
@@ -841,7 +841,7 @@ struct AccountApplicationUseCasesTests {
         #expect(result.language == settings.language)
         #expect(result.timezone == settings.timezone)
         #expect(result.pageSize == settings.pageSize)
-        #expect(await repository.getCallCount == 1)
+        #expect(await repository.findCallCount == 1)
         #expect(await query.runCallCount == 1)
         #expect(await authorizer.canCallCount == 1)
     }
@@ -866,7 +866,7 @@ struct AccountApplicationUseCasesTests {
             )
         }
 
-        #expect(await repository.getCallCount == 0)
+        #expect(await repository.findCallCount == 0)
         #expect(await query.runCallCount == 0)
         #expect(await authorizer.canCallCount == 1)
     }

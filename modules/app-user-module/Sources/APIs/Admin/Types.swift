@@ -27,9 +27,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PATCH /api/v1/admin/user/identities/{userIdentityId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/patch(userIdentityPatch)`.
     func userIdentityPatch(_ input: Operations.UserIdentityPatch.Input) async throws -> Operations.UserIdentityPatch.Output
-    /// - Remark: HTTP `PUT /api/v1/admin/user/identities/{userIdentityId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)`.
-    func userIdentityPut(_ input: Operations.UserIdentityPut.Input) async throws -> Operations.UserIdentityPut.Output
     /// - Remark: HTTP `GET /api/v1/admin/user/roles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/get(userRoleList)`.
     func userRoleList(_ input: Operations.UserRoleList.Input) async throws -> Operations.UserRoleList.Output
@@ -48,9 +45,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PATCH /api/v1/admin/user/roles/{userRoleId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/patch(userRolePatch)`.
     func userRolePatch(_ input: Operations.UserRolePatch.Input) async throws -> Operations.UserRolePatch.Output
-    /// - Remark: HTTP `PUT /api/v1/admin/user/roles/{userRoleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)`.
-    func userRolePut(_ input: Operations.UserRolePut.Input) async throws -> Operations.UserRolePut.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -129,19 +123,6 @@ extension APIProtocol {
             body: body
         ))
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/user/identities/{userIdentityId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)`.
-    public func userIdentityPut(
-        path: Operations.UserIdentityPut.Input.Path,
-        headers: Operations.UserIdentityPut.Input.Headers = .init(),
-        body: Components.RequestBodies.UserIdentityUpdateRequestBody
-    ) async throws -> Operations.UserIdentityPut.Output {
-        try await userIdentityPut(Operations.UserIdentityPut.Input(
-            path: path,
-            headers: headers,
-            body: body
-        ))
-    }
     /// - Remark: HTTP `GET /api/v1/admin/user/roles`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/get(userRoleList)`.
     public func userRoleList(
@@ -208,19 +189,6 @@ extension APIProtocol {
         try await userRolePatch(Operations.UserRolePatch.Input(
             path: path,
             query: query,
-            headers: headers,
-            body: body
-        ))
-    }
-    /// - Remark: HTTP `PUT /api/v1/admin/user/roles/{userRoleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)`.
-    public func userRolePut(
-        path: Operations.UserRolePut.Input.Path,
-        headers: Operations.UserRolePut.Input.Headers = .init(),
-        body: Components.RequestBodies.UserRoleUpdateRequestBody
-    ) async throws -> Operations.UserRolePut.Output {
-        try await userRolePut(Operations.UserRolePut.Input(
-            path: path,
             headers: headers,
             body: body
         ))

@@ -259,6 +259,7 @@ let package = Package(
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
@@ -280,11 +281,10 @@ let package = Package(
                 .product(name: "WebComponents", package: "swift-web-standards"),
 
                 .product(name: "MediaWebAdmin", package: "app-media-module"),
-                .product(name: "SystemAdminAPI", package: "app-system-module"),
+                .product(name: "MediaModule", package: "app-media-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
-                .product(name: "UserModule", package: "app-user-module"),
                 .product(name: "UserWebAdmin", package: "app-user-module"),
 
                 .target(name: "AccountModule"),
@@ -355,7 +355,6 @@ let package = Package(
         .testTarget(
             name: "AccountBackendTests",
             dependencies: [
-                .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherHTTP", package: "feather-http"),
                 .product(name: "FeatherHTTPHummingbirdTesting", package: "feather-http-hummingbird-testing"),
                 .product(name: "FeatherInfrastructure", package: "feather-core"),

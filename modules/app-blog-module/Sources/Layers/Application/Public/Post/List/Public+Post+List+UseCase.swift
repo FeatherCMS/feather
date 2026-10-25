@@ -34,14 +34,13 @@ extension Public.Post.List {
                     else {
                         continue
                     }
-                    let post = try await scope.post.find(id: item.id)
                     let authors = try await Self.publicAuthors(
-                        post.authorIds,
+                        item.authorIds,
                         now: now,
                         context: scope
                     )
                     let tags = try await Self.publicTags(
-                        post.tagIds,
+                        item.tagIds,
                         now: now,
                         context: scope
                     )
@@ -67,11 +66,11 @@ extension Public.Post.List {
 
 }
 
-extension UseCase {
+extension Public.Post.List.UseCase {
     fileprivate static func publicAuthors(
         _ ids: [String],
         now: Date,
-        context: Scope
+        context: Public.Post.List.Scope
     ) async throws -> [Public.Author.Summary.Item] {
         var result: [Public.Author.Summary.Item] = []
         for id in ids {
@@ -82,7 +81,7 @@ extension UseCase {
                 ),
                 metadata.isPublic(at: now)
             else { continue }
-            let author = try await context.author.find(id: id)
+            let author = try await context.postList.findAuthor(id: id)
             result.append(
                 .init(
                     id: author.id,
@@ -102,7 +101,7 @@ extension UseCase {
     fileprivate static func publicTags(
         _ ids: [String],
         now: Date,
-        context: Scope
+        context: Public.Post.List.Scope
     ) async throws -> [Public.Tag.Summary.Item] {
         var result: [Public.Tag.Summary.Item] = []
         for id in ids {
@@ -113,7 +112,7 @@ extension UseCase {
                 ),
                 metadata.isPublic(at: now)
             else { continue }
-            let tag = try await context.tag.find(id: id)
+            let tag = try await context.postList.findTag(id: id)
             result.append(
                 .init(
                     id: tag.id,

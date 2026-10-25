@@ -124,11 +124,6 @@ let package = Package(
             name: "UserApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
-                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "UserModule"),
                 .target(name: "UserDomain"),
@@ -257,7 +252,6 @@ let package = Package(
                 .product(name: "FeatherDBALTesting", package: "feather-dbal"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
-                .product(name: "FeatherTesting", package: "feather-core"),
 
                 .target(name: "UserInfrastructure"),
                 .target(name: "UserModule"),

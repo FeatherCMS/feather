@@ -6,7 +6,7 @@ import WebAdminAPI
 import WebDomain
 import WebModule
 
-extension Page.Metadata.Repository {
+extension WebModule.Page.Metadata.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 

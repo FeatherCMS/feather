@@ -11,7 +11,7 @@ extension Variant.Edit.Repository {
         let api: API.Client
 
         func load(id: String) async throws
-            -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
+            -> Variant.Edit.Model
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.mediaVariantGet(
@@ -19,7 +19,15 @@ extension Variant.Edit.Repository {
                     headers: .init(accept: [.init(contentType: .json)])
                 )
                 switch response {
-                case .ok(let result): return try result.body.json
+                case .ok(let result):
+                    let detail = try result.body.json
+                    return Variant.Edit.Model(
+                        id: detail.id,
+                        key: detail.key,
+                        name: detail.name,
+                        isRequired: detail.isRequired,
+                        isActive: detail.isActive
+                    )
                 case .notFound: throw OpenAPIRepositoryError.notFound
                 case .unauthorized: throw OpenAPIRepositoryError.unauthorized
                 case .forbidden: throw OpenAPIRepositoryError.forbidden
@@ -33,8 +41,7 @@ extension Variant.Edit.Repository {
         }
 
         func loadProcessor(variantId: String, id: String) async throws
-            -> MediaAdminAPI.Components.Schemas
-            .MediaVariantProcessorDetailSchema
+            -> Variant.Processor.Edit.Model
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.mediaVariantProcessorGet(
@@ -45,7 +52,16 @@ extension Variant.Edit.Repository {
                     headers: .init(accept: [.init(contentType: .json)])
                 )
                 switch response {
-                case .ok(let result): return try result.body.json
+                case .ok(let result):
+                    let detail = try result.body.json
+                    return Variant.Processor.Edit.Model(
+                        id: detail.id,
+                        variantId: variantId,
+                        name: detail.name,
+                        matchExtensions: detail.matchExtensions,
+                        commandTemplate: detail.commandTemplate,
+                        isActive: detail.isActive
+                    )
                 case .notFound: throw OpenAPIRepositoryError.notFound
                 case .unauthorized: throw OpenAPIRepositoryError.unauthorized
                 case .forbidden: throw OpenAPIRepositoryError.forbidden

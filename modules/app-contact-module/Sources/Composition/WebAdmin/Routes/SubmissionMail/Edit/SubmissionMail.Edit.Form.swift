@@ -31,7 +31,11 @@ extension SubmissionMail.Edit {
                     )
                 )
                 context.build(
-                    ContactModule.Form.TabBar(formId: formId, active: .emails)
+                    ContactModule.Form.TabBar(
+                        formId: formId,
+                        routes: routes.formRoutes,
+                        active: .emails
+                    )
                 )
                 context.build(
                     AdminRelationshipGroup(
@@ -62,7 +66,8 @@ extension SubmissionMail.Edit {
         private var replacementVariables: some FlowContent {
             P {
                 Span("Available replacement variables: ")
-                for (index, field) in availableFields.enumerated() {
+                for index in availableFields.indices {
+                    let field = availableFields[index]
                     if index > 0 { Span(", ") }
                     Span("{{\(field.key)}}")
                 }

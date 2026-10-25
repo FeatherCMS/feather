@@ -32,11 +32,11 @@ extension Credential.Edit {
             }
 
             let passwordHash: FieldChange<String>
-            if case .set(let password) = input.password {
-                passwordHash = .set(try await passwordHasher.hash(password))
-            }
-            else {
+            switch input.password {
+            case .unchanged:
                 passwordHash = .unchanged
+            case .set(let password):
+                passwordHash = .set(try await passwordHasher.hash(password))
             }
 
             return try await transaction.run { scope in
@@ -45,14 +45,14 @@ extension Credential.Edit {
                         id: input.id
                     )
                 else {
-                    throw Credential.Edit.Error.credentialNotFound(id: input.id)
+                    throw Error.credentialNotFound(id: input.id)
                 }
 
                 let currentAuthEmail = try await scope.authEmail.findBy(
                     id: model.authEmailId
                 )
                 guard let currentAuthEmail else {
-                    throw Credential.Edit.Error.authEmailNotFoundForCredential(id: input.id)
+                    throw Error.authEmailNotFoundForCredential(id: input.id)
                 }
                 let userId = input.userId.apply(to: currentAuthEmail.identityId)
                 let email = input.email.apply(to: currentAuthEmail.email)
@@ -61,7 +61,7 @@ extension Credential.Edit {
                         email: email
                     ), authEmail.identityId == userId
                 else {
-                    throw Credential.Edit.Error.authEmailNotFoundForIdentity(identityId: userId)
+                    throw Error.authEmailNotFoundForIdentity(identityId: userId)
                 }
 
                 let authEmailId: FieldChange<String>

@@ -25,13 +25,13 @@ extension RolePermission {
         let routes: Routes
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            RolePermission.Edit
+            Edit
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,
                     routes: routes
                 )
-                .controller.route(on: router, routes: routes)
+                .route(on: router)
         }
     }
 }

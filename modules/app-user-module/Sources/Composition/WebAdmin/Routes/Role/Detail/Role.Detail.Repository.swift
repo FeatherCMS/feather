@@ -9,6 +9,6 @@ extension Role.Detail.Repository {
 
         func load(
             id: String
-        ) async throws -> Role.Detail.Repository.Model
+        ) async throws -> Model
     }
 }

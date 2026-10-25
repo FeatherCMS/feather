@@ -7,7 +7,7 @@ extension Metadata.Query {
         var operationId: String? { "metadataQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: MetadataQueryItemSchema(),
+                items: ItemSchema(),
                 sortFieldKeys: [
                     "id",
                     "slug",
@@ -20,7 +20,7 @@ extension Metadata.Query {
                 ],
                 filters: SearchFilterSchema(
                     additionalProperties: [
-                        "referenceType": MetadataReferenceTypeField()
+                        "referenceType": Metadata.Schemas.ReferenceType()
                             .reference(required: false)
                     ]
                 )

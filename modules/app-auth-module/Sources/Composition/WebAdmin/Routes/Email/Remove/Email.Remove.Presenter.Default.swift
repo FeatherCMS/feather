@@ -39,7 +39,8 @@ extension Email.Remove.Presenter {
                         item: item,
                         identityId: identityId,
                         breadcrumb: routes.breadcrumb,
-                        nonceToken: nonceToken
+                        nonceToken: nonceToken,
+                        routes: routes
                     )
                 ),
                 size: .small

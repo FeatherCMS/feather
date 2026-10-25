@@ -1,5 +1,5 @@
 public import FeatherModuleKit
-import NewsModule
+public import NewsModule
 
 extension Article.Extension {
     public struct Context: Sendable {

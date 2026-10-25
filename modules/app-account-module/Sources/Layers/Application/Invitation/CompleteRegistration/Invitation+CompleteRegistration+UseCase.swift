@@ -41,7 +41,7 @@ extension Invitation.CompleteRegistration {
                     ),
                     identity.status == .invited
                 else {
-                    throw Invitation.CompleteRegistration.Error(message: "Invitation or identity not found")
+                    throw Error(message: "Invitation or identity not found")
                 }
                 if try await scope.authEmail.findBy(email: invitation.email)
                     == nil
@@ -68,7 +68,7 @@ extension Invitation.CompleteRegistration {
                     !(try await scope.invitation.delete(ids: [invitation.id]))
                         .isEmpty
                 else {
-                    throw Invitation.CompleteRegistration.Error(message: "Invitation already used")
+                    throw Error(message: "Invitation already used")
                 }
                 return .init(
                     id: updated.id,

@@ -43,12 +43,12 @@ extension Insight.View {
             switch source {
             case .api:
                 router.get(
-                    AnalyticsWebAdmin.Router.Routes.api,
+                    AnalyticsWebAdmin.Router.Routes.api.routerPath,
                     use: controller.getInsights
                 )
             case .web:
                 router.get(
-                    AnalyticsWebAdmin.Router.Routes.web,
+                    AnalyticsWebAdmin.Router.Routes.web.routerPath,
                     use: controller.getInsights
                 )
             }

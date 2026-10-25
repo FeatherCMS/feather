@@ -1,3 +1,4 @@
+import Foundation
 import ContactApplication
 import ContactModule
 import FeatherWebAdmin
@@ -36,6 +37,7 @@ extension ContactModule.Form.Edit.Fields {
                 context.build(
                     ContactModule.Form.TabBar(
                         formId: state.key,
+                        routes: state.routes,
                         active: .fields
                     )
                 )

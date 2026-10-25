@@ -7,7 +7,7 @@ extension Credential.Post {
         var contentMap: ContentMap {
             [
                 .json: Content(
-                    Credential.Post.Schema().reference()
+                    Schema().reference()
                 )
             ]
         }

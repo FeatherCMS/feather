@@ -6,7 +6,7 @@ extension Post {
 }
 
 extension Post.Operation {
-    var tags: [any TagRepresentable] { [BlogPostTag()] }
+    var tags: [any TagRepresentable] { [Post.Tag()] }
 }
 
 extension Post.ID {

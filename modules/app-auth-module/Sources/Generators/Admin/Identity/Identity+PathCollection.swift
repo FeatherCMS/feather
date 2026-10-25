@@ -5,7 +5,9 @@ extension Identity {
         var pathMap: PathMap {
             [
                 "api/v1/admin/user/identities/{userIdentityId}/sessions":
-                    Session.PathItem()
+                    Session.PathItem(),
+                "api/v1/admin/user/identities/{userIdentityId}/sessions/query":
+                    Session.Query.PathItem()
             ]
         }
     }

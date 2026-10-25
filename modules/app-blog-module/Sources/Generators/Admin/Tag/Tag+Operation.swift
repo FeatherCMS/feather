@@ -7,7 +7,7 @@ extension Tag {
 }
 
 extension Tag.Operation {
-    var tags: [any TagRepresentable] { [BlogTagTag()] }
+    var tags: [any TagRepresentable] { [Tag.Tag()] }
 }
 
 extension Tag.IdentifiableOperation {

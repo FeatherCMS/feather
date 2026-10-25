@@ -1,4 +1,5 @@
-public import Foundation
+import Foundation
+public import FeatherWebShared
 import RedirectAppAPI
 
 /// Resolves redirects through the generated App API client.

@@ -1,6 +1,5 @@
 public import FeatherApplication
 public import FeatherModuleKit
-import NewsletterDomain
 public import NewsletterModule
 
 extension Campaign.List {
@@ -26,9 +25,7 @@ extension Campaign.List {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
             return try await query.run { scope in
-                let items = try await scope.campaign.list()
-                    .map(Item.init(model:))
-                return Output(items: items)
+                try await scope.campaign.list()
             }
         }
     }

@@ -22,15 +22,17 @@ extension Credential.Edit.Repository {
         let api: API.Client
         let userAPI: UserWebAdmin.API.Client
 
-        func listEmails() async throws -> [AuthAdminAPI.Components.Schemas
-            .AuthEmailSchemasDetail]
+        func listEmails() async throws -> [Email.Option]
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.authEmailList(
                     headers: .init(accept: [.init(contentType: .json)])
                 )
                 switch response {
-                case .ok(let value): return try value.body.json
+                case .ok(let value):
+                    return try value.body.json.map {
+                        .init(id: $0.id, identityId: $0.identityId, email: $0.email)
+                    }
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:

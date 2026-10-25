@@ -37,6 +37,18 @@ extension MagicLink {
                 ]
             }
 
+            func detailsPath(_ id: String) -> String {
+                details.path(parameter: "id", value: id)
+            }
+
+            func editPath(_ id: String) -> String {
+                edit.path(parameter: "id", value: id)
+            }
+
+            func removePath(_ id: String) -> String {
+                remove.path(parameter: "id", value: id)
+            }
+
             func removeBreadcrumb(_ id: String) -> [AdminBreadcrumb.Link] {
                 detailsBreadcrumb(id) + [
                     .init(

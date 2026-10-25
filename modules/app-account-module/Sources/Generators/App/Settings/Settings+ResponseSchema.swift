@@ -5,9 +5,9 @@ extension Settings {
         public var openAPIIdentifier: String { "AccountSettingsResponseSchema" }
         public var propertyMap: SchemaMap {
             [
-                "language": Fields.Language().reference(),
-                "timezone": Fields.Timezone().reference(),
-                "pageSize": Fields.PageSize().reference(),
+                "language": Schemas.Language().reference(),
+                "timezone": Schemas.Timezone().reference(),
+                "pageSize": Schemas.PageSize().reference(),
             ]
         }
 

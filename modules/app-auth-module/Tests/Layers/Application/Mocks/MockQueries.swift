@@ -13,17 +13,15 @@ import UserModule
 //  Created by Binary Birds on 2026. 06. 18.
 
 actor MockMagicLinkQueries: MagicLink.Detail.Query.Interface,
-    MagicLink.List.Query.Interface
+    MagicLink.Search.Query.Interface
 {
     private(set) var findCallCount = 0
-    private(set) var listCallCount = 0
-    private(set) var countCallCount = 0
+    private(set) var searchCallCount = 0
     private(set) var lastFindId: String?
-    private(set) var lastListQuery: MagicLink.List.Input.Query?
+    private(set) var lastSearchQuery: MagicLink.Search.Input.Query?
 
     private let findResult: MagicLink.Detail.Output
-    private let listResult: MagicLink.List.Output
-    private let countResult: Int
+    private let searchResult: MagicLink.Search.Output
 
     init(
         findResult: MagicLink.Detail.Output = .init(
@@ -36,12 +34,10 @@ actor MockMagicLinkQueries: MagicLink.Detail.Query.Interface,
             createdAt: .init(timeIntervalSince1970: 1),
             updatedAt: .init(timeIntervalSince1970: 2)
         ),
-        listResult: MagicLink.List.Output,
-        countResult: Int
+        searchResult: MagicLink.Search.Output
     ) {
         self.findResult = findResult
-        self.listResult = listResult
-        self.countResult = countResult
+        self.searchResult = searchResult
     }
 
     func find(
@@ -52,19 +48,12 @@ actor MockMagicLinkQueries: MagicLink.Detail.Query.Interface,
         return findResult
     }
 
-    func list(
-        query: MagicLink.List.Input.Query
-    ) async throws -> MagicLink.List.Output {
-        listCallCount += 1
-        lastListQuery = query
-        return listResult
-    }
-
-    func count(
-        query: MagicLink.List.Input.Query
-    ) async throws -> Int {
-        countCallCount += 1
-        return countResult
+    func search(
+        query: MagicLink.Search.Input.Query
+    ) async throws -> MagicLink.Search.Output {
+        searchCallCount += 1
+        lastSearchQuery = query
+        return searchResult
     }
 }
 
@@ -117,13 +106,12 @@ actor MockRolePermissionQueries: RolePermission.Search.Query.Interface {
 }
 
 actor MockSessionQueries: Session.Detail.Query.Interface,
-    Session.List.Query.Interface,
-    Session.ListByIdentity.Query.Interface
+    Session.List.Query.Interface
 {
     private let findResult: Session.Detail.Output
     private(set) var listCallCount = 0
     private(set) var findCallCount = 0
-    private(set) var lastQuery: Session.List.Input.Query?
+    private(set) var lastIdentityId: String?
     private let listResult: Session.List.Output
 
     init(
@@ -152,35 +140,10 @@ actor MockSessionQueries: Session.Detail.Query.Interface,
         return findResult
     }
 
-    func list(
-        query: Session.List.Input.Query
-    ) async throws -> Session.List.Output {
+    func list(identityId: String) async throws -> Session.List.Output {
         listCallCount += 1
-        lastQuery = query
+        lastIdentityId = identityId
         return listResult
-    }
-
-    func list(identityId: String) async throws -> Session.ListByIdentity.Output
-    {
-        listCallCount += 1
-        lastQuery = .init(identityId: identityId)
-        return .init(
-            items: listResult.items
-                .filter { $0.identityId == identityId }
-                .map {
-                    .init(
-                        id: $0.id,
-                        token: $0.token,
-                        identityId: $0.identityId,
-                        authenticationType: $0.authenticationType,
-                        authenticationReference: $0.authenticationReference,
-                        expiresAt: $0.expiresAt,
-                        isPersistent: $0.isPersistent,
-                        createdAt: $0.createdAt,
-                        updatedAt: $0.updatedAt
-                    )
-                }
-        )
     }
 }
 

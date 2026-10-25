@@ -7,11 +7,11 @@ extension Asset.File {
 }
 
 extension Asset.File.Operation {
-    var tags: [any TagRepresentable] { [MediaAssetTag()] }
+    var tags: [any TagRepresentable] { [Asset.File.Tag()] }
 }
 
 extension Asset.File.IDOperation {
     var parameters: [any ParameterRepresentable] {
-        [MediaAssetIdParameter().reference()]
+        [Asset.File.Parameters.ID().reference()]
     }
 }

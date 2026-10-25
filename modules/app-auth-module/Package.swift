@@ -196,6 +196,7 @@ let package = Package(
             name: "AuthAdminOpenAPIGenerator",
             dependencies: [
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
                 .product(name: "UserOpenAPIGeneratorSupport", package: "app-user-module"),
@@ -220,7 +221,6 @@ let package = Package(
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
-                .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "NIOHTTP1", package: "swift-nio"),
 
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
@@ -334,7 +334,6 @@ let package = Package(
         .testTarget(
             name: "AuthBackendTests",
             dependencies: [
-                .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherHTTP", package: "feather-http"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherInfrastructure", package: "feather-core"),

@@ -1,8 +1,6 @@
 extension Overview.Interactor {
 
-    struct Default:
-        Overview.Interactor.Interface
-    {
+    struct Default: Interface {
         func getOverview() async throws -> Overview.Model {
             .init(title: "Account module")
         }

@@ -7,7 +7,7 @@ extension Variant.List {
     struct Router {
         static let pageSize = 20
         private let routes: Variant.Router.Routes
-        let controller: any Variant.List.Controller.Interface
+        let controller: any Controller.Interface
 
         init(
             environment: AppEnvironment,
@@ -15,18 +15,18 @@ extension Variant.List {
             routes: Variant.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Variant.List.Controller.Default(
+            self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Variant.List.Interactor.Default(
-                            repository: Variant.List.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )
                             )
                         ),
-                        presenter: Variant.List.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderingEngine: renderingEngine,

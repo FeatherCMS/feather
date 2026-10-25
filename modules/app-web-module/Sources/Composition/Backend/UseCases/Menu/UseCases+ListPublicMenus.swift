@@ -21,9 +21,6 @@ extension UseCases {
                     menuList: Menu.List.Query.Database(
                         context: context
                     ),
-                    menuLookup: Menu.Lookup.Query.Database(
-                        context: context
-                    ),
                     menuItems: Menu.Public.List.Query.Database(
                         context: context
                     )

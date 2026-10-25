@@ -9,7 +9,7 @@ extension AdminAPIGateway {
         _ input: Operations.SystemPermissionGet.Input
     ) async throws -> Operations.SystemPermissionGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = self.useCases.makeGetPermissions()
+        let useCase = self.useCases.makeDetailPermissions()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.systemPermissionId)

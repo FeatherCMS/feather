@@ -38,7 +38,7 @@ extension MagicLink.Add.Form.Input {
 
     private var validator: GroupValidator {
         GroupValidator {
-            MagicLink.Add.Form.Input.Validator.credentialId(
+            Validator.credentialId(
                 credentialId,
                 required: true
             )

@@ -11,7 +11,8 @@ extension WebModule.Metadata.Edit {
         public init(
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
-            adminEvents: any EventPublisher
+            adminEvents: any EventPublisher,
+            mediaAssetList: WebRoute
         ) {
             controller = Controller.Default(
                 buildRuntime: { request, context in
@@ -28,7 +29,8 @@ extension WebModule.Metadata.Edit {
                         presenter: Presenter.Default(
                             request: request,
                             context: context,
-                            renderingEngine: renderingEngine
+                            renderingEngine: renderingEngine,
+                            mediaAssetList: mediaAssetList
                         )
                     )
                 }

@@ -5,11 +5,11 @@ extension Menu.ID.Put {
     struct Operation: Menu.ID.Operation, BearerProtectedOperation {
         var operationId: String? { "menuUpdate" }
         var requestBody: (any RequestBodyRepresentable)? {
-            MenuUpdateRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: MenuDetailResponse().reference(),
+                200: Menu.ID.Get.Response().reference(),
                 404: CustomResponse(description: "Menu not found"),
             ]
         }

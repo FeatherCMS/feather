@@ -1,5 +1,8 @@
 import FeatherWebShared
 import NewsletterAdminAPI
+import NewsletterApplication
+import NewsletterModule
+import OpenAPIRuntime
 
 extension Issue.TestEmail.Repository {
     struct OpenAPI: Interface {

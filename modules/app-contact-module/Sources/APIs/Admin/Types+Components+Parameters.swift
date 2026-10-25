@@ -14,6 +14,10 @@ extension Components {
         public typealias FormFieldListFilterParameter = Components.Schemas.ContactFormKeyField
         /// - Remark: Generated from `#/components/parameters/FormFieldIdParameter`.
         public typealias FormFieldIdParameter = Components.Schemas.ContactIdField
+        /// Comma-separated list of fields to update.
+        ///
+        /// - Remark: Generated from `#/components/parameters/ContactFieldParametersUpdateMask`.
+        public typealias ContactFieldParametersUpdateMask = Components.Schemas.ContactFormFieldUpdateMask
         /// The ID of the contact form submission.
         ///
         /// - Remark: Generated from `#/components/parameters/ContactSubmissionParametersID`.

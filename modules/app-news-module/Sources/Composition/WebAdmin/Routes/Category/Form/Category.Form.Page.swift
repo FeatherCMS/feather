@@ -82,8 +82,7 @@ extension NewsModule.Category.Form {
                                     isRequired: false
                                 ),
                                 selectedAsset: selectedImageAsset,
-                                browsePath:
-                                    "/admin/media/assets/?picker=1&field=imageAssetId&extensions=\(AllowedExtensions.images.queryValue)",
+                                browsePath: routes.imagePickerPath("imageAssetId"),
                                 defaultFolderPath: "news/categories",
                                 allowedExtensions: .images,
                                 previewStyle: .wide
@@ -95,7 +94,8 @@ extension NewsModule.Category.Form {
                             state: input.metadata.adminFields(
                                 template: "news.category"
                             ),
-                            showTitle: true
+                            showTitle: true,
+                            mediaAssetList: routes.mediaAssetList
                         )
                     )
                     Div {

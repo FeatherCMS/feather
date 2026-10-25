@@ -4,9 +4,7 @@ import FeatherWebShared
 
 extension Profile.Edit.Interactor {
 
-    struct Default:
-        Profile.Edit.Interactor.Interface
-    {
+    struct Default: Interface {
         let profileRepository: any Profile.Edit.Repository.Interface
 
         func loadProfile(

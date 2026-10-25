@@ -7,10 +7,10 @@ extension Post {
 extension Post.Parameters {
     struct ID: PathParameterRepresentable {
         var openAPIIdentifier: String { "BlogPostIdParameter" }
-        var name: String { "id" }
+        var name: String { "blogPostId" }
         var description: String? { "Blog post identifier" }
         var schema: any OpenAPISchemaRepresentable {
-            BlogPostIdField().reference()
+            Post.Schemas.ID().reference()
         }
     }
 }

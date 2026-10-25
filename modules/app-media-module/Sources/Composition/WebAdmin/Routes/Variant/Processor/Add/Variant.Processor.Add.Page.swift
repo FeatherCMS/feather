@@ -10,7 +10,7 @@ extension Variant.Processor {
     enum Add {
         struct Page: Component {
             let variantId: String
-            let form: Variant.Processor.Form
+            let form: Form
             let routes: Variant.Router.Routes
 
             func html(context: inout BuilderContext) -> some BasicTag {

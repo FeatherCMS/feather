@@ -13,15 +13,15 @@ extension MenuItem {
 
             func find(
                 id: String
-            ) async throws -> MenuItem.Model?
+            ) async throws -> Model?
 
             func insert(
-                _ model: MenuItem.Model.New
-            ) async throws -> MenuItem.Model
+                _ model: Model.New
+            ) async throws -> Model
 
             func update(
-                _ model: MenuItem.Model
-            ) async throws -> MenuItem.Model
+                _ model: Model
+            ) async throws -> Model
 
             func move(
                 id: String,

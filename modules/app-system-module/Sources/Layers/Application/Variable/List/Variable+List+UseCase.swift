@@ -26,17 +26,5 @@ extension Variable.List {
                 try await scope.variable.list(query: queryInput)
             }
         }
-
-        public func count(subject: Subject, input: Input) async throws -> Int {
-            let action = Action()
-            guard try await authorizer.can(subject: subject, perform: action)
-            else {
-                throw AuthError(kind: .forbidden, message: action.key.rawValue)
-            }
-            let queryInput = input.query
-            return try await query.run { scope in
-                try await scope.variable.count(query: queryInput)
-            }
-        }
     }
 }

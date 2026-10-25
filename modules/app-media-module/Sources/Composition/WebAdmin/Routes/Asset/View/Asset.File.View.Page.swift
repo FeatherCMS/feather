@@ -4,17 +4,15 @@ import FeatherWebAdmin
 import Foundation
 import HTML
 import Hummingbird
-import MediaAdminAPI
 import MediaModule
-import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
 
 extension Asset.File.View {
     struct Page: Component {
-        let item: Components.Schemas.MediaAssetDetailSchema
-        let variants: [Components.Schemas.MediaAssetVariantListItemSchema]
+        let item: AdminMediaAsset
+        let variants: [Variant]
         let permissions: AdminListActions
         let routes: Asset.Router.Routes
 
@@ -45,7 +43,10 @@ extension Asset.File.View {
                     )
                 )
                 context.build(
-                    AdminDetailField(label: "Extension", value: item._extension)
+                    AdminDetailField(
+                        label: "Extension",
+                        value: item.`extension`
+                    )
                 )
                 context.build(
                     AdminDetailField(label: "Status", value: item.status)
@@ -103,7 +104,7 @@ extension Asset.File.View {
                                     for variant in variants {
                                         Tr {
                                             Td(variant.name)
-                                            Td(variant._extension)
+                                            Td(variant.fileExtension)
                                             Td(variant.url)
                                             Td {
                                                 context.build(

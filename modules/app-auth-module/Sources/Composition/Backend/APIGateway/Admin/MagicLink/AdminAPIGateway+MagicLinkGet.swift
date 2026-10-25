@@ -10,7 +10,7 @@ extension AdminAPIGateway {
         _ input: Operations.AuthMagicLinkGet.Input
     ) async throws -> Operations.AuthMagicLinkGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = self.useCases.makeGetMagicLink()
+        let useCase = self.useCases.makeDetailMagicLink()
         let result = try await useCase.execute(
             subject: subject,
             input: MagicLink.Detail.Input(id: input.path.authMagicLinkId)

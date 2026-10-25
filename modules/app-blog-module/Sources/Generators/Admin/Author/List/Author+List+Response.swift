@@ -15,13 +15,13 @@ extension Author.List {
     struct ItemSchema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "id": BlogAuthorIdField().reference(),
-                "name": BlogAuthorNameField().reference(),
-                "excerpt": BlogAuthorExcerptField().reference(),
-                "profileImageAssetId": BlogAuthorProfileImageAssetIdField()
+                "id": Author.Schemas.ID().reference(),
+                "name": Author.Schemas.Name().reference(),
+                "excerpt": Author.Schemas.Excerpt().reference(),
+                "profileImageAssetId": Author.Schemas.ProfileImageAssetID()
                     .reference(required: false),
-                "createdAt": BlogAuthorCreatedAtField().reference(),
-                "updatedAt": BlogAuthorUpdatedAtField().reference(),
+                "createdAt": Author.Schemas.CreatedAt().reference(),
+                "updatedAt": Author.Schemas.UpdatedAt().reference(),
             ]
         }
     }

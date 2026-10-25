@@ -7,11 +7,11 @@ extension Variable.Query {
         var operationId: String? { "systemVariableQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: Variable.Query.Schemas.Item(),
+                items: Schemas.Item(),
                 sortFieldKeys: ["key", "name", "value", "notes"],
                 filters: SearchFilterSchema(
                     additionalProperties: [
-                        "ids": Variable.Query.Schemas.Filter()
+                        "ids": Schemas.Filter()
                     ]
                 )
             )

@@ -1,21 +1,7 @@
 import FeatherDBAL
 public import FeatherInfrastructure
 public import NewsletterApplication
-public import NewsletterDomain
 public import NewsletterModule
-
-extension Campaign.Table.List {
-    var asDomain: Campaign.Model {
-        .init(
-            id: id,
-            key: key,
-            name: name,
-            fromEmail: fromEmail,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}
 
 extension Campaign.List.Query {
     public struct Database: Interface {
@@ -25,11 +11,22 @@ extension Campaign.List.Query {
             self.accessLayer = .init(context: context)
         }
 
-        public func list() async throws -> [Campaign.Model] {
-            try await accessLayer.select {
+        public func list() async throws -> Campaign.List.Output {
+            let rows = try await accessLayer.select {
                 $0.order(by: \.name).order(by: \.id)
             }
-            .map(\.asDomain)
+            return .init(
+                items: rows.map {
+                    .init(
+                        id: $0.id,
+                        key: $0.key,
+                        name: $0.name,
+                        fromEmail: $0.fromEmail,
+                        createdAt: $0.createdAt,
+                        updatedAt: $0.updatedAt
+                    )
+                }
+            )
         }
     }
 }

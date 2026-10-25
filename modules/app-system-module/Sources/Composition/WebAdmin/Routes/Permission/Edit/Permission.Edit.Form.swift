@@ -28,7 +28,7 @@ extension Permission.Edit {
                 )
             }
 
-            static func from(input: Permission.Edit.Form.Input) -> Self {
+            static func from(input: Form.Input) -> Self {
                 .init(
                     key: .init(
                         name: "key",

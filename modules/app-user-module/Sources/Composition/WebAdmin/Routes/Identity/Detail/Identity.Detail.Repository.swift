@@ -11,6 +11,6 @@ extension Identity.Detail.Repository {
 
         func load(
             id: String
-        ) async throws -> Identity.Detail.Repository.Model
+        ) async throws -> Model
     }
 }

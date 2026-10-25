@@ -18,17 +18,7 @@ extension AdminAPIGateway {
 
         let subject = try await CurrentSubject.require()
         let useCase = self.useCases.makeSearchCredentials()
-        let listQuery = mapCredentialSearchQuery(query)
-        let objectQuery = Credential.Search.Input.Query(
-            page: listQuery.page,
-            sort: listQuery.sort.map {
-                .init(
-                    field: .init(rawValue: $0.field.rawValue) ?? .userId,
-                    direction: $0.direction
-                )
-            },
-            search: listQuery.search
-        )
+        let searchQuery = mapCredentialSearchQuery(query)
         let userId =
             query.filters.userId?.isEmpty == true
             ? nil
@@ -37,7 +27,7 @@ extension AdminAPIGateway {
         let result = try await useCase.execute(
             subject: subject,
             input: .init(
-                query: objectQuery,
+                query: searchQuery,
                 userId: userId
             )
         )
@@ -75,7 +65,7 @@ extension AdminAPIGateway {
     private func mapCredentialSearchQuery(
         _ query: Components.Schemas
             .AuthCredentialQueryItemSearchRequestQuerySchema
-    ) -> Credential.List.Input.Query {
+    ) -> Credential.Search.Input.Query {
         .init(
             page: .init(
                 size: query.page?.size ?? 20,
@@ -83,7 +73,7 @@ extension AdminAPIGateway {
             ),
             sort: (query.sort ?? [])
                 .map { rule in
-                    let field: Credential.List.Input.Query.Sort.Field
+                    let field: Credential.Search.Input.Query.Sort.Field
                     switch rule.field {
                     case .userId: field = .userId
                     case .email: field = .email

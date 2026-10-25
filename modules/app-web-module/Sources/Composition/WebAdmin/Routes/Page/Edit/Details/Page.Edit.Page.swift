@@ -39,6 +39,7 @@ extension Page.Edit {
                 context.build(
                     Page.Form.Component(
                         state: state.form,
+                        mediaAssetList: state.routes.mediaAssetList,
                         metadataHref: state.routes.metadataPath(
                             pageID: state.id,
                             metadataID: state.id

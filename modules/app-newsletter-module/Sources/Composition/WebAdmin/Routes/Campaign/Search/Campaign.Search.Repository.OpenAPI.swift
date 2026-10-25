@@ -13,7 +13,7 @@ extension Campaign.Search.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func searchCampaigns(
+        func search(
             page: Int,
             search: String?
         ) async throws -> Campaign.Search.Model {

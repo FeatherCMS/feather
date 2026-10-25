@@ -11,7 +11,7 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        try await useCases.makeSendNewsletterTestEmail()
+        try await useCases.makeSendTestEmail()
             .execute(
                 subject: subject,
                 input: .init(

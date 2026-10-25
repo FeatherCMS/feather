@@ -173,8 +173,7 @@ struct UserApplicationUseCasesTests {
             roles: ["admin"]
         )
         let query = TestIdentityListQuery(
-            result: .init(items: [item]),
-            count: 8
+            result: .init(items: [item])
         )
         let executor = MockQueryExecutor(
             context: Identity.List.Scope(identity: query)
@@ -189,12 +188,7 @@ struct UserApplicationUseCasesTests {
             subject: Subject(id: "subject-identity-list"),
             input: input
         )
-        let count = try await useCase.count(
-            subject: Subject(id: "subject-identity-list"),
-            input: input
-        )
         #expect(result.items.map(\.id) == ["i-2"])
-        #expect(count == 8)
         #expect(await query.lastQuery?.search == "identity")
 
         let forbiddenExecutor = MockQueryExecutor(
@@ -218,8 +212,7 @@ struct UserApplicationUseCasesTests {
         let query = TestRoleListQuery(
             result: .init(items: [
                 .init(id: "r-2", key: "editor", name: "Editor")
-            ]),
-            count: 4
+            ])
         )
         let executor = MockQueryExecutor(context: Role.List.Scope(role: query))
         let useCase = Role.List.UseCase(
@@ -232,12 +225,7 @@ struct UserApplicationUseCasesTests {
             subject: Subject(id: "subject-role-list"),
             input: input
         )
-        let count = try await useCase.count(
-            subject: Subject(id: "subject-role-list"),
-            input: input
-        )
         #expect(result.items.map(\.id) == ["r-2"])
-        #expect(count == 4)
         #expect(await query.lastQuery?.search == "edit")
 
         let forbiddenExecutor = MockQueryExecutor(
@@ -248,7 +236,7 @@ struct UserApplicationUseCasesTests {
             query: forbiddenExecutor
         )
         await #expect(throws: AuthError.self) {
-            _ = try await forbiddenUseCase.count(
+            _ = try await forbiddenUseCase.execute(
                 subject: Subject(id: "subject-role-list"),
                 input: input
             )
@@ -569,11 +557,9 @@ private actor TestRoleDetailQuery: Role.Detail.Query.Interface {
 private actor TestIdentityListQuery: Identity.List.Query.Interface {
     private(set) var lastQuery: Identity.List.Input.Query?
     private let result: Identity.List.Output
-    private let resultCount: Int
 
-    init(result: Identity.List.Output, count: Int) {
+    init(result: Identity.List.Output) {
         self.result = result
-        self.resultCount = count
     }
 
     func list(query: Identity.List.Input.Query) async throws
@@ -583,20 +569,14 @@ private actor TestIdentityListQuery: Identity.List.Query.Interface {
         return result
     }
 
-    func count(query: Identity.List.Input.Query) async throws -> Int {
-        lastQuery = query
-        return resultCount
-    }
 }
 
 private actor TestRoleListQuery: Role.List.Query.Interface {
     private(set) var lastQuery: Role.List.Input.Query?
     private let result: Role.List.Output
-    private let resultCount: Int
 
-    init(result: Role.List.Output, count: Int) {
+    init(result: Role.List.Output) {
         self.result = result
-        self.resultCount = count
     }
 
     func list(query: Role.List.Input.Query) async throws -> Role.List.Output {
@@ -604,8 +584,4 @@ private actor TestRoleListQuery: Role.List.Query.Interface {
         return result
     }
 
-    func count(query: Role.List.Input.Query) async throws -> Int {
-        lastQuery = query
-        return resultCount
-    }
 }

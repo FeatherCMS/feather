@@ -4,6 +4,8 @@ import BlogModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import WebModule
+import WebModuleWebAdmin
 
 extension Tag.List {
     struct Router {
@@ -17,8 +19,23 @@ extension Tag.List {
         ) {
             self.routes = routes
             self.controller = Controller.Default(
-                environment: environment,
                 routes: routes,
+                buildViewRepository: { context in
+                    Tag.View.Repository.OpenAPI(
+                        api: API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                },
+                buildStatusRepository: { context in
+                    WebModule.Metadata.Status.Repository.OpenAPI(
+                        api: WebModuleWebAdmin.API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                },
                 buildRuntime: { request, context in
                     WebAdminRuntime(
                         interactor: Interactor.Default(

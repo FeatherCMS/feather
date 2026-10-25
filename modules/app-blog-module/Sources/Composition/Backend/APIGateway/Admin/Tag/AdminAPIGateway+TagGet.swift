@@ -12,7 +12,7 @@ extension AdminAPIGateway {
     public func blogTagGet(
         _ input: Operations.BlogTagGet.Input
     ) async throws -> Operations.BlogTagGet.Output {
-        let useCase = self.useCases.makeGetTag()
+        let useCase = self.useCases.makeDetailTag()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(
             subject: subject,

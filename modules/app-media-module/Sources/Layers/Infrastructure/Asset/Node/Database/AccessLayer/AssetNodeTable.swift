@@ -141,7 +141,7 @@ extension Asset.Node {
                     parentId: row.parentId,
                     name: row.name,
                     slug: row.slug,
-                    absoluteSlug: Asset.Node.SlugPath.parent(of: row.slugPath)
+                    absoluteSlug: SlugPath.parent(of: row.slugPath)
                 )
             )
             guard let result = try await find(id: row.id) else {
@@ -159,13 +159,13 @@ extension Asset.Node {
                     parentId: row.parentId,
                     name: row.name,
                     slug: row.slug,
-                    absoluteSlug: Asset.Node.SlugPath.parent(of: row.slugPath)
+                    absoluteSlug: SlugPath.parent(of: row.slugPath)
                 ),
                 where: \.id,
                 equals: row.id
             )
             if old.slugPath != row.slugPath {
-                try await AssetNodeSubtreeUpdateQuery(connection: connection)
+                try await SubtreeUpdateQuery(connection: connection)
                     .update(
                         oldSlugPath: old.slugPath,
                         newSlugPath: row.slugPath
@@ -186,8 +186,8 @@ extension Asset.Node {
         }
 
         func find(slugPath: String) async throws -> Row? {
-            let absoluteSlug = Asset.Node.SlugPath.parent(of: slugPath)
-            let slug = Asset.Node.SlugPath.slug(of: slugPath)
+            let absoluteSlug = SlugPath.parent(of: slugPath)
+            let slug = SlugPath.slug(of: slugPath)
             return try await connection.run(
                 query: #"""
                     SELECT id, parent_id, name, slug,

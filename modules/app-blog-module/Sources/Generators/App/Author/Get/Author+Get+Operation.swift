@@ -6,7 +6,7 @@ extension Author.Get {
     struct Operation: BlogOperation {
         var operationId: String? { "blogAuthorGet" }
         var parameters: [any ParameterRepresentable] {
-            [BlogAuthorIdParameter().reference()]
+            [Author.Parameters.ID().reference()]
         }
         var responseMap: ResponseMap {
             [

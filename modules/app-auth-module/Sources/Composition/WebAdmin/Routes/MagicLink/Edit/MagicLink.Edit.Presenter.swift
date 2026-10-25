@@ -25,7 +25,7 @@ extension MagicLink.Edit.Presenter {
 
         func formState(
             credentialId: String,
-            emails: [AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail],
+            emails: [Email.Option],
             isPersistent: Bool
         ) -> MagicLink.Add.Form.State
 

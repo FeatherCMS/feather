@@ -1,4 +1,3 @@
-import AnalyticsAdminAPI
 import AnalyticsModule
 import CSS
 import FeatherWebAdmin
@@ -11,7 +10,7 @@ import WebComponents
 
 extension NotFound.View {
     struct Component: WebComponents.Component {
-        let model: NotFound.View.Model
+        let model: Model
 
         func rules() -> [any Rule] {
             Media {

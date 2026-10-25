@@ -5,13 +5,13 @@ extension Category.Query {
         var openAPIIdentifier: String { "NewsCategoryQueryItemSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": NewsAdminOpenAPIComponents.StringField(),
-                "title": NewsAdminOpenAPIComponents.StringField(),
-                "excerpt": NewsAdminOpenAPIComponents.StringField(),
-                "imageAssetId": NewsAdminOpenAPIComponents.StringField()
+                "id": Category.Schemas.StringField(),
+                "title": Category.Schemas.StringField(),
+                "excerpt": Category.Schemas.StringField(),
+                "imageAssetId": Category.Schemas.StringField()
                     .reference(required: false),
-                "createdAt": NewsAdminOpenAPIComponents.TimestampField(),
-                "updatedAt": NewsAdminOpenAPIComponents.TimestampField(),
+                "createdAt": Category.Schemas.TimestampField(),
+                "updatedAt": Category.Schemas.TimestampField(),
             ]
         }
     }

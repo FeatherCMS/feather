@@ -531,25 +531,19 @@ components:
       properties:
         firstName:
           type: string
-          nullable: true
         lastName:
           type: string
-          nullable: true
         profileImageAssetId:
           type: string
-          nullable: true
     AccountProfileUpdateSchema:
       type: object
       properties:
         firstName:
           type: string
-          nullable: true
         lastName:
           type: string
-          nullable: true
         profileImageAssetId:
           type: string
-          nullable: true
     AccountSettingsDetailSchema:
       type: object
       properties:

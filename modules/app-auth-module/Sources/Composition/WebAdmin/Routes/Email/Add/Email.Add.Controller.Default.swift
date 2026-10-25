@@ -18,6 +18,7 @@ import WebComponents
 
 extension Email.Add.Controller {
     struct Default: Interface {
+        let routes: Email.Router.Routes
 
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
@@ -98,7 +99,7 @@ extension Email.Add.Controller {
                     )
                 )
                 return AdminNotificationFlash.redirect(
-                    to: "/admin/auth/emails/",
+                    to: routes.list.path,
                     notification: .init(
                         title: "Added",
                         message: "User email added successfully."

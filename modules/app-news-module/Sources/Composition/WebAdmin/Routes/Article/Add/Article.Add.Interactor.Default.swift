@@ -1,5 +1,4 @@
 import NewsApplication
-import NewsAdminAPI
 import NewsModule
 
 extension Article.Add.Interactor {
@@ -11,7 +10,7 @@ extension Article.Add.Interactor {
         }
 
         func create(
-            input: Components.Schemas.NewsArticleCreateSchema
+            input: Article.Form.Input
         ) async throws {
             try await repository.create(input: input)
         }

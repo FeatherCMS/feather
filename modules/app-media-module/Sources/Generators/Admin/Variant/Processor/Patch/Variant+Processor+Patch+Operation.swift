@@ -6,17 +6,17 @@ extension Variant.Processor.Patch {
         var operationId: String? { "mediaVariantProcessorPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                MediaVariantIdParameter().reference(),
-                MediaVariantProcessorIdParameter().reference(),
-                MediaVariantProcessorUpdateMaskParameter().reference(),
+                Variant.Parameters.ID().reference(),
+                Variant.Processor.Parameters.ID().reference(),
+                Variant.Processor.Parameters.UpdateMask().reference(),
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            MediaVariantProcessorPatchRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: MediaVariantProcessorDetailResponse().reference(),
+                200: Variant.Processor.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Invalid update mask"
                 ),

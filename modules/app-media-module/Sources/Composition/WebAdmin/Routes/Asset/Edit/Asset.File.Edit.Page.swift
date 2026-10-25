@@ -14,7 +14,7 @@ import WebComponents
 extension Asset.File.Edit {
     struct Page: Component {
         struct State {
-            let model: Asset.File.Edit.Model
+            let model: Model
             let permissions: AdminListActions
             let routes: Asset.Router.Routes
         }

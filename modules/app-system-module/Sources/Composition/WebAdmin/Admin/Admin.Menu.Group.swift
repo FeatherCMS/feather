@@ -4,7 +4,7 @@ extension Admin.Menu {
     public enum Group {}
     }
 
-    extension Admin.Menu.Group {
+    extension Group {
     public struct Definition: Sendable {
         public let key: String
         public let groupKey: String

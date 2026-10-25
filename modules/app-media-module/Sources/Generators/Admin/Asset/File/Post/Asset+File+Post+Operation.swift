@@ -6,19 +6,19 @@ extension Asset.File.Post {
         var operationId: String? { "mediaAssetPost" }
         var parameters: [any ParameterRepresentable] {
             [
-                MediaAssetParentIDHeader().reference(),
-                MediaAssetFileNameHeader().reference(),
-                MediaAssetExtensionHeader().reference(),
-                MediaAssetTitleHeader().reference(),
-                MediaAssetAltTextHeader().reference(),
+                Parameters.ParentID().reference(),
+                Parameters.FileName().reference(),
+                Parameters.Extension().reference(),
+                Parameters.Title().reference(),
+                Parameters.AltText().reference(),
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            MediaAssetCreateRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                201: MediaAssetDetailResponse().reference(),
+                201: Asset.File.Get.Response().reference(),
                 409: CustomResponse(
                     description: "A media asset with this path already exists"
                 ),

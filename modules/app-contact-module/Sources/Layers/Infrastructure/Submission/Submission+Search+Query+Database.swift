@@ -31,7 +31,7 @@ extension Submission.Search.Query {
                     .replacingOccurrences(of: "_", with: "!_")
                     + "%"
             }
-            let searchTable = SubmissionSearchQueryTable(
+            let searchTable = AccessLayer(
                 connection: context.connection
             )
             let rows = try await searchTable.items(

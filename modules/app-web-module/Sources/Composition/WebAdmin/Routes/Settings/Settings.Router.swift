@@ -9,9 +9,15 @@ extension Settings {
         struct Routes: Sendable {
             let edit: WebRoute
             let breadcrumb: [AdminBreadcrumb.Link]
+            let mediaAssetList: WebRoute
 
-            init(edit: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
+            init(
+                edit: WebRoute,
+                breadcrumb: [AdminBreadcrumb.Link],
+                mediaAssetList: WebRoute
+            ) {
                 self.edit = edit
+                self.mediaAssetList = mediaAssetList
                 self.breadcrumb =
                     breadcrumb + [
                         .init(label: "Settings", link: edit.path)
@@ -24,7 +30,7 @@ extension Settings {
         let routes: Routes
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            Settings.Edit
+            Edit
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,

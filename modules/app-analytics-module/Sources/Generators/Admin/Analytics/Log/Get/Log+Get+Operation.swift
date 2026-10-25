@@ -6,7 +6,7 @@ extension Analytics.Log.Get {
         var operationId: String? { "analyticsLogGet" }
         var responseMap: ResponseMap {
             [
-                200: AnalyticsLogDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "AnalyticsLog not found"),
             ]
         }

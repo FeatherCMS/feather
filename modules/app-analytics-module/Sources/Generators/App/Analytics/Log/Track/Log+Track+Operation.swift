@@ -4,10 +4,10 @@ import FeatherOpenAPIGenerator
 extension Analytics.Log.Track {
     struct Operation: OperationRepresentable {
         var operationId: String? { "analyticsLogTrack" }
-        var tags: [any TagRepresentable] { [AppAnalyticsLogTag()] }
+        var tags: [any TagRepresentable] { [Analytics.Log.Tag()] }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            AnalyticsLogTrackRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {

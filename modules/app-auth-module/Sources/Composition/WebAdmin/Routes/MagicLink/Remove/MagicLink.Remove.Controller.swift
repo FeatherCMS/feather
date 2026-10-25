@@ -30,12 +30,3 @@ extension MagicLink.Remove.Controller {
     }
 }
 
-extension MagicLink.Remove.Controller.Interface {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: MagicLink.Router.Routes
-    ) {
-        router.post(routes.remove.routerPath, use: postAuthMagicLinksRemove)
-    }
-}

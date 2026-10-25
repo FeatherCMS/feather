@@ -2,9 +2,7 @@ import AccountModule
 
 extension Invitation.Detail.Interactor {
 
-    struct Default:
-        Invitation.Detail.Interactor.Interface
-    {
+    struct Default: Interface {
         let repository: any Invitation.Detail.Repository.Interface
         let roleNamesProvider: @Sendable ([String]) async -> [String]
 

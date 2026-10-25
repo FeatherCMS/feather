@@ -38,7 +38,8 @@ extension MagicLink.Add.Presenter {
                 content: MagicLink.Add.Page(
                     state: .init(
                         form: form,
-                        breadcrumb: routes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
                     )
                 )
             )
@@ -61,8 +62,7 @@ extension MagicLink.Add.Presenter {
 
         func formState(
             credentialId: String = "",
-            emails: [AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail] =
-                [],
+            emails: [Email.Option] = [],
             isPersistent: Bool = false
         ) -> MagicLink.Add.Form.State {
             .init(

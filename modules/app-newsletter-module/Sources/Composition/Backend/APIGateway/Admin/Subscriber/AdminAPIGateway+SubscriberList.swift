@@ -12,7 +12,7 @@ extension AdminAPIGateway {
         let subject = try await CurrentSubject.require()
         let result =
             try await useCases
-            .makeListNewsletterSubscribers()
+            .makeListSubscribers()
             .execute(
                 subject: subject,
                 input: .init(campaignKey: input.path.newsletterCampaignKey)
@@ -34,7 +34,7 @@ extension AdminAPIGateway {
     private func map(
         _ value: Subscriber.List.Item,
         campaignKey: String
-    ) -> Components.Schemas.NewsletterSubscriberSchema {
+    ) -> Components.Schemas.NewsletterSubscriberListItemSchema {
         .init(
             id: subscriberID(value.email),
             campaignKey: campaignKey,

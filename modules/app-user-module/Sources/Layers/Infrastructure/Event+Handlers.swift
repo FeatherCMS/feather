@@ -21,7 +21,7 @@ extension UserModule.Event {
 
             registry.register(
                 event: Role.Event.Seed.Provider.self,
-                context: UserModule.Event.Context.self
+                context: Context.self
             ) { _, _ in
                 [
                     .init(
@@ -33,7 +33,7 @@ extension UserModule.Event {
 
             registry.register(
                 event: Identity.Event.Seed.Provider.self,
-                context: UserModule.Event.Context.self
+                context: Context.self
             ) { _, context in
                 [
                     .init(

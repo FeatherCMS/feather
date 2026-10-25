@@ -1,8 +1,8 @@
 public import Foundation
 public import WebModule
 
-public struct NewsWebTemplateProvider: TemplateProvider {
-    public let templates: [TemplateDefinition] = [
+public struct NewsWebTemplateProvider: WebModule.Template.Provider {
+    public let templates: [WebModule.Template.Definition] = [
         .init(
             id: "news.article",
             title: "News article",

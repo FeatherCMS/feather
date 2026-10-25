@@ -20,7 +20,7 @@ extension Tag.View {
                 buildRuntime: { request, context in
                     WebAdminRuntime(
                         interactor: Interactor.Default(
-                            repository: Tag.View.Repository.OpenAPI(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context

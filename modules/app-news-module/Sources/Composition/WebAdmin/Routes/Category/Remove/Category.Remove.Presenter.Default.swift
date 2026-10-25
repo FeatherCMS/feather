@@ -1,7 +1,6 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import NewsAdminAPI
 import NewsApplication
 import NewsModule
 
@@ -13,7 +12,7 @@ extension Category.Remove.Presenter {
         let routes: Category.Router.Routes
 
         func renderRemoveConfirmation(
-            item: Components.Schemas.NewsCategoryDetailSchema
+            item: Category.Detail.Model
         ) async throws -> Response {
             let nonce = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken

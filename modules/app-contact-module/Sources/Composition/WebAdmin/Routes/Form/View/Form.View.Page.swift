@@ -31,6 +31,7 @@ extension ContactModule.Form.View {
                 context.build(
                     ContactModule.Form.TabBar(
                         formId: item.key,
+                        routes: routes,
                         active: .details
                     )
                 )

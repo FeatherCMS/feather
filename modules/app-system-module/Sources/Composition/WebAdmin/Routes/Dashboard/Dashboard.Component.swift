@@ -10,6 +10,7 @@ import WebComponents
 extension Dashboard {
     struct Component: WebComponents.Component {
         let model: Model
+        let adminPath: String
 
         func rules() -> [any Rule] {
             Media {
@@ -179,7 +180,7 @@ extension Dashboard {
                 Div {
                     context.build(
                         AdminBreadcrumb(
-                            links: [.init(label: "Admin", link: "/admin/")]
+                            links: [.init(label: "Admin", link: adminPath)]
                         )
                     )
                     context.build(

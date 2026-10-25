@@ -1,2 +1,1 @@
-public enum Authorization {
-}
+public enum Authorization {}

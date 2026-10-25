@@ -2,6 +2,8 @@ import NewsApplication
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import MediaWebAdmin
+import MediaModule
 import NewsModule
 
 extension Category.Add {
@@ -29,7 +31,8 @@ extension Category.Add {
                         presenter: Presenter.Default(
                             request: request,
                             context: context,
-                            mediaAPI: api.mediaAdminAPI(),
+                            mediaRepository: MediaModule.Asset.File.View
+                                .Repository.OpenAPI(api: api.mediaAdminAPI()),
                             renderingEngine: renderingEngine,
                             routes: routes
                         )

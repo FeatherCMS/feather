@@ -20,7 +20,7 @@ extension Author.List {
             let canAccess: Bool
             let canEdit: Bool
             let canAdd: Bool
-            let items: [Author.List.Item]
+            let items: [Item]
             let pageState: AdminListPageState
             let search: String
             let permissions: AdminListActions
@@ -93,7 +93,7 @@ extension Author.List {
                                             id: statusFormID(item.id),
                                             action:
                                                 state.routes
-                                                .authorStatus(item.id),
+                                                .authorStatusPath(item.id),
                                             returnTo: state.routes.authors.path
                                         )
                                     )
@@ -103,7 +103,7 @@ extension Author.List {
                                 AdminListSelectionForm(
                                     state: .init(
                                         action: state.routes
-                                            .authorRemove(),
+                                            .authorRemovePath(),
                                         pageState: state.pageState,
                                         search: state.search,
                                         button: .init(
@@ -180,7 +180,7 @@ extension Author.List {
                                                                     .href(
                                                                         state
                                                                             .routes
-                                                                            .author(
+                                                                            .authorPath(
                                                                                 item
                                                                                     .id
                                                                             )
@@ -259,7 +259,7 @@ extension Author.List {
                                                                             href:
                                                                                 state
                                                                                 .routes
-                                                                                .author(
+                                                                                .authorPath(
                                                                                     item
                                                                                         .id
                                                                                 ),
@@ -277,7 +277,7 @@ extension Author.List {
                                                                             href:
                                                                                 state
                                                                                 .routes
-                                                                                .authorEdit(
+                                                                                .authorEditPath(
                                                                                     item
                                                                                         .id
                                                                                 ),
@@ -298,7 +298,7 @@ extension Author.List {
                                                                                     path:
                                                                                         state
                                                                                         .routes
-                                                                                        .authorRemove(),
+                                                                                        .authorRemovePath(),
                                                                                     ids: [
                                                                                         item
                                                                                             .id
@@ -354,7 +354,7 @@ extension Author.List {
                                     context.build(
                                         AdminButton(
                                             "Add author",
-                                            href: state.routes.authorAdd()
+                                            href: state.routes.authorAddPath()
                                         )
                                     )
                                 }

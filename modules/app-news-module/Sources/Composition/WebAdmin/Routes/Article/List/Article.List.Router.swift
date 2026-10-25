@@ -6,7 +6,7 @@ import NewsModule
 
 extension Article.List {
     struct Router: Sendable {
-        let controller: any Article.List.Controller.Interface
+        let controller: any Controller.Interface
         let routes: Article.Router.Routes
 
         init(
@@ -15,19 +15,19 @@ extension Article.List {
             routes: Article.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Article.List.Controller.Default(
+            self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     let api = API.Client(
                         environment: environment,
                         requestContext: context
                     )
-                    return Article.List.Runtime(
-                        interactor: Article.List.Interactor.Default(
-                            repository: Article.List.Repository.OpenAPI(
+                    return Runtime(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: api
                             )
                         ),
-                        presenter: Article.List.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderingEngine: renderingEngine,

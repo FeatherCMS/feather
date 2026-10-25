@@ -44,12 +44,12 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
     func newsletterIssueUpdate(_ input: Operations.NewsletterIssueUpdate.Input) async throws -> Operations.NewsletterIssueUpdate.Output
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
-    func newsletterIssueDeliveryList(_ input: Operations.NewsletterIssueDeliveryList.Input) async throws -> Operations.NewsletterIssueDeliveryList.Output
     /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
     func newsletterIssueTestEmail(_ input: Operations.NewsletterIssueTestEmail.Input) async throws -> Operations.NewsletterIssueTestEmail.Output
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
+    func newsletterIssueDeliveryList(_ input: Operations.NewsletterIssueDeliveryList.Input) async throws -> Operations.NewsletterIssueDeliveryList.Output
     /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/get(newsletterSubscriberList)`.
     func newsletterSubscriberList(_ input: Operations.NewsletterSubscriberList.Input) async throws -> Operations.NewsletterSubscriberList.Output
@@ -225,17 +225,6 @@ extension APIProtocol {
             body: body
         ))
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
-    public func newsletterIssueDeliveryList(
-        path: Operations.NewsletterIssueDeliveryList.Input.Path,
-        headers: Operations.NewsletterIssueDeliveryList.Input.Headers = .init()
-    ) async throws -> Operations.NewsletterIssueDeliveryList.Output {
-        try await newsletterIssueDeliveryList(Operations.NewsletterIssueDeliveryList.Input(
-            path: path,
-            headers: headers
-        ))
-    }
     /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
     public func newsletterIssueTestEmail(
@@ -247,6 +236,17 @@ extension APIProtocol {
             path: path,
             headers: headers,
             body: body
+        ))
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
+    public func newsletterIssueDeliveryList(
+        path: Operations.NewsletterIssueDeliveryList.Input.Path,
+        headers: Operations.NewsletterIssueDeliveryList.Input.Headers = .init()
+    ) async throws -> Operations.NewsletterIssueDeliveryList.Output {
+        try await newsletterIssueDeliveryList(Operations.NewsletterIssueDeliveryList.Input(
+            path: path,
+            headers: headers
         ))
     }
     /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.

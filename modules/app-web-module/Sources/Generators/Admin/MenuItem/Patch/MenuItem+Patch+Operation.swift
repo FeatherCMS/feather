@@ -13,12 +13,12 @@ extension MenuItem.Patch {
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            MenuItemPatchRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                200: MenuItemDetailResponse().reference(),
+                200: MenuItem.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),

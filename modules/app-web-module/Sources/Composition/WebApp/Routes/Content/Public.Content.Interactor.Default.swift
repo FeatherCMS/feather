@@ -15,7 +15,7 @@ extension Public.Content.Interactor {
             slug: String
         ) async throws -> Public.Content.Model {
             let metadata = try await repository.resolveWebRoute(slug: slug)
-            let baseMetadata: PublicContent.Metadata.Base
+            let baseMetadata: FeatherModuleKit.PublicContent.Metadata.Base
             let status: HTTPResponse.Status
 
             if let metadata {
@@ -50,8 +50,8 @@ extension Public.Content.Interactor {
 
         func resolveRSS() async throws -> Public.RSS.Model {
             let results = try await events.trigger(
-                event: RSSContentProvider(),
-                using: RSSContentEventContext(runtime: runtime)
+                event: WebModule.Public.RSS.Event.Provider(),
+                using: WebModule.Public.RSS.Event.Context(runtime: runtime)
             )
             let settings = try await repository.publicSiteSettings()
             return .init(
@@ -70,16 +70,16 @@ extension Public.Content.Interactor {
         }
 
         private func resolveResults(
-            baseMetadata: PublicContent.Metadata.Base
-        ) async throws -> [PublicContentProvider.Output] {
-            let eventContext = PublicContentEventContext<
+            baseMetadata: FeatherModuleKit.PublicContent.Metadata.Base
+        ) async throws -> [WebModule.Public.Content.Event.Provider.Output] {
+            let eventContext = WebModule.Public.Content.Event.Context<
                 PublicContentRuntimeContext
             >(
                 baseMetadata: baseMetadata,
                 runtime: runtime
             )
             let results = try await events.trigger(
-                event: PublicContentProvider(),
+                event: WebModule.Public.Content.Event.Provider(),
                 using: eventContext
             )
             return results

@@ -14,6 +14,8 @@ import WebModuleWebApp
 func buildAppRoutes(
     router: Hummingbird.Router<DefaultRequestContext>,
     environment: AppEnvironment,
+    contactSubmissionRoutes: Submission.Router.Routes,
+    newsletterSubmissionRoute: Campaign.Subscription.Route,
     publicPageRenderer: any PublicPageRenderer,
     themeRenderer: DefaultThemeRenderer,
     publicContentEvents: any EventPublisher,
@@ -26,9 +28,16 @@ func buildAppRoutes(
     )
     .route(on: router)
 
-    Submission.Router(environment: environment).route(on: router)
+    Submission.Router(
+        environment: environment,
+        routes: contactSubmissionRoutes
+    )
+    .route(on: router)
 
-    Campaign.Subscription.Router(environment: environment)
+    Campaign.Subscription.Router(
+        environment: environment,
+        route: newsletterSubmissionRoute
+    )
         .route(on: router)
 
     Public.Content

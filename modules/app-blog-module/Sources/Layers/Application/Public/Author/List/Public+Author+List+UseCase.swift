@@ -34,14 +34,13 @@ extension Public.Author.List {
                     else {
                         continue
                     }
-                    let author = try await scope.authorDetail.find(id: item.id)
                     result.append(
                         .init(
-                            id: author.id,
-                            name: author.name,
-                            excerpt: author.excerpt,
-                            content: author.content,
-                            imageAssetId: author.profileImageAssetId,
+                            id: item.id,
+                            name: item.name,
+                            excerpt: item.excerpt,
+                            content: item.content,
+                            imageAssetId: item.profileImageAssetId,
                             imageURL: "",
                             media: nil,
                             metadata: metadata

@@ -1,3 +1,3 @@
 enum Post {
-
+    enum Parameters {}
 }

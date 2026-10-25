@@ -11,7 +11,7 @@ import WebComponents
 extension ContactModule.Form.Search {
     struct Page: Component {
         struct State {
-            let items: [ContactModule.Form.Search.Model.Item]
+            let items: [Model.Item]
             let pageState: AdminListPageState
             let search: String
             let permissions: AdminListActions
@@ -37,7 +37,7 @@ extension ContactModule.Form.Search {
                     )
                 )
                 context.build(
-                    ContactModule.Form.Search.Page.Content(
+                    Page.Content(
                         items: state.items,
                         pageState: state.pageState,
                         search: state.search,

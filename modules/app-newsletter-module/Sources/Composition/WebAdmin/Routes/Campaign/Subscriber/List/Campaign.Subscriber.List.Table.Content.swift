@@ -9,7 +9,7 @@ import WebComponents
 extension Campaign.Subscriber.List {
     struct Content: Component {
         let newsletterId: String
-        let items: [Campaign.Subscriber.List.Item]
+        let items: [Item]
         let pageState: AdminListPageState
         let search: String?
         let permissions: AdminListActions

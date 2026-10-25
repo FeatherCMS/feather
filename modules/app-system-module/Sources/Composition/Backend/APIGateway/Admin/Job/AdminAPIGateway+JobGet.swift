@@ -9,7 +9,7 @@ extension AdminAPIGateway {
         _ input: Operations.SystemJobGet.Input
     ) async throws -> Operations.SystemJobGet.Output {
         let subject = try await CurrentSubject.require()
-        let job = try await self.useCases.makeGetJob()
+        let job = try await self.useCases.makeDetailJob()
             .execute(
                 subject: subject,
                 input: .init(id: input.path.systemJobId)

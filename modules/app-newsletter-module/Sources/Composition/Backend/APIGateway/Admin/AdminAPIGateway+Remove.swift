@@ -11,7 +11,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeRemoveNewsletterCampaign()
+        let useCase = useCases.makeRemoveCampaign()
         _ = try await useCase.execute(
             subject: subject,
             input: .init(keys: body.ids)
@@ -27,7 +27,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeRemoveNewsletterIssue()
+        let useCase = useCases.makeRemoveIssue()
         _ = try await useCase.execute(
             subject: subject,
             input: .init(
@@ -46,7 +46,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeRemoveNewsletterSubscriber()
+        let useCase = useCases.makeRemoveSubscriber()
         _ = try await useCase.execute(
             subject: subject,
             input: .init(

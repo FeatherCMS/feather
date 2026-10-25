@@ -32,13 +32,13 @@ actor MockInvitationQueries: Invitation.Detail.Query.Interface,
         self.tokenResult = tokenResult
     }
 
-    func getBy(
+    func find(
         id: String
     ) async throws -> Invitation.Detail.Output {
         fatalError("not needed in tests")
     }
 
-    func getBy(
+    func find(
         token: String
     ) async throws -> Invitation.Validate.Output {
         guard let tokenResult else { fatalError("not needed in tests") }

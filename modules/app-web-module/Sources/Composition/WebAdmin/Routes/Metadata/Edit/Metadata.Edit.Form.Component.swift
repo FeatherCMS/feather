@@ -1,4 +1,5 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import OpenAPIRuntime
 import SGML
@@ -28,7 +29,7 @@ extension WebModule.Metadata.Edit.Form {
             var referenceId: FieldState?
             var slug: FieldState
             var template: FieldState
-            var templateOptions: [PageTemplateOption]
+            var templateOptions: [WebModule.Metadata.Edit.TemplateOption]
             var publicationDate: FieldState
             var expirationDate: FieldState
             var status: FieldState
@@ -68,6 +69,7 @@ extension WebModule.Metadata.Edit.Form {
         }
 
         var state: State
+        var mediaAssetList: WebRoute
         var action: String
         var submitLabel: String
         var removeHref: String? = nil
@@ -175,7 +177,8 @@ extension WebModule.Metadata.Edit.Form {
                         showTemplate: true,
                         templateOptions: state.templateOptions.map {
                             .init(label: $0.title, value: $0.value)
-                        }
+                        },
+                        mediaAssetList: mediaAssetList
                     )
                 )
 

@@ -6,7 +6,7 @@ extension Auth.MagicLink {
         var operationId: String? { "authMagicLink" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            Auth.MagicLink.RequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {

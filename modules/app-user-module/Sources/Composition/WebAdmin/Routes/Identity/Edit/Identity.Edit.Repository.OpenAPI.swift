@@ -5,9 +5,7 @@ import UserAdminAPI
 import UserModule
 
 extension Identity.Edit.Repository {
-    struct OpenAPI:
-        Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
         func load(
             id: String

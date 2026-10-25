@@ -10,8 +10,8 @@ extension AdminAPIGateway {
         _ input: Operations.UserIdentitySessionList.Input
     ) async throws -> Operations.UserIdentitySessionList.Output {
         let subject = try await CurrentSubject.require()
-        let sessions = useCases.makeListIdentitySessions()
-        let result = try await sessions.execute(
+        let useCase = useCases.makeListSessions()
+        let result = try await useCase.execute(
             subject: subject,
             input: .init(identityId: input.path.userIdentityId)
         )
@@ -28,7 +28,7 @@ extension AdminAPIGateway {
 
 extension AdminAPIGateway {
     private func mapSession(
-        _ item: Session.ListByIdentity.Output.Item
+        _ item: Session.List.Output.Item
     ) -> AuthAdminAPI.Components.Schemas.UserAuthSessionListItemSchema {
         .init(
             id: item.id,

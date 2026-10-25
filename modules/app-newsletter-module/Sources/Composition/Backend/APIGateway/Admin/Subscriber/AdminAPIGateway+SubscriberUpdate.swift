@@ -32,7 +32,7 @@ extension AdminAPIGateway {
         }
         let result =
             try await useCases
-            .makeEditNewsletterSubscriber()
+            .makeEditSubscriber()
             .execute(
                 subject: subject,
                 input: .init(

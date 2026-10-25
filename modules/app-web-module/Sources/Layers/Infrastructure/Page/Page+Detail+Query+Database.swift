@@ -4,23 +4,11 @@ public import WebApplication
 import WebDomain
 public import WebModule
 
-extension Page.Table.Detail {
-    func asDetail(metadata: Metadata.Snapshot) -> Page.Detail.Output {
-        .init(
-            id: id,
-            title: title,
-            excerpt: excerpt,
-            content: content,
-            imageAssetId: imageAssetId,
-            metadata: metadata,
-            createdAt: createdAt,
-            updatedAt: updatedAt
-        )
-    }
-}
-
 extension Page.Detail.Query {
-    public struct Database: Interface {
+    public struct Database:
+        Interface,
+        Public.Interface
+    {
         public let context: DatabaseQueryContext
         public let metadata: any Metadata.Reference.Query.Interface
 
@@ -32,7 +20,7 @@ extension Page.Detail.Query {
             self.metadata = metadata
         }
 
-        public func find(id: String) async throws -> Page.Detail.Output {
+        public func find(id: String) async throws -> Page.Model {
             guard
                 let page = try await DatabaseAccessLayer<Page.Table>(
                     context: context
@@ -49,7 +37,42 @@ extension Page.Detail.Query {
             else {
                 throw RepositoryError.notFound
             }
-            return page.asDetail(metadata: metadata)
+            let metadataModel = Metadata.Model(
+                id: metadata.id,
+                reference: .identified(
+                    .init(
+                        type: metadata.referenceType,
+                        id: metadata.referenceID
+                    )
+                ),
+                template: metadata.template,
+                slug: metadata.slug,
+                publicationDate: metadata.publicationDate,
+                expirationDate: metadata.expirationDate,
+                status: metadata.status,
+                title: metadata.title,
+                excerpt: metadata.excerpt,
+                imageURL: metadata.imageURL,
+                canonicalURL: metadata.canonicalURL,
+                noIndex: metadata.noIndex,
+                primaryKeyword: metadata.primaryKeyword,
+                cssCodeInjection: metadata.cssCodeInjection,
+                javascriptCodeInjection: metadata.javascriptCodeInjection,
+                structuredDataCodeInjection:
+                    metadata.structuredDataCodeInjection,
+                createdAt: metadata.createdAt,
+                updatedAt: metadata.updatedAt
+            )
+            return Page.Model(
+                id: page.id,
+                title: page.title,
+                excerpt: page.excerpt,
+                content: page.content,
+                imageAssetId: page.imageAssetId,
+                metadata: metadataModel,
+                createdAt: page.createdAt,
+                updatedAt: page.updatedAt
+            )
         }
     }
 }

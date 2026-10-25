@@ -63,9 +63,9 @@ extension Post.Form.Input {
 
     private var validator: GroupValidator {
         GroupValidator {
-            Post.Form.Input.Validation.title(title, required: true)
-            Post.Form.Input.Validation.excerpt(excerpt, required: false)
-            Post.Form.Input.Validation.content(content, required: true)
+            Validation.title(title, required: true)
+            Validation.excerpt(excerpt, required: false)
+            Validation.content(content, required: true)
         }
     }
 

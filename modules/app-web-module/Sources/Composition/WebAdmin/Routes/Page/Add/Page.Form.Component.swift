@@ -1,4 +1,6 @@
 import FeatherWebAdmin
+import FeatherWebShared
+import Foundation
 import HTML
 import OpenAPIRuntime
 import SGML
@@ -38,6 +40,7 @@ extension WebModule.Page.Form {
         }
 
         var state: State
+        var mediaAssetList: WebRoute
         var metadataHref: String? = nil
         var action: String
         var submitLabel: String
@@ -75,6 +78,22 @@ extension WebModule.Page.Form {
 
                 context.build(AdminTabBar(links: metadataTabLinks()))
 
+                var browseComponents = URLComponents()
+                browseComponents.path = mediaAssetList.path
+                browseComponents.queryItems = [
+                    URLQueryItem(name: "picker", value: "1"),
+                    URLQueryItem(
+                        name: "field",
+                        value: state.imageAssetId.key
+                    ),
+                    URLQueryItem(
+                        name: "extensions",
+                        value: AllowedExtensions.images.queryValue
+                    ),
+                ]
+                let imagePickerPath =
+                    browseComponents.string ?? browseComponents.path
+
                 context.build(
                     AdminFormFieldMediaPicker(
                         state: .init(
@@ -99,8 +118,7 @@ extension WebModule.Page.Form {
                                     status: $0.status
                                 )
                             },
-                            browsePath:
-                                "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)",
+                            browsePath: imagePickerPath,
                             defaultFolderPath: "web/pages",
                             allowedExtensions: .images,
                             previewStyle: .wide

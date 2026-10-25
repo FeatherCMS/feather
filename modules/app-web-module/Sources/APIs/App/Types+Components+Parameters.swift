@@ -14,9 +14,7 @@ extension Components {
         ///
         /// - Remark: Generated from `#/components/parameters/MetadataSlugParameter`.
         public typealias MetadataSlugParameter = Components.Schemas.MetadataSlugField
-        /// Web metadata identifier
-        ///
-        /// - Remark: Generated from `#/components/parameters/MetadataIdParameter`.
-        public typealias MetadataIdParameter = Components.Schemas.MetadataReferenceIDField
+        /// - Remark: Generated from `#/components/parameters/PageIDParameter`.
+        public typealias PageIDParameter = Components.Schemas.PageIdField
     }
 }

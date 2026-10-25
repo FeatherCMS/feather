@@ -68,7 +68,8 @@ extension Author.List.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 try await withThrowingTaskGroup(of: IndexedItem.self) { group in
                     let repository = Author.View.Repository.OpenAPI(api: api)
-                    for (index, item) in items.enumerated() {
+                    for index in items.indices {
+                        let item = items[index]
                         group.addTask {
                             let details = try await repository.get(id: item.id)
                             return IndexedItem(

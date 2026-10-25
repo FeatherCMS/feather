@@ -14,7 +14,7 @@ extension Invitation.Detail.Query {
             self.context = context
         }
 
-        public func getBy(id: String) async throws -> Invitation.Detail.Output {
+        public func find(id: String) async throws -> Invitation.Detail.Output {
             guard
                 let detail = try await DatabaseAccessLayer<Invitation.Table>(
                     context: context

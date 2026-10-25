@@ -38,7 +38,7 @@ extension Credential.Add {
                         email: input.email
                     ), authEmail.identityId == input.userId
                 else {
-                    throw Credential.Add.Error.authEmailNotFound(identityId: input.userId)
+                    throw Error.authEmailNotFound(identityId: input.userId)
                 }
                 return try await scope.credential.insert(
                     Credential.Model.create(

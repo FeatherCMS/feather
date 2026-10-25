@@ -1,7 +1,7 @@
 import AnalyticsAppAPI
 public import AnalyticsModule
 public import FeatherWebShared
-public import Foundation
+import Foundation
 import HTTPTypes
 public import Hummingbird
 

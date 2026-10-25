@@ -36,7 +36,7 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeSearchNewsletterIssues()
+        let result = try await useCases.makeSearchIssues()
             .execute(
                 subject: subject,
                 input: .init(

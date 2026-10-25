@@ -35,7 +35,8 @@ extension Email.View.Presenter {
                     state: .init(
                         link: link,
                         permissions: permissions,
-                        breadcrumb: routes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
                     )
                 )
             )

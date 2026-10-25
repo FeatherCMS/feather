@@ -13,8 +13,8 @@ extension Settings.Edit {
         let primaryFont: String
         let secondaryFont: String
         let homePageId: String?
-        let homePage: Settings.Edit.Model.HomePage?
-        let homePageOptions: [Settings.Edit.Model.HomePage]
+        let homePage: Model.HomePage?
+        let homePageOptions: [Model.HomePage]
         let locale: String
         let timezone: String
         let title: String

@@ -14,7 +14,7 @@ extension Variant.Edit.Presenter {
 
         func renderEditPage(
             id: String,
-            detail: MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema,
+            detail: Variant.Edit.Model,
             state: Variant.Form.State,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
@@ -52,8 +52,7 @@ extension Variant.Edit.Presenter {
 
         func renderProcessorEditPage(
             variantId: String,
-            processor: MediaAdminAPI.Components.Schemas
-                .MediaVariantProcessorDetailSchema,
+            processor: Variant.Processor.Edit.Model,
             permissions: AdminListActions
         ) async throws -> HTMLResponse {
             let processorNonce = await AdminNonceStore.shared.issue(

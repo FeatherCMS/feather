@@ -20,11 +20,15 @@ extension UseCases {
                         ),
                         storageObjects: StorageObject.Repository.Database(
                             context: context
+                        ),
+                        variantProcessors: Variant.Processor.Repository.Database(
+                            context: context
                         )
                     )
                 }
             ),
-            storageContext: storageContext
+            storageContext: storageContext,
+            jobs: jobs
         )
     }
 }

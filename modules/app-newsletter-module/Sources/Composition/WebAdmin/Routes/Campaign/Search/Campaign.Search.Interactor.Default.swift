@@ -10,7 +10,7 @@ extension Campaign.Search.Interactor {
             page: Int,
             search: String?
         ) async throws -> Campaign.Search.Model {
-            try await repository.searchCampaigns(page: page, search: search)
+            try await repository.search(page: page, search: search)
         }
     }
 }

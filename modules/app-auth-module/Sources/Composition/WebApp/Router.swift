@@ -31,7 +31,7 @@ public struct Router {
             usesSecureCookies: usesSecureCookies,
             turnstileVerifier: turnstileVerifier
         )
-        .controller.route(on: router)
+        .route(on: router)
 
         Logout.Router(
             repository: Logout.Repository.OpenAPI(
@@ -39,7 +39,7 @@ public struct Router {
             ),
             usesSecureCookies: usesSecureCookies
         )
-        .controller.route(on: router)
+        .route(on: router)
 
         MagicLink.App
             .Router(

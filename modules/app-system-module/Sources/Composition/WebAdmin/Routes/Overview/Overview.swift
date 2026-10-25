@@ -6,12 +6,14 @@ import SystemModule
 enum Overview {
     struct Router {
         struct Routes {
+            let admin: WebRoute
             let overview: WebRoute
             let variables: WebRoute
             let permissions: WebRoute
             let jobs: WebRoute
 
-            init(root: WebRoute) {
+            init(admin: WebRoute, root: WebRoute) {
+                self.admin = admin
                 self.overview = root
                 self.variables = root.appending(pathComponent: "variables")
                 self.permissions = root.appending(pathComponent: "permissions")

@@ -3,6 +3,7 @@ import FeatherWebShared
 import RedirectAdminAPI
 import RedirectApplication
 import RedirectModule
+import RedirectDomain
 
 extension Rule.List.Interactor {
     struct Default: Interface {
@@ -11,7 +12,7 @@ extension Rule.List.Interactor {
         func listRedirectRules(
             page: Int,
             search: String?,
-            statusCode: Rule.StatusCode?
+            statusCode: Rule.Model.StatusCode?
         ) async throws -> AdminListModel<
             Components.Schemas.RedirectRuleQueryItemSchema
         > {

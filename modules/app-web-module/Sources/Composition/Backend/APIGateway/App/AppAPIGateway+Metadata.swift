@@ -1,4 +1,3 @@
-import FeatherDatabase
 public import WebAppAPI
 import WebApplication
 import WebModule
@@ -61,9 +60,6 @@ extension AppAPIGateway {
             )
         }
         catch is WebRoute.Resolve.Error {
-            return nil
-        }
-        catch let error as DatabaseError where error.isResolveWebRouteNotFound {
             return nil
         }
     }

@@ -10,7 +10,7 @@ extension Permission.Get {
         }
         var responseMap: ResponseMap {
             [
-                200: Permission.Get.Response().reference(),
+                200: Response().reference(),
                 404: DefaultHTTPErrorContentResponse(
                     description: "SystemPermission not found"
                 ),

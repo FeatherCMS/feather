@@ -37,7 +37,10 @@ extension Post.Add {
                 context.build(
                     Post.Form(
                         state: state.form,
-                        action: state.routes.postAdd(),
+                        browsePath: state.routes.imagePickerPath(
+                            state.form.imageAssetId.key
+                        ),
+                        action: state.routes.postAddPath(),
                         submitLabel: "Add post"
                     )
                 )

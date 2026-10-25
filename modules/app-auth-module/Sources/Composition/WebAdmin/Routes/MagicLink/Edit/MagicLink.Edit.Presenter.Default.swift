@@ -25,8 +25,7 @@ extension MagicLink.Edit.Presenter {
 
         func formState(
             credentialId: String = "",
-            emails: [AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail] =
-                [],
+            emails: [Email.Option] = [],
             isPersistent: Bool = false
         ) -> MagicLink.Add.Form.State {
             .init(
@@ -73,7 +72,8 @@ extension MagicLink.Edit.Presenter {
                         id: id,
                         isEdited: isEdited,
                         form: form,
-                        breadcrumb: routes.breadcrumb
+                        breadcrumb: routes.breadcrumb,
+                        routes: routes
                     )
                 )
             )

@@ -1,7 +1,6 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import NewsAdminAPI
 import NewsApplication
 import NewsModule
 
@@ -12,7 +11,7 @@ extension Category.Detail {
 extension Category.Detail.Presenter {
     protocol Interface: Sendable {
         func renderDetails(
-            item: Components.Schemas.NewsCategoryDetailSchema
+            item: Category.Detail.Model
         ) async throws -> HTMLResponse
         func renderError(_ message: String) async throws -> HTMLResponse
     }

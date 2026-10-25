@@ -10,7 +10,7 @@ extension AdminAPIGateway {
     public func blogAuthorLinkGet(
         _ input: Operations.BlogAuthorLinkGet.Input
     ) async throws -> Operations.BlogAuthorLinkGet.Output {
-        let useCase = self.useCases.makeGetAuthorLink()
+        let useCase = self.useCases.makeDetailAuthorLink()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(
             subject: subject,

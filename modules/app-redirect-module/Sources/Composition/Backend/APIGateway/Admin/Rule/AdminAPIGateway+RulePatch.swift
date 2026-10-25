@@ -48,12 +48,12 @@ extension AdminAPIGateway {
             shouldApply: fields.contains(.statusCode),
             onMissing: { HTTPError(.badRequest) }
         )
-        let statusCode: FieldChange<Rule.StatusCode>
+        let statusCode: FieldChange<Rule.Model.StatusCode>
         switch rawStatusCode {
         case .unchanged:
             statusCode = .unchanged
         case .set(let value):
-            guard let value = Rule.StatusCode(rawValue: value)
+            guard let value = Rule.Model.StatusCode(rawValue: value)
             else {
                 throw Rule.Model.Error.invalidStatusCode
             }

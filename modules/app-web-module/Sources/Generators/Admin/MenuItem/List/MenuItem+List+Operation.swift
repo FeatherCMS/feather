@@ -7,7 +7,7 @@ extension MenuItem.List {
         var operationId: String? { "menuItemList" }
         var responseMap: ResponseMap {
             [
-                200: MenuItemListResponse().reference()
+                200: Response().reference()
             ]
         }
     }

@@ -3,9 +3,9 @@ public import SystemModule
 
 extension Variable.Search {
     public struct Scope: FeatherModuleKit.Scope {
-        public let variable: any Variable.Search.Query.Interface
+        public let variable: any Query.Interface
 
-        public init(variable: any Variable.Search.Query.Interface) {
+        public init(variable: any Query.Interface) {
             self.variable = variable
         }
     }

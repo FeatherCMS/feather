@@ -6,11 +6,11 @@ extension Page.ID.Get {
     struct Operation: Page.Operation {
         var operationId: String? { "pageGet" }
         var parameters: [any ParameterRepresentable] {
-            [MetadataIdParameter().reference()]
+            [Page.Parameters.ID().reference()]
         }
         var responseMap: ResponseMap {
             [
-                200: PageDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "Web page not found"),
             ]
         }

@@ -6,9 +6,7 @@ import OpenAPIRuntime
 
 extension Settings.Edit.Repository {
 
-    struct OpenAPI:
-        Settings.Edit.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
         let targetUserID: String?
 

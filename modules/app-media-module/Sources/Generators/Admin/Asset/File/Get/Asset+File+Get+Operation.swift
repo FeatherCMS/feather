@@ -6,7 +6,7 @@ extension Asset.File.Get {
         var operationId: String? { "mediaAssetGet" }
         var responseMap: ResponseMap {
             [
-                200: MediaAssetDetailResponse().reference(),
+                200: Response().reference(),
                 404: CustomResponse(description: "MediaAsset not found"),
             ]
         }

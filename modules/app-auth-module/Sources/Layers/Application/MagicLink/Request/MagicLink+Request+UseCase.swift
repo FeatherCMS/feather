@@ -39,7 +39,7 @@ extension MagicLink.Request {
                         .whitespaceTrimmed,
                         !mailFromAddress.isEmpty
                     else {
-                        throw MagicLink.Request.Error.mailFromNotConfigured
+                        throw Error.mailFromNotConfigured
                     }
                     let mailFromName = try await scope.variable.get(
                         "system-settings-mail-from-name"

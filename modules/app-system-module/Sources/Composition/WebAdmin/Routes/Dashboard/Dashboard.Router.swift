@@ -22,6 +22,7 @@ extension Dashboard {
                             request: request,
                             context: context,
                             renderingEngine: renderingEngine,
+                            adminPath: path.path
                         )
                     )
                 }

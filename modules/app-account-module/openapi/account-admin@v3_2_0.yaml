@@ -538,33 +538,21 @@ components:
       type: object
       properties:
         firstName:
-          type:
-          - string
-          - 'null'
+          type: string
         lastName:
-          type:
-          - string
-          - 'null'
+          type: string
         profileImageAssetId:
-          type:
-          - string
-          - 'null'
+          type: string
       minProperties: 0
     AccountProfileUpdateSchema:
       type: object
       properties:
         firstName:
-          type:
-          - string
-          - 'null'
+          type: string
         lastName:
-          type:
-          - string
-          - 'null'
+          type: string
         profileImageAssetId:
-          type:
-          - string
-          - 'null'
+          type: string
       minProperties: 0
     AccountSettingsDetailSchema:
       type: object

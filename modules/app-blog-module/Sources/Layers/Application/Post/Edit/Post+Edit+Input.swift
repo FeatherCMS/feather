@@ -5,6 +5,8 @@ public import WebApplication
 import WebDomain
 public import WebModule
 
+public import struct Foundation.Date
+
 extension Post.Edit {
     public struct Input: DTO {
         public let id: String
@@ -14,7 +16,8 @@ extension Post.Edit {
         public let imageAssetId: OptionalFieldChange<String>
         public let authorIds: FieldChange<[String]>
         public let tagIds: FieldChange<[String]>
-        public let metadata: Metadata.Input?
+        public let metadata: Metadata.Model.Base?
+        public let metadataPublicationDate: FieldChange<Date>
 
         public init(
             id: String,
@@ -24,7 +27,8 @@ extension Post.Edit {
             imageAssetId: OptionalFieldChange<String>,
             authorIds: FieldChange<[String]>,
             tagIds: FieldChange<[String]>,
-            metadata: Metadata.Input?
+            metadata: Metadata.Model.Base?,
+            metadataPublicationDate: FieldChange<Date> = .unchanged
         ) {
             self.id = id
             self.title = title
@@ -34,6 +38,7 @@ extension Post.Edit {
             self.authorIds = authorIds
             self.tagIds = tagIds
             self.metadata = metadata
+            self.metadataPublicationDate = metadataPublicationDate
         }
     }
 }

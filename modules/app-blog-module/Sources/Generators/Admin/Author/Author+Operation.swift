@@ -6,7 +6,7 @@ extension Author {
 }
 
 extension Author.Operation {
-    var tags: [any TagRepresentable] { [BlogAuthorTag()] }
+    var tags: [any TagRepresentable] { [Author.Tag()] }
 }
 
 extension Author.ID {

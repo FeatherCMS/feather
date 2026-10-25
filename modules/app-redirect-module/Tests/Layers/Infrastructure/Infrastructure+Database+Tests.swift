@@ -29,6 +29,7 @@ struct RedirectInfrastructureDatabaseTests {
 
         let queries = await connection.executedQueries()[.migration]
         #expect(queries?.count == 1)
+        #expect(queries?.first?.sql.contains("CREATE TABLE") == true)
         #expect(queries?.first?.sql.contains("redirect_rule") == true)
     }
 
@@ -36,6 +37,7 @@ struct RedirectInfrastructureDatabaseTests {
     func tableSchemaDeclaresColumnsAndConstraints() {
         let schema = Rule.Table.tableCreationSchema
 
+        #expect(schema.name == "redirect_rule")
         #expect(
             schema.columns.map(\.name) == [
                 "id", "source", "destination", "status_code", "notes",
@@ -148,5 +150,13 @@ struct RedirectInfrastructureDatabaseTests {
                     }
                 }
         )
+        for column in [schema.columns[5], schema.columns[6]] {
+            #expect(column.constraints.contains {
+                guard case .default(let value) = $0 else { return false }
+                if case .currentTimestamp = value.storage { return true }
+                return false
+            })
+        }
+        #expect(schema.indexes.isEmpty)
     }
 }

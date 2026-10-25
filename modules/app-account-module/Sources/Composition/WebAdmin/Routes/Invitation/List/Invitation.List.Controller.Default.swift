@@ -5,9 +5,7 @@ import Hummingbird
 
 extension Invitation.List.Controller {
 
-    struct Default:
-        Invitation.List.Controller.Interface
-    {
+    struct Default: Interface {
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Invitation.List.Interactor.Interface,

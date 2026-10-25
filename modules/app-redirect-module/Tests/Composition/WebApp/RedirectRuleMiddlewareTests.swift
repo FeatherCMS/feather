@@ -1,6 +1,5 @@
 import FeatherHTTP
 import FeatherHTTPHummingbirdTesting
-import FeatherWebAdmin
 import FeatherWebShared
 import Foundation
 import Hummingbird

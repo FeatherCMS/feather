@@ -13,7 +13,7 @@ extension Invitation.Validate.Query {
             self.context = context
         }
 
-        public func getBy(token: String) async throws
+        public func find(token: String) async throws
             -> Invitation.Validate.Output
         {
             guard

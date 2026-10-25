@@ -34,7 +34,7 @@ extension MagicLink.Edit {
                         id: input.id
                     )
                 else {
-                    throw MagicLink.Edit.Error.notFound(id: input.id)
+                    throw Error.notFound(id: input.id)
                 }
 
                 let updated = MagicLink.Model(

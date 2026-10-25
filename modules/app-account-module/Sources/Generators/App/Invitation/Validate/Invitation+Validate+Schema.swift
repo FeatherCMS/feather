@@ -7,8 +7,8 @@ extension Invitation.Validate {
         }
         public var propertyMap: SchemaMap {
             [
-                "email": EmailField().reference(),
-                "expiresAt": ExpiresAtField().reference(),
+                "email": Email().reference(),
+                "expiresAt": ExpiresAt().reference(),
             ]
         }
 

@@ -9,7 +9,7 @@ extension AdminAPIGateway {
     public func menuItemGet(
         _ input: Operations.MenuItemGet.Input
     ) async throws -> Operations.MenuItemGet.Output {
-        let useCase = useCases.makeGetMenuItem()
+        let useCase = useCases.makeDetailMenuItem()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(
             subject: subject,

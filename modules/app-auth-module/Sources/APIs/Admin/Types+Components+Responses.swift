@@ -34,16 +34,16 @@ extension Components {
             /// Creates a new `NoContentResponse`.
             public init() {}
         }
-        public struct AuthCredentialListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/AuthCredentialListResponse/content`.
+        public struct UserIdentitySessionQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/UserIdentitySessionQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/AuthCredentialListResponse/content/application\/json`.
-                case json(Components.Schemas.AuthCredentialListSchema)
+                /// - Remark: Generated from `#/components/responses/UserIdentitySessionQueryItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.UserIdentitySessionQueryItemSearchSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthCredentialListSchema {
+                public var json: Components.Schemas.UserIdentitySessionQueryItemSearchSchema {
                     get throws {
                         switch self {
                         case let .json(body):
@@ -53,12 +53,12 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.AuthCredentialListResponse.Body
-            /// Creates a new `AuthCredentialListResponse`.
+            public var body: Components.Responses.UserIdentitySessionQueryItemSearchSchemaSearchResponse.Body
+            /// Creates a new `UserIdentitySessionQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AuthCredentialListResponse.Body) {
+            public init(body: Components.Responses.UserIdentitySessionQueryItemSearchSchemaSearchResponse.Body) {
                 self.body = body
             }
         }
@@ -255,34 +255,6 @@ extension Components {
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(body: Components.Responses.AuthRolePermissionQueryItemSearchSchemaSearchResponse.Body) {
-                self.body = body
-            }
-        }
-        public struct AuthMagicLinkListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/AuthMagicLinkListResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/AuthMagicLinkListResponse/content/application\/json`.
-                case json(Components.Schemas.AuthMagicLinkListSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthMagicLinkListSchema {
-                    get throws {
-                        switch self {
-                        case let .json(body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.AuthMagicLinkListResponse.Body
-            /// Creates a new `AuthMagicLinkListResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AuthMagicLinkListResponse.Body) {
                 self.body = body
             }
         }

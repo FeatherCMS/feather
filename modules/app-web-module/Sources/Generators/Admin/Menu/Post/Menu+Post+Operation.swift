@@ -5,10 +5,10 @@ extension Menu.Post {
     struct Operation: Menu.Operation, BearerProtectedOperation {
         var operationId: String? { "menuCreate" }
         var requestBody: (any RequestBodyRepresentable)? {
-            MenuRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: MenuDetailResponse().reference()]
+            [201: Menu.ID.Get.Response().reference()]
         }
     }
 }

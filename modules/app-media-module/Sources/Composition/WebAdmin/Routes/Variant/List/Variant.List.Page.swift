@@ -36,7 +36,7 @@ extension Variant.List {
                     )
                 )
                 context.build(
-                    Variant.List.Page.Content(
+                    Page.Content(
                         variants: state.variants,
                         permissions: state.permissions,
                         pageState: state.pageState,

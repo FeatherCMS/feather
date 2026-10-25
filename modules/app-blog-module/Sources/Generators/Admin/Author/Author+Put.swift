@@ -1,3 +1,0 @@
-extension Author {
-    enum Put {}
-}

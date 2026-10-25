@@ -40,13 +40,13 @@ extension Invitation.Edit {
                 guard
                     var model = try await scope.invitation.findBy(id: input.id)
                 else {
-                    throw Invitation.Edit.Error(message: "Invitation not found")
+                    throw Error(message: "Invitation not found")
                 }
 
                 let roleIDs = input.roleIDs.apply(to: model.roleIDs)
                 for roleID in roleIDs {
                     guard try await scope.role.findBy(id: roleID) != nil else {
-                        throw Invitation.Edit.Error(message: "Role not found: \(roleID)")
+                        throw Error(message: "Role not found: \(roleID)")
                     }
                 }
 

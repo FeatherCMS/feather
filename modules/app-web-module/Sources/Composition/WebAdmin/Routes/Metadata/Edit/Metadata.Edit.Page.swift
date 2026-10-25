@@ -1,5 +1,6 @@
 import FeatherValidation
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -14,6 +15,7 @@ extension WebModule.Metadata.Edit {
         struct State {
             let id: String
             let form: Form.Component.State
+            let mediaAssetList: WebRoute
             let breadcrumb: [AdminBreadcrumb.Link]
             let action: String
             let navigationTabs: [AdminTabBar.Link]
@@ -32,6 +34,7 @@ extension WebModule.Metadata.Edit {
                 context.build(
                     Form.Component(
                         state: state.form,
+                        mediaAssetList: state.mediaAssetList,
                         action: state.action,
                         submitLabel: "Edit entry"
                     )

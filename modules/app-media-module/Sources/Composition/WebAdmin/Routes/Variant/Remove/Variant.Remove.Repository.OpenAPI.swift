@@ -5,9 +5,7 @@ import MediaModule
 import OpenAPIRuntime
 
 extension Variant.Remove.Repository {
-    struct OpenAPI:
-        Variant.Remove.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func delete(ids: [String]) async throws {

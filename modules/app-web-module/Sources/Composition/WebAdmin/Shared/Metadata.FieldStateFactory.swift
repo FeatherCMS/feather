@@ -8,7 +8,7 @@ extension WebModule.Metadata {
             _ metadata: AdminMetadataFormValue?,
             slugPrefix: String? = nil,
             template: String = "default"
-        ) -> WebModule.Metadata.Fields.State {
+        ) -> Fields.State {
             .init(
                 slug: .init(
                     key: "slug",

@@ -6,16 +6,16 @@ extension Asset.File.Patch {
         var operationId: String? { "mediaAssetPatch" }
         var parameters: [any ParameterRepresentable] {
             [
-                MediaAssetIdParameter().reference(),
-                MediaAssetUpdateMaskParameter().reference(),
+                Asset.File.Parameters.ID().reference(),
+                Asset.File.Parameters.UpdateMask().reference(),
             ]
         }
         var requestBody: (any RequestBodyRepresentable)? {
-            MediaAssetPatchRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                200: MediaAssetDetailResponse().reference(),
+                200: Asset.File.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Invalid update mask"
                 ),

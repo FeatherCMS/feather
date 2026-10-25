@@ -11,7 +11,7 @@ extension MagicLink.Operation {
 }
 
 extension MagicLink {
-    public protocol IdentifiableOperation: MagicLink.Operation {}
+    public protocol IdentifiableOperation: Operation {}
 }
 
 extension MagicLink.IdentifiableOperation {

@@ -2,13 +2,16 @@ import BlogModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import WebModule
 import WebModuleWebAdmin
+import WebModule
 
 extension Post.Status.Controller {
     struct Default: Interface {
-        let environment: AppEnvironment
         let routes: Post.Router.Routes
+        let buildViewRepository:
+            @Sendable (AuthenticatedRequestContext) -> any Post.View.Repository.Interface
+        let buildStatusRepository:
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata.Status.Repository.Interface
 
         func post(
             request: Request,
@@ -19,30 +22,17 @@ extension Post.Status.Controller {
                 as: AdminStatusActionFormInput.self,
                 context: context
             )
-            let api = API.Client(
-                environment: environment,
-                requestContext: context
-            )
-            let details = try await Post.View.Repository.OpenAPI(api: api)
-                .get(
-                    id: id
-                )
+            let details = try await buildViewRepository(context).get(id: id)
             let targetStatus = resolvedStatus(
                 from: payload,
                 current: details.metadata
             )
-            try await WebModule.Metadata
-                .StatusUpdater(
-                    api: WebModuleWebAdmin.API.Client(
-                        environment: environment,
-                        requestContext: context
-                    )
-                )
-                .update(
-                    referenceType: "blog.post",
-                    referenceID: id,
-                    status: targetStatus
-                )
+            try await buildStatusRepository(context)
+            .update(
+                referenceType: "blog.post",
+                referenceID: id,
+                status: targetStatus
+            )
 
             let toast = statusToastContent(for: targetStatus)
             return AdminNotificationFlash.redirect(

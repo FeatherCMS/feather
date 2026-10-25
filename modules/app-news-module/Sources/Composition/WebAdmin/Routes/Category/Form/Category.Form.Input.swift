@@ -1,6 +1,5 @@
-import FeatherModuleKit
 import Foundation
-import NewsAdminAPI
+import NewsApplication
 import NewsModule
 
 extension NewsModule.Category {
@@ -29,12 +28,12 @@ extension NewsModule.Category.Form {
 
         init() {}
 
-        init(item: Components.Schemas.NewsCategoryDetailSchema) {
+        init(item: NewsModule.Category.Detail.Model) {
             title = item.title
             excerpt = item.excerpt
             content = item.content
             imageAssetId = item.imageAssetId ?? ""
-            let metadata = News.Metadata.Form.Input(metadata: item.metadata)
+            let metadata = item.metadata
             slug = metadata.slug
             status = metadata.status
             publicationDate = metadata.publicationDate
@@ -84,16 +83,5 @@ extension NewsModule.Category.Form {
             return nil
         }
 
-        var schema: Components.Schemas.NewsCategoryCreateSchema {
-            .init(
-                title: title.trimmingCharacters(in: .whitespacesAndNewlines),
-                excerpt: excerpt.trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                ),
-                content: content,
-                imageAssetId: imageAssetId.emptyToNil,
-                metadata: metadata.schema
-            )
-        }
     }
 }

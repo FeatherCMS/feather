@@ -15,6 +15,7 @@ extension WebModule.Metadata.Edit.Presenter {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine
+        let mediaAssetList: WebRoute
 
         func renderEditPage(
             id: String,
@@ -32,6 +33,7 @@ extension WebModule.Metadata.Edit.Presenter {
                     state: .init(
                         id: id,
                         form: state,
+                        mediaAssetList: mediaAssetList,
                         breadcrumb: configuration.breadcrumb,
                         action: request.uri.path,
                         navigationTabs: navigationTabs,

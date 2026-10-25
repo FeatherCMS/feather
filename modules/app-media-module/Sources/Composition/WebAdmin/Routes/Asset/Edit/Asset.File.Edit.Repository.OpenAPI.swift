@@ -18,7 +18,7 @@ extension Asset.File.Edit.Repository {
         func getAsset(
             id: String
         ) async throws
-            -> MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema
+            -> Asset.File.Edit.Model
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
@@ -28,7 +28,13 @@ extension Asset.File.Edit.Repository {
                     )
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json
+                    let asset = try ok.body.json
+                    return Asset.File.Edit.Model(
+                        id: asset.id,
+                        title: asset.title ?? "",
+                        altText: asset.altText ?? "",
+                        error: nil
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:
@@ -48,7 +54,7 @@ extension Asset.File.Edit.Repository {
             id: String,
             title: String?,
             altText: String?
-        ) async throws -> Components.Schemas.MediaAssetDetailSchema {
+        ) async throws -> Asset.File.Edit.Model {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
@@ -64,7 +70,13 @@ extension Asset.File.Edit.Repository {
                     )
                 switch response {
                 case .ok(let ok):
-                    return try ok.body.json
+                    let asset = try ok.body.json
+                    return Asset.File.Edit.Model(
+                        id: asset.id,
+                        title: asset.title ?? "",
+                        altText: asset.altText ?? "",
+                        error: nil
+                    )
                 case .badRequest(let response):
                     let data = try JSONEncoder().encode(try response.body.json)
                     throw OpenAPIRepositoryError.parsedFailure(

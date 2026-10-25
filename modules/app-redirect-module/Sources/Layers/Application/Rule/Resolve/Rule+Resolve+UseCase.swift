@@ -17,7 +17,7 @@ extension Rule.Resolve {
                         source: input.source
                     )
                 else {
-                    throw Rule.Resolve.Error.notFound
+                    throw Error.notFound
                 }
                 return output
             }

@@ -20,10 +20,7 @@ extension Public.Article.List {
 
             return try await query.run { scope in
                 let articles = try await scope.article.listPublic(
-                    query: .init(
-                        page: .init(size: pageSize, number: 1),
-                        sort: []
-                    )
+                    limit: pageSize
                 )
                 let metadata = try await scope.metadataDetails.resolveDetails(
                     referenceType: "news.article",

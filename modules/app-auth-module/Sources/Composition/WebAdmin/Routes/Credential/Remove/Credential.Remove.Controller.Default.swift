@@ -19,6 +19,8 @@ import WebComponents
 
 extension Credential.Remove.Controller {
     struct Default: Interface {
+        let routes: Credential.Router.Routes
+
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Credential.Remove.Interactor.Interface,
@@ -62,7 +64,7 @@ extension Credential.Remove.Controller {
             }
             try await interactor.delete(id: id)
             return AdminNotificationFlash.redirect(
-                to: "/admin/auth/credentials/",
+                to: routes.list.path,
                 notification: .init(
                     title: "Removed",
                     message: "User credential removed successfully."

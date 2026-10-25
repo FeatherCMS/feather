@@ -52,8 +52,6 @@ private struct TestDatabaseRow: DatabaseRow {
 }
 
 private struct TestDatabaseRowSequence: DatabaseRowSequence {
-    typealias Element = TestDatabaseRow
-
     struct AsyncIterator: AsyncIteratorProtocol {
         mutating func next() async -> TestDatabaseRow? {
             nil
@@ -70,8 +68,6 @@ private struct TestDatabaseRowSequence: DatabaseRowSequence {
 }
 
 private struct TestDatabaseConnection: DatabaseConnection {
-    typealias RowSequence = TestDatabaseRowSequence
-
     let logger = Logger.current
 
     func run<T: Sendable>(

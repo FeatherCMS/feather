@@ -11,10 +11,9 @@ extension Variant.Edit {
 extension Variant.Edit.Repository {
     protocol Interface: Sendable {
         func load(id: String) async throws
-            -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
+            -> Variant.Edit.Model
         func loadProcessor(variantId: String, id: String) async throws
-            -> MediaAdminAPI.Components.Schemas
-            .MediaVariantProcessorDetailSchema
+            -> Variant.Processor.Edit.Model
         func processorNames(variantId: String, ids: [String]) async throws
             -> [AdminRemoveItemContext]
         func update(

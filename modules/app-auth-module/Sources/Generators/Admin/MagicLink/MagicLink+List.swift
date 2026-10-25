@@ -1,4 +1,0 @@
-
-extension MagicLink {
-    enum List {}
-}

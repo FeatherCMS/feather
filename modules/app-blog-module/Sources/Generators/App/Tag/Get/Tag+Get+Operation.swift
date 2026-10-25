@@ -6,7 +6,7 @@ extension Tag.Get {
     struct Operation: BlogOperation {
         var operationId: String? { "blogTagGet" }
         var parameters: [any ParameterRepresentable] {
-            [BlogTagIdParameter().reference()]
+            [Tag.Parameters.ID().reference()]
         }
         var responseMap: ResponseMap {
             [

@@ -1,6 +1,7 @@
 import AuthModule
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import Hummingbird
 
 extension Session {
@@ -9,13 +10,24 @@ extension Session {
 
     struct Router {
         struct Routes {
+            let admin: WebRoute
+            let auth: WebRoute
             let identityRoot: WebRoute
             let identity: WebRoute
             let list: WebRoute
             let remove: WebRoute
+            let magicLinks: WebRoute
 
-            init(identityRoot: WebRoute) {
+            init(
+                admin: WebRoute,
+                auth: WebRoute,
+                identityRoot: WebRoute,
+                magicLinks: WebRoute
+            ) {
+                self.admin = admin
+                self.auth = auth
                 self.identityRoot = identityRoot
+                self.magicLinks = magicLinks
                 identity = identityRoot.appending(parameter: "identityId")
                 list = identity.appending(pathComponent: "sessions")
                 remove =
@@ -27,17 +39,30 @@ extension Session {
             func detailsBreadcrumb(identityID: String) -> [AdminBreadcrumb.Link]
             {
                 [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Auth", link: "/admin/auth/"),
+                    .init(label: "Admin", link: admin.path),
+                    .init(label: "Auth", link: auth.path),
                     .init(label: "Identities", link: identityRoot.path),
                     .init(
                         label: "Details",
-                        link: identity.path(
-                            parameter: "identityId",
-                            value: identityID
-                        )
+                        link: identityPath(identityID)
                     ),
                 ]
+            }
+
+            func identityPath(_ identityID: String) -> String {
+                identity.path(parameter: "identityId", value: identityID)
+            }
+
+            func listPath(identityID: String) -> String {
+                list.path(parameter: "identityId", value: identityID)
+            }
+
+            func magicLinksPath(identityID: String) -> String {
+                var components = URLComponents(string: magicLinks.path)!
+                components.queryItems = [
+                    URLQueryItem(name: "userId", value: identityID)
+                ]
+                return components.string ?? magicLinks.path
             }
 
             func removePath(identityID: String, sessionID: String) -> String {
@@ -63,19 +88,20 @@ extension Session {
         let renderingEngine: any RenderingEngine
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            Session.List
-                .Router(
-                    environment: environment,
-                    renderingEngine: renderingEngine
-                )
-                .controller.route(on: router, routes: routes)
-            Session.Remove
+            List
                 .Router(
                     environment: environment,
                     renderingEngine: renderingEngine,
                     routes: routes
                 )
-                .controller.route(on: router, routes: routes)
+                .route(on: router)
+            Remove
+                .Router(
+                    environment: environment,
+                    renderingEngine: renderingEngine,
+                    routes: routes
+                )
+                .route(on: router)
         }
     }
 }

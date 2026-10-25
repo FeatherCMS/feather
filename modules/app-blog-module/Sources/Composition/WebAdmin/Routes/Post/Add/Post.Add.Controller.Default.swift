@@ -17,8 +17,9 @@ import WebModuleWebAdmin
 
 extension Post.Add.Controller {
     struct Default: Interface {
-        let environment: AppEnvironment
         let routes: Post.Router.Routes
+        let buildPublicContentRepository:
+            @Sendable (AuthenticatedRequestContext) -> any PublicContent.Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Post.Add.Interactor.Interface,
@@ -239,15 +240,8 @@ extension Post.Add.Controller {
             context: AuthenticatedRequestContext,
             keyPath: KeyPath<BlogModule.Settings.PublicRoutes, String>
         ) async throws -> String {
-            let schema = try await PublicContent.Repository
-                .OpenAPI(
-                    api: API.App.Client(
-                        environment: environment,
-                        requestContext: context
-                    )
-                )
+            let settings = try await buildPublicContentRepository(context)
                 .getRouteSettings()
-            let settings = BlogModule.Settings.PublicRoutes(schema: schema)
             let prefix = settings[keyPath: keyPath]
             return prefix.isEmpty ? "/" : "/\(prefix)/"
         }

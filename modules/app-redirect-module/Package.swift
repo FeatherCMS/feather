@@ -165,6 +165,7 @@ let package = Package(
                 .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "RedirectModule"),
+                .target(name: "RedirectDomain"),
                 .target(name: "RedirectApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -246,6 +247,7 @@ let package = Package(
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
@@ -277,6 +279,7 @@ let package = Package(
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
 
                 .target(name: "RedirectModule"),
+                .target(name: "RedirectDomain"),
                 .target(name: "RedirectApplication"),
                 .target(name: "RedirectAdminAPI"),
             ],
@@ -311,7 +314,6 @@ let package = Package(
                     name: "FeatherDatabaseTesting",
                     package: "feather-database"
                 ),
-                .product(name: "FeatherTesting", package: "feather-core"),
                 .target(name: "RedirectInfrastructure"),
                 .target(name: "RedirectModule"),
             ],
@@ -321,7 +323,6 @@ let package = Package(
         .testTarget(
             name: "RedirectBackendTests",
             dependencies: [
-                .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherHTTP", package: "feather-http"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(
@@ -344,8 +345,6 @@ let package = Package(
                     package: "feather-database"
                 ),
                 .product(name: "FeatherDBALTesting", package: "feather-dbal"),
-                .product(name: "FeatherWebAdmin", package: "feather-core"),
-                .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HTTPTypes", package: "swift-http-types"),
                 .target(name: "RedirectBackend"),
@@ -366,7 +365,6 @@ let package = Package(
                     name: "FeatherHTTPHummingbirdTesting",
                     package: "feather-http-hummingbird-testing"
                 ),
-                .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdTesting", package: "hummingbird"),

@@ -38,7 +38,7 @@ extension Post.Edit {
 
             return try await transaction.run { scope in
                 guard var model = try await scope.post.find(id: input.id) else {
-                    throw Post.Edit.Error(message: "Post not found")
+                    throw Error(message: "Post not found")
                 }
                 guard
                     var metadata = try await scope.metadata.find(
@@ -46,7 +46,7 @@ extension Post.Edit {
                         referenceId: input.id
                     )
                 else {
-                    throw Post.Edit.Error(message: "Post metadata not found")
+                    throw Error(message: "Post metadata not found")
                 }
 
                 try model.update(
@@ -58,7 +58,50 @@ extension Post.Edit {
                     tagIds: input.tagIds
                 )
                 if let metadataInput = input.metadata {
-                    try metadataInput.update(&metadata)
+                    try metadata.update(
+                        slug: .set(metadataInput.slug),
+                        publicationDate: input.metadataPublicationDate,
+                        expirationDate: .init(
+                            value: metadataInput.expirationDate,
+                            shouldApply: metadataInput.expirationDate != nil
+                        ),
+                        status: .set(metadataInput.status),
+                        title: .init(
+                            value: metadataInput.title,
+                            shouldApply: metadataInput.title != nil
+                        ),
+                        excerpt: .init(
+                            value: metadataInput.excerpt,
+                            shouldApply: metadataInput.excerpt != nil
+                        ),
+                        imageURL: .init(
+                            value: metadataInput.imageURL,
+                            shouldApply: metadataInput.imageURL != nil
+                        ),
+                        canonicalURL: .init(
+                            value: metadataInput.canonicalURL,
+                            shouldApply: metadataInput.canonicalURL != nil
+                        ),
+                        noIndex: .set(metadataInput.noIndex),
+                        primaryKeyword: .init(
+                            value: metadataInput.primaryKeyword,
+                            shouldApply: true
+                        ),
+                        cssCodeInjection: .init(
+                            value: metadataInput.cssCodeInjection,
+                            shouldApply: metadataInput.cssCodeInjection != nil
+                        ),
+                        javascriptCodeInjection: .init(
+                            value: metadataInput.javascriptCodeInjection,
+                            shouldApply: metadataInput.javascriptCodeInjection
+                                != nil
+                        ),
+                        structuredDataCodeInjection: .init(
+                            value: metadataInput.structuredDataCodeInjection,
+                            shouldApply: metadataInput
+                                .structuredDataCodeInjection != nil
+                        )
+                    )
                 }
 
                 let savedModel = try await scope.post.update(model)

@@ -9,7 +9,7 @@ extension Tag.Parameters {
             "Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body."
         }
         var schema: any OpenAPISchemaRepresentable {
-            BlogTagUpdateMaskField().reference()
+            Tag.Schemas.UpdateMask().reference()
         }
     }
 }

@@ -4,14 +4,14 @@ public import UserModule
 extension Role.List {
     public struct Input: DTO {
         public struct Query: Sendable {
-            public var page: Search.Page
+            public var limit: Int?
             public var search: String?
 
             public init(
-                page: Search.Page = .init(),
+                limit: Int? = nil,
                 search: String? = nil
             ) {
-                self.page = page
+                self.limit = limit
                 self.search = search
             }
         }

@@ -8,7 +8,7 @@ extension AdminAPIGateway {
     public func settingsGet(
         _ input: Operations.SettingsGet.Input
     ) async throws -> Operations.SettingsGet.Output {
-        let useCase = useCases.makeGetSettings()
+        let useCase = useCases.makeDetailSettings()
         let subject = try await CurrentSubject.require()
         let result = try await useCase.execute(
             subject: subject,

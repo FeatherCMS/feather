@@ -1,5 +1,5 @@
 public import FeatherApplication
-import WebDomain
+public import WebDomain
 public import WebModule
 
 public import struct Foundation.Date
@@ -13,7 +13,7 @@ extension MenuItem.Add {
         public let priority: Int
         public let isBlank: Bool
         public let permission: String
-        public let authentication: MenuItem.Authentication
+        public let authentication: MenuItem.Model.Authentication
         public let notes: String?
         public let createdAt: Date
         public let updatedAt: Date

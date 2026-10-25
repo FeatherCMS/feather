@@ -1,4 +1,3 @@
-import AnalyticsAdminAPI
 import AnalyticsModule
 
 extension Insight.View.Interactor {
@@ -9,7 +8,7 @@ extension Insight.View.Interactor {
             source: String,
             from: Double,
             to: Double
-        ) async throws -> Components.Schemas.AnalyticsLogOverviewSchema {
+        ) async throws -> Overview.Model {
             try await repository.getOverview(
                 source: source,
                 from: from,

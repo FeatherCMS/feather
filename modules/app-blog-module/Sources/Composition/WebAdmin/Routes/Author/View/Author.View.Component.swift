@@ -15,7 +15,7 @@ import WebModuleWebAdmin
 extension Author.View {
     struct Component: WebComponents.Component {
         struct State {
-            let author: Author.View.Model
+            let author: Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
             let routes: Author.Router.Routes
@@ -67,10 +67,10 @@ extension Author.View {
                         context.build(
                             AdminStatusSelectFormDefinition(
                                 id: formID,
-                                action: state.routes.authorStatus(
+                                action: state.routes.authorStatusPath(
                                     state.author.id
                                 ),
-                                returnTo: state.routes.author(state.author.id)
+                                returnTo: state.routes.authorPath(state.author.id)
                             )
                         )
                         context.build(
@@ -99,7 +99,7 @@ extension Author.View {
                             "Add link",
                             href:
                                 state.authorLinkRoutes
-                                .authorLinkAdd(state.author.id)
+                                .authorLinkAddPath(state.author.id)
                         )
                     )
                 }
@@ -137,7 +137,7 @@ extension Author.View {
                 result.append(
                     .init(
                         label: "Edit author",
-                        href: state.routes.authorEdit(state.author.id),
+                        href: state.routes.authorEditPath(state.author.id),
                         style: .primary
                     )
                 )
@@ -148,7 +148,7 @@ extension Author.View {
                 result.append(
                     .init(
                         label: "Remove author",
-                        href: state.routes.authorRemove(state.author.id),
+                        href: state.routes.authorRemovePath(state.author.id),
                         style: .destructive
                     )
                 )

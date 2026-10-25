@@ -1,4 +1,3 @@
-import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import UserApplication
@@ -30,11 +29,9 @@ extension Identity.List.Query {
             let rows = try await accessLayer.select(
                 as: Identity.Table.List.self
             ) { initial in
-                paginatedQuery(
-                    applyFilters(query, roleIDs: roleIDs, to: initial)
-                        .order(by: [.init(by: \.id, .ascending)]),
-                    page: query.page
-                )
+                applyFilters(query, roleIDs: roleIDs, to: initial)
+                    .order(by: [.init(by: \.id, .ascending)])
+                    .limit(min(max(query.limit ?? 20, 1), 100))
             }
 
             var items: [Identity.List.Output.Item] = []
@@ -50,15 +47,6 @@ extension Identity.List.Query {
                 )
             }
             return .init(items: items)
-        }
-
-        public func count(query: Identity.List.Input.Query) async throws -> Int
-        {
-            let roleIDs = try await matchingRoleIDs(query.role)
-            if let roleIDs, roleIDs.isEmpty { return 0 }
-            return try await accessLayer.selectCount { initial in
-                applyFilters(query, roleIDs: roleIDs, to: initial)
-            }
         }
 
         private func applyFilters(
@@ -125,18 +113,6 @@ extension Identity.List.Query {
                 }
                 .compactMap(\.name)
                 .sorted()
-        }
-
-        private func paginatedQuery(
-            _ query: DatabaseQuerySelect<Identity.Table>,
-            page: Search.Page
-        ) -> DatabaseQuerySelect<Identity.Table> {
-            let page = page.normalized()
-            let pageIndex = page.number - 1
-            let offset =
-                pageIndex > Int.max / page.size
-                ? Int.max : pageIndex * page.size
-            return query.limit(page.size).offset(offset)
         }
     }
 }

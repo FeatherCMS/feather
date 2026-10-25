@@ -6,9 +6,7 @@ import UserAdminAPI
 import UserModule
 
 extension Identity.Remove.Repository {
-    struct OpenAPI:
-        Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         private func exists(

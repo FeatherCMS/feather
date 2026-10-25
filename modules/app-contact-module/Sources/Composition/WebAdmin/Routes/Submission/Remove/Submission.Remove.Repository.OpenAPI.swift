@@ -14,7 +14,8 @@ extension Submission.Remove.Repository {
                     ?? ""
             }
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                for (formKey, tokens) in grouped where !formKey.isEmpty {
+                for formKey in grouped.keys where !formKey.isEmpty {
+                    guard let tokens = grouped[formKey] else { continue }
                     let submissionIDs = tokens.compactMap { token in
                         let parts = token.split(separator: ":", maxSplits: 1)
                         return parts.count == 2 ? String(parts[1]) : nil

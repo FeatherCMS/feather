@@ -6,5 +6,5 @@ extension Settings {
 }
 
 extension Settings.Operation {
-    var tags: [any TagRepresentable] { [BlogSettingsTag()] }
+    var tags: [any TagRepresentable] { [Settings.Tag()] }
 }

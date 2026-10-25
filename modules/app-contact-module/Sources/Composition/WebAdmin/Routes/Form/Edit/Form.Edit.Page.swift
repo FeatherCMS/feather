@@ -36,6 +36,7 @@ extension ContactModule.Form.Edit {
                 context.build(
                     ContactModule.Form.TabBar(
                         formId: state.key,
+                        routes: state.routes,
                         active: .details
                     )
                 )

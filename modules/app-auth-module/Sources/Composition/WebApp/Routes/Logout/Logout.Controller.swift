@@ -15,9 +15,3 @@ extension Logout.Controller {
         ) async throws -> Response
     }
 }
-
-extension Logout.Controller.Interface {
-    func route(on router: any RouterMethods<DefaultRequestContext>) {
-        router.get(RouterPath("/logout/"), use: getLogout)
-    }
-}

@@ -11,10 +11,10 @@ extension Author.Patch {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "name": BlogAuthorNameField().reference(required: false),
-                "excerpt": BlogAuthorExcerptField().reference(required: false),
-                "content": BlogAuthorContentField().reference(required: false),
-                "profileImageAssetId": BlogAuthorProfileImageAssetIdField()
+                "name": Author.Schemas.Name().reference(required: false),
+                "excerpt": Author.Schemas.Excerpt().reference(required: false),
+                "content": Author.Schemas.Content().reference(required: false),
+                "profileImageAssetId": Author.Schemas.ProfileImageAssetID()
                     .nullable().reference(required: false),
             ]
         }

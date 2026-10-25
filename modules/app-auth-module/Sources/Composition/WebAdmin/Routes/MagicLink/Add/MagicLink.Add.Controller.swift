@@ -35,19 +35,3 @@ extension MagicLink.Add.Controller {
     }
 }
 
-extension MagicLink.Add.Controller.Interface {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: MagicLink.Router.Routes
-    ) {
-        router.get(
-            routes.add.routerPath,
-            use: getAddAuthMagicLink
-        )
-        router.post(
-            routes.add.routerPath,
-            use: postAddAuthMagicLink
-        )
-    }
-}

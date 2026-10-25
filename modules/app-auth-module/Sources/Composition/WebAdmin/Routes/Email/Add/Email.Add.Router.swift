@@ -18,7 +18,7 @@ import WebComponents
 
 extension Email.Add {
     struct Router {
-        let controller: any Email.Add.Controller.Interface
+        let controller: any Controller.Interface
         let routes: Email.Router.Routes
 
         init(
@@ -27,11 +27,12 @@ extension Email.Add {
             routes: Email.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Email.Add.Controller.Default(
+            self.controller = Controller.Default(
+                routes: routes,
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Email.Add.Interactor.Default(
-                            repository: Email.Add.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
@@ -42,7 +43,7 @@ extension Email.Add {
                                 )
                             )
                         ),
-                        presenter: Email.Add.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,

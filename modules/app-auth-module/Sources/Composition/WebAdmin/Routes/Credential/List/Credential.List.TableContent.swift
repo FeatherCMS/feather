@@ -10,7 +10,7 @@ import WebComponents
 
 extension Credential.List {
     struct TableContent: WebComponents.Component {
-        let state: Credential.List.Component.State
+        let state: Component.State
 
         func html(context: inout BuilderContext) -> Div {
             let actions = AdminListActions(
@@ -51,8 +51,7 @@ extension Credential.List {
                                             context.build(
                                                 AdminButton(
                                                     "Add new",
-                                                    href:
-                                                        "/admin/auth/credentials/add/"
+                                                    href: state.routes.add.path
                                                 )
                                             )
                                         }
@@ -83,9 +82,10 @@ extension Credential.List {
                                             for credential in state.credentials
                                             {
                                                 context.build(
-                                                    Credential.List.Row(
+                                                    Row(
                                                         credential: credential,
-                                                        actions: actions
+                                                        actions: actions,
+                                                        routes: state.routes
                                                     )
                                                 )
                                             }
@@ -100,7 +100,7 @@ extension Credential.List {
                         context.build(
                             AdminListSearch(
                                 state: .init(
-                                    action: "/admin/auth/credentials/",
+                                    action: state.routes.list.path,
                                     placeholder: "Quick search credentials",
                                     search: state.search
                                 )
@@ -114,8 +114,7 @@ extension Credential.List {
                                     context.build(
                                         AdminButton(
                                             "Add new",
-                                            href:
-                                                "/admin/auth/credentials/add/"
+                                            href: state.routes.add.path
                                         )
                                     )
                                 }
@@ -126,7 +125,7 @@ extension Credential.List {
                         context.build(
                             AdminListPagination(
                                 state: .init(
-                                    path: "/admin/auth/credentials/",
+                                    path: state.routes.list.path,
                                     pageState: pageState,
                                     search: state.search
                                 )

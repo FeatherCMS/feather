@@ -106,9 +106,9 @@ extension AdminAPIGateway {
         _ query: Components.Schemas
             .RedirectRuleQueryItemSearchRequestQuerySchema
     ) throws -> Rule.Search.Input.Query {
-        let statusCode: Rule.StatusCode?
+        let statusCode: Rule.Model.StatusCode?
         if let rawValue = query.filters.statusCode {
-            guard let value = Rule.StatusCode(rawValue: rawValue)
+            guard let value = Rule.Model.StatusCode(rawValue: rawValue)
             else {
                 throw Rule.Model.Error.invalidStatusCode
             }

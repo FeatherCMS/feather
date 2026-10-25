@@ -17,8 +17,15 @@ extension Tag.Add {
         ) {
             self.routes = routes
             self.controller = Controller.Default(
-                environment: environment,
                 routes: routes,
+                buildPublicContentRepository: { context in
+                    PublicContent.Repository.OpenAPI(
+                        api: API.App.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                },
                 buildRuntime: { request, context in
                     WebAdminRuntime(
                         interactor: Interactor.Default(

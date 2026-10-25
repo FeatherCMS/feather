@@ -17,20 +17,7 @@ extension Issue.Search {
                 request: Request,
                 context: AuthenticatedRequestContext
             ) async throws -> HTMLResponse
-
-            func route(
-                on router: any RouterMethods<AuthenticatedRequestContext>,
-                at route: WebRoute
-            )
         }
     }
 }
 
-extension Issue.Search.Controller.Interface {
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        at route: WebRoute
-    ) {
-        router.get(route.routerPath, use: search)
-    }
-}

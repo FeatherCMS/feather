@@ -764,199 +764,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
-    public enum ContactSubmissionQuery {
-        public static let id: Swift.String = "contactSubmissionQuery"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactSubmissionQuery.AcceptableContentType>]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactSubmissionQuery.AcceptableContentType>] = .defaultValues()) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.ContactSubmissionQuery.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/requestBody`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.ContactSubmissionQueryItemSearchRequestQuerySchema)
-            }
-            public var body: Operations.ContactSubmissionQuery.Input.Body
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - headers:
-            ///   - body:
-            public init(
-                headers: Operations.ContactSubmissionQuery.Input.Headers = .init(),
-                body: Operations.ContactSubmissionQuery.Input.Body
-            ) {
-                self.headers = headers
-                self.body = body
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// Search response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.ContactSubmissionQueryItemSearchSchemaSearchResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.ContactSubmissionQueryItemSearchSchemaSearchResponse {
-                get throws {
-                    switch self {
-                    case let .ok(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/responses/401/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/responses/401/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.ContactSubmissionQuery.Output.Unauthorized.Body
-                /// Creates a new `Unauthorized`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.ContactSubmissionQuery.Output.Unauthorized.Body) {
-                    self.body = body
-                }
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.ContactSubmissionQuery.Output.Unauthorized)
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.ContactSubmissionQuery.Output.Unauthorized {
-                get throws {
-                    switch self {
-                    case let .unauthorized(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/responses/403/content`.
-                @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/responses/403/content/application\/json`.
-                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
-                    /// The associated value of the enum case if `self` is `.json`.
-                    ///
-                    /// - Throws: An error if `self` is not `.json`.
-                    /// - SeeAlso: `.json`.
-                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
-                        get throws {
-                            switch self {
-                            case let .json(body):
-                                return body
-                            }
-                        }
-                    }
-                }
-                /// Received HTTP response body
-                public var body: Operations.ContactSubmissionQuery.Output.Forbidden.Body
-                /// Creates a new `Forbidden`.
-                ///
-                /// - Parameters:
-                ///   - body: Received HTTP response body
-                public init(body: Operations.ContactSubmissionQuery.Output.Forbidden.Body) {
-                    self.body = body
-                }
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.ContactSubmissionQuery.Output.Forbidden)
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.ContactSubmissionQuery.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case let .forbidden(response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case let .other(string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     public enum ContactFormGet {
@@ -2493,14 +2300,14 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)`.
-    public enum ContactFieldUpdate {
-        public static let id: Swift.String = "contactFieldUpdate"
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/field/{formFieldId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)`.
+    public enum ContactFieldPatch {
+        public static let id: Swift.String = "contactFieldPatch"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/path/formFieldId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/path/formFieldId`.
                 public var formFieldId: Components.Parameters.FormFieldIdParameter
                 /// Creates a new `Path`.
                 ///
@@ -2510,32 +2317,50 @@ public enum Operations {
                     self.formFieldId = formFieldId
                 }
             }
-            public var path: Operations.ContactFieldUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/header`.
+            public var path: Operations.ContactFieldPatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/query`.
+            public struct Query: Sendable, Hashable {
+                /// Comma-separated list of fields to update.
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/query/updateMask`.
+                public var updateMask: Components.Parameters.ContactFieldParametersUpdateMask
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - updateMask: Comma-separated list of fields to update.
+                public init(updateMask: Components.Parameters.ContactFieldParametersUpdateMask) {
+                    self.updateMask = updateMask
+                }
+            }
+            public var query: Operations.ContactFieldPatch.Input.Query
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFieldUpdate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFieldPatch.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFieldUpdate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactFieldPatch.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.ContactFieldUpdate.Input.Headers
+            public var headers: Operations.ContactFieldPatch.Input.Headers
             public var body: Components.RequestBodies.FormFieldPatchRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.ContactFieldUpdate.Input.Path,
-                headers: Operations.ContactFieldUpdate.Input.Headers = .init(),
+                path: Operations.ContactFieldPatch.Input.Path,
+                query: Operations.ContactFieldPatch.Input.Query,
+                headers: Operations.ContactFieldPatch.Input.Headers = .init(),
                 body: Components.RequestBodies.FormFieldPatchRequestBody
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -2543,7 +2368,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Contact form field response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.FormFieldResponse)
@@ -2564,10 +2389,10 @@ public enum Operations {
                     }
                 }
             }
-            public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/404/content`.
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/responses/400/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/responses/400/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2583,26 +2408,77 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.ContactFieldUpdate.Output.NotFound.Body
+                public var body: Operations.ContactFieldPatch.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldPatch.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Bad Request
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.ContactFieldPatch.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.ContactFieldPatch.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldPatch.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.ContactFieldUpdate.Output.NotFound.Body) {
+                public init(body: Operations.ContactFieldPatch.Output.NotFound.Body) {
                     self.body = body
                 }
             }
             /// Contact field not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.ContactFieldUpdate.Output.NotFound)
+            case notFound(Operations.ContactFieldPatch.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.ContactFieldUpdate.Output.NotFound {
+            public var notFound: Operations.ContactFieldPatch.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -2616,9 +2492,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2634,26 +2510,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.ContactFieldUpdate.Output.Unauthorized.Body
+                public var body: Operations.ContactFieldPatch.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.ContactFieldUpdate.Output.Unauthorized.Body) {
+                public init(body: Operations.ContactFieldPatch.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.ContactFieldUpdate.Output.Unauthorized)
+            case unauthorized(Operations.ContactFieldPatch.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.ContactFieldUpdate.Output.Unauthorized {
+            public var unauthorized: Operations.ContactFieldPatch.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -2667,9 +2543,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PATCH/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2685,26 +2561,219 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.ContactFieldUpdate.Output.Forbidden.Body
+                public var body: Operations.ContactFieldPatch.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.ContactFieldUpdate.Output.Forbidden.Body) {
+                public init(body: Operations.ContactFieldPatch.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/patch(contactFieldPatch)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.ContactFieldUpdate.Output.Forbidden)
+            case forbidden(Operations.ContactFieldPatch.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.ContactFieldUpdate.Output.Forbidden {
+            public var forbidden: Operations.ContactFieldPatch.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case let .forbidden(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case let .other(string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/contact/submission/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)`.
+    public enum ContactSubmissionQuery {
+        public static let id: Swift.String = "contactSubmissionQuery"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactSubmissionQuery.AcceptableContentType>]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.ContactSubmissionQuery.AcceptableContentType>] = .defaultValues()) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.ContactSubmissionQuery.Input.Headers
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/requestBody`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/requestBody/content/application\/json`.
+                case json(Components.Schemas.ContactSubmissionQueryItemSearchRequestQuerySchema)
+            }
+            public var body: Operations.ContactSubmissionQuery.Input.Body
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.ContactSubmissionQuery.Input.Headers = .init(),
+                body: Operations.ContactSubmissionQuery.Input.Body
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Search response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.ContactSubmissionQueryItemSearchSchemaSearchResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.ContactSubmissionQueryItemSearchSchemaSearchResponse {
+                get throws {
+                    switch self {
+                    case let .ok(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactSubmissionQuery.Output.Unauthorized.Body
+                /// Creates a new `Unauthorized`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactSubmissionQuery.Output.Unauthorized.Body) {
+                    self.body = body
+                }
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.ContactSubmissionQuery.Output.Unauthorized)
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized: Operations.ContactSubmissionQuery.Output.Unauthorized {
+                get throws {
+                    switch self {
+                    case let .unauthorized(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/submission/query/POST/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactSubmissionQuery.Output.Forbidden.Body
+                /// Creates a new `Forbidden`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactSubmissionQuery.Output.Forbidden.Body) {
+                    self.body = body
+                }
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/submission/query/post(contactSubmissionQuery)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.ContactSubmissionQuery.Output.Forbidden)
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.ContactSubmissionQuery.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):

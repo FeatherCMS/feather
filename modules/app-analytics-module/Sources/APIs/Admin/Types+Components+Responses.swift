@@ -6,34 +6,6 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
     public enum Responses {
-        public struct AnalyticsLogListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/AnalyticsLogListResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/AnalyticsLogListResponse/content/application\/json`.
-                case json(Components.Schemas.AnalyticsLogListSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AnalyticsLogListSchema {
-                    get throws {
-                        switch self {
-                        case let .json(body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.AnalyticsLogListResponse.Body
-            /// Creates a new `AnalyticsLogListResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AnalyticsLogListResponse.Body) {
-                self.body = body
-            }
-        }
         public struct AnalyticsLogOverviewResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/AnalyticsLogOverviewResponse/content`.
             @frozen public enum Body: Sendable, Hashable {

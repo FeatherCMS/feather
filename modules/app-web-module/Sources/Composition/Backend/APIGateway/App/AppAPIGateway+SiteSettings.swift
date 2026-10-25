@@ -5,7 +5,7 @@ extension AppAPIGateway {
     public func siteSettings(
         _ input: Operations.SiteSettings.Input
     ) async throws -> Operations.SiteSettings.Output {
-        let result = try await useCases.makeGetPublicSettings().execute()
+        let result = try await useCases.makeDetailPublicSettings().execute()
 
         return .ok(
             .init(

@@ -6,7 +6,7 @@ extension Job.Get {
         var operationId: String? { "systemJobGet" }
         var responseMap: ResponseMap {
             [
-                200: Job.Get.Response().reference(),
+                200: Response().reference(),
                 404: DefaultHTTPErrorContentResponse(
                     description: "Worker job not found"
                 ),

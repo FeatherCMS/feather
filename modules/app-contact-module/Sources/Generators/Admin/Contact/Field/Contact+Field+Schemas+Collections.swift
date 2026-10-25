@@ -4,7 +4,7 @@ extension Contact.Field.Schemas {
     struct AllowedValues: ArraySchemaRepresentable {
         var openAPIIdentifier: String { "ContactAllowedValuesSchema" }
         var items: (any SchemaRepresentable)? {
-            Contact.Field.Schemas.AllowedValue()
+            AllowedValue()
         }
     }
 

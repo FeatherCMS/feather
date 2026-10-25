@@ -1,2 +1,1 @@
-public enum StorageObject {
-}
+public enum StorageObject {}

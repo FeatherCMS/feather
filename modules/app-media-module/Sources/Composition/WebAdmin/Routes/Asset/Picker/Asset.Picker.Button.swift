@@ -8,12 +8,12 @@ extension Asset.Picker {
     public struct Button: Component {
         public let label: String
         public let style: AdminButtonStyle
-        public let configuration: Asset.Picker.Popup.Configuration
+        public let configuration: Popup.Configuration
 
         public init(
             _ label: String = "Choose asset",
             style: AdminButtonStyle = .ghost(.primary),
-            configuration: Asset.Picker.Popup.Configuration
+            configuration: Popup.Configuration
         ) {
             self.label = label
             self.style = style

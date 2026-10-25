@@ -218,6 +218,8 @@ private enum QueryKeys {
         let permission = SystemModule.Permission.Table.tableCreationSchema
         let variable = SystemModule.Variable.Table.tableCreationSchema
 
+        #expect(permission.name == "system_permission")
+        #expect(variable.name == "system_variable")
         #expect(
             permission.columns.map(\.name) == [
                 "id", "key", "name", "notes", "created_at", "updated_at",
@@ -260,6 +262,11 @@ private enum QueryKeys {
         #expect(hasCurrentTimestampDefault(permission.columns[4].constraints))
         #expect(permission.columns[5].type == .timestamp)
         #expect(hasCurrentTimestampDefault(permission.columns[5].constraints))
+        for column in [permission.columns[4], permission.columns[5]] {
+            #expect(column.constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            })
+        }
 
         #expect(
             variable.columns.map(\.name) == [
@@ -267,7 +274,6 @@ private enum QueryKeys {
                 "updated_at",
             ]
         )
-        #expect(variable.columns[0].constraints.isEmpty)
         #expect(
             variable.columns[1].constraints
                 .contains {
@@ -305,6 +311,13 @@ private enum QueryKeys {
         #expect(hasCurrentTimestampDefault(variable.columns[5].constraints))
         #expect(variable.columns[6].type == .timestamp)
         #expect(hasCurrentTimestampDefault(variable.columns[6].constraints))
+        for column in [variable.columns[5], variable.columns[6]] {
+            #expect(column.constraints.contains {
+                if case .notNull = $0 { true } else { false }
+            })
+        }
+        #expect(permission.indexes.isEmpty)
+        #expect(variable.indexes.isEmpty)
         #expect(
             variable.constraints.contains {
                 guard case .primaryKey(let columns) = $0 else { return false }
@@ -314,7 +327,7 @@ private enum QueryKeys {
     }
 
     @Test
-    func variableListAndCountUseFiltersOrderingAndPagination() async throws {
+    func variableListUsesFiltersAndLimit() async throws {
         let connection = MockDatabaseConnection<QueryKeys.Variable>(
             responses: [
                 .init(
@@ -329,12 +342,6 @@ private enum QueryKeys {
                         ])
                     ]
                 ),
-                .init(
-                    key: .count,
-                    rows: [
-                        .init(["count": .int(1)])
-                    ]
-                ),
             ])
         let query = SystemModule.Variable.List.Query.Database(
             context: DatabaseQueryContext(
@@ -344,27 +351,24 @@ private enum QueryKeys {
             )
         )
         let input = SystemModule.Variable.List.Input.Query(
-            page: .init(size: 10, number: 2),
+            limit: 10,
             search: "mail",
             ids: ["variable-1"]
         )
 
         let list = try await query.list(query: input)
-        let count = try await query.count(query: input)
         try await connection.assertAllResponsesConsumed()
 
         #expect(list.items.map(\.key) == ["mail.from"])
-        #expect(count == 1)
         let queries = await connection.executedQueries()
-        #expect(queries.values.reduce(0) { $0 + $1.count } == 2)
+        #expect(queries.values.reduce(0) { $0 + $1.count } == 1)
         #expect(queries[.list]?.first?.sql.contains("WHERE") == true)
         #expect(
             queries[.list]?.first?.sql.contains("ORDER BY") == true
         )
         #expect(queries[.list]?.first?.sql.contains("LIMIT") == true)
-        #expect(queries[.list]?.first?.sql.contains("OFFSET") == true)
+        #expect(queries[.list]?.first?.sql.contains("OFFSET") == false)
         #expect((queries[.list]?.first?.bindings.count ?? 0) >= 3)
-        #expect(queries[.count]?.first?.sql.contains("COUNT") == true)
     }
 
     @Test

@@ -1,3 +1,0 @@
-extension Post {
-    enum Put {}
-}

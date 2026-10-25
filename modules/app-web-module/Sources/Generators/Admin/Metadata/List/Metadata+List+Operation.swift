@@ -7,7 +7,7 @@ extension Metadata.List {
         var operationId: String? { "metadataList" }
         var responseMap: ResponseMap {
             [
-                200: MetadataListResponse().reference()
+                200: Response().reference()
             ]
         }
     }

@@ -10,7 +10,7 @@ extension AdminAPIGateway {
         _ input: Operations.AccountInvitationGet.Input
     ) async throws -> Operations.AccountInvitationGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeGetInvitation()
+        let useCase = useCases.makeDetailInvitation()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.accountInvitationId)

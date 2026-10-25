@@ -7,12 +7,12 @@ extension Page.Post {
         var operationId: String? { "pageCreate" }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            PageRequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {
             [
-                201: PageDetailResponse().reference()
+                201: Page.Get.Response().reference()
             ]
         }
     }

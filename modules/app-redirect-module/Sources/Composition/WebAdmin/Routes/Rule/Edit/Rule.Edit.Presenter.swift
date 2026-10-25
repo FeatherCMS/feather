@@ -25,7 +25,7 @@ extension RedirectModule.Rule.Edit.Presenter {
         func renderEditError(
             id: String,
             input: RedirectModule.Rule.Edit.Form.Input?,
-            error: RedirectModule.Rule.Edit.Error
+            error: RedirectModule.Rule.Edit.Interactor.Error
         ) async throws -> HTMLResponse
         func renderSuccess(id: String) -> Response
         func renderForbiddenPage() async throws -> HTMLResponse

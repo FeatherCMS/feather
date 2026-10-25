@@ -47,6 +47,7 @@ extension Settings.Edit.Controller {
                             canEdit: canEdit,
                             error: error.displayMessage
                         ),
+                        mediaAssetList: routes.mediaAssetList,
                         breadcrumb: routes.breadcrumb,
                         action: routes.edit.path
                     ),
@@ -58,6 +59,7 @@ extension Settings.Edit.Controller {
                 state: .init(
                     canEdit: canEdit,
                     form: makeFormState(from: settings, canEdit: canEdit),
+                    mediaAssetList: routes.mediaAssetList,
                     breadcrumb: routes.breadcrumb,
                     action: routes.edit.path
                 ),
@@ -121,6 +123,7 @@ extension Settings.Edit.Controller {
                         state: .init(
                             canEdit: canEdit,
                             form: form,
+                            mediaAssetList: routes.mediaAssetList,
                             breadcrumb: routes.breadcrumb,
                             action: routes.edit.path
                         ),
@@ -163,6 +166,7 @@ extension Settings.Edit.Controller {
                         state: .init(
                             canEdit: canEdit,
                             form: form,
+                            mediaAssetList: routes.mediaAssetList,
                             breadcrumb: routes.breadcrumb,
                             action: routes.edit.path
                         ),

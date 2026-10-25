@@ -19,6 +19,18 @@ extension Contact {
                     .appending(pathComponent: "contact")
             )
 
+            public var forms: WebRoute {
+                root.appending(pathComponent: "forms")
+            }
+
+            public var fields: WebRoute {
+                root.appending(pathComponent: "fields")
+            }
+
+            public var submissions: WebRoute {
+                root.appending(pathComponent: "submissions")
+            }
+
             var breadcrumb: [AdminBreadcrumb.Link] {
                 [
                     .init(label: "Admin", link: admin.path),

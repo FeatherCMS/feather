@@ -10,8 +10,9 @@ extension Session.List {
     struct Page: Component {
         struct State {
             let identityID: String
-            let items: [Session.List.Model.Item]
+            let items: [Model.Item]
             let canRemove: Bool
+            let routes: Session.Router.Routes
         }
 
         let state: State
@@ -21,12 +22,15 @@ extension Session.List {
                 context.build(
                     AdminBreadcrumb(
                         links: [
-                            .init(label: "Admin", link: "/admin/"),
-                            .init(label: "Auth", link: "/admin/auth/"),
+                            .init(
+                                label: "Admin",
+                                link: state.routes.admin.path
+                            ),
+                            .init(label: "Auth", link: state.routes.auth.path),
                             .init(
                                 label: "Identity",
                                 link:
-                                    "/admin/auth/identities/\(state.identityID)/"
+                                    state.routes.identityPath(state.identityID)
                             ),
                         ]
                     )
@@ -44,14 +48,16 @@ extension Session.List {
                     AdminTabBar(links: [
                         .init(
                             label: "Sessions",
-                            href:
-                                "/admin/auth/identities/\(state.identityID)/sessions/",
+                            href: state.routes.listPath(
+                                identityID: state.identityID
+                            ),
                             isCurrent: true
                         ),
                         .init(
                             label: "Magic links",
-                            href:
-                                "/admin/auth/magic-links/?userId=\(state.identityID)",
+                            href: state.routes.magicLinksPath(
+                                identityID: state.identityID
+                            ),
                             isCurrent: false
                         ),
                     ])

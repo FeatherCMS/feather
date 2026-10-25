@@ -1,4 +1,4 @@
-import NewsModule
+public import NewsModule
 
 extension Article {
     public enum Extension {}

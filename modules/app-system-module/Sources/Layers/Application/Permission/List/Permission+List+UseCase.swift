@@ -41,24 +41,5 @@ extension Permission.List {
             }
         }
 
-        public func count(
-            subject: Subject,
-            input: Input
-        ) async throws -> Int {
-            let action = Action()
-
-            guard try await authorizer.can(subject: subject, perform: action)
-            else {
-                throw AuthError(kind: .forbidden, message: action.key.rawValue)
-            }
-
-            let inputQuery = input.query
-
-            return try await query.run { scope in
-                try await scope.permission.count(
-                    query: inputQuery
-                )
-            }
-        }
     }
 }

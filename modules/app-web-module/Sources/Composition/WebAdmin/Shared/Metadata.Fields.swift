@@ -1,5 +1,6 @@
 public import CSS
 public import FeatherWebAdmin
+public import FeatherWebShared
 import Foundation
 public import HTML
 import MediaWebAdmin
@@ -129,19 +130,22 @@ extension WebModule.Metadata {
         public let showTemplate: Bool
         public let titleRequired: Bool
         public let templateOptions: [AdminFormFieldSelect.SelectOption]
+        public let mediaAssetList: WebRoute
 
         public init(
             state: State,
             showTitle: Bool = false,
             showTemplate: Bool = false,
             titleRequired: Bool = false,
-            templateOptions: [AdminFormFieldSelect.SelectOption] = []
+            templateOptions: [AdminFormFieldSelect.SelectOption] = [],
+            mediaAssetList: WebRoute
         ) {
             self.state = state
             self.showTitle = showTitle
             self.showTemplate = showTemplate
             self.titleRequired = titleRequired
             self.templateOptions = templateOptions
+            self.mediaAssetList = mediaAssetList
         }
 
         public func selectors() -> [any CSS.Selector] {
@@ -267,7 +271,7 @@ extension WebModule.Metadata {
                         title: "Meta tags"
                     ) {
                         Div {
-                            imagePicker(
+                            imagePickerPath(
                                 state.imageUrl,
                                 selectedAsset: state.selectedImageAsset,
                                 context: &context
@@ -399,13 +403,23 @@ extension WebModule.Metadata {
             .class("admin-metadata-fields")
         }
 
-        private func imagePicker(
+        private func imagePickerPath(
             _ field: FieldState,
             selectedAsset: AdminMediaAsset?,
             context: inout BuilderContext
         ) -> Section {
+            var browseComponents = URLComponents()
+            browseComponents.path = mediaAssetList.path
+            browseComponents.queryItems = [
+                URLQueryItem(name: "picker", value: "1"),
+                URLQueryItem(name: "field", value: field.key),
+                URLQueryItem(
+                    name: "extensions",
+                    value: AllowedExtensions.images.queryValue
+                ),
+            ]
             let browsePath =
-                "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)"
+                browseComponents.string ?? browseComponents.path
             return context.build(
                 AdminFormFieldMediaPicker(
                     state: .init(

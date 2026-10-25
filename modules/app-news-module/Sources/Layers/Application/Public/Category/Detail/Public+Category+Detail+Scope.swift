@@ -6,7 +6,7 @@ public import WebModule
 extension Public.Category.Detail {
     public struct Scope: FeatherModuleKit.Scope {
         public let category: any Category.Detail.Query.Interface
-        public let article: any Public.Article.List.Query.Interface
+        public let article: any Query.Interface
         public let articleCategoryIDs:
             any Public.Article.CategoryIDs.Query.Interface
         public let metadataDetails:
@@ -14,7 +14,7 @@ extension Public.Category.Detail {
 
         public init(
             category: any Category.Detail.Query.Interface,
-            article: any Public.Article.List.Query.Interface,
+            article: any Query.Interface,
             articleCategoryIDs: any Public.Article.CategoryIDs.Query
                 .Interface,
             metadataDetails: any WebModule.Metadata.Resolve.Detail.Query

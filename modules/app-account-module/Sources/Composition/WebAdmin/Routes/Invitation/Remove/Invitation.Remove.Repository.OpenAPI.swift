@@ -6,9 +6,7 @@ import OpenAPIRuntime
 
 extension Invitation.Remove.Repository {
 
-    struct OpenAPI:
-        Invitation.Remove.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func get(

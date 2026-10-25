@@ -22,7 +22,7 @@ extension AppAPIGateway {
             AnalyticsLogRequestMetadata
             .parseUserAgent(body.userAgent)
 
-        _ = try await useCases.makeLogTrack()
+        _ = try await useCases.makeTrackLog()
             .execute(
                 input: .init(
                     accountId: accountId,

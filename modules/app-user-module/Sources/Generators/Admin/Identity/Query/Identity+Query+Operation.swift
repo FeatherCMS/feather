@@ -6,7 +6,7 @@ extension Identity.Query {
         var operationId: String? { "userIdentityQuery" }
         var searchRequestQuery: SearchRequestQuerySchema {
             .init(
-                items: Identity.Query.Schemas.Item(),
+                items: Schemas.Item(),
                 sortFieldKeys: ["id"],
                 filters: SearchFilterSchema(
                     additionalProperties: [

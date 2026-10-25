@@ -5,7 +5,7 @@ import Hummingbird
 
 extension Settings.Edit {
     struct Router {
-        let controller: any Settings.Edit.Controller.Interface
+        let controller: any Controller.Interface
         let routes: Settings.Router.Routes
 
         init(
@@ -14,12 +14,12 @@ extension Settings.Edit {
             routes: Settings.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Settings.Edit.Controller.Default(
+            self.controller = Controller.Default(
                 routes: routes,
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Settings.Edit.Interactor.Default(
-                            repository: Settings.Edit.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
@@ -30,7 +30,7 @@ extension Settings.Edit {
                                 )
                             )
                         ),
-                        presenter: Settings.Edit.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,

@@ -22,6 +22,10 @@ extension FormField.List.Repository {
             search: String?,
             formKey: String?
         ) async throws -> FormField.List.Model
+
+        func formFieldOptions(
+            formKey: String
+        ) async throws -> [FormField.List.FormFieldOption]
     }
 }
 
@@ -106,6 +110,35 @@ extension FormField.List.Repository {
                 ) {
                 case .ok(let value):
                     return try value.body.json.map(Self.mapField)
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+        }
+
+        func formFieldOptions(
+            formKey: String
+        ) async throws -> [FormField.List.FormFieldOption] {
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.contactFormGet(
+                    path: .init(contactFormKey: formKey)
+                )
+
+                switch response {
+                case .ok(let value):
+                    let form = try value.body.json
+                    return (form.items ?? []).map {
+                        .init(key: $0.key, label: $0.label)
+                    }
+                case .notFound:
+                    throw OpenAPIRepositoryError.notFound
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:

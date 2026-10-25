@@ -8,7 +8,7 @@ extension AdminAPIGateway {
         _ input: Operations.AccountProfileGet.Input
     ) async throws -> Operations.AccountProfileGet.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeGetAccountProfile()
+        let result = try await useCases.makeDetailProfile()
             .execute(
                 subject: subject,
                 input: .init(userId: input.path.userId)

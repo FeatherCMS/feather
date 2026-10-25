@@ -16,14 +16,3 @@ extension Session.List.Controller {
     }
 }
 
-extension Session.List.Controller.Interface {
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: Session.Router.Routes
-    ) {
-        router.get(
-            routes.list.routerPath,
-            use: get
-        )
-    }
-}

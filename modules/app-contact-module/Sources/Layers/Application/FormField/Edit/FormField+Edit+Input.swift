@@ -1,27 +1,28 @@
 public import ContactDomain
 public import ContactModule
 public import FeatherApplication
+public import FeatherDomain
 
 extension FormField.Edit {
     public struct Input: DTO {
         public let id: String
         public let formId: String?
-        public let key: String?
-        public let type: FormField.Model.ItemType?
-        public let label: String?
-        public let allowedValues: [FormField.Model.Option]?
-        public let isRequired: Bool?
-        public let position: Int?
+        public let key: FieldChange<String>
+        public let type: FieldChange<FormField.Model.ItemType>
+        public let label: FieldChange<String>
+        public let allowedValues: FieldChange<[FormField.Model.Option]>
+        public let isRequired: FieldChange<Bool>
+        public let position: FieldChange<Int>
 
         public init(
             id: String,
             formId: String?,
-            key: String? = nil,
-            type: FormField.Model.ItemType? = nil,
-            label: String? = nil,
-            allowedValues: [FormField.Model.Option]? = nil,
-            isRequired: Bool? = nil,
-            position: Int? = nil
+            key: FieldChange<String> = .unchanged,
+            type: FieldChange<FormField.Model.ItemType> = .unchanged,
+            label: FieldChange<String> = .unchanged,
+            allowedValues: FieldChange<[FormField.Model.Option]> = .unchanged,
+            isRequired: FieldChange<Bool> = .unchanged,
+            position: FieldChange<Int> = .unchanged
         ) {
             self.id = id
             self.formId = formId

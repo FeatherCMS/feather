@@ -29,7 +29,7 @@ extension Role.List {
                     )
                 )
                 context.build(
-                    Role.List.TableContent(
+                    TableContent(
                         routes: routes,
                         roles: roles,
                         permissions: permissions,

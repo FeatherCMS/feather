@@ -66,7 +66,7 @@ public struct Router {
         Overview
             .Router(
                 renderingEngine: renderingEngine,
-                routes: .init(root: routes.root)
+                routes: .init(admin: routes.admin, root: routes.root)
             )
             .route(on: router)
 

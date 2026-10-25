@@ -1,8 +1,1 @@
-public enum Variant {
-
-
-
-
-
-
-}
+public enum Variant {}

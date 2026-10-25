@@ -4,12 +4,12 @@ import FeatherWebShared
 import HTML
 import Hummingbird
 import MediaAdminAPI
-import MediaModule
+public import MediaModule
 import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
 
 extension Asset.File {
-    enum View {}
+    public enum View {}
 }

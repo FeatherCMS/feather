@@ -20,7 +20,7 @@ extension MagicLink.Add.Interactor {
         let repository: any MagicLink.Add.Repository.Interface
 
         func listEmails() async throws
-            -> [AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail]
+            -> [Email.Option]
         {
             try await repository.listEmails()
         }

@@ -5,9 +5,9 @@ extension Settings.Get {
         var openAPIIdentifier: String { "AccountSettingsDetailSchema" }
         var propertyMap: SchemaMap {
             [
-                "language": Settings.Fields.Language(),
-                "timezone": Settings.Fields.Timezone(),
-                "pageSize": Settings.Fields.PageSize(),
+                "language": Settings.Schemas.Language(),
+                "timezone": Settings.Schemas.Timezone(),
+                "pageSize": Settings.Schemas.PageSize(),
             ]
         }
     }

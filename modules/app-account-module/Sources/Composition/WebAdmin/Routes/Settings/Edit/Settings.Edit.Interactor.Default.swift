@@ -2,9 +2,7 @@ import AccountModule
 
 extension Settings.Edit.Interactor {
 
-    struct Default:
-        Settings.Edit.Interactor.Interface
-    {
+    struct Default: Interface {
 
         let repository: any Settings.Edit.Repository.Interface
 

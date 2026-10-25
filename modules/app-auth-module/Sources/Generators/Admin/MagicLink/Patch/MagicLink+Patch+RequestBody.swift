@@ -7,7 +7,7 @@ extension MagicLink.Patch {
         var contentMap: ContentMap {
             [
                 .json: Content(
-                    MagicLink.Patch.Schema().reference()
+                    Schema().reference()
                 )
             ]
         }

@@ -30,7 +30,7 @@ extension Public.Tag.Detail {
                     ),
                     metadata.isDirectlyAccessible(at: now)
                 else {
-                    throw Public.Tag.Detail.Error(message: "Tag not found")
+                    throw Error(message: "Tag not found")
                 }
 
                 let tagID = id
@@ -56,23 +56,19 @@ extension Public.Tag.Detail {
     }
 }
 
-extension UseCase {
+extension Public.Tag.Detail.UseCase {
     fileprivate static func publicPosts(
         matchingTagID tagID: String,
         now: Date,
-        context: Scope
+        context: Public.Tag.Detail.Scope
     ) async throws -> [Public.Post.Summary.Item] {
-        let posts = try await context.postList.list()
+        let posts = try await context.tag.posts(tagID: tagID)
         var result: [Public.Post.Summary.Item] = []
-        for item in posts.items {
-            let post = try await context.postDetail.find(id: item.id)
-            guard post.tagIds.contains(tagID) else {
-                continue
-            }
+        for post in posts {
             guard
                 let metadata = try await context.metadata.find(
                     referenceType: "blog.post",
-                    referenceID: item.id
+                    referenceID: post.id
                 ),
                 metadata.isPublic(at: now)
             else {
@@ -80,9 +76,9 @@ extension UseCase {
             }
             result.append(
                 .init(
-                    id: item.id,
-                    title: item.title,
-                    excerpt: item.excerpt,
+                    id: post.id,
+                    title: post.title,
+                    excerpt: post.excerpt,
                     imageAssetId: post.imageAssetId,
                     imageURL: "",
                     media: nil,

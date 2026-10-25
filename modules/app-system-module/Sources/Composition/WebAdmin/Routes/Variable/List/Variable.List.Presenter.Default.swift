@@ -7,9 +7,7 @@ import SystemModule
 import WebComponents
 
 extension Variable.List.Presenter {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
         let renderingEngine: any RenderingEngine

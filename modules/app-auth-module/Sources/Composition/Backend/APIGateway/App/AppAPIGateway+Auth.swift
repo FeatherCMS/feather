@@ -12,7 +12,7 @@ extension AppAPIGateway {
         _ input: Operations.AuthMe.Input
     ) async throws -> Operations.AuthMe.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeGetCurrentUser()
+        let useCase = useCases.makeCurrentUser()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: subject.id)

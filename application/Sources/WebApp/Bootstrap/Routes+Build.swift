@@ -40,7 +40,7 @@ import Logging
 func buildRouter(
     environment: AppEnvironment,
     templateOptions: [PageTemplateOption],
-    templateDefinitions: [TemplateDefinition],
+    templateDefinitions: [WebModule.Template.Definition],
     templatePaths: [URL]
 ) async throws -> Hummingbird.Router<DefaultRequestContext> {
 
@@ -66,9 +66,38 @@ func buildRouter(
         Response(status: .ok)
     }
 
+    let adminRoot = WebRoute.root.appending(pathComponent: "admin")
     let systemRoutes = SystemWebAdmin.Router.Routes.standard
     let redirectRoutes = RedirectWebAdmin.Router.Routes.standard
-    let newsRoutes = NewsWebAdmin.Router.Routes.standard
+    let authRoutes = AuthWebAdmin.Router.Routes.standard
+    let userRoutes = UserWebAdmin.Router.Routes.standard
+    let mediaRoutes = MediaWebAdmin.Router.Routes.standard
+    let newsRoutes = NewsWebAdmin.Router.Routes(
+        admin: adminRoot,
+        mediaAssetList: mediaRoutes.assetList
+    )
+    let newsletterRoutes = NewsletterWebAdmin.Router.Routes.standard
+    let webAdminRoutes = WebModuleWebAdmin.Router.Routes(
+        admin: adminRoot,
+        root: adminRoot.appending(pathComponent: "web"),
+        mediaAssetList: mediaRoutes.assetList
+    )
+    let blogRoutes = BlogWebAdmin.Router.Routes(
+        root: adminRoot,
+        mediaAssetList: mediaRoutes.assetList
+    )
+    let contactRoutes = Contact.Router.Routes(
+        admin: adminRoot,
+        root: adminRoot.appending(pathComponent: "contact")
+    )
+    let accountRoutes = AccountWebAdmin.Router.Routes(
+        admin: adminRoot,
+        mediaAssetList: mediaRoutes.assetList,
+        userIdentityRoot: userRoutes.user
+            .appending(pathComponent: "identities"),
+        authMagicLinksRoot: authRoutes.auth
+            .appending(pathComponent: "magic-links")
+    )
     var adminEvents = EventRegistry()
     WebModuleWebApp.Event.Handlers.register(in: &adminEvents)
     BlogWebApp.Event.Handlers.register(in: &adminEvents)
@@ -99,21 +128,35 @@ func buildRouter(
     UserModule.Event.Handlers.register(in: &adminEvents)
     MediaWebAdmin.Event.Handlers.register(in: &adminEvents)
     AnalyticsWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
-    BlogWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    BlogWebAdmin.Event.Handlers.registerMenu(
+        in: &adminEvents,
+        routes: blogRoutes
+    )
     NewsWebAdmin.Menu.Provider.register(in: &adminEvents)
     NewsWebAdmin.Event.Handlers.registerMenu(
         in: &adminEvents,
         routes: newsRoutes
     )
     NewsletterWebAdmin.Event.Handlers.registerRichContentEditor(
-        in: &adminEvents
+        in: &adminEvents,
+        routes: newsletterRoutes
     )
     ContactWebAdmin.Event.Handlers.registerRichContentEditor(
-        in: &adminEvents
+        in: &adminEvents,
+        routes: contactRoutes
     )
-    NewsletterWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
-    ContactWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
-    WebModuleWebAdmin.Event.Handlers.registerMenu(in: &adminEvents)
+    NewsletterWebAdmin.Event.Handlers.registerMenu(
+        in: &adminEvents,
+        routes: newsletterRoutes
+    )
+    ContactWebAdmin.Event.Handlers.registerMenu(
+        in: &adminEvents,
+        routes: contactRoutes
+    )
+    WebModuleWebAdmin.Event.Handlers.registerMenu(
+        in: &adminEvents,
+        routes: webAdminRoutes
+    )
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(
             event: AdminRichContentEditorBlockProvider(),
@@ -163,11 +206,17 @@ func buildRouter(
         in: &publicContentEvents
     )
 
+    let contactSubmissionRoutes = Submission.Router.Routes.standard
+    let newsletterSubmissionRoute = Campaign.Subscription.Route.standard
     ContactWebApp.Event.Handlers.registerMarkdown(
         in: &publicContentEvents,
-        api: ContactWebApp.API.Client(environment: environment)
+        api: ContactWebApp.API.Client(environment: environment),
+        routes: contactSubmissionRoutes
     )
-    NewsletterWebApp.Event.Handlers.registerMarkdown(in: &publicContentEvents)
+    NewsletterWebApp.Event.Handlers.registerMarkdown(
+        in: &publicContentEvents,
+        submissionRoute: newsletterSubmissionRoute
+    )
 
     let authRouter = router.add(
         middleware: DefaultAuthMiddleware(
@@ -178,6 +227,8 @@ func buildRouter(
     buildAppRoutes(
         router: router,
         environment: environment,
+        contactSubmissionRoutes: contactSubmissionRoutes,
+        newsletterSubmissionRoute: newsletterSubmissionRoute,
         publicPageRenderer: DefaultPublicPageRenderer(
             publicOrigins: environment.publicOrigins
         ),
@@ -212,7 +263,15 @@ func buildRouter(
         adminEvents: adminEvents,
         systemRoutes: systemRoutes,
         redirectRoutes: redirectRoutes,
-        newsRoutes: newsRoutes
+        newsRoutes: newsRoutes,
+        blogRoutes: blogRoutes,
+        contactRoutes: contactRoutes,
+        newsletterRoutes: newsletterRoutes,
+        authRoutes: authRoutes,
+        userRoutes: userRoutes,
+        mediaRoutes: mediaRoutes,
+        accountRoutes: accountRoutes,
+        webAdminRoutes: webAdminRoutes
     )
 
     return router

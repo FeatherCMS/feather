@@ -1,6 +1,7 @@
 import FeatherDBAL
 public import FeatherInfrastructure
 public import RedirectApplication
+import RedirectDomain
 public import RedirectModule
 
 extension Rule.Detail.Query {
@@ -11,7 +12,7 @@ extension Rule.Detail.Query {
             self.accessLayer = .init(context: context)
         }
 
-        public func detail(id: String) async throws -> Rule.Detail.Output {
+        public func find(id: String) async throws -> Rule.Detail.Output {
             guard
                 let row = try await accessLayer.selectFirst(
                     by: \.id,
@@ -21,7 +22,7 @@ extension Rule.Detail.Query {
                 throw RepositoryError.notFound
             }
             guard
-                let statusCode = Rule.StatusCode(
+                let statusCode = Rule.Model.StatusCode(
                     rawValue: row.statusCode
                 )
             else {

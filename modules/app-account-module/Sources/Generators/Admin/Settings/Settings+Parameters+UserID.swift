@@ -5,7 +5,7 @@ extension Settings.Parameters {
         var openAPIIdentifier: String { "AccountSettingsUserIDParameter" }
         var name: String { "userId" }
         var schema: any OpenAPISchemaRepresentable {
-            Settings.Fields.UserID().reference()
+            Settings.Schemas.UserID().reference()
         }
     }
 }

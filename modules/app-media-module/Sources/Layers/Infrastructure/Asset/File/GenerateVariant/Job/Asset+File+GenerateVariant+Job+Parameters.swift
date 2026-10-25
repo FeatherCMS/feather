@@ -1,4 +1,5 @@
 public import Jobs
+public import MediaApplication
 public import MediaModule
 
 extension Asset.File.GenerateVariant.Job {

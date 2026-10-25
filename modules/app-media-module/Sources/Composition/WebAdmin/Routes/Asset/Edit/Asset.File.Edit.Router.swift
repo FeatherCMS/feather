@@ -13,7 +13,7 @@ import WebComponents
 extension Asset.File.Edit {
     struct Router {
         private let routes: Asset.Router.Routes
-        let controller: any Asset.File.Edit.Controller.Interface
+        let controller: any Controller.Interface
 
         init(
             environment: AppEnvironment,
@@ -21,18 +21,18 @@ extension Asset.File.Edit {
             routes: Asset.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Asset.File.Edit.Controller.Default(
+            self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Asset.File.Edit.Interactor.Default(
-                            repository: Asset.File.Edit.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )
                             )
                         ),
-                        presenter: Asset.File.Edit.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,

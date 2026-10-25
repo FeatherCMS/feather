@@ -16,7 +16,7 @@ extension Credential.Patch {
         }
 
         var requestBody: (any RequestBodyRepresentable)? {
-            Credential.Patch.RequestBody().reference()
+            RequestBody().reference()
         }
 
         var responseMap: ResponseMap {

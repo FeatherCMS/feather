@@ -8,15 +8,17 @@ extension WebModule.Metadata.Edit.Interactor {
         let repository: any WebModule.Metadata.Edit.Repository.Interface
         let events: any EventPublisher
 
-        func getTemplateOptions() async throws -> [PageTemplateOption] {
+        func getTemplateOptions() async throws -> [WebModule.Metadata.Edit.TemplateOption] {
             let providers = try await events.trigger(
-                event: TemplateProviderEvent(),
+                event: WebModule.Template.Event.Provider(),
                 using: WebModule.Event.Context()
             )
             return
                 providers
                 .flatMap(\.templates)
-                .map { .init(value: $0.id, title: $0.title) }
+                .map {
+                    .init(value: $0.id, title: $0.title)
+                }
         }
 
         func load(

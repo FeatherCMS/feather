@@ -17,15 +17,3 @@ extension Session.Remove.Controller {
     }
 }
 
-extension Session.Remove.Controller.Interface {
-
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: Session.Router.Routes
-    ) {
-        router.post(
-            routes.remove.routerPath,
-            use: postRemoveAuthSession
-        )
-    }
-}

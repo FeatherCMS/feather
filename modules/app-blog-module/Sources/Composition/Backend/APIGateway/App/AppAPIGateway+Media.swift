@@ -11,22 +11,22 @@ extension AppAPIGateway {
         guard let assetId, !assetId.isEmpty else {
             return nil
         }
-        guard let asset = try? await useCases.media.detailAsset(id: assetId)
+        guard
+            let asset = try? await useCases.media
+                .makePublicResolveMediaAssets()
+                .execute(input: .init(ids: [assetId], variants: nil))
+                .items.first
         else {
             return nil
         }
         let resolver = useCases.mediaResolver
         let originalURL = resolver.resolve(imagePath: asset.url) ?? asset.url
-        let variants =
-            ((try? await useCases.media.listAssociatedVariantFiles(
-                assetId: assetId
-            )) ?? [])
-            .map {
-                MediaURLVariant(
-                    key: $0.key,
-                    url: resolver.resolve(imagePath: $0.url) ?? $0.url
-                )
-            }
+        let variants = asset.variants.map {
+            MediaURLVariant(
+                key: $0.key,
+                url: resolver.resolve(imagePath: $0.url) ?? $0.url
+            )
+        }
         let defaultURL =
             resolver.resolve(
                 variants: variants,

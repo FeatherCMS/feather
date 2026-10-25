@@ -72,8 +72,9 @@ extension Profile.Edit.Form {
                                     status: $0.status
                                 )
                             },
-                            browsePath:
-                                "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)",
+                            browsePath: routes.profileImagePickerPath(
+                                state.profileImageAssetId.key
+                            ),
                             defaultFolderPath: "account/profiles",
                             allowedExtensions: .images,
                             previewStyle: .circular

@@ -39,7 +39,8 @@ extension MagicLink.Remove.Presenter {
                         item: item,
                         credentialId: credentialId,
                         breadcrumb: routes.breadcrumb,
-                        nonceToken: nonceToken
+                        nonceToken: nonceToken,
+                        routes: routes
                     )
                 ),
                 size: .small

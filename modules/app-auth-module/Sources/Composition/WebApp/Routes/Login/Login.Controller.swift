@@ -20,10 +20,3 @@ extension Login.Controller {
         ) async throws -> Response
     }
 }
-
-extension Login.Controller.Interface {
-    func route(on router: any RouterMethods<DefaultRequestContext>) {
-        router.get(RouterPath("/login/"), use: getLogin)
-        router.post(RouterPath("/login/"), use: postLogin)
-    }
-}

@@ -1,6 +1,7 @@
 import AsyncHTTPClient
 public import FeatherWebShared
-import OpenAPIAsyncHTTPClient
+import NIOCore
+public import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 
 public enum BlogAPIClientSupport {

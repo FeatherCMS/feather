@@ -9,9 +9,10 @@ import WebComponents
 extension Email.View {
     struct Details: WebComponents.Component {
         struct State {
-            let link: Email.View.Detail
+            let link: Detail
             let permissions: Set<String>
             let breadcrumb: [AdminBreadcrumb.Link]
+            let routes: Email.Router.Routes
         }
 
         let state: State
@@ -43,7 +44,7 @@ extension Email.View {
                 actions.append(
                     .init(
                         label: "Edit email",
-                        href: "/admin/auth/emails/\(state.link.id)/edit/",
+                        href: state.routes.editPath(state.link.id),
                         style: .primary
                     )
                 )
@@ -54,7 +55,7 @@ extension Email.View {
                 actions.append(
                     .init(
                         label: "Remove email",
-                        href: "/admin/auth/emails/\(state.link.id)/remove/",
+                        href: state.routes.removePath(state.link.id),
                         style: .destructive
                     )
                 )

@@ -4,10 +4,10 @@ extension RolePermission {
 
     struct PathItem: PathItemRepresentable {
         var post: (any OperationRepresentable)? {
-            RolePermission.Post.Operation()
+            Post.Operation()
         }
         var delete: (any OperationRepresentable)? {
-            RolePermission.Delete.Operation()
+            Delete.Operation()
         }
     }
 }

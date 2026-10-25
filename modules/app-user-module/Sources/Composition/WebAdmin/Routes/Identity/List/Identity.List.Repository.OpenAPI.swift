@@ -6,9 +6,7 @@ import UserAdminAPI
 import UserModule
 
 extension Identity.List.Repository {
-    struct OpenAPI:
-        Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
         func search(
             page: Int,

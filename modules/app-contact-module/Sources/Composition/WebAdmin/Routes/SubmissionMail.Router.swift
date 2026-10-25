@@ -52,10 +52,16 @@ extension SubmissionMail {
         struct Routes: Sendable {
             private let root: WebRoute
             private let breadcrumb: [AdminBreadcrumb.Link]
+            let formRoutes: ContactModule.Form.Router.Routes
 
-            init(root: WebRoute, breadcrumb: [AdminBreadcrumb.Link]) {
+            init(
+                root: WebRoute,
+                breadcrumb: [AdminBreadcrumb.Link],
+                formRoutes: ContactModule.Form.Router.Routes
+            ) {
                 self.root = root
                 self.breadcrumb = breadcrumb
+                self.formRoutes = formRoutes
             }
 
             var formEmails: WebRoute {

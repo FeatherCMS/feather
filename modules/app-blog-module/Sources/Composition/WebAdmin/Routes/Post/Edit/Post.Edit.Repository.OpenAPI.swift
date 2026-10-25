@@ -66,8 +66,9 @@ extension Post.Edit.Repository {
             input: Post.Form.Input
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.blogPostPut(
+                let response = try await client.blogPostPatch(
                     path: .init(blogPostId: id),
+                    query: .init(updateMask: "title,excerpt,content,imageAssetId,authorIds,tagIds"),
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
@@ -83,6 +84,12 @@ extension Post.Edit.Repository {
                 switch response {
                 case .ok:
                     return
+                case .badRequest(let response):
+                    let data = try JSONEncoder().encode(try response.body.json)
+                    throw OpenAPIRepositoryError.parsedFailure(
+                        statusCode: 400,
+                        responseBody: String(data: data, encoding: .utf8)
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:

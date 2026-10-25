@@ -82,7 +82,8 @@ extension Form.Edit {
                         fieldId: item.id
                     )
                 }
-                for (position, fieldId) in input.fieldIds.enumerated() {
+                for position in input.fieldIds.indices {
+                    let fieldId = input.fieldIds[position]
                     try await scope.field.assign(
                         formId: value.id,
                         fieldId: fieldId,

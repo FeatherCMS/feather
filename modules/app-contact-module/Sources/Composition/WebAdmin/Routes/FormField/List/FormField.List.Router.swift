@@ -43,7 +43,8 @@ extension FormField.List {
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             router.get(routes.fields.routerPath, use: controller.list)
-            Data(environment: environment, routes: routes).route(on: router)
+            let data = Data(environment: environment)
+            router.get(routes.formFieldsData.routerPath, use: data.get)
         }
     }
 }

@@ -11,14 +11,14 @@ extension Post.Patch {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "title": BlogPostTitleField().reference(required: false),
-                "excerpt": BlogPostExcerptField().reference(required: false),
-                "content": BlogPostContentField().reference(required: false),
-                "imageAssetId": BlogPostImageAssetIdField()
+                "title": Post.Schemas.Title().reference(required: false),
+                "excerpt": Post.Schemas.Excerpt().reference(required: false),
+                "content": Post.Schemas.Content().reference(required: false),
+                "imageAssetId": Post.Schemas.ImageAssetID()
                     .nullable().reference(required: false),
-                "authorIds": BlogPostAuthorIdsField()
+                "authorIds": Post.Schemas.AuthorIDs()
                     .reference(required: false),
-                "tagIds": BlogPostTagIdsField().reference(required: false),
+                "tagIds": Post.Schemas.TagIDs().reference(required: false),
             ]
         }
     }

@@ -12,7 +12,7 @@ extension Issue.Search {
     struct Table: Component {
         struct State {
             let newsletterId: String
-            let items: [Issue.Search.Item]
+            let items: [Item]
             let pageState: AdminListPageState
             let permissions: AdminListActions
             let search: String?

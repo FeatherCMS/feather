@@ -19,6 +19,8 @@ import WebComponents
 
 extension Email.Remove.Controller {
     struct Default: Interface {
+        let routes: Email.Router.Routes
+
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Email.Remove.Interactor.Interface,
@@ -93,14 +95,14 @@ extension Email.Remove.Controller {
         private func listLocation(page: Int, search: String?, userID: String?)
             -> String
         {
-            var components = URLComponents(string: "/admin/auth/emails/")!
+            var components = URLComponents(string: routes.list.path)!
             components.queryItems = [
                 .init(name: "page", value: "\(page)"),
                 .init(name: "search", value: search),
                 .init(name: "userId", value: userID),
             ]
             .compactMap { $0.value == nil || $0.value!.isEmpty ? nil : $0 }
-            return components.string ?? "/admin/auth/emails/"
+            return components.string ?? routes.list.path
         }
     }
 }

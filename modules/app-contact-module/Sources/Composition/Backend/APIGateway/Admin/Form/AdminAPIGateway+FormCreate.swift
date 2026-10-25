@@ -14,7 +14,7 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        let result = try await self.useCases.makeCreateContactForm()
+        let result = try await self.useCases.makeAddForm()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input:

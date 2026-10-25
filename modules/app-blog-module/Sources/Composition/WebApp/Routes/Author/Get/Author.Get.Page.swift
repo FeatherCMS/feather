@@ -10,7 +10,7 @@ import WebModuleWebApp
 
 extension Author.Get {
     struct Page: Component {
-        let state: Author.Get.Model
+        let state: Model
 
         func html(context: inout BuilderContext) -> some BasicTag {
             Main {

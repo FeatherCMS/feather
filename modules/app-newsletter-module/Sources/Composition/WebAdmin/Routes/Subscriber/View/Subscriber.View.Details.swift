@@ -8,7 +8,7 @@ import WebComponents
 
 extension Subscriber.View {
     struct Details: Component {
-        let model: Subscriber.View.Model
+        let model: Model
         let permissions: AdminListActions
         let routes: Subscriber.Router.Routes
 

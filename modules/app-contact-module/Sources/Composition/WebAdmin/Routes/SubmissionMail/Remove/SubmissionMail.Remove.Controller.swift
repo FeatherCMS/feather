@@ -24,14 +24,3 @@ extension SubmissionMail.Remove.Controller {
     }
 }
 
-extension SubmissionMail.Remove.Controller.Interface {
-    func route(
-        on router: any RouterMethods<AuthenticatedRequestContext>,
-        routes: SubmissionMail.Router.Routes
-    ) {
-        router.post(
-            routes.formEmailRemove.routerPath,
-            use: remove
-        )
-    }
-}

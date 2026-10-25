@@ -5,9 +5,7 @@ import MediaModule
 import OpenAPIRuntime
 
 extension Variant.Processor.List.Repository {
-    struct OpenAPI:
-        Variant.Processor.List.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func search(

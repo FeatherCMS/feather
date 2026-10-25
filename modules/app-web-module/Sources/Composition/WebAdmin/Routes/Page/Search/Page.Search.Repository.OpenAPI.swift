@@ -12,7 +12,7 @@ extension Page.Search.Repository {
             self.api = api
         }
 
-        func searchPages(
+        func search(
             page: Int,
             search: String?
         ) async throws -> Page.Search.Model {

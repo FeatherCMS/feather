@@ -33,7 +33,6 @@ struct Entrypoint {
         let openapiOutputURL = getOpenAPIOutputDir()
         let encoder = YAMLEncoder()
         let openAPIDoc = document.openAPIDocument()
-        _ = try openAPIDoc.locallyDereferenced().resolved()
 
         let v300YAMLFileURL = openapiOutputURL.appending(
             path: "\(basename).yaml"

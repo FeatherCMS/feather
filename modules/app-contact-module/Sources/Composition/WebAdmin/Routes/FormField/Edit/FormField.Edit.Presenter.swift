@@ -24,12 +24,12 @@ extension FormField.Edit.Presenter {
 
         func renderEditError(
             field: FormField.Model,
-            error: FormField.Edit.Error,
+            error: FormField.Edit.Interactor.Error,
             permissions: Set<String>
         ) async throws -> HTMLResponse
 
         func renderErrorPage(
-            error: FormField.Edit.Error
+            error: FormField.Edit.Interactor.Error
         ) async throws -> HTMLResponse
 
         func renderForbiddenPage() async throws -> HTMLResponse

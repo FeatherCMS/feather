@@ -45,25 +45,6 @@ extension Menu.Public.List {
             }
         }
 
-        public func execute(
-            key: String,
-            subject: Subject?
-        ) async throws -> Output.Menu? {
-            try await query.run { scope in
-                guard let menu = try await scope.menuLookup.find(key: key)
-                else {
-                    return nil
-                }
-                return try await makePublicMenu(
-                    id: menu.id,
-                    key: menu.key,
-                    name: menu.name,
-                    menuItems: scope.menuItems,
-                    subject: subject
-                )
-            }
-        }
-
         private func makePublicMenu(
             id: String,
             key: String,

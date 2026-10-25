@@ -5,7 +5,7 @@ import Hummingbird
 
 extension Invitation.List {
     struct Router {
-        let controller: any Invitation.List.Controller.Interface
+        let controller: any Controller.Interface
         let routes: Invitation.Router.Routes
 
         init(
@@ -14,18 +14,18 @@ extension Invitation.List {
             routes: Invitation.Router.Routes
         ) {
             self.routes = routes
-            self.controller = Invitation.List.Controller.Default(
+            self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     WebAdminRuntime(
-                        interactor: Invitation.List.Interactor.Default(
-                            repository: Invitation.List.Repository.OpenAPI(
+                        interactor: Interactor.Default(
+                            repository: Repository.OpenAPI(
                                 api: API.Client(
                                     environment: environment,
                                     requestContext: context
                                 )
                             )
                         ),
-                        presenter: Invitation.List.Presenter.Default(
+                        presenter: Presenter.Default(
                             request: request,
                             context: context,
                             renderEngine: renderingEngine,

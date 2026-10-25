@@ -4,7 +4,7 @@ extension Admin.Menu {
     public enum Item {}
     }
 
-    extension Admin.Menu.Item {
+    extension Item {
     public struct Definition: Sendable {
         public let menuKey: String
         public let label: String

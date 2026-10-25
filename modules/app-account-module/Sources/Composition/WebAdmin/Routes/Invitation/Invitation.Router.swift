@@ -37,36 +37,33 @@ extension Invitation {
                     pathComponent: "resend"
                 )
                 self.invitationBreadcrumb = [
-                    .init(label: "Admin", link: "/admin/"),
+                    .init(label: "Admin", link: root.path),
                     .init(label: "Account", link: account.path),
                     .init(label: "Invitations", link: invitations.path),
                 ]
             }
 
-            func invitationDetails(_ id: String) -> String {
-                invitations.appending(pathComponent: id).path
+            func invitationDetailsPath(_ id: String) -> String {
+                invitationDetailsPattern.path(parameter: "id", value: id)
             }
 
-            func invitationEdit(_ id: String) -> String {
-                invitations.appending(pathComponent: id)
-                    .appending(pathComponent: "edit").path
+            func invitationEditPath(_ id: String) -> String {
+                invitationEditPattern.path(parameter: "id", value: id)
             }
 
-            func invitationRemove(_ id: String) -> String {
-                invitations.appending(pathComponent: id)
-                    .appending(pathComponent: "remove").path
+            func invitationRemovePath(_ id: String) -> String {
+                invitationRemovePattern.path(parameter: "id", value: id)
             }
 
-            func invitationResend(_ id: String) -> String {
-                invitations.appending(pathComponent: id)
-                    .appending(pathComponent: "resend").path
+            func invitationResendPath(_ id: String) -> String {
+                invitationResendPattern.path(parameter: "id", value: id)
             }
 
             func invitationDetailsBreadcrumb(_ id: String) -> [AdminBreadcrumb
                 .Link]
             {
                 invitationBreadcrumb + [
-                    .init(label: "Details", link: invitationDetails(id))
+                    .init(label: "Details", link: invitationDetailsPath(id))
                 ]
             }
 
@@ -74,7 +71,7 @@ extension Invitation {
                 .Link]
             {
                 invitationDetailsBreadcrumb(id) + [
-                    .init(label: "Edit", link: invitationEdit(id))
+                    .init(label: "Edit", link: invitationEditPath(id))
                 ]
             }
 
@@ -82,7 +79,7 @@ extension Invitation {
                 .Link]
             {
                 invitationBreadcrumb + [
-                    .init(label: "Remove", link: invitationRemove(id))
+                    .init(label: "Remove", link: invitationRemovePath(id))
                 ]
             }
         }

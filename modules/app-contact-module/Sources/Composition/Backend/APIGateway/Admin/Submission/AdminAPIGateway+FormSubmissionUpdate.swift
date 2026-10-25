@@ -33,7 +33,7 @@ extension AdminAPIGateway {
             shouldApply: fields.contains(.status),
             onMissing: { HTTPError(.badRequest) }
         )
-        let result = try await self.useCases.makeUpdateContactFormSubmission()
+        let result = try await self.useCases.makeEditSubmission()
             .execute(
                 subject: try await CurrentSubject.require(),
                 input:

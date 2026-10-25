@@ -76,14 +76,17 @@ extension MagicLink.List.Repository {
         }
 
         private func listEmails() async throws
-            -> [AuthAdminAPI.Components.Schemas.AuthEmailSchemasDetail]
+            -> [Email.Option]
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.authEmailList(
                     headers: .init(accept: [.init(contentType: .json)])
                 )
                 switch response {
-                case .ok(let ok): return try ok.body.json
+                case .ok(let ok):
+                    return try ok.body.json.map {
+                        .init(id: $0.id, identityId: $0.identityId, email: $0.email)
+                    }
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .forbidden:

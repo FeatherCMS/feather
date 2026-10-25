@@ -4,8 +4,8 @@ import WebModule
 
 public enum Event {
     public enum Handlers {
-        private struct DefaultWebTemplateProvider: TemplateProvider {
-            let templates: [TemplateDefinition] = [
+        private struct DefaultWebTemplateProvider: WebModule.Template.Provider {
+            let templates: [WebModule.Template.Definition] = [
                 .init(id: "default", title: "Default", path: "pages/default"),
                 .init(id: "home", title: "Home", path: "pages/home"),
                 .init(
@@ -23,7 +23,7 @@ public enum Event {
 
         public static func register(in registry: inout EventRegistry) {
             registry.register(
-                event: TemplateProviderEvent.self,
+                event: WebModule.Template.Event.Provider.self,
                 context: WebModule.Event.Context.self
             ) { _, _ in
                 DefaultWebTemplateProvider()

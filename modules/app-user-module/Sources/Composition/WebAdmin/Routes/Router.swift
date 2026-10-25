@@ -47,7 +47,7 @@ public struct Router {
     ) {
         Overview.Router(
             renderingEngine: renderingEngine,
-            routes: .init(root: routes.user)
+            routes: .init(admin: routes.admin, root: routes.user)
         )
         .route(on: router)
 

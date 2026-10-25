@@ -99,9 +99,10 @@ extension MagicLink.Repository {
             token: String
         ) async throws -> MagicLink.Model {
             guard
-                let consumed = try await MagicLinkConsumeQuery(
+                let consumed = try await ConsumeQuery(
                     connection: context.connection
-                ).consume(token: token)
+                )
+                .consume(token: token)
             else {
                 guard
                     let existing = try await DatabaseAccessLayer<

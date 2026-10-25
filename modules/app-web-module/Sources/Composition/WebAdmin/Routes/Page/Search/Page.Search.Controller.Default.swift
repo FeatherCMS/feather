@@ -6,8 +6,11 @@ import WebModule
 
 extension Page.Search.Controller {
     struct Default: Interface {
-        let environment: AppEnvironment
         let routes: Page.Router.Routes
+        let buildMetadataRepository:
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Page.Metadata.Repository.Interface
+        let buildStatusRepository:
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata.Status.Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Page.Search.Interactor.Interface,
@@ -68,24 +71,13 @@ extension Page.Search.Controller {
                 as: AdminStatusActionFormInput.self,
                 context: context
             )
-            let repository = Page.Metadata.Repository.OpenAPI(
-                api: API.Client(
-                    environment: environment,
-                    requestContext: context
-                )
-            )
-            let metadata = try await repository.load(id: id)
+            let metadata = try await buildMetadataRepository(context)
+                .load(id: id)
             let targetStatus = resolvedStatus(
                 from: payload,
                 current: metadata
             )
-            try await WebModule.Metadata
-                .StatusUpdater(
-                    api: API.Client(
-                        environment: environment,
-                        requestContext: context
-                    )
-                )
+            try await buildStatusRepository(context)
                 .update(
                     referenceType: "web.page",
                     referenceID: id,

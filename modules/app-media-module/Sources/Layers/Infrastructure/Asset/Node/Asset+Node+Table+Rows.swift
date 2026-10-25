@@ -3,6 +3,8 @@ import FeatherDatabase
 import Foundation
 import MediaModule
 
+extension Asset.Node.Table: DatabaseTableWithDelete {}
+
 extension Asset.Node.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let id: String

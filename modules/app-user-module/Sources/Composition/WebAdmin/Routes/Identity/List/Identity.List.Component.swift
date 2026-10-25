@@ -32,7 +32,7 @@ extension Identity.List {
                     )
                 )
                 context.build(
-                    Identity.List.TableContent(
+                    TableContent(
                         routes: routes,
                         permissions: permissions,
                         identities: identities,

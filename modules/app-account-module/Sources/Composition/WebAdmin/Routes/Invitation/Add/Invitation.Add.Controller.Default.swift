@@ -3,17 +3,12 @@ import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import OpenAPIRuntime
-import UserAdminAPI
-import UserWebAdmin
 
 extension Invitation.Add.Controller {
 
-    struct Default:
-        Invitation.Add.Controller.Interface
-    {
-        let environment: AppEnvironment
+    struct Default: Interface {
         let routes: Invitation.Router.Routes
+        let roleRepository: @Sendable (AuthenticatedRequestContext) -> any Invitation.Form.Repository.Role.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Invitation.Add.Interactor.Interface,
@@ -35,7 +30,7 @@ extension Invitation.Add.Controller {
             )
         }
 
-        func postAdd(
+        func postAddPath(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
@@ -136,25 +131,8 @@ extension Invitation.Add.Controller {
         private func roleOptions(
             _ context: AuthenticatedRequestContext
         ) async -> [Invitation.Form.Component.RoleOptionState] {
-            let userAPI = UserWebAdmin.API.Client(
-                environment: environment,
-                requestContext: context
-            )
-            guard
-                let response =
-                    try? await userAPI
-                    .withOpenAPIRepositoryErrorMapping({ client in
-                        try await client.userRoleList(
-                            query: .init(limit: 100),
-                            headers: .init(accept: [.init(contentType: .json)])
-                        )
-                    })
-            else { return [] }
-            guard case .ok(let value) = response,
-                let body = try? value.body.json
-            else { return [] }
-            return body.map {
-                .init(value: $0.id, label: $0.name ?? $0.id, isSelected: false)
+            await roleRepository(context).list().map {
+                .init(value: $0.id, label: $0.name, isSelected: false)
             }
         }
 

@@ -10,7 +10,7 @@ extension Profile.Detail {
     struct Page: Component {
         let routes: Profile.Router.Routes
         struct State {
-            let profile: Profile.Detail.Model
+            let profile: Model
             let canEdit: Bool
             let breadcrumb: [AdminBreadcrumb.Link]
         }

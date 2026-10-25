@@ -16,8 +16,23 @@ extension Page.Search {
         ) {
             self.routes = routes
             self.controller = Controller.Default(
-                environment: environment,
                 routes: routes,
+                buildMetadataRepository: { context in
+                    WebModule.Page.Metadata.Repository.OpenAPI(
+                        api: API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                },
+                buildStatusRepository: { context in
+                    WebModule.Metadata.Status.Repository.OpenAPI(
+                        api: API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                },
                 buildRuntime: { request, context in
                     WebAdminRuntime(
                         interactor: Interactor.Default(

@@ -1,3 +1,0 @@
-extension NewsletterSubscriber {
-    enum List {}
-}

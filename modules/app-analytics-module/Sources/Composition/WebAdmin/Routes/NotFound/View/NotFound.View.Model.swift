@@ -1,4 +1,3 @@
-import AnalyticsAdminAPI
 import AnalyticsModule
 
 extension NotFound.View {
@@ -7,6 +6,6 @@ extension NotFound.View {
         let description: String
         let from: String
         let to: String
-        let overview: Components.Schemas.AnalyticsLogOverviewSchema
+        let overview: Overview.Model
     }
 }

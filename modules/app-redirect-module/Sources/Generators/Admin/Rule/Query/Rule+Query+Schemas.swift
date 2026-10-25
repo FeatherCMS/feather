@@ -1,5 +1,9 @@
 import FeatherOpenAPI
 
+extension Rule.Query {
+    enum Schemas {}
+}
+
 extension Rule.Query.Schemas {
     struct Item: ObjectSchemaRepresentable {
         var openAPIIdentifier: String { "RedirectRuleQueryItemSchema" }

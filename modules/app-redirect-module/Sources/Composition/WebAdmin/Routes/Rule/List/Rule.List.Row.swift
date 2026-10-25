@@ -4,6 +4,7 @@ import Hummingbird
 import RedirectAdminAPI
 import RedirectApplication
 import RedirectModule
+import RedirectDomain
 import WebBuilders
 import WebComponents
 
@@ -16,7 +17,7 @@ extension Rule.List {
         let routes: Rule.Router.Routes
 
         private var statusChip: AdminChip {
-            guard let statusCode = Rule.StatusCode(rawValue: rule.statusCode)
+            guard let statusCode = Rule.Model.StatusCode(rawValue: rule.statusCode)
             else {
                 return AdminChip(
                     label: String(rule.statusCode),

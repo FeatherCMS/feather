@@ -38,6 +38,7 @@ extension Submission.Detail {
                 context.build(
                     ContactModule.Form.TabBar(
                         formId: state.formId,
+                        routes: state.routes.formRoutes,
                         active: .submissions
                     )
                 )
@@ -75,12 +76,15 @@ extension Submission.Detail {
                             )
                         }
                         else {
-                            for (key, value) in state.item.values.sorted(by: {
-                                $0.key < $1.key
-                            }) {
-                                context.build(
-                                    AdminDetailField(label: key, value: value)
-                                )
+                            for key in state.item.values.keys.sorted() {
+                                if let value = state.item.values[key] {
+                                    context.build(
+                                        AdminDetailField(
+                                            label: key,
+                                            value: value
+                                        )
+                                    )
+                                }
                             }
                         }
                         if canUpdate {

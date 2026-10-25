@@ -4,16 +4,16 @@ public import UserModule
 extension Identity.List {
     public struct Input: DTO {
         public struct Query: Sendable {
-            public var page: Search.Page
+            public var limit: Int?
             public var search: String?
             public var role: String?
 
             public init(
-                page: Search.Page = .init(),
+                limit: Int? = nil,
                 search: String? = nil,
                 role: String? = nil
             ) {
-                self.page = page
+                self.limit = limit
                 self.search = search
                 self.role = role
             }

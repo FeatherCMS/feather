@@ -10,7 +10,7 @@ import WebComponents
 extension Issue.Search {
     struct Row: Component {
         let newsletterId: String
-        let item: Issue.Search.Item
+        let item: Item
         let permissions: AdminListActions
         let routes: Campaign.Router.Routes
 

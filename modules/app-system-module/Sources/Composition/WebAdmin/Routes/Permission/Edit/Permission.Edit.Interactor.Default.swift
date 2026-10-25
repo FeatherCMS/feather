@@ -3,9 +3,7 @@ import FeatherWebShared
 import SystemModule
 
 extension Permission.Edit.Interactor {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let repository:
             any Permission.Edit.Repository
                 .Interface

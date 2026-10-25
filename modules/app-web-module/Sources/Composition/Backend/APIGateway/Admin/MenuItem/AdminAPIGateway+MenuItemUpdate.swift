@@ -30,7 +30,7 @@ extension AdminAPIGateway {
                 isBlank: .set(body.isBlank),
                 permission: .set(body.permission),
                 authentication: .set(
-                    MenuItem.Authentication(
+                    MenuItem.Model.Authentication(
                         rawValue: body.authentication ?? "any"
                     ) ?? .any
                 ),

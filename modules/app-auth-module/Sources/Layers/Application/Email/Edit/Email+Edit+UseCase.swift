@@ -29,7 +29,7 @@ extension Email.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.authEmail.findBy(id: input.id)
                 else {
-                    throw Email.Edit.Error.authEmailNotFound
+                    throw Error.authEmailNotFound
                 }
                 model.update(
                     identityId: input.identityId,

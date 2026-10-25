@@ -2,6 +2,7 @@ import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import RedirectApplication
+import RedirectDomain
 public import RedirectModule
 
 extension Rule.Search.Query {
@@ -35,7 +36,7 @@ extension Rule.Search.Query {
             _ row: Rule.Table.List
         ) throws -> Rule.Search.Output.Item {
             guard
-                let statusCode = Rule.StatusCode(
+                let statusCode = Rule.Model.StatusCode(
                     rawValue: row.statusCode
                 )
             else {

@@ -1,7 +1,7 @@
 public import FeatherInfrastructure
 public import FeatherModuleKit
 public import NewsletterApplication
-import NewsletterModule
+public import NewsletterModule
 
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext

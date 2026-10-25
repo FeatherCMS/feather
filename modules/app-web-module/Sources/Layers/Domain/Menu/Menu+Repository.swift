@@ -13,19 +13,19 @@ extension Menu {
 
             func find(
                 id: String
-            ) async throws -> Menu.Model?
+            ) async throws -> Model?
 
             func find(
                 key: String
-            ) async throws -> Menu.Model?
+            ) async throws -> Model?
 
             func insert(
-                _ model: Menu.Model.New
-            ) async throws -> Menu.Model
+                _ model: Model.New
+            ) async throws -> Model
 
             func update(
-                _ model: Menu.Model
-            ) async throws -> Menu.Model
+                _ model: Model
+            ) async throws -> Model
 
             func delete(
                 ids: [String]

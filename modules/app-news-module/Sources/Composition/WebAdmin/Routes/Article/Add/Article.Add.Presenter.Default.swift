@@ -2,6 +2,7 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import MediaWebAdmin
+import MediaModule
 import NewsApplication
 import NewsModule
 
@@ -9,7 +10,7 @@ extension Article.Add.Presenter {
     struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
-        let mediaAPI: MediaWebAdmin.API.Client
+        let mediaRepository: any MediaModule.Asset.File.View.Repository.Interface
         let renderingEngine: any RenderingEngine
         let routes: Article.Router.Routes
 
@@ -22,8 +23,9 @@ extension Article.Add.Presenter {
             submitLabel: String,
             removeHref: String?
         ) async throws -> HTMLResponse {
-            let selectedImageAsset = try? await mediaAPI.loadImageAsset(
-                assetId: input.imageAssetId
+            let selectedImageAsset = try? await mediaRepository.loadImageAsset(
+                assetId: input.imageAssetId,
+                variants: ["preview"]
             )
             return try await renderingEngine.renderAdminPage(
                 request: request,

@@ -1,5 +1,4 @@
 public import FeatherApplication
-public import NewsletterDomain
 public import NewsletterModule
 
 public import struct Foundation.Date
@@ -13,13 +12,20 @@ extension Campaign.List {
         public let createdAt: Date
         public let updatedAt: Date
 
-        public init(model: Campaign.Model) {
-            id = model.id
-            key = model.key
-            name = model.name
-            fromEmail = model.fromEmail
-            createdAt = model.createdAt
-            updatedAt = model.updatedAt
+        public init(
+            id: String,
+            key: String,
+            name: String,
+            fromEmail: String,
+            createdAt: Date,
+            updatedAt: Date
+        ) {
+            self.id = id
+            self.key = key
+            self.name = name
+            self.fromEmail = fromEmail
+            self.createdAt = createdAt
+            self.updatedAt = updatedAt
         }
     }
 }

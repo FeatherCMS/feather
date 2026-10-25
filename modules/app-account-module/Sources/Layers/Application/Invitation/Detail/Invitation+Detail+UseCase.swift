@@ -33,7 +33,7 @@ extension Invitation.Detail {
             }
 
             return try await query.run { scope in
-                try await scope.query.getBy(id: input.id)
+                try await scope.query.find(id: input.id)
             }
         }
     }

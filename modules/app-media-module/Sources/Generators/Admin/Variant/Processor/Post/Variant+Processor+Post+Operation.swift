@@ -5,11 +5,11 @@ extension Variant.Processor.Post {
     struct Operation: Variant.Processor.Operation {
         var operationId: String? { "mediaVariantProcessorPost" }
         var requestBody: (any RequestBodyRepresentable)? {
-            MediaVariantProcessorCreateRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
             [
-                201: MediaVariantProcessorDetailResponse().reference(),
+                201: Variant.Processor.Get.Response().reference(),
                 404: CustomResponse(description: "Media variant not found"),
             ]
         }

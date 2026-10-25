@@ -5,10 +5,10 @@ extension Variant.Post {
     struct Operation: Variant.Operation {
         var operationId: String? { "mediaVariantPost" }
         var requestBody: (any RequestBodyRepresentable)? {
-            MediaVariantCreateRequestBody().reference()
+            RequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: MediaVariantDetailResponse().reference()]
+            [201: Variant.Get.Response().reference()]
         }
     }
 }

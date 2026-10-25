@@ -81,6 +81,10 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
+            url: "https://github.com/apple/swift-nio",
+            from: "2.0.0"
+        ),
+        .package(
             url:
                 "https://github.com/swift-server/swift-openapi-async-http-client",
             from: "1.0.0"
@@ -277,7 +281,6 @@ let package = Package(
                 ),
                 .product(name: "MediaBackend", package: "app-media-module"),
 
-                .product(name: "WebAdminAPI", package: "app-web-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
                 .product(
@@ -301,6 +304,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "NIOCore", package: "swift-nio"),
                 .product(
                     name: "OpenAPIAsyncHTTPClient",
                     package: "swift-openapi-async-http-client"

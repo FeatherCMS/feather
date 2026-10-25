@@ -27,10 +27,8 @@ extension Session.List {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
 
-            let inputQuery = input.query
-
             return try await query.run { scope in
-                try await scope.session.list(query: inputQuery)
+                try await scope.session.list(identityId: input.identityId)
             }
         }
 

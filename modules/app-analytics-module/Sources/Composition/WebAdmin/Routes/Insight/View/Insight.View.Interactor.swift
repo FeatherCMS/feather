@@ -1,4 +1,3 @@
-import AnalyticsAdminAPI
 import AnalyticsModule
 
 extension Insight.View {
@@ -11,6 +10,6 @@ extension Insight.View.Interactor {
             source: String,
             from: Double,
             to: Double
-        ) async throws -> Components.Schemas.AnalyticsLogOverviewSchema
+        ) async throws -> Overview.Model
     }
 }

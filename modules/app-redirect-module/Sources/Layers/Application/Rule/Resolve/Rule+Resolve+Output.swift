@@ -6,17 +6,18 @@
 
 public import FeatherApplication
 public import RedirectModule
+public import RedirectDomain
 
 extension Rule.Resolve {
     public struct Output: DTO {
         public let source: String
         public let destination: String
-        public let statusCode: Rule.StatusCode
+        public let statusCode: Rule.Model.StatusCode
 
         public init(
             source: String,
             destination: String,
-            statusCode: Rule.StatusCode
+            statusCode: Rule.Model.StatusCode
         ) {
             self.source = source
             self.destination = destination

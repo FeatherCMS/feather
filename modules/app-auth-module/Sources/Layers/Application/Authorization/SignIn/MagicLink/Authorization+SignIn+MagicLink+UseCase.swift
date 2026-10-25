@@ -27,7 +27,7 @@ extension AuthModule.Authorization.SignIn.MagicLink {
                         ),
                         user.status == .active
                     else {
-                        throw AuthModule.Authorization.SignIn.MagicLink.Error.authenticationFailed
+                        throw Error.authenticationFailed
                     }
                     async let rolesTask = scope.roles.getRolesBy(
                         identityId: user.id
@@ -60,7 +60,7 @@ extension AuthModule.Authorization.SignIn.MagicLink {
                     )
                 }
                 catch {
-                    throw AuthModule.Authorization.SignIn.MagicLink.Error.authenticationFailed
+                    throw Error.authenticationFailed
                 }
             }
         }

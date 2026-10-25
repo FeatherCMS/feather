@@ -1,9 +1,11 @@
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 import NewsDomain
 public import NewsModule
 import WebApplication
 import WebDomain
+import WebModule
 
 //
 //  Article+Edit+UseCase.swift
@@ -38,7 +40,7 @@ extension Article.Edit {
             let model = try await transaction.run { scope in
                 guard var model = try await scope.article.find(id: input.id)
                 else {
-                    throw Article.Edit.Error(message: "Article not found")
+                    throw Error(message: "Article not found")
                 }
                 try model.update(
                     title: input.title,
@@ -47,10 +49,53 @@ extension Article.Edit {
                     imageAssetId: input.imageAssetId,
                     categoryIds: input.categoryIds
                 )
-                if case .set(let metadataInput) = input.metadata {
-                    try metadataInput.update(
-                        &model.metadata,
-                        template: metadataInput.template
+                switch input.metadata {
+                case .unchanged:
+                    break
+                case .set(let metadata):
+                    try model.metadata.update(
+                        template: .set(metadata.template),
+                        slug: .set(metadata.slug),
+                        publicationDate: input.metadataPublicationDate,
+                        expirationDate: .init(
+                            value: metadata.expirationDate,
+                            shouldApply: metadata.expirationDate != nil
+                        ),
+                        status: .set(metadata.status),
+                        title: .init(
+                            value: metadata.title,
+                            shouldApply: metadata.title != nil
+                        ),
+                        excerpt: .init(
+                            value: metadata.excerpt,
+                            shouldApply: metadata.excerpt != nil
+                        ),
+                        imageURL: .init(
+                            value: metadata.imageURL,
+                            shouldApply: metadata.imageURL != nil
+                        ),
+                        canonicalURL: .init(
+                            value: metadata.canonicalURL,
+                            shouldApply: metadata.canonicalURL != nil
+                        ),
+                        noIndex: .set(metadata.noIndex),
+                        primaryKeyword: .init(
+                            value: metadata.primaryKeyword,
+                            shouldApply: true
+                        ),
+                        cssCodeInjection: .init(
+                            value: metadata.cssCodeInjection,
+                            shouldApply: metadata.cssCodeInjection != nil
+                        ),
+                        javascriptCodeInjection: .init(
+                            value: metadata.javascriptCodeInjection,
+                            shouldApply: metadata.javascriptCodeInjection != nil
+                        ),
+                        structuredDataCodeInjection: .init(
+                            value: metadata.structuredDataCodeInjection,
+                            shouldApply: metadata.structuredDataCodeInjection
+                                != nil
+                        )
                     )
                 }
 

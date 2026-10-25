@@ -6,6 +6,8 @@ public import WebApplication
 import WebDomain
 public import WebModule
 
+public import struct Foundation.Date
+
 extension Category {
     public enum Edit {}
 }
@@ -17,7 +19,8 @@ extension Category.Edit {
         public let excerpt: FieldChange<String>
         public let content: FieldChange<String>
         public let imageAssetId: OptionalFieldChange<String>
-        public let metadata: FieldChange<Metadata.Input>
+        public let metadata: FieldChange<Metadata.Model.Base>
+        public let metadataPublicationDate: FieldChange<Date>
 
         public init(
             id: String,
@@ -25,7 +28,8 @@ extension Category.Edit {
             excerpt: FieldChange<String> = .unchanged,
             content: FieldChange<String> = .unchanged,
             imageAssetId: OptionalFieldChange<String> = .unchanged,
-            metadata: FieldChange<Metadata.Input> = .unchanged
+            metadata: FieldChange<Metadata.Model.Base> = .unchanged,
+            metadataPublicationDate: FieldChange<Date> = .unchanged
         ) {
             self.id = id
             self.title = title
@@ -33,6 +37,7 @@ extension Category.Edit {
             self.content = content
             self.imageAssetId = imageAssetId
             self.metadata = metadata
+            self.metadataPublicationDate = metadataPublicationDate
         }
     }
 }

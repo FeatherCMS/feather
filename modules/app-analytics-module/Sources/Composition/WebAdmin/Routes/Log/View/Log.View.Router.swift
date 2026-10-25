@@ -37,7 +37,7 @@ extension Log.View {
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
             router.get(
-                AnalyticsWebAdmin.Router.Routes.log(RouterPath("{id}")),
+                AnalyticsWebAdmin.Router.Routes.log.routerPath,
                 use: controller.getAnalyticsLog
             )
         }

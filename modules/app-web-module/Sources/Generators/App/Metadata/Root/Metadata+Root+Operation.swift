@@ -7,7 +7,7 @@ extension Metadata.Root {
         var operationId: String? { "metadataRootGet" }
         var responseMap: ResponseMap {
             [
-                200: MetadataResponse().reference(),
+                200: Metadata.Get.Response().reference(),
                 404: CustomResponse(description: "Web metadata not found"),
             ]
         }

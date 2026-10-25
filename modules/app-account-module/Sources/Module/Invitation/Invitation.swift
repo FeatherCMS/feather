@@ -1,12 +1,1 @@
-public enum Invitation {
-
-
-
-
-
-
-
-
-
-
-}
+public enum Invitation {}

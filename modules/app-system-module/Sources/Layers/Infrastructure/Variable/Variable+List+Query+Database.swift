@@ -1,4 +1,3 @@
-import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import SystemApplication
@@ -17,23 +16,13 @@ extension SystemModule.Variable.List.Query {
         ) async throws -> SystemModule.Variable.List.Output {
             let items =
                 try await accessLayer.select { queryBuilder in
-                    paginatedQuery(
-                        applyFilters(query, to: queryBuilder)
-                            .order(by: databaseOrders(for: query.sort)),
-                        using: query.page
-                    )
+                    applyFilters(query, to: queryBuilder)
+                        .order(by: \.key, .ascending)
+                        .limit(min(max(query.limit ?? 20, 1), 100))
                 }
                 .map(mapListItem)
 
             return .init(items: items)
-        }
-
-        public func count(
-            query: SystemModule.Variable.List.Input.Query
-        ) async throws -> Int {
-            try await accessLayer.selectCount { queryBuilder in
-                applyFilters(query, to: queryBuilder)
-            }
         }
 
         private func mapListItem(
@@ -68,46 +57,6 @@ extension SystemModule.Variable.List.Query {
                 )
             }
             return result
-        }
-
-        private func databaseOrder(
-            for rule: SystemModule.Variable.List.Input.Query.Sort
-        ) -> DatabaseQueryOrder<Variable.Table> {
-            let direction: DatabaseQueryDirection =
-                switch rule.direction {
-                case .asc: .ascending
-                case .desc: .descending
-                }
-
-            return switch rule.field {
-            case .key: DatabaseQueryOrder(by: \.key, direction)
-            case .name: DatabaseQueryOrder(by: \.name, direction)
-            case .value: DatabaseQueryOrder(by: \.value, direction)
-            case .notes: DatabaseQueryOrder(by: \.notes, direction)
-            }
-        }
-
-        private func databaseOrders(
-            for rules: [SystemModule.Variable.List.Input.Query.Sort]
-        ) -> [DatabaseQueryOrder<Variable.Table>] {
-            var orderings = rules.map(databaseOrder)
-            if !rules.contains(where: { $0.field == .key }) {
-                orderings.append(.init(by: \.key, .ascending))
-            }
-            return orderings
-        }
-
-        private func paginatedQuery(
-            _ query: DatabaseQuerySelect<Variable.Table>,
-            using page: Search.Page
-        ) -> DatabaseQuerySelect<Variable.Table> {
-            let page = page.normalized()
-            let pageIndex = page.number - 1
-            let offset =
-                pageIndex > Int.max / page.size
-                ? Int.max
-                : pageIndex * page.size
-            return query.limit(page.size).offset(offset)
         }
     }
 }

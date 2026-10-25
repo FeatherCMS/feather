@@ -10,12 +10,12 @@ extension AuthorLink.Post {
     struct Schema: ObjectSchemaRepresentable {
         var propertyMap: SchemaMap {
             [
-                "label": BlogAuthorLinkLabelField(),
-                "url": BlogAuthorLinkURLField(),
-                "priority": BlogAuthorLinkPriorityField(),
-                "isBlank": BlogAuthorLinkIsBlankField(),
-                "permission": BlogAuthorLinkPermissionField(),
-                "notes": BlogAuthorLinkNotesField().reference(required: false),
+                "label": AuthorLink.Schemas.Label(),
+                "url": AuthorLink.Schemas.URL(),
+                "priority": AuthorLink.Schemas.Priority(),
+                "isBlank": AuthorLink.Schemas.IsBlank(),
+                "permission": AuthorLink.Schemas.Permission(),
+                "notes": AuthorLink.Schemas.Notes().reference(required: false),
             ]
         }
     }

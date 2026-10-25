@@ -1,7 +1,6 @@
 import FeatherWebAdmin
 import HTML
 import Hummingbird
-import MediaAdminAPI
 import MediaModule
 import SGML
 import WebBuilders
@@ -11,10 +10,8 @@ extension Variant.Processor {
     enum Edit {
         struct Page: Component {
             let variantId: String
-            let processor:
-                MediaAdminAPI.Components.Schemas
-                    .MediaVariantProcessorDetailSchema
-            let form: Variant.Processor.Form
+            let processor: Edit.Model
+            let form: Form
             let routes: Variant.Router.Routes
 
             func html(context: inout BuilderContext) -> some BasicTag {

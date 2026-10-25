@@ -10,15 +10,15 @@ extension Asset.Folder.List {
         var openAPIIdentifier: String { "MediaFolderListItemSchema" }
         var propertyMap: SchemaMap {
             [
-                "id": MediaFolderIdField().reference(),
-                "parentId": MediaFolderNullableIdField(),
-                "name": MediaFolderNameField().reference(),
-                "slug": MediaFolderSlugField().reference(),
-                "slugPath": MediaFolderSlugPathField().reference(),
-                "assetCount": MediaFolderCountField().reference(),
-                "totalSizeBytes": MediaFolderBytesField().reference(),
-                "createdAt": MediaFolderTimestampField().reference(),
-                "updatedAt": MediaFolderTimestampField().reference(),
+                "id": Asset.Folder.Schemas.ID().reference(),
+                "parentId": Asset.Folder.Schemas.NullableID(),
+                "name": Asset.Folder.Schemas.Name().reference(),
+                "slug": Asset.Folder.Schemas.Slug().reference(),
+                "slugPath": Asset.Folder.Schemas.SlugPath().reference(),
+                "assetCount": Asset.Folder.Schemas.Count().reference(),
+                "totalSizeBytes": Asset.Folder.Schemas.Bytes().reference(),
+                "createdAt": Asset.Folder.Schemas.Timestamp().reference(),
+                "updatedAt": Asset.Folder.Schemas.Timestamp().reference(),
             ]
         }
     }

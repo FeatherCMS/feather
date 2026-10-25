@@ -1,4 +1,3 @@
-import AnalyticsAdminAPI
 import AnalyticsModule
 
 extension NotFound.View.Interactor {
@@ -8,7 +7,7 @@ extension NotFound.View.Interactor {
         func getOverview(
             from: Double,
             to: Double
-        ) async throws -> Components.Schemas.AnalyticsLogOverviewSchema {
+        ) async throws -> Overview.Model {
             try await repository.getOverview(from: from, to: to)
         }
     }

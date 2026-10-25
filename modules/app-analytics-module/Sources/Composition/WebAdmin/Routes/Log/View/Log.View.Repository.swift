@@ -1,4 +1,3 @@
-import AnalyticsAdminAPI
 import AnalyticsModule
 
 extension Log.View {
@@ -7,7 +6,6 @@ extension Log.View {
 
 extension Log.View.Repository {
     protocol Interface: Sendable {
-        func get(id: String) async throws
-            -> Components.Schemas.AnalyticsLogDetailSchema
+        func get(id: String) async throws -> Log.View.Model
     }
 }

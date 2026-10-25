@@ -49,9 +49,25 @@ extension Post.Add {
                         imageAssetId: input.imageAssetId,
                         authorIds: input.authorIds,
                         tagIds: input.tagIds,
-                        metadata: input.metadata.asMetadataBase(
+                        metadata: .init(
                             template: "blog.post",
-                            slug: input.metadata.slug.prefixedSlug(with: prefix)
+                            slug: input.metadata.slug.prefixedSlug(
+                                with: prefix
+                            ),
+                            publicationDate: input.metadata.publicationDate,
+                            expirationDate: input.metadata.expirationDate,
+                            status: input.metadata.status,
+                            title: input.metadata.title,
+                            excerpt: input.metadata.excerpt,
+                            imageURL: input.metadata.imageURL,
+                            canonicalURL: input.metadata.canonicalURL,
+                            noIndex: input.metadata.noIndex,
+                            primaryKeyword: input.metadata.primaryKeyword,
+                            cssCodeInjection: input.metadata.cssCodeInjection,
+                            javascriptCodeInjection: input.metadata
+                                .javascriptCodeInjection,
+                            structuredDataCodeInjection: input.metadata
+                                .structuredDataCodeInjection
                         )
                     )
                 )

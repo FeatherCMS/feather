@@ -1,3 +1,0 @@
-extension NewsletterIssue {
-    enum ID {}
-}

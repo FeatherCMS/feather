@@ -1,7 +1,8 @@
 import AsyncHTTPClient
 public import FeatherWebShared
-import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+import NIOCore
+public import OpenAPIAsyncHTTPClient
+public import OpenAPIRuntime
 
 public enum RedirectAPIClientSupport {
     public struct Configuration {

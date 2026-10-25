@@ -16,8 +16,9 @@ import WebModuleWebAdmin
 
 extension Tag.Add.Controller {
     struct Default: Interface {
-        let environment: AppEnvironment
         let routes: Tag.Router.Routes
+        let buildPublicContentRepository:
+            @Sendable (AuthenticatedRequestContext) -> any PublicContent.Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Tag.Add.Interactor.Interface,
@@ -176,15 +177,8 @@ extension Tag.Add.Controller {
             context: AuthenticatedRequestContext,
             keyPath: KeyPath<BlogModule.Settings.PublicRoutes, String>
         ) async throws -> String {
-            let schema = try await PublicContent.Repository
-                .OpenAPI(
-                    api: API.App.Client(
-                        environment: environment,
-                        requestContext: context
-                    )
-                )
+            let settings = try await buildPublicContentRepository(context)
                 .getRouteSettings()
-            let settings = BlogModule.Settings.PublicRoutes(schema: schema)
             let prefix = settings[keyPath: keyPath]
             return prefix.isEmpty ? "/" : "/\(prefix)/"
         }

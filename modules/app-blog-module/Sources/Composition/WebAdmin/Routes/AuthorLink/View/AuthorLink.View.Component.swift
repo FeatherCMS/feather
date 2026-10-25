@@ -10,7 +10,7 @@ import WebComponents
 extension AuthorLink.View {
     struct Component: WebComponents.Component {
         struct State {
-            let model: AuthorLink.View.Model
+            let model: Model
             let breadcrumb: [AdminBreadcrumb.Link]
             let permissions: Set<String>
             let routes: AuthorLink.Router.Routes
@@ -60,7 +60,7 @@ extension AuthorLink.View {
                     .init(
                         label: "Edit link",
                         href: state.routes
-                            .authorLinkEdit(
+                            .authorLinkEditPath(
                                 state.model.authorID,
                                 state.model.id
                             ),
@@ -76,12 +76,12 @@ extension AuthorLink.View {
                         label: "Remove link",
                         href: AdminLocation.remove(
                             path: state.routes
-                                .authorLinkRemove(
+                                .authorLinkRemovePath(
                                     state.model.authorID
                                 ),
                             ids: [state.model.id],
                             returnTo: state.routes
-                                .authorLinks(
+                                .authorLinksPath(
                                     state.model.authorID
                                 )
                         ),

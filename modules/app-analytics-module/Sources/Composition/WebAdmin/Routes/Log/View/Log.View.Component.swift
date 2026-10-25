@@ -1,4 +1,3 @@
-import AnalyticsAdminAPI
 import AnalyticsModule
 import FeatherWebAdmin
 import HTML
@@ -8,7 +7,7 @@ import WebComponents
 
 extension Log.View {
     struct Component: WebComponents.Component {
-        let log: Components.Schemas.AnalyticsLogDetailSchema
+        let log: Model
         let breadcrumb: [AdminBreadcrumb.Link]
 
         func html(context: inout BuilderContext) -> some BasicTag {

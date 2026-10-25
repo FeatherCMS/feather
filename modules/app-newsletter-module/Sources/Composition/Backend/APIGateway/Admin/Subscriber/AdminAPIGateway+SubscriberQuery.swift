@@ -27,13 +27,13 @@ extension AdminAPIGateway {
         let sort = (request.sort ?? [])
             .map { rule in
                 Subscriber.Search.Input.Query.Sort(
-                    field: rule.field == .name ? .name : .email,
+                    field: .email,
                     direction: rule.direction == .asc ? .asc : .desc
                 )
             }
 
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeSearchNewsletterSubscribers()
+        let result = try await useCases.makeSearchSubscribers()
             .execute(
                 subject: subject,
                 input: .init(
@@ -52,7 +52,7 @@ extension AdminAPIGateway {
                 Components.Schemas
                     .NewsletterSubscriberQueryItemSearchResponseQuerySchema
                     .SortPayloadPayload(
-                        field: rule.field == .name ? .name : .email,
+                        field: .email,
                         direction: rule.direction
                     )
             }

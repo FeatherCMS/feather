@@ -15,7 +15,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
 
-        let created = try await self.useCases.makeAddNewsletterIssue()
+        let created = try await self.useCases.makeAddIssue()
             .execute(
                 subject: subject,
                 input: .init(
@@ -28,7 +28,7 @@ extension AdminAPIGateway {
         let issueSchema: Components.Schemas.NewsletterIssueSchema
         if let scheduledAt = body.scheduledAt {
             let scheduled = try await self.useCases
-                .makeScheduleNewsletterIssue()
+                .makeScheduleIssue()
                 .execute(
                     subject: subject,
                     input: .init(
@@ -36,7 +36,7 @@ extension AdminAPIGateway {
                         scheduledDate: .init(timeIntervalSince1970: scheduledAt)
                     )
                 )
-            try await useCases.makeSendNewsletterIssueEmails()
+            try await useCases.makeSendIssueEmails()
                 .execute(
                     subject: subject,
                     input: .init(
@@ -53,7 +53,7 @@ extension AdminAPIGateway {
             )
         }
         else {
-            try await useCases.makeSendNewsletterIssueEmails()
+            try await useCases.makeSendIssueEmails()
                 .execute(
                     subject: subject,
                     input: .init(

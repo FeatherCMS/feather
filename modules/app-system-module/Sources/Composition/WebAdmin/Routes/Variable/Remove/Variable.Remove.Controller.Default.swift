@@ -6,9 +6,7 @@ import Hummingbird
 import SystemModule
 
 extension Variable.Remove.Controller {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let routes: Variable.Router.Routes
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<

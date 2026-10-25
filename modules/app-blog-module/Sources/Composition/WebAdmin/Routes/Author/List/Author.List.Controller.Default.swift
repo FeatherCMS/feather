@@ -1,5 +1,3 @@
-import BlogAdminAPI
-import BlogAppAPI
 import BlogModule
 import FeatherWebAdmin
 import FeatherWebShared
@@ -9,8 +7,11 @@ import WebModuleWebAdmin
 
 extension Author.List.Controller {
     struct Default: Interface {
-        let environment: AppEnvironment
         let routes: Author.Router.Routes
+        let buildViewRepository:
+            @Sendable (AuthenticatedRequestContext) -> any Author.View.Repository.Interface
+        let buildStatusRepository:
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata.Status.Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Author.List.Interactor.Interface,
@@ -65,7 +66,7 @@ extension Author.List.Controller {
             )
         }
 
-        func postStatus(
+        func postStatusPath(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {
@@ -82,30 +83,17 @@ extension Author.List.Controller {
                 as: AdminStatusActionFormInput.self,
                 context: context
             )
-            let details = try await Author.View.Repository
-                .OpenAPI(
-                    api: API.Client(
-                        environment: environment,
-                        requestContext: context
-                    )
-                )
-                .get(id: id)
+            let details = try await buildViewRepository(context).get(id: id)
             let targetStatus = resolvedStatus(
                 from: payload,
                 current: details.metadata
             )
-            try await WebModule.Metadata
-                .StatusUpdater(
-                    api: WebModuleWebAdmin.API.Client(
-                        environment: environment,
-                        requestContext: context
-                    )
-                )
-                .update(
-                    referenceType: "blog.author",
-                    referenceID: id,
-                    status: targetStatus
-                )
+            try await buildStatusRepository(context)
+            .update(
+                referenceType: "blog.author",
+                referenceID: id,
+                status: targetStatus
+            )
             let toast = statusToastContent(for: targetStatus)
             return AdminNotificationFlash.redirect(
                 to: payload.normalizedReturnTo ?? routes.authors.path

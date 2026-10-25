@@ -2,6 +2,8 @@ import BlogModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import WebModule
+import WebModuleWebAdmin
 
 extension Post.Status {
     struct Router {
@@ -14,8 +16,23 @@ extension Post.Status {
         ) {
             self.routes = routes
             self.controller = Controller.Default(
-                environment: environment,
-                routes: routes
+                routes: routes,
+                buildViewRepository: { context in
+                    Post.View.Repository.OpenAPI(
+                        api: API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                },
+                buildStatusRepository: { context in
+                    WebModule.Metadata.Status.Repository.OpenAPI(
+                        api: WebModuleWebAdmin.API.Client(
+                            environment: environment,
+                            requestContext: context
+                        )
+                    )
+                }
             )
         }
 

@@ -1,4 +1,5 @@
 import FeatherApplication
+import FeatherDomain
 import FeatherModuleKit
 import Foundation
 public import NewsAdminAPI
@@ -33,7 +34,7 @@ extension AdminAPIGateway {
         let result = try await useCases.makeListArticles()
             .execute(
                 subject: subject,
-                input: .init(query: .init())
+                input: .init()
             )
         return .ok(.init(body: .json(result.items.map(map))))
     }
@@ -78,7 +79,7 @@ extension AdminAPIGateway {
         _ input: Operations.NewsArticleGet.Input
     ) async throws -> Operations.NewsArticleGet.Output {
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeGetArticle()
+        let result = try await useCases.makeDetailArticle()
             .execute(
                 subject: subject,
                 input: .init(id: input.path.newsArticleId)
@@ -132,7 +133,7 @@ extension Components.Schemas.NewsArticleCreateSchema {
                 template: "news.article",
                 publicationDate: metadata.publicationDate.map(
                     Date.init(timeIntervalSince1970:)
-                ),
+                ) ?? .init(),
                 expirationDate: metadata.expirationDate.map(
                     Date.init(timeIntervalSince1970:)
                 ),
@@ -145,7 +146,7 @@ extension Components.Schemas.NewsArticleCreateSchema {
                 imageURL: metadata.imageURL,
                 canonicalURL: metadata.canonicalURL,
                 noIndex: metadata.noIndex ?? false,
-                primaryKeyword: metadata.primaryKeyword ?? "",
+                primaryKeyword: metadata.primaryKeyword,
                 cssCodeInjection: metadata.cssCodeInjection,
                 javascriptCodeInjection: metadata.javascriptCodeInjection,
                 structuredDataCodeInjection: metadata
@@ -171,7 +172,7 @@ extension Components.Schemas.NewsArticleCreateSchema {
                     template: "news.article",
                     publicationDate: metadata.publicationDate.map(
                         Date.init(timeIntervalSince1970:)
-                    ),
+                    ) ?? .init(),
                     expirationDate: metadata.expirationDate.map(
                         Date.init(timeIntervalSince1970:)
                     ),
@@ -184,13 +185,16 @@ extension Components.Schemas.NewsArticleCreateSchema {
                     imageURL: metadata.imageURL,
                     canonicalURL: metadata.canonicalURL,
                     noIndex: metadata.noIndex ?? false,
-                    primaryKeyword: metadata.primaryKeyword ?? "",
+                    primaryKeyword: metadata.primaryKeyword,
                     cssCodeInjection: metadata.cssCodeInjection,
                     javascriptCodeInjection: metadata.javascriptCodeInjection,
                     structuredDataCodeInjection: metadata
                         .structuredDataCodeInjection
                 )
-            )
+            ),
+            metadataPublicationDate: metadata.publicationDate.map {
+                .set(Date(timeIntervalSince1970: $0))
+            } ?? .unchanged
         )
     }
 }

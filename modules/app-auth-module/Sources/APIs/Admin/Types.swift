@@ -11,9 +11,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionRemove)`.
     func userIdentitySessionRemove(_ input: Operations.UserIdentitySessionRemove.Input) async throws -> Operations.UserIdentitySessionRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/get(authCredentialList)`.
-    func authCredentialList(_ input: Operations.AuthCredentialList.Input) async throws -> Operations.AuthCredentialList.Output
+    /// - Remark: HTTP `POST /api/v1/admin/user/identities/{userIdentityId}/sessions/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/query/post(userIdentitySessionQuery)`.
+    func userIdentitySessionQuery(_ input: Operations.UserIdentitySessionQuery.Input) async throws -> Operations.UserIdentitySessionQuery.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/credentials`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/post(authCredentialCreate)`.
     func authCredentialCreate(_ input: Operations.AuthCredentialCreate.Input) async throws -> Operations.AuthCredentialCreate.Output
@@ -59,9 +59,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/query/post(authRolePermissionQuery)`.
     func authRolePermissionQuery(_ input: Operations.AuthRolePermissionQuery.Input) async throws -> Operations.AuthRolePermissionQuery.Output
-    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/get(authMagicLinkList)`.
-    func authMagicLinkList(_ input: Operations.AuthMagicLinkList.Input) async throws -> Operations.AuthMagicLinkList.Output
     /// - Remark: HTTP `POST /api/v1/admin/auth/magic-links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/post(authMagicLinkCreate)`.
     func authMagicLinkCreate(_ input: Operations.AuthMagicLinkCreate.Input) async throws -> Operations.AuthMagicLinkCreate.Output
@@ -108,10 +105,18 @@ extension APIProtocol {
             body: body
         ))
     }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/get(authCredentialList)`.
-    public func authCredentialList(headers: Operations.AuthCredentialList.Input.Headers = .init()) async throws -> Operations.AuthCredentialList.Output {
-        try await authCredentialList(Operations.AuthCredentialList.Input(headers: headers))
+    /// - Remark: HTTP `POST /api/v1/admin/user/identities/{userIdentityId}/sessions/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/query/post(userIdentitySessionQuery)`.
+    public func userIdentitySessionQuery(
+        path: Operations.UserIdentitySessionQuery.Input.Path,
+        headers: Operations.UserIdentitySessionQuery.Input.Headers = .init(),
+        body: Operations.UserIdentitySessionQuery.Input.Body
+    ) async throws -> Operations.UserIdentitySessionQuery.Output {
+        try await userIdentitySessionQuery(Operations.UserIdentitySessionQuery.Input(
+            path: path,
+            headers: headers,
+            body: body
+        ))
     }
     /// - Remark: HTTP `POST /api/v1/admin/auth/credentials`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/post(authCredentialCreate)`.
@@ -281,11 +286,6 @@ extension APIProtocol {
             headers: headers,
             body: body
         ))
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/get(authMagicLinkList)`.
-    public func authMagicLinkList(headers: Operations.AuthMagicLinkList.Input.Headers = .init()) async throws -> Operations.AuthMagicLinkList.Output {
-        try await authMagicLinkList(Operations.AuthMagicLinkList.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/admin/auth/magic-links`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/post(authMagicLinkCreate)`.

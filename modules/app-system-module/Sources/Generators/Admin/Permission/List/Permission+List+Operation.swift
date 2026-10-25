@@ -13,7 +13,7 @@ extension Permission.List {
             ]
         }
         var responseMap: ResponseMap {
-            [200: Permission.List.Response().reference()]
+            [200: Response().reference()]
         }
     }
 

@@ -13,7 +13,7 @@ public import WebModule
 
 public import struct Foundation.Date
 
-extension Category {
+extension NewsModule.Category {
     public struct Model: FeatherDomain.Model {
 
         public enum Error: DomainError {
@@ -62,7 +62,7 @@ extension Category {
     }
 }
 
-extension Category.Model {
+extension NewsModule.Category.Model {
 
     private static func validate(
         title: String

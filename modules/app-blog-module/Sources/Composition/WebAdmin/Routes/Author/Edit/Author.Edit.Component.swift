@@ -33,15 +33,18 @@ extension Author.Edit {
                 context.build(
                     Author.Form(
                         state: state.form,
+                        browsePath: state.routes.imagePickerPath(
+                            state.form.profileImageAssetId.key
+                        ),
                         metadataHref: state.routes
-                            .authorEditMetadata(
+                            .authorEditMetadataPath(
                                 state.id,
                                 state.id
                             ),
-                        action: state.routes.authorEdit(state.id),
+                        action: state.routes.authorEditPath(state.id),
                         submitLabel: "Edit author",
                         removeHref: state.routes
-                            .authorRemove(state.id),
+                            .authorRemovePath(state.id),
                         removeLabel: "Remove author"
                     )
                 )

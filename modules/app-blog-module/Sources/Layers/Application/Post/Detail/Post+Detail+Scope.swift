@@ -3,9 +3,9 @@ public import FeatherModuleKit
 
 extension Post.Detail {
     public struct Scope: FeatherModuleKit.Scope {
-        public let post: any Post.Detail.Query.Interface
+        public let post: any Query.Interface
 
-        public init(post: any Post.Detail.Query.Interface) {
+        public init(post: any Query.Interface) {
             self.post = post
         }
     }

@@ -9,7 +9,7 @@ import WebComponents
 extension Rule.Edit {
     struct Page: Component {
         let id: String
-        let form: RedirectModule.Rule.Edit.Form.State
+        let form: RedirectModule.Form.State
         let nonceToken: String
         let permissions: AdminListActions
         let routes: Rule.Router.Routes
@@ -29,7 +29,7 @@ extension Rule.Edit {
                     )
                 )
                 context.build(
-                    RedirectModule.Rule.Edit.Form(
+                    RedirectModule.Form(
                         state: form,
                         action: routes.editPath(id),
                         viewHref: permissions.allows(Rule.Permissions.read)

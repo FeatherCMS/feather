@@ -6,7 +6,7 @@ extension Role.Get {
         var operationId: String? { "userRoleGet" }
         var responseMap: ResponseMap {
             [
-                200: Role.Get.Response().reference(),
+                200: Response().reference(),
                 404: DefaultHTTPErrorContentResponse(
                     description: "UserRole not found"
                 ),

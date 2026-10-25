@@ -28,6 +28,10 @@ current System, User, and Redirect module structure.
   entity and operation (`Page.Add.Action|Input|Output|Scope|UseCase`,
   `Page.Search.Input.Query`, and `Page.Search.Output`). Keep each declaration
   in its own appropriately named file and operation directory.
+- Keep public rendering contracts under `Public.Content`, `Public.RSS`, and
+  `Template` namespaces. Event providers and contexts belong under each
+  contract's `Event` namespace; do not flatten them into `PublicContent...`,
+  `RSS...`, or `Template...` prefix types.
 - Use distinct `List` and `Search` operations and their own schemas. Lightweight
   selectors use the HTTP List endpoint; structured filtering, sorting,
   pagination, and table results use the application Search use-case through the

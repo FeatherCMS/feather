@@ -1,25 +1,42 @@
 import FeatherWebApp
+import FeatherWebShared
+import Hummingbird
 
 extension Logout {
     struct Router {
-        let controller: any Logout.Controller.Interface
+        struct Routes {
+            let logout: WebRoute
+
+            init(root: WebRoute = .root) {
+                logout = root.appending(pathComponent: "logout")
+            }
+        }
+
+        let routes: Routes
+        let controller: any Controller.Interface
 
         init(
-            repository: any Logout.Repository.Interface,
-            usesSecureCookies: Bool
+            repository: any Repository.Interface,
+            usesSecureCookies: Bool,
+            routes: Routes = .init()
         ) {
-            self.controller = Logout.Controller.Default(
+            self.routes = routes
+            self.controller = Controller.Default(
                 buildRuntime: { _, _ in
                     WebAppRuntime(
-                        interactor: Logout.Interactor.Default(
+                        interactor: Interactor.Default(
                             repository: repository
                         ),
-                        presenter: Logout.Presenter.Default(
+                        presenter: Presenter.Default(
                             usesSecureCookies: usesSecureCookies
                         )
                     )
                 }
             )
+        }
+
+        func route(on router: any RouterMethods<DefaultRequestContext>) {
+            router.get(routes.logout.routerPath, use: controller.getLogout)
         }
     }
 }
