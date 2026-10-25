@@ -160,15 +160,6 @@ extension Variable.Edit {
                     context.build(
                         AdminButton("View", href: viewHref, style: .secondary)
                     )
-                    if let removeHref {
-                        context.build(
-                            AdminButton(
-                                "Remove",
-                                href: removeHref,
-                                style: .destructive
-                            )
-                        )
-                    }
                 }
                 .class("admin-form__actions")
             }

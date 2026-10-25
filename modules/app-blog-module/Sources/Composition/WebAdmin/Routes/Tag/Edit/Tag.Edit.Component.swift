@@ -26,7 +26,14 @@ extension Tag.Edit {
                     AdminPageHeader(
                         state: .primary(
                             title: "Edit tag",
-                            description: "Update this blog tag."
+                            description: "Update this blog tag.",
+                            actions: [
+                                .init(
+                                    label: "Remove tag",
+                                    href: state.routes.tagRemovePath(state.id),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -43,9 +50,7 @@ extension Tag.Edit {
                             ),
                         action: state.routes.tagEditPath(state.id),
                         submitLabel: "Edit tag",
-                        removeHref: state.routes
-                            .tagRemovePath(state.id),
-                        removeLabel: "Remove tag"
+                        removeHref: nil
                     )
                 )
             }

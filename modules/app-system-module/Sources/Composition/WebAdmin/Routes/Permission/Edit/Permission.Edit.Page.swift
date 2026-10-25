@@ -30,7 +30,20 @@ extension Permission.Edit {
                     AdminPageHeader(
                         state: .primary(
                             title: "Edit system permission",
-                            description: "Update this system permission."
+                            description: "Update this system permission.",
+                            actions: [
+                                .init(
+                                    label: "Remove",
+                                    href: AdminLocation.remove(
+                                        path: state.routes.remove.path,
+                                        ids: [state.id],
+                                        returnTo: state.routes.editPath(
+                                            state.id
+                                        )
+                                    ),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -42,11 +55,6 @@ extension Permission.Edit {
                         state: state.form,
                         action: state.routes.editPath(state.id),
                         viewHref: state.routes.detailsPath(state.id),
-                        removeHref: AdminLocation.remove(
-                            path: state.routes.remove.path,
-                            ids: [state.id],
-                            returnTo: state.routes.editPath(state.id)
-                        ),
                         nonceToken: state.nonceToken
                     )
                 )

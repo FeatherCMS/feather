@@ -21,7 +21,7 @@ extension Campaign.Search.Table {
                 if canDelete {
                     context.build(AdminListRowCheckbox(id: item.id))
                 }
-                identifierCell()
+                identifierCell(context: &context)
                 if isPicker {
                     Td {
                         Button(item.name)
@@ -61,21 +61,18 @@ extension Campaign.Search.Table {
             }
         }
 
-        private func identifierCell() -> Td {
+        private func identifierCell(context: inout BuilderContext) -> Td {
             Td {
                 Span {
                     Span(item.id)
                     if actions.allows(Campaign.Permissions.read) {
-                        Button {
-                            FeatherIcons.clipboard()
-                        }
-                        .type(.button)
-                        .ariaLabel("Copy campaign key \(item.id)")
-                        .onClick(
-                            "navigator.clipboard.writeText('@NewsletterCampaign(key: \(item.id))').then(()=>window.toast&&window.toast.success('Copied','Newsletter campaign key copied to clipboard'))"
-                        )
-                        .style(
-                            "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;padding:0;border:0;background:transparent;color:var(--cms-link);cursor:pointer;"
+                        context.build(
+                            AdminCopyButton(
+                                value: "@NewsletterCampaign(key: \(item.id))",
+                                label: "Copy campaign key \(item.id)",
+                                copiedMessage:
+                                    "Newsletter campaign key copied to clipboard"
+                            )
                         )
                     }
                 }

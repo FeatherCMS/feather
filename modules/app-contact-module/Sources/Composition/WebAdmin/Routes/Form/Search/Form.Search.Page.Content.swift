@@ -125,7 +125,8 @@ extension ContactModule.Form.Search.Page {
                                                                 )
                                                             }
                                                             identifierCell(
-                                                                item: item
+                                                                item: item,
+                                                                context: &context
                                                             )
                                                             if isPicker {
                                                                 Td {
@@ -262,23 +263,22 @@ extension ContactModule.Form.Search.Page {
             )
         }
 
-        private func identifierCell(item: ContactModule.Form.Search.Model.Item)
-            -> Td
+        private func identifierCell(
+            item: ContactModule.Form.Search.Model.Item,
+            context: inout BuilderContext
+        ) -> Td
         {
             Td {
                 Span {
                     Span(item.key)
                     if permissions.allows(ContactModule.Form.Permissions.read) {
-                        Button {
-                            FeatherIcons.clipboard()
-                        }
-                        .type(.button)
-                        .ariaLabel("Copy contact form key \(item.key)")
-                        .onClick(
-                            "navigator.clipboard.writeText('@ContactForm(key: \(item.key))').then(()=>window.toast&&window.toast.success('Copied','Contact form key copied to clipboard'))"
-                        )
-                        .style(
-                            "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;padding:0;border:0;background:transparent;color:var(--cms-link);cursor:pointer;"
+                        context.build(
+                            AdminCopyButton(
+                                value: "@ContactForm(key: \(item.key))",
+                                label: "Copy contact form key \(item.key)",
+                                copiedMessage:
+                                    "Contact form key copied to clipboard"
+                            )
                         )
                     }
                 }

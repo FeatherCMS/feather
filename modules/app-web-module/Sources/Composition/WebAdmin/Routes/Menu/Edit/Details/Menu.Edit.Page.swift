@@ -30,7 +30,16 @@ extension WebModule.Menu.Edit {
                         state: .primary(
                             title: "Edit menu",
                             description:
-                                "Update the navigation menu configuration."
+                                "Update the navigation menu configuration.",
+                            actions: [
+                                .init(
+                                    label: "Remove menu",
+                                    href: state.routes.menu.detailsRemovePath(
+                                        state.id
+                                    ),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -46,10 +55,7 @@ extension WebModule.Menu.Edit {
                         state: state.form,
                         action: state.routes.menu.editPath(state.id),
                         submitLabel: "Edit menu",
-                        removeHref: state.routes.menu.detailsRemovePath(
-                            state.id
-                        ),
-                        removeLabel: "Remove menu"
+                        removeHref: nil
                     )
                 )
             }

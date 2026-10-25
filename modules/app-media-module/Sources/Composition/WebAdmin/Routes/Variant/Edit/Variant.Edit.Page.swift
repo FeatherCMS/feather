@@ -22,7 +22,16 @@ extension Variant.Edit {
                     AdminPageHeader(
                         state: .primary(
                             title: "Edit \(detail.name)",
-                            description: "Update the media variant details."
+                            description: "Update the media variant details.",
+                            actions: form.removeHref.map {
+                                [
+                                    .init(
+                                        label: "Remove",
+                                        href: $0,
+                                        style: .destructive
+                                    )
+                                ]
+                            } ?? []
                         )
                     )
                 )

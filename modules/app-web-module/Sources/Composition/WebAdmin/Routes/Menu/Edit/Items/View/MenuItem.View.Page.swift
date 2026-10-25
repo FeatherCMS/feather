@@ -61,7 +61,18 @@ extension MenuItem.View {
                         state: .primary(
                             title: "Edit menu",
                             description:
-                                "Update the navigation menu configuration."
+                                "Update the navigation menu configuration.",
+                            actions: [
+                                .init(
+                                    label: "Remove item",
+                                    href: state.routes.itemRemovePath(
+                                        menuID: state.item.menuId,
+                                        itemID: state.item.id,
+                                        origin: .view
+                                    ),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -121,16 +132,6 @@ extension MenuItem.View {
                                     style: .primary
                                 )
                             )
-                            let button = AdminButton(
-                                "Remove item",
-                                href: state.routes.itemRemovePath(
-                                    menuID: state.item.menuId,
-                                    itemID: state.item.id,
-                                    origin: .view
-                                ),
-                                style: .destructive,
-                            )
-                            context.build(button)
                         }
                         .class("web-menu-item-details-actions")
                     }

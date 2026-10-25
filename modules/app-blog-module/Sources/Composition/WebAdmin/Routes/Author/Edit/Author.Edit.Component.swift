@@ -26,7 +26,16 @@ extension Author.Edit {
                     AdminPageHeader(
                         state: .primary(
                             title: "Edit author",
-                            description: "Update this blog author."
+                            description: "Update this blog author.",
+                            actions: [
+                                .init(
+                                    label: "Remove author",
+                                    href: state.routes.authorRemovePath(
+                                        state.id
+                                    ),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -43,9 +52,7 @@ extension Author.Edit {
                             ),
                         action: state.routes.authorEditPath(state.id),
                         submitLabel: "Edit author",
-                        removeHref: state.routes
-                            .authorRemovePath(state.id),
-                        removeLabel: "Remove author"
+                        removeHref: nil
                     )
                 )
             }

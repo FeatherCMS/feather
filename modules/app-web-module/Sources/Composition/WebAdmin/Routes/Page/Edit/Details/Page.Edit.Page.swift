@@ -32,7 +32,16 @@ extension Page.Edit {
                             title: "Edit page",
                             description:
                                 "Update the page content and publication settings.",
-                            preview: .init(label: "Preview", href: previewPath)
+                            preview: .init(label: "Preview", href: previewPath),
+                            actions: [
+                                .init(
+                                    label: "Remove page",
+                                    href: state.routes.detailsRemovePath(
+                                        state.id
+                                    ),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -46,8 +55,7 @@ extension Page.Edit {
                         ),
                         action: state.routes.editPath(state.id),
                         submitLabel: "Edit page",
-                        removeHref: state.routes.detailsRemovePath(state.id),
-                        removeLabel: "Remove page"
+                        removeHref: nil
                     )
                 )
             }

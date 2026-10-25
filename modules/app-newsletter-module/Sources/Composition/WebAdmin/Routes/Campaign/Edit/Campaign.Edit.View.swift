@@ -33,7 +33,30 @@ extension Campaign.Edit {
                         ]
                     )
                 )
-                context.build(AdminPageHeader(state: state.pageHeader))
+                context.build(
+                    AdminPageHeader(
+                        state: state.pageHeader.addingActions(
+                            state.permissions.allows(
+                                Campaign.Permissions.delete
+                            )
+                                ? [
+                                    .init(
+                                        label: "Remove campaign",
+                                        href: AdminLocation.remove(
+                                            path: state.routes.removeSelected
+                                                .path,
+                                            ids: [state.id],
+                                            returnTo: state.routes.detailsPath(
+                                                state.id
+                                            )
+                                        ),
+                                        style: .destructive
+                                    )
+                                ]
+                                : []
+                        )
+                    )
+                )
                 context.build(
                     Campaign.Tabs(
                         id: state.id,
@@ -82,26 +105,6 @@ extension Campaign.Edit {
                                             "Edit",
                                             href: editPath,
                                             style: .primary
-                                        )
-                                    )
-                                }
-                                if state.permissions.allows(
-                                    Campaign.Permissions.delete
-                                ) {
-                                    context.build(
-                                        AdminButton(
-                                            "Remove",
-                                            href: AdminLocation.remove(
-                                                path: state.routes
-                                                    .removeSelected
-                                                    .path,
-                                                ids: [state.id],
-                                                returnTo: state.routes
-                                                    .detailsPath(
-                                                        state.id
-                                                    )
-                                            ),
-                                            style: .destructive
                                         )
                                     )
                                 }

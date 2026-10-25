@@ -32,7 +32,18 @@ extension Asset.File.View {
                         state: .primary(
                             title: "Media asset details",
                             description:
-                                "Review asset metadata and generated variants."
+                                "Review asset metadata and generated variants.",
+                            actions: permissions.allows(
+                                Asset.Permissions.delete
+                            )
+                                ? [
+                                    .init(
+                                        label: "Remove",
+                                        href: routes.file.removePath(item.id),
+                                        style: .destructive
+                                    )
+                                ]
+                                : []
                         )
                     )
                 )
@@ -134,14 +145,6 @@ extension Asset.File.View {
                                     routes.file.editPath(item.id)
                             )
                         )
-                    }
-                    if permissions.allows(Asset.Permissions.delete) {
-                        let button = AdminButton(
-                            "Remove",
-                            href: routes.file.removePath(item.id),
-                            style: .destructive,
-                        )
-                        context.build(button)
                     }
                 }
                 .class("button-row", "admin-detail-actions")

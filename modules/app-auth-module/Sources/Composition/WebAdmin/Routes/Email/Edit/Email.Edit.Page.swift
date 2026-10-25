@@ -37,7 +37,14 @@ extension Email.Edit {
                     AdminPageHeader(
                         state: .primary(
                             title: "Edit user email",
-                            description: "Update a user email address."
+                            description: "Update a user email address.",
+                            actions: [
+                                .init(
+                                    label: "Remove email",
+                                    href: state.routes.removePath(state.id),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -47,8 +54,7 @@ extension Email.Edit {
                         state: state.form,
                         action: state.routes.editPath(state.id),
                         submitLabel: "Edit email",
-                        removeHref: state.routes.removePath(state.id),
-                        removeLabel: "Remove email"
+                        removeHref: nil
                     )
                 )
             }

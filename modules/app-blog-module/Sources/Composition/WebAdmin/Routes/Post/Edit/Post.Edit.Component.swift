@@ -31,7 +31,14 @@ extension Post.Edit {
                     AdminPageHeader(
                         state: .primary(
                             title: "Edit post",
-                            description: "Update this blog post."
+                            description: "Update this blog post.",
+                            actions: [
+                                .init(
+                                    label: "Remove post",
+                                    href: state.routes.postRemovePath(state.id),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -48,9 +55,7 @@ extension Post.Edit {
                             ),
                         action: state.routes.postEditPath(state.id),
                         submitLabel: "Edit post",
-                        removeHref: state.routes
-                            .postRemovePath(state.id),
-                        removeLabel: "Remove post"
+                        removeHref: nil
                     )
                 )
             }

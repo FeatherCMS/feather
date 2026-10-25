@@ -24,7 +24,18 @@ extension Rule.Edit {
                         state: .primary(
                             title: "Edit redirect rule",
                             description:
-                                "Update the redirect rule configuration."
+                                "Update the redirect rule configuration.",
+                            actions: permissions.allows(
+                                Rule.Permissions.delete
+                            )
+                                ? [
+                                    .init(
+                                        label: "Remove",
+                                        href: routes.removePath(id),
+                                        style: .destructive
+                                    )
+                                ]
+                                : []
                         )
                     )
                 )
@@ -35,11 +46,7 @@ extension Rule.Edit {
                         viewHref: permissions.allows(Rule.Permissions.read)
                             ? routes.detailsPath(id)
                             : nil,
-                        removeHref: permissions.allows(
-                            Rule.Permissions.delete
-                        )
-                            ? routes.removePath(id)
-                            : nil,
+                        removeHref: nil,
                         nonceToken: nonceToken
                     )
                 )

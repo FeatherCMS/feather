@@ -90,9 +90,24 @@ public struct AdminDetailView: Component {
     }
 
     public func html(context: inout BuilderContext) -> Section {
-        Section {
+        let removeActions =
+            actions
+            .filter { $0.style == .destructive }
+            .map {
+                AdminButton.State(
+                    label: $0.label,
+                    href: $0.href,
+                    style: $0.style
+                )
+            }
+
+        return Section {
             context.build(AdminBreadcrumb(links: breadcrumb))
-            context.build(AdminPageHeader(state: pageHeader))
+            context.build(
+                AdminPageHeader(
+                    state: pageHeader.addingActions(removeActions)
+                )
+            )
             Div {
                 for field in fields {
                     let fieldView = Div {
@@ -140,9 +155,12 @@ public struct AdminDetailView: Component {
                 }
             }
             .class("admin-detail-view-fields")
-            if !actions.isEmpty {
+            let primaryActions = actions.filter {
+                $0.style != .destructive
+            }
+            if !primaryActions.isEmpty {
                 Div {
-                    for action in actions {
+                    for action in primaryActions {
                         let button = AdminButton(
                             action.label,
                             href: action.href,

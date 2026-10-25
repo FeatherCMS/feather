@@ -31,7 +31,18 @@ extension MenuItem.Edit {
                         state: .primary(
                             title: "Edit menu",
                             description:
-                                "Update the navigation menu configuration."
+                                "Update the navigation menu configuration.",
+                            actions: [
+                                .init(
+                                    label: "Remove item",
+                                    href: state.routes.itemRemovePath(
+                                        menuID: state.menuId,
+                                        itemID: state.id,
+                                        origin: .edit
+                                    ),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -57,13 +68,7 @@ extension MenuItem.Edit {
                                     itemID: state.id
                                 ),
                                 submitLabel: "Edit item",
-                                removeHref:
-                                    state.routes.itemRemovePath(
-                                        menuID: state.menuId,
-                                        itemID: state.id,
-                                        origin: .edit
-                                    ),
-                                removeLabel: "Remove item"
+                                removeHref: nil
                             )
                         )
                     }

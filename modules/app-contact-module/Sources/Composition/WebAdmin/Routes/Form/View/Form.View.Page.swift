@@ -21,11 +21,23 @@ extension ContactModule.Form.View {
                 context.build(AdminBreadcrumb(links: breadcrumb))
                 context.build(
                     AdminPageHeader(
-                        state: .primary(
-                            title: "Contact form details",
-                            description:
-                                "Review the contact form configuration."
-                        )
+                        state:
+                            .primary(
+                                title: "Contact form details",
+                                description:
+                                    "Review the contact form configuration."
+                            )
+                            .addingActions(
+                                actions
+                                    .filter { $0.style == .destructive }
+                                    .map {
+                                        .init(
+                                            label: $0.label,
+                                            href: $0.href,
+                                            style: $0.style
+                                        )
+                                    }
+                            )
                     )
                 )
                 context.build(
@@ -90,9 +102,12 @@ extension ContactModule.Form.View {
                         }
                         .class("admin-detail-view-fields")
                         .style("display:grid;gap:12px;")
-                        if !actions.isEmpty {
+                        let primaryActions = actions.filter {
+                            $0.style != .destructive
+                        }
+                        if !primaryActions.isEmpty {
                             Div {
-                                for action in actions {
+                                for action in primaryActions {
                                     let button = AdminButton(
                                         action.label,
                                         href: action.href,

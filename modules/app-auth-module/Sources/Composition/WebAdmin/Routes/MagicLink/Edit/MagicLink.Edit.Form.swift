@@ -40,7 +40,14 @@ extension MagicLink.Edit.Form {
                     AdminPageHeader(
                         state: .primary(
                             title: "Edit user magic link",
-                            description: "Update a sign-in magic link."
+                            description: "Update a sign-in magic link.",
+                            actions: [
+                                .init(
+                                    label: "Remove magic link",
+                                    href: state.routes.removePath(state.id),
+                                    style: .destructive
+                                )
+                            ]
                         )
                     )
                 )
@@ -50,8 +57,7 @@ extension MagicLink.Edit.Form {
                         state: state.form,
                         action: state.routes.editPath(state.id),
                         submitLabel: "Edit magic link",
-                        removeHref: state.routes.removePath(state.id),
-                        removeLabel: "Remove magic link"
+                        removeHref: nil
                     )
                 )
             }

@@ -33,7 +33,16 @@ extension NewsModule.Article.Form {
                         AdminPageHeader(
                             state: .primary(
                                 title: title,
-                                description: "Create or update a news article."
+                                description: "Create or update a news article.",
+                                actions: removeHref.map {
+                                    [
+                                        .init(
+                                            label: "Remove",
+                                            href: $0,
+                                            style: .destructive
+                                        )
+                                    ]
+                                } ?? []
                             )
                         )
                     )
@@ -122,15 +131,6 @@ extension NewsModule.Article.Form {
                         context.build(
                             AdminSubmitButton(submitLabel, style: .primary)
                         )
-                        if let removeHref {
-                            context.build(
-                                AdminButton(
-                                    "Remove",
-                                    href: removeHref,
-                                    style: .destructive
-                                )
-                            )
-                        }
                     }
                     .class("admin-form__actions")
                 }

@@ -59,6 +59,19 @@ public struct AdminPageHeader: Component {
                 showSeparator: true
             )
         }
+
+        public func addingActions(_ additionalActions: [AdminButton.State])
+            -> Self
+        {
+            .init(
+                title: title,
+                description: description,
+                preview: preview,
+                actions: actions + additionalActions,
+                level: level,
+                showSeparator: showSeparator
+            )
+        }
     }
 
     public let state: State

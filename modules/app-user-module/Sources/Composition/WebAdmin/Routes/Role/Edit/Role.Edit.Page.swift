@@ -20,7 +20,16 @@ extension Role.Edit {
                     AdminPageHeader(
                         state: .primary(
                             title: "Edit user role",
-                            description: "Update this user role."
+                            description: "Update this user role.",
+                            actions: permissions.allows(Role.Permissions.delete)
+                                ? [
+                                    .init(
+                                        label: "Remove",
+                                        href: routes.removePath(id),
+                                        style: .destructive
+                                    )
+                                ]
+                                : []
                         )
                     )
                 )
@@ -31,11 +40,7 @@ extension Role.Edit {
                         submitLabel: "Save changes",
                         viewHref: routes.detailsPath(id)
                             .description,
-                        removeHref: permissions.allows(
-                            Role.Permissions.delete
-                        )
-                            ? routes.removePath(id)
-                            : nil,
+                        removeHref: nil,
                         nonceToken: nonceToken
                     )
                 )

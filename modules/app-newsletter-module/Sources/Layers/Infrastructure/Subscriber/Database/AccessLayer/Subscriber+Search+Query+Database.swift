@@ -113,7 +113,7 @@ extension Subscriber.Search.Query {
                     FROM newsletter_subscriber AS subscriber
                     JOIN newsletter_campaign AS campaign
                       ON campaign.id = subscriber.newsletter_id
-                    WHERE (
+                    WHERE
                 """
             )
             appendFilters(
@@ -124,7 +124,6 @@ extension Subscriber.Search.Query {
             )
             sql.appendLiteral(
                 """
-                    )
                     GROUP BY subscriber.email
                 ), paged_emails AS (
                     SELECT email, first_name, last_name
@@ -172,7 +171,7 @@ extension Subscriber.Search.Query {
                 FROM newsletter_subscriber AS subscriber
                 JOIN newsletter_campaign AS campaign
                   ON campaign.id = subscriber.newsletter_id
-                WHERE (
+                WHERE
                 """
             )
             appendFilters(
@@ -181,7 +180,6 @@ extension Subscriber.Search.Query {
                 campaignKey: campaignKey,
                 email: email
             )
-            sql.appendLiteral(")")
             return DatabaseQuery(stringInterpolation: sql)
         }
 
@@ -191,6 +189,7 @@ extension Subscriber.Search.Query {
             campaignKey: String?,
             email: String?
         ) {
+            sql.appendLiteral("(")
             sql.appendInterpolation(pattern)
             sql.appendLiteral(" IS NULL OR LOWER(subscriber.email) LIKE ")
             sql.appendInterpolation(pattern)
