@@ -40,14 +40,24 @@ extension Variant.Processor.List {
                     )
                 )
                 context.build(
-                    Page.Content(
-                        variantId: variantId,
-                        processors: processors,
-                        pageState: pageState,
-                        search: search,
-                        permissions: permissions,
-                        routes: routes,
-                    )
+                    AdminRelationshipGroup(
+                        pageHeader: .secondary(
+                            title: "Variant processors",
+                            description:
+                                "Manage the processing steps for this media variant."
+                        )
+                    ) {
+                        context.build(
+                            Page.Content(
+                                variantId: variantId,
+                                processors: processors,
+                                pageState: pageState,
+                                search: search,
+                                permissions: permissions,
+                                routes: routes,
+                            )
+                        )
+                    }
                 )
             }
             .class("cms-section")

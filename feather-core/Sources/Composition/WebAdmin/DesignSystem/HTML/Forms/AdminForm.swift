@@ -36,7 +36,7 @@ public struct AdminForm: Component {
                 FlexDirection(.column)
                 Gap(26.px)
                 Width(100.percent)
-                MarginTop(24.px)
+                MarginTop(0.px)
             },
             Custom(".admin-form > .admin-form__messages") {
                 Display(.flex)

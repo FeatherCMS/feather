@@ -63,48 +63,58 @@ extension Session.List {
                         ),
                     ])
                 )
-                if state.items.isEmpty {
-                    context.build(
-                        AdminListEmptyState(
-                            message: "No active sessions.",
-                            icon: FeatherIcons.inbox()
+                context.build(
+                    AdminRelationshipGroup(
+                        pageHeader: .secondary(
+                            title: "Active sessions",
+                            description:
+                                "Review sessions currently active for this identity."
                         )
-                    )
-                }
-                else {
-                    context.build(
-                        AdminListShell(
-                            layout: .init(
-                                name: "auth-sessions",
-                                columns: [
-                                    .fraction(2), .fraction(2), .fraction(1),
-                                    .actions,
-                                ]
-                            ),
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        Th("Authentication")
-                                        Th("Expires")
-                                        Th("Persistent")
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for item in state.items {
+                    ) {
+                    if state.items.isEmpty {
+                        context.build(
+                            AdminListEmptyState(
+                                message: "No active sessions.",
+                                icon: FeatherIcons.inbox()
+                            )
+                        )
+                    }
+                    else {
+                        context.build(
+                            AdminListShell(
+                                layout: .init(
+                                    name: "auth-sessions",
+                                    columns: [
+                                        .fraction(2), .fraction(2), .fraction(1),
+                                        .actions,
+                                    ]
+                                ),
+                                table: Table {
+                                    Thead {
                                         Tr {
-                                            Td(item.authenticationType)
-                                            Td("\(item.expiresAt)")
-                                            Td(item.isPersistent ? "Yes" : "No")
-                                            Td("")
+                                            Th("Authentication")
+                                            Th("Expires")
+                                            Th("Persistent")
+                                            Th("Actions")
+                                        }
+                                    }
+                                    Tbody {
+                                        for item in state.items {
+                                            Tr {
+                                                Td(item.authenticationType)
+                                                Td("\(item.expiresAt)")
+                                                Td(item.isPersistent ? "Yes" : "No")
+                                                Td("")
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            .class("cms-table", "action-table")
+                                .class("cms-table", "action-table")
+                            )
                         )
-                    )
-                }
+                    }
+                    }
+                )
             }
             .class("cms-section")
         }

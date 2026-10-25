@@ -46,18 +46,28 @@ extension Submission.Search {
                         )
                     )
                 }
-                if let error = state.error {
-                    P(error).class("admin-form__error")
-                }
                 context.build(
-                    Content(
-                        items: state.items,
-                        pageState: state.pageState,
-                        search: state.search,
-                        formKey: state.formKey,
-                        routes: state.routes,
-                        permissions: state.permissions
-                    )
+                    AdminRelationshipGroup(
+                        pageHeader: .secondary(
+                            title: "Submissions",
+                            description:
+                                "Review the submitted contact form entries."
+                        )
+                    ) {
+                        if let error = state.error {
+                            P(error).class("admin-form__error")
+                        }
+                        context.build(
+                            Content(
+                                items: state.items,
+                                pageState: state.pageState,
+                                search: state.search,
+                                formKey: state.formKey,
+                                routes: state.routes,
+                                permissions: state.permissions
+                            )
+                        )
+                    }
                 )
             }
             .class("cms-section")

@@ -35,7 +35,17 @@ extension Variant.Processor {
                             routes: routes
                         )
                     )
-                    context.build(form)
+                    context.build(
+                        AdminRelationshipGroup(
+                            pageHeader: .secondary(
+                                title: "Processor configuration",
+                                description:
+                                    "Update how this variant is processed."
+                            )
+                        ) {
+                            context.build(form)
+                        }
+                    )
                 }
                 .class("cms-section")
             }

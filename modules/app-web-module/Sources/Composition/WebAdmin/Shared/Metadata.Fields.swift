@@ -156,7 +156,7 @@ extension WebModule.Metadata {
                 Class("admin-metadata-fields") {
                     Display(.grid)
                     Gap(20.px)
-                    MarginTop(32.px)
+                    MarginTop(0.px)
                 },
                 Class("admin-metadata-fields__group") {
                     Display(.grid)

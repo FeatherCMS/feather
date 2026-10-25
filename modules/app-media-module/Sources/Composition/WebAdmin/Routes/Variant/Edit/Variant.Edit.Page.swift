@@ -39,7 +39,16 @@ extension Variant.Edit {
                         routes: state.routes
                     )
                 )
-                context.build(state.form)
+                context.build(
+                    AdminRelationshipGroup(
+                        pageHeader: .secondary(
+                            title: "Variant details",
+                            description: "Edit the media variant configuration."
+                        )
+                    ) {
+                        context.build(state.form)
+                    }
+                )
             }
             .class("cms-section")
         }

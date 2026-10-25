@@ -60,19 +60,31 @@ extension Settings.Edit {
                     )
                 }
 
-                if !state.canEdit {
-                    P(
-                        "You can view these settings, but update permission is required to save changes."
-                    )
-                }
-
-                let action = state.userID.map { routes.userSettingsPath($0) }
-                    ?? routes.settings.path
                 context.build(
-                    Form.Component(
-                        state: state.form,
-                        action: action
-                    )
+                    AdminRelationshipGroup(
+                        pageHeader: .secondary(
+                            title: "Account settings",
+                            description:
+                                "Configure preferences for this account."
+                        )
+                    ) {
+                        if !state.canEdit {
+                            P(
+                                "You can view these settings, but update permission is required to save changes."
+                            )
+                        }
+
+                        let action =
+                            state.userID.map {
+                                routes.userSettingsPath($0)
+                            } ?? routes.settings.path
+                        context.build(
+                            Form.Component(
+                                state: state.form,
+                                action: action
+                            )
+                        )
+                    }
                 )
             }
             .class("cms-section")

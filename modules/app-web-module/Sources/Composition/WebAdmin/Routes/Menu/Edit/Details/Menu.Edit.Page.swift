@@ -51,11 +51,21 @@ extension WebModule.Menu.Edit {
                     )
                 )
                 context.build(
-                    Menu.Form.Component(
-                        state: state.form,
-                        action: state.routes.menu.editPath(state.id),
-                        submitLabel: "Edit menu",
-                    )
+                    AdminRelationshipGroup(
+                        pageHeader: .secondary(
+                            title: "Menu details",
+                            description:
+                                "Update the navigation menu configuration."
+                        )
+                    ) {
+                        context.build(
+                            Menu.Form.Component(
+                                state: state.form,
+                                action: state.routes.menu.editPath(state.id),
+                                submitLabel: "Edit menu",
+                            )
+                        )
+                    }
                 )
             }
             .class("cms-section")

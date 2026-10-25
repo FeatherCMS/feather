@@ -56,7 +56,7 @@ public struct AdminPageHeader: Component {
                 preview: nil,
                 moreActions: [],
                 level: 2,
-                showSeparator: true
+                showSeparator: false
             )
         }
 

@@ -32,12 +32,21 @@ extension WebModule.Metadata.Edit {
                 )
                 context.build(AdminTabBar(links: state.navigationTabs))
                 context.build(
-                    Form.Component(
-                        state: state.form,
-                        mediaAssetList: state.mediaAssetList,
-                        action: state.action,
-                        submitLabel: "Edit entry"
-                    )
+                    AdminRelationshipGroup(
+                        pageHeader: .secondary(
+                            title: "Metadata",
+                            description: "Edit the metadata for this entry."
+                        )
+                    ) {
+                        context.build(
+                            Form.Component(
+                                state: state.form,
+                                mediaAssetList: state.mediaAssetList,
+                                action: state.action,
+                                submitLabel: "Edit entry"
+                            )
+                        )
+                    }
                 )
             }
             .class("cms-section")
