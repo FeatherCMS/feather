@@ -56,7 +56,7 @@ public struct AdminFormFieldRichContentEditor: Component {
     private static let markdownEditorScript = #"""
         if (document.querySelector('#markdownInput')) {
             const initialMarkdown = document.querySelector('#markdownInput').defaultValue || document.querySelector('#markdownInput').value;
-            const state = { blocks: [], mode: 'visual', dragging: null, insertPosition: 'bottom', activeContactForm: null };
+            const state = { blocks: [], mode: 'visual', dragging: null, insertPosition: 'bottom', activeContactForm: null, showValidationErrors: false };
             const editorExtensions = Array.isArray(window.featherRichContentEditorBlocks)
               ? window.featherRichContentEditorBlocks
               : [];
@@ -410,7 +410,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                 block.availableFields.forEach(field => {
                   const fieldLabel = field.label || field.key;
                   const visibleLabel = fieldLabel.length > 24 ? `${fieldLabel.slice(0, 21).trimEnd()}…` : fieldLabel;
-                  const button = document.createElement('button'); button.type = 'button'; button.className = 'component-button contact-form-field-option'; button.title = `Label: ${fieldLabel} | Key: ${field.key}`; button.draggable = !used.includes(field.key); button.disabled = used.includes(field.key);
+                  const isUsed = used.includes(field.key); const button = document.createElement('button'); button.type = 'button'; button.className = 'component-button contact-form-field-option'; button.title = `Label: ${fieldLabel} | Key: ${field.key}`; button.draggable = !isUsed; button.disabled = isUsed; button.classList.toggle('is-added', isUsed);
                   const icon = document.createElement('span'); icon.className = 'component-icon'; icon.textContent = '▤'; icon.setAttribute('aria-hidden', 'true');
                   const text = document.createElement('span'); text.className = 'contact-form-field-option-text';
                   const label = document.createElement('span'); label.textContent = visibleLabel;
@@ -423,10 +423,10 @@ public struct AdminFormFieldRichContentEditor: Component {
               } else if (block.value && !block.loadingFields && !block.fieldLoadError) { const empty = document.createElement('p'); empty.className = 'contact-form-palette-status'; empty.textContent = 'No fields are assigned to this form.'; toolbar.append(empty); }
               const separator = document.createElement('hr'); separator.className = 'contact-form-toolbar-separator'; toolbar.append(separator); const componentsLabel = document.createElement('p'); componentsLabel.className = 'eyebrow contact-form-toolbar-heading'; componentsLabel.textContent = 'Form components'; toolbar.append(componentsLabel);
               const componentTitles = { 'contact-form-captcha': 'CAPTCHA', 'contact-form-submit': 'Submit button', 'contact-form-error': 'Error message', 'contact-form-success': 'Success message' }; const componentOrder = ['contact-form-captcha', 'contact-form-submit', 'contact-form-error', 'contact-form-success'];
-              editorExtensions.filter(item => item.isContainerChild && item.type !== 'contact-form-field').sort((left, right) => componentOrder.indexOf(left.type) - componentOrder.indexOf(right.type)).forEach(item => { if (flattenContactFormBlocks(block.children).some(child => child.type === item.type)) return; const titleText = componentTitles[item.type] || item.title; const button = document.createElement('button'); button.type = 'button'; button.className = 'component-button contact-form-marker-option'; button.draggable = true; const icon = document.createElement('span'); icon.className = 'component-icon'; icon.textContent = item.icon; icon.setAttribute('aria-hidden', 'true'); const label = document.createElement('span'); label.textContent = titleText; const description = document.createElement('small'); description.textContent = titleText; button.append(icon, label, description); button.addEventListener('click', () => { if (flattenContactFormBlocks(block.children).some(child => child.type === item.type)) return; insertContactFormChild(block, createBlock(item.type)); }); button.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'copy'; event.dataTransfer.setData('text/plain', item.type); state.dragging = { kind: 'contact-form-component', formId: block.id, type: item.type }; }); button.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); }); toolbar.append(button); });
+              editorExtensions.filter(item => item.isContainerChild && item.type !== 'contact-form-field').sort((left, right) => componentOrder.indexOf(left.type) - componentOrder.indexOf(right.type)).forEach(item => { const isUsed = flattenContactFormBlocks(block.children).some(child => child.type === item.type); const titleText = componentTitles[item.type] || item.title; const button = document.createElement('button'); button.type = 'button'; button.className = 'component-button contact-form-marker-option'; button.draggable = !isUsed; button.disabled = isUsed; button.classList.toggle('is-added', isUsed); const icon = document.createElement('span'); icon.className = 'component-icon'; icon.textContent = item.icon; icon.setAttribute('aria-hidden', 'true'); const label = document.createElement('span'); label.textContent = titleText; const description = document.createElement('small'); description.textContent = titleText; button.append(icon, label, description); button.addEventListener('click', () => { if (flattenContactFormBlocks(block.children).some(child => child.type === item.type)) return; insertContactFormChild(block, createBlock(item.type)); }); button.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'copy'; event.dataTransfer.setData('text/plain', item.type); state.dragging = { kind: 'contact-form-component', formId: block.id, type: item.type }; }); button.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); }); toolbar.append(button); });
               panel.append(toolbar);
               const validation = validateContactFormLayout(block);
-              if (validation.length && !block.fieldLoadError) { const message = document.createElement('p'); message.className = 'contact-form-layout-validation'; message.textContent = validation.join(' '); panel.append(message); }
+              if (state.showValidationErrors && validation.length && !block.fieldLoadError) { const message = document.createElement('ul'); message.className = 'contact-form-layout-validation'; message.setAttribute('role', 'alert'); validation.forEach(error => { const item = document.createElement('li'); item.textContent = error; message.append(item); }); panel.append(message); }
               const layoutSeparator = document.createElement('hr'); layoutSeparator.className = 'contact-form-layout-separator'; panel.append(layoutSeparator);
               const layout = document.createElement('div'); layout.className = 'contact-form-layout-children'; const previousContactForm = state.activeContactForm; state.activeContactForm = block;
               if (!block.children.length) { layout.classList.add('is-empty'); const empty = document.createElement('div'); empty.className = 'contact-form-layout-empty'; empty.textContent = 'Drag fields & components here'; layout.append(empty); }
@@ -451,19 +451,16 @@ public struct AdminFormFieldRichContentEditor: Component {
               if (block.value && !block.availableFields && !block.loadingFields && !block.fieldLoadError) loadContactFormFields(block);
             }
             function validateContactFormLayout(block) {
-              if (block.mode !== 'custom') return [];
               if (!block.value) return ['Choose a contact form.'];
               if (block.loadingFields) return ['Wait for this form’s fields to load.'];
               if (block.fieldLoadError) return [block.fieldLoadError];
               if (!Array.isArray(block.availableFields)) return ['Could not load the selected form’s fields.'];
-              const errors = []; const children = flattenContactFormBlocks(block.children); const fields = children.filter(child => child.type === 'contact-form-field'); const keys = fields.map(field => (field.value || '').trim());
-              const expected = block.availableFields.map(field => field.key); const duplicates = [...new Set(keys.filter((key, index) => key && keys.indexOf(key) !== index))]; const missing = expected.filter(key => !keys.includes(key)); const unknown = keys.filter(key => key && !expected.includes(key));
-              if (missing.length) errors.push(`Add every assigned field (${missing.length} missing).`);
-              if (duplicates.length) errors.push('Each field can appear only once.');
-              if (unknown.length) errors.push('Remove fields not assigned to this form.');
+              const children = flattenContactFormBlocks(block.children); const fields = children.filter(child => child.type === 'contact-form-field'); const keys = fields.map(field => (field.value || '').trim()); const expected = block.availableFields.map(field => field.key); const errors = [];
+              if (expected.some(key => !keys.includes(key))) errors.push(`Missing assigned fields: ${expected.filter(key => !keys.includes(key)).length}.`);
+              if (keys.some((key, index) => key && keys.indexOf(key) !== index)) errors.push('Each field can appear only once.');
+              if (keys.some(key => key && !expected.includes(key))) errors.push('Remove fields not assigned to this form.');
               if (fields.some(field => !field.value.trim())) errors.push('Choose a key for each field block.');
-              for (const [type, title] of [['contact-form-submit', 'Submit'], ['contact-form-error', 'Error message'], ['contact-form-success', 'Success message']]) { const count = children.filter(child => child.type === type).length; if (count !== 1) errors.push(`Add exactly one ${title} block.`); }
-              if (children.filter(child => child.type === 'contact-form-captcha').length !== 1) errors.push('Add exactly one CAPTCHA block.');
+              for (const [type, title] of [['contact-form-submit', 'Submit'], ['contact-form-error', 'Error message'], ['contact-form-success', 'Success message'], ['contact-form-captcha', 'CAPTCHA']]) { if (children.filter(child => child.type === type).length !== 1) errors.push(`Add exactly one ${title} block.`); }
               return errors;
             }
             function flattenContactFormBlocks(blocks) { return (blocks || []).flatMap(block => [block, ...(block.columns || []).flatMap(column => flattenContactFormBlocks(column.blocks)), ...flattenContactFormBlocks(block.children)]); }
@@ -570,7 +567,7 @@ public struct AdminFormFieldRichContentEditor: Component {
             document.querySelectorAll('.component-button').forEach(button => { const description = button.querySelector('small'); if (description) button.title = description.textContent; });
             document.querySelectorAll('[data-insert]').forEach(button => button.addEventListener('click', () => { state.insertPosition = button.dataset.insert; document.querySelectorAll('[data-insert]').forEach(option => option.classList.toggle('active', option === button)); }));
             document.querySelectorAll('[data-add]').forEach(button => { button.draggable = true; button.addEventListener('click', () => { const block = createBlock(button.dataset.add); if (state.insertPosition === 'top') state.blocks.unshift(block); else state.blocks.push(block); syncRaw(); render(); setStatus('Added'); }); button.addEventListener('dragstart', e => { e.dataTransfer.effectAllowed = 'copy'; e.dataTransfer.setData('text/plain', button.dataset.add); state.dragging = { kind: 'new', type: button.dataset.add }; button.classList.add('dragging'); canvas.classList.add('drag-over'); }); button.addEventListener('dragend', clearDragState); });
-            input.closest('form')?.addEventListener('submit', event => { if (state.mode === 'raw') state.blocks = parseMarkdown(input.value); const invalid = state.blocks.find(block => editorExtension(block.type)?.isContainer && block.mode === 'custom' && validateContactFormLayout(block).length); if (!invalid) return; event.preventDefault(); render(); const message = validateContactFormLayout(invalid)[0]; setStatus(message); canvas.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+            input.closest('form')?.addEventListener('submit', event => { if (state.mode === 'raw') state.blocks = parseMarkdown(input.value); const invalid = state.blocks.find(block => editorExtension(block.type)?.isContainer && block.mode === 'custom' && validateContactFormLayout(block).length); if (!invalid) { state.showValidationErrors = false; return; } event.preventDefault(); state.showValidationErrors = true; showMode('visual'); render(); setStatus(validateContactFormLayout(invalid)[0]); canvas.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
             input.value = initialMarkdown; state.blocks = parseMarkdown(initialMarkdown); render();
 
         }
@@ -1219,9 +1216,13 @@ public struct AdminFormFieldRichContentEditor: Component {
                 FontSize(0.68.rem)
                 FontWeight(.number(500))
             },
-            Custom("\(root) .contact-form-field-option:disabled") {
-                Opacity(0.45)
+            Custom("\(root) .contact-form-field-option:disabled, \(root) .contact-form-marker-option:disabled") {
                 Cursor(.default)
+            },
+            Custom("\(root) .contact-form-field-option.is-added .component-icon, \(root) .contact-form-marker-option.is-added .component-icon") {
+                BorderColor(.variable(TokenKey.Colors.Palette.Green.border))
+                Background(.variable(TokenKey.Colors.Palette.Green.background))
+                Color(.variable(TokenKey.Colors.Palette.Green.foreground))
             },
             Custom("\(root) .contact-form-layout-children") {
                 Display(.flex)
@@ -1243,12 +1244,17 @@ public struct AdminFormFieldRichContentEditor: Component {
                 Margin(0.px)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
             },
-            Custom("\(root) .contact-form-layout-validation, \(root) .contact-form-layout-note") {
+            Custom("\(root) .contact-form-layout-note") {
                 Margin(0.px)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
             },
             Custom("\(root) .contact-form-layout-validation") {
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Margin(0.px)
+                Padding(left: 18.px)
+                Color(.variable(TokenKey.Colors.Palette.Red.foreground))
+            },
+            Custom("\(root) .contact-form-layout-validation li + li") {
+                Margin(top: 3.px)
             },
             Custom("\(root) .contact-form-grid-source") {
                 MinHeight(130.px)
