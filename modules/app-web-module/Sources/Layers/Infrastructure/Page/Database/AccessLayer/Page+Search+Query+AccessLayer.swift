@@ -92,6 +92,7 @@ extension Page.Search.Query {
                 + "WHERE reference_type = 'web.page' "
                 + "AND reference_id = web_page.id) "
                 + "DESC NULLS LAST"
+                + ", "
                 + (sortParts + ["id ASC"]).joined(separator: ", ")
         }
     }
