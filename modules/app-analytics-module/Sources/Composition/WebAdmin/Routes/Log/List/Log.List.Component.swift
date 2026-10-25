@@ -3,6 +3,7 @@ import AnalyticsModule
 import AnalyticsApplication
 import CSS
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import SGML

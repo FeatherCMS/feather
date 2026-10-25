@@ -1,5 +1,6 @@
 import FeatherDBAL
 public import FeatherInfrastructure
+public import MediaApplication
 import MediaDomain
 public import MediaModule
 

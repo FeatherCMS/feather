@@ -1,6 +1,7 @@
 import AnalyticsModule
 import CSS
 import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird

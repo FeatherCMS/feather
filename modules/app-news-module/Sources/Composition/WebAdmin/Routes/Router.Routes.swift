@@ -19,12 +19,12 @@ extension Router {
             self.articles = news.appending(pathComponent: "articles")
             self.categories = news.appending(pathComponent: "categories")
             self.mediaAssetList =
-                mediaAssetList ?? MediaWebAdmin.Routes.standard.assetList
+                mediaAssetList ?? MediaWebAdmin.Router.Routes.standard.assetList
         }
 
         public static let standard = Routes(
             admin: .root.appending(pathComponent: "admin"),
-            mediaAssetList: MediaWebAdmin.Routes.standard.assetList
+            mediaAssetList: MediaWebAdmin.Router.Routes.standard.assetList
         )
 
         var breadcrumb: [AdminBreadcrumb.Link] {

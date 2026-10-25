@@ -1,4 +1,4 @@
-import AuthModule
+public import AuthModule
 
 extension Email {
     public struct Option: Sendable {

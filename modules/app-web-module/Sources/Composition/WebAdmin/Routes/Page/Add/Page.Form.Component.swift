@@ -68,6 +68,22 @@ extension WebModule.Page.Form {
         }
 
         func html(context: inout BuilderContext) -> Form {
+            var browseComponents = URLComponents()
+            browseComponents.path = mediaAssetList.path
+            browseComponents.queryItems = [
+                URLQueryItem(name: "picker", value: "1"),
+                URLQueryItem(
+                    name: "field",
+                    value: state.imageAssetId.key
+                ),
+                URLQueryItem(
+                    name: "extensions",
+                    value: AllowedExtensions.images.queryValue
+                ),
+            ]
+            let imagePickerPath =
+                browseComponents.string ?? browseComponents.path
+
             let form = AdminForm(action: action) {
                 if let success = state.success {
                     P(success).class("admin-form__success")
@@ -77,22 +93,6 @@ extension WebModule.Page.Form {
                 }
 
                 context.build(AdminTabBar(links: metadataTabLinks()))
-
-                var browseComponents = URLComponents()
-                browseComponents.path = mediaAssetList.path
-                browseComponents.queryItems = [
-                    URLQueryItem(name: "picker", value: "1"),
-                    URLQueryItem(
-                        name: "field",
-                        value: state.imageAssetId.key
-                    ),
-                    URLQueryItem(
-                        name: "extensions",
-                        value: AllowedExtensions.images.queryValue
-                    ),
-                ]
-                let imagePickerPath =
-                    browseComponents.string ?? browseComponents.path
 
                 context.build(
                     AdminFormFieldMediaPicker(

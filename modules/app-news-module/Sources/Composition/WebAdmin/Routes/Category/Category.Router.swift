@@ -7,7 +7,7 @@ import MediaModule
 import NewsApplication
 import NewsModule
 
-extension Category {
+extension NewsModule.Category {
     struct Router: Sendable {
         struct Routes: Sendable {
             let list: WebRoute

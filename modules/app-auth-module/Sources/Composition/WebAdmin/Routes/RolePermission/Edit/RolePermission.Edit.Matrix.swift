@@ -3,6 +3,7 @@ import AuthModule
 import FeatherValidation
 import FeatherValidationFoundation
 import FeatherWebAdmin
+import FeatherWebShared
 import Foundation
 import HTML
 import Hummingbird
@@ -152,7 +153,7 @@ extension RolePermission.Edit {
         [SystemAdminAPI.Components.Schemas.SystemPermissionListItemSchema]
     }
 
-    extension Matrix {
+extension RolePermission.Edit.Matrix {
     fileprivate func matrixTable(
         groups: [PermissionGroup],
         context: inout BuilderContext

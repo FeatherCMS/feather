@@ -6,16 +6,16 @@ import WebInfrastructure
 import WebModule
 
 extension UseCases {
-    public func makeResolvePublicArticles() -> Public.Article.Resolve.UseCase {
+    public func makeResolvePublicArticles() -> NewsApplication.Public.Article.Resolve.UseCase {
         .init(
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
                 scope: { context in
-                    Public.Article.Resolve.Scope(
-                        article: Public.Article.Resolve.Query.Database(
+                    NewsApplication.Public.Article.Resolve.Scope(
+                        article: NewsApplication.Public.Article.Resolve.Query.Database(
                             context: context
                         ),
-                        articleCategoryIDs: Public.Article.CategoryIDs.Query
+                        articleCategoryIDs: NewsApplication.Public.Article.CategoryIDs.Query
                             .Database(context: context),
                         metadataDetails: WebModule.Metadata.Resolve.Detail.Query
                             .Database(

@@ -35,14 +35,14 @@ extension Login.Form {
             )
         }
     }
-    }
+}
 
-    extension Input {
+extension Login.Form.Input {
 
     private var validator: GroupValidator {
         GroupValidator {
-            Validator.email(email, required: true)
-            Validator.password(password, required: true)
+            Login.Form.Validator.email(email, required: true)
+            Login.Form.Validator.password(password, required: true)
         }
     }
 

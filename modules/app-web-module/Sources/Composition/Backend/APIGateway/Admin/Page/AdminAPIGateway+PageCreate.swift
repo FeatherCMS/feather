@@ -55,8 +55,8 @@ extension AdminAPIGateway {
         excerpt: String
     ) -> Metadata.Model.Base {
         .init(
-            slug: title.slugified,
             template: "default",
+            slug: title.slugified,
             publicationDate: .init(),
             expirationDate: nil,
             status: .draft,

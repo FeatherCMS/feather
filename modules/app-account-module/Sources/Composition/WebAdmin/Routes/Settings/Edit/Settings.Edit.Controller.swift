@@ -16,7 +16,7 @@ extension Settings.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
 
-        func postEditPath(
+        func postEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response

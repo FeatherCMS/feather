@@ -87,6 +87,10 @@ extension Email {
                 edit.path(parameter: "id", value: id)
             }
 
+            func removePath(_ id: String) -> String {
+                remove.path(parameter: "id", value: id)
+            }
+
         }
     }
 }

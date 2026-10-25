@@ -1,5 +1,6 @@
 import FeatherModuleKit
 public import RedirectAdminAPI
+import RedirectDomain
 import RedirectApplication
 import RedirectModule
 

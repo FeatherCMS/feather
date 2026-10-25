@@ -1,4 +1,5 @@
 public import WebDomain
+public import WebModule
 
 extension Public.Page.Detail {
     public enum Query {

@@ -2,6 +2,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 import Foundation
 import WebDomain
+import WebModule
 
 extension Public.Page.Detail {
     public struct UseCase: FeatherApplication.UseCase {

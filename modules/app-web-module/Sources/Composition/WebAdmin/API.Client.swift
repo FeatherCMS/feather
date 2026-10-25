@@ -49,7 +49,7 @@ extension API {
             )
         }
 
-        public func mediaAdminAPI() -> MediaWebAdmin.Client {
+        public func mediaAdminAPI() -> MediaWebAdmin.API.Client {
             .init(environment: environment, requestContext: requestContext)
         }
     }

@@ -1,5 +1,6 @@
 public import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import SystemModule
 import SystemWebAdmin
 

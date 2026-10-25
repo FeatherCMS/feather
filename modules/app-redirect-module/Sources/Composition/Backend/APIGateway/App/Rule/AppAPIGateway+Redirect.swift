@@ -1,4 +1,5 @@
 public import RedirectAppAPI
+import RedirectDomain
 import RedirectApplication
 import RedirectModule
 

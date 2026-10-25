@@ -1,4 +1,5 @@
 import FeatherModuleKit
+import MediaApplication
 public import MediaAdminAPI
 
 extension AdminAPIGateway {
@@ -10,7 +11,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        try await useCases.makeRemoveAsset().execute(
+        _ = try await useCases.makeRemoveAsset().execute(
             subject: subject,
             input: .init(ids: body.ids)
         )

@@ -13,7 +13,7 @@ extension Invitation.Remove.Controller {
                 any Invitation.Remove.Presenter.Interface
             >
 
-        func postRemovePath(
+        func postRemove(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

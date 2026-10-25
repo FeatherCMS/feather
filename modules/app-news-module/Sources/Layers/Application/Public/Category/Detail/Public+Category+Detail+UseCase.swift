@@ -85,7 +85,7 @@ extension Public.Category.Detail.UseCase {
         let currentPage = min(requestedPage, pageCount)
         let articleItems: [Public.Article.Item]
         if currentPage == requestedPage || total == 0 {
-            articleItems = requestedArticles.items
+            articleItems = requestedArticles
         }
         else {
             articleItems = try await context.article.listPublicArticles(

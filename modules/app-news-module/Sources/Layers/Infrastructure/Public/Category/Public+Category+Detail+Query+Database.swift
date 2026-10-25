@@ -1,4 +1,4 @@
-import FeatherApplication
+public import FeatherApplication
 public import FeatherInfrastructure
 public import NewsApplication
 import NewsDomain

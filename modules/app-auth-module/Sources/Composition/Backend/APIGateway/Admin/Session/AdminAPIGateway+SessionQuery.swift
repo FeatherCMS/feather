@@ -3,6 +3,7 @@ import AuthApplication
 import AuthModule
 import FeatherApplication
 import FeatherModuleKit
+import Foundation
 
 extension AdminAPIGateway {
     public func userIdentitySessionQuery(

@@ -1,4 +1,4 @@
-import FeatherApplication
+public import FeatherApplication
 import NewsModule
 
 extension Public.Category.Detail {

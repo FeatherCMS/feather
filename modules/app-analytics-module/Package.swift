@@ -159,6 +159,8 @@ let package = Package(
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "SystemModule", package: "app-system-module"),
 
+                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemDomain", package: "app-system-module"),
                 .target(name: "AnalyticsModule"),
                 .target(name: "AnalyticsApplication"),
                 .target(name: "AnalyticsDomain"),
@@ -229,6 +231,7 @@ let package = Package(
                 .target(name: "AnalyticsAdminAPI"),
                 .target(name: "AnalyticsAppAPI"),
                 .target(name: "AnalyticsDomain"),
+                .product(name: "Hummingbird", package: "hummingbird"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: swiftSettings

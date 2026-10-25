@@ -2,9 +2,9 @@ public import FeatherModuleKit
 
 extension Admin.Menu {
     public enum Group {}
-    }
+}
 
-    extension Group {
+extension Admin.Menu.Group {
     public struct Definition: Sendable {
         public let key: String
         public let groupKey: String

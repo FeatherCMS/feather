@@ -2,9 +2,9 @@ public import FeatherModuleKit
 
 extension Admin.Menu {
     public enum Item {}
-    }
+}
 
-    extension Item {
+extension Admin.Menu.Item {
     public struct Definition: Sendable {
         public let menuKey: String
         public let label: String

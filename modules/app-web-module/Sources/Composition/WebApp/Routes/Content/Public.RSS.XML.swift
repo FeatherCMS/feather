@@ -10,7 +10,7 @@ extension Public.RSS {
             title: String,
             description: String,
             siteURL: String,
-            items: [WebModule.Item]
+            items: [WebModule.Public.RSS.Item]
         ) -> String {
             let sortedItems =
                 items
@@ -46,7 +46,9 @@ extension Public.RSS {
             return document.render(indent: 4)
         }
 
-        private static func makeItem(_ item: WebModule.Item) -> Item {
+        private static func makeItem(
+            _ item: WebModule.Public.RSS.Item
+        ) -> Item {
             var children: [any ItemContent] = [
                 Guid(item.url, isPermalink: true),
                 Title(item.title),

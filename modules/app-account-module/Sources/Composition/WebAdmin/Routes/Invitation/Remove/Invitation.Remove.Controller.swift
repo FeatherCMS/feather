@@ -11,7 +11,7 @@ extension Invitation.Remove.Controller {
 
     protocol Interface: Sendable {
 
-        func postRemovePath(
+        func postRemove(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response

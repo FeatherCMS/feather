@@ -41,7 +41,7 @@ extension Profile.Edit.Controller {
             )
         }
 
-        func postEditPath(
+        func postEdit(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

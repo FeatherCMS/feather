@@ -13,12 +13,12 @@ import WebModule
 
 extension UseCases {
 
-    func makeListPublicMetadata() -> Public.Metadata.List.UseCase {
+    func makeListPublicMetadata() -> WebApplication.Public.Metadata.List.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Public.Metadata.List.Scope(
-                    metadata: Public.Metadata.List.Query.Database(
+                WebApplication.Public.Metadata.List.Scope(
+                    metadata: WebApplication.Public.Metadata.List.Query.Database(
                         context: context
                     )
                 )

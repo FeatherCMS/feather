@@ -5,6 +5,6 @@ extension Public.RSS {
         let title: String
         let description: String
         let siteURL: String
-        let items: [WebModule.Item]
+        let items: [WebModule.Public.RSS.Item]
     }
 }

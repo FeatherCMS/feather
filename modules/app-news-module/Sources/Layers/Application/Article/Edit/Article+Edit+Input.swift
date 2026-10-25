@@ -2,8 +2,7 @@ public import FeatherApplication
 public import FeatherDomain
 import NewsDomain
 public import NewsModule
-public import WebApplication
-import WebDomain
+public import WebDomain
 public import WebModule
 
 public import struct Foundation.Date

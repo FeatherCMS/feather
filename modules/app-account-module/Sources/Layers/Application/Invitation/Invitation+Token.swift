@@ -1,4 +1,4 @@
-import AccountModule
+public import AccountModule
 
 extension Invitation {
     public enum Token {}

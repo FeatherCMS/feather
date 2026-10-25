@@ -4,6 +4,7 @@ import NewsDomain
 public import NewsModule
 import SystemApplication
 import WebApplication
+import WebDomain
 
 //
 //  Category+Add+UseCase.swift

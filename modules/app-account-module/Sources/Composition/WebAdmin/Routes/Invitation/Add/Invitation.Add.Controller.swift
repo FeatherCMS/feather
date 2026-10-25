@@ -16,7 +16,7 @@ extension Invitation.Add.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
 
-        func postAddPath(
+        func postAdd(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response

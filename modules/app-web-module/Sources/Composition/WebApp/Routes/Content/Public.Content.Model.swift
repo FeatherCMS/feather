@@ -5,12 +5,12 @@ import WebModule
 extension Public.Content {
     struct Model: Sendable {
         let metadata: FeatherModuleKit.PublicContent.Metadata.Base
-        let results: [WebModule.Event.Provider.Output]
+        let results: [WebModule.Public.Content.Event.Provider.Output]
         let status: HTTPResponse.Status
 
         init(
             metadata: FeatherModuleKit.PublicContent.Metadata.Base,
-            results: [WebModule.Event.Provider.Output],
+            results: [WebModule.Public.Content.Event.Provider.Output],
             status: HTTPResponse.Status = .ok
         ) {
             self.metadata = metadata

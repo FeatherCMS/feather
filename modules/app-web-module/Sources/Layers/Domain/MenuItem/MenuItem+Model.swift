@@ -154,7 +154,7 @@ extension MenuItem.Model {
         priority: Int,
         isBlank: Bool,
         permission: String,
-        authentication: Model.Authentication = .any,
+        authentication: Authentication = .any,
         notes: String?
     ) throws(Self.Error) -> Self.New {
         try validate(label: label)
@@ -180,7 +180,7 @@ extension MenuItem.Model {
         priority: FieldChange<Int> = .unchanged,
         isBlank: FieldChange<Bool> = .unchanged,
         permission: FieldChange<String> = .unchanged,
-        authentication: FieldChange<Model.Authentication> = .unchanged,
+        authentication: FieldChange<Authentication> = .unchanged,
         notes: OptionalFieldChange<String> = .unchanged
     ) throws(Self.Error) {
         let newLabel = label.apply(to: self.label)

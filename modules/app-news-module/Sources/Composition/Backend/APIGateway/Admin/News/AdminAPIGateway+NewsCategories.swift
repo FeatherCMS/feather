@@ -128,8 +128,8 @@ extension Components.Schemas.NewsCategoryCreateSchema {
             content: content,
             imageAssetId: imageAssetId,
             metadata: .init(
-                slug: metadata.slug,
                 template: "news.category",
+                slug: metadata.slug,
                 publicationDate: metadata.publicationDate.map(
                     Date.init(timeIntervalSince1970:)
                 ) ?? .init(),
@@ -168,8 +168,8 @@ extension Components.Schemas.NewsCategoryCreateSchema {
             ),
             metadata: .set(
                 .init(
-                    slug: metadata.slug,
                     template: "news.category",
+                    slug: metadata.slug,
                     publicationDate: metadata.publicationDate.map(
                         Date.init(timeIntervalSince1970:)
                     ) ?? .init(),

@@ -3,7 +3,7 @@ public import FeatherModuleKit
 import FeatherStorage
 import Foundation
 import MIME
-import MediaDomain
+public import MediaDomain
 public import MediaModule
 import NIOCore
 
@@ -39,7 +39,7 @@ extension Asset.File.Add {
         }
 
         public func execute(input: Input) async throws -> Output {
-            try await execute(input: input, processors: nil)
+            try await execute(input: input, processorOverride: nil)
         }
 
         public func execute(

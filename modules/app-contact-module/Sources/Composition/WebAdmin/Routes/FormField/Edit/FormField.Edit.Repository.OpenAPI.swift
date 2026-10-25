@@ -4,6 +4,7 @@ import ContactModule
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime

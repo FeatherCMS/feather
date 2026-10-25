@@ -2,7 +2,7 @@ import FeatherDatabase
 import FeatherInfrastructure
 public import MediaApplication
 import MediaInfrastructure
-import MediaModule
+public import MediaModule
 
 extension UseCases {
     public func makeListActiveVariantProcessors()

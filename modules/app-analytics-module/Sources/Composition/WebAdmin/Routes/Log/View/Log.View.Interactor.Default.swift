@@ -5,7 +5,7 @@ extension Log.View.Interactor {
         let repository: any Log.View.Repository.Interface
 
         func execute(id: String) async throws -> Log.View.Model {
-            .init(log: try await repository.get(id: id))
+            try await repository.get(id: id)
         }
     }
 }

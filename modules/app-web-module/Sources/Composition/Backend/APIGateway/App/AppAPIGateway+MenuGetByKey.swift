@@ -1,3 +1,4 @@
+import FeatherModuleKit
 public import WebAppAPI
 import WebApplication
 import WebModule

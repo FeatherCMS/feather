@@ -8,12 +8,12 @@ import WebModule
 
 extension UseCases {
 
-    public func makeDetailPublicCategory() -> Public.Category.Detail.UseCase {
-        Public.Category.Detail.UseCase(
+    public func makeDetailPublicCategory() -> NewsApplication.Public.Category.Detail.UseCase {
+        NewsApplication.Public.Category.Detail.UseCase(
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
                 scope: { context in
-                    Public.Category.Detail.Scope(
+                    NewsApplication.Public.Category.Detail.Scope(
                         category: NewsModule.Category.Detail.Query.Database(
                             context: context,
                             metadata: WebModule.Metadata.Reference.Query
@@ -21,10 +21,10 @@ extension UseCases {
                                     context: context
                                 )
                         ),
-                        article: Public.Category.Detail.Query.Database(
+                        article: NewsApplication.Public.Category.Detail.Query.Database(
                             context: context
                         ),
-                        articleCategoryIDs: Public.Article.CategoryIDs.Query
+                        articleCategoryIDs: NewsApplication.Public.Article.CategoryIDs.Query
                             .Database(context: context),
                         metadataDetails: WebModule.Metadata.Resolve.Detail.Query
                             .Database(

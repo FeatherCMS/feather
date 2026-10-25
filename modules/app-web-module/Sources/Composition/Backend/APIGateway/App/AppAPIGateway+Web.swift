@@ -38,7 +38,7 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is Public.Page.Detail.Error {
+        catch is WebApplication.Public.Page.Detail.Error {
             return .notFound(
                 .init(
                     body: .json(

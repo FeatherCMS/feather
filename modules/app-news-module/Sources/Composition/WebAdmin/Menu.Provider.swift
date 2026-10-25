@@ -7,8 +7,8 @@ extension Menu {
     public enum Provider {
         public static func register(in events: inout EventRegistry) {
             events.register(
-                event: SystemWebAdmin.Admin.Group.Provider.self,
-                context: SystemWebAdmin.Admin.Context.self
+                event: SystemWebAdmin.Admin.Menu.Group.Provider.self,
+                context: SystemWebAdmin.Admin.Menu.Context.self
             ) { _, _ in
                 [
                     .init(

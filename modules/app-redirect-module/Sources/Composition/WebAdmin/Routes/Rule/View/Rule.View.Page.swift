@@ -1,6 +1,7 @@
 import FeatherWebAdmin
 import HTML
 import Hummingbird
+import RedirectDomain
 import RedirectModule
 import WebBuilders
 import WebComponents

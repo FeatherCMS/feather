@@ -51,7 +51,9 @@ extension AdminAPIGateway {
         )
         let allowedValues = try FieldChange(
             value: body.allowedValues.map { values in
-                values.map { .init(value: $0, label: $0) }
+                values.map {
+                    FormField.Model.Option(value: $0, label: $0)
+                }
             },
             shouldApply: fields.contains(.allowedValues),
             onMissing: { HTTPError(.badRequest) }

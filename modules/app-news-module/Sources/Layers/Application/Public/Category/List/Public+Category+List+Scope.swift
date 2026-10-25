@@ -1,5 +1,5 @@
 public import FeatherModuleKit
-public import NewsModule
+import NewsModule
 public import WebApplication
 public import WebModule
 

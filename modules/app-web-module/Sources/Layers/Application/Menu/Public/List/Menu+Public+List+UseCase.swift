@@ -7,6 +7,7 @@
 public import FeatherApplication
 public import FeatherModuleKit
 public import WebModule
+import WebDomain
 
 extension Menu.Public.List {
     public struct UseCase: FeatherApplication.UseCase {

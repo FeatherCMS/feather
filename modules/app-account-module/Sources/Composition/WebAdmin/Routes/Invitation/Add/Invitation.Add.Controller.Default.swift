@@ -30,7 +30,7 @@ extension Invitation.Add.Controller {
             )
         }
 
-        func postAddPath(
+        func postAdd(
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response {

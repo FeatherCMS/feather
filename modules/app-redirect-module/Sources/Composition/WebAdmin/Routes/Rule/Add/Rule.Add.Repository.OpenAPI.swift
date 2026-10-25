@@ -3,6 +3,7 @@ import FeatherWebShared
 import OpenAPIRuntime
 import RedirectAdminAPI
 import RedirectApplication
+import RedirectDomain
 import RedirectModule
 
 extension Rule.Add.Repository {

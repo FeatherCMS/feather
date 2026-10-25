@@ -1,13 +1,13 @@
 import FeatherDBAL
 public import FeatherInfrastructure
 public import WebApplication
-import WebDomain
+public import WebDomain
 public import WebModule
 
 extension Page.Detail.Query {
     public struct Database:
         Interface,
-        Public.Interface
+        WebApplication.Public.Page.Detail.Query.Interface
     {
         public let context: DatabaseQueryContext
         public let metadata: any Metadata.Reference.Query.Interface

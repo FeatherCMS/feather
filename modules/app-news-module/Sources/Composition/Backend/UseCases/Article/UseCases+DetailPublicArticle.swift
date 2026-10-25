@@ -8,12 +8,12 @@ import WebModule
 
 extension UseCases {
 
-    public func makeDetailPublicArticle() -> Public.Article.Detail.UseCase {
-        Public.Article.Detail.UseCase(
+    public func makeDetailPublicArticle() -> NewsApplication.Public.Article.Detail.UseCase {
+        NewsApplication.Public.Article.Detail.UseCase(
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
                 scope: { context in
-                    Public.Article.Detail.Scope(
+                    NewsApplication.Public.Article.Detail.Scope(
                         article: NewsModule.Article.Detail.Query.Database(
                             context: context,
                             metadata: WebModule.Metadata.Reference.Query

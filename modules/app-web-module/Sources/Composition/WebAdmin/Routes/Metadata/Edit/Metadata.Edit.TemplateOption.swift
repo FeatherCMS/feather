@@ -1,4 +1,4 @@
-import WebModule
+public import WebModule
 
 extension WebModule.Metadata.Edit {
     public struct TemplateOption: Sendable, Hashable, Codable {
