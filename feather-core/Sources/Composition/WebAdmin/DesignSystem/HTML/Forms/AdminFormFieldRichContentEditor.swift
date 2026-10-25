@@ -256,10 +256,10 @@ public struct AdminFormFieldRichContentEditor: Component {
               finally { block.loadingFields = false; if (state.blocks.includes(block)) { syncRaw(); render(); } }
             }
             function renderEmbedControl(body, block, update, definition) {
-              const fields = document.createElement('div'); fields.className = 'embed-fields';
-              const key = document.createElement('input'); key.value = block.value || ''; key.placeholder = `${definition.title} ${definition.argument || 'key'}`; key.setAttribute('aria-label', key.placeholder); key.addEventListener(definition.isContainer ? 'change' : 'input', event => update('value', event.target.value));
+              const fields = document.createElement('div'); fields.className = `embed-fields${['contact-form', 'newsletter'].includes(definition.type) ? ' removable-key-fields' : ''}`;
+              const key = document.createElement('input'); key.value = block.value || ''; key.placeholder = 'Key'; key.setAttribute('aria-label', `${definition.title} ${definition.argument || 'key'}`); key.addEventListener(definition.isContainer ? 'change' : 'input', event => update('value', event.target.value));
               fields.append(key);
-              if (definition.pickerEndpoint) { const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'embed-picker-button'; picker.textContent = block.value ? 'Change selection' : 'Choose from list'; picker.addEventListener('click', () => openEmbedPicker(definition, value => { update('value', value); })); fields.append(picker); }
+              if (definition.pickerEndpoint) { const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'embed-picker-button'; picker.textContent = block.value ? 'Change' : 'Choose'; picker.setAttribute('aria-label', block.value ? `Change ${definition.title}` : `Choose ${definition.title} from list`); picker.title = picker.getAttribute('aria-label'); picker.addEventListener('click', () => openEmbedPicker(definition, value => { update('value', value); })); fields.append(picker); }
               body.append(fields);
             }
             function renderExtensionControl(body, block, update, definition) {
@@ -269,13 +269,14 @@ public struct AdminFormFieldRichContentEditor: Component {
               renderEmbedControl(body, block, update, definition);
             }
             function renderVideoControl(body, block, update) {
-              const fields = document.createElement('div'); fields.className = 'media-fields';
-              const kind = document.createElement('select'); kind.setAttribute('aria-label', 'Video source type');
-              [['file', 'Video file'], ['embed', 'External video']].forEach(([value, label]) => { const option = document.createElement('option'); option.value = value; option.textContent = label; kind.append(option); });
-              kind.value = block.kind || 'file'; kind.addEventListener('change', event => { update('kind', event.target.value); render(); });
-              const url = document.createElement('input'); url.value = block.value || ''; url.placeholder = kind.value === 'file' ? 'Video URL' : 'Embedded video URL'; url.setAttribute('aria-label', 'Video URL'); url.addEventListener('input', event => update('value', event.target.value));
-              fields.append(kind, url);
-              if (kind.value === 'file') { const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'media-picker-button'; picker.textContent = 'Choose from gallery'; picker.addEventListener('click', () => openMediaPicker('video', value => update('value', value))); fields.append(picker); }
+              const kind = block.kind || 'file';
+              const sourceSwitch = document.createElement('div'); sourceSwitch.className = 'mode-switch video-kind-switch'; sourceSwitch.setAttribute('role', 'tablist'); sourceSwitch.setAttribute('aria-label', 'Video source type');
+              [['file', 'File', 'Video file'], ['embed', 'External', 'External video']].forEach(([value, label, accessibleLabel]) => { const button = document.createElement('button'); button.type = 'button'; button.className = kind === value ? 'active' : ''; button.textContent = label; button.setAttribute('role', 'tab'); button.setAttribute('aria-label', accessibleLabel); button.setAttribute('aria-selected', String(kind === value)); button.addEventListener('click', () => { if (kind === value) return; update('kind', value); render(); }); sourceSwitch.append(button); });
+              const fields = document.createElement('div'); fields.className = `media-fields video-fields${kind === 'embed' ? ' video-external-fields' : ''}`;
+              const url = document.createElement('input'); url.value = block.value || ''; url.placeholder = 'URL'; url.setAttribute('aria-label', kind === 'file' ? 'Video file URL' : 'External video URL'); url.addEventListener('input', event => update('value', event.target.value));
+              fields.append(url);
+              if (kind === 'file') { const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'media-picker-button'; picker.textContent = 'Choose'; picker.setAttribute('aria-label', 'Choose video from gallery'); picker.title = picker.getAttribute('aria-label'); picker.addEventListener('click', () => openMediaPicker('video', value => update('value', value))); fields.append(picker); }
+              body.append(sourceSwitch);
               body.append(fields);
             }
             function escapeHTML(value) { return value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character])); }
@@ -328,7 +329,7 @@ public struct AdminFormFieldRichContentEditor: Component {
               const createButton = (className, title, text) => { const button = document.createElement('button'); button.type = 'button'; button.className = className; button.title = title; button.setAttribute('aria-label', title); button.textContent = text; return button; };
               const up = createButton('move-button', 'Move up', '↑'); up.disabled = collection.indexOf(block) === 0; up.addEventListener('click', event => { event.stopPropagation(); const index = collection.indexOf(block); if (index <= 0) return; [collection[index - 1], collection[index]] = [collection[index], collection[index - 1]]; onChange('Rearranged'); });
               const down = createButton('move-button', 'Move down', '↓'); down.disabled = collection.indexOf(block) === collection.length - 1; down.addEventListener('click', event => { event.stopPropagation(); const index = collection.indexOf(block); if (index < 0 || index >= collection.length - 1) return; [collection[index + 1], collection[index]] = [collection[index], collection[index + 1]]; onChange('Rearranged'); }); controls.append(up, down);
-              const duplicate = createButton('duplicate-button', 'Duplicate component', ''); duplicate.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="2" width="9" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3 5H2.5A1.5 1.5 0 0 0 1 6.5v7A1.5 1.5 0 0 0 2.5 15h6A1.5 1.5 0 0 0 10 13.5V13" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>'; duplicate.addEventListener('click', event => { event.stopPropagation(); const index = collection.indexOf(block); if (index < 0) return; collection.splice(index + 1, 0, cloneBlock(block)); onChange('Duplicated'); }); controls.append(duplicate);
+              if (block.type !== 'contact-form-field' && editorExtension(block.type)?.editor !== 'marker') { const duplicate = createButton('duplicate-button', 'Duplicate component', ''); duplicate.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="2" width="9" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3 5H2.5A1.5 1.5 0 0 0 1 6.5v7A1.5 1.5 0 0 0 2.5 15h6A1.5 1.5 0 0 0 10 13.5V13" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>'; duplicate.addEventListener('click', event => { event.stopPropagation(); const index = collection.indexOf(block); if (index < 0) return; collection.splice(index + 1, 0, cloneBlock(block)); onChange('Duplicated'); }); controls.append(duplicate); }
               const remove = createButton('remove', 'Remove component', '×');
               remove.addEventListener('click', event => {
                 event.stopPropagation();
@@ -388,7 +389,7 @@ public struct AdminFormFieldRichContentEditor: Component {
               else if (block.type === 'blockquote') { const fields = document.createElement('div'); fields.className = 'quote-fields'; const quote = document.createElement('textarea'); quote.value = block.value; quote.placeholder = 'Quote text…'; quote.setAttribute('aria-label', 'Blockquote text'); quote.addEventListener('input', e => update('value', e.target.value)); const cite = document.createElement('input'); cite.value = block.cite || ''; cite.placeholder = 'Citation (optional)'; cite.setAttribute('aria-label', 'Blockquote citation'); cite.addEventListener('input', e => update('cite', e.target.value)); fields.append(quote, cite); body.append(fields); }
               else if (block.type === 'html') { const field = document.createElement('textarea'); field.className = 'html-editor'; field.value = block.value; field.placeholder = '<div>Raw HTML…</div>'; field.setAttribute('aria-label', 'Raw HTML'); field.addEventListener('input', e => update('value', e.target.value)); body.append(field); }
               else if (block.type === 'code') { const language = document.createElement('input'); language.className = 'code-language'; language.value = block.language; language.placeholder = 'Language (e.g. swift)'; language.setAttribute('aria-label', 'Code language'); language.addEventListener('input', e => update('language', e.target.value)); const field = document.createElement('textarea'); field.className = 'code-editor'; field.value = block.value; field.placeholder = 'Paste or type code…'; field.setAttribute('aria-label', 'Code'); field.addEventListener('input', e => update('value', e.target.value)); body.append(language, field); }
-              else if (block.type === 'image') { const fields = document.createElement('div'); fields.className = 'media-fields'; const url = document.createElement('input'); url.value = block.value; url.placeholder = 'Image URL'; url.setAttribute('aria-label', 'Image URL'); url.addEventListener('input', e => update('value', e.target.value)); const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'media-picker-button'; picker.textContent = 'Choose from gallery'; picker.addEventListener('click', () => openMediaPicker('image', value => update('value', value))); fields.append(url, picker); const alt = document.createElement('input'); alt.value = block.alt || ''; alt.placeholder = 'Alt text'; alt.setAttribute('aria-label', 'Image alt text'); alt.addEventListener('input', e => update('alt', e.target.value)); fields.append(alt); body.append(fields); }
+              else if (block.type === 'image') { const fields = document.createElement('div'); fields.className = 'media-fields image-fields'; const url = document.createElement('input'); url.value = block.value; url.placeholder = 'URL'; url.setAttribute('aria-label', 'Image URL'); url.addEventListener('input', e => update('value', e.target.value)); const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'media-picker-button'; picker.textContent = 'Choose'; picker.setAttribute('aria-label', 'Choose image from gallery'); picker.title = picker.getAttribute('aria-label'); picker.addEventListener('click', () => openMediaPicker('image', value => update('value', value))); fields.append(url, picker); const alt = document.createElement('input'); alt.value = block.alt || ''; alt.placeholder = 'Alt text'; alt.setAttribute('aria-label', 'Image alt text'); alt.addEventListener('input', e => update('alt', e.target.value)); fields.append(alt); body.append(fields); }
               else if (block.type === 'video') { renderVideoControl(body, block, update); }
               else if (block.type === 'custom') { const fields = document.createElement('div'); fields.className = 'custom-fields'; const name = document.createElement('input'); name.value = block.name || 'CustomBlock'; name.placeholder = 'Component name'; name.setAttribute('aria-label', 'Custom component name'); name.addEventListener('input', e => update('name', e.target.value)); const args = document.createElement('input'); args.value = block.value; args.placeholder = 'Arguments, e.g. id: 123'; args.setAttribute('aria-label', 'Custom component arguments'); args.addEventListener('input', e => update('value', e.target.value)); fields.append(name, args); body.append(fields); }
               else { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.value = block.value; field.placeholder = 'Write text…'; field.setAttribute('aria-label', 'Text with Markdown formatting'); configureTextEditor(field); field.addEventListener('input', e => update('value', e.target.value)); body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelectionForBlock(field, block, update, button.dataset.format))); }
@@ -426,7 +427,9 @@ public struct AdminFormFieldRichContentEditor: Component {
               panel.append(toolbar);
               const validation = validateContactFormLayout(block);
               if (validation.length && !block.fieldLoadError) { const message = document.createElement('p'); message.className = 'contact-form-layout-validation'; message.textContent = validation.join(' '); panel.append(message); }
+              const layoutSeparator = document.createElement('hr'); layoutSeparator.className = 'contact-form-layout-separator'; panel.append(layoutSeparator);
               const layout = document.createElement('div'); layout.className = 'contact-form-layout-children'; const previousContactForm = state.activeContactForm; state.activeContactForm = block;
+              if (!block.children.length) { layout.classList.add('is-empty'); const empty = document.createElement('div'); empty.className = 'contact-form-layout-empty'; empty.textContent = 'Drag fields & components here'; layout.append(empty); }
               block.children.forEach((child, index) => {
                 const card = document.createElement('article'); card.className = 'block contact-form-layout-child'; card.draggable = true; card.dataset.id = child.id;
                 const childControls = createBlockControls(child, block.children, message => { block.mode = 'custom'; syncRaw(); render(); setStatus(message); });
@@ -440,9 +443,8 @@ public struct AdminFormFieldRichContentEditor: Component {
                 layout.append(card);
               });
               state.activeContactForm = previousContactForm;
-              if (!block.children.length) { const empty = document.createElement('div'); empty.className = 'contact-form-layout-empty'; empty.textContent = 'Drop components here to add them to the form'; layout.append(empty); }
-              layout.addEventListener('dragover', event => { if (state.dragging && (!state.dragging.formId || state.dragging.formId === block.id)) { event.preventDefault(); event.stopPropagation(); if (block.children.length) { layout.classList.remove('drop-target'); placeInsertionMarker(layout, ':scope > .contact-form-layout-child', event.clientY); } else { marker.classList.remove('visible'); marker.dataset.position = ''; layout.classList.add('drop-target'); } } });
-              layout.addEventListener('dragleave', event => { if (!layout.contains(event.relatedTarget)) layout.classList.remove('drop-target'); });
+              layout.addEventListener('dragover', event => { if (state.dragging && (!state.dragging.formId || state.dragging.formId === block.id)) { event.preventDefault(); event.stopPropagation(); if (block.children.length) { placeInsertionMarker(layout, ':scope > .contact-form-layout-child', event.clientY); } else { showEmptyInsertionMarker(layout); } } });
+              layout.addEventListener('dragleave', event => { if (!layout.contains(event.relatedTarget) && marker.parentElement === layout) { marker.classList.remove('visible'); marker.dataset.position = ''; } });
               layout.addEventListener('drop', event => { if (!state.dragging || event.target.closest('.contact-form-layout-child') || state.dragging.formId && state.dragging.formId !== block.id) return; event.preventDefault(); event.stopPropagation(); layout.classList.remove('drop-target'); const dragState = state.dragging; let moved; let source = null; let sourceIndex = -1; let target = insertionIndex(block.children); if (dragState.kind === 'new') moved = createBlock(dragState.type); else if (dragState.kind === 'contact-form-field') { if (!flattenContactFormBlocks(block.children).some(item => item.type === 'contact-form-field' && item.value === dragState.key)) moved = Object.assign(newBlock('contact-form-field', dragState.key), { displayTitle: dragState.label }); } else if (dragState.kind === 'contact-form-component') moved = createBlock(dragState.type); else if (dragState.kind === 'contact-form-child') { source = block.children; sourceIndex = dragState.childIndex; moved = source.splice(sourceIndex, 1)[0]; } else if (dragState.kind === 'contact-form-grid-child') { source = dragState.grid.columns[dragState.columnIndex].blocks; sourceIndex = dragState.childIndex; moved = source.splice(sourceIndex, 1)[0]; } else if (dragState.kind === 'existing' || dragState.kind === 'grid-child') { const taken = takeDraggedBlock(dragState); if (taken) { moved = taken.block; source = dragState.kind === 'existing' ? state.blocks : null; sourceIndex = taken.index; } } if (!moved) return; if (source === block.children && sourceIndex < target) target--; block.children.splice(Math.max(0, target), 0, moved); block.mode = 'custom'; clearDragState(); syncRaw(); render(); setStatus('Moved into contact form'); });
               panel.append(layout);
               body.append(panel);
@@ -522,7 +524,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                   }
                   controls.append(responsive, columns); body.querySelector('.block-label').textContent = 'Grid'; body.append(controls);
                 }
-                else if (block.type === 'image') { const fields = document.createElement('div'); fields.className = 'media-fields'; const url = document.createElement('input'); url.value = block.value; url.placeholder = 'Image URL'; url.setAttribute('aria-label', 'Image URL'); url.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'media-picker-button'; picker.textContent = 'Choose from gallery'; picker.addEventListener('click', () => openMediaPicker('image', value => updateBlock(block.id, 'value', value))); fields.append(url, picker); const alt = document.createElement('input'); alt.value = block.alt || ''; alt.placeholder = 'Alt text'; alt.setAttribute('aria-label', 'Image alt text'); alt.addEventListener('input', e => updateBlock(block.id, 'alt', e.target.value)); fields.append(alt); body.querySelector('.block-label').textContent = 'Image'; body.append(fields); }
+                else if (block.type === 'image') { const fields = document.createElement('div'); fields.className = 'media-fields image-fields'; const url = document.createElement('input'); url.value = block.value; url.placeholder = 'URL'; url.setAttribute('aria-label', 'Image URL'); url.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'media-picker-button'; picker.textContent = 'Choose'; picker.setAttribute('aria-label', 'Choose image from gallery'); picker.title = picker.getAttribute('aria-label'); picker.addEventListener('click', () => openMediaPicker('image', value => updateBlock(block.id, 'value', value))); fields.append(url, picker); const alt = document.createElement('input'); alt.value = block.alt || ''; alt.placeholder = 'Alt text'; alt.setAttribute('aria-label', 'Image alt text'); alt.addEventListener('input', e => updateBlock(block.id, 'alt', e.target.value)); fields.append(alt); body.querySelector('.block-label').textContent = 'Image'; body.append(fields); }
                 else if (block.type === 'video') { renderVideoControl(body, block, (key, value) => updateBlock(block.id, key, value)); body.querySelector('.block-label').textContent = 'Video'; }
                 else if (block.type === 'custom') { const fields = document.createElement('div'); fields.className = 'custom-fields'; const name = document.createElement('input'); name.value = block.name || 'CustomBlock'; name.placeholder = 'Component name'; name.setAttribute('aria-label', 'Custom component name'); name.addEventListener('input', e => updateBlock(block.id, 'name', e.target.value)); const args = document.createElement('input'); args.value = block.value; args.placeholder = 'Arguments, e.g. id: 123'; args.setAttribute('aria-label', 'Custom component arguments'); args.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); fields.append(name, args); body.querySelector('.block-label').textContent = 'Custom block'; body.append(fields); }
                 else { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.value = block.value; field.placeholder = 'Write text…'; field.setAttribute('aria-label', 'Text with Markdown formatting'); configureTextEditor(field); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelection(field, block.id, button.dataset.format))); }
@@ -538,6 +540,7 @@ public struct AdminFormFieldRichContentEditor: Component {
             function takeDraggedBlock(drag) { if (drag.kind === 'existing') { const index = state.blocks.findIndex(block => block.id === drag.id); return index < 0 ? null : { block: state.blocks.splice(index, 1)[0], index }; } if (drag.kind === 'grid-child') { const grid = state.blocks.find(block => block.id === drag.gridId); if (!grid || !grid.columns[drag.columnIndex]) return null; const column = grid.columns[drag.columnIndex].blocks; return drag.childIndex < 0 ? null : { block: column.splice(drag.childIndex, 1)[0], index: -1 }; } return null; }
             function placeMarker(item, after) { const position = `${item.dataset.id}:${after ? 'after' : 'before'}`; if (marker.dataset.position !== position) { if (after) item.after(marker); else item.before(marker); marker.dataset.position = position; } marker.classList.add('visible'); }
             function placeInsertionMarker(container, selector, clientY) { const items = [...container.querySelectorAll(selector)]; if (!items.length) return; const target = items.find(item => clientY < item.getBoundingClientRect().top + item.offsetHeight / 2); placeMarker(target || items[items.length - 1], !target); }
+            function showEmptyInsertionMarker(container) { if (marker.parentElement !== container || marker.dataset.position !== 'empty') { const empty = container.querySelector(':scope > .contact-form-layout-empty'); container.insertBefore(marker, empty || null); marker.dataset.position = 'empty'; } marker.classList.add('visible'); }
             function insertionIndex(items) { const match = marker.dataset.position.match(/^([^:]+):(before|after)$/); if (!match) return items.length; const index = items.findIndex(item => item.id === match[1]); return index < 0 ? items.length : index + (match[2] === 'after' ? 1 : 0); }
             function clearDragState() { state.dragging = null; marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); document.querySelectorAll('.component-button').forEach(button => button.classList.remove('dragging')); document.querySelectorAll('.grid-column, .grid-child, .contact-form-layout-child').forEach(element => element.classList.remove('drop-target', 'dragging')); }
             canvas.addEventListener('dragover', e => {
@@ -657,7 +660,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                     .tracks([.length(26.px), .fraction(1.fr)])
                 )
                 AlignItems(.center)
-                Gap(6.px)
+                Gap(10.px)
                 MinWidth(0.px)
                 MinHeight(38.px)
                 Border(
@@ -1075,8 +1078,44 @@ public struct AdminFormFieldRichContentEditor: Component {
                 Padding(vertical: 6.px, horizontal: 5.px)
                 TextAlign(.center)
             },
-            Custom("\(root) .embed-fields") {
+            Custom("\(root) .image-fields, \(root) .video-fields") {
+                GridTemplateColumns(.tracks([.fraction(1.fr), .auto]))
+                AlignItems(.center)
+                Gap(6.px)
+            },
+            Custom("\(root) .image-fields > input:first-child, \(root) .video-fields > input:first-child") {
+                Width(100.percent)
+                MinWidth(0.px)
+            },
+            Custom("\(root) .image-fields > input:last-of-type") {
+                GridColumn(.span(2))
+            },
+            Custom("\(root) .video-external-fields > input") {
+                GridColumn(.span(2))
+            },
+            Custom("\(root) .video-kind-switch") {
                 Margin(bottom: 8.px)
+            },
+            Custom("\(root) .image-fields .media-picker-button, \(root) .video-fields .media-picker-button") {
+                WhiteSpace(.nowrap)
+                Padding(vertical: 6.px, horizontal: 8.px)
+            },
+            Custom("\(root) .embed-fields") {
+                GridTemplateColumns(.tracks([.fraction(1.fr), .auto]))
+                AlignItems(.center)
+                Gap(6.px)
+                Margin(bottom: 8.px)
+            },
+            Custom("\(root) .embed-fields > input") {
+                Width(100.percent)
+                MinWidth(0.px)
+            },
+            Custom("\(root) .removable-key-fields, \(root) .image-fields, \(root) .video-fields") {
+                Margin(right: 84.px)
+            },
+            Custom("\(root) .embed-picker-button") {
+                WhiteSpace(.nowrap)
+                Padding(vertical: 6.px, horizontal: 8.px)
             },
             Custom("\(root) .grid-columns") {
                 Display(.grid)
@@ -1097,7 +1136,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                 Display(.block)
                 Margin(bottom: 10.px)
             },
-            Custom("\(root) .grid-column, \(root) .contact-form-layout-children") {
+            Custom("\(root) .grid-column") {
                 Border(
                     1.px,
                     .dashed,
@@ -1130,6 +1169,17 @@ public struct AdminFormFieldRichContentEditor: Component {
                 Margin(vertical: 4.px, horizontal: 0.px)
             },
             Custom("\(root) .contact-form-toolbar-separator") {
+                Width(100.percent)
+                Border(0)
+                BorderTop(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                Margin(vertical: 4.px, horizontal: 0.px)
+            },
+            Custom("\(root) .contact-form-layout-separator") {
+                Width(100.percent)
                 Border(0)
                 BorderTop(
                     1.px,
@@ -1178,21 +1228,15 @@ public struct AdminFormFieldRichContentEditor: Component {
                 FlexDirection(.column)
                 Gap(8.px)
                 MinHeight(360.px)
-                Padding(12.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+            },
+            Custom("\(root) .contact-form-layout-children.is-empty") {
+                JustifyContent(.center)
             },
             Custom("\(root) .contact-form-layout-empty") {
-                MinHeight(70.px)
-                Display(.grid)
-                AlignItems(.center)
-                JustifyContent(.center)
-                Padding(10.px)
-                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+                Margin(0.px)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 TextAlign(.center)
-            },
-            Custom("\(root) .contact-form-layout-children.drop-target .contact-form-layout-empty") {
-                BorderColor(.variable(TokenKey.Colors.Link.default))
-                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
             },
             Custom("\(root) .contact-form-palette-status") {
                 GridColumn(.span(6))
@@ -1223,7 +1267,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             },
             Custom(
-                "\(root) .grid-column.drop-target, \(root) .contact-form-grid-column.drop-target, \(root) .contact-form-layout-children.drop-target, \(root) .grid-child.drop-target, \(root) .contact-form-layout-child.drop-target"
+                "\(root) .grid-column.drop-target, \(root) .contact-form-grid-column.drop-target, \(root) .grid-child.drop-target, \(root) .contact-form-layout-child.drop-target"
             ) {
                 BorderColor(.variable(TokenKey.Colors.Link.default))
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
