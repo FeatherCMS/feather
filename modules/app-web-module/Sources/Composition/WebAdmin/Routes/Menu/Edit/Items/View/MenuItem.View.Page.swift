@@ -117,17 +117,17 @@ extension MenuItem.View {
                                     style: .primary
                                 )
                             )
-                            context.build(
-                                AdminButton(
-                                    "Remove item",
-                                    href: state.routes.itemRemovePath(
-                                        menuID: state.item.menuId,
-                                        itemID: state.item.id,
-                                        origin: .view
-                                    ),
-                                    style: .destructive
-                                )
+                            let button = AdminButton(
+                                "Remove item",
+                                href: state.routes.itemRemovePath(
+                                    menuID: state.item.menuId,
+                                    itemID: state.item.id,
+                                    origin: .view
+                                ),
+                                style: .destructive,
+                                confirmationItem: state.item.label
                             )
+                            context.build(button)
                         }
                         .class("web-menu-item-details-actions")
                     }

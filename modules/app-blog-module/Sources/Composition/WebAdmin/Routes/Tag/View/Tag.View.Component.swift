@@ -100,7 +100,8 @@ extension Tag.View {
                     .init(
                         label: "Remove tag",
                         href: state.routes.tagRemovePath(state.model.id),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: state.model.title
                     )
                 )
             }

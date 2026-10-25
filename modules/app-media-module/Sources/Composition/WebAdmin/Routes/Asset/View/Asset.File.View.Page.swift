@@ -137,14 +137,13 @@ extension Asset.File.View {
                         )
                     }
                     if permissions.allows(Asset.Permissions.delete) {
-                        context.build(
-                            AdminButton(
-                                "Remove",
-                                href:
-                                    routes.file.removePath(item.id),
-                                style: .destructive
-                            )
+                        let button = AdminButton(
+                            "Remove",
+                            href: routes.file.removePath(item.id),
+                            style: .destructive,
+                            confirmationItem: item.title ?? item.url
                         )
+                        context.build(button)
                     }
                 }
                 .class("button-row", "admin-detail-actions")

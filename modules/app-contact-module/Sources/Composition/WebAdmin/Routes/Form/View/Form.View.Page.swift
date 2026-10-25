@@ -92,13 +92,13 @@ extension ContactModule.Form.View {
                         if !actions.isEmpty {
                             Div {
                                 for action in actions {
-                                    context.build(
-                                        AdminButton(
-                                            action.label,
-                                            href: action.href,
-                                            style: action.style
-                                        )
+                                    let button = AdminButton(
+                                        action.label,
+                                        href: action.href,
+                                        style: action.style,
+                                        confirmationItem: action.confirmationItem
                                     )
+                                    context.build(button)
                                 }
                             }
                             .class("admin-detail-actions")
@@ -144,7 +144,8 @@ extension ContactModule.Form.View {
                             returnTo:
                                 routes.formDetailsPagePath(item.key)
                         ),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: item.name
                     )
                 )
             }

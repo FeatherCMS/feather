@@ -122,6 +122,64 @@ public struct AdminDialogHost: Component {
                     return fallback;
                 }
 
+                function formContextLabel(trigger) {
+                    var form = trigger.closest("form");
+                    if (!form) { return null; }
+                    var preferred = [
+                        "name", "title", "email", "subject", "label",
+                        "username", "slug", "key", "url", "source",
+                        "destination", "filename", "file name", "path"
+                    ];
+                    var ignored = [
+                        "id", "status", "created", "created at", "updated at",
+                        "expires at", "roles", "permissions"
+                    ];
+                    var candidates = [];
+                    form.querySelectorAll(".admin-form-field").forEach(
+                        function (field) {
+                            var control = field.querySelector(
+                                "input:not([type='hidden']), select, textarea"
+                            );
+                            var label = field.querySelector(
+                                ".admin-form-field-label"
+                            );
+                            if (!control || !label) { return; }
+                            var labelText = (label.innerText || label.textContent || "")
+                                .trim()
+                                .replace(/\s+/g, " ")
+                                .replace(/\s*\(optional\)$/, "");
+                            var value = control.value || "";
+                            if (
+                                control.tagName === "SELECT" &&
+                                control.selectedOptions.length
+                            ) {
+                                value = control.selectedOptions[0].textContent || value;
+                            }
+                            value = value.trim().replace(/\s+/g, " ");
+                            var normalizedLabel = labelText.toLowerCase();
+                            if (
+                                !labelText || !value || value === "—" ||
+                                ignored.indexOf(normalizedLabel) >= 0
+                            ) {
+                                return;
+                            }
+                            candidates.push({
+                                label: labelText,
+                                value: value
+                            });
+                        }
+                    );
+                    var candidate = null;
+                    for (var index = 0; index < preferred.length; index += 1) {
+                        candidate = candidates.find(function (item) {
+                            return item.label.toLowerCase() === preferred[index];
+                        });
+                        if (candidate) { break; }
+                    }
+                    candidate = candidate || candidates[0];
+                    return candidate ? candidate.value : null;
+                }
+
                 function makeButton(label, classes, action) {
                     var button = document.createElement("button");
                     button.type = "button";
@@ -290,11 +348,32 @@ public struct AdminDialogHost: Component {
                             "data-admin-dialog-url"
                         );
                         var removeRow = removeTrigger.closest("tr");
-                        var removeLabel = rowLabel(removeRow, "Selected item");
+                        var removeLabel = removeTrigger.getAttribute(
+                            "data-remove-label"
+                        );
+                        if (!removeLabel || removeLabel === "true") {
+                            removeLabel = rowLabel(removeRow, "Selected item");
+                        }
+                        if (removeLabel === "Selected item") {
+                            removeLabel = formContextLabel(removeTrigger) || removeLabel;
+                        }
                         showRemoveConfirmation([removeLabel], function () {
                             var form = document.createElement("form");
                             form.method = "POST";
-                            form.action = removeURL;
+                            var removeTarget = new URL(
+                                removeURL,
+                                window.location.href
+                            );
+                            form.action = removeTarget.pathname;
+                            removeTarget.searchParams.forEach(
+                                function (value, name) {
+                                    var input = document.createElement("input");
+                                    input.type = "hidden";
+                                    input.name = name;
+                                    input.value = value;
+                                    form.appendChild(input);
+                                }
+                            );
                             var nonceInput = document.createElement("input");
                             nonceInput.type = "hidden";
                             nonceInput.name = "_nonce";

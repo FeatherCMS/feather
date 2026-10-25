@@ -116,7 +116,8 @@ extension Post.View {
                     .init(
                         label: "Remove post",
                         href: state.routes.postRemovePath(state.model.id),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: state.model.title
                     )
                 )
             }

@@ -68,7 +68,9 @@ extension Permission.View {
                             returnTo:
                                 state.routes.detailsPath(state.permission.id)
                         ),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem:
+                            state.permission.name?.emptyToNil ?? state.permission.key
                     )
                 )
             }

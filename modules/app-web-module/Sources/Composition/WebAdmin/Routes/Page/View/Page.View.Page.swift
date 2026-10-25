@@ -67,7 +67,8 @@ extension Page.View {
                     .init(
                         label: "Remove page",
                         href: state.routes.detailsRemovePath(state.rule.id),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: state.rule.title
                     )
                 )
             }

@@ -49,7 +49,8 @@ extension NewsModule.Category.Detail {
                     .init(
                         label: "Remove",
                         href: routes.removePath(item.id),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: item.title
                     )
                 )
             }

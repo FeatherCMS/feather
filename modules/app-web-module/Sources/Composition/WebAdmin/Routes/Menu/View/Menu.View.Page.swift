@@ -48,7 +48,8 @@ extension WebModule.Menu.View {
                                 href: state.routes.detailsRemovePath(
                                     state.menu.id
                                 ),
-                                style: .destructive
+                    style: .destructive,
+                    confirmationItem: state.menu.name
                             ),
                         ]
                     )

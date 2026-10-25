@@ -1,3 +1,4 @@
+import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import HTML
@@ -65,7 +66,9 @@ extension Variable.View {
                         returnTo:
                             state.routes.detailsPath(state.variable.id)
                     ),
-                    style: .destructive
+                    style: .destructive,
+                    confirmationItem:
+                        state.variable.name?.emptyToNil ?? state.variable.key
                 )
             )
         }

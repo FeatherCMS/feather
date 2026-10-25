@@ -31,7 +31,8 @@ extension Identity.Detail {
                         label: "Remove",
                         href: routes.removePath(identity.id)
                             .description,
-                        style: .destructive
+                    style: .destructive,
+                    confirmationItem: identity.name
                     )
                 )
             }

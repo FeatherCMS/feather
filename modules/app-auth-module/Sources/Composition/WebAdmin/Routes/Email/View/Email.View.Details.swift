@@ -26,6 +26,7 @@ extension Email.View {
                         description: "Inspect this user email."
                     ),
                     fields: [
+                        .init(label: "Email", value: state.link.email),
                         .init(
                             label: "Identity ID",
                             value: state.link.identityId
@@ -56,7 +57,8 @@ extension Email.View {
                     .init(
                         label: "Remove email",
                         href: state.routes.removePath(state.link.id),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: state.link.email
                     )
                 )
             }

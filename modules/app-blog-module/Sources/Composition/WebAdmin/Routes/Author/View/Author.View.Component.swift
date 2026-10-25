@@ -149,7 +149,8 @@ extension Author.View {
                     .init(
                         label: "Remove author",
                         href: state.routes.authorRemovePath(state.author.id),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: state.author.name
                     )
                 )
             }

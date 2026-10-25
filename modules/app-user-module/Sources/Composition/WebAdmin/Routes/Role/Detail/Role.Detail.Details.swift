@@ -28,7 +28,8 @@ extension Role.Detail {
                         label: "Remove",
                         href: routes.removePath(role.id)
                             .description,
-                        style: .destructive
+                    style: .destructive,
+                    confirmationItem: role.name.emptyToNil ?? role.key
                     )
                 )
             }

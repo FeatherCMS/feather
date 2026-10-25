@@ -38,7 +38,8 @@ extension Issue.View {
                             newsletterId: newsletterId,
                             issueId: issueId
                         ),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: model.subject
                     )
                 )
             }
@@ -100,13 +101,13 @@ extension Issue.View {
                         if !actions.isEmpty {
                             Div {
                                 for action in actions {
-                                    context.build(
-                                        AdminButton(
-                                            action.label,
-                                            href: action.href,
-                                            style: action.style
-                                        )
+                                    let button = AdminButton(
+                                        action.label,
+                                        href: action.href,
+                                        style: action.style,
+                                        confirmationItem: action.confirmationItem
                                     )
+                                    context.build(button)
                                 }
                             }
                             .class("admin-detail-actions")

@@ -57,7 +57,8 @@ extension Rule.View {
                     .init(
                         label: "Remove rule",
                         href: routes.removePath(rule.id),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: "\(rule.source) → \(rule.destination)"
                     )
                 )
             }

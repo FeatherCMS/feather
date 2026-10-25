@@ -58,10 +58,17 @@ public struct AdminDetailView: Component {
         public let label: String
         public let href: String
         public let style: AdminButtonStyle
-        public init(label: String, href: String, style: AdminButtonStyle) {
+        public let confirmationItem: String?
+        public init(
+            label: String,
+            href: String,
+            style: AdminButtonStyle,
+            confirmationItem: String? = nil
+        ) {
             self.label = label
             self.href = href
             self.style = style
+            self.confirmationItem = confirmationItem
         }
     }
     public let breadcrumb: [AdminBreadcrumb.Link]
@@ -79,6 +86,7 @@ public struct AdminDetailView: Component {
         self.fields = fields
         self.actions = actions
     }
+
     public func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(AdminBreadcrumb(links: breadcrumb))
@@ -128,13 +136,13 @@ public struct AdminDetailView: Component {
             if !actions.isEmpty {
                 Div {
                     for action in actions {
-                        context.build(
-                            AdminButton(
-                                action.label,
-                                href: action.href,
-                                style: action.style
-                            )
+                        let button = AdminButton(
+                            action.label,
+                            href: action.href,
+                            style: action.style,
+                            confirmationItem: action.confirmationItem
                         )
+                        context.build(button)
                     }
                 }
                 .class("admin-detail-actions")

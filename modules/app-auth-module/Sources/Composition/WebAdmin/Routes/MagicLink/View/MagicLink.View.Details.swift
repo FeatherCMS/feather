@@ -60,7 +60,8 @@ extension MagicLink.View {
                     .init(
                         label: "Remove magic link",
                         href: state.routes.removePath(state.link.id),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: state.link.credentialId
                     )
                 )
             }

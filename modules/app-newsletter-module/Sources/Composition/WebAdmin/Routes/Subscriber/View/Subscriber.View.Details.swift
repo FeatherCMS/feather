@@ -37,7 +37,8 @@ extension Subscriber.View {
                             ids: [model.id],
                             returnTo: routes.detailsPath(model.id)
                         ),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: model.email
                     )
                 )
             }

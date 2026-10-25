@@ -59,7 +59,8 @@ extension Invitation.Detail {
                                 href: routes.invitationRemovePath(
                                     state.invitation.id
                                 ),
-                                style: .destructive
+                                style: .destructive,
+                                confirmationItem: state.invitation.email
                             ),
                         ]
                     )

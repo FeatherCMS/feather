@@ -85,7 +85,8 @@ extension AuthorLink.View {
                                     state.model.authorID
                                 )
                         ),
-                        style: .destructive
+                        style: .destructive,
+                        confirmationItem: state.model.label
                     )
                 )
             }
