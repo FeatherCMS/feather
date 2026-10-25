@@ -263,8 +263,8 @@ public struct AdminFormFieldRichContentEditor: Component {
               body.append(fields);
             }
             function renderExtensionControl(body, block, update, definition) {
-              if (definition.type === 'contact-form-field') { const preview = document.createElement('div'); preview.className = 'contact-form-field-preview'; const key = document.createElement('code'); key.textContent = block.value || ''; preview.append(key); body.append(preview); return; }
-              if (definition.editor === 'marker') { const names = { 'contact-form-captcha': 'CAPTCHA', 'contact-form-error': 'Error message', 'contact-form-success': 'Success message', 'contact-form-submit': 'Submit button' }; const preview = document.createElement('div'); preview.className = 'contact-form-marker-preview'; const title = document.createElement('strong'); title.textContent = 'Contact Form'; const component = document.createElement('span'); component.textContent = names[block.type] || definition.title; preview.append(title, component); body.append(preview); return; }
+              if (definition.type === 'contact-form-field') { const preview = document.createElement('div'); preview.className = 'contact-form-field-preview'; const label = document.createElement('div'); label.textContent = `Label: ${block.displayTitle || ''}`; const key = document.createElement('div'); key.append('Key: '); const keyValue = document.createElement('code'); keyValue.textContent = block.value || ''; key.append(keyValue); preview.append(label, key); body.append(preview); return; }
+              if (definition.editor === 'marker') { const names = { 'contact-form-captcha': 'CAPTCHA', 'contact-form-error': 'Error message', 'contact-form-success': 'Success message', 'contact-form-submit': 'Submit button' }; const preview = document.createElement('div'); preview.className = 'contact-form-marker-preview'; const component = document.createElement('span'); component.textContent = names[block.type] || definition.title; preview.append(component); body.append(preview); return; }
               if (definition.editor === 'text') { const field = document.createElement('textarea'); field.value = block.value || ''; field.placeholder = definition.title; field.setAttribute('aria-label', definition.title); configureTextEditor(field); field.addEventListener('input', event => update('value', event.target.value)); body.append(field); return; }
               renderEmbedControl(body, block, update, definition);
             }
@@ -315,6 +315,13 @@ public struct AdminFormFieldRichContentEditor: Component {
             function makeGridBlock() { return Object.assign(newBlock('grid', ''), { settings: { desktop: 3, tablet: 2, mobile: 1 }, columnCount: 3, columns: [0, 1, 2].map(() => ({ blocks: [] })) }); }
             function ensureGridColumns(block) { block.columns = block.columns || []; block.columnCount = Math.max(1, Math.min(12, block.columnCount || block.columns.length || 1)); while (block.columns.length < block.columnCount) block.columns.push({ blocks: [] }); }
             function updateGridColumn(id, index, value) { const block = state.blocks.find(item => item.id === id); if (!block) return; if (!block.columns) block.columns = []; while (block.columns.length <= index) block.columns.push({ blocks: [] }); block.columns[index].blocks = parseMarkdown(value); syncRaw(); setStatus('Updated'); }
+            function blockTitle(block) {
+              if (block.displayTitle) return block.displayTitle;
+              if (block.type === 'heading') return `Heading ${block.level}`;
+              const extension = editorExtension(block.type);
+              if (extension?.title) return extension.title;
+              return ({ text: 'Text', ul: 'Bulleted list', ol: 'Numbered list', separator: 'Separator', blockquote: 'Quote', image: 'Image', video: 'Video', code: 'Code block', html: 'HTML', grid: 'Grid', custom: 'Custom block' })[block.type] || block.type;
+            }
             function createBlockControls(block, collection, onChange) {
               const controls = document.createElement('div'); controls.className = 'drag-controls';
               const handle = document.createElement('span'); handle.className = 'drag-handle'; handle.textContent = '⠿'; handle.title = 'Drag to rearrange'; handle.setAttribute('aria-label', 'Drag to rearrange'); controls.append(handle);
@@ -350,7 +357,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                 children.forEach((child, childIndex) => {
                   const card = document.createElement('article'); card.className = 'block grid-child contact-form-grid-child'; card.draggable = true;
                   const childControls = createBlockControls(child, children, message => { contactForm.mode = 'custom'; syncRaw(); render(); setStatus(message); }); card.append(childControls.controls);
-                  const childBody = document.createElement('div'); childBody.className = 'block-body'; const label = document.createElement('label'); label.className = 'block-label'; label.textContent = child.displayTitle || editorExtension(child.type)?.title || child.type; childBody.append(label); renderBlockContent(childBody, child, (key, value) => { child[key] = value; syncRaw(); setStatus('Updated'); }); card.append(childBody);
+                  const childBody = document.createElement('div'); childBody.className = 'block-body'; const label = document.createElement('label'); label.className = 'block-label'; label.textContent = blockTitle(child); childBody.append(label); renderBlockContent(childBody, child, (key, value) => { child[key] = value; syncRaw(); setStatus('Updated'); }); card.append(childBody);
                   card.append(childControls.remove);
                   card.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'move'; state.dragging = { kind: 'contact-form-grid-child', formId: contactForm?.id, grid, columnIndex, childIndex }; card.classList.add('dragging'); }); card.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); });
                   column.append(card);
@@ -364,7 +371,7 @@ public struct AdminFormFieldRichContentEditor: Component {
             function renderBlockContent(body, block, update) {
               const extension = editorExtension(block.type);
               if (block.type === 'grid') { if (state.activeContactForm) renderNestedGridEditor(body, block); else { const field = document.createElement('textarea'); field.className = 'contact-form-grid-source'; field.value = serializeBlock(block); field.setAttribute('aria-label', 'Grid layout Markdown'); field.addEventListener('input', () => { const parsed = parseMarkdown(field.value).find(item => item.type === 'grid'); if (parsed) { Object.assign(block, parsed); syncRaw(); setStatus('Updated'); } }); body.append(field); } return; }
-              if (extension) { renderExtensionControl(body, block, update, extension); const label = body.querySelector('.block-label'); if (label) { label.hidden = extension.editor === 'marker'; label.textContent = extension.editor === 'marker' ? '' : extension.type === 'contact-form-field' ? 'Contact form field' : extension.title; } return; }
+              if (extension) { renderExtensionControl(body, block, update, extension); const label = body.querySelector('.block-label'); if (label) { label.hidden = false; label.textContent = extension.editor === 'marker' ? 'Form component' : extension.type === 'contact-form-field' ? 'Field' : extension.title; } return; }
               if (block.type === 'heading') { const toolbar = document.createElement('div'); toolbar.className = 'heading-toolbar'; toolbar.setAttribute('aria-label', 'Heading level'); toolbar.innerHTML = [1,2,3,4,5,6].map(level => `<button type="button" class="${level === block.level ? 'active' : ''}" data-level="${level}" title="Heading ${level}">H${level}</button>`).join(''); toolbar.querySelectorAll('[data-level]').forEach(button => button.addEventListener('click', () => { update('level', Number(button.dataset.level)); render(); })); const field = document.createElement('input'); field.value = block.value; field.placeholder = 'Heading text…'; field.setAttribute('aria-label', 'Heading text'); field.addEventListener('input', e => update('value', e.target.value)); body.append(toolbar, field); }
               else if (block.type === 'separator') { const rule = document.createElement('div'); rule.className = 'preview-content'; rule.innerHTML = '<hr>'; body.append(rule); }
               else if (block.type === 'ul' || block.type === 'ol') { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.className = 'list-editor'; field.value = block.value; field.placeholder = 'One list item per line…'; field.setAttribute('aria-label', `${block.type === 'ul' ? 'Unordered' : 'Ordered'} list items`); field.addEventListener('input', e => update('value', e.target.value)); body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelectionForBlock(field, block, update, button.dataset.format))); }
@@ -389,7 +396,19 @@ public struct AdminFormFieldRichContentEditor: Component {
               else if (block.fieldLoadError) { const error = document.createElement('p'); error.className = 'error contact-form-palette-status'; error.textContent = block.fieldLoadError; const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'button secondary'; retry.textContent = 'Retry'; retry.addEventListener('click', () => { block.availableFields = null; loadContactFormFields(block); }); toolbar.append(error, retry); }
               else if (block.availableFields?.length) {
                 const used = flattenContactFormBlocks(block.children).filter(child => child.type === 'contact-form-field').map(child => child.value);
-                block.availableFields.forEach(field => { const button = document.createElement('button'); button.type = 'button'; button.className = 'component-button contact-form-field-option'; button.title = field.key; button.draggable = !used.includes(field.key); button.disabled = used.includes(field.key); const icon = document.createElement('span'); icon.className = 'component-icon'; icon.textContent = '▤'; icon.setAttribute('aria-hidden', 'true'); const label = document.createElement('span'); label.textContent = field.label || field.key; const description = document.createElement('small'); description.textContent = field.key; button.append(icon, label, description); button.addEventListener('click', () => { if (flattenContactFormBlocks(block.children).some(child => child.type === 'contact-form-field' && child.value === field.key)) return; const child = Object.assign(newBlock('contact-form-field', field.key), { displayTitle: field.label || field.key }); insertContactFormChild(block, child); }); button.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'copy'; event.dataTransfer.setData('text/plain', field.key); state.dragging = { kind: 'contact-form-field', formId: block.id, key: field.key, label: field.label || field.key }; }); button.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); }); toolbar.append(button); });
+                block.availableFields.forEach(field => {
+                  const fieldLabel = field.label || field.key;
+                  const visibleLabel = fieldLabel.length > 24 ? `${fieldLabel.slice(0, 21).trimEnd()}…` : fieldLabel;
+                  const button = document.createElement('button'); button.type = 'button'; button.className = 'component-button contact-form-field-option'; button.title = `Label: ${fieldLabel} | Key: ${field.key}`; button.draggable = !used.includes(field.key); button.disabled = used.includes(field.key);
+                  const icon = document.createElement('span'); icon.className = 'component-icon'; icon.textContent = '▤'; icon.setAttribute('aria-hidden', 'true');
+                  const text = document.createElement('span'); text.className = 'contact-form-field-option-text';
+                  const label = document.createElement('span'); label.textContent = visibleLabel;
+                  const key = document.createElement('small'); key.textContent = `Key: ${field.key}`;
+                  text.append(label, key); button.append(icon, text);
+                  button.addEventListener('click', () => { if (flattenContactFormBlocks(block.children).some(child => child.type === 'contact-form-field' && child.value === field.key)) return; const child = Object.assign(newBlock('contact-form-field', field.key), { displayTitle: fieldLabel }); insertContactFormChild(block, child); });
+                  button.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'copy'; event.dataTransfer.setData('text/plain', field.key); state.dragging = { kind: 'contact-form-field', formId: block.id, key: field.key, label: fieldLabel }; });
+                  button.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); }); toolbar.append(button);
+                });
               } else if (block.value && !block.loadingFields && !block.fieldLoadError) { const empty = document.createElement('p'); empty.className = 'contact-form-palette-status'; empty.textContent = 'No fields are assigned to this form.'; toolbar.append(empty); }
               const separator = document.createElement('hr'); separator.className = 'contact-form-toolbar-separator'; toolbar.append(separator); const componentsLabel = document.createElement('p'); componentsLabel.className = 'eyebrow contact-form-toolbar-heading'; componentsLabel.textContent = 'Form components'; toolbar.append(componentsLabel);
               const componentTitles = { 'contact-form-captcha': 'CAPTCHA', 'contact-form-submit': 'Submit button', 'contact-form-error': 'Error message', 'contact-form-success': 'Success message' }; const componentOrder = ['contact-form-captcha', 'contact-form-submit', 'contact-form-error', 'contact-form-success'];
@@ -402,7 +421,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                 const card = document.createElement('article'); card.className = 'block contact-form-layout-child'; card.draggable = true;
                 const childControls = createBlockControls(child, block.children, message => { block.mode = 'custom'; syncRaw(); render(); setStatus(message); });
                 card.append(childControls.controls);
-                const childBody = document.createElement('div'); childBody.className = 'contact-form-layout-child-body block-body'; childBody.innerHTML = '<label class="block-label"></label>'; renderBlockContent(childBody, child, (key, value) => { child[key] = value; syncRaw(); setStatus('Updated'); }); if (child.displayTitle && child.type !== 'contact-form-field' && editorExtension(child.type)?.editor !== 'marker') childBody.querySelector('.block-label').textContent = child.displayTitle; card.append(childBody);
+                const childBody = document.createElement('div'); childBody.className = 'contact-form-layout-child-body block-body'; childBody.innerHTML = '<label class="block-label"></label>'; childBody.querySelector('.block-label').textContent = blockTitle(child); renderBlockContent(childBody, child, (key, value) => { child[key] = value; syncRaw(); setStatus('Updated'); }); if (child.displayTitle && child.type !== 'contact-form-field' && editorExtension(child.type)?.editor !== 'marker') childBody.querySelector('.block-label').textContent = child.displayTitle; card.append(childBody);
                 card.append(childControls.remove);
                 card.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'move'; state.dragging = { kind: 'contact-form-child', formId: block.id, childIndex: index }; card.classList.add('dragging'); });
                 card.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); });
@@ -443,7 +462,8 @@ public struct AdminFormFieldRichContentEditor: Component {
               if (!state.blocks.length) { canvas.innerHTML = '<div class="empty"><strong>Your canvas is empty.</strong><br>Drag here a component from above to get started.</div>'; return; }
               state.blocks.forEach((block, index) => {
                 const item = document.createElement('article'); item.className = 'block'; item.draggable = true; item.dataset.id = block.id;
-                item.innerHTML = `<div class="block-body"><label class="block-label">${block.type === 'heading' ? `Heading ${block.level}` : block.type}</label></div>`;
+                item.innerHTML = '<div class="block-body"><label class="block-label"></label></div>';
+                item.querySelector('.block-label').textContent = blockTitle(block);
                 const blockControls = createBlockControls(block, state.blocks, message => { syncRaw(); render(); setStatus(message); });
                 item.prepend(blockControls.controls);
                 item.append(blockControls.remove);
@@ -478,7 +498,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                     children.forEach(child => {
                       const childCard = document.createElement('article'); childCard.className = 'grid-child block'; childCard.draggable = true;
                       const childControls = createBlockControls(child, children, message => { syncRaw(); render(); setStatus(message); }); childCard.append(childControls.controls);
-                      const childBody = document.createElement('div'); childBody.className = 'block-body'; const childLabel = document.createElement('label'); childLabel.className = 'block-label'; childLabel.textContent = child.type === 'heading' ? `Heading ${child.level}` : child.type; childBody.append(childLabel);
+                      const childBody = document.createElement('div'); childBody.className = 'block-body'; const childLabel = document.createElement('label'); childLabel.className = 'block-label'; childLabel.textContent = blockTitle(child); childBody.append(childLabel);
                       renderBlockContent(childBody, child, (key, value) => { child[key] = value; syncRaw(); setStatus('Updated'); }); childCard.append(childBody, childControls.remove);
                       childCard.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'move'; state.dragging = { kind: 'grid-child', gridId: block.id, columnIndex, childIndex: children.indexOf(child) }; childCard.classList.add('dragging'); });
                       childCard.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); });
@@ -1117,6 +1137,26 @@ public struct AdminFormFieldRichContentEditor: Component {
             },
             Custom("\(root) .contact-form-field-option") {
                 Cursor(.grab)
+            },
+            Custom("\(root) .contact-form-field-option-text") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(2.px)
+                MinWidth(0.px)
+            },
+            Custom("\(root) .contact-form-field-option-text > span") {
+                Overflow(.hidden)
+                TextOverflow(.ellipsis)
+                WhiteSpace(.nowrap)
+            },
+            Custom("\(root) .contact-form-field-option-text small") {
+                Display(.block)
+                Overflow(.hidden)
+                TextOverflow(.ellipsis)
+                WhiteSpace(.nowrap)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                FontSize(0.68.rem)
+                FontWeight(.number(500))
             },
             Custom("\(root) .contact-form-field-option:disabled") {
                 Opacity(0.45)

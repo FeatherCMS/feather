@@ -64,7 +64,7 @@ extension Event {
                 ]
                 return AdminRichContentEditorBlockDefinition(
                     type: "newsletter",
-                    title: "Newsletter campaign",
+                    title: "Newsletter",
                     icon: "✉",
                     directive: "NewsletterCampaign",
                     pickerEndpoint: components.string ?? components.path
