@@ -164,12 +164,7 @@ public struct AdminDialogHost: Component {
                     header.className = "admin-dialog__header";
                     var title = document.createElement("h2");
                     title.textContent = "Are you sure?";
-                    var closeButton = makeButton(
-                        "Close",
-                        "secondary-ghost admin-dialog__close",
-                        function () { close(dialog); }
-                    );
-                    header.append(title, closeButton);
+                    header.appendChild(title);
                     panel.appendChild(header);
 
                     var description = document.createElement("p");
@@ -198,6 +193,8 @@ public struct AdminDialogHost: Component {
 
                     var buttons = document.createElement("div");
                     buttons.className = "button-row";
+                    buttons.style.display = "flex";
+                    buttons.style.gap = "12px";
                     if (typeof onConfirm === "function") {
                         buttons.appendChild(makeButton(
                             "Remove",

@@ -10,6 +10,7 @@ public struct AdminPageHeader: Component {
         public let title: String
         public let description: String
         public let preview: AdminButton.State?
+        public let actions: [AdminButton.State]
         public let level: Int
         public let showSeparator: Bool
 
@@ -17,12 +18,14 @@ public struct AdminPageHeader: Component {
             title: String,
             description: String,
             preview: AdminButton.State?,
+            actions: [AdminButton.State],
             level: Int,
             showSeparator: Bool
         ) {
             self.title = title
             self.description = description
             self.preview = preview
+            self.actions = actions
             self.level = min(max(level, 1), 6)
             self.showSeparator = showSeparator
         }
@@ -30,12 +33,14 @@ public struct AdminPageHeader: Component {
         public static func primary(
             title: String,
             description: String,
-            preview: AdminButton.State? = nil
+            preview: AdminButton.State? = nil,
+            actions: [AdminButton.State] = []
         ) -> Self {
             .init(
                 title: title,
                 description: description,
                 preview: preview,
+                actions: actions,
                 level: 1,
                 showSeparator: false
             )
@@ -49,6 +54,7 @@ public struct AdminPageHeader: Component {
                 title: title,
                 description: description,
                 preview: nil,
+                actions: [],
                 level: 2,
                 showSeparator: true
             )
@@ -61,7 +67,17 @@ public struct AdminPageHeader: Component {
 
     public func rules() -> [any Rule] {
         Media {
-            Custom(".admin-page-header") { Margin(bottom: 24.px) }
+            Custom(".admin-page-header") {
+                Display(.flex)
+                AlignItems(.flexStart)
+                JustifyContent(.spaceBetween)
+                Gap(16.px)
+                Margin(bottom: 24.px)
+            }
+            Custom(".admin-page-header__content") {
+                Flex(1)
+                MinWidth(0.px)
+            }
             Custom(
                 ".admin-page-header h1, .admin-page-header h2, "
                     + ".admin-page-header h3, .admin-page-header h4, "
@@ -98,15 +114,121 @@ public struct AdminPageHeader: Component {
                 )
                 Margin(top: 16.px, bottom: 0.px)
             }
+            Custom(".admin-page-header__actions") {
+                Position(.relative)
+                FlexShrink(0)
+            }
+            Custom(".admin-page-header__actions-trigger") {
+                Display(.flex)
+                AlignItems(.center)
+                JustifyContent(.center)
+                Width(38.px)
+                Height(38.px)
+                Padding(0.px)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Secondary.border)
+                )
+                BorderRadius(999.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                Cursor(.pointer)
+                ListStyle(.none)
+            }
+            Custom(
+                ".admin-page-header__actions-trigger::-webkit-details-marker"
+            ) {
+                Display(.none)
+            }
+            Custom(".admin-page-header__actions-trigger:hover") {
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
+            }
+            Custom(".admin-page-header__actions-menu") {
+                Position(.absolute)
+                Right(0.px)
+                Top(44.px)
+                MinWidth(180.px)
+                ListStyle(.none)
+                Padding(vertical: 6.px, horizontal: 0.px)
+                Margin(0)
+                ZIndex(.number(20))
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
+                BorderRadius(10.px)
+                BoxShadow(
+                    0.px,
+                    10.px,
+                    blur: 24.px,
+                    color: CSSColor(
+                        stringLiteral:
+                            "var(--\(TokenKey.Colors.BoxShadow.tint.propertyName))"
+                    )
+                )
+            }
+            Custom(".admin-page-header__actions-menu li .button") {
+                Display(.block)
+                Width(100.percent)
+                BoxSizing(.borderBox)
+                Padding(vertical: 9.px, horizontal: 12.px)
+                Border(0)
+                BorderRadius(0.px)
+                Background(.transparent)
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                TextAlign(.left)
+                TextDecoration(.none)
+                BoxShadow(.none)
+            }
+            Custom(".admin-page-header__actions-menu li .button.destructive") {
+                Color(.red)
+            }
+            Custom(
+                ".admin-page-header__actions-menu .button:hover:not(:disabled):not(.disabled)"
+            ) {
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+            }
+            Custom(
+                ".admin-page-header__actions[open] .admin-page-header__actions-menu"
+            ) {
+                Display(.block)
+            }
         }
     }
 
     public func html(context: inout BuilderContext) -> Div {
         Div {
-            for heading in heading() { heading }
-            P(state.description)
-            if state.showSeparator {
-                Hr().class("admin-page-header__separator")
+            Div {
+                for heading in heading() { heading }
+                P(state.description)
+                if state.showSeparator {
+                    Hr().class("admin-page-header__separator")
+                }
+            }
+            .class("admin-page-header__content")
+            if !state.actions.isEmpty {
+                Details {
+                    Summary {
+                        if let icon = FeatherIcons.get(named: "moreHorizontal")
+                        {
+                            icon
+                        }
+                    }
+                    .class("admin-page-header__actions-trigger")
+                    .ariaLabel("More actions")
+                    Ul {
+                        for action in state.actions {
+                            Li {
+                                context.build(AdminButton(state: action))
+                            }
+                        }
+                    }
+                    .class("admin-page-header__actions-menu")
+                }
+                .class("admin-page-header__actions")
             }
         }
         .class("admin-page-header")

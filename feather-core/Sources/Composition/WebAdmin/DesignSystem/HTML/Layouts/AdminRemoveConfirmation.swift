@@ -61,6 +61,11 @@ public struct AdminRemoveConfirmation: Component {
             Custom(".admin-confirmation-items li") {
                 Margin(vertical: 8.px, horizontal: 0.px)
             }
+            Custom(".admin-remove-confirmation-actions") {
+                Display(.flex)
+                AlignItems(.center)
+                Gap(12.px)
+            }
         }
     }
 
@@ -105,7 +110,7 @@ public struct AdminRemoveConfirmation: Component {
             }
             .method(.post)
             .action(action)
-            .class("button-row")
+            .class("button-row", "admin-remove-confirmation-actions")
         }
 
         return Section {

@@ -14,7 +14,24 @@ extension Identity.Edit {
         let nonceToken: String?
 
         func html(context: inout BuilderContext) -> Section {
-            Section {
+            var actions = [
+                AdminButton.State(
+                    label: "View",
+                    href: routes.detailsPath(id).description,
+                    style: .secondary
+                )
+            ]
+            if permissions.allows(Identity.Permissions.delete) {
+                actions.append(
+                    AdminButton.State(
+                        label: "Remove",
+                        href: routes.removePath(id),
+                        style: .destructive
+                    )
+                )
+            }
+
+            return Section {
                 context.build(
                     AdminBreadcrumb(links: routes.breadcrumb)
                 )
@@ -22,7 +39,8 @@ extension Identity.Edit {
                     AdminPageHeader(
                         state: .primary(
                             title: "Edit user identity",
-                            description: "Update this user identity."
+                            description: "Update this user identity.",
+                            actions: actions
                         )
                     )
                 )
@@ -32,13 +50,6 @@ extension Identity.Edit {
                         action: routes.editPath(id)
                             .description,
                         submitLabel: "Save changes",
-                        viewHref: routes.detailsPath(id)
-                            .description,
-                        removeHref: permissions.allows(
-                            Identity.Permissions.delete
-                        )
-                            ? routes.removePath(id)
-                            : nil,
                         nonceToken: nonceToken
                     )
                 )
