@@ -24,4 +24,4 @@
 - [ ] storage + mail ephemeral -> main testing like DatabaseTesting
 - [ ] sign in oldalak captcha -> renderer abstraction for admin/app
 - [ ] protocol buffer api 
-- [ ] 
+- [ ] review admin css

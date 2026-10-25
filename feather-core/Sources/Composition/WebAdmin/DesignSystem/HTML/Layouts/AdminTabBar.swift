@@ -41,7 +41,7 @@ public struct AdminTabBar: Component {
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
                 BoxSizing(.borderBox)
                 BorderRadius(999.px)
-                MarginBottom(16.px)
+                MarginBottom(18.px)
                 Padding(4.px)
                 Width(100.percent)
                 MaxWidth(100.percent)

@@ -19,6 +19,9 @@ public struct AdminRelationshipGroup: Component {
     public static func groupSelectors() -> [any Selector] {
         [
             Class("admin-relationship-group") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(18.px)
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(16.px)

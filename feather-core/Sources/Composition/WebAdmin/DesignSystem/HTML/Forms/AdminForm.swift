@@ -34,9 +34,12 @@ public struct AdminForm: Component {
             Class("admin-form") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(26.px)
+                Gap(18.px)
                 Width(100.percent)
                 MarginTop(0.px)
+            },
+            Custom(".admin-form > .pill-tabs") {
+                MarginBottom(0.px)
             },
             Custom(".admin-form > .admin-form__messages") {
                 Display(.flex)
