@@ -106,4 +106,33 @@ public struct AdminTopBar: Component {
         }
         .class("top-bar")
     }
+
+    public func scripts() -> [String] {
+        [
+            #"""
+            (function () {
+                var root = document.documentElement;
+                if (root.dataset.adminAccountMenuListener === "1") {
+                    return;
+                }
+                root.dataset.adminAccountMenuListener = "1";
+
+                document.addEventListener("click", function (event) {
+                    var toggle = document.getElementById("accountToggle");
+                    var actions = toggle && toggle.closest(".top-bar-actions");
+                    if (!toggle || !toggle.checked || !actions) {
+                        return;
+                    }
+                    var menu = actions.querySelector(".account-menu");
+                    if (
+                        !actions.contains(event.target) ||
+                        (menu && menu.contains(event.target))
+                    ) {
+                        toggle.checked = false;
+                    }
+                });
+            })();
+            """#
+        ]
+    }
 }

@@ -234,6 +234,38 @@ public struct AdminPageHeader: Component {
         .class("admin-page-header")
     }
 
+    public func scripts() -> [String] {
+        guard !state.actions.isEmpty else { return [] }
+
+        return [
+            #"""
+            (function () {
+                var root = document.documentElement;
+                if (root.dataset.adminPageHeaderMenuListener === "1") {
+                    return;
+                }
+                root.dataset.adminPageHeaderMenuListener = "1";
+
+                document.addEventListener("click", function (event) {
+                    document.querySelectorAll(
+                        ".admin-page-header__actions[open]"
+                    ).forEach(function (menu) {
+                        var actionItems = menu.querySelector(
+                            ".admin-page-header__actions-menu"
+                        );
+                        if (
+                            !menu.contains(event.target) ||
+                            (actionItems && actionItems.contains(event.target))
+                        ) {
+                            menu.removeAttribute("open");
+                        }
+                    });
+                });
+            })();
+            """#
+        ]
+    }
+
     private func heading() -> [any FlowContent] {
         switch state.level {
         case 2: [H2 { headingContents() }]
