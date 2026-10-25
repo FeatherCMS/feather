@@ -27,7 +27,7 @@ extension Invitation.Edit {
                             title: "Edit user invitation",
                             description:
                                 "Update the invited user and assigned roles.",
-                            actions: [
+                            moreActions: [
                                 .init(
                                     label: "Remove invitation",
                                     href: routes.invitationRemovePath(state.id)
@@ -44,7 +44,6 @@ extension Invitation.Edit {
                         state: state.form,
                         action: routes.invitationEditPath(state.id) + "/",
                         submitLabel: "Edit invitation",
-                        removeHref: nil
                     )
                 )
             }

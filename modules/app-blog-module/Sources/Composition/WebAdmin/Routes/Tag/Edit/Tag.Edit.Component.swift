@@ -27,7 +27,7 @@ extension Tag.Edit {
                         state: .primary(
                             title: "Edit tag",
                             description: "Update this blog tag.",
-                            actions: [
+                            moreActions: [
                                 .init(
                                     label: "Remove tag",
                                     href: state.routes.tagRemovePath(state.id),
@@ -50,7 +50,6 @@ extension Tag.Edit {
                             ),
                         action: state.routes.tagEditPath(state.id),
                         submitLabel: "Edit tag",
-                        removeHref: nil
                     )
                 )
             }

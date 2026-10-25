@@ -178,7 +178,7 @@ extension Variant.Edit.Controller {
                     variantId: id,
                     input: payload.input
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.processorPath(id),
                     notification: .init(
                         title: "Added",
@@ -222,7 +222,7 @@ extension Variant.Edit.Controller {
                     id: processorId,
                     input: payload.input
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.processorPath(id),
                     notification: .init(
                         title: "Saved",
@@ -273,7 +273,7 @@ extension Variant.Edit.Controller {
                     processorIds.count == 1
                     ? "Processor removed successfully."
                     : "\(processorIds.count) processors removed successfully."
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.processorPath(id),
                     notification: .init(title: "Removed", message: message)
                 )

@@ -27,7 +27,7 @@ extension ContactModule.Form.View {
                                 description:
                                     "Review the contact form configuration."
                             )
-                            .addingActions(
+                            .addingMoreActions(
                                 actions
                                     .filter { $0.style == .destructive }
                                     .map {
@@ -47,82 +47,72 @@ extension ContactModule.Form.View {
                         active: .details
                     )
                 )
-                context.build(
-                    AdminRelationshipGroup(
-                        pageHeader: .secondary(
-                            title: "Form configuration",
-                            description:
-                                "Review the form settings and selected fields."
+                if let error {
+                    P(error).class("admin-form__error")
+                }
+                Div {
+                    context.build(
+                        AdminDetailField(label: "Key", value: item.key)
+                    )
+                    context.build(
+                        AdminDetailField(
+                            label: "Name",
+                            value: item.name
                         )
-                    ) {
-                        if let error {
-                            P(error).class("admin-form__error")
-                        }
-                        Div {
-                            context.build(
-                                AdminDetailField(label: "Key", value: item.key)
+                        .setAsRemoveConfirmationLabel()
+                    )
+                    context.build(
+                        AdminDetailField(
+                            label: "Success message",
+                            value: item.successMessage.emptyToNil ?? "—"
+                        )
+                    )
+                    context.build(
+                        AdminDetailField(
+                            label: "Failure message",
+                            value: item.failureMessage.emptyToNil ?? "—"
+                        )
+                    )
+                    context.build(
+                        AdminDetailField(
+                            label: "Redirect URL",
+                            value: item.redirectUrl?.emptyToNil ?? "—"
+                        )
+                    )
+                    context.build(
+                        AdminDetailField(
+                            label: "Fields",
+                            value: selectedFieldLabels
+                        )
+                    )
+                    context.build(
+                        AdminDetailField(
+                            label: "Email definitions",
+                            value: "\(item.mails.count)"
+                        )
+                    )
+                }
+                .class("admin-detail-view-fields")
+                .style("display:grid;gap:12px;")
+                let primaryActions = actions.filter {
+                    $0.style != .destructive
+                }
+                if !primaryActions.isEmpty {
+                    Div {
+                        for action in primaryActions {
+                            let button = AdminButton(
+                                action.label,
+                                href: action.href,
+                                style: action.style,
                             )
-                            context.build(
-                                AdminDetailField(
-                                    label: "Name",
-                                    value: item.name
-                                )
-                                .setAsRemoveConfirmationLabel()
-                            )
-                            context.build(
-                                AdminDetailField(
-                                    label: "Success message",
-                                    value: item.successMessage.emptyToNil ?? "—"
-                                )
-                            )
-                            context.build(
-                                AdminDetailField(
-                                    label: "Failure message",
-                                    value: item.failureMessage.emptyToNil ?? "—"
-                                )
-                            )
-                            context.build(
-                                AdminDetailField(
-                                    label: "Redirect URL",
-                                    value: item.redirectUrl?.emptyToNil ?? "—"
-                                )
-                            )
-                            context.build(
-                                AdminDetailField(
-                                    label: "Fields",
-                                    value: selectedFieldLabels
-                                )
-                            )
-                            context.build(
-                                AdminDetailField(
-                                    label: "Email definitions",
-                                    value: "\(item.mails.count)"
-                                )
-                            )
-                        }
-                        .class("admin-detail-view-fields")
-                        .style("display:grid;gap:12px;")
-                        let primaryActions = actions.filter {
-                            $0.style != .destructive
-                        }
-                        if !primaryActions.isEmpty {
-                            Div {
-                                for action in primaryActions {
-                                    let button = AdminButton(
-                                        action.label,
-                                        href: action.href,
-                                        style: action.style,
-                                    )
-                                    context.build(button)
-                                }
-                            }
-                            .class("admin-detail-actions")
-                            .style(
-                                "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
-                            )
+                            context.build(button)
                         }
                     }
-                )
+                    .class("admin-detail-actions")
+                    .style(
+                        "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
+                    )
+                }
             }
             .class("cms-section")
         }

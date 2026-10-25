@@ -10,7 +10,7 @@ public struct AdminPageHeader: Component {
         public let title: String
         public let description: String
         public let preview: AdminButton.State?
-        public let actions: [AdminButton.State]
+        public let moreActions: [AdminButton.State]
         public let level: Int
         public let showSeparator: Bool
 
@@ -18,14 +18,14 @@ public struct AdminPageHeader: Component {
             title: String,
             description: String,
             preview: AdminButton.State?,
-            actions: [AdminButton.State],
+            moreActions: [AdminButton.State],
             level: Int,
             showSeparator: Bool
         ) {
             self.title = title
             self.description = description
             self.preview = preview
-            self.actions = actions
+            self.moreActions = moreActions
             self.level = min(max(level, 1), 6)
             self.showSeparator = showSeparator
         }
@@ -34,13 +34,13 @@ public struct AdminPageHeader: Component {
             title: String,
             description: String,
             preview: AdminButton.State? = nil,
-            actions: [AdminButton.State] = []
+            moreActions: [AdminButton.State] = []
         ) -> Self {
             .init(
                 title: title,
                 description: description,
                 preview: preview,
-                actions: actions,
+                moreActions: moreActions,
                 level: 1,
                 showSeparator: false
             )
@@ -54,20 +54,20 @@ public struct AdminPageHeader: Component {
                 title: title,
                 description: description,
                 preview: nil,
-                actions: [],
+                moreActions: [],
                 level: 2,
                 showSeparator: true
             )
         }
 
-        public func addingActions(_ additionalActions: [AdminButton.State])
+        public func addingMoreActions(_ additionalActions: [AdminButton.State])
             -> Self
         {
             .init(
                 title: title,
                 description: description,
                 preview: preview,
-                actions: actions + additionalActions,
+                moreActions: moreActions + additionalActions,
                 level: level,
                 showSeparator: showSeparator
             )
@@ -222,7 +222,7 @@ public struct AdminPageHeader: Component {
                 }
             }
             .class("admin-page-header__content")
-            if !state.actions.isEmpty {
+            if !state.moreActions.isEmpty {
                 Details {
                     Summary {
                         if let icon = FeatherIcons.get(named: "moreHorizontal")
@@ -233,7 +233,7 @@ public struct AdminPageHeader: Component {
                     .class("admin-page-header__actions-trigger")
                     .ariaLabel("More actions")
                     Ul {
-                        for action in state.actions {
+                        for action in state.moreActions {
                             Li {
                                 context.build(AdminButton(state: action))
                             }
@@ -248,7 +248,7 @@ public struct AdminPageHeader: Component {
     }
 
     public func scripts() -> [String] {
-        guard !state.actions.isEmpty else { return [] }
+        guard !state.moreActions.isEmpty else { return [] }
 
         return [
             #"""

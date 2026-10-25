@@ -66,7 +66,7 @@ extension Campaign.Add.Controller {
 
             do {
                 _ = try await runtime.interactor.add(payload: payload)
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.list.path,
                     notification: .init(
                         title: "Added",

@@ -41,7 +41,7 @@ extension MagicLink.Edit.Form {
                         state: .primary(
                             title: "Edit user magic link",
                             description: "Update a sign-in magic link.",
-                            actions: [
+                            moreActions: [
                                 .init(
                                     label: "Remove magic link",
                                     href: state.routes.removePath(state.id),
@@ -57,7 +57,6 @@ extension MagicLink.Edit.Form {
                         state: state.form,
                         action: state.routes.editPath(state.id),
                         submitLabel: "Edit magic link",
-                        removeHref: nil
                     )
                 )
             }

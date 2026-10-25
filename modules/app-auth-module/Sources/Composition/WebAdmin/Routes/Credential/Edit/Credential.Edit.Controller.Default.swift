@@ -131,7 +131,7 @@ extension Credential.Edit.Controller {
                         password: payload!.normalizedPassword
                     )
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.editPath(id),
                     notification: .init(
                         title: "Saved",

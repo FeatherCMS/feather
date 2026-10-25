@@ -44,8 +44,6 @@ extension WebModule.Page.Form {
         var metadataHref: String? = nil
         var action: String
         var submitLabel: String
-        var removeHref: String? = nil
-        var removeLabel: String = "Remove"
 
         private func metadataTabLinks() -> [AdminTabBar.Link] {
             var links: [AdminTabBar.Link] = [
@@ -151,15 +149,6 @@ extension WebModule.Page.Form {
                 )
                 Div {
                     context.build(AdminSubmitButton(submitLabel))
-                    if let removeHref {
-                        context.build(
-                            AdminButton(
-                                removeLabel,
-                                href: removeHref,
-                                style: .destructive
-                            )
-                        )
-                    }
                 }
                 .class("admin-form__actions")
             }

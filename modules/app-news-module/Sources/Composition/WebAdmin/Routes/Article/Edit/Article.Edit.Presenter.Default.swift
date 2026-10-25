@@ -1,8 +1,8 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import MediaWebAdmin
 import MediaModule
+import MediaWebAdmin
 import NewsApplication
 import NewsModule
 
@@ -10,7 +10,8 @@ extension Article.Edit.Presenter {
     struct Default: Interface {
         let request: Request
         let context: AuthenticatedRequestContext
-        let mediaRepository: any MediaModule.Asset.File.View.Repository.Interface
+        let mediaRepository:
+            any MediaModule.Asset.File.View.Repository.Interface
         let renderingEngine: any RenderingEngine
         let routes: Article.Router.Routes
 
@@ -21,7 +22,7 @@ extension Article.Edit.Presenter {
             title: String,
             action: String,
             submitLabel: String,
-            removeHref: String?
+            moreActions: [AdminButton.State]
         ) async throws -> HTMLResponse {
             let selectedImageAsset = try? await mediaRepository.loadImageAsset(
                 assetId: input.imageAssetId,
@@ -39,7 +40,7 @@ extension Article.Edit.Presenter {
                     title: title,
                     action: action,
                     submitLabel: submitLabel,
-                    removeHref: removeHref,
+                    moreActions: moreActions,
                     routes: routes
                 )
             )
@@ -59,7 +60,7 @@ extension Article.Edit.Presenter {
         }
 
         func renderUpdated(id: String) -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: routes.editPath(id),
                 notification: .init(
                     title: "Saved",

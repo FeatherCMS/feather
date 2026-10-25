@@ -1,11 +1,15 @@
 public import CSS
+import Foundation
 public import HTML
+public import Hummingbird
 import SGML
 import SVG
 import WebBuilders
 public import WebComponents
 
 public struct AdminNotification: Component {
+    public static let cookieName = "admin_notification"
+
     public struct State: Codable, Sendable, Equatable {
         public enum Kind: String, Codable, Sendable {
             case success
@@ -32,13 +36,54 @@ public struct AdminNotification: Component {
         }
     }
 
-    let notification: State
+    let state: State
 
     public init(notification: State) {
-        self.notification = notification
+        self.state = notification
     }
 
-    public func selectors() -> [any CSS.Selector] {
+    public static func state(from request: Request) -> State? {
+        guard
+            let value = request.cookies[cookieName]?.value,
+            let data = Data(base64Encoded: value)
+        else { return nil }
+        return try? JSONDecoder().decode(State.self, from: data)
+    }
+
+    public static func cookie(for notification: State) -> Cookie {
+        let data = (try? JSONEncoder().encode(notification)) ?? Data()
+        return Cookie(
+            name: cookieName,
+            value: data.base64EncodedString(),
+            maxAge: 30,
+            path: "/admin",
+            httpOnly: false,
+            sameSite: .lax
+        )
+    }
+
+    public static func clearCookie() -> Cookie {
+        Cookie(
+            name: cookieName,
+            value: "",
+            maxAge: 0,
+            path: "/admin",
+            httpOnly: false,
+            sameSite: .lax
+        )
+    }
+
+    public static func redirect(
+        to location: String,
+        notification: State
+    ) -> Response {
+        var headers: HTTPFields = [.location: location]
+        headers[values: .setCookie]
+            .append(cookie(for: notification).description)
+        return Response(status: .seeOther, headers: headers)
+    }
+
+    public static func styleSelectors() -> [any CSS.Selector] {
         [
             Class("admin-notification") {
                 Position(.fixed)
@@ -154,18 +199,114 @@ public struct AdminNotification: Component {
         ]
     }
 
+    public func selectors() -> [any CSS.Selector] {
+        Self.styleSelectors()
+    }
+
+    public static func showScript(_ notification: State) -> String {
+        "window.adminNotification.show({kind:\(javascriptString(notification.kind.rawValue)),title:\(javascriptString(notification.title)),message:\(javascriptString(notification.message)),position:\(javascriptString(notification.position))})"
+    }
+
+    public static let clientRuntimeScript = #"""
+        (function () {
+            if (window.adminNotification) {
+                return;
+            }
+
+            function dismiss(notification) {
+                if (!notification.isConnected) {
+                    return;
+                }
+                notification.classList.remove("is-visible");
+                notification.classList.add("is-hidden");
+                setTimeout(function () {
+                    notification.remove();
+                }, 220);
+            }
+
+            function present(notification) {
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        notification.classList.add("is-visible");
+                    });
+                });
+                setTimeout(function () {
+                    dismiss(notification);
+                }, 3000);
+            }
+
+            window.adminNotification = {
+                show: function (state) {
+                    var previous = document.getElementById("admin-toast");
+                    if (previous) {
+                        previous.remove();
+                    }
+
+                    var kind = ["success", "info", "warning", "error"]
+                        .includes(state.kind) ? state.kind : "info";
+                    var notification = document.createElement("div");
+                    notification.id = "admin-toast";
+                    notification.className = "admin-notification";
+                    notification.setAttribute("role", "status");
+                    notification.dataset.notificationInline = "true";
+                    notification.dataset.toastType = kind;
+                    notification.dataset.toastTitle = state.title;
+                    notification.dataset.toastMessage = state.message;
+                    notification.dataset.toastPosition = state.position || "top-right";
+
+                    var icon = document.createElement("span");
+                    icon.className = "admin-notification__icon admin-notification__icon--" + kind;
+                    icon.textContent = kind === "success" ? "✓" : kind === "warning" ? "!" : kind === "error" ? "×" : "i";
+
+                    var content = document.createElement("span");
+                    content.className = "admin-notification__content";
+                    var title = document.createElement("span");
+                    title.className = "admin-notification__title";
+                    title.textContent = state.title;
+                    content.appendChild(title);
+                    if (state.message) {
+                        var message = document.createElement("span");
+                        message.className = "admin-notification__message";
+                        message.textContent = state.message;
+                        content.appendChild(message);
+                    }
+
+                    var close = document.createElement("button");
+                    close.type = "button";
+                    close.className = "admin-notification__close";
+                    close.setAttribute("aria-label", "Dismiss notification");
+                    close.textContent = "×";
+                    close.addEventListener("click", function () {
+                        dismiss(notification);
+                    });
+
+                    notification.append(icon, content, close);
+                    document.body.appendChild(notification);
+                    present(notification);
+                }
+            };
+
+            document.addEventListener("DOMContentLoaded", function () {
+                var notification = document.getElementById("admin-toast");
+                if (notification) {
+                    present(notification);
+                }
+            });
+        })();
+        """#
+
     public func html(context: inout BuilderContext) -> Div {
         Div {
             Span {
                 icon
             }
             .class(
-                "admin-notification__icon admin-notification__icon--\(notification.kind.rawValue)"
+                "admin-notification__icon admin-notification__icon--\(state.kind.rawValue)"
             )
             Span {
-                Span(notification.title).class("admin-notification__title")
-                if !notification.message.isEmpty {
-                    Span(notification.message)
+                Span(state.title).class("admin-notification__title")
+                if !state.message.isEmpty {
+                    Span(state.message)
                         .class("admin-notification__message")
                 }
             }
@@ -183,14 +324,14 @@ public struct AdminNotification: Component {
         .id("admin-toast")
         .class("admin-notification")
         .data("notification-inline", "true")
-        .data("toast-type", notification.kind.rawValue)
-        .data("toast-title", notification.title)
-        .data("toast-message", notification.message)
-        .data("toast-position", notification.position)
+        .data("toast-type", state.kind.rawValue)
+        .data("toast-title", state.title)
+        .data("toast-message", state.message)
+        .data("toast-position", state.position)
     }
 
     private var icon: SVG {
-        switch notification.kind {
+        switch state.kind {
         case .success: return FeatherIcons.checkCircle()
         case .info: return FeatherIcons.info()
         case .warning: return FeatherIcons.alertTriangle()
@@ -199,8 +340,11 @@ public struct AdminNotification: Component {
     }
 
     public func scripts() -> [String] {
-        [
-            "document.addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){var n=document.getElementById('admin-toast');if(n){n.classList.add('is-visible');setTimeout(function(){if(n){n.classList.remove('is-visible');n.classList.add('is-hidden');setTimeout(function(){n.remove()},220)}},3000);}});});"
-        ]
+        []
+    }
+
+    private static func javascriptString(_ value: String) -> String {
+        let data = try? JSONEncoder().encode(value)
+        return data.flatMap { String(data: $0, encoding: .utf8) } ?? "\"\""
     }
 }

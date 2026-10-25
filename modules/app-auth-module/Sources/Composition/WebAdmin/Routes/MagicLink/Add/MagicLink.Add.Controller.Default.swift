@@ -99,7 +99,7 @@ extension MagicLink.Add.Controller {
                         isPersistent: payload.isPersistent.value
                     )
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.list.path,
                     notification: .init(
                         title: "Added",

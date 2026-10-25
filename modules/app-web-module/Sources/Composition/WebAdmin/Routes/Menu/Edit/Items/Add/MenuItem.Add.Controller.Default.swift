@@ -146,7 +146,7 @@ extension MenuItem.Add.Controller {
                     input: payload
                 )
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.itemsPath(menuId),
                     notification: .init(
                         title: "Added",

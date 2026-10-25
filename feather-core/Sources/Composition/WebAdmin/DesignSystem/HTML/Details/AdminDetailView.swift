@@ -105,7 +105,7 @@ public struct AdminDetailView: Component {
             context.build(AdminBreadcrumb(links: breadcrumb))
             context.build(
                 AdminPageHeader(
-                    state: pageHeader.addingActions(removeActions)
+                    state: pageHeader.addingMoreActions(removeActions)
                 )
             )
             Div {

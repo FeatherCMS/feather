@@ -204,7 +204,7 @@ extension Asset.File.Add.Controller {
                 }
 
                 if isDialog {
-                    return AdminNotificationFlash.redirect(
+                    return AdminNotification.redirect(
                         to: redirectLocation(
                             parentId: payload.parentId.emptyToNil,
                             view: model.view
@@ -216,7 +216,7 @@ extension Asset.File.Add.Controller {
                     )
                 }
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: redirectLocation(
                         parentId: payload.parentId.emptyToNil,
                         view: model.view

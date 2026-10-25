@@ -8,9 +8,11 @@ extension Page.Search.Controller {
     struct Default: Interface {
         let routes: Page.Router.Routes
         let buildMetadataRepository:
-            @Sendable (AuthenticatedRequestContext) -> any WebModule.Page.Metadata.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Page
+                .Metadata.Repository.Interface
         let buildStatusRepository:
-            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata.Status.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata
+                .Status.Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Page.Search.Interactor.Interface,
@@ -83,7 +85,7 @@ extension Page.Search.Controller {
                     referenceID: id,
                     status: targetStatus
                 )
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: payload.normalizedReturnTo ?? routes.list.path,
                 notification: statusNotification(for: targetStatus)
             )

@@ -8,16 +8,20 @@ import WebComponents
 
 extension Rule.Edit {
     struct Page: Component {
-        let id: String
-        let form: Rule.Edit.Form.State
-        let nonceToken: String
-        let permissions: AdminListActions
-        let routes: Rule.Router.Routes
+        struct State {
+            let id: String
+            let form: Rule.Edit.Form.State
+            let nonceToken: String
+            let moreActions: [AdminButton.State]
+            let routes: Rule.Router.Routes
+        }
+
+        let state: State
 
         func html(context: inout BuilderContext) -> Section {
             Section {
                 context.build(
-                    AdminBreadcrumb(links: routes.breadcrumb)
+                    AdminBreadcrumb(links: state.routes.breadcrumb)
                 )
                 context.build(
                     AdminPageHeader(
@@ -25,29 +29,15 @@ extension Rule.Edit {
                             title: "Edit redirect rule",
                             description:
                                 "Update the redirect rule configuration.",
-                            actions: permissions.allows(
-                                Rule.Permissions.delete
-                            )
-                                ? [
-                                    .init(
-                                        label: "Remove",
-                                        href: routes.removePath(id),
-                                        style: .destructive
-                                    )
-                                ]
-                                : []
+                            moreActions: state.moreActions
                         )
                     )
                 )
                 context.build(
                     Rule.Edit.Form(
-                        state: form,
-                        action: routes.editPath(id),
-                        viewHref: permissions.allows(Rule.Permissions.read)
-                            ? routes.detailsPath(id)
-                            : nil,
-                        removeHref: nil,
-                        nonceToken: nonceToken
+                        state: state.form,
+                        action: state.routes.editPath(state.id),
+                        nonceToken: state.nonceToken
                     )
                 )
             }

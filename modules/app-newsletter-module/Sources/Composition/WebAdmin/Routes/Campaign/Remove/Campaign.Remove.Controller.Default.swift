@@ -33,7 +33,7 @@ extension Campaign.Remove.Controller {
             try await interactor.remove(
                 id: try context.requiredParameter("newsletterId")
             )
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: routes.list.path,
                 notification: .init(
                     title: "Removed",
@@ -61,7 +61,7 @@ extension Campaign.Remove.Controller {
             else { return Response(status: .badRequest) }
             let payload = nonceRequest.input
             try await interactor.remove(ids: payload.normalizedSelectedIds)
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: AdminLocation.url(
                     path: routes.list.path,
                     page: payload.normalizedPage,

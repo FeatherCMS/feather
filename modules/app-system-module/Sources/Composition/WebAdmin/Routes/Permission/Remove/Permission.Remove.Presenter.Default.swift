@@ -115,7 +115,7 @@ extension Permission.Remove.Presenter {
         }
 
         func renderSuccess(location: String, count: Int) -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: location,
                 notification: .init(
                     title: "Removed",

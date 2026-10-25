@@ -30,7 +30,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
             request: request,
             context: context
         )
-        let notification = AdminNotificationFlash.notification(from: request)
+        let notification = AdminNotification.state(from: request)
         let adminRemoveNonce = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )

@@ -34,7 +34,7 @@ extension Credential.Edit {
                         state: .primary(
                             title: "Edit user credential",
                             description: "Update a user credential.",
-                            actions: [
+                            moreActions: [
                                 .init(
                                     label: "Remove",
                                     href: state.routes.removePath(state.id),
@@ -49,7 +49,6 @@ extension Credential.Edit {
                         state: state.form,
                         action: state.routes.editPath(state.id),
                         submitLabel: "Edit credential",
-                        removeHref: nil
                     )
                 )
             }

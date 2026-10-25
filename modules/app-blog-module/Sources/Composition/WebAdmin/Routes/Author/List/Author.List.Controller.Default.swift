@@ -9,9 +9,11 @@ extension Author.List.Controller {
     struct Default: Interface {
         let routes: Author.Router.Routes
         let buildViewRepository:
-            @Sendable (AuthenticatedRequestContext) -> any Author.View.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any Author.View
+                .Repository.Interface
         let buildStatusRepository:
-            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata.Status.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata
+                .Status.Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Author.List.Interactor.Interface,
@@ -89,13 +91,13 @@ extension Author.List.Controller {
                 current: details.metadata
             )
             try await buildStatusRepository(context)
-            .update(
-                referenceType: "blog.author",
-                referenceID: id,
-                status: targetStatus
-            )
+                .update(
+                    referenceType: "blog.author",
+                    referenceID: id,
+                    status: targetStatus
+                )
             let toast = statusToastContent(for: targetStatus)
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: payload.normalizedReturnTo ?? routes.authors.path
                     + "/",
                 notification: .init(title: toast.title, message: toast.message)

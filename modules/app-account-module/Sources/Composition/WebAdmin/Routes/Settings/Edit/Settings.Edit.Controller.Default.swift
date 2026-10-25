@@ -110,7 +110,7 @@ extension Settings.Edit.Controller {
                     sessionToken: context.sessionToken
                 )
             else {
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: request.uri.path,
                     notification: .init(
                         title: "Expired",
@@ -120,7 +120,7 @@ extension Settings.Edit.Controller {
                 )
             }
             try await interactor.saveSettings(input: nonceRequest.input)
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: request.uri.path,
                 notification: .init(
                     title: "Saved",

@@ -129,7 +129,7 @@ extension WebModule.Metadata.Edit.Controller {
                     input: payload
                 )
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: request.uri.path,
                     notification: .init(
                         title: "Saved",

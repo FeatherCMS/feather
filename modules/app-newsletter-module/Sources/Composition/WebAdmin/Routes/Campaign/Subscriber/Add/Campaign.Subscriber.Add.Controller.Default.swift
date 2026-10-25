@@ -45,7 +45,7 @@ extension Campaign.Subscriber.Add.Controller {
                     newsletterId: newsletterId,
                     form: form
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.subscribersPath(newsletterId: newsletterId),
                     notification: .init(
                         title: "Added",

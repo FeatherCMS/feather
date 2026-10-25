@@ -37,7 +37,7 @@ extension Campaign.Subscriber.Remove.Controller {
                     newsletterId: newsletterId,
                     subscriberIds: nonceRequest.input.normalizedIds
                 )
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: routes.subscribersPath(newsletterId: newsletterId),
                 notification: .init(
                     title: "Removed",

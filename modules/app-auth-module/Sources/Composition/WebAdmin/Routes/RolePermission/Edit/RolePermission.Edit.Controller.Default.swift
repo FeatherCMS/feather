@@ -139,7 +139,7 @@ extension RolePermission.Edit.Controller {
                     )!
                     components.queryItems = query
                     let location = components.string ?? routes.edit.path
-                    return AdminNotificationFlash.redirect(
+                    return AdminNotification.redirect(
                         to: location,
                         notification: .init(
                             title: "Saved",

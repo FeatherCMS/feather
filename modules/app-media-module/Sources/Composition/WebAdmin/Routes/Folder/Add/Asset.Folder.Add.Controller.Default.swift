@@ -66,13 +66,13 @@ extension Asset.Folder.Add.Controller {
                         status: .noContent,
                         headers: [
                             .setCookie:
-                                AdminNotificationFlash
+                                AdminNotification
                                 .cookie(for: notification)
                                 .description
                         ]
                     )
                 }
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: redirectLocation(
                         parentId: model.parentId,
                         view: model.view

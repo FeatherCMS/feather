@@ -17,7 +17,7 @@ extension Article.Add.Presenter {
             title: String,
             action: String,
             submitLabel: String,
-            removeHref: String?
+            moreActions: [AdminButton.State]
         ) async throws -> HTMLResponse
         func renderCreated() -> Response
     }

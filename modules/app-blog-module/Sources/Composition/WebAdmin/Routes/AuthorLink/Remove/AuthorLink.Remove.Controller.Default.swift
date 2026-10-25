@@ -48,7 +48,7 @@ extension AuthorLink.Remove.Controller {
                     authorID: authorID,
                     ids: ids
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: location,
                     notification: .init(
                         title: "Removed",

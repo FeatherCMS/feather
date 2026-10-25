@@ -176,7 +176,7 @@ extension MenuItem.Edit.Controller {
                     input: payload
                 )
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.itemEditPath(menuID: menuId, itemID: id),
                     notification: .init(
                         title: "Saved",

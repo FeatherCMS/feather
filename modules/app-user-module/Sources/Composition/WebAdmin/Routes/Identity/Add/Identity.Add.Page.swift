@@ -30,8 +30,6 @@ extension Identity.Add {
                         state: form,
                         action: routes.add.path,
                         submitLabel: "Add identity",
-                        viewHref: nil,
-                        removeHref: nil,
                         nonceToken: nonceToken
                     )
                 )

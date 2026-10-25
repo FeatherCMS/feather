@@ -19,8 +19,7 @@ public struct AdminHTML<T: Component>: Component where T.HTML: FlowContent {
     let body: AdminBody<T>
     let stylesheetPath: String?
     let adminRemoveNonce: String?
-    let richContentEditorBlocks:
-        [AdminRichContentEditorBlockDefinition]
+    let richContentEditorBlocks: [AdminRichContentEditorBlockDefinition]
 
     private let cssRenderer: CSSRenderer
     public init(
@@ -55,7 +54,10 @@ public struct AdminHTML<T: Component>: Component where T.HTML: FlowContent {
             AdminHead(
                 title: title,
                 stylesheet: css,
-                scripts: [richContentEditorConfigurationScript] + scripts,
+                scripts: [
+                    richContentEditorConfigurationScript,
+                    AdminNotification.clientRuntimeScript,
+                ] + scripts,
                 stylesheetPath: stylesheetPath,
                 adminRemoveNonce: adminRemoveNonce
             )
@@ -69,9 +71,11 @@ public struct AdminHTML<T: Component>: Component where T.HTML: FlowContent {
     }
 
     private var richContentEditorConfigurationScript: String {
-        let encoded = (try? JSONEncoder().encode(richContentEditorBlocks))
+        let encoded =
+            (try? JSONEncoder().encode(richContentEditorBlocks))
             .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
-        let safeEncoded = encoded
+        let safeEncoded =
+            encoded
             .replacingOccurrences(of: "<", with: "\\u003C")
             .replacingOccurrences(of: ">", with: "\\u003E")
             .replacingOccurrences(of: "&", with: "\\u0026")

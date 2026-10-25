@@ -65,7 +65,7 @@ extension Page.Edit.Controller {
                 try await payload.validate()
                 try await runtime.interactor.update(id: id, input: payload)
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.editPath(id),
                     notification: .init(
                         title: "Saved",

@@ -174,7 +174,7 @@ extension Settings.Edit.Controller {
                     )
                     .response(from: request, context: context)
             }
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: routes.edit.path,
                 notification: .init(
                     title: "Saved",

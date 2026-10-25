@@ -7,14 +7,20 @@ import WebComponents
 
 extension Variable.Edit {
     struct Page: Component {
-        let routes: Variable.Router.Routes
-        let form: Form
+        struct State {
+            let routes: Variable.Router.Routes
+            let id: String
+            let form: Form
+            let moreActions: [AdminButton.State]
+        }
+
+        let state: State
 
         func html(context: inout BuilderContext) -> some BasicTag {
             Section {
                 context.build(
                     AdminBreadcrumb(
-                        links: routes.breadcrumb
+                        links: state.routes.breadcrumb
                     )
                 )
                 context.build(
@@ -23,19 +29,11 @@ extension Variable.Edit {
                             title: "Edit system variable",
                             description:
                                 "Update this configuration value used by the application.",
-                            actions: form.removeHref.map {
-                                [
-                                    .init(
-                                        label: "Remove",
-                                        href: $0,
-                                        style: .destructive
-                                    )
-                                ]
-                            } ?? []
+                            moreActions: state.moreActions
                         )
                     )
                 )
-                context.build(form)
+                context.build(state.form)
             }
             .class("cms-section")
         }

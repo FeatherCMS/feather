@@ -119,23 +119,17 @@ extension Variant {
         let action: String
         let submitLabel: String
         let nonceToken: String?
-        let viewHref: String?
-        let removeHref: String?
 
         init(
             state: State,
             action: String,
             submitLabel: String,
-            nonceToken: String?,
-            viewHref: String? = nil,
-            removeHref: String? = nil
+            nonceToken: String?
         ) {
             self.state = state
             self.action = action
             self.submitLabel = submitLabel
             self.nonceToken = nonceToken
-            self.viewHref = viewHref
-            self.removeHref = removeHref
         }
 
         func html(context: inout BuilderContext) -> HTML.Form {
@@ -154,15 +148,6 @@ extension Variant {
                     context.build(
                         AdminSubmitButton(submitLabel, style: .primary)
                     )
-                    if let viewHref {
-                        context.build(
-                            AdminButton(
-                                "View",
-                                href: viewHref,
-                                style: .secondary
-                            )
-                        )
-                    }
                 }
                 .class("admin-form__actions")
             }

@@ -54,7 +54,6 @@ extension Permission.Edit {
 
         let state: State
         let action: String
-        let viewHref: String
         let nonceToken: String?
 
         func html(context: inout BuilderContext) -> HTML.Form {
@@ -78,9 +77,6 @@ extension Permission.Edit {
                 Div {
                     context.build(
                         AdminSubmitButton("Save changes", style: .primary)
-                    )
-                    context.build(
-                        AdminButton("View", href: viewHref, style: .secondary)
                     )
                 }
                 .class("admin-form__actions")

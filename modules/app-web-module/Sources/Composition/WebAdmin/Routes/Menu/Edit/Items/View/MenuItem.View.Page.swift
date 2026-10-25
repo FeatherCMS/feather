@@ -62,7 +62,7 @@ extension MenuItem.View {
                             title: "Edit menu",
                             description:
                                 "Update the navigation menu configuration.",
-                            actions: [
+                            moreActions: [
                                 .init(
                                     label: "Remove item",
                                     href: state.routes.itemRemovePath(

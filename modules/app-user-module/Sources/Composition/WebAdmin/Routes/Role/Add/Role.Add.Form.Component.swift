@@ -56,8 +56,6 @@ extension Role.Add.Form {
         let state: State
         let action: String
         let submitLabel: String
-        let viewHref: String?
-        let removeHref: String?
         let nonceToken: String?
 
         func html(context: inout BuilderContext) -> Form {
@@ -75,24 +73,6 @@ extension Role.Add.Form {
                     context.build(
                         AdminSubmitButton(submitLabel, style: .primary)
                     )
-                    if let viewHref {
-                        context.build(
-                            AdminButton(
-                                "View",
-                                href: viewHref,
-                                style: .secondary
-                            )
-                        )
-                    }
-                    if let removeHref {
-                        context.build(
-                            AdminButton(
-                                "Remove",
-                                href: removeHref,
-                                style: .destructive
-                            )
-                        )
-                    }
                 }
                 .class("admin-form__actions")
             }

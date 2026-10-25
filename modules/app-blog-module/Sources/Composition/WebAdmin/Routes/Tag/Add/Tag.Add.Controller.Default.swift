@@ -18,7 +18,8 @@ extension Tag.Add.Controller {
     struct Default: Interface {
         let routes: Tag.Router.Routes
         let buildPublicContentRepository:
-            @Sendable (AuthenticatedRequestContext) -> any PublicContent.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any PublicContent
+                .Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Tag.Add.Interactor.Interface,
@@ -54,7 +55,7 @@ extension Tag.Add.Controller {
                 try await payload.validate()
                 try await runtime.interactor.execute(input: payload)
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.tags.path,
                     notification: .init(
                         title: "Added",

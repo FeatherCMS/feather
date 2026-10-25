@@ -2,8 +2,8 @@ import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import RedirectModule
 import RedirectApplication
+import RedirectModule
 import WebComponents
 
 extension RedirectModule.Rule.Edit.Presenter {
@@ -21,13 +21,34 @@ extension RedirectModule.Rule.Edit.Presenter {
             let nonceToken = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
+            var moreActions: [AdminButton.State] = []
+            if permissions.allows(Rule.Permissions.read) {
+                moreActions.append(
+                    .init(
+                        label: "View",
+                        href: routes.detailsPath(id),
+                        style: .secondary
+                    )
+                )
+            }
+            if permissions.allows(Rule.Permissions.delete) {
+                moreActions.append(
+                    .init(
+                        label: "Remove",
+                        href: routes.removePath(id),
+                        style: .destructive
+                    )
+                )
+            }
             return try await renderPage(
                 content: RedirectModule.Rule.Edit.Page(
-                    id: id,
-                    form: state,
-                    nonceToken: nonceToken,
-                    permissions: permissions,
-                    routes: routes
+                    state: .init(
+                        id: id,
+                        form: state,
+                        nonceToken: nonceToken,
+                        moreActions: moreActions,
+                        routes: routes
+                    )
                 ),
                 status: .ok
             )
@@ -97,7 +118,7 @@ extension RedirectModule.Rule.Edit.Presenter {
         }
 
         func renderSuccess(id: String) -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: routes.editPath(id),
                 notification: .init(
                     title: "Saved",

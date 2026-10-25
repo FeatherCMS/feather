@@ -62,7 +62,7 @@ extension Issue.Remove.Controller {
                 newsletterId: newsletterId,
                 issueId: try context.requiredParameter("issueId")
             )
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: routes.issuesPath(newsletterId: newsletterId),
                 notification: .init(
                     title: "Removed",

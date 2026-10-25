@@ -1,6 +1,8 @@
 # TODO
 
 - [ ] Time zone issues, settings management (pagination, etc)
+- [ ] list order support 
+- [ ] permission all proper naming convention for api
 - [ ] Newsletter unscribscibe link + sending out issues
 - [ ] Proper home page management
 - [ ] https://github.com/hummingbird-project/hummingbird-compression
@@ -20,3 +22,6 @@
 - [ ] Duplicate feature
 - [ ] RCE undo / redo feature
 - [ ] storage + mail ephemeral -> main testing like DatabaseTesting
+- [ ] sign in oldalak captcha -> renderer abstraction for admin/app
+- [ ] protocol buffer api 
+- [ ] 

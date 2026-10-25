@@ -1,6 +1,6 @@
+import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
-import FeatherValidation
 import Hummingbird
 import SystemAdminAPI
 import SystemModule
@@ -61,7 +61,7 @@ extension Variable.Add.Presenter {
         }
 
         func renderSuccess() -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: routes.list.path,
                 notification: .init(
                     title: "Added",

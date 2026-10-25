@@ -93,7 +93,7 @@ extension Profile.Edit.Controller {
                         profileImageAsset: nil
                     )
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.profileEdit.path + "/",
                     notification: .init(
                         title: "Saved",

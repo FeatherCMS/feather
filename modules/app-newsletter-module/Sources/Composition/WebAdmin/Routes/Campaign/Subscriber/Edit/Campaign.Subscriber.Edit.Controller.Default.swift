@@ -68,7 +68,7 @@ extension Campaign.Subscriber.Edit.Controller {
                     subscriberId: subscriberId,
                     form: form
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.subscriberEditPath(
                         newsletterId: newsletterId,
                         subscriberId: subscriberId

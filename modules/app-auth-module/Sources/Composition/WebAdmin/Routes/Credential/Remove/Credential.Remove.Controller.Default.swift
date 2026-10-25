@@ -63,7 +63,7 @@ extension Credential.Remove.Controller {
                     .response(from: request, context: context)
             }
             try await interactor.delete(id: id)
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: routes.list.path,
                 notification: .init(
                     title: "Removed",

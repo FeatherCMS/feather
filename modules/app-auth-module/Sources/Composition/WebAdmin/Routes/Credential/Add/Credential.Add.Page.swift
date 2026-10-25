@@ -42,7 +42,6 @@ extension Credential.Add {
                         state: state.form,
                         action: state.routes.add.path,
                         submitLabel: "Add credential",
-                        removeHref: nil
                     )
                 )
             }

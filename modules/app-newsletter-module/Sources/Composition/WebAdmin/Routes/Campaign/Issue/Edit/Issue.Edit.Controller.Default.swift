@@ -65,7 +65,7 @@ extension Issue.Edit.Controller {
                     issueId: issueId,
                     form: form
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.issueEditPath(
                         newsletterId: newsletterId,
                         issueId: issueId

@@ -35,7 +35,7 @@ extension Campaign.Edit {
                 )
                 context.build(
                     AdminPageHeader(
-                        state: state.pageHeader.addingActions(
+                        state: state.pageHeader.addingMoreActions(
                             state.permissions.allows(
                                 Campaign.Permissions.delete
                             )
@@ -65,74 +65,54 @@ extension Campaign.Edit {
                     )
                 )
                 if state.isDetails {
-                    context.build(
-                        AdminRelationshipGroup(
-                            pageHeader: .secondary(
-                                title: "Campaign details",
-                                description:
-                                    "Review the campaign configuration."
+                    Div {
+                        context.build(
+                            AdminDetailField(
+                                label: "Key",
+                                value: state.form.key
                             )
+                        )
+                        context.build(
+                            AdminDetailField(
+                                label: "Name",
+                                value: state.form.name
+                            )
+                            .setAsRemoveConfirmationLabel()
+                        )
+                        context.build(
+                            AdminDetailField(
+                                label: "From email",
+                                value: state.form.fromEmail
+                            )
+                        )
+                    }
+                    .class("admin-detail-view-fields")
+                    .style("display:grid;gap:12px;")
+                    Div {
+                        if state.permissions.allows(
+                            Campaign.Permissions.update
                         ) {
-                            Div {
-                                context.build(
-                                    AdminDetailField(
-                                        label: "Key",
-                                        value: state.form.key
-                                    )
+                            context.build(
+                                AdminButton(
+                                    "Edit",
+                                    href: editPath,
+                                    style: .primary
                                 )
-                                context.build(
-                                    AdminDetailField(
-                                        label: "Name",
-                                        value: state.form.name
-                                    )
-                                    .setAsRemoveConfirmationLabel()
-                                )
-                                context.build(
-                                    AdminDetailField(
-                                        label: "From email",
-                                        value: state.form.fromEmail
-                                    )
-                                )
-                            }
-                            .class("admin-detail-view-fields")
-                            .style("display:grid;gap:12px;")
-                            Div {
-                                if state.permissions.allows(
-                                    Campaign.Permissions.update
-                                ) {
-                                    context.build(
-                                        AdminButton(
-                                            "Edit",
-                                            href: editPath,
-                                            style: .primary
-                                        )
-                                    )
-                                }
-                            }
-                            .class("admin-detail-actions")
-                            .style(
-                                "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
                             )
                         }
+                    }
+                    .class("admin-detail-actions")
+                    .style(
+                        "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
                     )
                 }
                 else {
                     context.build(
-                        AdminRelationshipGroup(
-                            pageHeader: .secondary(
-                                title: "Campaign configuration",
-                                description:
-                                    "Update the campaign key, name, and sender address."
-                            )
-                        ) {
-                            context.build(
-                                Campaign.Form.Component(
-                                    state: state.form,
-                                    action: editPath,
-                                    submitLabel: "Save campaign"
-                                )
-                            )
-                        }
+                        Campaign.Form.Component(
+                            state: state.form,
+                            action: editPath,
+                            submitLabel: "Save campaign"
+                        )
                     )
                 }
             }

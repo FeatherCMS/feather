@@ -26,26 +26,32 @@ extension Variant.Edit.Presenter {
                 context: context,
                 title: "Edit media variant",
                 content: Variant.Edit.Page(
-                    id: id,
-                    detail: detail,
-                    form: Variant.Form(
-                        state: state,
-                        action: routes.editPath(id),
-                        submitLabel: "Save changes",
-                        nonceToken: variantNonce,
-                        viewHref: nil,
-                        removeHref: permissions.allows(
+                    state: .init(
+                        id: id,
+                        detail: detail,
+                        form: Variant.Form(
+                            state: state,
+                            action: routes.editPath(id),
+                            submitLabel: "Save changes",
+                            nonceToken: variantNonce
+                        ),
+                        routes: routes,
+                        moreActions: permissions.allows(
                             Variant.Permissions.delete
                         )
-                            ? AdminLocation.remove(
-                                path: routes.remove.path,
-                                ids: [id],
-                                returnTo:
-                                    routes.editPath(id)
-                            )
-                            : nil
+                            ? [
+                                .init(
+                                    label: "Remove",
+                                    href: AdminLocation.remove(
+                                        path: routes.remove.path,
+                                        ids: [id],
+                                        returnTo: routes.editPath(id)
+                                    ),
+                                    style: .destructive
+                                )
+                            ]
+                            : []
                     ),
-                    routes: routes
                 )
             )
         }
@@ -138,7 +144,7 @@ extension Variant.Edit.Presenter {
         }
 
         func renderSuccess(id: String) -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: routes.editPath(id),
                 notification: .init(
                     title: "Saved",

@@ -125,7 +125,7 @@ extension MenuItem.Remove.Controller {
             }
             do {
                 try await runtime.interactor.delete(menuId: menuId, ids: ids)
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: location,
                     notification: .init(
                         title: "Removed",

@@ -40,7 +40,7 @@ extension Identity.Edit {
                         state: .primary(
                             title: "Edit user identity",
                             description: "Update this user identity.",
-                            actions: actions
+                            moreActions: actions
                         )
                     )
                 )

@@ -28,8 +28,6 @@ extension Role.Add {
                         state: form,
                         action: routes.add.path,
                         submitLabel: "Add role",
-                        viewHref: nil,
-                        removeHref: nil,
                         nonceToken: nonceToken
                     )
                 )

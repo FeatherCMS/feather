@@ -43,7 +43,7 @@ extension Page.Add.Controller {
                 try await payload.validate()
                 try await runtime.interactor.execute(input: payload)
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.list.path,
                     notification: .init(
                         title: "Added",

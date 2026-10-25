@@ -85,7 +85,7 @@ extension Role.Edit.Presenter {
         }
 
         func renderSuccess(id: String) -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: routes.editPath(id),
                 notification: .init(
                     title: "Saved",

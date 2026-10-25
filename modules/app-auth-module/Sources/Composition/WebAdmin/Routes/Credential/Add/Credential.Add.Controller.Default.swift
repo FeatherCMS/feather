@@ -109,7 +109,7 @@ extension Credential.Add.Controller {
                         password: payload!.normalizedPassword
                     )
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.list.path,
                     notification: .init(
                         title: "Added",

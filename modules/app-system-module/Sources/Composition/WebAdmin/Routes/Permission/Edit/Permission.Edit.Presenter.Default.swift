@@ -35,12 +35,29 @@ extension Permission.Edit.Presenter {
             let nonceToken = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
+            let moreActions: [AdminButton.State] = [
+                .init(
+                    label: "View",
+                    href: routes.detailsPath(id),
+                    style: .secondary
+                ),
+                .init(
+                    label: "Remove",
+                    href: AdminLocation.remove(
+                        path: routes.remove.path,
+                        ids: [id],
+                        returnTo: routes.editPath(id)
+                    ),
+                    style: .destructive
+                ),
+            ]
             return try await renderPage(
                 content: Permission.Edit.Page(
                     state: .init(
                         id: id,
                         isEdited: isEdited,
                         form: state,
+                        moreActions: moreActions,
                         nonceToken: nonceToken,
                         routes: routes
                     )
@@ -97,7 +114,7 @@ extension Permission.Edit.Presenter {
         }
 
         func renderSuccess(id: String) -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: routes.editPath(id),
                 notification: .init(
                     title: "Saved",

@@ -1,8 +1,8 @@
-import Foundation
 import FeatherModuleKit
 import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
+import Foundation
 import HTML
 import Hummingbird
 import NewsletterApplication
@@ -44,7 +44,7 @@ extension Subscriber.Remove.Controller {
                 ids: payload.normalizedIds,
                 campaignId: payload.campaignId?.emptyToNil
             )
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: AdminLocation.url(
                     path: routes.list.path,
                     queryItems: payload.campaignId?.emptyToNil

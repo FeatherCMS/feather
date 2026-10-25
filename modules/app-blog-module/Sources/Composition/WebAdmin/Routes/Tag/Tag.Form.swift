@@ -40,8 +40,6 @@ extension BlogModule.Tag {
         var metadataHref: String?
         var action: String
         var submitLabel: String
-        var removeHref: String?
-        var removeLabel: String = "Remove"
 
         func html(context: inout BuilderContext) -> HTML.Form {
             let form = AdminForm(action: action) {
@@ -120,15 +118,6 @@ extension BlogModule.Tag {
                     context.build(
                         AdminSubmitButton(submitLabel, style: .primary)
                     )
-                    if let removeHref {
-                        context.build(
-                            AdminButton(
-                                removeLabel,
-                                href: removeHref,
-                                style: .destructive
-                            )
-                        )
-                    }
                 }
                 .class("admin-form__actions")
             }

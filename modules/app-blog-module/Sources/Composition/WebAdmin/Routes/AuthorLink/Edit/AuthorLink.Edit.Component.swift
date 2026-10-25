@@ -34,7 +34,7 @@ extension AuthorLink.Edit {
                         state: .primary(
                             title: "Edit blog author link",
                             description: "Update this author link.",
-                            actions: [
+                            moreActions: [
                                 .init(
                                     label: "Remove link",
                                     href: state.routes.authorLinkRemovePath(
@@ -57,7 +57,6 @@ extension AuthorLink.Edit {
                                     state.id
                                 ),
                             submitLabel: "Edit link",
-                            removeHref: nil
                         )
                     )
                 }

@@ -32,7 +32,7 @@ extension Post.Edit {
                         state: .primary(
                             title: "Edit post",
                             description: "Update this blog post.",
-                            actions: [
+                            moreActions: [
                                 .init(
                                     label: "Remove post",
                                     href: state.routes.postRemovePath(state.id),
@@ -55,7 +55,6 @@ extension Post.Edit {
                             ),
                         action: state.routes.postEditPath(state.id),
                         submitLabel: "Edit post",
-                        removeHref: nil
                     )
                 )
             }

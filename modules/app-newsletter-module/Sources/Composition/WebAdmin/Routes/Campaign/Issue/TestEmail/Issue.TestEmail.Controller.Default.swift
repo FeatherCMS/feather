@@ -43,7 +43,7 @@ extension Issue.TestEmail.Controller {
                         content: form.content
                     )
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: location,
                     notification: .init(
                         title: "Sent",
@@ -52,7 +52,7 @@ extension Issue.TestEmail.Controller {
                 )
             }
             catch {
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: location,
                     notification: .init(
                         title: "Test email failed",

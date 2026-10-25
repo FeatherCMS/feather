@@ -91,7 +91,7 @@ extension Identity.Add.Presenter {
         }
 
         func renderSuccess() -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: routes.list.path,
                 notification: .init(
                     title: "Added",

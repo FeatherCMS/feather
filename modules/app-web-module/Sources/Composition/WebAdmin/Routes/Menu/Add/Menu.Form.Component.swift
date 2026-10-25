@@ -34,8 +34,6 @@ extension WebModule.Menu.Form {
         var state: State
         var action: String
         var submitLabel: String
-        var removeHref: String? = nil
-        var removeLabel: String = "Remove"
 
         func html(context: inout BuilderContext) -> Form {
             let form = AdminForm(action: action) {
@@ -84,15 +82,6 @@ extension WebModule.Menu.Form {
                 Div {
                     Div {
                         context.build(AdminSubmitButton(submitLabel))
-                        if let removeHref {
-                            context.build(
-                                AdminButton(
-                                    removeLabel,
-                                    href: removeHref,
-                                    style: .destructive
-                                )
-                            )
-                        }
                     }
                     .class("admin-form__actions")
                 }

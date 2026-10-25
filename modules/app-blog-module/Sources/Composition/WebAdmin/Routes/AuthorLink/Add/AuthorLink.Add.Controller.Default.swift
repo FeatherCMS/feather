@@ -76,7 +76,7 @@ extension AuthorLink.Add.Controller {
                     input: payload
                 )
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.authorPath(authorID),
                     notification: .init(
                         title: "Added",

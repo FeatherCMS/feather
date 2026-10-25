@@ -65,7 +65,7 @@ extension Issue.Add.Controller {
                 payload: payload
             )
             if model.error == nil {
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.issuesPath(newsletterId: model.newsletterId),
                     notification: .init(
                         title: "Added",

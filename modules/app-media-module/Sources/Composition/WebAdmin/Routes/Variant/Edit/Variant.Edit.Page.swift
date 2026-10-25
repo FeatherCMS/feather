@@ -8,37 +8,38 @@ import WebComponents
 
 extension Variant.Edit {
     struct Page: Component {
-        let id: String
-        let detail: Model
-        let form: Variant.Form
-        let routes: Variant.Router.Routes
+        struct State {
+            let id: String
+            let detail: Model
+            let form: Variant.Form
+            let routes: Variant.Router.Routes
+            let moreActions: [AdminButton.State]
+        }
+
+        let state: State
 
         func html(context: inout BuilderContext) -> some BasicTag {
             Section {
                 context.build(
-                    AdminBreadcrumb(links: routes.breadcrumb)
+                    AdminBreadcrumb(links: state.routes.breadcrumb)
                 )
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Edit \(detail.name)",
+                            title: "Edit \(state.detail.name)",
                             description: "Update the media variant details.",
-                            actions: form.removeHref.map {
-                                [
-                                    .init(
-                                        label: "Remove",
-                                        href: $0,
-                                        style: .destructive
-                                    )
-                                ]
-                            } ?? []
+                            moreActions: state.moreActions
                         )
                     )
                 )
                 context.build(
-                    Variant.Tabs(id: id, active: .details, routes: routes)
+                    Variant.Tabs(
+                        id: state.id,
+                        active: .details,
+                        routes: state.routes
+                    )
                 )
-                context.build(form)
+                context.build(state.form)
             }
             .class("cms-section")
         }

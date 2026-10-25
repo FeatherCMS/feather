@@ -33,7 +33,7 @@ extension Asset.File.View {
                             title: "Media asset details",
                             description:
                                 "Review asset metadata and generated variants.",
-                            actions: permissions.allows(
+                            moreActions: permissions.allows(
                                 Asset.Permissions.delete
                             )
                                 ? [

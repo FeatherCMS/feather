@@ -3,8 +3,8 @@ import FeatherWebAdmin
 import FeatherWebShared
 import HTML
 import Hummingbird
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -63,7 +63,7 @@ extension Subscriber.Add.Controller {
             do {
                 let model = try await interactor.post(form: form)
                 if model.error == nil {
-                    return AdminNotificationFlash.redirect(
+                    return AdminNotification.redirect(
                         to: routes.list.path,
                         notification: .init(
                             title: "Added",

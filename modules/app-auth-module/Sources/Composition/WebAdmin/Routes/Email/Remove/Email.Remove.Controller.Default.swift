@@ -46,18 +46,20 @@ extension Email.Remove.Controller {
             }
             do {
                 let item = try await runtime.interactor.get(id: id)
-                return try await runtime.presenter.renderPage(
-                    item: .init(id: item.id, label: item.email),
-                    identityId: item.identityId
-                )
-                .response(from: request, context: context)
+                return try await runtime.presenter
+                    .renderPage(
+                        item: .init(id: item.id, label: item.email),
+                        identityId: item.identityId
+                    )
+                    .response(from: request, context: context)
             }
             catch let error as OpenAPIRepositoryError {
-                return try await runtime.presenter.renderError(
-                    item: .init(id: id, label: ""),
-                    error: error
-                )
-                .response(from: request, context: context)
+                return try await runtime.presenter
+                    .renderError(
+                        item: .init(id: id, label: ""),
+                        error: error
+                    )
+                    .response(from: request, context: context)
             }
         }
 
@@ -108,7 +110,7 @@ extension Email.Remove.Controller {
             }
             do {
                 try await interactor.remove(ids: ids)
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: location,
                     notification: .init(
                         title: "Removed",

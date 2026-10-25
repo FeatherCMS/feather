@@ -62,7 +62,7 @@ extension Session.Remove.Controller {
                         updatedAt: 0
                     )
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.identityPath(identityId),
                     notification: .init(
                         title: "Removed",

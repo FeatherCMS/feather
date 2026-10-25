@@ -116,21 +116,15 @@ extension Variable.Edit {
 
         let state: State
         let action: String
-        let viewHref: String
-        let removeHref: String?
         let nonceToken: String?
 
         init(
             state: State,
             action: String,
-            viewHref: String,
-            removeHref: String?,
             nonceToken: String? = nil
         ) {
             self.state = state
             self.action = action
-            self.viewHref = viewHref
-            self.removeHref = removeHref
             self.nonceToken = nonceToken
         }
 
@@ -156,9 +150,6 @@ extension Variable.Edit {
                 Div {
                     context.build(
                         AdminSubmitButton("Save changes", style: .primary)
-                    )
-                    context.build(
-                        AdminButton("View", href: viewHref, style: .secondary)
                     )
                 }
                 .class("admin-form__actions")

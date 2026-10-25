@@ -38,7 +38,7 @@ extension Email.Edit {
                         state: .primary(
                             title: "Edit user email",
                             description: "Update a user email address.",
-                            actions: [
+                            moreActions: [
                                 .init(
                                     label: "Remove email",
                                     href: state.routes.removePath(state.id),
@@ -54,7 +54,6 @@ extension Email.Edit {
                         state: state.form,
                         action: state.routes.editPath(state.id),
                         submitLabel: "Edit email",
-                        removeHref: nil
                     )
                 )
             }

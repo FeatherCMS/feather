@@ -1,8 +1,8 @@
-import NewsApplication
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import NewsApplication
 import NewsModule
 
 extension Article.Add.Controller {
@@ -28,7 +28,7 @@ extension Article.Add.Controller {
                 title: "Add news article",
                 action: routes.add.path,
                 submitLabel: "Add article",
-                removeHref: nil
+                moreActions: []
             )
         }
 
@@ -51,7 +51,7 @@ extension Article.Add.Controller {
                         title: "Add news article",
                         action: routes.add.path,
                         submitLabel: "Add article",
-                        removeHref: nil
+                        moreActions: []
                     )
                     .response(from: request, context: context)
             }
@@ -68,7 +68,7 @@ extension Article.Add.Controller {
                         title: "Add news article",
                         action: routes.add.path,
                         submitLabel: "Add article",
-                        removeHref: nil
+                        moreActions: []
                     )
                     .response(from: request, context: context)
             }

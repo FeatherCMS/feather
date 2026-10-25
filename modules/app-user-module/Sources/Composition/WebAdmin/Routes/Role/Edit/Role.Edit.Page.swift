@@ -21,15 +21,22 @@ extension Role.Edit {
                         state: .primary(
                             title: "Edit user role",
                             description: "Update this user role.",
-                            actions: permissions.allows(Role.Permissions.delete)
-                                ? [
-                                    .init(
-                                        label: "Remove",
-                                        href: routes.removePath(id),
-                                        style: .destructive
-                                    )
-                                ]
-                                : []
+                            moreActions: [
+                                .init(
+                                    label: "View",
+                                    href: routes.detailsPath(id).description,
+                                    style: .secondary
+                                )
+                            ]
+                                + (permissions.allows(Role.Permissions.delete)
+                                    ? [
+                                        .init(
+                                            label: "Remove",
+                                            href: routes.removePath(id),
+                                            style: .destructive
+                                        )
+                                    ]
+                                    : [])
                         )
                     )
                 )
@@ -38,9 +45,6 @@ extension Role.Edit {
                         state: form,
                         action: routes.editPath(id),
                         submitLabel: "Save changes",
-                        viewHref: routes.detailsPath(id)
-                            .description,
-                        removeHref: nil,
                         nonceToken: nonceToken
                     )
                 )

@@ -1,7 +1,7 @@
-import FeatherWebAdmin
-import FeatherWebShared
 import FeatherModuleKit
 import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
 import Hummingbird
 import SystemAdminAPI
 import SystemModule
@@ -40,24 +40,39 @@ extension Variable.Edit.Presenter {
             let nonceToken = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
+            var moreActions: [AdminButton.State] = [
+                .init(
+                    label: "View",
+                    href: routes.detailsPath(id),
+                    style: .secondary
+                )
+            ]
+            if actions.allows(SystemModule.Variable.Permissions.delete),
+                let deleteID
+            {
+                moreActions.append(
+                    .init(
+                        label: "Remove",
+                        href: AdminLocation.remove(
+                            path: routes.remove.path,
+                            ids: [deleteID],
+                            returnTo: routes.editPath(id)
+                        ),
+                        style: .destructive
+                    )
+                )
+            }
             return try await renderPage(
                 content: Variable.Edit.Page(
-                    routes: routes,
-                    form: Variable.Edit.Form(
-                        state: state,
-                        action: routes.editPath(id),
-                        viewHref: routes.detailsPath(id),
-                        removeHref: actions.allows(
-                            SystemModule.Variable.Permissions.delete
-                        )
-                            ? deleteID.map { deleteID in
-                                AdminLocation.remove(
-                                    path: routes.remove.path,
-                                    ids: [deleteID],
-                                    returnTo: routes.editPath(id)
-                                )
-                            } : nil,
-                        nonceToken: nonceToken
+                    state: .init(
+                        routes: routes,
+                        id: id,
+                        form: Variable.Edit.Form(
+                            state: state,
+                            action: routes.editPath(id),
+                            nonceToken: nonceToken
+                        ),
+                        moreActions: moreActions
                     )
                 ),
                 status: status
@@ -134,7 +149,7 @@ extension Variable.Edit.Presenter {
         }
 
         func renderSuccess(id: String) -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: routes.editPath(id),
                 notification: .init(
                     title: "Saved",

@@ -41,8 +41,8 @@ public struct HTMLResponse: ResponseGenerator {
             .contentType: "text/html; charset=utf-8"
         ]
         var responseCookies = cookies
-        if request.cookies[AdminNotificationFlash.cookieName] != nil {
-            responseCookies.append(AdminNotificationFlash.clearCookie())
+        if request.cookies[AdminNotification.cookieName] != nil {
+            responseCookies.append(AdminNotification.clearCookie())
         }
         for cookie in responseCookies {
             headers[values: .setCookie].append(cookie.description)

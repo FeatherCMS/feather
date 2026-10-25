@@ -51,7 +51,7 @@ extension Asset.File.Remove.Controller {
             }
             do {
                 try await interactor.remove(ids: ids)
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: location,
                     notification: .init(
                         title: "Removed",
@@ -62,7 +62,7 @@ extension Asset.File.Remove.Controller {
                 )
             }
             catch {
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: location,
                     notification: .init(
                         title: "Remove failed",

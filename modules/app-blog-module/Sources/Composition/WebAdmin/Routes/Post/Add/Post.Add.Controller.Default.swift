@@ -19,7 +19,8 @@ extension Post.Add.Controller {
     struct Default: Interface {
         let routes: Post.Router.Routes
         let buildPublicContentRepository:
-            @Sendable (AuthenticatedRequestContext) -> any PublicContent.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any PublicContent
+                .Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Post.Add.Interactor.Interface,
@@ -58,7 +59,7 @@ extension Post.Add.Controller {
                 try await payload.validate()
                 try await runtime.interactor.execute(input: payload)
 
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.posts.path,
                     notification: .init(
                         title: "Added",

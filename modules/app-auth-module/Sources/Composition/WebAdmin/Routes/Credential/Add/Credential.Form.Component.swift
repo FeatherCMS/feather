@@ -50,7 +50,6 @@ extension Credential.Form {
         var state: State
         var action: String
         var submitLabel: String
-        var removeHref: String?
 
         func html(context: inout BuilderContext) -> Form {
             var password = state.password
@@ -85,15 +84,6 @@ extension Credential.Form {
                         context.build(
                             AdminSubmitButton(submitLabel, style: .primary)
                         )
-                        if let removeHref {
-                            context.build(
-                                AdminButton(
-                                    "Remove credential",
-                                    href: removeHref,
-                                    style: .destructive
-                                )
-                            )
-                        }
                     }
                     .class("admin-form__actions")
                 }

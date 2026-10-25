@@ -17,23 +17,24 @@ extension Article.Remove.Presenter {
             let nonce = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
-            return try await renderingEngine.renderAdminDialog(
-                request: request,
-                context: context,
-                title: AdminRemoveConfirmation.dialogTitle,
-                content: AdminRemoveConfirmation(
-                    header: .primary(
-                        title: "Remove news article",
-                        description: "This action cannot be undone."
+            return
+                try await renderingEngine.renderAdminDialog(
+                    request: request,
+                    context: context,
+                    title: AdminRemoveConfirmation.dialogTitle,
+                    content: AdminRemoveConfirmation(
+                        header: .primary(
+                            title: "Remove news article",
+                            description: "This action cannot be undone."
+                        ),
+                        selectedItems: [item.title],
+                        action: routes.removePath(item.id),
+                        nonceToken: nonce,
+                        hiddenFields: [.init(name: "id", value: item.id)]
                     ),
-                    selectedItems: [item.title],
-                    action: routes.removePath(item.id),
-                    nonceToken: nonce,
-                    hiddenFields: [.init(name: "id", value: item.id)]
-                ),
-                size: .small
-            )
-            .response(from: request, context: context)
+                    size: .small
+                )
+                .response(from: request, context: context)
         }
 
         func renderError(_ message: String) async throws -> HTMLResponse {
@@ -50,7 +51,7 @@ extension Article.Remove.Presenter {
         }
 
         func renderRemoved() -> Response {
-            AdminNotificationFlash.redirect(
+            AdminNotification.redirect(
                 to: routes.list.path,
                 notification: .init(
                     title: "Removed",

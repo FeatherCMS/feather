@@ -22,7 +22,7 @@ public struct AdminCopyButton: Component {
     }
 
     public func selectors() -> [any CSS.Selector] {
-        [
+        AdminNotification.styleSelectors() + [
             Class("admin-copy-button") {
                 Display(.inlineFlex)
                 AlignItems(.center)
@@ -41,17 +41,22 @@ public struct AdminCopyButton: Component {
     }
 
     public func html(context: inout BuilderContext) -> Button {
-        Button {
-            FeatherIcons.externalLink()
+        let notificationScript = AdminNotification.showScript(
+            .init(title: "Copied", message: copiedMessage)
+        )
+
+        var button = Button {
+            FeatherIcons.clipboard()
                 .width(16)
                 .height(16)
         }
         .type(.button)
         .ariaLabel(label)
-        .onClick(
-            "navigator.clipboard.writeText(\(javascriptString(value))).then(()=>window.toast&&window.toast.success('Copied',\(javascriptString(copiedMessage))))"
-        )
         .class("admin-copy-button")
+        button = button.onClick(
+            "navigator.clipboard.writeText(\(javascriptString(value))).then(()=>\(notificationScript))"
+        )
+        return button
     }
 
     private func javascriptString(_ value: String) -> String {

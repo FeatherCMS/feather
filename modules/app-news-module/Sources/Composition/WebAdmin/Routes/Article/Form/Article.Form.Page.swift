@@ -16,7 +16,7 @@ extension NewsModule.Article.Form {
         let title: String
         let action: String
         let submitLabel: String
-        let removeHref: String?
+        let moreActions: [AdminButton.State]
         let routes: NewsModule.Article.Router.Routes
 
         func html(
@@ -34,15 +34,7 @@ extension NewsModule.Article.Form {
                             state: .primary(
                                 title: title,
                                 description: "Create or update a news article.",
-                                actions: removeHref.map {
-                                    [
-                                        .init(
-                                            label: "Remove",
-                                            href: $0,
-                                            style: .destructive
-                                        )
-                                    ]
-                                } ?? []
+                                moreActions: moreActions
                             )
                         )
                     )

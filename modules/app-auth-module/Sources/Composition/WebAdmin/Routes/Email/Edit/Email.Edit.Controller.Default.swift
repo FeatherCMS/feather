@@ -129,7 +129,7 @@ extension Email.Edit.Controller {
                         email: payload.normalizedEmail
                     )
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.editPath(id),
                     notification: .init(
                         title: "Saved",

@@ -1,8 +1,8 @@
-import NewsApplication
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import NewsApplication
 import NewsModule
 
 extension Category.Edit.Controller {
@@ -29,7 +29,13 @@ extension Category.Edit.Controller {
                     title: "Edit news category",
                     action: routes.editPath(id),
                     submitLabel: "Save category",
-                    removeHref: routes.removePath(id)
+                    moreActions: [
+                        .init(
+                            label: "Remove",
+                            href: routes.removePath(id),
+                            style: .destructive
+                        )
+                    ]
                 )
             }
             catch {
@@ -50,7 +56,13 @@ extension Category.Edit.Controller {
                 context: context
             )
             let action = routes.editPath(id)
-            let removeHref = routes.removePath(id)
+            let moreActions = [
+                AdminButton.State(
+                    label: "Remove",
+                    href: routes.removePath(id),
+                    style: .destructive
+                )
+            ]
             if let message = input.validationMessage {
                 return try await runtime.presenter
                     .renderForm(
@@ -59,7 +71,7 @@ extension Category.Edit.Controller {
                         title: "Edit news category",
                         action: action,
                         submitLabel: "Save category",
-                        removeHref: removeHref
+                        moreActions: moreActions
                     )
                     .response(from: request, context: context)
             }
@@ -75,7 +87,7 @@ extension Category.Edit.Controller {
                         title: "Edit news category",
                         action: action,
                         submitLabel: "Save category",
-                        removeHref: removeHref
+                        moreActions: moreActions
                     )
                     .response(from: request, context: context)
             }

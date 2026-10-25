@@ -15,9 +15,11 @@ extension Tag.List.Controller {
     struct Default: Interface {
         let routes: Tag.Router.Routes
         let buildViewRepository:
-            @Sendable (AuthenticatedRequestContext) -> any Tag.View.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any Tag.View.Repository
+                .Interface
         let buildStatusRepository:
-            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata.Status.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata
+                .Status.Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Tag.List.Interactor.Interface,
@@ -86,13 +88,13 @@ extension Tag.List.Controller {
                 current: details.metadata
             )
             try await buildStatusRepository(context)
-            .update(
-                referenceType: "blog.tag",
-                referenceID: id,
-                status: targetStatus
-            )
+                .update(
+                    referenceType: "blog.tag",
+                    referenceID: id,
+                    status: targetStatus
+                )
             let toast = statusToastContent(for: targetStatus)
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: payload.normalizedReturnTo ?? routes.tags.path
                     + "/",
                 notification: .init(title: toast.title, message: toast.message)

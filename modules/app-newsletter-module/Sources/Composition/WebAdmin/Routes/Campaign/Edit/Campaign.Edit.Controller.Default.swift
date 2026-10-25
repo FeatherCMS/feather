@@ -62,7 +62,7 @@ extension Campaign.Edit.Controller {
                     name: form.name,
                     fromEmail: form.fromEmail
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.editPath(id),
                     notification: .init(
                         title: "Updated",

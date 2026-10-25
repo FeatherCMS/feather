@@ -127,7 +127,7 @@ extension MagicLink.Edit.Controller {
                         isPersistent: payload.isPersistent.value
                     )
                 )
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.editPath(id),
                     notification: .init(
                         title: "Saved",

@@ -58,7 +58,7 @@ extension Asset.File.Edit.Controller {
 
             do {
                 _ = try await runtime.interactor.update(id: id, input: payload)
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.file.editPath(id),
                     notification: .init(
                         title: "Saved",

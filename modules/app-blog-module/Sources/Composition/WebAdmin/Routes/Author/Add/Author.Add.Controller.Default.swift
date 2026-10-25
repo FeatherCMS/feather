@@ -19,7 +19,8 @@ extension Author.Add.Controller {
     struct Default: Interface {
         let routes: Author.Router.Routes
         let buildPublicContentRepository:
-            @Sendable (AuthenticatedRequestContext) -> any PublicContent.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any PublicContent
+                .Repository.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Author.Add.Interactor.Interface,
@@ -55,7 +56,7 @@ extension Author.Add.Controller {
                 payload = decoded
                 try await decoded.validate()
                 try await runtime.interactor.execute(input: decoded)
-                return AdminNotificationFlash.redirect(
+                return AdminNotification.redirect(
                     to: routes.authors.path,
                     notification: .init(
                         title: "Added",

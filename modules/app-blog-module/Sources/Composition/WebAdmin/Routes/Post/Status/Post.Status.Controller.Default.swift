@@ -2,16 +2,18 @@ import BlogModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import WebModuleWebAdmin
 import WebModule
+import WebModuleWebAdmin
 
 extension Post.Status.Controller {
     struct Default: Interface {
         let routes: Post.Router.Routes
         let buildViewRepository:
-            @Sendable (AuthenticatedRequestContext) -> any Post.View.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any Post.View.Repository
+                .Interface
         let buildStatusRepository:
-            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata.Status.Repository.Interface
+            @Sendable (AuthenticatedRequestContext) -> any WebModule.Metadata
+                .Status.Repository.Interface
 
         func post(
             request: Request,
@@ -28,14 +30,14 @@ extension Post.Status.Controller {
                 current: details.metadata
             )
             try await buildStatusRepository(context)
-            .update(
-                referenceType: "blog.post",
-                referenceID: id,
-                status: targetStatus
-            )
+                .update(
+                    referenceType: "blog.post",
+                    referenceID: id,
+                    status: targetStatus
+                )
 
             let toast = statusToastContent(for: targetStatus)
-            return AdminNotificationFlash.redirect(
+            return AdminNotification.redirect(
                 to: payload.normalizedReturnTo ?? routes.posts.path
                     + "/",
                 notification: .init(title: toast.title, message: toast.message)
