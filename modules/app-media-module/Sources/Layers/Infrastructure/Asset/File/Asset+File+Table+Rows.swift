@@ -8,6 +8,14 @@ extension Asset.File.Table: DatabaseTableWithInsert {
         let status: String
         let title: String?
         let altText: String?
+
+        enum CodingKeys: String, CodingKey {
+            case assetNodeId = "asset_node_id"
+            case storageObjectId = "storage_object_id"
+            case status
+            case title
+            case altText = "alt_text"
+        }
     }
 }
 
@@ -16,6 +24,12 @@ extension Asset.File.Table: DatabaseTableWithUpdate {
         let status: String?
         let title: String??
         let altText: String??
+
+        enum CodingKeys: String, CodingKey {
+            case status
+            case title
+            case altText = "alt_text"
+        }
 
         init(
             status: String,

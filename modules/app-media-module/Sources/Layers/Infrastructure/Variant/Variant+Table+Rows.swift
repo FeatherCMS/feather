@@ -9,6 +9,14 @@ extension Variant.Table: DatabaseTableWithInsert {
         let name: String
         let isRequired: Bool
         let isActive: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case key = "variant_key"
+            case name
+            case isRequired = "is_required"
+            case isActive = "is_active"
+        }
     }
 }
 
@@ -18,6 +26,13 @@ extension Variant.Table: DatabaseTableWithUpdate {
         let name: String
         let isRequired: Bool
         let isActive: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case key = "variant_key"
+            case name
+            case isRequired = "is_required"
+            case isActive = "is_active"
+        }
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Variant.Table.columns.updatedAt] = .currentTimestamp

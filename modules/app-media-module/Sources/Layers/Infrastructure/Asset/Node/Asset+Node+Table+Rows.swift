@@ -12,6 +12,14 @@ extension Asset.Node.Table: DatabaseTableWithInsert {
         let name: String
         let slug: String
         let absoluteSlug: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case parentId = "parent_id"
+            case name
+            case slug
+            case absoluteSlug = "absolute_slug"
+        }
     }
 }
 
@@ -21,6 +29,13 @@ extension Asset.Node.Table: DatabaseTableWithUpdate {
         let name: String
         let slug: String
         let absoluteSlug: String
+
+        enum CodingKeys: String, CodingKey {
+            case parentId = "parent_id"
+            case name
+            case slug
+            case absoluteSlug = "absolute_slug"
+        }
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Asset.Node.Table.columns.updatedAt] = .currentTimestamp

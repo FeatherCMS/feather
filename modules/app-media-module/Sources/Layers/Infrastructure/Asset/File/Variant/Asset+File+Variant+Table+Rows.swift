@@ -9,6 +9,14 @@ extension Asset.File.Variant.Table: DatabaseTableWithInsert {
         let variantId: String
         let variantProcessorId: String
         let storageObjectId: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case assetNodeFileId = "asset_node_file_id"
+            case variantId = "variant_id"
+            case variantProcessorId = "variant_processor_id"
+            case storageObjectId = "storage_object_id"
+        }
     }
 }
 

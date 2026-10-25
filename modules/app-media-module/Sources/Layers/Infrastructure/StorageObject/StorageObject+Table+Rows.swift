@@ -9,6 +9,14 @@ extension StorageObject.Table: DatabaseTableWithInsert {
         let fileExtension: String
         let contentType: String
         let sizeInBytes: Int64
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case key
+            case fileExtension = "extension"
+            case contentType = "content_type"
+            case sizeInBytes = "size_in_bytes"
+        }
     }
 }
 
