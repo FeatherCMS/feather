@@ -410,6 +410,8 @@ public struct AdminDialogHost: Component {
                         );
                         if (selected.length === 0) { return; }
                         var labels = selected.map(function (input) {
+                            var inputLabel = input.getAttribute("data-remove-label");
+                            if (inputLabel) { return inputLabel; }
                             return rowLabel(input.closest("tr"), input.value);
                         });
                         var nonceMeta = document.querySelector(

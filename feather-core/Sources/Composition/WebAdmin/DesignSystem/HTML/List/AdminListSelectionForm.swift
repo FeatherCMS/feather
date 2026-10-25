@@ -9,6 +9,7 @@ public struct AdminListSelectionForm<Table: FlowContent>: Component {
         public let action: String
         public let pageState: AdminListPageState
         public let search: String
+        public let returnTo: String?
         public let button: AdminSubmitButton
         public let isEnabled: Bool
 
@@ -16,12 +17,14 @@ public struct AdminListSelectionForm<Table: FlowContent>: Component {
             action: String,
             pageState: AdminListPageState,
             search: String,
+            returnTo: String? = nil,
             button: AdminSubmitButton,
             isEnabled: Bool = true
         ) {
             self.action = action
             self.pageState = pageState
             self.search = search
+            self.returnTo = returnTo
             self.button = button
             self.isEnabled = isEnabled
         }
@@ -58,6 +61,13 @@ public struct AdminListSelectionForm<Table: FlowContent>: Component {
                             .type(.hidden)
                             .name("search")
                             .value(state.search)
+                    }
+
+                    if let returnTo = state.returnTo {
+                        Input()
+                            .type(.hidden)
+                            .name("returnTo")
+                            .value(returnTo)
                     }
 
                     Script(script())

@@ -69,10 +69,54 @@ extension Asset.File.List {
                     value: "repeat(auto-fill, minmax(220px, 1fr))"
                 )
             }
+            Class("media-assets-grid-select-all") {
+                Display(.flex)
+                AlignItems(.center)
+                Gap(8.px)
+                MarginBottom(12.px)
+            }
+            Custom(".media-assets-card .media-assets-selection-input") {
+                Position(.absolute)
+                Width(1.px)
+                Height(0.px)
+                Padding(0.px)
+                Margin((-1).px)
+                Overflow(.hidden)
+                UnsafeRawProperty(name: "clip-path", value: "inset(50%)")
+                WhiteSpace(.nowrap)
+                Border(0)
+            }
+            Custom(".media-assets-card[data-media-selectable]") {
+                UnsafeRawProperty(name: "cursor", value: "pointer")
+                UnsafeRawProperty(
+                    name: "transition",
+                    value: "border-color 120ms ease, background-color 120ms ease"
+                )
+            }
+            Custom(
+                ".media-assets-card[data-media-selectable]:not(.is-selected):hover"
+            ) {
+                Background(
+                    .variable(TokenKey.Colors.Materials.Tertiary.hover)
+                )
+            }
+            Custom(".media-assets-card.is-selected") {
+                BorderColor(.variable(TokenKey.Colors.Link.default))
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+            }
+            Custom(".media-assets-card[data-media-selectable]:focus-within") {
+                Outline(
+                    2.px,
+                    .solid,
+                    .color(.variable(TokenKey.Colors.Link.default))
+                )
+                OutlineOffset(2.px)
+            }
             Custom(".media-assets-grid > *") {
                 Overflow(.hidden)
             }
             Class("media-assets-card") {
+                Position(.relative)
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(8.px)
@@ -122,6 +166,13 @@ extension Asset.File.List {
             Class("media-assets-card-body") {
                 Display(.grid)
                 Gap(4.px)
+                MinWidth(0.px)
+            }
+            Custom(".media-assets-card-title") {
+                Display(.block)
+                Overflow(.hidden)
+                TextOverflow(.ellipsis)
+                WhiteSpace(.nowrap)
             }
             Custom(".media-assets-card-body h3") {
                 Margin(0)
@@ -160,6 +211,14 @@ extension Asset.File.List {
             Custom(".media-assets-table-preview a") {
                 Display(.inlineBlock)
                 TextDecoration(.none)
+            }
+            Custom(".media-assets-table-name") {
+                Display(.block)
+                Flex(1, .number(1), .auto)
+                MinWidth(0.px)
+                Overflow(.hidden)
+                TextOverflow(.ellipsis)
+                WhiteSpace(.nowrap)
             }
             Custom(".media-assets-table-preview .media-assets-folder-icon svg")
             {
@@ -743,25 +802,74 @@ extension Asset.File.List.Page {
     fileprivate func gridContent(context: inout BuilderContext)
         -> some FlowContent
     {
+        let canRemove =
+            state.permissions.allows(Asset.Permissions.delete)
+            && !state.picker.isEnabled
         let returnTo = browsePath(
             parentId: state.parentId,
             search: state.search.isEmpty ? nil : state.search,
             page: state.pageState.page
         )
-        return Div {
-            if let currentFolder = state.currentFolder {
-                upCard(parentId: currentFolder.parentId, context: &context)
-            }
-            for entry in state.entries {
-                switch entry {
-                case .folder(let folder):
-                    folderCard(folder, returnTo: returnTo, context: &context)
-                case .asset(let item):
-                    assetCard(item, returnTo: returnTo, context: &context)
+        return context.build(
+            AdminListSelectionForm(
+                state: .init(
+                    action: AdminLocation.remove(
+                        path: state.routes.file.remove.path,
+                        ids: [],
+                        returnTo: returnTo
+                    ),
+                    pageState: state.pageState,
+                    search: state.search,
+                    returnTo: returnTo,
+                    button: .init("Remove selected", style: .destructive),
+                    isEnabled: canRemove
+                ),
+                table: Div {
+                    if canRemove {
+                        Div {
+                            context.build(
+                                AdminCheckbox(
+                                    ariaLabel: "Select all assets and folders",
+                                    onChange:
+                                        "this.closest('form').querySelectorAll('input.select-row').forEach(function(input) { input.checked = this.checked; }, this)",
+                                    classes: ["select-all"]
+                                )
+                            )
+                            Span("Select all")
+                        }
+                        .class("media-assets-grid-select-all")
+                    }
+
+                    Div {
+                        if let currentFolder = state.currentFolder {
+                            upCard(parentId: currentFolder.parentId, context: &context)
+                        }
+                        for entry in state.entries {
+                            switch entry {
+                            case .folder(let folder):
+                                folderCard(
+                                    folder,
+                                    canRemove: canRemove,
+                                    returnTo: returnTo,
+                                    context: &context
+                                )
+                            case .asset(let item):
+                                assetCard(
+                                    item,
+                                    canRemove: canRemove,
+                                    returnTo: returnTo,
+                                    context: &context
+                                )
+                            }
+                        }
+                    }
+                    .class("media-assets-grid")
+                    if canRemove {
+                        Script(gridSelectionScript())
+                    }
                 }
-            }
-        }
-        .class("media-assets-grid")
+            )
+        )
     }
 
     fileprivate func listContent(context: inout BuilderContext)
@@ -785,6 +893,7 @@ extension Asset.File.List.Page {
                     ),
                     pageState: state.pageState,
                     search: state.search,
+                    returnTo: returnTo,
                     button: .init("Remove selected", style: .destructive),
                     isEnabled: canRemove
                 ),
@@ -888,10 +997,22 @@ extension Asset.File.List.Page {
 
     fileprivate func folderCard(
         _ folder: Components.Schemas.MediaFolderListItemSchema,
+        canRemove: Bool,
         returnTo: String,
         context: inout BuilderContext
     ) -> some FlowContent {
-        Div {
+        var card = Div {
+            if canRemove {
+                context.build(
+                    AdminCheckbox(
+                        name: "ids",
+                        value: folder.id,
+                        ariaLabel: "Select \(folder.name)",
+                        classes: ["select-row", "media-assets-selection-input"]
+                    )
+                )
+                .data("remove-label", folder.name)
+            }
             A {
                 Div {
                     FeatherIcons.folder()
@@ -904,6 +1025,8 @@ extension Asset.File.List.Page {
                 H3 {
                     folder.name
                 }
+                .class("media-assets-card-title")
+                .title(folder.name)
                 P(folderItemCountLabel(for: folder))
             }
             .class("media-assets-card-body")
@@ -927,18 +1050,19 @@ extension Asset.File.List.Page {
                         )
                     )
                 }
-                if state.permissions.allows(Asset.Permissions.delete)
-                    && !state.picker.isEnabled
-                {
-                }
             }
             .class("media-assets-card-actions")
         }
         .class("media-assets-card")
+        if canRemove {
+            card = card.data("media-selectable", "true")
+        }
+        return card
     }
 
     fileprivate func assetCard(
         _ item: Asset.File.List.Model.AssetItem,
+        canRemove: Bool,
         returnTo: String,
         context: inout BuilderContext
     ) -> some FlowContent {
@@ -950,7 +1074,18 @@ extension Asset.File.List.Page {
             for: item.preview?.url ?? item.asset.url
         )
         let originalURL = assetOriginalLink(for: item.asset)
-        return Div {
+        var card = Div {
+            if canRemove {
+                context.build(
+                    AdminCheckbox(
+                        name: "ids",
+                        value: item.asset.id,
+                        ariaLabel: "Select \(displayTitle(for: item.asset))",
+                        classes: ["select-row", "media-assets-selection-input"]
+                    )
+                )
+                .data("remove-label", displayTitle(for: item.asset))
+            }
             if state.picker.isEnabled, let field = state.picker.field {
                 Button {
                     Div {
@@ -1011,6 +1146,8 @@ extension Asset.File.List.Page {
 
             Div {
                 H3(displayTitle(for: item.asset))
+                    .class("media-assets-card-title")
+                    .title(displayTitle(for: item.asset))
                 P(fileSizeLabel(bytes: item.asset.sizeBytes))
             }
             .class("media-assets-card-body")
@@ -1060,14 +1197,50 @@ extension Asset.File.List.Page {
                         )
                     )
                 }
-                if state.permissions.allows(Asset.Permissions.delete)
-                    && !state.picker.isEnabled
-                {
-                }
             }
             .class("media-assets-card-actions")
         }
         .class("media-assets-card")
+        if canRemove {
+            card = card.data("media-selectable", "true")
+        }
+        return card
+    }
+
+    fileprivate func gridSelectionScript() -> String {
+        """
+        (function () {
+            var script = document.currentScript;
+            var form = script && script.closest("form.table-remove-form");
+            if (!form || form.dataset.gridSelectionReady === "true") { return; }
+            form.dataset.gridSelectionReady = "true";
+
+            function syncCard(input) {
+                var card = input.closest(".media-assets-card[data-media-selectable]");
+                if (!card) { return; }
+                card.classList.toggle("is-selected", input.checked);
+            }
+
+            form.addEventListener("click", function (event) {
+                var card = event.target.closest(".media-assets-card[data-media-selectable]");
+                if (!card || event.target.closest("a, button, input, select, textarea, label")) { return; }
+                var input = card.querySelector("input.select-row");
+                if (!input) { return; }
+                input.checked = !input.checked;
+                input.dispatchEvent(new Event("change", { bubbles: true }));
+            });
+
+            form.addEventListener("change", function (event) {
+                if (event.target.matches("input.select-row")) {
+                    syncCard(event.target);
+                } else if (event.target.matches("input.select-all")) {
+                    form.querySelectorAll("input.select-row").forEach(syncCard);
+                }
+            });
+
+            form.querySelectorAll("input.select-row").forEach(syncCard);
+        })();
+        """
     }
 
     fileprivate func upRow(
@@ -1352,7 +1525,11 @@ extension Asset.File.List.Page {
     fileprivate func folderTitleCell(
         for folder: Components.Schemas.MediaFolderListItemSchema
     ) -> some BasicTag {
-        Td(folder.name)
+        Td {
+            Span(folder.name)
+                .class("media-assets-table-name")
+                .title(folder.name)
+        }
             .data("label", "Name")
             .setAsRemoveConfirmationLabel()
     }
@@ -1366,6 +1543,8 @@ extension Asset.File.List.Page {
         Td {
             Span {
                 Span(fileName(for: item.asset))
+                    .class("media-assets-table-name")
+                    .title(displayTitle(for: item.asset))
                 context.build(
                     AdminPreviewLink(
                         href: originalURL,
@@ -1374,7 +1553,7 @@ extension Asset.File.List.Page {
                 )
             }
             .style(
-                "display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;line-height:1.25;"
+                "display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;line-height:1.25;max-width:100%;min-width:0;"
             )
         }
         .data("label", "Name")
