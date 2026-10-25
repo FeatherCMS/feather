@@ -25,7 +25,7 @@ extension Rule.Remove.Controller {
                 return try await presenter.renderForbiddenPage()
                     .response(from: request, context: context)
             }
-            let id = try context.requiredID()
+            let id = try context.requiredParameter("redirectRuleId")
             do {
                 let payload = try await request.decode(
                     as: NonceRequest<AdminListRemoveFormInput>.self,

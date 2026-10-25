@@ -25,7 +25,7 @@ extension Rule.View.Controller {
             else {
                 return try await presenter.renderErrorPage(error: .forbidden)
             }
-            let id = try context.requiredID()
+            let id = try context.requiredParameter("redirectRuleId")
             do {
                 return try await presenter.renderDetailsPage(
                     rule: try await interactor.load(id: id),

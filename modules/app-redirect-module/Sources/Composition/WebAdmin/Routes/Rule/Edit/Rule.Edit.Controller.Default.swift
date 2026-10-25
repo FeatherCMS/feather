@@ -27,7 +27,7 @@ extension RedirectModule.Rule.Edit.Controller {
                     to: RedirectModule.Rule.Permissions.update
                 )
             else { return try await presenter.renderForbiddenPage() }
-            let id = try context.requiredID()
+            let id = try context.requiredParameter("redirectRuleId")
             do {
                 return try await presenter.renderEditPage(
                     id: id,
@@ -61,7 +61,7 @@ extension RedirectModule.Rule.Edit.Controller {
                 return try await presenter.renderForbiddenPage()
                     .response(from: request, context: context)
             }
-            let id = try context.requiredID()
+            let id = try context.requiredParameter("redirectRuleId")
             var lastPayload: RedirectModule.Rule.Edit.Form.Input?
             do {
                 let payload = try await request.decode(
