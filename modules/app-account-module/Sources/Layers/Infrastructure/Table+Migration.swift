@@ -31,5 +31,28 @@ public struct TableMigration: DatabaseMigration {
                 try await connection.run(query: query) { _ in }
             }
         }
+        try await Settings.Table.applyPageSizeConstraint(on: connection)
+    }
+}
+
+extension Settings.Table {
+    static func applyPageSizeConstraint(
+        on connection: any DatabaseConnection
+    ) async throws {
+        try await connection.run(
+            query: #"""
+                DO $$ BEGIN
+                    IF NOT EXISTS (
+                        SELECT 1 FROM pg_constraint
+                        WHERE conname = 'account_settings_page_size_check'
+                          AND conrelid = 'account_settings'::regclass
+                    ) THEN
+                        ALTER TABLE account_settings
+                        ADD CONSTRAINT account_settings_page_size_check
+                        CHECK (page_size IN (10, 20, 50, 100));
+                    END IF;
+                END $$;
+                """#
+        ) { _ in }
     }
 }

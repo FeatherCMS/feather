@@ -1,4 +1,5 @@
 import FeatherDBAL
+import FeatherDatabase
 import ContactModule
 
 extension Submission.Table {
@@ -30,5 +31,25 @@ extension Submission.Table {
                 .init(name: "contact_form_submission_status_idx", columns: [.init(name: columns.status.name, type: .string)]),
             ]
         )
+    }
+
+    static func applyStatusConstraint(
+        on connection: any DatabaseConnection
+    ) async throws {
+        try await connection.run(
+            query: #"""
+                DO $$ BEGIN
+                    IF NOT EXISTS (
+                        SELECT 1 FROM pg_constraint
+                        WHERE conname = 'contact_form_submission_status_check'
+                          AND conrelid = 'contact_form_submission'::regclass
+                    ) THEN
+                        ALTER TABLE contact_form_submission
+                        ADD CONSTRAINT contact_form_submission_status_check
+                        CHECK (status IN ('received', 'processed', 'spam', 'failed'));
+                    END IF;
+                END $$;
+                """#
+        ) { _ in }
     }
 }

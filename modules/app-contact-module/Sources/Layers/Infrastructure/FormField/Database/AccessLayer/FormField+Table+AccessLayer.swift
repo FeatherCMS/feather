@@ -90,7 +90,7 @@ extension FormField {
                         )
                     ) THEN
                         ALTER TABLE contact_form_field
-                        ADD CONSTRAINT contact_form_field_allowed_values_check
+                        ADD CONSTRAINT contact_form_field_check
                         CHECK (
                             (type IN ('select', 'radio') AND jsonb_array_length(allowed_values) > 0)
                             OR (type IN ('text', 'textarea', 'toggle', 'hidden') AND allowed_values = '[]'::jsonb)

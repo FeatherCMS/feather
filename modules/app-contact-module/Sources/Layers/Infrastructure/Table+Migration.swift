@@ -36,5 +36,6 @@ public struct TableMigration: DatabaseMigration {
             }
         }
         try await FormField.AccessLayer.applyCheckConstraints(on: connection)
+        try await Submission.Table.applyStatusConstraint(on: connection)
     }
 }
