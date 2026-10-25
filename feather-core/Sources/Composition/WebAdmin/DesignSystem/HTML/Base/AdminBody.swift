@@ -29,6 +29,7 @@ public struct AdminBody<T: Component>: Component where T.HTML: FlowContent {
     public func html(context: inout BuilderContext) -> Body {
         Body {
             context.build(content)
+            context.build(AdminNotification.Template())
 
             if showsFooter {
                 Div {

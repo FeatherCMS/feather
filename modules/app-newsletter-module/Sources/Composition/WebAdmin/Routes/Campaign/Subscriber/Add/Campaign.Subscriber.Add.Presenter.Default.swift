@@ -27,9 +27,9 @@ extension Campaign.Subscriber.Add.Presenter {
                     error: error,
                     editAction: nil,
                     pageHeader: .primary(
-                        title: "Edit newsletter campaign",
+                        title: "Edit campaign",
                         description:
-                            "Update the newsletter campaign settings."
+                            "Update the campaign settings."
                     ),
                     routes: routes
                 )

@@ -22,7 +22,7 @@ public struct AdminCopyButton: Component {
     }
 
     public func selectors() -> [any CSS.Selector] {
-        AdminNotification.styleSelectors() + [
+        [
             Class("admin-copy-button") {
                 Display(.inlineFlex)
                 AlignItems(.center)
