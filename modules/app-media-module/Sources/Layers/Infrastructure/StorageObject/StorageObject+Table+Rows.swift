@@ -28,6 +28,15 @@ extension StorageObject.Table: DatabaseTableWithDetail {
         let contentType: String
         let sizeInBytes: Int64
         let createdAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case key
+            case fileExtension = "extension"
+            case contentType = "content_type"
+            case sizeInBytes = "size_in_bytes"
+            case createdAt = "created_at"
+        }
     }
 }
 
@@ -39,5 +48,14 @@ extension StorageObject.Table: DatabaseTableWithList {
         let contentType: String
         let sizeInBytes: Int64
         let createdAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case key
+            case fileExtension = "extension"
+            case contentType = "content_type"
+            case sizeInBytes = "size_in_bytes"
+            case createdAt = "created_at"
+        }
     }
 }

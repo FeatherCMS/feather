@@ -49,6 +49,16 @@ extension Variant.Table: DatabaseTableWithDetail {
         let isActive: Bool
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case key = "variant_key"
+            case name
+            case isRequired = "is_required"
+            case isActive = "is_active"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -61,6 +71,16 @@ extension Variant.Table: DatabaseTableWithList {
         let isActive: Bool
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case key = "variant_key"
+            case name
+            case isRequired = "is_required"
+            case isActive = "is_active"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
