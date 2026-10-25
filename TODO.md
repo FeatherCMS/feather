@@ -25,3 +25,4 @@
 - [ ] sign in oldalak captcha -> renderer abstraction for admin/app
 - [ ] protocol buffer api 
 - [ ] review admin css
+- [ ] contact custom submit label + rce display data 
