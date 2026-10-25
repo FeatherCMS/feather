@@ -172,13 +172,13 @@ extension MenuItem.List.Page {
                                                             .fraction(2),
                                                             .fraction(2),
                                                             .fixed(140),
-                                                            .fixed(250),
+                                                            .actions,
                                                         ]
                                                         : [
                                                             .fraction(2),
                                                             .fraction(2),
                                                             .fixed(140),
-                                                            .fixed(250),
+                                                            .actions,
                                                         ]
                                                 ),
                                                 hasSelection: canDelete,
