@@ -44,16 +44,7 @@ extension Issue.View {
             }
             return Section {
                 context.build(
-                    AdminBreadcrumb(
-                        links: routes.breadcrumb + [
-                            .init(
-                                label: "Issues",
-                                link: routes.issuesPath(
-                                    newsletterId: newsletterId
-                                )
-                            )
-                        ]
-                    )
+                    AdminBreadcrumb(links: routes.campaignBreadcrumb)
                 )
                 context.build(
                     AdminPageHeader(

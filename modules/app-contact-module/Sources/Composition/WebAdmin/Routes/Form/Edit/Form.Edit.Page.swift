@@ -25,11 +25,8 @@ extension ContactModule.Form.Edit {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: state.isReadOnly
-                                ? "Contact form" : "Edit contact form",
-                            description: state.isReadOnly
-                                ? "Review the contact form settings."
-                                : "Update the contact form settings."
+                            title: "Edit contact form",
+                            description: "Update the contact form settings."
                         )
                     )
                 )

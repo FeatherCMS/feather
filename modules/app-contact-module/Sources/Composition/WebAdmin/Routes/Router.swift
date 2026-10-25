@@ -38,7 +38,6 @@ public struct Router {
         )
         let submissionMailRoutes = SubmissionMail.Router.Routes(
             root: routes.root,
-            breadcrumb: routes.breadcrumb,
             formRoutes: formRoutes
         )
 

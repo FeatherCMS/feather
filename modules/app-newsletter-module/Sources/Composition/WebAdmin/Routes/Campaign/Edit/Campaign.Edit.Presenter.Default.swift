@@ -39,8 +39,9 @@ extension Campaign.Edit.Presenter {
                             Set(permissions.map(PermissionKey.init))
                         ),
                         pageHeader: .primary(
-                            title: "Edit campaign",
-                            description: "Update this newsletter campaign."
+                            title: "Edit newsletter campaign",
+                            description:
+                                "Update the newsletter campaign settings."
                         )
                     )
                 )

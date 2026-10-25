@@ -18,7 +18,7 @@ extension ContactModule.Form {
                 AdminTabBar(links: [
                     .init(
                         label: "Details",
-                        href: routes.formDetailsPagePath(formId),
+                        href: routes.formEditPath(formId),
                         isCurrent: active == .details
                     ),
                     .init(

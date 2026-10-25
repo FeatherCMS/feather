@@ -38,22 +38,7 @@ extension Campaign.Subscriber.Form {
             return Section {
                 context.build(
                     AdminBreadcrumb(
-                        links: state.routes.breadcrumb + [
-                            .init(
-                                label: "Campaigns",
-                                link: state.routes.list.path
-                            ),
-                            .init(
-                                label: "Campaign subscribers",
-                                link: state.routes.subscribersPath(
-                                    newsletterId: state.newsletterId
-                                )
-                            ),
-                            .init(
-                                label: state.isEdit ? "Edit" : "Add",
-                                link: action
-                            ),
-                        ]
+                        links: state.routes.campaignBreadcrumb
                     )
                 )
                 context.build(AdminPageHeader(state: state.pageHeader))

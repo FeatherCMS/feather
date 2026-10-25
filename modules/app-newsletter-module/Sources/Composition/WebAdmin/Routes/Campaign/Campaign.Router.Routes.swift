@@ -48,6 +48,10 @@ extension Campaign.Router {
             edit.path(parameter: "newsletterId", value: id)
         }
 
+        var campaignBreadcrumb: [AdminBreadcrumb.Link] {
+            breadcrumb + [.init(label: "Campaign", link: list.path)]
+        }
+
         var subscribers: WebRoute {
             list.appending(parameter: "newsletterId")
                 .appending(pathComponent: "subscribers")

@@ -32,7 +32,7 @@ extension Campaign {
                 .init(
                     label: "Details",
                     href:
-                        routes.detailsPath(id),
+                        routes.editPath(id),
                     isCurrent: active == .details
                 ),
                 .init(

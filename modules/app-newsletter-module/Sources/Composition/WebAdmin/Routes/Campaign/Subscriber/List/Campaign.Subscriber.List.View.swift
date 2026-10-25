@@ -23,14 +23,7 @@ extension Campaign.Subscriber.List {
         func html(context: inout BuilderContext) -> some BasicTag {
             Section {
                 context.build(
-                    AdminBreadcrumb(
-                        links: state.routes.breadcrumb + [
-                            .init(
-                                label: "Campaigns",
-                                link: state.routes.list.path
-                            )
-                        ]
-                    )
+                    AdminBreadcrumb(links: state.routes.campaignBreadcrumb)
                 )
                 context.build(
                     AdminPageHeader(

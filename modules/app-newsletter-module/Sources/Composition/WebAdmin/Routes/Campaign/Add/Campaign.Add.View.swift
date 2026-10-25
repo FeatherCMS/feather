@@ -23,18 +23,7 @@ extension Campaign.Add {
         func html(context: inout BuilderContext) -> some BasicTag {
             Section {
                 context.build(
-                    AdminBreadcrumb(
-                        links: routes.breadcrumb + [
-                            .init(
-                                label: "Campaigns",
-                                link: routes.list.path
-                            ),
-                            .init(
-                                label: "Add",
-                                link: routes.add.path
-                            ),
-                        ]
-                    )
+                    AdminBreadcrumb(links: routes.campaignBreadcrumb)
                 )
                 context.build(
                     AdminPageHeader(

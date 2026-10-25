@@ -124,62 +124,64 @@ extension ContactModule.Form {
                 if let error = state.error {
                     P(error).class("admin-form__error")
                 }
-                context.build(
-                    AdminFormFieldInput(
-                        state: .init(
-                            name: "key",
-                            label: "Key",
-                            value: state.key,
-                            isRequired: true,
-                            isReadOnly: isReadOnly
+                if mode == .details {
+                    context.build(
+                        AdminFormFieldInput(
+                            state: .init(
+                                name: "key",
+                                label: "Key",
+                                value: state.key,
+                                isRequired: true,
+                                isReadOnly: isReadOnly
+                            )
                         )
                     )
-                )
-                context.build(
-                    AdminFormFieldInput(
-                        state: .init(
-                            name: "name",
-                            label: "Name",
-                            value: state.name,
-                            isRequired: true,
-                            isReadOnly: isReadOnly
+                    context.build(
+                        AdminFormFieldInput(
+                            state: .init(
+                                name: "name",
+                                label: "Name",
+                                value: state.name,
+                                isRequired: true,
+                                isReadOnly: isReadOnly
+                            )
                         )
                     )
-                )
-                context.build(
-                    AdminFormFieldInput(
-                        state: .init(
-                            name: "successMessage",
-                            label: "Success message",
-                            value: state.successMessage,
-                            help: "Shown after a successful submission.",
-                            isReadOnly: isReadOnly
+                    context.build(
+                        AdminFormFieldInput(
+                            state: .init(
+                                name: "successMessage",
+                                label: "Success message",
+                                value: state.successMessage,
+                                help: "Shown after a successful submission.",
+                                isReadOnly: isReadOnly
+                            )
                         )
                     )
-                )
-                context.build(
-                    AdminFormFieldInput(
-                        state: .init(
-                            name: "failureMessage",
-                            label: "Failure message",
-                            value: state.failureMessage,
-                            help:
-                                "Shown when a submission cannot be processed.",
-                            isReadOnly: isReadOnly
+                    context.build(
+                        AdminFormFieldInput(
+                            state: .init(
+                                name: "failureMessage",
+                                label: "Failure message",
+                                value: state.failureMessage,
+                                help:
+                                    "Shown when a submission cannot be processed.",
+                                isReadOnly: isReadOnly
+                            )
                         )
                     )
-                )
-                context.build(
-                    AdminFormFieldInput(
-                        state: .init(
-                            name: "redirectUrl",
-                            label: "Redirect URL",
-                            value: state.redirectUrl ?? "",
-                            help: "Optional URL to use after submission.",
-                            isReadOnly: isReadOnly
+                    context.build(
+                        AdminFormFieldInput(
+                            state: .init(
+                                name: "redirectUrl",
+                                label: "Redirect URL",
+                                value: state.redirectUrl ?? "",
+                                help: "Optional URL to use after submission.",
+                                isReadOnly: isReadOnly
+                            )
                         )
                     )
-                )
+                }
                 if mode == .fields, !state.availableFields.isEmpty {
                     Section {
                         Div {

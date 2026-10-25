@@ -133,20 +133,14 @@ extension ContactModule.Form {
                 breadcrumb + [.init(label: "Forms", link: forms.path)]
             }
 
-            func formDetailsBreadcrumb(_ key: String)
-                -> [AdminBreadcrumb.Link]
-            {
-                formsBreadcrumb + [
-                    .init(label: key, link: formDetailsPagePath(key))
-                ]
+            var formBreadcrumb: [AdminBreadcrumb.Link] {
+                breadcrumb + [.init(label: "Form", link: forms.path)]
             }
 
-            func formEmailsBreadcrumb(_ key: String)
+            func formDetailsBreadcrumb(_: String)
                 -> [AdminBreadcrumb.Link]
             {
-                formsBreadcrumb + [
-                    .init(label: "Emails", link: formEmailsPath(key))
-                ]
+                formBreadcrumb
             }
 
             func formEmailsPath(

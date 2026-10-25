@@ -116,17 +116,8 @@ extension ContactModule.FormField {
             func fieldAddBreadcrumb(
                 _ formKey: String?
             ) -> [AdminBreadcrumb.Link] {
-                let forms = root.appending(pathComponent: "forms")
-                if let formKey {
-                    return breadcrumb
-                        + [.init(label: "Forms", link: forms.path)]
-                        + [
-                            .init(
-                                label: formKey,
-                                link: formFieldsPath(formKey)
-                            ),
-                            .init(label: "Add field", link: fieldAdd.path),
-                        ]
+                if formKey != nil {
+                    return formRoutes.formBreadcrumb
                 }
                 return fieldsBreadcrumb + [
                     .init(label: "Add field", link: fieldAdd.path)

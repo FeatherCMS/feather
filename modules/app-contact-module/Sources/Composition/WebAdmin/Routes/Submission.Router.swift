@@ -123,19 +123,9 @@ extension Submission {
             }
 
             func formSubmissionsBreadcrumb(
-                _ key: String
+                _: String
             ) -> [AdminBreadcrumb.Link] {
-                breadcrumb
-                    + [.init(label: "Forms", link: root.appending(pathComponent: "forms").path)]
-                    + [
-                        .init(
-                            label: "Submissions",
-                            link: formSubmissions.path(
-                                parameter: "formKey",
-                                value: key
-                            )
-                        )
-                    ]
+                formRoutes.formBreadcrumb
             }
         }
     }

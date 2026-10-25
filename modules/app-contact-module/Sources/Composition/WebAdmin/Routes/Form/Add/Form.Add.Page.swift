@@ -20,7 +20,7 @@ extension ContactModule.Form.Add {
         func html(context: inout BuilderContext) -> some BasicTag {
             Section {
                 context.build(
-                    AdminBreadcrumb(links: state.routes.formsBreadcrumb)
+                    AdminBreadcrumb(links: state.routes.formBreadcrumb)
                 )
                 context.build(
                     AdminPageHeader(

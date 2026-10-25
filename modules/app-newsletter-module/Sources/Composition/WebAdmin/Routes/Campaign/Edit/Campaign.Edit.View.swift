@@ -24,14 +24,7 @@ extension Campaign.Edit {
             let editPath = state.routes.editPath(state.id)
             return Section {
                 context.build(
-                    AdminBreadcrumb(
-                        links: state.routes.breadcrumb + [
-                            .init(
-                                label: "Campaigns",
-                                link: state.routes.list.path
-                            )
-                        ]
-                    )
+                    AdminBreadcrumb(links: state.routes.campaignBreadcrumb)
                 )
                 context.build(
                     AdminPageHeader(

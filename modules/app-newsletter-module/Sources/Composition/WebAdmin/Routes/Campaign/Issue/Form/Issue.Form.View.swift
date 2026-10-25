@@ -31,18 +31,7 @@ extension Issue.Form {
             return Section {
                 context.build(
                     AdminBreadcrumb(
-                        links: state.routes.breadcrumb + [
-                            .init(
-                                label: "Campaign issues",
-                                link: state.routes.issuesPath(
-                                    newsletterId: state.newsletterId
-                                )
-                            ),
-                            .init(
-                                label: state.issueId == nil ? "Add" : "Edit",
-                                link: action
-                            ),
-                        ]
+                        links: state.routes.campaignBreadcrumb
                     )
                 )
                 context.build(AdminPageHeader(state: state.pageHeader))

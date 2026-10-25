@@ -28,9 +28,9 @@ extension ContactModule.Form.Edit.Fields {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Contact form fields",
+                            title: "Edit contact form",
                             description:
-                                "Choose the fields used by this form and arrange their order."
+                                "Update the contact form settings."
                         )
                     )
                 )

@@ -24,20 +24,7 @@ extension Issue.Search {
         func html(context: inout BuilderContext) -> some BasicTag {
             Section {
                 context.build(
-                    AdminBreadcrumb(
-                        links: state.routes.breadcrumb + [
-                            .init(
-                                label: "Campaigns",
-                                link: state.routes.list.path
-                            ),
-                            .init(
-                                label: "Issues",
-                                link: state.routes.issuesPath(
-                                    newsletterId: state.newsletterId
-                                )
-                            ),
-                        ]
-                    )
+                    AdminBreadcrumb(links: state.routes.campaignBreadcrumb)
                 )
                 context.build(
                     AdminPageHeader(
