@@ -11,6 +11,10 @@ extension AuthModule.Authorization.Permissions.Query {
     public struct Database: Interface {
         private struct Root: DatabaseTableRowDecodable {
             let isRoot: Bool
+
+            enum CodingKeys: String, CodingKey {
+                case isRoot = "is_root"
+            }
         }
 
         private struct RoleID: DatabaseTableRowDecodable {
@@ -31,6 +35,10 @@ extension AuthModule.Authorization.Permissions.Query {
 
         private struct PermissionName: DatabaseTableRowDecodable {
             let name: String?
+
+            enum CodingKeys: String, CodingKey {
+                case name = "name"
+            }
         }
 
         private let context: any DatabaseContext

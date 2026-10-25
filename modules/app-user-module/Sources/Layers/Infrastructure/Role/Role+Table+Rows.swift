@@ -10,6 +10,15 @@ extension Role.Table: DatabaseTableWithDetail {
         public let notes: String?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case notes = "notes"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
     }
 
@@ -21,6 +30,15 @@ extension Role.Table: DatabaseTableWithDetail {
         public let notes: String?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case notes = "notes"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
     }
 

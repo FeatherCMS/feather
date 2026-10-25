@@ -60,6 +60,18 @@ extension Author.Table: DatabaseTableWithDetail {
         let content: String
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case notes = "notes"
+            case excerpt = "excerpt"
+            case profileImageAssetId = "profile_image_asset_id"
+            case content = "content"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -71,6 +83,15 @@ extension Author.Table: DatabaseTableWithList {
         let profileImageAssetId: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case name = "name"
+            case excerpt = "excerpt"
+            case profileImageAssetId = "profile_image_asset_id"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

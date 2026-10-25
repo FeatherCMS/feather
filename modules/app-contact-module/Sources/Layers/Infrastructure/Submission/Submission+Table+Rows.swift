@@ -43,6 +43,17 @@ extension Submission.Table: DatabaseTableWithDetail {
         public let status: String
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case formId = "form_id"
+            case values = "values"
+            case itemsSnapshot = "items_snapshot"
+            case metadata = "metadata"
+            case status = "status"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -56,6 +67,17 @@ extension Submission.Table: DatabaseTableWithList {
         public let status: String
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case formId = "form_id"
+            case values = "values"
+            case itemsSnapshot = "items_snapshot"
+            case metadata = "metadata"
+            case status = "status"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

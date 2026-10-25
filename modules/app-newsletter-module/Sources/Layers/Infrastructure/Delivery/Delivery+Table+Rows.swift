@@ -66,6 +66,17 @@ extension Delivery.Table: DatabaseTableWithDetail {
         public let failureReason: String?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case issueId = "issue_id"
+            case newsletterId = "newsletter_id"
+            case subscriberEmail = "subscriber_email"
+            case status = "status"
+            case sentDate = "sent_date"
+            case failureReason = "failure_reason"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -79,6 +90,17 @@ extension Delivery.Table: DatabaseTableWithList {
         public let failureReason: String?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case issueId = "issue_id"
+            case newsletterId = "newsletter_id"
+            case subscriberEmail = "subscriber_email"
+            case status = "status"
+            case sentDate = "sent_date"
+            case failureReason = "failure_reason"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

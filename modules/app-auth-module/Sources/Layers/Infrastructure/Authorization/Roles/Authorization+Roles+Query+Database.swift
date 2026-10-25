@@ -17,6 +17,10 @@ extension AuthModule.Authorization.Roles.Query {
 
         private struct RoleName: DatabaseTableRowDecodable {
             let name: String?
+
+            enum CodingKeys: String, CodingKey {
+                case name = "name"
+            }
         }
 
         private let context: any DatabaseContext

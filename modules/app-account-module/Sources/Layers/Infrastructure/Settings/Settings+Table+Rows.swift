@@ -11,6 +11,16 @@ extension Settings.Table: DatabaseTableWithDetail {
         let pageSize: Int
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case userId = "user_id"
+            case language = "language"
+            case timezone = "timezone"
+            case pageSize = "page_size"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

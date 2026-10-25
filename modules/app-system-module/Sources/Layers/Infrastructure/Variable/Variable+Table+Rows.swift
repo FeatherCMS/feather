@@ -31,6 +31,14 @@ extension Variable.Table: DatabaseTableWithInsert {
         let value: String
         let name: String?
         let notes: String?
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case value = "value"
+            case name = "name"
+            case notes = "notes"
+        }
     }
     }
 
@@ -41,6 +49,14 @@ extension Variable.Table: DatabaseTableWithInsert {
         let value: String
         let name: String?
         let notes: String?
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case value = "value"
+            case name = "name"
+            case notes = "notes"
+        }
     }
 }
 

@@ -9,6 +9,14 @@ extension Email.Table: DatabaseTableWithDetail {
         let email: String
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case identityId = "identity_id"
+            case email = "email"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -19,6 +27,14 @@ extension Email.Table: DatabaseTableWithList {
         let email: String
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case identityId = "identity_id"
+            case email = "email"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

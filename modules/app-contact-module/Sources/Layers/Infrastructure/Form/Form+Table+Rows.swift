@@ -55,6 +55,17 @@ extension Form.Table: DatabaseTableWithDetail {
         public let redirectUrl: String?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case successMessage = "success_message"
+            case failureMessage = "failure_message"
+            case redirectUrl = "redirect_url"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -68,6 +79,17 @@ extension Form.Table: DatabaseTableWithList {
         public let redirectUrl: String?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case successMessage = "success_message"
+            case failureMessage = "failure_message"
+            case redirectUrl = "redirect_url"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

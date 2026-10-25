@@ -12,6 +12,17 @@ extension Invitation.Table: DatabaseTableWithDetail {
         let expiresAt: Date
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case userId = "user_id"
+            case email = "email"
+            case token = "token"
+            case roleIds = "role_ids"
+            case expiresAt = "expires_at"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -25,6 +36,17 @@ extension Invitation.Table: DatabaseTableWithList {
         let expiresAt: Date
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case userId = "user_id"
+            case email = "email"
+            case token = "token"
+            case roleIds = "role_ids"
+            case expiresAt = "expires_at"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

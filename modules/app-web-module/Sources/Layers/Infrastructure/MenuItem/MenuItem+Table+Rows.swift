@@ -71,6 +71,20 @@ extension MenuItem.Table: DatabaseTableWithDetail {
         let notes: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case menuId = "menu_id"
+            case label = "label"
+            case url = "url"
+            case priority = "priority"
+            case isBlank = "is_blank"
+            case permission = "permission"
+            case authentication = "authentication"
+            case notes = "notes"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -87,6 +101,20 @@ extension MenuItem.Table: DatabaseTableWithList {
         let notes: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case menuId = "menu_id"
+            case label = "label"
+            case url = "url"
+            case priority = "priority"
+            case isBlank = "is_blank"
+            case permission = "permission"
+            case authentication = "authentication"
+            case notes = "notes"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

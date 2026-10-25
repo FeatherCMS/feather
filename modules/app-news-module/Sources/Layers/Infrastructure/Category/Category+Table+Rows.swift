@@ -76,6 +76,16 @@ extension NewsModule.Category.Table: DatabaseTableWithDetail {
         public let imageAssetId: String?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case title = "title"
+            case excerpt = "excerpt"
+            case content = "content"
+            case imageAssetId = "image_asset_id"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -88,6 +98,16 @@ extension NewsModule.Category.Table: DatabaseTableWithList {
         public let imageAssetId: String?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case title = "title"
+            case excerpt = "excerpt"
+            case content = "content"
+            case imageAssetId = "image_asset_id"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

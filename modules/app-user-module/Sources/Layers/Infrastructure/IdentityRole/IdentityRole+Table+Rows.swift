@@ -17,9 +17,17 @@ extension IdentityRole.Table: DatabaseTableWithDelete {}
 extension IdentityRole.Table {
     struct RoleID: DatabaseTableRowDecodable {
         let roleId: String
+
+        enum CodingKeys: String, CodingKey {
+            case roleId = "role_id"
+        }
     }
 
     struct IdentityID: DatabaseTableRowDecodable {
         let identityId: String
+
+        enum CodingKeys: String, CodingKey {
+            case identityId = "identity_id"
+        }
     }
 }

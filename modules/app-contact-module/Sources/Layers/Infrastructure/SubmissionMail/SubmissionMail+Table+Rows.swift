@@ -36,6 +36,18 @@ extension SubmissionMail.Table: DatabaseTableWithDetail {
         public let messageBody: String
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case formId = "form_id"
+            case mailFrom = "mail_from"
+            case mailTo = "mail_to"
+            case subject = "subject"
+            case additionalHeaders = "additional_headers"
+            case messageBody = "message_body"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -50,6 +62,18 @@ extension SubmissionMail.Table: DatabaseTableWithList {
         public let messageBody: String
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case formId = "form_id"
+            case mailFrom = "mail_from"
+            case mailTo = "mail_to"
+            case subject = "subject"
+            case additionalHeaders = "additional_headers"
+            case messageBody = "message_body"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 extension SubmissionMail.Table: DatabaseTableWithDelete {}

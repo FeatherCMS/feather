@@ -33,6 +33,15 @@ extension Menu.Table: DatabaseTableWithDetail {
         let notes: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case notes = "notes"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -43,6 +52,14 @@ extension Menu.Table: DatabaseTableWithList {
         let name: String
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

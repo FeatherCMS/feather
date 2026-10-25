@@ -52,6 +52,17 @@ extension Variant.Processor.Table: DatabaseTableWithDetail {
         let isActive: Bool
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case variantId = "variant_id"
+            case name = "name"
+            case matchExtensions = "match_extensions"
+            case commandTemplate = "command_template"
+            case isActive = "is_active"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -65,6 +76,17 @@ extension Variant.Processor.Table: DatabaseTableWithList {
         let isActive: Bool
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case variantId = "variant_id"
+            case name = "name"
+            case matchExtensions = "match_extensions"
+            case commandTemplate = "command_template"
+            case isActive = "is_active"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

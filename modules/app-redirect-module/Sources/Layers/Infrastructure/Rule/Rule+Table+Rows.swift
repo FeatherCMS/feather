@@ -49,6 +49,16 @@ extension Rule.Table: DatabaseTableWithDetail {
         let notes: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case source = "source"
+            case destination = "destination"
+            case statusCode = "status_code"
+            case notes = "notes"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -61,6 +71,16 @@ extension Rule.Table: DatabaseTableWithList {
         let notes: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case source = "source"
+            case destination = "destination"
+            case statusCode = "status_code"
+            case notes = "notes"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

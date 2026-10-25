@@ -22,6 +22,11 @@ extension ArticleCategory.Table: DatabaseTableWithList {
     public struct List: DatabaseTableRowDecodable {
         public let articleId: String
         public let categoryId: String
+
+        enum CodingKeys: String, CodingKey {
+            case articleId = "article_id"
+            case categoryId = "category_id"
+        }
     }
 }
 

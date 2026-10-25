@@ -39,6 +39,13 @@ extension RolePermission.Table: DatabaseTableWithDetail {
         let permissionId: String
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case roleId = "role_id"
+            case permissionId = "permission_id"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

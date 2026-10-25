@@ -11,6 +11,16 @@ extension Profile.Table: DatabaseTableWithDetail {
         let profileImageAssetId: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case userId = "user_id"
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case profileImageAssetId = "profile_image_asset_id"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

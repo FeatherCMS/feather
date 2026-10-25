@@ -56,6 +56,17 @@ extension FormField.Table: DatabaseTableWithDetail {
         public let isRequired: Bool
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case type = "type"
+            case label = "label"
+            case allowedValues = "allowed_values"
+            case isRequired = "is_required"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -69,6 +80,17 @@ extension FormField.Table: DatabaseTableWithList {
         public let isRequired: Bool
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case type = "type"
+            case label = "label"
+            case allowedValues = "allowed_values"
+            case isRequired = "is_required"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

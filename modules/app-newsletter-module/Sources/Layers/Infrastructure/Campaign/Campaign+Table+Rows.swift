@@ -45,6 +45,15 @@ extension Campaign.Table: DatabaseTableWithDetail {
         public let fromEmail: String
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case fromEmail = "from_email"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -56,6 +65,15 @@ extension Campaign.Table: DatabaseTableWithList {
         public let fromEmail: String
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case fromEmail = "from_email"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

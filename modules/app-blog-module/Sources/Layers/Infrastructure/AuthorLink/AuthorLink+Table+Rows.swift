@@ -65,6 +65,19 @@ extension AuthorLink.Table: DatabaseTableWithDetail {
         let notes: String
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case authorId = "author_id"
+            case label = "label"
+            case url = "url"
+            case priority = "priority"
+            case isBlank = "is_blank"
+            case permission = "permission"
+            case notes = "notes"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -79,6 +92,18 @@ extension AuthorLink.Table: DatabaseTableWithList {
         let permission: String
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case authorId = "author_id"
+            case label = "label"
+            case url = "url"
+            case priority = "priority"
+            case isBlank = "is_blank"
+            case permission = "permission"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

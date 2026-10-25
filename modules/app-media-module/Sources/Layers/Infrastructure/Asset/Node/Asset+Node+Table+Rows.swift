@@ -68,5 +68,16 @@ extension Asset.Node.Table: DatabaseTableWithDetail {
                 deletedAt: deletedAt
             )
         }
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case parentId = "parent_id"
+            case name = "name"
+            case slug = "slug"
+            case absoluteSlug = "absolute_slug"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+            case deletedAt = "deleted_at"
+        }
     }
 }

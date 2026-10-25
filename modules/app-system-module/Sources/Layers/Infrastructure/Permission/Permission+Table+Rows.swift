@@ -28,6 +28,13 @@ extension Permission.Table: DatabaseTableWithDetail {
         public let key: String
         public let name: String?
         public let notes: String?
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case notes = "notes"
+        }
     }
 }
 
@@ -37,6 +44,13 @@ extension Permission.Table: DatabaseTableWithList {
         public let key: String
         public let name: String?
         public let notes: String?
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case key = "key"
+            case name = "name"
+            case notes = "notes"
+        }
     }
 }
 

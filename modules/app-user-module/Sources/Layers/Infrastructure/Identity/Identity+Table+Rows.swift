@@ -10,6 +10,15 @@ extension Identity.Table: DatabaseTableWithDetail {
         public let isRoot: Bool
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case name = "name"
+            case status = "status"
+            case isRoot = "is_root"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -21,6 +30,15 @@ extension Identity.Table: DatabaseTableWithList {
         public let isRoot: Bool
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case name = "name"
+            case status = "status"
+            case isRoot = "is_root"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

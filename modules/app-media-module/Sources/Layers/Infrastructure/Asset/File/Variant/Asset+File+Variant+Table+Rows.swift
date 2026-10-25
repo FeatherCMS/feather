@@ -28,6 +28,15 @@ extension Asset.File.Variant.Table: DatabaseTableWithDetail {
         let variantProcessorId: String
         let storageObjectId: String
         let createdAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case assetNodeFileId = "asset_node_file_id"
+            case variantId = "variant_id"
+            case variantProcessorId = "variant_processor_id"
+            case storageObjectId = "storage_object_id"
+            case createdAt = "created_at"
+        }
     }
 }
 
@@ -39,6 +48,15 @@ extension Asset.File.Variant.Table: DatabaseTableWithList {
         let variantProcessorId: String
         let storageObjectId: String
         let createdAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case assetNodeFileId = "asset_node_file_id"
+            case variantId = "variant_id"
+            case variantProcessorId = "variant_processor_id"
+            case storageObjectId = "storage_object_id"
+            case createdAt = "created_at"
+        }
     }
 }
 

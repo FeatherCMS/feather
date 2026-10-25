@@ -39,6 +39,14 @@ extension Credential.Table: DatabaseTableWithDetail {
         let passwordHash: String
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case authEmailId = "auth_email_id"
+            case passwordHash = "password_hash"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

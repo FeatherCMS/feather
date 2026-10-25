@@ -57,6 +57,17 @@ extension MagicLink.Table: DatabaseTableWithDetail {
         let isUsed: Bool
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case authEmailId = "auth_email_id"
+            case token = "token"
+            case expiresAt = "expires_at"
+            case isPersistent = "is_persistent"
+            case isUsed = "is_used"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

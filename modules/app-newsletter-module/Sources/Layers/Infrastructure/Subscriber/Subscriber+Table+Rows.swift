@@ -131,6 +131,22 @@ extension Subscriber.Table: DatabaseTableWithDetail {
         public let lastSentAt: Date?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case newsletterId = "newsletter_id"
+            case email = "email"
+            case status = "status"
+            case subscriptionDate = "subscription_date"
+            case unsubscriptionDate = "unsubscription_date"
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case confirmedAt = "confirmed_at"
+            case unsubscribeToken = "unsubscribe_token"
+            case source = "source"
+            case lastSentAt = "last_sent_at"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -149,6 +165,22 @@ extension Subscriber.Table: DatabaseTableWithList {
         public let lastSentAt: Date?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case newsletterId = "newsletter_id"
+            case email = "email"
+            case status = "status"
+            case subscriptionDate = "subscription_date"
+            case unsubscriptionDate = "unsubscription_date"
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case confirmedAt = "confirmed_at"
+            case unsubscribeToken = "unsubscribe_token"
+            case source = "source"
+            case lastSentAt = "last_sent_at"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

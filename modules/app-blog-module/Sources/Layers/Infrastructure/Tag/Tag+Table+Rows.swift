@@ -50,6 +50,16 @@ extension Tag.Table: DatabaseTableWithDetail {
         let imageAssetId: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case title = "title"
+            case excerpt = "excerpt"
+            case content = "content"
+            case imageAssetId = "image_asset_id"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -61,6 +71,15 @@ extension Tag.Table: DatabaseTableWithList {
         let imageAssetId: String?
         let createdAt: Date
         let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case title = "title"
+            case excerpt = "excerpt"
+            case imageAssetId = "image_asset_id"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

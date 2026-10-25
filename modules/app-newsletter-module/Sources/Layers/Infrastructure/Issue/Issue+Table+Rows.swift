@@ -86,6 +86,19 @@ extension Issue.Table: DatabaseTableWithDetail {
         public let sentDate: Date?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case newsletterId = "newsletter_id"
+            case subject = "subject"
+            case previewText = "preview_text"
+            case content = "content"
+            case status = "status"
+            case scheduledDate = "scheduled_date"
+            case sentDate = "sent_date"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -101,6 +114,19 @@ extension Issue.Table: DatabaseTableWithList {
         public let sentDate: Date?
         public let createdAt: Date
         public let updatedAt: Date
+
+        enum CodingKeys: String, CodingKey {
+            case id = "id"
+            case newsletterId = "newsletter_id"
+            case subject = "subject"
+            case previewText = "preview_text"
+            case content = "content"
+            case status = "status"
+            case scheduledDate = "scheduled_date"
+            case sentDate = "sent_date"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 

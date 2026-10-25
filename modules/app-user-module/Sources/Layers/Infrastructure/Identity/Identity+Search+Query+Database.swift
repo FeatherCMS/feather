@@ -7,6 +7,10 @@ public import UserModule
 
 private struct IdentitySearchRoleName: DatabaseTableRowDecodable {
     let name: String?
+
+    enum CodingKeys: String, CodingKey {
+        case name = "name"
+    }
 }
 
 extension Identity.Table.List {
