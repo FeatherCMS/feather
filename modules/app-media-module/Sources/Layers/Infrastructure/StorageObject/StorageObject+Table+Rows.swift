@@ -8,7 +8,7 @@ extension StorageObject.Table: DatabaseTableWithInsert {
         let key: String
         let fileExtension: String
         let contentType: String
-        let sizeInBytes: Int64
+        let sizeInBytes: Int
 
         enum CodingKeys: String, CodingKey {
             case id

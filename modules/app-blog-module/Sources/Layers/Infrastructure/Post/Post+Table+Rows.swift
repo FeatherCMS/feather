@@ -12,6 +12,16 @@ extension Post.Table: DatabaseTableWithInsert {
         let imageAssetId: String?
         let authorIds: String
         let tagIds: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case title
+            case excerpt
+            case content
+            case imageAssetId = "image_asset_id"
+            case authorIds = "author_ids"
+            case tagIds = "tag_ids"
+        }
     }
 }
 
@@ -26,6 +36,15 @@ extension Post.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Post.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case title
+            case excerpt
+            case content
+            case imageAssetId = "image_asset_id"
+            case authorIds = "author_ids"
+            case tagIds = "tag_ids"
         }
     }
 }

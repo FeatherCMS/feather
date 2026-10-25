@@ -13,6 +13,17 @@ extension AuthorLink.Table: DatabaseTableWithInsert {
         let isBlank: Bool
         let permission: String
         let notes: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case authorId = "author_id"
+            case label
+            case url
+            case priority
+            case isBlank = "is_blank"
+            case permission
+            case notes
+        }
     }
 }
 
@@ -28,6 +39,16 @@ extension AuthorLink.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[AuthorLink.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case authorId = "author_id"
+            case label
+            case url
+            case priority
+            case isBlank = "is_blank"
+            case permission
+            case notes
         }
     }
 }

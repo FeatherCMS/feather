@@ -11,6 +11,11 @@ extension RolePermission.Table: DatabaseTableWithInsert {
             values[RolePermission.Table.columns.createdAt] = .currentTimestamp
             values[RolePermission.Table.columns.updatedAt] = .currentTimestamp
         }
+
+        enum CodingKeys: String, CodingKey {
+            case roleId = "role_id"
+            case permissionId = "permission_id"
+        }
     }
 }
 
@@ -20,6 +25,10 @@ extension RolePermission.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[RolePermission.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case permissionId = "permission_id"
         }
     }
 }

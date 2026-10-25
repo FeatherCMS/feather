@@ -9,10 +9,18 @@ extension Rule.Table: DatabaseTableWithInsert {
         let destination: String
         let statusCode: Int
         let notes: String?
-    }
-    }
 
-    extension Rule.Table: DatabaseTableWithUpdate {
+        enum CodingKeys: String, CodingKey {
+            case id
+            case source
+            case destination
+            case statusCode = "status_code"
+            case notes
+        }
+    }
+}
+
+extension Rule.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let source: String
         let destination: String
@@ -22,10 +30,17 @@ extension Rule.Table: DatabaseTableWithInsert {
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Rule.Table.columns.updatedAt] = .currentTimestamp
         }
-    }
-    }
 
-    extension Rule.Table: DatabaseTableWithDetail {
+        enum CodingKeys: String, CodingKey {
+            case source
+            case destination
+            case statusCode = "status_code"
+            case notes
+        }
+    }
+}
+
+extension Rule.Table: DatabaseTableWithDetail {
     struct Detail: DatabaseTableRowDecodable {
         let id: String
         let source: String
@@ -35,9 +50,9 @@ extension Rule.Table: DatabaseTableWithInsert {
         let createdAt: Date
         let updatedAt: Date
     }
-    }
+}
 
-    extension Rule.Table: DatabaseTableWithList {
+extension Rule.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let source: String

@@ -10,6 +10,11 @@ extension ArticleCategory.Table: DatabaseTableWithInsert {
             self.articleId = articleId
             self.categoryId = categoryId
         }
+
+        enum CodingKeys: String, CodingKey {
+            case articleId = "article_id"
+            case categoryId = "category_id"
+        }
     }
 }
 

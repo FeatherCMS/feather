@@ -12,6 +12,16 @@ extension Author.Table: DatabaseTableWithInsert {
         let excerpt: String
         let profileImageAssetId: String?
         let content: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case key
+            case name
+            case notes
+            case excerpt
+            case profileImageAssetId = "profile_image_asset_id"
+            case content
+        }
     }
 }
 
@@ -26,6 +36,15 @@ extension Author.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Author.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case key
+            case name
+            case notes
+            case excerpt
+            case profileImageAssetId = "profile_image_asset_id"
+            case content
         }
     }
 }

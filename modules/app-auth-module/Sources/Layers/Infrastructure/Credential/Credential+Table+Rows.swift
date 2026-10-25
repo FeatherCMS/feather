@@ -7,6 +7,12 @@ extension Credential.Table: DatabaseTableWithInsert {
         let id: String
         let authEmailId: String
         let passwordHash: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case authEmailId = "auth_email_id"
+            case passwordHash = "password_hash"
+        }
     }
 }
 
@@ -17,6 +23,11 @@ extension Credential.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Credential.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case authEmailId = "auth_email_id"
+            case passwordHash = "password_hash"
         }
     }
 }

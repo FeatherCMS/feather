@@ -1,5 +1,6 @@
 public import ContactModule
 public import FeatherDBAL
+
 public import struct Foundation.Date
 
 extension SubmissionMail.Table: DatabaseTableWithInsert {
@@ -11,6 +12,16 @@ extension SubmissionMail.Table: DatabaseTableWithInsert {
         public let subject: String
         public let additionalHeaders: String
         public let messageBody: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case formId = "form_id"
+            case mailFrom = "mail_from"
+            case mailTo = "mail_to"
+            case subject
+            case additionalHeaders = "additional_headers"
+            case messageBody = "message_body"
+        }
     }
 }
 

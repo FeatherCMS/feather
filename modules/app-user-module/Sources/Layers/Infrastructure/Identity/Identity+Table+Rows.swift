@@ -30,6 +30,13 @@ extension Identity.Table: DatabaseTableWithInsert {
         public let name: String
         public let status: String
         public let isRoot: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case name
+            case status
+            case isRoot = "is_root"
+        }
     }
 }
 
@@ -42,6 +49,13 @@ extension Identity.Table: DatabaseTableWithUpdate {
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Identity.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case name
+            case status
+            case isRoot = "is_root"
         }
     }
 }

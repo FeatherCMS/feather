@@ -13,9 +13,9 @@ extension Invitation.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-    }
+}
 
-    extension Invitation.Table: DatabaseTableWithList {
+extension Invitation.Table: DatabaseTableWithList {
     struct List: DatabaseTableRowDecodable {
         let id: String
         let userId: String
@@ -26,9 +26,9 @@ extension Invitation.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-    }
+}
 
-    extension Invitation.Table: DatabaseTableWithInsert {
+extension Invitation.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let id: String
         let userId: String
@@ -36,10 +36,19 @@ extension Invitation.Table: DatabaseTableWithDetail {
         let token: String
         let roleIds: String
         let expiresAt: Date
-    }
-    }
 
-    extension Invitation.Table: DatabaseTableWithUpdate {
+        enum CodingKeys: String, CodingKey {
+            case id
+            case userId = "user_id"
+            case email
+            case token
+            case roleIds = "role_ids"
+            case expiresAt = "expires_at"
+        }
+    }
+}
+
+extension Invitation.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let userId: String
         let email: String
@@ -49,6 +58,14 @@ extension Invitation.Table: DatabaseTableWithDetail {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Invitation.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case userId = "user_id"
+            case email
+            case token
+            case roleIds = "role_ids"
+            case expiresAt = "expires_at"
         }
     }
 }

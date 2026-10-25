@@ -6,13 +6,27 @@ public import MediaModule
 
 extension StorageObject.Table.Detail {
     var asDomain: StorageObject.Model {
-        .init(id: id, key: key, extension: fileExtension, contentType: contentType, sizeInBytes: sizeInBytes, createdAt: createdAt)
+        .init(
+            id: id,
+            key: key,
+            extension: fileExtension,
+            contentType: contentType,
+            sizeInBytes: sizeInBytes,
+            createdAt: createdAt
+        )
     }
 }
 
 extension StorageObject.Table.List {
     var asDomain: StorageObject.Model {
-        .init(id: id, key: key, extension: fileExtension, contentType: contentType, sizeInBytes: sizeInBytes, createdAt: createdAt)
+        .init(
+            id: id,
+            key: key,
+            extension: fileExtension,
+            contentType: contentType,
+            sizeInBytes: sizeInBytes,
+            createdAt: createdAt
+        )
     }
 }
 
@@ -26,29 +40,38 @@ extension StorageObject.Repository {
             self.accessLayer = .init(context: context)
         }
 
-        public func insert(_ model: StorageObject.Model.New) async throws -> StorageObject.Model {
+        public func insert(_ model: StorageObject.Model.New) async throws
+            -> StorageObject.Model
+        {
             let row = StorageObject.Table.Insert(
                 id: context.idGenerator.generate(),
                 key: model.key,
                 fileExtension: model.extension,
                 contentType: model.contentType,
-                sizeInBytes: model.sizeInBytes
+                sizeInBytes: Int(model.sizeInBytes)
             )
             try await accessLayer.insert(row)
-            guard let saved = try await accessLayer.selectFirst(by: \.id, equals: row.id) else {
+            guard
+                let saved = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: row.id
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return saved.asDomain
         }
 
-        public func insert(_ models: [StorageObject.Model.New]) async throws -> [StorageObject.Model] {
+        public func insert(_ models: [StorageObject.Model.New]) async throws
+            -> [StorageObject.Model]
+        {
             let rows = models.map {
                 StorageObject.Table.Insert(
                     id: context.idGenerator.generate(),
                     key: $0.key,
                     fileExtension: $0.extension,
                     contentType: $0.contentType,
-                    sizeInBytes: $0.sizeInBytes
+                    sizeInBytes: Int($0.sizeInBytes)
                 )
             }
             try await accessLayer.insert(rows)
@@ -57,14 +80,21 @@ extension StorageObject.Repository {
                 .map(\.asDomain)
         }
 
-        public func find(storageObjectId: String) async throws -> StorageObject.Model? {
-            try await accessLayer.selectFirst(by: \.id, equals: storageObjectId).map(\.asDomain)
+        public func find(storageObjectId: String) async throws -> StorageObject
+            .Model?
+        {
+            try await accessLayer.selectFirst(by: \.id, equals: storageObjectId)
+                .map(\.asDomain)
         }
 
-        public func list(assetNodeFileIds: [String]) async throws -> [StorageObject.Model] {
-            try await StorageObject.AssociatedQuery(connection: context.connection)
-                .list(assetNodeFileIds: assetNodeFileIds)
-                .map(\.asDomain)
+        public func list(assetNodeFileIds: [String]) async throws
+            -> [StorageObject.Model]
+        {
+            try await StorageObject.AssociatedQuery(
+                connection: context.connection
+            )
+            .list(assetNodeFileIds: assetNodeFileIds)
+            .map(\.asDomain)
         }
     }
 }

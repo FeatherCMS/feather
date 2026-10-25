@@ -15,6 +15,18 @@ extension MenuItem.Table: DatabaseTableWithInsert {
         let permission: String
         let authentication: String
         let notes: String?
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case menuId = "menu_id"
+            case label
+            case url
+            case priority
+            case isBlank = "is_blank"
+            case permission
+            case authentication
+            case notes
+        }
     }
 }
 
@@ -31,6 +43,17 @@ extension MenuItem.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[MenuItem.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case menuId = "menu_id"
+            case label
+            case url
+            case priority
+            case isBlank = "is_blank"
+            case permission
+            case authentication
+            case notes
         }
     }
 }

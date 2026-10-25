@@ -1,6 +1,7 @@
 public import FeatherDBAL
-public import struct Foundation.Date
 public import NewsletterModule
+
+public import struct Foundation.Date
 
 extension Subscriber.Table: DatabaseTableWithInsert {
     public struct Insert: DatabaseTableRowEncodable {
@@ -15,6 +16,20 @@ extension Subscriber.Table: DatabaseTableWithInsert {
         public let unsubscribeToken: String?
         public let source: String?
         public let lastSentAt: Date?
+
+        enum CodingKeys: String, CodingKey {
+            case newsletterId = "newsletter_id"
+            case email
+            case status
+            case subscriptionDate = "subscription_date"
+            case unsubscriptionDate = "unsubscription_date"
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case confirmedAt = "confirmed_at"
+            case unsubscribeToken = "unsubscribe_token"
+            case source
+            case lastSentAt = "last_sent_at"
+        }
     }
 }
 
@@ -32,6 +47,18 @@ extension Subscriber.Table: DatabaseTableWithUpdate {
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Subscriber.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case status
+            case subscriptionDate = "subscription_date"
+            case unsubscriptionDate = "unsubscription_date"
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case confirmedAt = "confirmed_at"
+            case unsubscribeToken = "unsubscribe_token"
+            case source
+            case lastSentAt = "last_sent_at"
         }
     }
 }

@@ -1,5 +1,6 @@
 public import ContactModule
 public import FeatherDBAL
+
 public import struct Foundation.Date
 
 extension FormField.Table: DatabaseTableWithInsert {
@@ -10,6 +11,15 @@ extension FormField.Table: DatabaseTableWithInsert {
         public let label: String
         public let allowedValues: String
         public let isRequired: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case key
+            case type
+            case label
+            case allowedValues = "allowed_values"
+            case isRequired = "is_required"
+        }
     }
 }
 
@@ -23,6 +33,14 @@ extension FormField.Table: DatabaseTableWithUpdate {
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[FormField.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case key
+            case type
+            case label
+            case allowedValues = "allowed_values"
+            case isRequired = "is_required"
         }
     }
 }

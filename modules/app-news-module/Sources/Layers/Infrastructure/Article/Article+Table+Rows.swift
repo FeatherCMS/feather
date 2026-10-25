@@ -1,6 +1,7 @@
 public import FeatherDBAL
-public import struct Foundation.Date
 public import NewsModule
+
+public import struct Foundation.Date
 
 extension Article.Table: DatabaseTableWithInsert {
     public struct Insert: DatabaseTableRowEncodable {
@@ -10,12 +11,26 @@ extension Article.Table: DatabaseTableWithInsert {
         public let content: String
         public let imageAssetId: String?
 
-        public init(id: String, title: String, excerpt: String, content: String, imageAssetId: String?) {
+        public init(
+            id: String,
+            title: String,
+            excerpt: String,
+            content: String,
+            imageAssetId: String?
+        ) {
             self.id = id
             self.title = title
             self.excerpt = excerpt
             self.content = content
             self.imageAssetId = imageAssetId
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case title
+            case excerpt
+            case content
+            case imageAssetId = "image_asset_id"
         }
     }
 }
@@ -27,7 +42,12 @@ extension Article.Table: DatabaseTableWithUpdate {
         public let content: String
         public let imageAssetId: String?
 
-        public init(title: String, excerpt: String, content: String, imageAssetId: String?) {
+        public init(
+            title: String,
+            excerpt: String,
+            content: String,
+            imageAssetId: String?
+        ) {
             self.title = title
             self.excerpt = excerpt
             self.content = content
@@ -36,6 +56,13 @@ extension Article.Table: DatabaseTableWithUpdate {
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Article.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case title
+            case excerpt
+            case content
+            case imageAssetId = "image_asset_id"
         }
     }
 }

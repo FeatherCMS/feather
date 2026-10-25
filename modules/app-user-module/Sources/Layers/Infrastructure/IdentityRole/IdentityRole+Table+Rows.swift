@@ -4,6 +4,11 @@ extension IdentityRole.Table: DatabaseTableWithInsert {
     public struct Insert: DatabaseTableRowEncodable {
         public let roleId: String
         public let identityId: String
+
+        enum CodingKeys: String, CodingKey {
+            case roleId = "role_id"
+            case identityId = "identity_id"
+        }
     }
 }
 

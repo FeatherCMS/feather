@@ -12,19 +12,27 @@ extension Profile.Table: DatabaseTableWithDetail {
         let createdAt: Date
         let updatedAt: Date
     }
-    }
+}
 
-    extension Profile.Table: DatabaseTableWithInsert {
+extension Profile.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let id: String
         let userId: String
         let firstName: String?
         let lastName: String?
         let profileImageAssetId: String?
-    }
-    }
 
-    extension Profile.Table: DatabaseTableWithUpdate {
+        enum CodingKeys: String, CodingKey {
+            case id
+            case userId = "user_id"
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case profileImageAssetId = "profile_image_asset_id"
+        }
+    }
+}
+
+extension Profile.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let firstName: String?
         let lastName: String?
@@ -32,6 +40,12 @@ extension Profile.Table: DatabaseTableWithDetail {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Profile.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case firstName = "first_name"
+            case lastName = "last_name"
+            case profileImageAssetId = "profile_image_asset_id"
         }
     }
 }

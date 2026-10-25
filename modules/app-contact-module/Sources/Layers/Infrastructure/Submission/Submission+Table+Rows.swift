@@ -1,5 +1,6 @@
 public import ContactModule
 public import FeatherDBAL
+
 public import struct Foundation.Date
 
 extension Submission.Table: DatabaseTableWithInsert {
@@ -10,6 +11,15 @@ extension Submission.Table: DatabaseTableWithInsert {
         public let itemsSnapshot: String
         public let metadata: String?
         public let status: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case formId = "form_id"
+            case values
+            case itemsSnapshot = "items_snapshot"
+            case metadata
+            case status
+        }
     }
 }
 

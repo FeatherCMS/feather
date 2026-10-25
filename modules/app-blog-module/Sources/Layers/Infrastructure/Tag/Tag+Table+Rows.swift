@@ -10,6 +10,14 @@ extension Tag.Table: DatabaseTableWithInsert {
         let excerpt: String
         let content: String
         let imageAssetId: String?
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case title
+            case excerpt
+            case content
+            case imageAssetId = "image_asset_id"
+        }
     }
 }
 
@@ -22,6 +30,13 @@ extension Tag.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Tag.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case title
+            case excerpt
+            case content
+            case imageAssetId = "image_asset_id"
         }
     }
 }

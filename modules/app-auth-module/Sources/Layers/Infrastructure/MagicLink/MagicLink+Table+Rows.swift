@@ -9,6 +9,14 @@ extension MagicLink.Table: DatabaseTableWithInsert {
         let token: String
         let expiresAt: Date
         let isPersistent: Bool
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case authEmailId = "auth_email_id"
+            case token
+            case expiresAt = "expires_at"
+            case isPersistent = "is_persistent"
+        }
     }
 }
 
@@ -22,6 +30,14 @@ extension MagicLink.Table: DatabaseTableWithUpdate {
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[MagicLink.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case authEmailId = "auth_email_id"
+            case token
+            case expiresAt = "expires_at"
+            case isPersistent = "is_persistent"
+            case isUsed = "is_used"
         }
     }
 }

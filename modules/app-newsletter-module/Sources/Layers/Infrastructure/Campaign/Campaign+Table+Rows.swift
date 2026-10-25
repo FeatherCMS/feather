@@ -1,6 +1,7 @@
 public import FeatherDBAL
-public import struct Foundation.Date
 public import NewsletterModule
+
+public import struct Foundation.Date
 
 extension Campaign.Table: DatabaseTableWithInsert {
     public struct Insert: DatabaseTableRowEncodable {
@@ -8,6 +9,13 @@ extension Campaign.Table: DatabaseTableWithInsert {
         public let key: String
         public let name: String
         public let fromEmail: String
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case key
+            case name
+            case fromEmail = "from_email"
+        }
     }
 }
 
@@ -19,6 +27,12 @@ extension Campaign.Table: DatabaseTableWithUpdate {
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Campaign.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case key
+            case name
+            case fromEmail = "from_email"
         }
     }
 }

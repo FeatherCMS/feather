@@ -78,7 +78,7 @@ extension Asset.Folder {
                     Insert(
                         assetNodeId: row.id,
                         assetCount: row.assetCount,
-                        totalSizeBytes: row.totalSizeBytes
+                        totalSizeBytes: Int(row.totalSizeBytes)
                     )
                 )
             guard let result = try await find(id: row.id) else {
@@ -103,7 +103,7 @@ extension Asset.Folder {
                 .update(
                     Update(
                         assetCount: row.assetCount,
-                        totalSizeBytes: row.totalSizeBytes
+                        totalSizeBytes: Int(row.totalSizeBytes)
                     ),
                     where: \.assetNodeId,
                     equals: row.id

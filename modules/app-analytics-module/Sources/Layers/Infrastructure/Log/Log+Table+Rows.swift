@@ -1,6 +1,7 @@
-public import FeatherDBAL
-public import struct Foundation.Date
 public import AnalyticsModule
+public import FeatherDBAL
+
+public import struct Foundation.Date
 
 extension Log.Table: DatabaseTableWithInsert {
     public struct Insert: DatabaseTableRowEncodable {
@@ -34,6 +35,35 @@ extension Log.Table: DatabaseTableWithInsert {
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Log.Table.columns.createdAt] = .currentTimestamp
             values[Log.Table.columns.updatedAt] = .currentTimestamp
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case id
+            case accountId = "account_id"
+            case source
+            case method
+            case url
+            case headers
+            case ip
+            case path
+            case referer
+            case origin
+            case acceptLanguage = "accept_language"
+            case userAgent = "user_agent"
+            case trafficCategory = "traffic_category"
+            case language
+            case region
+            case osName = "os_name"
+            case osVersion = "os_version"
+            case browserName = "browser_name"
+            case browserVersion = "browser_version"
+            case engineName = "engine_name"
+            case engineVersion = "engine_version"
+            case deviceVendor = "device_vendor"
+            case deviceType = "device_type"
+            case deviceModel = "device_model"
+            case cpu
+            case responseCode = "response_code"
         }
     }
 }

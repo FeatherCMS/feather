@@ -5,7 +5,7 @@ extension Asset.Folder.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {
         let assetNodeId: String
         let assetCount: Int
-        let totalSizeBytes: Int64
+        let totalSizeBytes: Int
 
         enum CodingKeys: String, CodingKey {
             case assetNodeId = "asset_node_id"
@@ -18,7 +18,7 @@ extension Asset.Folder.Table: DatabaseTableWithInsert {
 extension Asset.Folder.Table: DatabaseTableWithUpdate {
     struct Update: DatabaseTableRowEncodable {
         let assetCount: Int
-        let totalSizeBytes: Int64
+        let totalSizeBytes: Int
 
         enum CodingKeys: String, CodingKey {
             case assetCount = "asset_count"
