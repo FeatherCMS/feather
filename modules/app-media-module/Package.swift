@@ -138,6 +138,9 @@ let package = Package(
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "SystemDomain", package: "app-system-module"),
+                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .target(name: "MediaApplication"),
@@ -198,6 +201,9 @@ let package = Package(
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "SystemDomain", package: "app-system-module"),
+                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "MediaApplication"),
                 .target(name: "MediaInfrastructure"),

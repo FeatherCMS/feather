@@ -157,6 +157,11 @@ let package = Package(
                     name: "FeatherInfrastructure",
                     package: "feather-core"
                 ),
+                .product(name: "SystemDomain", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
@@ -227,6 +232,11 @@ let package = Package(
             name: "ContactBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "SystemDomain", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
 
                 .target(name: "ContactModule"),
                 .target(name: "ContactInfrastructure"),
