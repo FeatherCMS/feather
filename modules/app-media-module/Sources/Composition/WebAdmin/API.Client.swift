@@ -38,6 +38,14 @@ extension API {
             )
         }
 
+        public func loadImageAsset(
+            assetId: String?,
+            variants: [String] = ["preview"]
+        ) async throws -> AdminMediaAsset? {
+            try await Asset.File.View.Repository.OpenAPI(api: self)
+                .loadImageAsset(assetId: assetId, variants: variants)
+        }
+
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (MediaAdminAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
