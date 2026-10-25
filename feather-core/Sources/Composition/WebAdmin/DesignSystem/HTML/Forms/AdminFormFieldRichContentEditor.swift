@@ -434,7 +434,7 @@ public struct AdminFormFieldRichContentEditor: Component {
             function formatSelectionForBlock(field, block, update, format) { const start = field.selectionStart; const end = field.selectionEnd; if (start === end) return; const selected = field.value.slice(start, end); const wrappers = { bold: ['**', '**'], italic: ['*', '*'], underline: ['__', '__'], strike: ['~~', '~~'] }; let before; let after; if (format === 'link') { const url = window.prompt('Link URL', 'https://'); if (!url) return; before = '['; after = `](${url})`; } else { [before, after] = wrappers[format]; } const value = field.value.slice(0, start) + before + selected + after + field.value.slice(end); update('value', value); field.value = value; field.focus(); field.setSelectionRange(start + before.length, end + before.length); setStatus('Formatted'); }
             function render() {
               canvas.innerHTML = '';
-              if (!state.blocks.length) { canvas.innerHTML = '<div class="empty"><strong>Your canvas is empty.</strong><br>Choose a component to get started.</div>'; return; }
+              if (!state.blocks.length) { canvas.innerHTML = '<div class="empty"><strong>Your canvas is empty.</strong><br>Drag here a component from above to get started.</div>'; return; }
               state.blocks.forEach((block, index) => {
                 const item = document.createElement('article'); item.className = 'block'; item.draggable = true; item.dataset.id = block.id;
                 item.innerHTML = `<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button></div><div class="block-body"><label class="block-label">${block.type === 'heading' ? `Heading ${block.level}` : block.type}</label></div><button type="button" class="remove" title="Remove component" aria-label="Remove component">×</button>`;
@@ -491,9 +491,18 @@ public struct AdminFormFieldRichContentEditor: Component {
             function takeDraggedBlock(drag) { if (drag.kind === 'existing') { const index = state.blocks.findIndex(block => block.id === drag.id); return index < 0 ? null : { block: state.blocks.splice(index, 1)[0], index }; } if (drag.kind === 'grid-child') { const grid = state.blocks.find(block => block.id === drag.gridId); if (!grid || !grid.columns[drag.columnIndex]) return null; const column = grid.columns[drag.columnIndex].blocks; return drag.childIndex < 0 ? null : { block: column.splice(drag.childIndex, 1)[0], index: -1 }; } return null; }
             function placeMarker(item, after) { const position = `${item.dataset.id}:${after ? 'after' : 'before'}`; if (marker.dataset.position !== position) { if (after) item.after(marker); else item.before(marker); marker.dataset.position = position; } marker.classList.add('visible'); }
             function clearDragState() { state.dragging = null; marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); document.querySelectorAll('.component-button').forEach(button => button.classList.remove('dragging')); document.querySelectorAll('.grid-column, .grid-child').forEach(element => element.classList.remove('drop-target', 'dragging')); }
-            canvas.addEventListener('dragover', e => { if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind) || e.target.closest('.block') || marker.classList.contains('visible')) return; e.preventDefault(); canvas.append(marker); marker.dataset.position = 'canvas-end'; marker.classList.add('visible'); canvas.classList.add('drag-over'); });
+            canvas.addEventListener('dragover', e => {
+              if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind) || e.target.closest('.block')) return;
+              e.preventDefault();
+              e.dataTransfer.dropEffect = state.dragging.kind === 'new' ? 'copy' : 'move';
+              if (marker.classList.contains('visible')) return;
+              canvas.append(marker);
+              marker.dataset.position = 'canvas-end';
+              marker.classList.add('visible');
+              canvas.classList.add('drag-over');
+            });
             canvas.addEventListener('drop', e => { if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind) || e.target.closest('.block')) return; e.preventDefault(); const drag = state.dragging; let to = state.blocks.length; const position = marker.dataset.position; const targetMatch = position && position.match(/^([^:]+):(before|after)$/); if (targetMatch) { to = state.blocks.findIndex(block => block.id === targetMatch[1]) + (targetMatch[2] === 'after' ? 1 : 0); } if (drag.kind === 'existing') { const from = state.blocks.findIndex(b => b.id === drag.id); if (from >= 0) { const [moved] = state.blocks.splice(from, 1); if (from < to) to--; state.blocks.splice(to, 0, moved); } } else if (drag.kind === 'new') state.blocks.splice(to, 0, createBlock(drag.type)); syncRaw(); clearDragState(); render(); setStatus(drag.kind === 'new' ? 'Added' : 'Rearranged'); });
-            function showMode(mode) { state.mode = mode; document.querySelector('#visualView').hidden = mode !== 'visual'; document.querySelector('#previewView').hidden = mode !== 'preview'; document.querySelector('#rawView').hidden = mode !== 'raw'; document.querySelectorAll('[data-mode]').forEach(button => button.classList.toggle('active', button.dataset.mode === mode)); if (mode === 'raw') { syncRaw(); requestAnimationFrame(resizeMarkdownInput); } if (mode === 'preview') renderPreview(); }
+            function showMode(mode) { state.mode = mode; document.querySelector('#visualView').hidden = mode !== 'visual'; document.querySelector('#previewView').hidden = mode !== 'preview'; document.querySelector('#rawView').hidden = mode !== 'raw'; document.querySelector('.component-toolbar').hidden = mode !== 'visual'; document.querySelector('.insert-toggle').hidden = mode !== 'visual'; document.querySelectorAll('[data-mode]').forEach(button => button.classList.toggle('active', button.dataset.mode === mode)); if (mode === 'raw') { syncRaw(); requestAnimationFrame(resizeMarkdownInput); } if (mode === 'preview') renderPreview(); }
             document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click', () => { if (state.mode === 'raw' && button.dataset.mode !== 'raw') { state.blocks = parseMarkdown(input.value); render(); } showMode(button.dataset.mode); }));
             function formatSelection(field, id, format) { const start = field.selectionStart; const end = field.selectionEnd; if (start === end) return; const selected = field.value.slice(start, end); const wrappers = { bold: ['**', '**'], italic: ['*', '*'], underline: ['__', '__'], strike: ['~~', '~~'] }; let before; let after; if (format === 'link') { const url = window.prompt('Link URL', 'https://'); if (!url) return; before = '['; after = `](${url})`; } else { [before, after] = wrappers[format]; } const value = field.value.slice(0, start) + before + selected + after + field.value.slice(end); updateBlock(id, 'value', value); field.value = value; field.focus(); field.setSelectionRange(start + before.length, end + before.length); setStatus('Formatted'); }
             const componentList = document.querySelector('.component-list');
@@ -576,7 +585,22 @@ public struct AdminFormFieldRichContentEditor: Component {
             Custom("\(root) .component-list") {
                 Display(.grid)
                 GridTemplateColumns(.repeat(6, .fraction(1.fr)))
-                Gap(6.px)
+                Gap(10.px)
+            },
+            Custom("\(root) .component-toolbar") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(10.px)
+                Padding(10.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+                BorderBottom(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Primary.border)
+                )
+            },
+            Custom("\(root) .component-toolbar[hidden]") {
+                Display(.none)
             },
             Custom("\(root) .component-button") {
                 Display(.grid)
@@ -627,95 +651,93 @@ public struct AdminFormFieldRichContentEditor: Component {
                 FontWeight(.number(800))
                 LineHeight(1)
             },
-            Custom("\(root) .sidebar-footer") {
-                Display(.flex)
-                AlignItems(.center)
-                JustifyContent(.spaceBetween)
-                Gap(16.px)
-                BorderTop(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Primary.border)
-                )
-                Margin(top: 14.px)
-                Padding(top: 10.px)
-            },
-            Custom("\(root) .hint") {
-                Margin(0)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                FontSize(0.78.rem)
-            },
             Custom("\(root) .insert-toggle") {
                 Display(.flex)
                 AlignItems(.center)
-                Gap(9.px)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                FontSize(0.78.rem)
+                Gap(8.px)
+            },
+            Custom("\(root) .insert-toggle[hidden]") {
+                Display(.none)
+            },
+            Custom("\(root) #status.sr-only") {
+                Position(.absolute)
+                Width(1.px)
+                Height(1.px)
+                Padding(0)
+                Margin((-1).px)
+                Overflow(.hidden)
+                Clip(.shape("rect(0, 0, 0, 0)"))
+                WhiteSpace(.nowrap)
+                Border(0)
             },
             Custom("\(root) .insert-toggle strong") {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
-            },
-            Custom("\(root) .insert-options") {
-                Display(.flex)
-            },
-            Custom("\(root) .insert-options button") {
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Tertiary.border)
-                )
-                Padding(vertical: 5.px, horizontal: 9.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                Cursor(.pointer)
-            },
-            Custom("\(root) .insert-options button.active") {
-                BorderColor(.variable(TokenKey.Colors.Link.default))
-                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
-                Color(.variable(TokenKey.Colors.Link.default))
-                FontWeight(.number(700))
             },
             Custom("\(root) .editor-bar") {
                 Display(.flex)
                 AlignItems(.center)
                 JustifyContent(.spaceBetween)
-                Gap(12.px)
+                FlexWrap(.wrap)
+                Gap(10.px)
                 BorderBottom(
                     1.px,
                     .solid,
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
-                Padding(vertical: 13.px, horizontal: 18.px)
+                Padding(10.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 FontSize(0.82.rem)
             },
-            Custom("\(root) .mode-switch") {
-                Display(.flex)
-                Gap(3.px)
-                Padding(3.px)
-                BorderRadius(8.px)
+            Custom("\(root) .mode-switch, \(root) .insert-options") {
+                Display(.inlineFlex)
+                AlignItems(.center)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                MaxWidth(100.percent)
+                Gap(2.px)
+                Padding(3.px)
+                BorderRadius(10.px)
             },
-            Custom("\(root) .mode-switch button") {
+            Custom(
+                "\(root) .mode-switch button, \(root) .insert-options button"
+            ) {
                 Border(0)
-                BorderRadius(6.px)
-                Padding(vertical: 5.px, horizontal: 10.px)
+                BorderRadius(7.px)
                 Background(.transparent)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                FontSize(0.75.rem)
-                Cursor(.pointer)
-            },
-            Custom("\(root) .mode-switch button.active") {
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                Padding(vertical: 5.px, horizontal: 10.px)
+                FontSize(0.84.rem)
+                LineHeight(1.2)
+                TextAlign(.center)
+                Cursor(.pointer)
+                TextDecoration(.none)
+                WhiteSpace(.nowrap)
             },
-            Custom("\(root) .status") {
-                Color(.variable(TokenKey.Colors.Link.default))
-                FontWeight(.number(600))
+            Custom(
+                "\(root) .mode-switch button:hover:not(.active), \(root) .insert-options button:hover:not(.active)"
+            ) {
+                Color(.variable(TokenKey.Colors.Link.hover))
+                TextDecoration(.underline)
+            },
+            Custom(
+                "\(root) .mode-switch button.active, \(root) .insert-options button.active"
+            ) {
+                Background(.variable(TokenKey.Colors.Accents.Primary.tint))
+                Color(.variable(TokenKey.Colors.Accents.Primary.text))
+            },
+            Custom("\(root) .mode-switch") {
+                Display(.inlineFlex)
+                AlignItems(.center)
+                MaxWidth(100.percent)
             },
             Custom("\(root) .visual-canvas") {
                 MinHeight(560.px)
-                Padding(13.px)
+                Padding(10.px)
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             },
             Custom("\(root) .visual-canvas.drag-over") {
@@ -895,21 +917,22 @@ public struct AdminFormFieldRichContentEditor: Component {
                 )
             },
             Custom("\(root) #rawView") {
-                Padding(18.px)
+                Padding(10.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             },
             Custom("\(root) #markdownInput") {
                 Display(.block)
                 Width(100.percent)
-                UnsafeRawProperty(name: "min-height", value: "3lh")
+                MinHeight(560.px)
                 Resize(.none)
                 Border(
                     1.px,
                     .solid,
                     .variable(TokenKey.Colors.Materials.Tertiary.border)
                 )
-                Padding(17.px)
+                Padding(10.px)
                 BorderRadius(9.px)
-                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 Outline(0)
                 UnsafeRawProperty(
@@ -920,13 +943,10 @@ public struct AdminFormFieldRichContentEditor: Component {
             },
             Custom("\(root) #previewView") {
                 MinHeight(560.px)
-                Padding(vertical: 42.px, horizontal: 7.percent)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Padding(10.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             },
             Custom("\(root) .preview-content") {
-                MaxWidth(760.px)
-                MarginLeft(.auto)
-                MarginRight(.auto)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
             },
             Custom(
@@ -1303,58 +1323,6 @@ public struct AdminFormFieldRichContentEditor: Component {
             context.build(AdminFormFieldLabel(text: state.label))
             Div {
                 Div {
-                    P("Add component").class("eyebrow")
-                    Div {
-                        for definition in blockDefinitions {
-                            Button {
-                                Span(definition.icon)
-                                    .class("component-icon")
-                                    .setAttribute(
-                                        name: "aria-hidden",
-                                        value: "true"
-                                    )
-                                Span(definition.title)
-                                Small(definition.title)
-                            }
-                            .type(.button)
-                            .class("component-button")
-                            .setAttribute(
-                                name: "data-add",
-                                value: definition.type
-                            )
-                        }
-                    }
-                    .class("component-list")
-                    Div {
-                        P(
-                            "Drag the handle to rearrange blocks. Select text inside a text block to format it."
-                        )
-                        .class("hint")
-                        Div {
-                            Strong("Insert at")
-                            Div {
-                                Button("Bottom")
-                                    .type(.button)
-                                    .class("active")
-                                    .setAttribute(
-                                        name: "data-insert",
-                                        value: "bottom"
-                                    )
-                                Button("Top")
-                                    .type(.button)
-                                    .setAttribute(
-                                        name: "data-insert",
-                                        value: "top"
-                                    )
-                            }
-                            .class("insert-options")
-                        }
-                        .class("insert-toggle")
-                    }
-                    .class("sidebar-footer")
-                }
-                .class("panel", "sidebar")
-                Div {
                     Div {
                         Nav {
                             Button("Visual")
@@ -1378,9 +1346,56 @@ public struct AdminFormFieldRichContentEditor: Component {
                                 )
                         }
                         .class("mode-switch")
-                        Span("Ready").id("status").class("status")
+                        Div {
+                            Strong("Insert at")
+                            Div {
+                                Button("Bottom")
+                                    .type(.button)
+                                    .class("active")
+                                    .setAttribute(
+                                        name: "data-insert",
+                                        value: "bottom"
+                                    )
+                                Button("Top")
+                                    .type(.button)
+                                    .setAttribute(
+                                        name: "data-insert",
+                                        value: "top"
+                                    )
+                            }
+                            .class("insert-options")
+                        }
+                        .class("insert-toggle")
                     }
                     .class("editor-bar")
+                    Div {
+                        Div {
+                            for definition in blockDefinitions {
+                                Button {
+                                    Span(definition.icon)
+                                        .class("component-icon")
+                                        .setAttribute(
+                                            name: "aria-hidden",
+                                            value: "true"
+                                        )
+                                    Span(definition.title)
+                                    Small(definition.title)
+                                }
+                                .type(.button)
+                                .class("component-button")
+                                .setAttribute(
+                                    name: "data-add",
+                                    value: definition.type
+                                )
+                            }
+                        }
+                        .class("component-list")
+                    }
+                    .class("component-toolbar")
+                    Span("")
+                        .id("status")
+                        .class("sr-only")
+                        .setAttribute(name: "aria-live", value: "polite")
                     Div {
                         Div {}
                             .id("canvas")
