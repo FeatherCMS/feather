@@ -437,7 +437,7 @@ public struct AdminFormFieldRichContentEditor: Component {
               if (!state.blocks.length) { canvas.innerHTML = '<div class="empty"><strong>Your canvas is empty.</strong><br>Drag here a component from above to get started.</div>'; return; }
               state.blocks.forEach((block, index) => {
                 const item = document.createElement('article'); item.className = 'block'; item.draggable = true; item.dataset.id = block.id;
-                item.innerHTML = `<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button></div><div class="block-body"><label class="block-label">${block.type === 'heading' ? `Heading ${block.level}` : block.type}</label></div><button type="button" class="remove" title="Remove component" aria-label="Remove component">×</button>`;
+                item.innerHTML = `<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button type="button" class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button type="button" class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button><button type="button" class="duplicate-button" title="Duplicate component" aria-label="Duplicate component"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="2" width="9" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M3 5H2.5A1.5 1.5 0 0 0 1 6.5v7A1.5 1.5 0 0 0 2.5 15h6A1.5 1.5 0 0 0 10 13.5V13" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></button></div><div class="block-body"><label class="block-label">${block.type === 'heading' ? `Heading ${block.level}` : block.type}</label></div><button type="button" class="remove" title="Remove component" aria-label="Remove component">×</button>`;
                 const body = item.querySelector('.block-body');
                 const extension = editorExtension(block.type);
                 if (extension?.isContainer) { renderContactFormContainer(body, block, extension, (key, value) => updateBlock(block.id, key, value)); body.querySelector('.block-label').textContent = extension.title; }
@@ -480,6 +480,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                   clearTimeout(setStatus.timer);
                 });
                 item.querySelector('.drag-controls').querySelectorAll('[data-move]').forEach(button => button.addEventListener('click', e => { e.stopPropagation(); const target = button.dataset.move === 'up' ? index - 1 : index + 1; if (target < 0 || target >= state.blocks.length) return; [state.blocks[index], state.blocks[target]] = [state.blocks[target], state.blocks[index]]; syncRaw(); render(); setStatus('Rearranged'); }));
+                item.querySelector('.duplicate-button').addEventListener('click', event => { event.stopPropagation(); const blockIndex = state.blocks.findIndex(value => value.id === block.id); if (blockIndex < 0) return; state.blocks.splice(blockIndex + 1, 0, cloneBlock(block)); syncRaw(); render(); setStatus('Duplicated'); });
                 item.addEventListener('dragstart', event => { if (event.target.closest('.contact-form-component-toolbar')) { event.stopPropagation(); return; } state.dragging = { kind: 'existing', id: block.id }; item.classList.add('dragging'); }); item.addEventListener('dragend', clearDragState);
                 item.addEventListener('dragover', e => { if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind) || (state.dragging.kind === 'existing' && state.dragging.id === block.id)) return; e.preventDefault(); const after = e.clientY > item.getBoundingClientRect().top + item.offsetHeight / 2; placeMarker(item, after); canvas.classList.add('drag-over'); });
                 item.addEventListener('drop', e => { if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind)) return; e.preventDefault(); const drag = state.dragging; const after = e.clientY > item.getBoundingClientRect().top + item.offsetHeight / 2; let to = state.blocks.findIndex(b => b.id === block.id) + (after ? 1 : 0); if (drag.kind === 'new') { state.blocks.splice(to, 0, createBlock(drag.type)); setStatus('Added'); } else if (drag.kind === 'existing' || drag.kind === 'grid-child') { const moved = takeDraggedBlock(drag); if (!moved) return; if (drag.kind === 'existing' && moved.index < to) to--; state.blocks.splice(to, 0, moved.block); setStatus(drag.kind === 'grid-child' ? 'Moved out of grid' : 'Rearranged'); } syncRaw(); clearDragState(); render(); });
@@ -488,6 +489,7 @@ public struct AdminFormFieldRichContentEditor: Component {
             }
             function insertContactFormChild(container, child) { container.children = container.children || []; if (state.insertPosition === 'top') container.children.unshift(child); else container.children.push(child); container.mode = 'custom'; syncRaw(); render(); setStatus('Added to contact form'); }
             function createBlock(type) { if (type === 'grid') return makeGridBlock(); const definition = editorExtension(type); const block = newBlock(type); if (definition?.isContainer) { block.mode = 'automatic'; block.children = []; } if (type === 'code') block.language = ''; if (type === 'image') block.alt = ''; if (type === 'video') block.kind = 'file'; if (type === 'blockquote') block.cite = ''; if (type === 'custom') block.name = ''; return block; }
+            function cloneBlock(block) { const clone = JSON.parse(JSON.stringify(block)); const refreshIDs = item => { item.id = crypto.randomUUID(); (item.children || []).forEach(refreshIDs); (item.columns || []).forEach(column => (column.blocks || []).forEach(refreshIDs)); }; refreshIDs(clone); return clone; }
             function takeDraggedBlock(drag) { if (drag.kind === 'existing') { const index = state.blocks.findIndex(block => block.id === drag.id); return index < 0 ? null : { block: state.blocks.splice(index, 1)[0], index }; } if (drag.kind === 'grid-child') { const grid = state.blocks.find(block => block.id === drag.gridId); if (!grid || !grid.columns[drag.columnIndex]) return null; const column = grid.columns[drag.columnIndex].blocks; return drag.childIndex < 0 ? null : { block: column.splice(drag.childIndex, 1)[0], index: -1 }; } return null; }
             function placeMarker(item, after) { const position = `${item.dataset.id}:${after ? 'after' : 'before'}`; if (marker.dataset.position !== position) { if (after) item.after(marker); else item.before(marker); marker.dataset.position = position; } marker.classList.add('visible'); }
             function clearDragState() { state.dragging = null; marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); document.querySelectorAll('.component-button').forEach(button => button.classList.remove('dragging')); document.querySelectorAll('.grid-column, .grid-child').forEach(element => element.classList.remove('drop-target', 'dragging')); }
@@ -773,7 +775,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                 Cursor(.grab)
                 UserSelect(.none)
             },
-            Custom("\(root) .move-button, \(root) .remove") {
+            Custom("\(root) .move-button, \(root) .duplicate-button, \(root) .remove") {
                 Border(0)
                 BorderRadius(6.px)
                 Padding(3.px)
@@ -792,9 +794,20 @@ public struct AdminFormFieldRichContentEditor: Component {
                 JustifyContent(.center)
                 BoxSizing(.borderBox)
             },
-            Custom("\(root) .move-button:hover, \(root) .remove:hover") {
+            Custom("\(root) .move-button:hover, \(root) .duplicate-button:hover, \(root) .remove:hover") {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
                 Color(.variable(TokenKey.Colors.Link.default))
+            },
+            Custom("\(root) .duplicate-button") {
+                Display(.flex)
+                AlignItems(.center)
+                JustifyContent(.center)
+                Width(24.px)
+                Height(24.px)
+            },
+            Custom("\(root) .duplicate-button svg") {
+                Width(16.px)
+                Height(16.px)
             },
             Custom("\(root) .remove.is-confirming") {
                 Width(76.px)
@@ -1028,6 +1041,10 @@ public struct AdminFormFieldRichContentEditor: Component {
             },
             Custom("\(root) .grid-column") {
                 Padding(8.px)
+            },
+            Custom("\(root) .grid-column > label") {
+                Display(.block)
+                Margin(bottom: 10.px)
             },
             Custom("\(root) .grid-column, \(root) .contact-form-layout-children") {
                 Border(
