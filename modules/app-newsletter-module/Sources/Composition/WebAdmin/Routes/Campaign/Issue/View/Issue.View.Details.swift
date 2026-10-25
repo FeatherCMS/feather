@@ -49,9 +49,9 @@ extension Issue.View {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Campaign issue details",
+                            title: "Edit newsletter campaign",
                             description:
-                                "Review the issue content and delivery schedule."
+                                "Update the newsletter campaign settings."
                         )
                     )
                 )

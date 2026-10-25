@@ -28,8 +28,9 @@ extension Campaign.Subscriber.List {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Campaign subscribers",
-                            description: "Manage subscribers for this campaign."
+                            title: "Edit newsletter campaign",
+                            description:
+                                "Update the newsletter campaign settings."
                         )
                     )
                 )

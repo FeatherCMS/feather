@@ -235,6 +235,60 @@ public struct AdminNotification: Component {
                 }, 3000);
             }
 
+            function createIcon(name, elements) {
+                var namespace = "http://www.w3.org/2000/svg";
+                var svg = document.createElementNS(namespace, "svg");
+                svg.setAttribute("width", "24");
+                svg.setAttribute("height", "24");
+                svg.setAttribute("viewBox", "0 0 24 24");
+                svg.setAttribute("fill", "none");
+                svg.setAttribute("stroke", "currentColor");
+                svg.setAttribute("stroke-width", "2");
+                svg.setAttribute("stroke-linecap", "round");
+                svg.setAttribute("stroke-linejoin", "round");
+                svg.setAttribute("aria-hidden", "true");
+                svg.setAttribute("class", "feather feather-" + name);
+
+                elements.forEach(function (element) {
+                    var node = document.createElementNS(namespace, element.tag);
+                    Object.keys(element.attributes).forEach(function (key) {
+                        node.setAttribute(key, element.attributes[key]);
+                    });
+                    svg.appendChild(node);
+                });
+                return svg;
+            }
+
+            function notificationIcon(kind) {
+                var shapes = {
+                    success: [
+                        {tag: "path", attributes: {d: "M22 11.08V12a10 10 0 1 1-5.93-9.14"}},
+                        {tag: "polyline", attributes: {points: "22 4 12 14.01 9 11.01"}}
+                    ],
+                    info: [
+                        {tag: "circle", attributes: {cx: "12", cy: "12", r: "10"}},
+                        {tag: "line", attributes: {x1: "12", y1: "16", x2: "12", y2: "12"}},
+                        {tag: "line", attributes: {x1: "12", y1: "8", x2: "12.01", y2: "8"}}
+                    ],
+                    warning: [
+                        {tag: "path", attributes: {d: "M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"}},
+                        {tag: "line", attributes: {x1: "12", y1: "9", x2: "12", y2: "13"}},
+                        {tag: "line", attributes: {x1: "12", y1: "17", x2: "12.01", y2: "17"}}
+                    ],
+                    error: [
+                        {tag: "circle", attributes: {cx: "12", cy: "12", r: "10"}},
+                        {tag: "line", attributes: {x1: "12", y1: "8", x2: "12", y2: "12"}},
+                        {tag: "line", attributes: {x1: "12", y1: "16", x2: "12.01", y2: "16"}}
+                    ]
+                };
+                return createIcon(
+                    kind === "success" ? "check-circle" :
+                    kind === "warning" ? "alert-triangle" :
+                    kind === "error" ? "alert-circle" : "info",
+                    shapes[kind] || shapes.info
+                );
+            }
+
             window.adminNotification = {
                 show: function (state) {
                     var previous = document.getElementById("admin-toast");
@@ -256,7 +310,7 @@ public struct AdminNotification: Component {
 
                     var icon = document.createElement("span");
                     icon.className = "admin-notification__icon admin-notification__icon--" + kind;
-                    icon.textContent = kind === "success" ? "✓" : kind === "warning" ? "!" : kind === "error" ? "×" : "i";
+                    icon.appendChild(notificationIcon(kind));
 
                     var content = document.createElement("span");
                     content.className = "admin-notification__content";
@@ -275,7 +329,10 @@ public struct AdminNotification: Component {
                     close.type = "button";
                     close.className = "admin-notification__close";
                     close.setAttribute("aria-label", "Dismiss notification");
-                    close.textContent = "×";
+                    close.appendChild(createIcon("x", [
+                        {tag: "line", attributes: {x1: "18", y1: "6", x2: "6", y2: "18"}},
+                        {tag: "line", attributes: {x1: "6", y1: "6", x2: "18", y2: "18"}}
+                    ]));
                     close.addEventListener("click", function () {
                         dismiss(notification);
                     });

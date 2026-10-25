@@ -27,9 +27,9 @@ extension SubmissionMail.List {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Contact form emails",
+                            title: "Edit contact form",
                             description:
-                                "Configure delivery messages for this contact form."
+                                "Update the contact form settings."
                         )
                     )
                 )

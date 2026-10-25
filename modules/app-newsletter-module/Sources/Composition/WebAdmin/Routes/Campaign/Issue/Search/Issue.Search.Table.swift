@@ -29,9 +29,9 @@ extension Issue.Search {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Campaign issues",
+                            title: "Edit newsletter campaign",
                             description:
-                                "Manage issues for this newsletter campaign."
+                                "Update the newsletter campaign settings."
                         )
                     )
                 )

@@ -36,10 +36,10 @@ extension ContactModule.FormField.Add {
                         state: .primary(
                             title: state.formKey == nil
                                 ? "Add contact form field"
-                                : "Add field to contact form",
+                                : "Edit contact form",
                             description: state.formKey == nil
                                 ? "Create a reusable field for contact forms."
-                                : "Create a reusable field and add it to this contact form."
+                                : "Update the contact form settings."
                         )
                     )
                 )

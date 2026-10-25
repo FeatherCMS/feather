@@ -23,9 +23,9 @@ extension ContactModule.Form.View {
                     AdminPageHeader(
                         state:
                             .primary(
-                                title: "Contact form details",
+                                title: "Edit contact form",
                                 description:
-                                    "Review the contact form configuration."
+                                    "Update the contact form settings."
                             )
                             .addingMoreActions(
                                 actions

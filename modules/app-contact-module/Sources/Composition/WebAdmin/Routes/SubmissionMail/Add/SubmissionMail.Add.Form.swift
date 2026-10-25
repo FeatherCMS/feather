@@ -24,9 +24,9 @@ extension SubmissionMail.Add {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Add contact form email",
+                            title: "Edit contact form",
                             description:
-                                "Define the notification email sent by this contact form."
+                                "Update the contact form settings."
                         )
                     )
                 )

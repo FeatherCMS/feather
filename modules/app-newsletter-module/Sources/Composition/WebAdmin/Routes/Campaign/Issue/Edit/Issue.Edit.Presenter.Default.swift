@@ -29,9 +29,9 @@ extension Issue.Edit.Presenter {
                         issueId: issueId,
                         error: model.error,
                         pageHeader: .primary(
-                            title: "Edit campaign issue",
+                            title: "Edit newsletter campaign",
                             description:
-                                "Compose the issue content and delivery schedule."
+                                "Update the newsletter campaign settings."
                         ),
                         routes: routes
                     )

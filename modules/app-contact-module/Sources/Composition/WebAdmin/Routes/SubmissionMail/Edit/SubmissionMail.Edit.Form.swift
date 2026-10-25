@@ -24,9 +24,9 @@ extension SubmissionMail.Edit {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Edit contact form email",
+                            title: "Edit contact form",
                             description:
-                                "Update the notification email for this contact form."
+                                "Update the contact form settings."
                         )
                     )
                 )

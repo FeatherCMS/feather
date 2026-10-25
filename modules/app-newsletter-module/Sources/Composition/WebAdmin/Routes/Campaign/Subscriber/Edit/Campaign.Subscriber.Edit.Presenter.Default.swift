@@ -30,8 +30,9 @@ extension Campaign.Subscriber.Edit.Presenter {
                         subscriberId: subscriberId
                     ),
                     pageHeader: .primary(
-                        title: "Edit campaign subscriber",
-                        description: "Manage this campaign subscription."
+                        title: "Edit newsletter campaign",
+                        description:
+                            "Update the newsletter campaign settings."
                     ),
                     routes: routes
                 )

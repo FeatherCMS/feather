@@ -29,9 +29,9 @@ extension Submission.Detail {
                 context.build(
                     AdminPageHeader(
                         state: .primary(
-                            title: "Contact form submission",
+                            title: "Edit contact form",
                             description:
-                                "Review the submitted values and processing status."
+                                "Update the contact form settings."
                         )
                     )
                 )

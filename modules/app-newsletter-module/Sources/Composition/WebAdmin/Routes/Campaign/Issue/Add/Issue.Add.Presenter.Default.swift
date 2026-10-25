@@ -34,9 +34,9 @@ extension Issue.Add.Presenter {
                         issueId: nil,
                         error: model.error,
                         pageHeader: .primary(
-                            title: "Add campaign issue",
+                            title: "Edit newsletter campaign",
                             description:
-                                "Compose the issue content and delivery schedule."
+                                "Update the newsletter campaign settings."
                         ),
                         routes: routes
                     )

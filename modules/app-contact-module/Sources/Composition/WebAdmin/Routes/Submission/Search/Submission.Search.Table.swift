@@ -30,10 +30,10 @@ extension Submission.Search {
                         state: .primary(
                             title: state.formKey == nil
                                 ? "Submissions"
-                                : "Contact form submissions",
+                                : "Edit contact form",
                             description: state.formKey == nil
                                 ? "Review contact form submissions."
-                                : "Review submissions received through this contact form."
+                                : "Update the contact form settings."
                         )
                     )
                 )
