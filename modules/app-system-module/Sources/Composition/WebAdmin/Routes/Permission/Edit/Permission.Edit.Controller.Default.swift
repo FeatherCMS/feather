@@ -82,7 +82,7 @@ extension Permission.Edit.Controller {
                 }
                 try await payload.input.validate()
                 try await interactor.update(id: id, input: payload.input)
-                return presenter.renderSuccess(id: payload.input.normalizedKey)
+                return presenter.renderSuccess(id: id)
             }
             catch let error as ValidationError {
                 return

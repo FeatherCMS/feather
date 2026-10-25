@@ -50,7 +50,7 @@ extension Variable.View {
                 .init(
                     label: "Edit",
                     href:
-                        state.routes.editPath(state.variable.key),
+                        state.routes.editPath(state.variable.id),
                     style: .primary
                 )
             )
@@ -63,7 +63,7 @@ extension Variable.View {
                         path: state.routes.remove.path,
                         ids: [state.variable.id],
                         returnTo:
-                            state.routes.detailsPath(state.variable.key)
+                            state.routes.detailsPath(state.variable.id)
                     ),
                     style: .destructive
                 )

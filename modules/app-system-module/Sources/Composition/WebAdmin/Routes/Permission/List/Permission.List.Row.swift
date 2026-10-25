@@ -19,13 +19,13 @@ extension Permission.List {
             [
                 .init(
                     "View",
-                    href: routes.detailsPath(permission.key),
+                    href: routes.detailsPath(permission.id),
                     style: .ghost(.primary),
                     permission: SystemModule.Permission.Permissions.read
                 ),
                 .init(
                     "Edit",
-                    href: routes.editPath(permission.key),
+                    href: routes.editPath(permission.id),
                     style: .ghost(.secondary),
                     permission: SystemModule.Permission.Permissions.update
                 ),

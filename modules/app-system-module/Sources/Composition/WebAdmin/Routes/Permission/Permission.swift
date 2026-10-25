@@ -19,7 +19,7 @@ enum Permission {
                 self.list = root
                 self.add = root.appending(pathComponent: "add")
                 self.remove = root.appending(pathComponent: "remove")
-                self.details = root.appending(parameter: "key")
+                self.details = root.appending(parameter: "id")
                 self.edit = self.details.appending(pathComponent: "edit")
                 self.listBreadcrumb = breadcrumb
                 self.breadcrumb =
@@ -28,12 +28,12 @@ enum Permission {
                     ]
             }
 
-            func detailsPath(_ key: String) -> String {
-                details.path(parameter: "key", value: key)
+            func detailsPath(_ id: String) -> String {
+                details.path(parameter: "id", value: id)
             }
 
-            func editPath(_ key: String) -> String {
-                edit.path(parameter: "key", value: key)
+            func editPath(_ id: String) -> String {
+                edit.path(parameter: "id", value: id)
             }
         }
 

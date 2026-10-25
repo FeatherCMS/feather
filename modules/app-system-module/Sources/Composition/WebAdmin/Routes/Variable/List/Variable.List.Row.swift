@@ -28,13 +28,13 @@ extension Variable.List {
             self.actions = [
                 .init(
                     "View",
-                    href: routes.detailsPath(variable.key),
+                    href: routes.detailsPath(variable.id),
                     style: .ghost(.primary),
                     permission: SystemModule.Variable.Permissions.read
                 ),
                 .init(
                     "Edit",
-                    href: routes.editPath(variable.key),
+                    href: routes.editPath(variable.id),
                     style: .ghost(.secondary),
                     permission: SystemModule.Variable.Permissions.update
                 ),

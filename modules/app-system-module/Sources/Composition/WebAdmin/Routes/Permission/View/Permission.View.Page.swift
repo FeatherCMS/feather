@@ -51,7 +51,7 @@ extension Permission.View {
                     .init(
                         label: "Edit",
                         href:
-                            state.routes.editPath(state.permission.key),
+                            state.routes.editPath(state.permission.id),
                         style: .primary
                     )
                 )
@@ -66,7 +66,7 @@ extension Permission.View {
                             path: state.routes.remove.path,
                             ids: [state.permission.id],
                             returnTo:
-                                state.routes.detailsPath(state.permission.key)
+                                state.routes.detailsPath(state.permission.id)
                         ),
                         style: .destructive
                     )
