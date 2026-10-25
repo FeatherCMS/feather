@@ -86,6 +86,7 @@ public struct AdminFormFieldRichContentEditor: Component {
               }
               return -1;
             }
+            function dedentMarkdown(markdown) { const lines = markdown.replace(/\r/g, '').split('\n'); const indents = lines.filter(line => line.trim()).map(line => line.match(/^\s*/)[0].length); const indent = indents.length ? Math.min(...indents) : 0; return lines.map(line => line.trim() ? line.slice(indent) : '').join('\n'); }
             function splitMarkdownBlocks(markdown) {
               const lines = markdown.replace(/\r/g, '').split('\n'); const blocks = []; let current = []; let fenced = false; let directiveFence = false; let directiveDepth = 0;
               lines.forEach(line => {
@@ -140,7 +141,7 @@ public struct AdminFormFieldRichContentEditor: Component {
                   if (args[definition.argument || 'key'] === undefined) continue;
                   const hasBody = match[2] !== undefined;
                   const mode = args.displayMode === 'custom' || (args.displayMode === undefined && args.mode === 'custom') ? 'custom' : 'automatic';
-                  return Object.assign(newBlock(definition.type, args[definition.argument || 'key']), { children: mode === 'custom' && hasBody ? parseMarkdown(match[2]) : [], mode });
+                  return Object.assign(newBlock(definition.type, args[definition.argument || 'key']), { children: mode === 'custom' && hasBody ? parseMarkdown(dedentMarkdown(match[2])) : [], mode });
                 }
               }
               return null;
@@ -161,32 +162,33 @@ public struct AdminFormFieldRichContentEditor: Component {
                 const videoBlock = parseVideoBlock(part); if (videoBlock) return videoBlock;
                 const containerBlock = parseContainerBlock(part); if (containerBlock) return containerBlock;
                 const extensionBlock = parseExtensionBlock(part); if (extensionBlock) return extensionBlock;
-                const grid = part.match(/^@Grid\(([^)]*)\)\s*\{/); if (grid) { const openingIndex = grid[0].length - 1; const closingIndex = findMatchingBrace(part, openingIndex); if (closingIndex !== part.length - 1) return newBlock('text', part); const settings = { desktop: 3, tablet: 2, mobile: 1 }; grid[1].split(',').forEach(pair => { const match = pair.match(/(desktop|tablet|mobile)\s*:\s*(\d+)/); if (match) settings[match[1]] = Number(match[2]); }); const cellSource = part.slice(openingIndex + 1, closingIndex); const cellPattern = /(?:^|\n)\s*@Cell\s*\{/g; const cells = []; let cell; while ((cell = cellPattern.exec(cellSource))) { const cellOpeningIndex = cellSource.indexOf('{', cell.index); const cellClosingIndex = findMatchingBrace(cellSource, cellOpeningIndex); if (cellClosingIndex < 0) break; cells.push({ blocks: parseMarkdown(cellSource.slice(cellOpeningIndex + 1, cellClosingIndex).trim()) }); cellPattern.lastIndex = cellClosingIndex + 1; } return Object.assign(newBlock('grid', ''), { settings, columnCount: cells.length || 1, columns: cells }); }
+                const grid = part.match(/^@Grid\(([^)]*)\)\s*\{/); if (grid) { const openingIndex = grid[0].length - 1; const closingIndex = findMatchingBrace(part, openingIndex); if (closingIndex !== part.length - 1) return newBlock('text', part); const settings = { desktop: 3, tablet: 2, mobile: 1 }; grid[1].split(',').forEach(pair => { const match = pair.match(/(desktop|tablet|mobile)\s*:\s*(\d+)/); if (match) settings[match[1]] = Number(match[2]); }); const cellSource = part.slice(openingIndex + 1, closingIndex); const cellPattern = /(?:^|\n)\s*@Cell\s*\{/g; const cells = []; let cell; while ((cell = cellPattern.exec(cellSource))) { const cellOpeningIndex = cellSource.indexOf('{', cell.index); const cellClosingIndex = findMatchingBrace(cellSource, cellOpeningIndex); if (cellClosingIndex < 0) break; cells.push({ blocks: parseMarkdown(dedentMarkdown(cellSource.slice(cellOpeningIndex + 1, cellClosingIndex))) }); cellPattern.lastIndex = cellClosingIndex + 1; } return Object.assign(newBlock('grid', ''), { settings, columnCount: cells.length || 1, columns: cells }); }
                 const custom = part.match(/^@([A-Za-z][\w-]*)\(([^]*)\)$/); if (custom) return Object.assign(newBlock('custom', custom[2]), { name: custom[1] });
                 const heading = part.match(/^(#{1,6})\s+(.+)$/); if (heading) return Object.assign(newBlock('heading', heading[2]), { level: heading[1].length });
                 if (/^<[^>]+[\s\S]*>$/.test(part)) return newBlock('html', part);
                 return newBlock('text', part);
               });
             }
-            function serializeBlocks(blocks) { return blocks.map(serializeBlock).filter(Boolean).join('\n\n'); }
+            function serializeBlocks(blocks, depth = 0) { return blocks.map(block => serializeBlock(block, depth)).filter(Boolean).join('\n\n'); }
             function serialize() { return serializeBlocks(state.blocks); }
-            function serializeBlock(block) {
+            function indentLines(value, depth) { const indent = '    '.repeat(depth); return value.split('\n').map(line => line ? indent + line : line).join('\n'); }
+            function serializeBlock(block, depth = 0) {
               const value = (block.value || '').trim(); const extension = editorExtension(block.type);
-              if (extension?.isContainer) return value ? '@' + extension.directive + '(' + (extension.argument || 'key') + ': ' + JSON.stringify(value) + (block.mode === 'custom' ? ', displayMode: custom' : '') + ')' + (block.mode === 'custom' ? ' {\n' + serializeBlocks(block.children || []) + '\n}' : '') : '';
-              if (extension?.editor === 'marker') return '@' + extension.directive;
+              if (extension?.isContainer) { if (!value) return ''; const header = '@' + extension.directive + '(' + (extension.argument || 'key') + ': ' + JSON.stringify(value) + (block.mode === 'custom' ? ', displayMode: custom' : '') + ')'; if (block.mode !== 'custom') return indentLines(header, depth); const children = serializeBlocks(block.children || [], depth + 1); return indentLines(header + ' {', depth) + '\n' + children + (children ? '\n' : '') + indentLines('}', depth); }
+              if (extension?.editor === 'marker') return indentLines('@' + extension.directive, depth);
               if (!value && !['code', 'grid', 'separator'].includes(block.type)) return '';
-              if (block.type === 'separator') return '---';
-              if (block.type === 'heading') return `${'#'.repeat(block.level)} ${value}`;
-              if (block.type === 'code') return '```' + (block.language || '').trim() + '\n' + value + '\n```';
-              if (block.type === 'ul') return value.split('\n').filter(Boolean).map(item => '- ' + item.trim()).join('\n');
-              if (block.type === 'ol') return value.split('\n').filter(Boolean).map((item, index) => `${index + 1}. ${item.trim()}`).join('\n');
-              if (block.type === 'blockquote') return value.split('\n').map(line => '> ' + line).join('\n') + (block.cite ? '\n>\n> — ' + block.cite.trim() : '');
-              if (block.type === 'image') return `![${(block.alt || '').trim()}](${value})`;
-              if (block.type === 'video') return '@Video(source: ' + JSON.stringify(value) + ', kind: "' + (block.kind || 'file') + '")';
-              if (extension) return '@' + extension.directive + '(' + (extension.argument || 'key') + ': ' + JSON.stringify(value) + ')';
-              if (block.type === 'custom') return '@' + (block.name || '').trim() + '(' + value + ')';
-              if (block.type === 'grid') { const settings = block.settings || { desktop: 3, tablet: 2, mobile: 1 }; const columns = (block.columns || []).map(column => '@Cell {\n' + serializeBlocks(column.blocks || []) + '\n}').join('\n'); return '@Grid(desktop: ' + settings.desktop + ', tablet: ' + settings.tablet + ', mobile: ' + settings.mobile + ') {\n' + columns + '\n}'; }
-              return value;
+              if (block.type === 'separator') return indentLines('---', depth);
+              if (block.type === 'heading') return indentLines(`${'#'.repeat(block.level)} ${value}`, depth);
+              if (block.type === 'code') return indentLines('```' + (block.language || '').trim() + '\n' + value + '\n```', depth);
+              if (block.type === 'ul') return indentLines(value.split('\n').filter(Boolean).map(item => '- ' + item.trim()).join('\n'), depth);
+              if (block.type === 'ol') return indentLines(value.split('\n').filter(Boolean).map((item, index) => `${index + 1}. ${item.trim()}`).join('\n'), depth);
+              if (block.type === 'blockquote') return indentLines(value.split('\n').map(line => '> ' + line).join('\n') + (block.cite ? '\n>\n> — ' + block.cite.trim() : ''), depth);
+              if (block.type === 'image') return indentLines(`![${(block.alt || '').trim()}](${value})`, depth);
+              if (block.type === 'video') return indentLines('@Video(source: ' + JSON.stringify(value) + ', kind: "' + (block.kind || 'file') + '")', depth);
+              if (extension) return indentLines('@' + extension.directive + '(' + (extension.argument || 'key') + ': ' + JSON.stringify(value) + ')', depth);
+              if (block.type === 'custom') return indentLines('@' + (block.name || '').trim() + '(' + value + ')', depth);
+              if (block.type === 'grid') { const settings = block.settings || { desktop: 3, tablet: 2, mobile: 1 }; const indent = '    '.repeat(depth); const columns = (block.columns || []).map(column => indentLines('@Cell {', depth + 1) + '\n' + serializeBlocks(column.blocks || [], depth + 2) + '\n' + indentLines('}', depth + 1)).join('\n\n'); return indentLines('@Grid(desktop: ' + settings.desktop + ', tablet: ' + settings.tablet + ', mobile: ' + settings.mobile + ') {', depth) + '\n' + columns + (columns ? '\n' : '') + indent + '}'; }
+              return indentLines(value, depth);
             }
             function setStatus(message) { status.textContent = message; clearTimeout(setStatus.timer); setStatus.timer = setTimeout(() => status.textContent = 'Saved locally in editor', 900); }
             function syncRaw() { input.value = serialize(); }
@@ -467,7 +469,8 @@ public struct AdminFormFieldRichContentEditor: Component {
             function formatSelectionForBlock(field, block, update, format) { const start = field.selectionStart; const end = field.selectionEnd; if (start === end) return; const selected = field.value.slice(start, end); const wrappers = { bold: ['**', '**'], italic: ['*', '*'], underline: ['__', '__'], strike: ['~~', '~~'] }; let before; let after; if (format === 'link') { const url = window.prompt('Link URL', 'https://'); if (!url) return; before = '['; after = `](${url})`; } else { [before, after] = wrappers[format]; } const value = field.value.slice(0, start) + before + selected + after + field.value.slice(end); update('value', value); field.value = value; field.focus(); field.setSelectionRange(start + before.length, end + before.length); setStatus('Formatted'); }
             function render() {
               canvas.innerHTML = '';
-              if (!state.blocks.length) { canvas.innerHTML = '<div class="empty"><strong>Your canvas is empty.</strong><br>Drag here a component from above to get started.</div>'; return; }
+              canvas.classList.toggle('is-empty', !state.blocks.length);
+              if (!state.blocks.length) { canvas.innerHTML = '<div class="empty"><strong>Your canvas is empty.</strong><span>Drag here a component from above to get started.</span></div>'; return; }
               state.blocks.forEach((block, index) => {
                 const item = document.createElement('article'); item.className = 'block'; item.draggable = true; item.dataset.id = block.id;
                 item.innerHTML = '<div class="block-body"><label class="block-label"></label></div>';
@@ -788,6 +791,18 @@ public struct AdminFormFieldRichContentEditor: Component {
                 MinHeight(560.px)
                 Padding(10.px)
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+            },
+            Custom("\(root) .visual-canvas.is-empty") {
+                Display(.flex)
+            },
+            Custom("\(root) .visual-canvas.is-empty > .empty") {
+                Display(.flex)
+                FlexGrow(1)
+                FlexDirection(.column)
+                AlignItems(.center)
+                JustifyContent(.center)
+                Gap(4.px)
+                Padding(vertical: 0.px, horizontal: 20.px)
             },
             Custom("\(root) .visual-canvas.drag-over") {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
