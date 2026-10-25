@@ -2,7 +2,10 @@
 set -Eeuo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+CMS_ROOT="$(cd "$ROOT_DIR/.." && pwd)"
 APPLICATION_DIR="$ROOT_DIR/application"
+FEATHER_APPLICATION_DIR="$CMS_ROOT/feather/application"
+AVA_APPLICATION_DIR="$CMS_ROOT/ava/application"
 COMPOSE=(docker compose --project-directory "$ROOT_DIR" -f "$ROOT_DIR/docker-compose.yaml")
 MODE="${1:-all}"
 CERT_VOLUME="feather-cms-certificates"
@@ -33,10 +36,68 @@ cleanup() {
     "${COMPOSE[@]}" stop postgres >/dev/null 2>&1 || true
 }
 
+stop_existing_local_instances() {
+    local app_dir project_root process_name pid executable attempt line state
+    local -a pids=()
+
+    while IFS= read -r line; do
+        read -r pid executable _ <<< "$line"
+        [[ -n "$pid" && -n "$executable" ]] || continue
+        for app_dir in "$FEATHER_APPLICATION_DIR" "$AVA_APPLICATION_DIR"; do
+            case "$executable" in
+                "$app_dir"/.build/*) ;;
+                *) continue ;;
+            esac
+            process_name="${executable##*/}"
+            case "$process_name" in
+                WebApp|WebStatic|Static|Server|Worker)
+                    echo "Stopping existing $process_name instance (PID $pid)..."
+                    kill -TERM "$pid" 2>/dev/null || true
+                    pids+=("$pid")
+                    break
+                    ;;
+            esac
+        done
+    done < <(ps -axo pid=,command=)
+
+    for project_root in "$CMS_ROOT/feather" "$CMS_ROOT/ava"; do
+        if [[ -f "$project_root/docker-compose.yaml" ]]; then
+            echo "Stopping existing Docker runtime services in $project_root..."
+            docker compose \
+                --project-directory "$project_root" \
+                -f "$project_root/docker-compose.yaml" \
+                stop server worker web-static web-app >/dev/null 2>&1 || true
+        fi
+    done
+
+    for attempt in {1..50}; do
+        local running=0
+        for pid in "${pids[@]}"; do
+            state="$(ps -p "$pid" -o stat= 2>/dev/null | tr -d ' ')"
+            if [[ -n "$state" && "$state" != Z* ]]; then
+                running=1
+                break
+            fi
+        done
+        (( running == 0 )) && break
+        sleep 0.1
+    done
+
+    for pid in "${pids[@]}"; do
+        state="$(ps -p "$pid" -o stat= 2>/dev/null | tr -d ' ')"
+        if [[ -n "$state" && "$state" != Z* ]]; then
+            echo "Force-stopping unresponsive local process (PID $pid)..."
+            kill -KILL "$pid" 2>/dev/null || true
+        fi
+    done
+}
+
 trap cleanup EXIT INT TERM
 
 command -v docker >/dev/null || { echo "docker is required" >&2; exit 1; }
 command -v swift >/dev/null || { echo "swift is required" >&2; exit 1; }
+
+stop_existing_local_instances
 
 mkdir -p "$CERT_DIR" "$MEDIA_DIR"
 

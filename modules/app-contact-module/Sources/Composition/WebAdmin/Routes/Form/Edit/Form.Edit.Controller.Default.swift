@@ -92,15 +92,12 @@ extension ContactModule.Form.Edit.Controller {
                     fieldIDs: form.fieldIds ?? current.selectedFieldIDs,
                     mails: form.mails.isEmpty ? current.mails : form.mails
                 )
-                return Response(
-                    status: .seeOther,
-                    headers: [
-                        .location: AdminNotificationRedirect.location(
-                            defaultPath: routes.formEditPath(form.key),
-                            title: "Saved",
-                            message: "Contact form updated successfully."
-                        )
-                    ]
+                return AdminNotification.redirect(
+                    to: routes.formEditPath(form.key),
+                    notification: .init(
+                        title: "Saved",
+                        message: "Contact form updated successfully."
+                    )
                 )
             }
             catch let error as ContactModule.Form.Edit.Repository.Error {
@@ -160,15 +157,12 @@ extension ContactModule.Form.Edit.Controller {
                     fieldIDs: form.fieldIds ?? [],
                     mails: current.mails
                 )
-                return Response(
-                    status: .seeOther,
-                    headers: [
-                        .location: AdminNotificationRedirect.location(
-                            defaultPath: routes.formFieldsPath(formKey),
-                            title: "Saved",
-                            message: "Contact form fields updated successfully."
-                        )
-                    ]
+                return AdminNotification.redirect(
+                    to: routes.formFieldsPath(formKey),
+                    notification: .init(
+                        title: "Saved",
+                        message: "Contact form fields updated successfully."
+                    )
                 )
             }
             catch {

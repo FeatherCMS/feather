@@ -41,11 +41,7 @@ public struct AdminCopyButton: Component {
     }
 
     public func html(context: inout BuilderContext) -> Button {
-        let notificationScript = AdminNotification.showScript(
-            .init(title: "Copied", message: copiedMessage)
-        )
-
-        var button = Button {
+        Button {
             FeatherIcons.clipboard()
                 .width(16)
                 .height(16)
@@ -53,19 +49,48 @@ public struct AdminCopyButton: Component {
         .type(.button)
         .ariaLabel(label)
         .class("admin-copy-button")
-        button = button.onClick(
-            "navigator.clipboard.writeText(\(javascriptString(value))).then(()=>\(notificationScript))"
-        )
-        return button
+        .data("copy-value", value)
+        .data("copy-message", copiedMessage)
     }
 
-    private func javascriptString(_ value: String) -> String {
-        let escaped =
-            value
-            .replacingOccurrences(of: "\\", with: "\\\\")
-            .replacingOccurrences(of: "'", with: "\\'")
-            .replacingOccurrences(of: "\n", with: "\\n")
-            .replacingOccurrences(of: "\r", with: "\\r")
-        return "'\(escaped)'"
+    public func scripts() -> [String] {
+        [
+            #"""
+            document.addEventListener("click", function (event) {
+                var target = event.target;
+                var button = target && target.closest
+                    ? target.closest(".admin-copy-button")
+                    : null;
+                if (!button) {
+                    return;
+                }
+
+                function show(kind, title, message) {
+                    if (window.adminNotification) {
+                        window.adminNotification.show({
+                            kind: kind,
+                            title: title,
+                            message: message
+                        });
+                    }
+                }
+
+                try {
+                    if (!navigator.clipboard || !navigator.clipboard.writeText) {
+                        throw new Error("Clipboard API unavailable");
+                    }
+                    navigator.clipboard.writeText(button.dataset.copyValue || "")
+                        .then(function () {
+                            show("success", "Copied", button.dataset.copyMessage || "Copied to clipboard");
+                        })
+                        .catch(function () {
+                            show("error", "Copy failed", "Could not copy to the clipboard.");
+                        });
+                } catch (_) {
+                    show("error", "Copy failed", "Could not copy to the clipboard.");
+                }
+            });
+            """#
+        ]
     }
 }

@@ -41,22 +41,12 @@ extension ContactModule.Form.Edit {
                     )
                 )
                 context.build(
-                    AdminRelationshipGroup(
-                        pageHeader: .secondary(
-                            title: "Form configuration",
-                            description:
-                                "Configure the form name, key, and submission messages."
-                        )
-                    ) {
-                        context.build(
-                            ContactModule.Form.Editor(
-                                state: state.form,
-                                action: state.routes.formEditPath(state.key),
-                                submitLabel: "Save changes",
-                                isReadOnly: state.isReadOnly
-                            )
-                        )
-                    }
+                    ContactModule.Form.Editor(
+                        state: state.form,
+                        action: state.routes.formEditPath(state.key),
+                        submitLabel: "Save changes",
+                        isReadOnly: state.isReadOnly
+                    )
                 )
             }
             .class("cms-section")
