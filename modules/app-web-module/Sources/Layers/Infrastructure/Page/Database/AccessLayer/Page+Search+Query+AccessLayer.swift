@@ -30,7 +30,7 @@ extension Page.Search.Query {
             )
             sql.appendLiteral("SELECT COUNT(*) AS count FROM web_page WHERE (")
             appendSearchFilter(to: &sql, search: search)
-            sql.appendLiteral(");")
+            sql.appendLiteral(";")
             return DatabaseQuery(stringInterpolation: sql)
         }
 
