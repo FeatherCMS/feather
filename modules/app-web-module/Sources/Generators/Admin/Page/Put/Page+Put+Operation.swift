@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebOpenAPIGeneratorSupport
 
 extension Page.Put {
     struct Operation: Page.IdentifiableOperation, BearerProtectedOperation {

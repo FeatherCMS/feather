@@ -202,10 +202,7 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "BlogAppAPI",
@@ -216,25 +213,9 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
-        ),
-        // MARK: -
-        .target(
-            name: "BlogSchemaSupport",
-            dependencies: [
-                .product(name: "MediaOpenAPIGeneratorSupport", package: "app-media-module"),
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
-                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
-            ],
-            path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
         ),
+        // MARK: -
         .executableTarget(
             name: "BlogAdminOpenAPIGenerator",
             dependencies: [
@@ -243,9 +224,8 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "BlogSchemaSupport"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -258,9 +238,8 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "BlogSchemaSupport"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings

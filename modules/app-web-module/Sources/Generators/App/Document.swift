@@ -7,7 +7,6 @@
 
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebOpenAPIGeneratorSupport
 
 struct Info: InfoRepresentable {
     var title: String { "App API" }

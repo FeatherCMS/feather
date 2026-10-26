@@ -176,10 +176,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthAppAPI",
@@ -187,10 +184,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "AuthAdminOpenAPIGenerator",
@@ -199,7 +193,6 @@ let package = Package(
                 .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-                .product(name: "UserOpenAPIGeneratorSupport", package: "app-user-module"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -210,7 +203,6 @@ let package = Package(
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-                .product(name: "UserOpenAPIGeneratorSupport", package: "app-user-module"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings

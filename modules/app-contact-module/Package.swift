@@ -181,10 +181,7 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "ContactAppAPI",
@@ -195,10 +192,7 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "ContactAdminOpenAPIGenerator",

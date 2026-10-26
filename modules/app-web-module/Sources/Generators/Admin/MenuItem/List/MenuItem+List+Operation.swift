@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebOpenAPIGeneratorSupport
 
 extension MenuItem.List {
     struct Operation: MenuItem.MenuOperation, BearerProtectedOperation {

@@ -1,6 +1,5 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebOpenAPIGeneratorSupport
 
 struct PathCollection: PathCollectionRepresentable {
 

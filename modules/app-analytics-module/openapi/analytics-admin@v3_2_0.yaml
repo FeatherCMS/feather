@@ -385,9 +385,9 @@ components:
         filters:
           type: object
           examples:
-          - source: web_app
+          - search: /articles/hello-world/
+            source: web_app
             method: GET
-            search: /articles/hello-world/
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'
@@ -516,8 +516,8 @@ components:
         filters:
           type: object
           examples:
-          - source: web_app
-            search: /articles/hello-world/
+          - search: /articles/hello-world/
+            source: web_app
             method: GET
           properties:
             search:

@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import WebOpenAPIGeneratorSupport
 
 extension Menu.Parameters {
     struct Key: PathParameterRepresentable {

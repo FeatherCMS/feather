@@ -191,10 +191,7 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "WebAppAPI",
@@ -205,24 +202,9 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
-        ),
-        // MARK: -
-        .target(
-            name: "WebOpenAPIGeneratorSupport",
-            dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
-                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
-            ],
-            path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
         ),
+        // MARK: -
         .executableTarget(
             name: "WebAdminOpenAPIGenerator",
             dependencies: [
@@ -231,9 +213,8 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "WebOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -246,9 +227,8 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "WebOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings

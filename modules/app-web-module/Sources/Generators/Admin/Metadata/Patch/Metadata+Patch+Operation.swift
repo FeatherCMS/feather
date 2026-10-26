@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebOpenAPIGeneratorSupport
 
 extension Metadata.Patch {
     struct Operation: Metadata.IdentifiableOperation, BearerProtectedOperation {

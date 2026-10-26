@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import UserOpenAPIGeneratorSupport
 
 extension Account.Auth {
     public struct ResponseSchema: ObjectSchemaRepresentable {

@@ -22,7 +22,7 @@ Install Mint on macOS with Homebrew:
 brew install mint
 ```
 
-The script uses `swift-openapi-generator` 1.14.2 through Mint by default. It
+The script uses `swift-openapi-generator` 1.14.3 through Mint by default. It
 installs that version on first use. `SWIFT_OPENAPI_GENERATOR_VERSION` changes
 the pinned Mint version; `SWIFT_OPENAPI_GENERATOR_BIN` can point to an already
 installed executable.

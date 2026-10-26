@@ -1,6 +1,5 @@
 public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
-import UserOpenAPIGeneratorSupport
 
 extension Identity {
     public protocol Operation: BearerProtectedOperation {}

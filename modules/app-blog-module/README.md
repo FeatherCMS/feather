@@ -22,7 +22,7 @@ Regenerate the YAML specifications and Swift clients with:
 make openapi
 ```
 
-The script uses Mint to run `swift-openapi-generator` 1.14.2. You can run only
+The script uses Mint to run `swift-openapi-generator` 1.14.3. You can run only
 the document generators with `make openapi-yaml`, or only generate Swift API
 types with `make openapi-swift`. The source specifications are in `openapi/`;
 generated Swift files under `Sources/APIs/` should not be edited manually.
