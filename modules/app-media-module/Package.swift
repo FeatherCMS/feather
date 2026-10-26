@@ -4,9 +4,7 @@ import PackageDescription
 let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
-    .enableUpcomingFeature("MemberImportVisibility"),
     .enableUpcomingFeature("InferIsolatedConformances"),
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
@@ -21,10 +19,14 @@ let sharedSwiftSettings: [SwiftSetting] = [
 ]
 
 let swiftSettings = sharedSwiftSettings + [
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
     .treatAllWarnings(as: .error)
 ]
 
-let generatedAPISwiftSettings = swiftSettings
+let generatedAPISwiftSettings = sharedSwiftSettings + [
+    .unsafeFlags(["-suppress-warnings"])
+]
 
 
 let package = Package(

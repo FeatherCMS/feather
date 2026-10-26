@@ -1,6 +1,6 @@
 public import FeatherValidation
 import FeatherWebAdmin
-public import UserModule
+import UserModule
 
 extension Role.Add.Form {
     enum FieldValidator {

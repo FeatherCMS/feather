@@ -4,9 +4,7 @@ import PackageDescription
 let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
-    .enableUpcomingFeature("MemberImportVisibility"),
     .enableUpcomingFeature("InferIsolatedConformances"),
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
@@ -22,8 +20,14 @@ let sharedSwiftSettings: [SwiftSetting] = [
 
 let swiftSettings =
     sharedSwiftSettings + [
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
         .treatAllWarnings(as: .error)
     ]
+
+let generatedAPISwiftSettings = sharedSwiftSettings + [
+    .unsafeFlags(["-suppress-warnings"])
+]
 
 
 let package = Package(
@@ -176,7 +180,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: generatedAPISwiftSettings
         ),
         .target(
             name: "AuthAppAPI",
@@ -184,7 +188,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
+            swiftSettings: generatedAPISwiftSettings
         ),
         .executableTarget(
             name: "AuthAdminOpenAPIGenerator",

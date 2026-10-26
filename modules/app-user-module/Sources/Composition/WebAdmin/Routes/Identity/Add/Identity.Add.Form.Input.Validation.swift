@@ -1,5 +1,5 @@
 public import FeatherValidation
-public import UserModule
+import UserModule
 
 extension Identity.Add.Form {
     enum FieldValidator {
