@@ -9,7 +9,7 @@ extension Identity {
         public static let delete = PermissionKey("user:identities:delete")
         public static let me = PermissionKey("user:identities:me")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete, me]
         }
     }

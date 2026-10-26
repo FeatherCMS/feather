@@ -8,7 +8,7 @@ extension RolePermission {
         public static let list = PermissionKey("auth:access-control:list")
         public static let delete = PermissionKey("auth:access-control:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

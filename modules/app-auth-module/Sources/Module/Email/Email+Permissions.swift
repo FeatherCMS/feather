@@ -8,7 +8,7 @@ extension Email {
         public static let delete = PermissionKey("auth:email:delete")
         public static let list = PermissionKey("auth:email:list")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, delete, list]
         }
     }

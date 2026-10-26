@@ -14,9 +14,5 @@ extension Job {
         public static func all() -> Set<PermissionKey> {
             [read, list]
         }
-
-        public static func allPermissions() -> Set<PermissionKey> {
-            all()
-        }
     }
 }

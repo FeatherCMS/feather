@@ -8,7 +8,7 @@ extension Post {
         public static let list = PermissionKey("blog:posts:list")
         public static let delete = PermissionKey("blog:posts:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

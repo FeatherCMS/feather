@@ -27,7 +27,7 @@ extension PermissionAction {
 }
 
 public protocol PermissionProvider {
-    static func allPermissions() -> Set<PermissionKey>
+    static func all() -> Set<PermissionKey>
 }
 
 public struct Subject: Sendable {

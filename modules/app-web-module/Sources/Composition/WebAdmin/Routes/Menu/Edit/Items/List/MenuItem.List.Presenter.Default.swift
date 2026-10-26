@@ -25,7 +25,7 @@ extension MenuItem.List.Presenter {
         ) async throws -> HTMLResponse {
             let actions = AdminListActions(
                 Set(
-                    MenuItem.Permissions.allPermissions()
+                    MenuItem.Permissions.all()
                         .filter {
                             permissions.contains($0.rawValue)
                         }

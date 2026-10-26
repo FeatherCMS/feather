@@ -11,7 +11,7 @@ extension RedirectModule.Event {
             registry.register(
                 event: SystemModule.Permission.Event.Seed.self
             ) { _ in
-                RedirectModule.Permissions.allPermissions()
+                RedirectModule.Permissions.all()
                     .map {
                         .init(permission: $0)
                     }

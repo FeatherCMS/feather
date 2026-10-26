@@ -8,7 +8,7 @@ extension MagicLink {
         public static let list = PermissionKey("auth:magic-links:list")
         public static let delete = PermissionKey("auth:magic-links:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

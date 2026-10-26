@@ -6,7 +6,7 @@ extension Profile {
         public static let read = PermissionKey("account:profile:read")
         public static let update = PermissionKey("account:profile:update")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update]
         }
     }

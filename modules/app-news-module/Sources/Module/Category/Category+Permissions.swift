@@ -8,7 +8,7 @@ extension Category {
         public static let list = PermissionKey("news:category:list")
         public static let delete = PermissionKey("news:category:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

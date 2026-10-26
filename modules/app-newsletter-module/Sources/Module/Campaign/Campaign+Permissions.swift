@@ -8,7 +8,7 @@ extension Campaign {
         public static let list = PermissionKey("newsletter:campaigns:list")
         public static let delete = PermissionKey("newsletter:campaigns:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

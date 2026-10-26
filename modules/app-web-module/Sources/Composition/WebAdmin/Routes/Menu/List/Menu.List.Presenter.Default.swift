@@ -25,7 +25,7 @@ extension WebModule.Menu.List.Presenter {
         ) async throws -> HTMLResponse {
             let actions = AdminListActions(
                 Set(
-                    Menu.Permissions.allPermissions()
+                    Menu.Permissions.all()
                         .filter {
                             permissions.contains($0.rawValue)
                         }

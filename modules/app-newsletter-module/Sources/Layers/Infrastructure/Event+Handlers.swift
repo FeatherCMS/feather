@@ -11,7 +11,7 @@ extension NewsletterModule.Event {
             registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
-                NewsletterModule.Permissions.allPermissions()
+                NewsletterModule.Permissions.all()
                     .map {
                         .init(permission: $0)
                     }

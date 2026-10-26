@@ -68,20 +68,20 @@ struct AccountApplicationUseCasesTests {
     @Test
     func exposesAccountProfilePermissions() {
         #expect(
-            Profile.Permissions.allPermissions() == [
+            Profile.Permissions.all() == [
                 Profile.Permissions.create,
                 Profile.Permissions.read,
                 Profile.Permissions.update,
             ]
         )
         #expect(
-            AccountModule.Permissions.allPermissions()
+            AccountModule.Permissions.all()
                 .contains(
                     Profile.Permissions.read
                 )
         )
         #expect(
-            AccountModule.Permissions.allPermissions()
+            AccountModule.Permissions.all()
                 .contains(
                     Profile.Permissions.update
                 )
@@ -780,8 +780,8 @@ struct AccountApplicationUseCasesTests {
     @Test
     func exposesAllSettingsPermissions() {
         let settingsPermissions = Settings.Permissions
-            .allPermissions()
-        let allPermissions = AccountModule.Permissions.allPermissions()
+            .all()
+        let all = AccountModule.Permissions.all()
 
         #expect(
             settingsPermissions == [
@@ -790,10 +790,10 @@ struct AccountApplicationUseCasesTests {
             ]
         )
         #expect(
-            allPermissions
-                == Profile.Permissions.allPermissions()
+            all
+                == Profile.Permissions.all()
                 .union(settingsPermissions)
-                .union(Invitation.Permissions.allPermissions())
+                .union(Invitation.Permissions.all())
         )
     }
 

@@ -13,8 +13,4 @@ public enum Permissions: PermissionProvider {
             .union(Variable.Permissions.all())
             .union(Job.Permissions.all())
     }
-
-    public static func allPermissions() -> Set<PermissionKey> {
-        all()
-    }
 }

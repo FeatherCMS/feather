@@ -1,9 +1,9 @@
 public import FeatherModuleKit
 
 public enum Permissions: PermissionProvider {
-    public static func allPermissions() -> Set<PermissionKey> {
-        Campaign.Permissions.allPermissions()
-            .union(Subscriber.Permissions.allPermissions())
-            .union(Issue.Permissions.allPermissions())
+    public static func all() -> Set<PermissionKey> {
+        Campaign.Permissions.all()
+            .union(Subscriber.Permissions.all())
+            .union(Issue.Permissions.all())
     }
 }

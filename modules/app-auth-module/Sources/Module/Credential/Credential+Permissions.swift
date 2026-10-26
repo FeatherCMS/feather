@@ -9,7 +9,7 @@ extension Credential {
         public static let find = PermissionKey("auth:credential:find")
         public static let list = PermissionKey("auth:credential:list")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, delete, find, list]
         }
     }

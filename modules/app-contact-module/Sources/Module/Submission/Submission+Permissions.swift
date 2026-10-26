@@ -11,7 +11,7 @@ extension Submission {
             "contact:form-submissions:delete"
         )
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [read, update, list, delete]
         }
     }

@@ -8,7 +8,7 @@ extension Form {
         public static let list = PermissionKey("contact:forms:list")
         public static let delete = PermissionKey("contact:forms:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

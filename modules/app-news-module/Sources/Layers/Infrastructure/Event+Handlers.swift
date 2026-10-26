@@ -11,7 +11,7 @@ extension NewsModule.Event {
             registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
-                NewsModule.Permissions.allPermissions()
+                NewsModule.Permissions.all()
                     .map {
                         .init(permission: $0)
                     }

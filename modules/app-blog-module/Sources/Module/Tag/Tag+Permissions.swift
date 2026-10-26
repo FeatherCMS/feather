@@ -8,7 +8,7 @@ extension Tag {
         public static let list = PermissionKey("blog:tags:list")
         public static let delete = PermissionKey("blog:tags:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

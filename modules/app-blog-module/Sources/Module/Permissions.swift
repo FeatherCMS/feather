@@ -7,11 +7,11 @@
 public import FeatherModuleKit
 
 public enum Permissions: PermissionProvider {
-    public static func allPermissions() -> Set<PermissionKey> {
-        Author.Permissions.allPermissions()
-            .union(AuthorLink.Permissions.allPermissions())
-            .union(Post.Permissions.allPermissions())
-            .union(Tag.Permissions.allPermissions())
-            .union(Settings.Permissions.allPermissions())
+    public static func all() -> Set<PermissionKey> {
+        Author.Permissions.all()
+            .union(AuthorLink.Permissions.all())
+            .union(Post.Permissions.all())
+            .union(Tag.Permissions.all())
+            .union(Settings.Permissions.all())
     }
 }

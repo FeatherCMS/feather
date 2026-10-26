@@ -24,7 +24,7 @@ extension Page.Search.Presenter {
         ) async throws -> HTMLResponse {
             let actions = AdminListActions(
                 Set(
-                    Page.Permissions.allPermissions()
+                    Page.Permissions.all()
                         .filter {
                             permissions.contains($0.rawValue)
                         }

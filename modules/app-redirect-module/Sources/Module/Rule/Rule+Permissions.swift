@@ -18,7 +18,7 @@ extension Rule {
             "redirect:not-found:list"
         )
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, search, delete, notFoundList]
         }
     }

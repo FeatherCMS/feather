@@ -17,9 +17,5 @@ extension Variable {
         public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
-
-        public static func allPermissions() -> Set<PermissionKey> {
-            all()
-        }
     }
 }

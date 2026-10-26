@@ -8,7 +8,7 @@ extension Page {
         public static let list = PermissionKey("web:pages:list")
         public static let delete = PermissionKey("web:pages:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

@@ -26,7 +26,7 @@ extension WebModule.Event {
             registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
-                WebModule.Permissions.allPermissions()
+                WebModule.Permissions.all()
                     .map {
                         .init(permission: $0)
                     }
@@ -37,7 +37,7 @@ extension WebModule.Event {
                 context: AccessControlContext.self
             ) { event, _ in
                 guard event.roleKey == "editor" else { return [] }
-                return WebModule.Permissions.allPermissions().map { $0 }
+                return WebModule.Permissions.all().map { $0 }
             }
 
             registry.register(

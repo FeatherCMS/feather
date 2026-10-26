@@ -11,9 +11,5 @@ extension Variant {
         public static func all() -> Set<PermissionKey> {
             [create, read, list, update, delete]
         }
-
-        public static func allPermissions() -> Set<PermissionKey> {
-            all()
-        }
     }
 }

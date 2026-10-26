@@ -5,7 +5,7 @@ extension Settings {
         public static let read = PermissionKey("blog:settings:read")
         public static let update = PermissionKey("blog:settings:update")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [read, update]
         }
     }

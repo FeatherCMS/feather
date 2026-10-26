@@ -8,7 +8,7 @@ extension AuthorLink {
         public static let list = PermissionKey("blog:author-links:list")
         public static let delete = PermissionKey("blog:author-links:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

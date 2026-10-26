@@ -8,7 +8,7 @@ extension Invitation {
         public static let update = PermissionKey("account:invitations:update")
         public static let delete = PermissionKey("account:invitations:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, list, update, delete]
         }
     }

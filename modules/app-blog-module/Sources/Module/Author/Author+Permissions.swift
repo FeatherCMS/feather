@@ -8,7 +8,7 @@ extension Author {
         public static let list = PermissionKey("blog:authors:list")
         public static let delete = PermissionKey("blog:authors:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

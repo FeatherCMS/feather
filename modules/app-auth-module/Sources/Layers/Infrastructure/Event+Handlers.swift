@@ -11,7 +11,7 @@ extension AuthModule.Event {
             registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
-                AuthModule.Permissions.allPermissions()
+                AuthModule.Permissions.all()
                     .map {
                         .init(permission: $0)
                     }

@@ -11,7 +11,7 @@ extension ContactModule.Event {
             registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
-                ContactModule.Permissions.allPermissions()
+                ContactModule.Permissions.all()
                     .map {
                         .init(permission: $0)
                     }

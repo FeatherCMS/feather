@@ -8,7 +8,7 @@ extension Issue {
         public static let list = PermissionKey("newsletter:issues:list")
         public static let delete = PermissionKey("newsletter:issues:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

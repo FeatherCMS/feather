@@ -11,7 +11,7 @@ extension AnalyticsModule.Event {
             registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
-                AnalyticsModule.Permissions.allPermissions()
+                AnalyticsModule.Permissions.all()
                     .map {
                         .init(permission: $0)
                     }

@@ -7,7 +7,4 @@ public enum Permissions: PermissionProvider {
             .union(Variant.Processor.Permissions.all())
     }
 
-    public static func allPermissions() -> Set<PermissionKey> {
-        all()
-    }
 }

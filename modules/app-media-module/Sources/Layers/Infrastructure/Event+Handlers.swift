@@ -14,7 +14,7 @@ extension MediaModule.Event.Handlers {
         registry.register(
             event: Permission.Event.Seed.self
         ) { _ in
-            MediaModule.Permissions.allPermissions()
+            MediaModule.Permissions.all()
                 .map {
                     .init(permission: $0)
                 }
@@ -25,7 +25,7 @@ extension MediaModule.Event.Handlers {
             context: AccessControlContext.self
         ) { event, _ in
             guard event.roleKey == "editor" else { return [] }
-            return MediaModule.Permissions.allPermissions().map { $0 }
+            return MediaModule.Permissions.all().map { $0 }
         }
     }
 }

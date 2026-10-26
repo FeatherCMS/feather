@@ -13,7 +13,7 @@ extension UserModule.Event {
             registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
-                UserModule.Permissions.allPermissions()
+                UserModule.Permissions.all()
                     .map {
                         .init(permission: $0)
                     }

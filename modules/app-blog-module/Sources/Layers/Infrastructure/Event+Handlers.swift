@@ -14,7 +14,7 @@ extension BlogModule.Event {
             registry.register(
                 event: Permission.Event.Seed.self
             ) { _ in
-                BlogModule.Permissions.allPermissions()
+                BlogModule.Permissions.all()
                     .map {
                         .init(permission: $0)
                     }

@@ -8,7 +8,7 @@ extension Session {
         public static let list = PermissionKey("auth:sessions:list")
         public static let delete = PermissionKey("auth:sessions:delete")
 
-        public static func allPermissions() -> Set<PermissionKey> {
+        public static func all() -> Set<PermissionKey> {
             [create, read, update, list, delete]
         }
     }

@@ -13,9 +13,5 @@ extension Admin {
         public static func all() -> Set<PermissionKey> {
             [access]
         }
-
-        public static func allPermissions() -> Set<PermissionKey> {
-            all()
-        }
     }
 }
