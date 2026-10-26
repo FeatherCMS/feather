@@ -6,10 +6,10 @@ Beta.1
 - vkf [ ] Proper home page management
 - vkf [ ] Full slug vs last slug component -> type? trim, split, etc.
 - vkf [ ] Sign in with magic link + flow
+
 - tib [ ] Datepicker date only mode & other improvements
 - tib [ ] Transport error middleware
 - tib [ ] Autocomplete reuqests instead of states, like city & country
-- tib [ ] sign in oldalak captcha -> renderer abstraction for admin/app
 - tib [ ] contact custom submit label + rce display data 
 
 Next round
@@ -27,3 +27,4 @@ Next round
 - [ ] RCE undo / redo feature
 - [ ] protocol buffer api 
 - [ ] review admin css
+- [ ] renderer abstraction for admin/app

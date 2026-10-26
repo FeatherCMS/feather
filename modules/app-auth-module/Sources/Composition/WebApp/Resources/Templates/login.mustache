@@ -7,28 +7,28 @@
     {{> partials/auth-styles}}
 </head>
 <body>
-    <main class="auth-page">
-        <section class="auth-card" aria-labelledby="page-title">
-            <header class="auth-header">
+    <main class="login-page">
+        <section class="login-card" aria-labelledby="page-title">
+            <header class="admin-page-header">
                 <h1 id="page-title">Sign in</h1>
                 <p>Use your user account to continue.</p>
             </header>
-            {{#hasMessage}}
-            <p class="auth-message auth-message--error" role="alert">{{message}}</p>
-            {{/hasMessage}}
-            <form class="auth-form" action="{{action}}" method="post">
+            <form class="new-admin-form" action="{{action}}" method="post">
                 <input type="hidden" name="redirect" value="{{redirectPath}}">
+                {{#hasMessage}}
+                <p class="new-admin-form__error" role="alert">{{message}}</p>
+                {{/hasMessage}}
                 <label>
                     <span>Email address</span>
                     <input name="email" type="email" value="{{email}}" required autocomplete="username">
-                    {{#hasEmailError}}<span class="auth-field-error">{{emailError}}</span>{{/hasEmailError}}
+                    {{#hasEmailError}}<span class="field-error">{{emailError}}</span>{{/hasEmailError}}
                 </label>
                 <label>
                     <span>Password</span>
                     <input name="password" type="password" value="{{password}}" required autocomplete="current-password">
-                    {{#hasPasswordError}}<span class="auth-field-error">{{passwordError}}</span>{{/hasPasswordError}}
+                    {{#hasPasswordError}}<span class="field-error">{{passwordError}}</span>{{/hasPasswordError}}
                 </label>
-                <label class="auth-checkbox">
+                <label class="new-admin-form__checkbox">
                     <input name="is_persistent" type="checkbox" value="on"{{#isPersistent}} checked{{/isPersistent}}>
                     <span>Keep me signed in</span>
                 </label>
@@ -36,11 +36,13 @@
                 <div class="cf-turnstile" data-sitekey="{{turnstileSiteKey}}"></div>
                 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
                 {{/hasTurnstile}}
-                <button type="submit">Sign in</button>
+                <div class="new-admin-form__actions">
+                    <button class="button primary" type="submit">Sign in</button>
+                </div>
             </form>
-            <nav class="auth-links" aria-label="Other sign-in options">
-                <a href="/magic-link/">Sign in with a magic link</a>
-                <a href="/">Home</a>
+            <nav class="login-actions" aria-label="Other sign-in options">
+                <a class="button primary-ghost" href="/magic-link/">Sign in with a magic link</a>
+                <a class="button secondary-ghost" href="/">Home</a>
             </nav>
         </section>
     </main>

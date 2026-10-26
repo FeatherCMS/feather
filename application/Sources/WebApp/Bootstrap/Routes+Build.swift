@@ -41,7 +41,8 @@ func buildRouter(
     environment: AppEnvironment,
     templateOptions: [PageTemplateOption],
     templateDefinitions: [WebModule.Template.Definition],
-    templatePaths: [URL]
+    templatePaths: [URL],
+    turnstileVerifier: (any TurnstileVerifier)? = nil
 ) async throws -> Hummingbird.Router<DefaultRequestContext> {
 
     let router = Hummingbird.Router(context: DefaultRequestContext.self)
@@ -241,7 +242,8 @@ func buildRouter(
     AuthWebApp.Router(
         templateRenderer: try AuthWebApp.MustacheTemplateRenderer(),
         environment: environment,
-        usesSecureCookies: environment.publicOrigins.usesSecureCookies
+        usesSecureCookies: environment.publicOrigins.usesSecureCookies,
+        turnstileVerifier: turnstileVerifier
     )
     .route(on: router)
 
