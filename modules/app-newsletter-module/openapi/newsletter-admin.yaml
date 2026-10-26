@@ -1310,10 +1310,15 @@ components:
           $ref: '#/components/schemas/NewsletterNameField'
         status:
           $ref: '#/components/schemas/NewsletterSubscriberStatusField'
+        subscriptionDate:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+        unsubscriptionDate:
+          $ref: '#/components/schemas/NewsletterTimestampField'
       required:
       - campaignKey
       - campaignName
       - status
+      - subscriptionDate
     NewsletterSubscriberUpdateMask:
       type: string
       example: firstName,lastName,status

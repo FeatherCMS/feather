@@ -1,6 +1,7 @@
 public import FeatherMail
 import Foundation
 public import Jobs
+import Logging
 
 public enum SendMailJobHandler {
 
@@ -11,11 +12,24 @@ public enum SendMailJobHandler {
         queue.registerJob(
             parameters: SendMailJobParameters.self,
             retryStrategy: .exponentialJitter(maxAttempts: 5)
-        ) { parameters, _ in
-            try await handle(
-                parameters: parameters,
-                mailClient: mailClient
-            )
+        ) { parameters, context in
+            do {
+                try await handle(
+                    parameters: parameters,
+                    mailClient: mailClient
+                )
+            }
+            catch {
+                context.logger.error(
+                    "Mail delivery failed",
+                    metadata: [
+                        "jobID": .string(context.jobID),
+                        "attempt": .string(String(context.attempt)),
+                        "error": .string(String(describing: error)),
+                    ]
+                )
+                throw error
+            }
         }
     }
 

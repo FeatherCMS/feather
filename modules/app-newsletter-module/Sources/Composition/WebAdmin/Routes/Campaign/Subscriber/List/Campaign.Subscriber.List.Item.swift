@@ -6,5 +6,7 @@ extension Campaign.Subscriber.List {
         let email: String
         let name: String
         let status: String
+        let subscriptionDate: String
+        let unsubscriptionDate: String
     }
 }

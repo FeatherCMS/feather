@@ -52,7 +52,7 @@ extension Campaign.Subscriber.Import {
                         pageHeader: .secondary(
                             title: "CSV file",
                             description:
-                                "Use a UTF-8 CSV with an email header. Optional columns are first_name, last_name, and status."
+                                "Use a UTF-8 CSV with an email header. Optional columns are first_name, last_name, and status. Other export columns, such as created_at, are ignored."
                         )
                     ) {
                         let form = AdminForm(
@@ -109,42 +109,59 @@ extension Campaign.Subscriber.Import {
             [
                 #"""
                 (function () {
-                    var fileInput = document.getElementById(
-                        "newsletterSubscriberCSV"
-                    );
-                    var form = fileInput && fileInput.closest("form");
-                    if (!form) { return; }
-                    var csvInput = form.querySelector('input[name="csv"]');
-                    if (!fileInput || !csvInput) { return; }
-                    form.addEventListener("submit", function (event) {
-                        if (!fileInput.files || !fileInput.files.length) {
-                            event.preventDefault();
-                            window.alert("Choose a CSV file to import.");
+                    function bindImportForm() {
+                        var fileInput = document.getElementById(
+                            "newsletterSubscriberCSV"
+                        );
+                        var form = fileInput && fileInput.closest("form");
+                        if (!form || form.dataset.csvImportBound === "1") {
                             return;
                         }
-                        event.preventDefault();
-                        if (fileInput.files[0].size > 5000000) {
-                            window.alert("CSV files must be 5 MB or smaller.");
-                            return;
-                        }
-                        var reader = new FileReader();
-                        reader.onload = function () {
-                            try {
-                                csvInput.value = new TextDecoder("utf-8", {
-                                    fatal: true
-                                }).decode(reader.result);
-                                form.submit();
-                            } catch (error) {
-                                window.alert(
-                                    "The selected CSV file must use valid UTF-8 text."
-                                );
+                        var csvInput = form.querySelector('input[name="csv"]');
+                        if (!csvInput) { return; }
+                        form.dataset.csvImportBound = "1";
+                        form.addEventListener("submit", function (event) {
+                            if (!fileInput.files || !fileInput.files.length) {
+                                event.preventDefault();
+                                window.alert("Choose a CSV file to import.");
+                                return;
                             }
-                        };
-                        reader.onerror = function () {
-                            window.alert("The selected CSV file could not be read.");
-                        };
-                        reader.readAsArrayBuffer(fileInput.files[0]);
-                    });
+                            event.preventDefault();
+                            if (fileInput.files[0].size > 5000000) {
+                                window.alert("CSV files must be 5 MB or smaller.");
+                                return;
+                            }
+                            var reader = new FileReader();
+                            reader.onload = function () {
+                                try {
+                                    csvInput.value = new TextDecoder("utf-8", {
+                                        fatal: true
+                                    }).decode(reader.result);
+                                    HTMLFormElement.prototype.submit.call(form);
+                                } catch (error) {
+                                    window.alert(
+                                        "The selected CSV file must use valid UTF-8 text."
+                                    );
+                                }
+                            };
+                            reader.onerror = function () {
+                                window.alert(
+                                    "The selected CSV file could not be read."
+                                );
+                            };
+                            reader.readAsArrayBuffer(fileInput.files[0]);
+                        });
+                    }
+
+                    if (document.readyState === "loading") {
+                        document.addEventListener(
+                            "DOMContentLoaded",
+                            bindImportForm,
+                            { once: true }
+                        );
+                    } else {
+                        bindImportForm();
+                    }
                 }());
                 """#
             ]

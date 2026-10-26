@@ -1495,25 +1495,37 @@ extension Components {
             public var campaignName: Components.Schemas.NewsletterNameField
             /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema/status`.
             public var status: Components.Schemas.NewsletterSubscriberStatusField
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema/subscriptionDate`.
+            public var subscriptionDate: Components.Schemas.NewsletterTimestampField
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema/unsubscriptionDate`.
+            public var unsubscriptionDate: Components.Schemas.NewsletterTimestampField?
             /// Creates a new `NewsletterSubscriberQueryMembershipSchema`.
             ///
             /// - Parameters:
             ///   - campaignKey:
             ///   - campaignName:
             ///   - status:
+            ///   - subscriptionDate:
+            ///   - unsubscriptionDate:
             public init(
                 campaignKey: Components.Schemas.NewsletterKeyField,
                 campaignName: Components.Schemas.NewsletterNameField,
-                status: Components.Schemas.NewsletterSubscriberStatusField
+                status: Components.Schemas.NewsletterSubscriberStatusField,
+                subscriptionDate: Components.Schemas.NewsletterTimestampField,
+                unsubscriptionDate: Components.Schemas.NewsletterTimestampField? = nil
             ) {
                 self.campaignKey = campaignKey
                 self.campaignName = campaignName
                 self.status = status
+                self.subscriptionDate = subscriptionDate
+                self.unsubscriptionDate = unsubscriptionDate
             }
             public enum CodingKeys: String, CodingKey {
                 case campaignKey
                 case campaignName
                 case status
+                case subscriptionDate
+                case unsubscriptionDate
             }
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberUpdateMask`.

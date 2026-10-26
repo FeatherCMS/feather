@@ -54,7 +54,7 @@ public enum SendNewsletterIssueJobHandler {
                 databaseContext: databaseContext,
                 parameters: parameters,
                 status: .failed,
-                failureReason: String(describing: error)
+                failureReason: deliveryFailureReason(for: error)
             )
             throw error
         }
@@ -89,6 +89,15 @@ public enum SendNewsletterIssueJobHandler {
                 + "\n\n<p>To stop receiving these emails, <a href=\"\(url)\">unsubscribe</a>.</p>",
             contentType: parameters.mail.contentType
         )
+    }
+
+    private static func deliveryFailureReason(for error: any Error) -> String {
+        let description = String(describing: error)
+        guard description.contains("MessageRejected") else {
+            return description
+        }
+        return
+            "Amazon SES rejected the message. Verify the sender identity and sending permissions in the configured SES region."
     }
 
     private static func updateNewsletterDelivery(

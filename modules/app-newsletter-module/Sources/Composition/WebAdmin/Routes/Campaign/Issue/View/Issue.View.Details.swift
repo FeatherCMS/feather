@@ -3,6 +3,7 @@ import FeatherWebAdmin
 import Foundation
 import HTML
 import Hummingbird
+import NewsletterApplication
 import NewsletterModule
 import SGML
 import WebBuilders
@@ -104,6 +105,31 @@ extension Issue.View {
                             .style(
                                 "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
                             )
+                        }
+                        if model.scheduledAt.isEmpty,
+                            permissions.allows(Issue.Permissions.update)
+                        {
+                            Div {
+                                context.build(
+                                    AdminForm(
+                                        action: routes.issueSendPath(
+                                            newsletterId: newsletterId,
+                                            issueId: issueId
+                                        )
+                                    ) {
+                                        context.build(
+                                            AdminSubmitButton(
+                                                "Send issue",
+                                                style: .primary
+                                            )
+                                        )
+                                        P(
+                                            "Queues the issue for subscribed recipients and retries failed deliveries."
+                                        )
+                                    }
+                                )
+                            }
+                            .style("margin-top: 20px;")
                         }
                     }
                 )

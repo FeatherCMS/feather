@@ -47,7 +47,16 @@ extension Campaign.Subscriber.List.Repository {
                                     .replacingOccurrences(of: "=", with: ""),
                                 email: item.email,
                                 name: item.name,
-                                status: membership.status
+                                status: membership.status,
+                                subscriptionDate:
+                                    DateFormatting.formatUnixTimestamp(
+                                        membership.subscriptionDate
+                                    ),
+                                unsubscriptionDate:
+                                    membership.unsubscriptionDate.map {
+                                        DateFormatting
+                                            .formatUnixTimestamp($0)
+                                    } ?? "—"
                             )
                         }
                     return .init(items: items, total: result.data.total)

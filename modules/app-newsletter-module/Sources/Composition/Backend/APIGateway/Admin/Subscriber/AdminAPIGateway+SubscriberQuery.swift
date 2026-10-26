@@ -1,5 +1,6 @@
 import FeatherApplication
 import FeatherModuleKit
+import Foundation
 public import NewsletterAdminAPI
 import NewsletterApplication
 import NewsletterDomain
@@ -81,7 +82,13 @@ extension AdminAPIGateway {
                                                     campaignKey: $0.campaignKey,
                                                     campaignName: $0
                                                         .campaignName,
-                                                    status: $0.status.rawValue
+                                                    status: $0.status.rawValue,
+                                                    subscriptionDate: $0
+                                                        .subscriptionDate
+                                                        .timeIntervalSince1970,
+                                                    unsubscriptionDate: $0
+                                                        .unsubscriptionDate?
+                                                        .timeIntervalSince1970
                                                 )
                                         }
                                     )

@@ -110,6 +110,7 @@ extension Campaign.Subscriber.List {
                                                     "newsletter-campaign-subscribers",
                                                 columns: [
                                                     .fraction(2), .fraction(2),
+                                                    .fraction(1), .fraction(1),
                                                     .fraction(1), .actions,
                                                 ]
                                             ),
@@ -126,6 +127,8 @@ extension Campaign.Subscriber.List {
                                                             Th("Email")
                                                             Th("Name")
                                                             Th("Status")
+                                                            Th("Subscribed")
+                                                            Th("Unsubscribed")
                                                             Th("Actions")
                                                         }
                                                     }

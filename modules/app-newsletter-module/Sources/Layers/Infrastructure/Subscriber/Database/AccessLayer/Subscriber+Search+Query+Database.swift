@@ -64,7 +64,9 @@ extension Subscriber.Search.Query {
                 let membership = Subscriber.Search.Output.Membership(
                     campaignKey: item.campaignKey,
                     campaignName: item.campaignName,
-                    status: try status(from: item.status)
+                    status: try status(from: item.status),
+                    subscriptionDate: item.subscriptionDate,
+                    unsubscriptionDate: item.unsubscriptionDate
                 )
                 if let lastIndex = items.indices.last,
                     items[lastIndex].email == item.email
@@ -142,7 +144,9 @@ extension Subscriber.Search.Query {
                 SELECT paged.email, paged.first_name, paged.last_name,
                        campaign.key AS campaign_key,
                        campaign.name AS campaign_name,
-                       subscriber.status
+                       subscriber.status,
+                       subscriber.subscription_date,
+                       subscriber.unsubscription_date
                 FROM paged_emails AS paged
                 JOIN newsletter_subscriber AS subscriber
                   ON subscriber.email = paged.email
@@ -260,6 +264,8 @@ private struct SubscriberSearchRow {
     let campaignKey: String
     let campaignName: String
     let status: String
+    let subscriptionDate: Date
+    let unsubscriptionDate: Date?
 
     init(from row: any DatabaseRow) throws {
         email = try row.decode(column: "email", as: String.self)
@@ -268,5 +274,13 @@ private struct SubscriberSearchRow {
         campaignKey = try row.decode(column: "campaign_key", as: String.self)
         campaignName = try row.decode(column: "campaign_name", as: String.self)
         status = try row.decode(column: "status", as: String.self)
+        subscriptionDate = try row.decode(
+            column: "subscription_date",
+            as: Date.self
+        )
+        unsubscriptionDate =
+            try row.decodeNil(column: "unsubscription_date")
+            ? nil
+            : try row.decode(column: "unsubscription_date", as: Date.self)
     }
 }

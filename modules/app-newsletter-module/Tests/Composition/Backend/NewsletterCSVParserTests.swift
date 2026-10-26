@@ -48,6 +48,27 @@ struct NewsletterCSVParserTests {
     }
 
     @Test
+    func parsesCMSSubscriberExportWithCreatedAtColumn() throws {
+        let csv =
+            "email,first_name,last_name,created_at\n"
+            + "person-one@example.com,\"\",\"\",2022-01-16 17:54:14\n"
+            + "person-two@example.com,\"\",\"\",2022-01-16 17:54:14\n"
+
+        let records = try Campaign.Subscriber.Import.CSVParser.parse(csv)
+
+        #expect(records.count == 2)
+        #expect(
+            records.map(\.email) == [
+                "person-one@example.com",
+                "person-two@example.com",
+            ]
+        )
+        #expect(
+            records.allSatisfy { $0.firstName.isEmpty && $0.lastName.isEmpty }
+        )
+    }
+
+    @Test
     func parsesOptionalStatusAndDefaultsBlankStatus() throws {
         let records = try Campaign.Subscriber.Import.CSVParser.parse(
             "email,status\nsubscribed@example.com,subscribed\nunsubscribed@example.com,unsubscribed\nblank@example.com,\n"
@@ -76,6 +97,32 @@ struct NewsletterCSVParserTests {
         #expect(result.skipped == 2)
         #expect(createdRecords.map(\.email) == ["new@example.com"])
         #expect(createdRecords.first?.firstName == "Ada")
+    }
+
+    @Test
+    func importsCMSSubscriberExportAndIgnoresCreatedAt() async throws {
+        let repository = MockImportRepository(knownEmails: [])
+        let interactor = Campaign.Subscriber.Import.Interactor.Default(
+            repository: repository
+        )
+
+        let result = try await interactor.run(
+            newsletterId: "weekly",
+            csv:
+                "email,first_name,last_name,created_at\n"
+                + "person-one@example.com,\"\",\"\",2022-01-16 17:54:14\n"
+                + "person-two@example.com,\"\",\"\",2022-01-16 17:54:14\n"
+        )
+        let createdRecords = await repository.createdRecords
+
+        #expect(result.imported == 2)
+        #expect(result.skipped == 0)
+        #expect(
+            createdRecords.map(\.email) == [
+                "person-one@example.com",
+                "person-two@example.com",
+            ]
+        )
     }
 
     @Test

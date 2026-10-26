@@ -43,6 +43,7 @@ extension Issue.Edit {
         ) {
             router.get(routes.issueEdit.routerPath, use: controller.get)
             router.post(routes.issueEdit.routerPath, use: controller.edit)
+            router.post(routes.issueSend.routerPath, use: controller.send)
         }
     }
 }

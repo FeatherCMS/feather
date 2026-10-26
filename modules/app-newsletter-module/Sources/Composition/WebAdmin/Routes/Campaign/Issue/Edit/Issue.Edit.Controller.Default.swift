@@ -92,5 +92,68 @@ extension Issue.Edit.Controller {
                     .response(from: request, context: context)
             }
         }
+
+        func send(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            guard context.isCurrentUserAllowed(to: Issue.Permissions.update)
+            else { return Response(status: .forbidden) }
+            let runtime = buildRuntime(request, context)
+            let newsletterId = try context.requiredParameter("newsletterId")
+            let issueId = try context.requiredParameter("issueId")
+
+            do {
+                let model = try await runtime.interactor.get(
+                    newsletterId: newsletterId,
+                    issueId: issueId
+                )
+                guard model.scheduledAt.isEmpty else {
+                    return AdminNotification.redirect(
+                        to: routes.issueDetailsPath(
+                            newsletterId: newsletterId,
+                            issueId: issueId
+                        ),
+                        notification: .init(
+                            title: "Scheduled",
+                            message:
+                                "This issue will be sent at its scheduled time."
+                        )
+                    )
+                }
+                try await runtime.interactor.edit(
+                    newsletterId: newsletterId,
+                    issueId: issueId,
+                    form: .init(
+                        subject: model.subject,
+                        content: model.content,
+                        scheduledAt: model.scheduledAt
+                    )
+                )
+                return AdminNotification.redirect(
+                    to: routes.issueDetailsPath(
+                        newsletterId: newsletterId,
+                        issueId: issueId
+                    ),
+                    notification: .init(
+                        title: "Queued",
+                        message:
+                            "Issue deliveries have been queued for subscribed recipients."
+                    )
+                )
+            }
+            catch {
+                return AdminNotification.redirect(
+                    to: routes.issueDetailsPath(
+                        newsletterId: newsletterId,
+                        issueId: issueId
+                    ),
+                    notification: .init(
+                        title: "Unable to queue issue",
+                        message: error.displayMessage
+                    )
+                )
+            }
+        }
     }
 }

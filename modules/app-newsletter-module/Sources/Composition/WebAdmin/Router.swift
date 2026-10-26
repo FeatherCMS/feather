@@ -129,7 +129,11 @@ public struct Router {
             )
             .route(on: router)
         Issue.TestEmail
-            .Router(environment: environment, routes: routes.campaign)
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes.campaign
+            )
             .route(on: router)
 
         Campaign.Subscriber.View

@@ -17,7 +17,29 @@ extension Issue.Search {
         func html(context: inout BuilderContext) -> Tr {
             Tr {
                 Td(item.subject).data("label", "Subject")
-                Td(item.status).data("label", "Status")
+                Td {
+                    P(item.status)
+                    if !item.deliveries.isEmpty {
+                        let sentCount = item.deliveries
+                            .filter {
+                                $0.status == "sent"
+                            }
+                            .count
+                        let failedDeliveries = item.deliveries.filter {
+                            $0.status == "failed"
+                        }
+                        P("\(sentCount) sent, \(failedDeliveries.count) failed")
+                            .class("admin-list-secondary")
+                        if let failureReason = failedDeliveries.first?
+                            .failureReason,
+                            failureReason != "—"
+                        {
+                            P("Failure: \(failureReason)")
+                                .class("admin-list-secondary")
+                        }
+                    }
+                }
+                .data("label", "Status")
                 Td(item.scheduledAt).data("label", "Scheduled")
                 Td(item.createdAt).data("label", "Created")
                 context.build(

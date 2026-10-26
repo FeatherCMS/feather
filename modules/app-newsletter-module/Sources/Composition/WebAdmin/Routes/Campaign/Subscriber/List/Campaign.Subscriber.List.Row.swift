@@ -22,7 +22,12 @@ extension Campaign.Subscriber.List {
                     .data("label", "Email")
                     .setAsRemoveConfirmationLabel()
                 Td(item.name).data("label", "Name")
-                Td(item.status).data("label", "Status")
+                Td {
+                    context.build(statusChip(item.status))
+                }
+                .data("label", "Status")
+                Td(item.subscriptionDate).data("label", "Subscribed")
+                Td(item.unsubscriptionDate).data("label", "Unsubscribed")
                 context.build(
                     AdminListRowActions(
                         label: "Actions",
@@ -40,6 +45,14 @@ extension Campaign.Subscriber.List {
                         permissions: permissions
                     )
                 )
+            }
+        }
+
+        private func statusChip(_ status: String) -> AdminChip {
+            switch status.lowercased() {
+            case "subscribed": .init(label: "Subscribed", color: .green)
+            case "unsubscribed": .init(label: "Unsubscribed", color: .gray)
+            default: .init(label: status, color: .yellow)
             }
         }
     }

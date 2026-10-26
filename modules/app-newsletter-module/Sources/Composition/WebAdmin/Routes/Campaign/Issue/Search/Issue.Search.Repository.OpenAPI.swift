@@ -102,7 +102,9 @@ extension Issue.Search.Repository {
                         sentAt: $0.sentAt.map {
                             DateFormatting.formatUnixTimestamp($0)
                         } ?? "—",
-                        failureReason: $0.failureReason ?? "—"
+                        failureReason: Self.displayFailureReason(
+                            $0.failureReason
+                        )
                     )
                 }
             case .unauthorized:
@@ -117,6 +119,13 @@ extension Issue.Search.Repository {
                     responseBody: response.body
                 )
             }
+        }
+
+        private static func displayFailureReason(_ reason: String?) -> String {
+            guard let reason else { return "—" }
+            guard reason.contains("MessageRejected") else { return reason }
+            return
+                "Amazon SES rejected the message. Verify the sender identity and sending permissions in the configured SES region."
         }
     }
 }
