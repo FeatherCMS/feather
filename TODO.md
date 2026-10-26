@@ -13,6 +13,8 @@ Beta.1
 - tib [ ] contact custom submit label + rce display data 
 
 Next round
+- [ ] Telemetry, CI, auto-deployment
+- [ ] Template editor for web module
 - [ ] list order support
 - [ ] Metadata reference permission checks based on content
 - [ ] https://github.com/hummingbird-project/hummingbird-compression
@@ -21,8 +23,6 @@ Next round
 - [ ] A11Y + outlines everywhere on admin + frontend
 - [ ] Review components and states
 - [ ] Storage context, database context, worker context unification
-- [ ] Telemetry, CI, auto-deployment
-- [ ] Template editor for web module
 - [ ] Duplicate feature
 - [ ] RCE undo / redo feature
 - [ ] protocol buffer api 
