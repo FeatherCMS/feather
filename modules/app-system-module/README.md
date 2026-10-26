@@ -28,12 +28,12 @@ Install [Mint](https://github.com/yonaskolb/Mint) on macOS with Homebrew:
 brew install mint
 ```
 
-The generation script pins `apple/swift-openapi-generator` to version `1.14.2`
+The generation script pins `apple/swift-openapi-generator` to version `1.14.3`
 by default. Mint installs and runs that version on the first generation, so a
 separate generator installation is not required. To install it ahead of time:
 
 ```sh
-mint install apple/swift-openapi-generator@1.14.2
+mint install apple/swift-openapi-generator@1.14.3
 ```
 
 Run the following commands from this module's directory:

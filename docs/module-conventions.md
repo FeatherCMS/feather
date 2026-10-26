@@ -589,12 +589,10 @@ generated Swift manually.
   not download UI assets or rebuild a custom image. Keep the OpenAPI YAML
   generation workflow documented separately from serving the generated file.
 
-A small `*OpenAPIGeneratorSupport` target is an explicit exception when schemas
-are intentionally reused by another module's generator (as User identity
-schemas are consumed by Auth and Account) or by multiple API generators in the
-same module (for example, schemas intentionally shared by its App and Admin
-APIs). Keep that support API narrow and organized by the schema's owner; do not
-use it as a dumping ground for generator implementation details.
+Keep OpenAPI schema declarations inside the API generator target that consumes
+them. When Admin and App generators, or another module's generator, need the
+same declarations, copy them into each consuming generator target instead of
+introducing a shared generator support target.
 
 ## Migration plan
 
@@ -604,7 +602,8 @@ old symbols and paths at each rename; a source-only check misses public API
 consumers and mocks.
 
 1. Inventory products, targets, generated APIs, module-owned endpoints, and
-   every cross-module import/reference. Mark intentional shared schema targets.
+   every cross-module import/reference. Identify schema declarations that need
+   to be copied into each consuming generator target.
 2. Align target/product names and remove targets for APIs the module does not
    own, including associated clients/builders. Update package dependencies and
    all consuming packages together.

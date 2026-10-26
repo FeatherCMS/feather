@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import WebOpenAPIGeneratorSupport
 
 extension Page.Parameters {
     struct ID: PathParameterRepresentable {

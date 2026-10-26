@@ -52,10 +52,10 @@
 ## OpenAPI and Docker
 
 - Use `make openapi` to regenerate Admin/App YAML and clients. The script pins
-  Mint's `swift-openapi-generator` to 1.14.2 by default.
-- Keep shared generator code limited to schema declarations reused by the
-  module's distinct Admin and App API generators; do not put generator
-  assembly or I/O helpers in the shared target.
+  Mint's `swift-openapi-generator` to 1.14.3 by default.
+- Keep schema declarations inside each consuming Admin or App API generator
+  target. Copy declarations when both generators need the same schemas; do not
+  introduce a shared generator target.
 - Use the pinned `swaggerapi/swagger-ui:v5.32.15` image for both spec viewers;
   mount the versioned YAML directly and configure `SWAGGER_JSON`.
 - Do not reintroduce a custom Swagger UI download, Nginx config, or a database

@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import UserOpenAPIGeneratorSupport
 
 extension Identity.Session.Query {
     enum Schemas {}

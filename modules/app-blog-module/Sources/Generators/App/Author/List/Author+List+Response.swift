@@ -1,4 +1,3 @@
-import BlogSchemaSupport
 import FeatherOpenAPI
 
 extension Author.List {

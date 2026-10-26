@@ -4,9 +4,7 @@ import PackageDescription
 let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
-    .enableUpcomingFeature("MemberImportVisibility"),
     .enableUpcomingFeature("InferIsolatedConformances"),
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
@@ -22,8 +20,14 @@ let sharedSwiftSettings: [SwiftSetting] = [
 
 let swiftSettings =
     sharedSwiftSettings + [
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
         .treatAllWarnings(as: .error)
     ]
+
+let generatedAPISwiftSettings = sharedSwiftSettings + [
+    .unsafeFlags(["-suppress-warnings"])
+]
 
 let package = Package(
     name: "app-news-module",
@@ -41,10 +45,6 @@ let package = Package(
         .library(name: "NewsInfrastructure", targets: ["NewsInfrastructure"]),
         .library(name: "NewsAdminAPI", targets: ["NewsAdminAPI"]),
         .library(name: "NewsAppAPI", targets: ["NewsAppAPI"]),
-        .library(
-            name: "NewsOpenAPIGeneratorSupport",
-            targets: ["NewsOpenAPIGeneratorSupport"]
-        ),
         .executable(
             name: "NewsAdminOpenAPIGenerator",
             targets: ["NewsAdminOpenAPIGenerator"]
@@ -208,9 +208,7 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: sharedSwiftSettings + [
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: generatedAPISwiftSettings
         ),
         .target(
             name: "NewsAdminAPI",
@@ -221,9 +219,7 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: sharedSwiftSettings + [
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: generatedAPISwiftSettings
         ),
         // MARK: -
         .executableTarget(
@@ -250,17 +246,8 @@ let package = Package(
                 .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-                .target(name: "NewsOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/App",
-            swiftSettings: swiftSettings
-        ),
-        .target(
-            name: "NewsOpenAPIGeneratorSupport",
-            dependencies: [
-                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
-            ],
-            path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
         ),
         // MARK: -

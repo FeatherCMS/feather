@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import WebOpenAPIGeneratorSupport
 
 extension Page.List {
     struct Response: JSONResponseRepresentable {

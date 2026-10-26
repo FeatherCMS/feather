@@ -4,9 +4,7 @@ import PackageDescription
 let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
-    .enableUpcomingFeature("MemberImportVisibility"),
     .enableUpcomingFeature("InferIsolatedConformances"),
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
@@ -22,8 +20,14 @@ let sharedSwiftSettings: [SwiftSetting] = [
 
 let swiftSettings =
     sharedSwiftSettings + [
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
         .treatAllWarnings(as: .error)
     ]
+
+let generatedAPISwiftSettings = sharedSwiftSettings + [
+    .unsafeFlags(["-suppress-warnings"])
+]
 
 
 let package = Package(
@@ -176,10 +180,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: generatedAPISwiftSettings
         ),
         .target(
             name: "AuthAppAPI",
@@ -187,10 +188,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: generatedAPISwiftSettings
         ),
         .executableTarget(
             name: "AuthAdminOpenAPIGenerator",
@@ -199,7 +197,6 @@ let package = Package(
                 .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-                .product(name: "UserOpenAPIGeneratorSupport", package: "app-user-module"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -210,7 +207,6 @@ let package = Package(
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-                .product(name: "UserOpenAPIGeneratorSupport", package: "app-user-module"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings

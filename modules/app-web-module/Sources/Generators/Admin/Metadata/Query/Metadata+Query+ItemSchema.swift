@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import WebOpenAPIGeneratorSupport
 
 extension Metadata.Query {
     struct ItemSchema: ObjectSchemaRepresentable {

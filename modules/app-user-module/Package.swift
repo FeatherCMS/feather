@@ -4,9 +4,7 @@ import PackageDescription
 let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
-    .enableUpcomingFeature("MemberImportVisibility"),
     .enableUpcomingFeature("InferIsolatedConformances"),
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
@@ -22,8 +20,14 @@ let sharedSwiftSettings: [SwiftSetting] = [
 
 let swiftSettings =
     sharedSwiftSettings + [
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
         .treatAllWarnings(as: .error)
     ]
+
+let generatedAPISwiftSettings = sharedSwiftSettings + [
+    .unsafeFlags(["-suppress-warnings"])
+]
 
 let package = Package(
     name: "app-user-module",
@@ -42,10 +46,6 @@ let package = Package(
         .library(name: "UserAdminAPI", targets: ["UserAdminAPI"]),
         .library(name: "UserBackend", targets: ["UserBackend"]),
         .library(name: "UserWebAdmin", targets: ["UserWebAdmin"]),
-        .library(
-            name: "UserOpenAPIGeneratorSupport",
-            targets: ["UserOpenAPIGeneratorSupport"]
-        ),
         .executable(
             name: "UserAdminOpenAPIGenerator",
             targets: ["UserAdminOpenAPIGenerator"]
@@ -162,23 +162,9 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: generatedAPISwiftSettings
         ),
         // MARK: -
-        .target(
-            name: "UserOpenAPIGeneratorSupport",
-            dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                )
-            ],
-            path: "Sources/Generators/SchemaSupport",
-            swiftSettings: swiftSettings
-        ),
         // MARK: -
         .executableTarget(
             name: "UserAdminOpenAPIGenerator",

@@ -1,4 +1,3 @@
-import BlogSchemaSupport
 import FeatherOpenAPI
 
 extension Settings.Get {

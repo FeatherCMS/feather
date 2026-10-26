@@ -1,5 +1,5 @@
 import FeatherModuleKit
-public import FeatherWebAdmin
+import FeatherWebAdmin
 import OpenAPIRuntime
 import WebModule
 

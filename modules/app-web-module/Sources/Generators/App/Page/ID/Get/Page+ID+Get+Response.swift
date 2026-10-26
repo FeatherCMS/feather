@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import WebOpenAPIGeneratorSupport
 
 extension Page.ID.Get {
     struct Response: JSONResponseRepresentable {

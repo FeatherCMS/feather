@@ -4,9 +4,7 @@ import PackageDescription
 let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
-    .enableUpcomingFeature("MemberImportVisibility"),
     .enableUpcomingFeature("InferIsolatedConformances"),
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
@@ -20,7 +18,15 @@ let sharedSwiftSettings: [SwiftSetting] = [
     ),
 ]
 
-let swiftSettings = sharedSwiftSettings + [.treatAllWarnings(as: .error)]
+let swiftSettings = sharedSwiftSettings + [
+        .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableUpcomingFeature("MemberImportVisibility"),
+    .treatAllWarnings(as: .error)
+]
+
+let generatedAPISwiftSettings = sharedSwiftSettings + [
+    .unsafeFlags(["-suppress-warnings"])
+]
 
 let package = Package(
     name: "app-redirect-module",
@@ -180,10 +186,7 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: generatedAPISwiftSettings
         ),
         .target(
             name: "RedirectAppAPI",
@@ -194,10 +197,7 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: generatedAPISwiftSettings
         ),
         .executableTarget(
             name: "RedirectAdminOpenAPIGenerator",

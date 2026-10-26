@@ -13,10 +13,9 @@ module's current implementation.
 - The package exposes an Admin API, not an app-facing API. Do not retain an App
   generator, generated App API, or App API client unless User explicitly takes
   ownership of such an API.
-- `UserOpenAPIGeneratorSupport` is a narrow exception for User-owned schemas
-  shared with other modules' generators. Keep only shared schema declarations
-  there; generator implementation and API-specific paths belong to the Admin
-  generator target.
+- Keep User-owned schema declarations in the consuming API generator target.
+  When another module needs the same schema declarations, copy them into that
+  module's generator target instead of exposing a shared generator target.
 - Authorization and permission persistence belongs to its owning module. Do
   not recreate System's permission table or move auth-role-permission storage
   into User. Use the System-owned contracts/tables through declared target

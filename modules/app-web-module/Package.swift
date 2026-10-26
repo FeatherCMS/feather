@@ -4,9 +4,7 @@ import PackageDescription
 let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
-    .enableUpcomingFeature("MemberImportVisibility"),
     .enableUpcomingFeature("InferIsolatedConformances"),
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
@@ -22,8 +20,14 @@ let sharedSwiftSettings: [SwiftSetting] = [
 
 let swiftSettings =
     sharedSwiftSettings + [
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
         .treatAllWarnings(as: .error)
     ]
+
+let generatedAPISwiftSettings = sharedSwiftSettings + [
+    .unsafeFlags(["-suppress-warnings"])
+]
 
 let package = Package(
     name: "app-web-module",
@@ -191,10 +195,7 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: generatedAPISwiftSettings
         ),
         .target(
             name: "WebAppAPI",
@@ -205,24 +206,9 @@ let package = Package(
                 )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: sharedSwiftSettings + [
-                // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"])
-            ]
+            swiftSettings: generatedAPISwiftSettings
         ),
         // MARK: -
-        .target(
-            name: "WebOpenAPIGeneratorSupport",
-            dependencies: [
-                .product(
-                    name: "FeatherOpenAPIGenerator",
-                    package: "feather-core"
-                ),
-                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
-            ],
-            path: "Sources/Generators/SchemaSupport",
-            swiftSettings: swiftSettings
-        ),
         .executableTarget(
             name: "WebAdminOpenAPIGenerator",
             dependencies: [
@@ -231,9 +217,8 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "WebOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/Admin",
             swiftSettings: swiftSettings
@@ -246,9 +231,8 @@ let package = Package(
                     package: "feather-core"
                 ),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "WebOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/App",
             swiftSettings: swiftSettings

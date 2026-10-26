@@ -19,7 +19,7 @@ brew install mint
 ```
 
 The generation script runs
-[`swift-openapi-generator` 1.14.2](https://github.com/apple/swift-openapi-generator)
+[`swift-openapi-generator` 1.14.3](https://github.com/apple/swift-openapi-generator)
 through Mint by default, installing it on first use. Set
 `SWIFT_OPENAPI_GENERATOR_VERSION` to override the pinned version, or
 `SWIFT_OPENAPI_GENERATOR_BIN` to use an already installed executable.

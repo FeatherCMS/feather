@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import WebOpenAPIGeneratorSupport
 
 extension Menu.ID.Get {
     struct Response: JSONResponseRepresentable {

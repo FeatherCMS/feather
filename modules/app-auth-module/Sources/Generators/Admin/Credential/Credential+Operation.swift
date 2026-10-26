@@ -1,6 +1,5 @@
 public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
-import UserOpenAPIGeneratorSupport
 
 extension Credential {
     public protocol Operation: BearerProtectedOperation {}

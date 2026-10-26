@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import WebOpenAPIGeneratorSupport
 
 extension Page.Query {
     struct Operation: Page.Operation, BearerProtectedOperation {

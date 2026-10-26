@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import UserOpenAPIGeneratorSupport
 
 extension Identity.Session.List {
     struct Items: ArraySchemaRepresentable {

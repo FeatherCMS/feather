@@ -5,7 +5,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODULE_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 WORKSPACE_DIR="$(cd "${MODULE_DIR}/../.." && pwd)"
-SWIFT_OPENAPI_GENERATOR_BIN="${SWIFT_OPENAPI_GENERATOR_BIN:-swift-openapi-generator}"
+SWIFT_OPENAPI_GENERATOR_VERSION="${SWIFT_OPENAPI_GENERATOR_VERSION:-1.14.3}"
+SWIFT_OPENAPI_GENERATOR_BIN="${SWIFT_OPENAPI_GENERATOR_BIN:-}"
 OPENAPI_GENERATOR_CONFIG_PATH="${OPENAPI_GENERATOR_CONFIG_PATH:-${SCRIPT_DIR}/openapi-generator-config.yml}"
 
 GENERATOR_TARGETS=("MediaAdminOpenAPIGenerator" "MediaAppOpenAPIGenerator")
@@ -13,9 +14,25 @@ SPECIFICATIONS=("media-admin.yaml" "media-app.yaml")
 OUTPUT_DIRECTORIES=("Sources/APIs/Admin" "Sources/APIs/App")
 
 ensure_swift_openapi_generator_bin() {
-    if ! command -v "${SWIFT_OPENAPI_GENERATOR_BIN}" >/dev/null 2>&1; then
-        printf 'swift-openapi-generator is required on PATH\n' >&2
+    if [[ -n "${SWIFT_OPENAPI_GENERATOR_BIN}" ]]; then
+        if ! command -v "${SWIFT_OPENAPI_GENERATOR_BIN}" >/dev/null 2>&1; then
+            printf 'swift-openapi-generator binary not found: %s\n' \
+                "${SWIFT_OPENAPI_GENERATOR_BIN}" >&2
+            exit 1
+        fi
+    elif ! command -v mint >/dev/null 2>&1; then
+        printf 'Mint is required to run swift-openapi-generator %s\n' \
+            "${SWIFT_OPENAPI_GENERATOR_VERSION}" >&2
         exit 1
+    fi
+}
+
+run_swift_openapi_generator() {
+    if [[ -n "${SWIFT_OPENAPI_GENERATOR_BIN}" ]]; then
+        "${SWIFT_OPENAPI_GENERATOR_BIN}" "$@"
+    else
+        mint run "apple/swift-openapi-generator@${SWIFT_OPENAPI_GENERATOR_VERSION}" \
+            swift-openapi-generator "$@"
     fi
 }
 
@@ -37,7 +54,7 @@ generate_types() {
     ensure_swift_openapi_generator_bin
     for index in "${!SPECIFICATIONS[@]}"; do
         mkdir -p "${MODULE_DIR}/${OUTPUT_DIRECTORIES[${index}]}"
-        "${SWIFT_OPENAPI_GENERATOR_BIN}" generate \
+        run_swift_openapi_generator generate \
             --config "${OPENAPI_GENERATOR_CONFIG_PATH}" \
             --output-directory "${MODULE_DIR}/${OUTPUT_DIRECTORIES[${index}]}" \
             "${MODULE_DIR}/openapi/${SPECIFICATIONS[${index}]}"

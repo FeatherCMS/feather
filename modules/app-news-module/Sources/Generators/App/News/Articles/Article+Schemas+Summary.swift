@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-import NewsOpenAPIGeneratorSupport
 
 extension Article.Schemas {
     public struct Summary: ObjectSchemaRepresentable {
