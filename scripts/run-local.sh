@@ -10,7 +10,6 @@ COMPOSE=(docker compose --project-directory "$ROOT_DIR" -f "$ROOT_DIR/docker-com
 MODE="${1:-all}"
 CERT_VOLUME="feather-cms-certificates"
 CERT_DIR="$ROOT_DIR/.docker/certs"
-MEDIA_DIR="$ROOT_DIR/.docker/media"
 
 SERVER_PID=""
 WORKER_PID=""
@@ -33,7 +32,7 @@ cleanup() {
         fi
     done
     wait 2>/dev/null || true
-    "${COMPOSE[@]}" stop postgres >/dev/null 2>&1 || true
+    "${COMPOSE[@]}" stop postgres minio >/dev/null 2>&1 || true
 }
 
 stop_existing_local_instances() {
@@ -66,7 +65,7 @@ stop_existing_local_instances() {
             docker compose \
                 --project-directory "$project_root" \
                 -f "$project_root/docker-compose.yaml" \
-                stop server worker web-static web-app >/dev/null 2>&1 || true
+                stop server worker web-static web-app minio >/dev/null 2>&1 || true
         fi
     done
 
@@ -99,7 +98,7 @@ command -v swift >/dev/null || { echo "swift is required" >&2; exit 1; }
 
 stop_existing_local_instances
 
-mkdir -p "$CERT_DIR" "$MEDIA_DIR"
+mkdir -p "$CERT_DIR"
 
 if [[ -f "$ROOT_DIR/.env" ]]; then
     set -a
@@ -108,9 +107,9 @@ if [[ -f "$ROOT_DIR/.env" ]]; then
     set +a
 fi
 
-echo "Starting PostgreSQL in Docker..."
+echo "Starting PostgreSQL and MinIO in Docker..."
 "${COMPOSE[@]}" up certificates
-"${COMPOSE[@]}" up -d postgres
+"${COMPOSE[@]}" up -d postgres minio
 
 echo "Exporting PostgreSQL CA certificate..."
 docker run --rm \
@@ -120,6 +119,11 @@ docker run --rm \
 
 echo "Waiting for PostgreSQL..."
 until "${COMPOSE[@]}" exec -T postgres pg_isready -U postgres -d postgres >/dev/null 2>&1; do
+    sleep 1
+done
+
+echo "Waiting for MinIO..."
+until "${COMPOSE[@]}" exec -T minio mc ready local >/dev/null 2>&1; do
     sleep 1
 done
 
@@ -133,7 +137,13 @@ export POSTGRES_USER="${POSTGRES_USER:-postgres}"
 export POSTGRES_PASSWORD="${POSTGRES_PASSWORD:-postgres}"
 export POSTGRES_DATABASE="${POSTGRES_DATABASE:-postgres}"
 export POSTGRES_ROOT_CA_PATH="${POSTGRES_ROOT_CA_PATH:-$CERT_DIR/ca.pem}"
-export MEDIA_STORAGE_ROOT_PATH="${MEDIA_STORAGE_ROOT_PATH:-$MEDIA_DIR}"
+export STORAGE_S3_ACCESS_KEY_ID="${STORAGE_S3_ACCESS_KEY_ID:-feather-local}"
+export STORAGE_S3_SECRET_ACCESS_KEY="${STORAGE_S3_SECRET_ACCESS_KEY:-feather-local-secret-key}"
+export STORAGE_S3_REGION="${STORAGE_S3_REGION:-us-east-1}"
+export STORAGE_S3_ENDPOINT="${STORAGE_S3_ENDPOINT:-http://127.0.0.1:9000}"
+export STORAGE_S3_BUCKET="${STORAGE_S3_BUCKET:-feather-cms-app}"
+export STORAGE_OBJECT_KEY_DEPTH="${STORAGE_OBJECT_KEY_DEPTH:-2}"
+export STORAGE_OBJECT_KEY_SEGMENT_LENGTH="${STORAGE_OBJECT_KEY_SEGMENT_LENGTH:-2}"
 export MEDIA_MAX_CONCURRENT_PROCESSING="${MEDIA_MAX_CONCURRENT_PROCESSING:-1}"
 export SERVER_HTTP_HOST="${SERVER_HTTP_HOST:-127.0.0.1}"
 export SERVER_HTTP_PORT="${SERVER_HTTP_PORT:-8080}"
@@ -142,7 +152,7 @@ export WORKER_QUEUE_NAME="${WORKER_QUEUE_NAME:-feather-cms-worker}"
 export API_BASE_URL="${API_BASE_URL:-http://127.0.0.1:8080}"
 export WEB_PUBLIC_BASE_URL="${WEB_PUBLIC_BASE_URL:-http://127.0.0.1:3456}"
 export STATIC_PUBLIC_BASE_URL="${STATIC_PUBLIC_BASE_URL:-http://127.0.0.1:4567}"
-export MEDIA_PUBLIC_BASE_URL="${MEDIA_PUBLIC_BASE_URL:-http://127.0.0.1:8080}"
+export MEDIA_PUBLIC_BASE_URL="${MEDIA_PUBLIC_BASE_URL:-http://127.0.0.1:9000/$STORAGE_S3_BUCKET}"
 
 echo "Running database migrations..."
 (

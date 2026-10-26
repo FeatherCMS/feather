@@ -1,5 +1,5 @@
 {
-  "originHash" : "502bf3d1ef5f288aa4c98ab4e546cc92c2c87137566a3d460c7fdbea07f71e76",
+  "originHash" : "44a7732574123e04106ced364a84617aedf30ae34b650de17bd0f6d71657adb2",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-mail",
       "state" : {
-        "revision" : "699738895348bb43516c8dc351ad53ed6f356997",
-        "version" : "1.0.0-rc.1"
+        "revision" : "1bc59ff85b3f21f2dfe211d4f7270a7a1f2a91db",
+        "version" : "1.0.0-rc.2"
       }
     },
     {
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-storage",
       "state" : {
-        "revision" : "8ec237eadbbe98c36c41b5f26b677fbae441d303",
-        "version" : "1.0.0-rc.2"
+        "revision" : "7a327f8d2b9f67893e84864b0372776c12fc6a41",
+        "version" : "1.0.0-rc.3"
       }
     },
     {

@@ -104,23 +104,19 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/feather-framework/feather-mail-ses",
-            exact: "1.0.0-rc.2"
+            exact: "1.0.0-rc.3"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-mail",
-            exact: "1.0.0-rc.1"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-mail-ephemeral",
-            exact: "1.0.0-rc.1"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-storage-fs",
             exact: "1.0.0-rc.2"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-storage",
-            exact: "1.0.0-rc.2"
+            exact: "1.0.0-rc.3"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-storage-s3",
+            exact: "1.0.0-rc.3"
         ),
         .package(
             url: "https://github.com/soto-project/soto-core",
@@ -287,10 +283,7 @@ let package = Package(
 
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherMailSES", package: "feather-mail-ses"),
-                .product(
-                    name: "FeatherStorageFS",
-                    package: "feather-storage-fs"
-                ),
+                .product(name: "FeatherStorageS3", package: "feather-storage-s3"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "SotoCore", package: "soto-core"),
 
@@ -489,11 +482,9 @@ let package = Package(
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
-                .product(
-                    name: "FeatherStorageFS",
-                    package: "feather-storage-fs"
-                ),
+                .product(name: "FeatherStorageS3", package: "feather-storage-s3"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
+                .product(name: "SotoCore", package: "soto-core"),
 
                 .product(name: "UserAdminAPI", package: "app-user-module"),
                 .product(
@@ -664,10 +655,7 @@ let package = Package(
                     name: "PostgresMigrations",
                     package: "postgres-migrations"
                 ),
-                .product(
-                    name: "FeatherStorageFS",
-                    package: "feather-storage-fs"
-                ),
+                .product(name: "FeatherStorageTesting", package: "feather-storage"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(
                     name: "AccountAdminAPI",
@@ -694,10 +682,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Worker"),
                 .product(name: "FeatherMail", package: "feather-mail"),
-                .product(
-                    name: "FeatherMailEphemeral",
-                    package: "feather-mail-ephemeral"
-                ),
+                .product(name: "FeatherMailTesting", package: "feather-mail"),
                 .target(name: "Environment"),
             ],
             swiftSettings: swiftSettings

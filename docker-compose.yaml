@@ -42,6 +42,34 @@ services:
       timeout: 5s
       retries: 10
 
+  minio:
+    build:
+      context: .
+      dockerfile: ./docker/minio/Dockerfile
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    user: "0:0"
+    restart: always
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-root}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-password}
+      MINIO_ACCESS_KEY_ID: ${STORAGE_S3_ACCESS_KEY_ID:-feather-local}
+      MINIO_SECRET_ACCESS_KEY: ${STORAGE_S3_SECRET_ACCESS_KEY:-feather-local-secret-key}
+      MINIO_REGION_NAME: ${STORAGE_S3_REGION:-us-east-1}
+      MINIO_BUCKET_NAME: ${STORAGE_S3_BUCKET:-feather-cms-app}
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test:
+        - CMD
+        - mc
+        - ready
+        - local
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   server:
     image: feather-cms-server
     build:
@@ -53,12 +81,13 @@ services:
         condition: service_completed_successfully
       postgres:
         condition: service_healthy
+      minio:
+        condition: service_healthy
       migrator:
         condition: service_completed_successfully
     user: "0:0"
     volumes:
       - certificates:/certs
-      - file-storage:/media
     ports:
       - "8080:8080"
     environment:
@@ -66,8 +95,15 @@ services:
       SERVER_HTTP_PORT: 8080
       SERVER_QUEUE_NAME: feather-cms-worker
       SERVER_QUEUE_POLL_TIME_MS: 100
-      MEDIA_STORAGE_ROOT_PATH: /media
       MEDIA_MAX_CONCURRENT_PROCESSING: 1
+      STORAGE_S3_ACCESS_KEY_ID: ${STORAGE_S3_ACCESS_KEY_ID:-feather-local}
+      STORAGE_S3_SECRET_ACCESS_KEY: ${STORAGE_S3_SECRET_ACCESS_KEY:-feather-local-secret-key}
+      STORAGE_S3_REGION: ${STORAGE_S3_REGION:-us-east-1}
+      STORAGE_S3_ENDPOINT: http://minio:9000
+      STORAGE_S3_BUCKET: ${STORAGE_S3_BUCKET:-feather-cms-app}
+      STORAGE_OBJECT_KEY_DEPTH: ${STORAGE_OBJECT_KEY_DEPTH:-2}
+      STORAGE_OBJECT_KEY_SEGMENT_LENGTH: ${STORAGE_OBJECT_KEY_SEGMENT_LENGTH:-2}
+      MEDIA_PUBLIC_BASE_URL: ${MEDIA_PUBLIC_BASE_URL:-http://localhost:9000/${STORAGE_S3_BUCKET:-feather-cms-app}}
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
@@ -89,10 +125,8 @@ services:
     user: "0:0"
     volumes:
       - certificates:/certs
-      - file-storage:/media
     restart: "no"
     environment:
-      MEDIA_STORAGE_ROOT_PATH: /media
       WEB_PUBLIC_BASE_URL: ${WEB_PUBLIC_BASE_URL:-http://localhost:3456}
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
@@ -112,12 +146,13 @@ services:
         condition: service_completed_successfully
       postgres:
         condition: service_healthy
+      minio:
+        condition: service_healthy
       migrator:
         condition: service_completed_successfully
     user: "0:0"
     volumes:
       - certificates:/certs
-      - file-storage:/media
     entrypoint:
       - /app/Worker
     restart: always
@@ -134,7 +169,13 @@ services:
       WORKER_SCHEDULER_LOCK_EVERY_SECONDS: 300
       WORKER_SCHEDULER_LOCK_FOR_SECONDS: 360
       WORKER_RUN_MIGRATIONS: "true"
-      MEDIA_STORAGE_ROOT_PATH: /media
+      STORAGE_S3_ACCESS_KEY_ID: ${STORAGE_S3_ACCESS_KEY_ID:-feather-local}
+      STORAGE_S3_SECRET_ACCESS_KEY: ${STORAGE_S3_SECRET_ACCESS_KEY:-feather-local-secret-key}
+      STORAGE_S3_REGION: ${STORAGE_S3_REGION:-us-east-1}
+      STORAGE_S3_ENDPOINT: http://minio:9000
+      STORAGE_S3_BUCKET: ${STORAGE_S3_BUCKET:-feather-cms-app}
+      STORAGE_OBJECT_KEY_DEPTH: ${STORAGE_OBJECT_KEY_DEPTH:-2}
+      STORAGE_OBJECT_KEY_SEGMENT_LENGTH: ${STORAGE_OBJECT_KEY_SEGMENT_LENGTH:-2}
       SES_ID: ${SES_ID:?Set SES_ID for Amazon SES}
       SES_SECRET: ${SES_SECRET:?Set SES_SECRET for Amazon SES}
       SES_REGION: ${SES_REGION:?Set SES_REGION for Amazon SES}
@@ -160,7 +201,7 @@ services:
       API_BASE_URL: http://server:8080
       WEB_PUBLIC_BASE_URL: ${WEB_PUBLIC_BASE_URL:-http://localhost:3456}
       STATIC_PUBLIC_BASE_URL: ${STATIC_PUBLIC_BASE_URL:-http://localhost:4567}
-      MEDIA_PUBLIC_BASE_URL: ${MEDIA_PUBLIC_BASE_URL:-http://localhost:8080}
+      MEDIA_PUBLIC_BASE_URL: ${MEDIA_PUBLIC_BASE_URL:-http://localhost:9000/${STORAGE_S3_BUCKET:-feather-cms-app}}
 
   web-static:
     build:
@@ -225,5 +266,5 @@ volumes:
     name: feather-cms-certificates
   postgres-data:
     name: feather-cms-postgres-data
-  file-storage:
-    name: feather-cms-file-storage
+  minio-data:
+    name: feather-cms-minio-data

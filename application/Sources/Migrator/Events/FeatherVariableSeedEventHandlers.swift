@@ -3,6 +3,7 @@ import SystemApplication
 import SystemModule
 
 enum FeatherVariableSeedEventHandlers {
+
     static func register(
         in events: inout EventRegistry
     ) {

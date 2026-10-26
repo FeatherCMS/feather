@@ -11,6 +11,8 @@ public struct AuthenticatedRequestContext:
     public var coreContext: CoreRequestContextStorage
     public let sessionToken: String
     public let account: AccountModel
+    // TODO: 
+    // public let accountSettings: AccountSettingsModel
 
     public init(context: DefaultRequestContext) throws {
         guard

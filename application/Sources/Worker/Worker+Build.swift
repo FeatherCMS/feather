@@ -6,7 +6,7 @@ import FeatherMailSES
 import FeatherDomain
 import FeatherInfrastructure
 import FeatherStorage
-import FeatherStorageFS
+import FeatherStorageS3
 import Jobs
 import JobsPostgres
 import Logging
@@ -33,6 +33,21 @@ func buildWorker(
     }
     guard !config.ses.region.isEmpty else {
         throw WorkerConfigurationError.missing("SES_REGION")
+    }
+    if config.storage.s3.accessKeyId.isEmpty
+        != config.storage.s3.secretAccessKey.isEmpty
+    {
+        let name =
+            config.storage.s3.accessKeyId.isEmpty
+            ? "STORAGE_S3_ACCESS_KEY_ID"
+            : "STORAGE_S3_SECRET_ACCESS_KEY"
+        throw WorkerConfigurationError.missing(name)
+    }
+    guard !config.storage.s3.region.isEmpty else {
+        throw WorkerConfigurationError.missing("STORAGE_S3_REGION")
+    }
+    guard !config.storage.s3.bucket.isEmpty else {
+        throw WorkerConfigurationError.missing("STORAGE_S3_BUCKET")
     }
 
     let awsClient = AWSClient(
@@ -61,6 +76,27 @@ func buildWorker(
                 return formatter.string(from: Date())
             }
         )
+    )
+
+    let storageCredentialProvider: CredentialProviderFactory
+    if config.storage.s3.accessKeyId.isEmpty {
+        storageCredentialProvider = .default
+    }
+    else {
+        storageCredentialProvider = .static(
+            accessKeyId: config.storage.s3.accessKeyId,
+            secretAccessKey: config.storage.s3.secretAccessKey
+        )
+    }
+    let storageAWSClient = AWSClient(
+        credentialProvider: storageCredentialProvider,
+        logger: Logger.current
+    )
+    let storage = StorageClientS3(
+        awsClient: storageAWSClient,
+        region: config.storage.s3.region,
+        endpoint: config.storage.s3.endpoint,
+        bucket: config.storage.s3.bucket
     )
 
     var tlsConfig = TLSConfiguration.makeClientConfiguration()
@@ -143,7 +179,7 @@ func buildWorker(
         mailClient: mailClient,
         databaseContext: databaseContext,
         storageContext: .init(
-            storage: StorageClientFS(rootPath: config.media.storageRootPath),
+            storage: storage,
             objectKeyGenerator: HierarchicalObjectKeyGenerator(
                 depth: config.storage.objectKey.depth,
                 segmentLength: config.storage.objectKey.segmentLength
@@ -192,7 +228,7 @@ func buildWorker(
         )
     )
 
-    var services: [any Service] = [postgresClient, awsClient]
+    var services: [any Service] = [postgresClient, awsClient, storageAWSClient]
     services.append(
         jobQueue.processor(
             options: JobQueueProcessorOptions(

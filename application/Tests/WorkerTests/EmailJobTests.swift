@@ -1,6 +1,6 @@
 import FeatherInfrastructure
 import FeatherMail
-import FeatherMailEphemeral
+import FeatherMailTesting
 import Testing
 
 @testable import Worker
@@ -10,8 +10,8 @@ struct EmailJobTests {
 
     @Test
     func sendsGenericEmail() async throws {
-        let mailbox = EphemeralMailbox()
-        let mailClient = MailClientEphemeral(mailbox: mailbox)
+        let mailbox = TestMailbox()
+        let mailClient = TestMailClient(mailbox: mailbox)
 
         try await SendMailJobHandler.handle(
             parameters: .init(
@@ -44,8 +44,8 @@ struct EmailJobTests {
 
     @Test
     func sendsContactFormEmailWithHeaders() async throws {
-        let mailbox = EphemeralMailbox()
-        let mailClient = MailClientEphemeral(mailbox: mailbox)
+        let mailbox = TestMailbox()
+        let mailClient = TestMailClient(mailbox: mailbox)
 
         try await SendMailJobHandler.handle(
             parameters: .init(
