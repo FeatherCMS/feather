@@ -1,5 +1,5 @@
-/// Server-side verification for Cloudflare Turnstile form responses.
-public protocol AuthTurnstileVerifier: Sendable {
+/// Verifies Cloudflare Turnstile form responses and provides the public widget key.
+public protocol TurnstileVerifier: Sendable {
     /// Public site key used to render the browser widget.
     var siteKey: String { get }
 

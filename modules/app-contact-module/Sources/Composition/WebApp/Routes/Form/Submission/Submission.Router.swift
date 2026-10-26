@@ -8,7 +8,6 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-public import WebModuleWebApp
 
 extension Submission {
     public struct Router {

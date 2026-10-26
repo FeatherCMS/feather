@@ -7,7 +7,7 @@ import Hummingbird
 extension MagicLink.App.Controller {
     struct Default: Interface {
         let usesSecureCookies: Bool
-        let turnstileVerifier: (any AuthTurnstileVerifier)?
+        let turnstileVerifier: (any TurnstileVerifier)?
         let routes: MagicLink.App.Router.Routes
         let buildRuntime:
             @Sendable (Request, DefaultRequestContext) -> WebAppRuntime<

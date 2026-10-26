@@ -19,6 +19,24 @@ func buildApplication(
     reader: ConfigReader
 ) async throws -> some ApplicationProtocol {
     let urlResolver = AppEnvironmentURLResolver(reader: reader)
+    let turnstileKey = reader.string(
+        forKey: "turnstile.key",
+        default: ""
+    ).trimmingCharacters(in: .whitespacesAndNewlines)
+    let turnstileSecret = reader.string(
+        forKey: "turnstile.secret",
+        default: ""
+    ).trimmingCharacters(in: .whitespacesAndNewlines)
+    guard turnstileKey.isEmpty == turnstileSecret.isEmpty else {
+        throw TurnstileConfigurationError.incompleteCredentials
+    }
+    let turnstileVerifier =
+        turnstileKey.isEmpty
+        ? nil
+        : CloudflareTurnstileVerifier(
+            siteKey: turnstileKey,
+            secretKey: turnstileSecret
+        )
     let environment = AppEnvironment(
         apiBaseURL: URL(
             string: urlResolver.apiBaseURL()
@@ -37,7 +55,8 @@ func buildApplication(
         environment: environment,
         templateOptions: webMetadataExtensions.templates,
         templateDefinitions: webMetadataExtensions.templateDefinitions,
-        templatePaths: webMetadataExtensions.templatePaths
+        templatePaths: webMetadataExtensions.templatePaths,
+        turnstileVerifier: turnstileVerifier
     )
 
     let app = Application(

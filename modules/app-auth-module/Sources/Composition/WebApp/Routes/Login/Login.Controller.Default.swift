@@ -7,7 +7,7 @@ import Hummingbird
 extension Login.Controller {
     struct Default: Interface {
         let usesSecureCookies: Bool
-        let turnstileVerifier: (any AuthTurnstileVerifier)?
+        let turnstileVerifier: (any TurnstileVerifier)?
         let buildRuntime:
             @Sendable (Request, DefaultRequestContext) -> WebAppRuntime<
                 any Login.Interactor.Interface,
