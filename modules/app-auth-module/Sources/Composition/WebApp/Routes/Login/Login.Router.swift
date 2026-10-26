@@ -19,7 +19,7 @@ extension Login {
             repository: any Repository.Interface,
             templateRenderer: any TemplateRenderer,
             usesSecureCookies: Bool,
-            turnstileVerifier: (any AuthTurnstileVerifier)? = nil,
+            turnstileVerifier: (any TurnstileVerifier)? = nil,
             routes: Routes = .init()
         ) {
             self.routes = routes

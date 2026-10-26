@@ -7,7 +7,6 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-public import WebModuleWebApp
 
 extension Campaign.Subscription {
     public struct Router {

@@ -2,11 +2,11 @@
 
 Beta.1
 - vkf [ ] Time zone issues, settings management (pagination, etc)
-- tib [ ] Newsletter unscribscibe link + sending out issues + import
 - vkf [ ] Proper home page management
 - vkf [ ] Full slug vs last slug component -> type? trim, split, etc.
 - vkf [ ] Sign in with magic link + flow
 
+- tib [ ] Newsletter unscribscibe link + sending out issues + import
 - tib [ ] Datepicker date only mode & other improvements
 - tib [ ] Transport error middleware
 - tib [ ] Autocomplete reuqests instead of states, like city & country

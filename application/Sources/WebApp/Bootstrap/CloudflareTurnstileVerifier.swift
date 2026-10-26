@@ -1,12 +1,11 @@
-import AuthWebApp
+import FeatherWebShared
 import Foundation
-import WebModule
 
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
 
-struct CloudflareTurnstileVerifier: TurnstileVerifier, AuthTurnstileVerifier {
+struct CloudflareTurnstileVerifier: TurnstileVerifier {
     private struct RequestBody: Encodable {
         let secret: String
         let response: String

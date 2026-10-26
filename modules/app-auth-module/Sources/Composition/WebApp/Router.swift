@@ -8,13 +8,13 @@ public struct Router {
     private let templateRenderer: any TemplateRenderer
     private let environment: AppEnvironment
     private let usesSecureCookies: Bool
-    private let turnstileVerifier: (any AuthTurnstileVerifier)?
+    private let turnstileVerifier: (any TurnstileVerifier)?
 
     public init(
         templateRenderer: any TemplateRenderer,
         environment: AppEnvironment,
         usesSecureCookies: Bool,
-        turnstileVerifier: (any AuthTurnstileVerifier)? = nil
+        turnstileVerifier: (any TurnstileVerifier)? = nil
     ) {
         self.templateRenderer = templateRenderer
         self.environment = environment
