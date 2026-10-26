@@ -43,6 +43,7 @@ struct WorkerConfig: Sendable {
     }
 
     let system: SystemConfig
+    let webPublicBaseURL: String
     let queue: QueueConfig
     let processor: ProcessorConfig
     let scheduler: SchedulerConfig

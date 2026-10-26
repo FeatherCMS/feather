@@ -143,7 +143,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     as: Components.Parameters.AppNewsletterCampaignKeyParameter.self
                 ))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
-                let body: Components.RequestBodies.AppNewsletterCampaignSubscriptionRequestBody
+                let body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -153,7 +153,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.AppNewsletterCampaignSubscriptionSchema.self,
+                        Components.Schemas.AppNewsletterCampaignUnsubscribeSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)

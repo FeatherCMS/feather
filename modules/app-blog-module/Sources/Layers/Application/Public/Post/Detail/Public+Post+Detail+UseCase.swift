@@ -53,7 +53,7 @@ extension Public.Post.Detail {
                             name: author.name,
                             excerpt: author.excerpt,
                             content: author.content,
-                            imageAssetId: author.profileImageAssetId,
+                            imageAssetId: author.imageAssetId,
                             imageURL: "",
                             media: nil,
                             metadata: authorMetadata

@@ -68,22 +68,37 @@ extension Issue.Send {
                     newsletterId: input.newsletterId
                 )
             }
-            for subscriber in subscribers where subscriber.status == .subscribed
-            {
+            for listedSubscriber in subscribers
+            where listedSubscriber.status == .subscribed {
+                var subscriber = listedSubscriber
+                if subscriber.unsubscribeToken == nil {
+                    subscriber.ensureUnsubscribeToken()
+                    let subscriberToUpdate = subscriber
+                    subscriber = try await transaction.run { scope in
+                        try await scope.subscriber.update(subscriberToUpdate)
+                    }
+                }
+                guard let unsubscribeToken = subscriber.unsubscribeToken else {
+                    continue
+                }
+                let subscriberEmail = subscriber.email
                 let shouldEnqueue = try await transaction.run { context in
-                    guard
-                        try await context.delivery.findBy(
-                            issueId: input.issueId,
-                            subscriberEmail: subscriber.email
-                        ) == nil
-                    else {
-                        return false
+                    if var delivery = try await context.delivery.findBy(
+                        issueId: input.issueId,
+                        subscriberEmail: subscriberEmail
+                    ) {
+                        guard delivery.status == .failed else { return false }
+                        delivery.status = .pending
+                        delivery.sentDate = nil
+                        delivery.failureReason = nil
+                        _ = try await context.delivery.update(delivery)
+                        return true
                     }
                     _ = try await context.delivery.insert(
                         .init(
                             issueId: input.issueId,
                             newsletterId: input.newsletterId,
-                            subscriberEmail: subscriber.email,
+                            subscriberEmail: subscriberEmail,
                             status: .pending,
                             sentDate: nil,
                             failureReason: nil
@@ -92,17 +107,38 @@ extension Issue.Send {
                     return true
                 }
                 guard shouldEnqueue else { continue }
-                try await jobs.enqueueIssue(
-                    mail: .init(
-                        from: .init(newsletter.fromEmail),
-                        to: [.init(subscriber.email)],
-                        subject: input.subject,
-                        body: .html(input.content)
-                    ),
-                    issueId: input.issueId,
-                    newsletterId: input.newsletterId,
-                    scheduledAt: input.scheduledDate
-                )
+                do {
+                    try await jobs.enqueueIssue(
+                        mail: .init(
+                            from: .init(newsletter.fromEmail),
+                            to: [.init(subscriberEmail)],
+                            subject: input.subject,
+                            body: .html(input.content)
+                        ),
+                        issueId: input.issueId,
+                        newsletterId: input.newsletterId,
+                        newsletterKey: newsletter.key,
+                        unsubscribeToken: unsubscribeToken,
+                        scheduledAt: input.scheduledDate
+                    )
+                }
+                catch {
+                    let failureReason = String(describing: error)
+                    try? await transaction.run { scope in
+                        guard
+                            var delivery = try await scope.delivery.findBy(
+                                issueId: input.issueId,
+                                subscriberEmail: subscriberEmail
+                            )
+                        else {
+                            return
+                        }
+                        delivery.status = .failed
+                        delivery.failureReason = failureReason
+                        _ = try await scope.delivery.update(delivery)
+                    }
+                    throw error
+                }
             }
         }
 

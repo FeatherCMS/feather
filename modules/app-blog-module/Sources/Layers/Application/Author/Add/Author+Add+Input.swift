@@ -1,7 +1,6 @@
 public import BlogModule
 public import FeatherApplication
-public import WebApplication
-import WebDomain
+public import WebDomain
 public import WebModule
 
 extension Author.Add {

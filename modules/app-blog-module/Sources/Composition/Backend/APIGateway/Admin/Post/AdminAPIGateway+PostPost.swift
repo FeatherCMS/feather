@@ -85,6 +85,7 @@ extension AdminAPIGateway {
         excerpt: String
     ) -> WebModule.Metadata.Model.Base {
         .init(
+            template: "default",
             slug: title.slugified,
             publicationDate: .init(),
             expirationDate: nil,

@@ -1,7 +1,6 @@
 public import FeatherDomain
+public import Foundation
 public import NewsletterModule
-
-public import struct Foundation.Date
 
 extension Subscriber {
     public struct Model: FeatherDomain.Model {
@@ -38,7 +37,7 @@ extension Subscriber {
         public var firstName: String
         public var lastName: String
         public var confirmedAt: Date?
-        public let unsubscribeToken: String?
+        public var unsubscribeToken: String?
         public let source: String?
         public var lastSentAt: Date?
         public let createdAt: Date
@@ -127,7 +126,8 @@ extension Subscriber.Model {
             firstName: firstName,
             lastName: lastName,
             confirmedAt: confirmedAt,
-            unsubscribeToken: unsubscribeToken,
+            unsubscribeToken: unsubscribeToken
+                ?? UUID().uuidString.replacingOccurrences(of: "-", with: ""),
             source: source,
             lastSentAt: nil
         )
@@ -146,5 +146,14 @@ extension Subscriber.Model {
         status = .subscribed
         subscriptionDate = date
         unsubscriptionDate = nil
+    }
+
+    public mutating func ensureUnsubscribeToken() {
+        guard unsubscribeToken == nil else { return }
+        unsubscribeToken = UUID().uuidString
+            .replacingOccurrences(
+                of: "-",
+                with: ""
+            )
     }
 }

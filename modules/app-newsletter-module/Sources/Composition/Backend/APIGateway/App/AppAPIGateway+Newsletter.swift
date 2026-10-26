@@ -24,7 +24,7 @@ extension AppAPIGateway {
     public func appNewsletterCampaignUnsubscribe(
         _ input: Operations.AppNewsletterCampaignUnsubscribe.Input
     ) async throws -> Operations.AppNewsletterCampaignUnsubscribe.Output {
-        let body: Components.Schemas.AppNewsletterCampaignSubscriptionSchema
+        let body: Components.Schemas.AppNewsletterCampaignUnsubscribeSchema
         switch input.body {
         case .json(let value): body = value
         }
@@ -32,7 +32,7 @@ extension AppAPIGateway {
             .execute(
                 input: .init(
                     campaignKey: input.path.newsletterCampaignKey,
-                    email: body.email
+                    token: body.token
                 )
             )
         return .noContent

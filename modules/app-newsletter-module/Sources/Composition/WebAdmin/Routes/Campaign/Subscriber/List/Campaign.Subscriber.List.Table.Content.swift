@@ -175,6 +175,17 @@ extension Campaign.Subscriber.List {
                                 AdminListToolbar {
                                     context.build(
                                         AdminButton(
+                                            "Import CSV",
+                                            href:
+                                                routes
+                                                .subscriberImportPath(
+                                                    newsletterId: newsletterId
+                                                ),
+                                            style: .secondary
+                                        )
+                                    )
+                                    context.build(
+                                        AdminButton(
                                             "Add new",
                                             href: routes.subscriberAddPath(
                                                 newsletterId: newsletterId

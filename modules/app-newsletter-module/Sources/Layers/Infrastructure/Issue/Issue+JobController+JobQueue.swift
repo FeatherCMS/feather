@@ -1,11 +1,10 @@
 public import FeatherApplication
 public import FeatherInfrastructure
 public import FeatherMail
+public import Foundation
 public import Jobs
 public import NewsletterApplication
 public import NewsletterModule
-
-public import struct Foundation.Date
 
 extension Issue.JobController {
     public struct JobQueue: Interface {
@@ -23,12 +22,14 @@ extension Issue.JobController {
         public static func register(
             on queue: some JobQueueProtocol,
             databaseContext: DatabaseClientContext,
-            mailClient: any MailClient
+            mailClient: any MailClient,
+            publicBaseURL: URL
         ) {
             SendNewsletterIssueJobHandler.register(
                 on: queue,
                 databaseContext: databaseContext,
-                mailClient: mailClient
+                mailClient: mailClient,
+                publicBaseURL: publicBaseURL
             )
         }
 
@@ -36,13 +37,17 @@ extension Issue.JobController {
             mail: Mail,
             issueId: String,
             newsletterId: String,
+            newsletterKey: String,
+            unsubscribeToken: String,
             scheduledAt: Date?
         ) async throws {
             try await queue.push(
                 SendNewsletterIssueJobParameter(
                     mail: makeParameters(for: mail),
                     issueId: issueId,
-                    newsletterId: newsletterId
+                    newsletterId: newsletterId,
+                    newsletterKey: newsletterKey,
+                    unsubscribeToken: unsubscribeToken
                 ),
                 scheduledAt: scheduledAt
             )

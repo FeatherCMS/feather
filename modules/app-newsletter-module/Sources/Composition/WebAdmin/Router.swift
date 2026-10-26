@@ -153,6 +153,13 @@ public struct Router {
                 routes: routes.campaign
             )
             .route(on: router)
+        Campaign.Subscriber.Import
+            .Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                routes: routes.campaign
+            )
+            .route(on: router)
         Campaign.Subscriber.Edit
             .Router(
                 environment: environment,

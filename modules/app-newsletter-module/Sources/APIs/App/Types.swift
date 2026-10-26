@@ -42,7 +42,7 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     public func appNewsletterCampaignUnsubscribe(
         path: Operations.AppNewsletterCampaignUnsubscribe.Input.Path,
-        body: Components.RequestBodies.AppNewsletterCampaignSubscriptionRequestBody
+        body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody
     ) async throws -> Operations.AppNewsletterCampaignUnsubscribe.Output {
         try await appNewsletterCampaignUnsubscribe(Operations.AppNewsletterCampaignUnsubscribe.Input(
             path: path,

@@ -28,9 +28,8 @@ extension AdminAPIGateway {
                 content: body.content,
                 imageAssetId: body.imageAssetId,
                 metadata: .init(
-                    slug: body.title.slugified,
                     template: "default",
-                    publicationDate: nil,
+                    slug: body.title.slugified,
                     expirationDate: nil,
                     status: .draft,
                     title: body.title,

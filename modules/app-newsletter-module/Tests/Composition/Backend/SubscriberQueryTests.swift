@@ -25,7 +25,7 @@ struct SubscriberQueryTests {
                 .NewsletterSubscriberQueryItemSearchRequestQuerySchema(
                     page: .init(size: 25, number: 2),
                     sort: [
-                        .init(field: .name, direction: .asc)
+                        .init(field: .email, direction: .asc)
                     ],
                     filters: .init(search: "person", campaignKey: "weekly")
                 )
@@ -41,7 +41,7 @@ struct SubscriberQueryTests {
         #expect(page["size"] as? Int == 25)
         #expect(page["number"] as? Int == 2)
         let sort = try #require(query["sort"] as? [[String: Any]])
-        #expect(sort.first?["field"] as? String == "name")
+        #expect(sort.first?["field"] as? String == "email")
         let data = try #require(json["data"] as? [String: Any])
         #expect(data["total"] as? Int == 1)
         let items = try #require(data["items"] as? [[String: Any]])
@@ -50,9 +50,7 @@ struct SubscriberQueryTests {
         let queries = await context.connection.executedQueries()
         #expect(
             queries[.search]?.first?.sql
-                .contains(
-                    "ORDER BY first_name ASC, last_name ASC"
-                ) == true
+                .contains("ORDER BY email ASC") == true
         )
         try await context.connection.assertAllResponsesConsumed()
     }

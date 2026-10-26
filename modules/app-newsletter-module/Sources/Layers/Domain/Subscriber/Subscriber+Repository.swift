@@ -14,6 +14,11 @@ extension Subscriber {
                 email: String
             ) async throws -> Model?
 
+            func findBy(
+                newsletterId: String,
+                unsubscribeToken: String
+            ) async throws -> Model?
+
             func insert(
                 _ model: Model.New
             ) async throws -> Model

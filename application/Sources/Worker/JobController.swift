@@ -1,3 +1,4 @@
+import Foundation
 import FeatherDatabase
 import FeatherApplication
 import FeatherInfrastructure
@@ -14,7 +15,8 @@ struct JobController {
         mailClient: any MailClient,
         databaseContext: DatabaseClientContext,
         storageContext: StorageClientContext,
-        maxConcurrentMediaProcessing: Int
+        maxConcurrentMediaProcessing: Int,
+        publicBaseURL: URL
     ) {
         JobQueueSendMailJobController.register(
             on: queue,
@@ -23,7 +25,8 @@ struct JobController {
         Issue.JobController.JobQueue.register(
             on: queue,
             databaseContext: databaseContext,
-            mailClient: mailClient
+            mailClient: mailClient,
+            publicBaseURL: publicBaseURL
         )
         Asset.File.GenerateVariant.JobController.JobQueue.register(
             on: queue,

@@ -88,7 +88,7 @@ extension Public.Post.List.UseCase {
                     name: author.name,
                     excerpt: author.excerpt,
                     content: author.content,
-                    imageAssetId: author.profileImageAssetId,
+                    imageAssetId: author.imageAssetId,
                     imageURL: "",
                     media: nil,
                     metadata: metadata

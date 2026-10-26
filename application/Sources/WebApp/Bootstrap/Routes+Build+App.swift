@@ -41,6 +41,9 @@ func buildAppRoutes(
         )
         .route(on: router)
 
+    Campaign.Unsubscribe.Router(environment: environment)
+        .route(on: router)
+
     Public.Content
         .Router(
             events: publicContentEvents,

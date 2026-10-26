@@ -28,7 +28,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/AppNewsletterCampaignKeyParameter'
       requestBody:
-        $ref: '#/components/requestBodies/AppNewsletterCampaignSubscriptionRequestBody'
+        $ref: '#/components/requestBodies/AppNewsletterCampaignUnsubscribeRequestBody'
       responses:
         204:
           description: Subscriber unsubscribed
@@ -49,6 +49,13 @@ components:
       - email
     AppNewsletterNameField:
       type: string
+    AppNewsletterCampaignUnsubscribeSchema:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+      - token
   parameters:
     AppNewsletterCampaignKeyParameter:
       name: newsletterCampaignKey
@@ -62,4 +69,10 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AppNewsletterCampaignSubscriptionSchema'
+      required: true
+    AppNewsletterCampaignUnsubscribeRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppNewsletterCampaignUnsubscribeSchema'
       required: true

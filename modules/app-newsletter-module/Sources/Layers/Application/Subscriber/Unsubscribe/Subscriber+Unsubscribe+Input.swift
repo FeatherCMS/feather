@@ -4,11 +4,11 @@ public import NewsletterModule
 extension Subscriber.Unsubscribe {
     public struct Input: DTO {
         public let campaignKey: String
-        public let email: String
+        public let token: String
 
-        public init(campaignKey: String, email: String) {
+        public init(campaignKey: String, token: String) {
             self.campaignKey = campaignKey
-            self.email = email
+            self.token = token
         }
     }
 }

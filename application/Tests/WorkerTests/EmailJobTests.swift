@@ -82,4 +82,38 @@ struct EmailJobTests {
             Issue.record("Contact-form email body was not HTML")
         }
     }
+
+    @Test
+    func sendsMailWithListUnsubscribeHeaders() async throws {
+        let mailbox = TestMailbox()
+        let mailClient = TestMailClient(mailbox: mailbox)
+
+        try await SendMailJobHandler.handle(
+            parameters: .init(
+                from: "sender@example.com",
+                to: ["recipient@example.com"],
+                subject: "Issue subject",
+                additionalHeaders: [
+                    "List-Unsubscribe: <https://example.com/unsubscribe/token>",
+                    "List-Unsubscribe-Post: List-Unsubscribe=One-Click",
+                ],
+                body: "<p>Issue content</p>",
+                contentType: .html
+            ),
+            mailClient: mailClient
+        )
+
+        let messages = await mailbox.getMessages()
+        let message = try #require(messages.first)
+        #expect(message.customHeaders.count == 2)
+        #expect(message.customHeaders[0].name == "List-Unsubscribe")
+        #expect(
+            message.customHeaders[0].value
+                == "<https://example.com/unsubscribe/token>"
+        )
+        #expect(message.customHeaders[1].name == "List-Unsubscribe-Post")
+        #expect(
+            message.customHeaders[1].value == "List-Unsubscribe=One-Click"
+        )
+    }
 }

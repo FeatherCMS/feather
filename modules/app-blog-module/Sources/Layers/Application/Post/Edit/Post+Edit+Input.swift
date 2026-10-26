@@ -1,8 +1,7 @@
 public import BlogModule
 public import FeatherApplication
 public import FeatherDomain
-public import WebApplication
-import WebDomain
+public import WebDomain
 public import WebModule
 
 public import struct Foundation.Date

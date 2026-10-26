@@ -109,7 +109,7 @@ public enum Operations {
                 }
             }
             public var path: Operations.AppNewsletterCampaignUnsubscribe.Input.Path
-            public var body: Components.RequestBodies.AppNewsletterCampaignSubscriptionRequestBody
+            public var body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -117,7 +117,7 @@ public enum Operations {
             ///   - body:
             public init(
                 path: Operations.AppNewsletterCampaignUnsubscribe.Input.Path,
-                body: Components.RequestBodies.AppNewsletterCampaignSubscriptionRequestBody
+                body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody
             ) {
                 self.path = path
                 self.body = body

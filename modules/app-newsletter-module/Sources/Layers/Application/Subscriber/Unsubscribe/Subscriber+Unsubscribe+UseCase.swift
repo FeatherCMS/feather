@@ -30,7 +30,7 @@ extension Subscriber.Unsubscribe {
                 guard
                     var model = try await scope.subscriber.findBy(
                         newsletterId: campaign.id,
-                        email: input.email
+                        unsubscribeToken: input.token
                     )
                 else {
                     throw Error(message: "Newsletter subscriber not found")

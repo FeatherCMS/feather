@@ -61,6 +61,10 @@ extension Campaign.Router {
             subscribers.appending(pathComponent: "add")
         }
 
+        var subscriberImport: WebRoute {
+            subscribers.appending(pathComponent: "import")
+        }
+
         var subscriberDetails: WebRoute {
             subscribers.appending(parameter: "subscriberId")
         }
@@ -79,6 +83,13 @@ extension Campaign.Router {
 
         func subscriberAddPath(newsletterId: String) -> String {
             subscriberAdd.path(parameter: "newsletterId", value: newsletterId)
+        }
+
+        func subscriberImportPath(newsletterId: String) -> String {
+            subscriberImport.path(
+                parameter: "newsletterId",
+                value: newsletterId
+            )
         }
 
         func subscriberDetailsPath(

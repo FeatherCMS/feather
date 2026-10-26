@@ -1,4 +1,5 @@
 import BlogDomain
+import FeatherDomain
 public import BlogModule
 public import FeatherApplication
 public import FeatherModuleKit

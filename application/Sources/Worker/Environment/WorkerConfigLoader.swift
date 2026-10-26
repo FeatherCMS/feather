@@ -19,6 +19,7 @@ struct WorkerConfigLoader {
             defaultEnvironmentFilePrefix: "worker"
         )
         let workerScope = reader.scoped(to: "worker")
+        let webScope = reader.scoped(to: "web")
         let mediaScope = reader.scoped(to: "media")
         let objectKeyScope = reader.scoped(to: "storage.object_key")
         let storageScope = reader.scoped(to: "storage.s3")
@@ -49,6 +50,10 @@ struct WorkerConfigLoader {
 
         return .init(
             system: systemConfigLoader.load(reader: reader),
+            webPublicBaseURL: webScope.string(
+                forKey: "publicBaseURL",
+                default: "http://localhost:3456"
+            ),
             queue: .init(
                 name: workerScope.string(
                     forKey: "queue_name",

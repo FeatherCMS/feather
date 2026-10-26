@@ -51,5 +51,20 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/AppNewsletterNameField`.
         public typealias AppNewsletterNameField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AppNewsletterCampaignUnsubscribeSchema`.
+        public struct AppNewsletterCampaignUnsubscribeSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AppNewsletterCampaignUnsubscribeSchema/token`.
+            public var token: Swift.String
+            /// Creates a new `AppNewsletterCampaignUnsubscribeSchema`.
+            ///
+            /// - Parameters:
+            ///   - token:
+            public init(token: Swift.String) {
+                self.token = token
+            }
+            public enum CodingKeys: String, CodingKey {
+                case token
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@ import FeatherDBAL
 import FeatherDatabase
 public import FeatherInfrastructure
 public import FeatherMail
-import Foundation
+public import Foundation
 public import Jobs
 import NewsletterDomain
 import NewsletterModule
@@ -12,7 +12,8 @@ public enum SendNewsletterIssueJobHandler {
     public static func register(
         on queue: some JobQueueProtocol,
         databaseContext: DatabaseClientContext,
-        mailClient: any MailClient
+        mailClient: any MailClient,
+        publicBaseURL: URL
     ) {
         queue.registerJob(
             parameters: SendNewsletterIssueJobParameter.self,
@@ -21,19 +22,24 @@ public enum SendNewsletterIssueJobHandler {
             try await handle(
                 parameters: parameters,
                 databaseContext: databaseContext,
-                mailClient: mailClient
+                mailClient: mailClient,
+                publicBaseURL: publicBaseURL
             )
         }
     }
 
-    private static func handle(
+    static func handle(
         parameters: SendNewsletterIssueJobParameter,
         databaseContext: DatabaseClientContext,
-        mailClient: any MailClient
+        mailClient: any MailClient,
+        publicBaseURL: URL
     ) async throws {
         do {
             try await SendMailJobHandler.handle(
-                parameters: parameters.mail,
+                parameters: makeMailParameters(
+                    parameters: parameters,
+                    publicBaseURL: publicBaseURL
+                ),
                 mailClient: mailClient
             )
             try await updateNewsletterDelivery(
@@ -52,6 +58,37 @@ public enum SendNewsletterIssueJobHandler {
             )
             throw error
         }
+    }
+
+    static func makeMailParameters(
+        parameters: SendNewsletterIssueJobParameter,
+        publicBaseURL: URL
+    ) -> SendMailJobParameters {
+        guard
+            let newsletterKey = parameters.newsletterKey,
+            let unsubscribeToken = parameters.unsubscribeToken
+        else {
+            return parameters.mail
+        }
+        let unsubscribeURL =
+            publicBaseURL
+            .appending(path: "newsletter")
+            .appending(path: "unsubscribe")
+            .appending(path: newsletterKey)
+            .appending(path: unsubscribeToken)
+        let url = unsubscribeURL.absoluteString
+        return SendMailJobParameters(
+            from: parameters.mail.from,
+            to: parameters.mail.to,
+            subject: parameters.mail.subject,
+            additionalHeaders: parameters.mail.additionalHeaders + [
+                "List-Unsubscribe: <\(url)>",
+                "List-Unsubscribe-Post: List-Unsubscribe=One-Click",
+            ],
+            body: parameters.mail.body
+                + "\n\n<p>To stop receiving these emails, <a href=\"\(url)\">unsubscribe</a>.</p>",
+            contentType: parameters.mail.contentType
+        )
     }
 
     private static func updateNewsletterDelivery(

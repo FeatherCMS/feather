@@ -13,6 +13,8 @@ extension Issue.JobController {
             mail: Mail,
             issueId: String,
             newsletterId: String,
+            newsletterKey: String,
+            unsubscribeToken: String,
             scheduledAt: Date?
         ) async throws
     }
