@@ -1,3 +1,3 @@
-public extension WebMetadata.Admin {
-    enum Patch {}
+extension WebMetadata.Admin {
+    public enum Patch {}
 }

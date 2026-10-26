@@ -12,10 +12,12 @@ extension Post.List.Query {
         }
 
         public func list() async throws -> Post.List.Output {
-            let rows = try await DatabaseAccessLayer<Post.Table>(context: context)
-                .select(as: Post.Table.List.self) {
-                    $0.order(by: \.id)
-                }
+            let rows = try await DatabaseAccessLayer<Post.Table>(
+                context: context
+            )
+            .select(as: Post.Table.List.self) {
+                $0.order(by: \.id)
+            }
             return .init(
                 items: rows.map {
                     Post.List.Output.Item(

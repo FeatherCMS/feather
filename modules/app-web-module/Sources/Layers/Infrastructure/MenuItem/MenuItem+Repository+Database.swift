@@ -14,7 +14,9 @@ extension MenuItem.Table.Detail {
             priority: priority,
             isBlank: isBlank,
             permission: permission,
-            authentication: MenuItem.Model.Authentication(rawValue: authentication)
+            authentication: MenuItem.Model.Authentication(
+                rawValue: authentication
+            )
                 ?? .any,
             notes: notes,
             createdAt: createdAt,

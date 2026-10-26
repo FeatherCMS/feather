@@ -1,9 +1,9 @@
-import NewsApplication
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import MediaWebAdmin
 import MediaModule
+import MediaWebAdmin
+import NewsApplication
 import NewsModule
 
 extension Category.Add {

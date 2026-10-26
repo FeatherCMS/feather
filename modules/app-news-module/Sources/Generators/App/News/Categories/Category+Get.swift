@@ -1,3 +1,3 @@
-public extension Category {
-    enum Get {}
+extension Category {
+    public enum Get {}
 }

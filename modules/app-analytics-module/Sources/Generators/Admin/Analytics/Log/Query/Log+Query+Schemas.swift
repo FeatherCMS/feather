@@ -28,23 +28,28 @@ extension Analytics.Log.Query.Schemas {
         var openAPIIdentifier: String { "AnalyticsLogFilterSchema" }
         var propertyMap: SchemaMap {
             [
-                "search": Analytics.Log.Schemas.Path().reference(
-                    required: false
-                ),
-                "source": Analytics.Log.Schemas.Source().reference(
-                    required: false
-                ),
-                "method": Analytics.Log.Schemas.Method().reference(
-                    required: false
-                ),
+                "search": Analytics.Log.Schemas.Path()
+                    .reference(
+                        required: false
+                    ),
+                "source": Analytics.Log.Schemas.Source()
+                    .reference(
+                        required: false
+                    ),
+                "method": Analytics.Log.Schemas.Method()
+                    .reference(
+                        required: false
+                    ),
                 "responseCode": Analytics.Log.Schemas.ResponseCode()
                     .reference(required: false),
-                "from": Analytics.Log.Overview.Schemas.Date().reference(
-                    required: false
-                ),
-                "to": Analytics.Log.Overview.Schemas.Date().reference(
-                    required: false
-                ),
+                "from": Analytics.Log.Overview.Schemas.Date()
+                    .reference(
+                        required: false
+                    ),
+                "to": Analytics.Log.Overview.Schemas.Date()
+                    .reference(
+                        required: false
+                    ),
             ]
         }
 

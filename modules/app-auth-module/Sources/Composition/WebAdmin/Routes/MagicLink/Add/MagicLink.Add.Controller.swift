@@ -34,4 +34,3 @@ extension MagicLink.Add.Controller {
         ) async throws -> Response
     }
 }
-

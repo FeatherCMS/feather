@@ -1,5 +1,5 @@
-import RedirectModule
 import RedirectApplication
+import RedirectModule
 
 extension Rule.Edit.Interactor {
     enum Error: Swift.Error, Sendable {

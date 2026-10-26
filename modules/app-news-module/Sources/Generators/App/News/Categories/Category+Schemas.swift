@@ -1,3 +1,3 @@
-public extension Category {
-    enum Schemas {}
+extension Category {
+    public enum Schemas {}
 }

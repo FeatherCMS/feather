@@ -44,8 +44,44 @@ extension AdminAPIGateway {
         let page = query.page ?? .init()
         return .init(
             page: .init(size: page.size ?? 20, number: page.number ?? 1),
-            sort: (query.sort ?? []).map { rule in
-                let field: Asset.Folder.Search.Input.Query.Sort.Field
+            sort: (query.sort ?? [])
+                .map { rule in
+                    let field: Asset.Folder.Search.Input.Query.Sort.Field
+                    switch rule.field {
+                    case .id: field = .id
+                    case .name: field = .name
+                    case .path: field = .path
+                    case .assetCount: field = .assetCount
+                    case .totalSizeBytes: field = .totalSizeBytes
+                    case .createdAt: field = .createdAt
+                    case .updatedAt: field = .updatedAt
+                    }
+                    let direction: Search.SortDirection
+                    switch rule.direction {
+                    case .asc: direction = .asc
+                    case .desc: direction = .desc
+                    }
+                    return .init(field: field, direction: direction)
+                },
+            parentId: (query.filters.parentId ?? "").emptyToNil
+        )
+    }
+
+    private func folderSearchResponseQuery(
+        from query: Components.Schemas
+            .MediaFolderQueryItemSearchRequestQuerySchema
+    ) -> Components.Schemas.MediaFolderQueryItemSearchResponseQuerySchema {
+        let page = query.page ?? .init()
+        let sort = query.sort?
+            .map {
+                rule
+                    -> Components.Schemas
+                    .MediaFolderQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload in
+                let field:
+                    Components.Schemas
+                        .MediaFolderQueryItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
                 switch rule.field {
                 case .id: field = .id
                 case .name: field = .name
@@ -55,37 +91,8 @@ extension AdminAPIGateway {
                 case .createdAt: field = .createdAt
                 case .updatedAt: field = .updatedAt
                 }
-                let direction: Search.SortDirection
-                switch rule.direction {
-                case .asc: direction = .asc
-                case .desc: direction = .desc
-                }
-                return .init(field: field, direction: direction)
-            },
-            parentId: (query.filters.parentId ?? "").emptyToNil
-        )
-    }
-
-    private func folderSearchResponseQuery(
-        from query: Components.Schemas.MediaFolderQueryItemSearchRequestQuerySchema
-    ) -> Components.Schemas.MediaFolderQueryItemSearchResponseQuerySchema {
-        let page = query.page ?? .init()
-        let sort = query.sort?.map { rule
-            -> Components.Schemas.MediaFolderQueryItemSearchResponseQuerySchema.SortPayloadPayload in
-            let field: Components.Schemas
-                .MediaFolderQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload.FieldPayload
-            switch rule.field {
-            case .id: field = .id
-            case .name: field = .name
-            case .path: field = .path
-            case .assetCount: field = .assetCount
-            case .totalSizeBytes: field = .totalSizeBytes
-            case .createdAt: field = .createdAt
-            case .updatedAt: field = .updatedAt
+                return .init(field: field, direction: rule.direction)
             }
-            return .init(field: field, direction: rule.direction)
-        }
         return .init(
             page: .init(size: page.size ?? 20, number: page.number ?? 1),
             sort: sort,

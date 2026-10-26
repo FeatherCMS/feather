@@ -1,6 +1,6 @@
 import AnalyticsAdminAPI
-import AnalyticsModule
 import AnalyticsApplication
+import AnalyticsModule
 import FeatherWebAdmin
 import FeatherWebShared
 import OpenAPIRuntime

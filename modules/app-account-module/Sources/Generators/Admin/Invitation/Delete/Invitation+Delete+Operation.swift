@@ -3,8 +3,8 @@ import FeatherOpenAPIGenerator
 
 extension Invitation.Delete {
     struct Operation: Invitation.Operation, BearerProtectedOperation,
-            DeleteOperation
-        {
+        DeleteOperation
+    {
         var operationId: String? { "accountInvitationDelete" }
     }
 }

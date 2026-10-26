@@ -1,9 +1,9 @@
 import FeatherInfrastructure
+public import NewsApplication
 import NewsInfrastructure
+public import NewsModule
 import WebInfrastructure
 import WebModule
-public import NewsApplication
-public import NewsModule
 
 extension UseCases {
 

@@ -1,6 +1,7 @@
 public import ContactDomain
 public import ContactModule
 public import FeatherApplication
+
 public import struct Foundation.Date
 
 extension Submission.Search {

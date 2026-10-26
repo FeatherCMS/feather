@@ -3,8 +3,6 @@ import FeatherWebShared
 import Hummingbird
 import SystemModule
 
-
-
 extension Job.List {
     struct Router {
         static let pageSize = 20

@@ -23,15 +23,19 @@ public enum PublicContent {
                 }
                 registry.register(
                     event: WebModule.Public.RSS.Event.Provider.self,
-                    context: WebModule.Public.RSS.Event.Context<PublicContentRuntimeContext>
-                        .self
+                    context: WebModule.Public.RSS.Event.Context<
+                        PublicContentRuntimeContext
+                    >
+                    .self
                 ) { _, context in
                     try await resolveRSS(context)
                 }
             }
 
             private static func resolveRSS(
-                _ context: WebModule.Public.RSS.Event.Context<PublicContentRuntimeContext>
+                _ context: WebModule.Public.RSS.Event.Context<
+                    PublicContentRuntimeContext
+                >
             ) async throws -> [WebModule.Public.RSS.Item] {
                 let configuration = NewsAPIClientSupport.configuration(
                     sessionToken: context.runtime.context.sessionToken
@@ -131,7 +135,9 @@ public enum PublicContent {
             }
 
             private static func resolveArticle(
-                context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
+                context: WebModule.Public.Content.Event.Context<
+                    PublicContentRuntimeContext
+                >,
                 client: NewsAppAPI.Client,
                 mediaResolver: MediaResolver
             ) async throws -> WebModule.Public.Content.Result? {
@@ -154,7 +160,9 @@ public enum PublicContent {
             }
 
             private static func resolveCategory(
-                context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
+                context: WebModule.Public.Content.Event.Context<
+                    PublicContentRuntimeContext
+                >,
                 client: NewsAppAPI.Client,
                 mediaResolver: MediaResolver
             ) async throws -> WebModule.Public.Content.Result? {

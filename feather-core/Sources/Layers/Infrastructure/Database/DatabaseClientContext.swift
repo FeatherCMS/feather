@@ -1,5 +1,5 @@
-public import FeatherDatabase
 public import FeatherDBAL
+public import FeatherDatabase
 public import FeatherDomain
 
 /// Application-lifetime database dependencies shared by module composition.

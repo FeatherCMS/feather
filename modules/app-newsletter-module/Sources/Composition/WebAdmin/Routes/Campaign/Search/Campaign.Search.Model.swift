@@ -1,6 +1,6 @@
 import FeatherWebAdmin
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 
 extension Campaign.Search {
     struct Model: Sendable {

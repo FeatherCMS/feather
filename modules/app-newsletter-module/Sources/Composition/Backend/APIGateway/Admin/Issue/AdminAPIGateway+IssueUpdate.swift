@@ -3,10 +3,10 @@ import FeatherDomain
 import FeatherModuleKit
 import Foundation
 import Hummingbird
-import NewsletterModule
 public import NewsletterAdminAPI
 import NewsletterApplication
 import NewsletterDomain
+import NewsletterModule
 
 extension AdminAPIGateway {
     private enum UpdateMaskFields: String, Sendable {

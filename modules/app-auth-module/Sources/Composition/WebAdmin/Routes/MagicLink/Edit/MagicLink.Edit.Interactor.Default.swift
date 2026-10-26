@@ -19,8 +19,7 @@ extension MagicLink.Edit.Interactor {
     struct Default: Interface {
         let repository: any MagicLink.Edit.Repository.Interface
 
-        func listEmails() async throws -> [Email.Option]
-        {
+        func listEmails() async throws -> [Email.Option] {
             try await repository.listEmails()
         }
 

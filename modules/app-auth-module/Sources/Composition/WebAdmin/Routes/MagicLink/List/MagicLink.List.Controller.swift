@@ -30,4 +30,3 @@ extension MagicLink.List.Controller {
 
     }
 }
-

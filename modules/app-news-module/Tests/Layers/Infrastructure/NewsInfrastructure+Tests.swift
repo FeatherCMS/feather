@@ -18,9 +18,17 @@ struct NewsInfrastructureTests {
             ]
         )
         for index in [1, 2, 3] {
-            #expect(schema.columns[index].constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
+            #expect(
+                schema.columns[index].constraints
+                    .contains {
+                        if case .notNull = $0 {
+                            true
+                        }
+                        else {
+                            false
+                        }
+                    }
+            )
         }
         #expect(
             schema.constraints.contains {
@@ -45,21 +53,30 @@ struct NewsInfrastructureTests {
                     && referenced.map(\.name) == ["asset_node_id"]
             }
         )
-        #expect(schema.columns[2].constraints.contains {
-            guard case .default(let value) = $0 else { return false }
-            guard case .string(let actual) = value.storage else { return false }
-            return actual.isEmpty
-        })
+        #expect(
+            schema.columns[2].constraints
+                .contains {
+                    guard case .default(let value) = $0 else { return false }
+                    guard case .string(let actual) = value.storage else {
+                        return false
+                    }
+                    return actual.isEmpty
+                }
+        )
         for column in [schema.columns[5], schema.columns[6]] {
-            #expect(column.constraints.contains {
-                guard case .notNull = $0 else { return false }
-                return true
-            })
-            #expect(column.constraints.contains {
-                guard case .default(let value) = $0 else { return false }
-                if case .currentTimestamp = value.storage { return true }
-                return false
-            })
+            #expect(
+                column.constraints.contains {
+                    guard case .notNull = $0 else { return false }
+                    return true
+                }
+            )
+            #expect(
+                column.constraints.contains {
+                    guard case .default(let value) = $0 else { return false }
+                    if case .currentTimestamp = value.storage { return true }
+                    return false
+                }
+            )
         }
         #expect(
             schema.indexes.map(\.name) == [
@@ -85,9 +102,17 @@ struct NewsInfrastructureTests {
             ]
         )
         for index in [1, 2, 3] {
-            #expect(schema.columns[index].constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
+            #expect(
+                schema.columns[index].constraints
+                    .contains {
+                        if case .notNull = $0 {
+                            true
+                        }
+                        else {
+                            false
+                        }
+                    }
+            )
         }
         #expect(
             schema.constraints.contains {
@@ -112,21 +137,30 @@ struct NewsInfrastructureTests {
                     && referenced.map(\.name) == ["asset_node_id"]
             }
         )
-        #expect(schema.columns[2].constraints.contains {
-            guard case .default(let value) = $0 else { return false }
-            guard case .string(let actual) = value.storage else { return false }
-            return actual.isEmpty
-        })
+        #expect(
+            schema.columns[2].constraints
+                .contains {
+                    guard case .default(let value) = $0 else { return false }
+                    guard case .string(let actual) = value.storage else {
+                        return false
+                    }
+                    return actual.isEmpty
+                }
+        )
         for column in [schema.columns[5], schema.columns[6]] {
-            #expect(column.constraints.contains {
-                guard case .notNull = $0 else { return false }
-                return true
-            })
-            #expect(column.constraints.contains {
-                guard case .default(let value) = $0 else { return false }
-                if case .currentTimestamp = value.storage { return true }
-                return false
-            })
+            #expect(
+                column.constraints.contains {
+                    guard case .notNull = $0 else { return false }
+                    return true
+                }
+            )
+            #expect(
+                column.constraints.contains {
+                    guard case .default(let value) = $0 else { return false }
+                    if case .currentTimestamp = value.storage { return true }
+                    return false
+                }
+            )
         }
         #expect(
             schema.indexes.map(\.name) == [
@@ -149,9 +183,16 @@ struct NewsInfrastructureTests {
             schema.columns.map(\.name) == ["article_id", "category_id"]
         )
         for column in schema.columns {
-            #expect(column.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
+            #expect(
+                column.constraints.contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+            )
         }
         #expect(
             schema.constraints.contains {

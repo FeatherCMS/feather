@@ -1,7 +1,6 @@
 public import FeatherDomain
-public import MediaModule
-
 public import Foundation
+public import MediaModule
 
 extension Asset.File {
     public struct Model: FeatherDomain.Model {

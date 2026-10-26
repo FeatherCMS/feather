@@ -85,7 +85,11 @@ extension MagicLink.List.Repository {
                 switch response {
                 case .ok(let ok):
                     return try ok.body.json.map {
-                        .init(id: $0.id, identityId: $0.identityId, email: $0.email)
+                        .init(
+                            id: $0.id,
+                            identityId: $0.identityId,
+                            email: $0.email
+                        )
                     }
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized

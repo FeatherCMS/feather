@@ -1,8 +1,8 @@
 import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
-import Hummingbird
 import Foundation
+import Hummingbird
 public import MediaAdminAPI
 import MediaApplication
 import MediaModule

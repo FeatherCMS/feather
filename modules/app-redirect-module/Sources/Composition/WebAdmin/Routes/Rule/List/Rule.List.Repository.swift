@@ -1,7 +1,7 @@
 import RedirectAdminAPI
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension Rule.List {
     enum Repository {}

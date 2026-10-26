@@ -1,3 +1,3 @@
-public extension Article {
-    enum Parameters {}
+extension Article {
+    public enum Parameters {}
 }

@@ -1,5 +1,5 @@
-public import FeatherApplication
 public import ContactModule
+public import FeatherApplication
 
 extension Form.Submit {
     public enum Error: UseCaseError {

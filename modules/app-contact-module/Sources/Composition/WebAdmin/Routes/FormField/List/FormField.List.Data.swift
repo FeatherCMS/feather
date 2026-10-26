@@ -31,7 +31,8 @@ extension FormField.List {
 
             do {
                 let payload = Payload(
-                    items: try await repository
+                    items:
+                        try await repository
                         .formFieldOptions(formKey: formKey)
                         .map {
                             .init(key: $0.key, label: $0.label)

@@ -14,4 +14,3 @@ extension Issue.TestEmail {
         }
     }
 }
-

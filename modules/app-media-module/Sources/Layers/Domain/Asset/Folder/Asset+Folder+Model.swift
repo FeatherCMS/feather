@@ -1,7 +1,6 @@
 public import FeatherDomain
-public import MediaModule
-
 public import Foundation
+public import MediaModule
 
 extension Asset.Folder {
     public struct Model: FeatherDomain.Model {
@@ -70,9 +69,10 @@ extension Asset.Folder.Model {
         name: FieldChange<String>,
         parentPath: String?
     ) throws(Error) {
-        let name = name.apply(to: self.name).trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
+        let name = name.apply(to: self.name)
+            .trimmingCharacters(
+                in: .whitespacesAndNewlines
+            )
         let slug = Self.slug(from: name)
         guard !name.isEmpty, !slug.isEmpty else {
             throw .invalidName

@@ -1,6 +1,6 @@
 public import AnalyticsApplication
-public import AnalyticsModule
 import AnalyticsDomain
+public import AnalyticsModule
 import FeatherDBAL
 public import FeatherInfrastructure
 import Foundation

@@ -5,7 +5,6 @@ import Hummingbird
 
 extension RolePermission {
 
-
     struct Router {
         struct Routes {
             let edit: WebRoute

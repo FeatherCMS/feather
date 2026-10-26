@@ -1,8 +1,8 @@
-import NewsApplication
 import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import NewsApplication
 import NewsModule
 
 extension Article.List.Controller {

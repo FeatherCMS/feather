@@ -10,7 +10,9 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Submission.Search.Scope(
-                    submission: Submission.Search.Query.Database(context: context)
+                    submission: Submission.Search.Query.Database(
+                        context: context
+                    )
                 )
             }
         )

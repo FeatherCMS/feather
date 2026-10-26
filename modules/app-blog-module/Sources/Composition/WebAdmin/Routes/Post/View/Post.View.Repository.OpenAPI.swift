@@ -3,8 +3,8 @@ import BlogModule
 import BlogWebShared
 import FeatherWebAdmin
 import FeatherWebShared
-import MediaWebAdmin
 import MediaModule
+import MediaWebAdmin
 import OpenAPIRuntime
 import WebModule
 import WebModuleWebAdmin
@@ -29,9 +29,11 @@ extension Post.View.Repository {
                         title: page.title,
                         excerpt: page.excerpt,
                         content: page.content,
-                        imageAsset: try await Asset.File.View.Repository.OpenAPI(
-                            api: api.mediaAdminAPI()
-                        ).loadImageAsset(assetId: page.imageAssetId),
+                        imageAsset: try await Asset.File.View.Repository
+                            .OpenAPI(
+                                api: api.mediaAdminAPI()
+                            )
+                            .loadImageAsset(assetId: page.imageAssetId),
                         metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: page.metadata,
                             fallbackTitle: page.title,

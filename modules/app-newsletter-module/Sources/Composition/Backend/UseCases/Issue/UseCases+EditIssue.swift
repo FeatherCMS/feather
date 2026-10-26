@@ -1,8 +1,8 @@
-import NewsletterApplication
-import NewsletterModule
-import NewsletterInfrastructure
 import FeatherDatabase
 import FeatherInfrastructure
+import NewsletterApplication
+import NewsletterInfrastructure
+import NewsletterModule
 
 extension UseCases {
 
@@ -16,6 +16,9 @@ extension UseCases {
                 )
             }
         )
-        return Issue.Edit.UseCase(authorizer: authorizer, transaction: transaction)
+        return Issue.Edit.UseCase(
+            authorizer: authorizer,
+            transaction: transaction
+        )
     }
 }

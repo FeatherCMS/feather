@@ -1,4 +1,3 @@
-
 extension Variable {
     enum Get {}
 }

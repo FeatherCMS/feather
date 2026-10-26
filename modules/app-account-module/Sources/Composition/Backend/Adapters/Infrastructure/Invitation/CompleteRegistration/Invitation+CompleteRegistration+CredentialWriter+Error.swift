@@ -1,5 +1,5 @@
-import AccountModule
 import AccountApplication
+import AccountModule
 
 extension Invitation.CompleteRegistration {
     enum CredentialWriterError: Swift.Error {

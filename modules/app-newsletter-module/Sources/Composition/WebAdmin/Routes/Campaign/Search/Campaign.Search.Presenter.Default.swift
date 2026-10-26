@@ -1,8 +1,8 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 
 extension Campaign.Search.Presenter {
     struct Default: Interface {

@@ -6,8 +6,8 @@ import FeatherWebAdmin
 import FeatherWebShared
 import HTML
 import Hummingbird
-import MediaWebAdmin
 import MediaModule
+import MediaWebAdmin
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -35,9 +35,11 @@ extension Post.Edit.Repository {
                         title: page.title,
                         excerpt: page.excerpt,
                         content: page.content,
-                        imageAsset: try await Asset.File.View.Repository.OpenAPI(
-                            api: api.mediaAdminAPI()
-                        ).loadImageAsset(assetId: page.imageAssetId),
+                        imageAsset: try await Asset.File.View.Repository
+                            .OpenAPI(
+                                api: api.mediaAdminAPI()
+                            )
+                            .loadImageAsset(assetId: page.imageAssetId),
                         metadata: WebModule.Metadata.SchemaBuilder.formValue(
                             from: page.metadata,
                             fallbackTitle: page.title,
@@ -68,7 +70,10 @@ extension Post.Edit.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogPostPatch(
                     path: .init(blogPostId: id),
-                    query: .init(updateMask: "title,excerpt,content,imageAssetId,authorIds,tagIds"),
+                    query: .init(
+                        updateMask:
+                            "title,excerpt,content,imageAssetId,authorIds,tagIds"
+                    ),
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(

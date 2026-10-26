@@ -1,6 +1,5 @@
 public import AccountModule
 
-
 extension Profile.Detail {
     public enum Query {
         public protocol Interface: Sendable {

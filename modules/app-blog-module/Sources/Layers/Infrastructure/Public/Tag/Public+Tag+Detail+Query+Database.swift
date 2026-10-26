@@ -13,7 +13,9 @@ extension BlogApplication.Public.Tag.Detail.Query {
 
         public func find(id: String) async throws -> Output {
             guard
-                let result = try await DatabaseAccessLayer<BlogModule.Tag.Table>(
+                let result = try await DatabaseAccessLayer<
+                    BlogModule.Tag.Table
+                >(
                     context: context
                 )
                 .selectFirst(
@@ -45,10 +47,11 @@ extension BlogApplication.Public.Tag.Detail.Query {
                 .limit(10_000)
             }
             return try result.compactMap { row in
-                let tagIDs = try JSONDecoder().decode(
-                    [String].self,
-                    from: Data(row.tagIds.utf8)
-                )
+                let tagIDs = try JSONDecoder()
+                    .decode(
+                        [String].self,
+                        from: Data(row.tagIds.utf8)
+                    )
                 guard tagIDs.contains(tagID) else { return nil }
                 return .init(
                     id: row.id,

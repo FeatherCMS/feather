@@ -3,8 +3,8 @@ public import FeatherInfrastructure
 public import NewsApplication
 import NewsDomain
 public import NewsModule
-import WebDomain
 public import WebApplication
+import WebDomain
 public import WebModule
 
 extension Article.Table.Detail {

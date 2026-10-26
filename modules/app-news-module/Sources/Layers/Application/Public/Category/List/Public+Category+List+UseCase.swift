@@ -35,20 +35,21 @@ extension Public.Category.List {
                         ) == nil
                     )
                 }
-                let items: [Public.Category.Summary.Item] = categories
+                let items: [Public.Category.Summary.Item] =
+                    categories
                     .compactMap { item -> Public.Category.Summary.Item? in
-                    guard let metadata = metadataByID[item.id] else {
-                        return nil
-                    }
-                    return .init(
-                        id: item.id,
-                        title: item.title,
-                        excerpt: item.excerpt,
-                        imageAssetId: item.imageAssetId,
-                        imageURL: "",
-                        media: nil,
-                        metadata: metadata
-                    )
+                        guard let metadata = metadataByID[item.id] else {
+                            return nil
+                        }
+                        return .init(
+                            id: item.id,
+                            title: item.title,
+                            excerpt: item.excerpt,
+                            imageAssetId: item.imageAssetId,
+                            imageURL: "",
+                            media: nil,
+                            metadata: metadata
+                        )
                     }
                 return .init(items: items)
             }

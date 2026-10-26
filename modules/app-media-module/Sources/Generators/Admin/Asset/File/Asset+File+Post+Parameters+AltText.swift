@@ -6,6 +6,8 @@ extension Asset.File.Post.Parameters {
         var name: String { "X-Media-Asset-Alt-Text" }
         var required: Bool { false }
         var description: String? { "Optional alternative text" }
-        var schema: any OpenAPISchemaRepresentable { Asset.File.Schemas.HeaderValue() }
+        var schema: any OpenAPISchemaRepresentable {
+            Asset.File.Schemas.HeaderValue()
+        }
     }
 }

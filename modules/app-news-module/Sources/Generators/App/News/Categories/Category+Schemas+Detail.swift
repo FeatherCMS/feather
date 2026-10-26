@@ -1,8 +1,8 @@
 public import FeatherOpenAPI
 import NewsOpenAPIGeneratorSupport
 
-public extension Category.Schemas {
-    struct Detail: ObjectSchemaRepresentable {
+extension Category.Schemas {
+    public struct Detail: ObjectSchemaRepresentable {
         public var openAPIIdentifier: String { "NewsCategoryDetailSchema" }
         public var propertyMap: SchemaMap {
             [
@@ -11,7 +11,8 @@ public extension Category.Schemas {
                 "excerpt": Excerpt().reference(),
                 "content": Content().reference(),
                 "imageURL": ImageURL().reference(),
-                "media": Media.Asset.Schemas.Schema().reference(required: false),
+                "media": Media.Asset.Schemas.Schema()
+                    .reference(required: false),
                 "metadata": WebMetadata.Content.Schema().reference(),
                 "news": Article.Schemas.SummaryList().reference(),
             ]

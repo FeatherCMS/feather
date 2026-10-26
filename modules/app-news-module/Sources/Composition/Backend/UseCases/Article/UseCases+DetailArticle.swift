@@ -1,9 +1,9 @@
 import FeatherInfrastructure
 public import NewsApplication
 import NewsInfrastructure
+public import NewsModule
 import WebInfrastructure
 import WebModule
-public import NewsModule
 
 extension UseCases {
 
@@ -16,9 +16,10 @@ extension UseCases {
                     Article.Detail.Scope(
                         article: Article.Detail.Query.Database(
                             context: context,
-                            metadata: WebModule.Metadata.Reference.Query.Database(
-                                context: context
-                            )
+                            metadata: WebModule.Metadata.Reference.Query
+                                .Database(
+                                    context: context
+                                )
                         )
                     )
                 }

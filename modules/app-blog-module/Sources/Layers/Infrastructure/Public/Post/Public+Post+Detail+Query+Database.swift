@@ -31,14 +31,16 @@ extension BlogApplication.Public.Post.Detail.Query {
                 excerpt: row.excerpt,
                 content: row.content,
                 imageAssetId: row.imageAssetId,
-                authorIds: try JSONDecoder().decode(
-                    [String].self,
-                    from: Data(row.authorIds.utf8)
-                ),
-                tagIds: try JSONDecoder().decode(
-                    [String].self,
-                    from: Data(row.tagIds.utf8)
-                )
+                authorIds: try JSONDecoder()
+                    .decode(
+                        [String].self,
+                        from: Data(row.authorIds.utf8)
+                    ),
+                tagIds: try JSONDecoder()
+                    .decode(
+                        [String].self,
+                        from: Data(row.tagIds.utf8)
+                    )
             )
         }
 
@@ -55,29 +57,34 @@ extension BlogApplication.Public.Post.Detail.Query {
                 ])
                 .limit(10_000)
             }
-            return try rows.map {
-                .init(
-                    id: $0.id,
-                    title: $0.title,
-                    excerpt: $0.excerpt,
-                    content: $0.content,
-                    imageAssetId: $0.imageAssetId,
-                    authorIds: try JSONDecoder().decode(
-                        [String].self,
-                        from: Data($0.authorIds.utf8)
-                    ),
-                    tagIds: try JSONDecoder().decode(
-                        [String].self,
-                        from: Data($0.tagIds.utf8)
+            return
+                try rows.map {
+                    .init(
+                        id: $0.id,
+                        title: $0.title,
+                        excerpt: $0.excerpt,
+                        content: $0.content,
+                        imageAssetId: $0.imageAssetId,
+                        authorIds: try JSONDecoder()
+                            .decode(
+                                [String].self,
+                                from: Data($0.authorIds.utf8)
+                            ),
+                        tagIds: try JSONDecoder()
+                            .decode(
+                                [String].self,
+                                from: Data($0.tagIds.utf8)
+                            )
                     )
-                )
-            }
-            .filter { $0.id != id }
+                }
+                .filter { $0.id != id }
         }
 
         public func findAuthor(id: String) async throws -> Author {
             guard
-                let row = try await DatabaseAccessLayer<BlogModule.Author.Table>(
+                let row = try await DatabaseAccessLayer<
+                    BlogModule.Author.Table
+                >(
                     context: context
                 )
                 .selectFirst(

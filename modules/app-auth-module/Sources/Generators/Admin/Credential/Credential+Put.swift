@@ -1,4 +1,3 @@
-
 extension Credential {
     enum Put {}
 }

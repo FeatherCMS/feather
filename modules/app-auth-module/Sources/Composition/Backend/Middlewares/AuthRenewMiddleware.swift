@@ -28,9 +28,10 @@ public struct AuthRenewMiddleware: ServerMiddleware {
         body: HTTPBody?,
         metadata: ServerRequestMetadata,
         operationID: String,
-        next: @concurrent @Sendable (
-            HTTPRequest, HTTPBody?, ServerRequestMetadata
-        ) async throws -> (HTTPResponse, HTTPBody?)
+        next:
+            @concurrent @Sendable (
+                HTTPRequest, HTTPBody?, ServerRequestMetadata
+            ) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         //        if let acl = try await AccessControl.get(ACL.self) {
         //            guard acl.userInfo["isPersistent"] == "true" else {

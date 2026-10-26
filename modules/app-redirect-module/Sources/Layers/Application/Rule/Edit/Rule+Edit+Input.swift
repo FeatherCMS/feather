@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherDomain
-public import RedirectModule
 public import RedirectDomain
+public import RedirectModule
 
 extension Rule.Edit {
     public struct Input: DTO {

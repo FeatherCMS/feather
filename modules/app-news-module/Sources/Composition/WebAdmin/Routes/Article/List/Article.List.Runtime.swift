@@ -1,5 +1,5 @@
-import NewsApplication
 import FeatherWebAdmin
+import NewsApplication
 import NewsModule
 
 extension Article.List {

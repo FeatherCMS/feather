@@ -1,6 +1,6 @@
 import AnalyticsAdminAPI
-import AnalyticsModule
 import AnalyticsApplication
+import AnalyticsModule
 
 extension Log.List {
     struct Model: Sendable {

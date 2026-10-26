@@ -1,10 +1,10 @@
 public import AccountAdminAPI
 import AccountApplication
 import AccountModule
-import Foundation
 import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
+import Foundation
 import Hummingbird
 
 extension AdminAPIGateway {

@@ -33,10 +33,11 @@ extension API {
         public func withOpenAPIRepositoryErrorMapping<T: Sendable>(
             _ operation: @Sendable (WebAdminAPI.Client) async throws -> T
         ) async throws(OpenAPIRepositoryError) -> T {
-            try await WebModuleAPIClientSupport.withOpenAPIRepositoryErrorMapping(
-                client,
-                operation: operation
-            )
+            try await WebModuleAPIClientSupport
+                .withOpenAPIRepositoryErrorMapping(
+                    client,
+                    operation: operation
+                )
         }
 
         public func failure(

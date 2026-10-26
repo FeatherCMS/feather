@@ -164,9 +164,10 @@ extension Settings.Edit.Repository {
                     )
                 }
 
-                let detailsRepository = WebModule.Page.Metadata.Repository.OpenAPI(
-                    api: api
-                )
+                let detailsRepository = WebModule.Page.Metadata.Repository
+                    .OpenAPI(
+                        api: api
+                    )
                 return try await withThrowingTaskGroup(
                     of: IndexedHomePage.self
                 ) { group in

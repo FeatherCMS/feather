@@ -1,8 +1,8 @@
 import FeatherApplication
 import FeatherModuleKit
+import Foundation
 public import WebAdminAPI
 import WebApplication
-import Foundation
 import WebModule
 
 extension AdminAPIGateway {
@@ -72,19 +72,20 @@ extension AdminAPIGateway {
                 size: query.page?.size ?? 20,
                 number: query.page?.number ?? 1
             ),
-            sort: query.sort?.compactMap { sort in
-                guard
-                    let field = Menu.Search.Input.Query.Sort.Field(
-                        rawValue: sort.field.rawValue
+            sort: query.sort?
+                .compactMap { sort in
+                    guard
+                        let field = Menu.Search.Input.Query.Sort.Field(
+                            rawValue: sort.field.rawValue
+                        )
+                    else {
+                        return nil
+                    }
+                    return .init(
+                        field: field,
+                        direction: sort.direction == .asc ? .asc : .desc
                     )
-                else {
-                    return nil
-                }
-                return .init(
-                    field: field,
-                    direction: sort.direction == .asc ? .asc : .desc
-                )
-            } ?? [],
+                } ?? [],
             search: query.filters.search
         )
     }

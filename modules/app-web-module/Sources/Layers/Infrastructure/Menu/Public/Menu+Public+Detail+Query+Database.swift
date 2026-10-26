@@ -1,7 +1,7 @@
 import FeatherDBAL
 public import FeatherInfrastructure
-import WebDomain
 public import WebApplication
+import WebDomain
 public import WebModule
 
 extension Menu.Public.Detail.Query {

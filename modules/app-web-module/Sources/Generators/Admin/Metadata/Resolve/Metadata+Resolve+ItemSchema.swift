@@ -9,7 +9,9 @@ extension Metadata.Resolve {
                 "referenceId": Metadata.Schemas.ReferenceID(),
                 "slug": Metadata.Schemas.Slug(),
                 "publicationDate": Metadata.Schemas.Timestamp(),
-                "expirationDate": MetadataNullableTimestampField(required: false),
+                "expirationDate": MetadataNullableTimestampField(
+                    required: false
+                ),
                 "status": Metadata.Schemas.Status(),
                 "availability": MetadataAvailabilityField().reference(),
             ]

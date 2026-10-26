@@ -1,8 +1,8 @@
 import FeatherApplication
 import FeatherModuleKit
+import Foundation
 public import WebAdminAPI
 import WebApplication
-import Foundation
 import WebDomain
 import WebModule
 
@@ -11,8 +11,7 @@ extension AdminAPIGateway {
     public func menuItemQuery(
         _ input: Operations.MenuItemQuery.Input
     ) async throws -> Operations.MenuItemQuery.Output {
-        let query:
-            Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema
+        let query: Components.Schemas.MenuItemQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -76,19 +75,20 @@ extension AdminAPIGateway {
                 size: query.page?.size ?? 20,
                 number: query.page?.number ?? 1
             ),
-            sort: (query.sort ?? []).compactMap { sort in
-                guard
-                    let field = MenuItem.Search.Input.Query.Sort.Field(
-                        rawValue: sort.field.rawValue
+            sort: (query.sort ?? [])
+                .compactMap { sort in
+                    guard
+                        let field = MenuItem.Search.Input.Query.Sort.Field(
+                            rawValue: sort.field.rawValue
+                        )
+                    else {
+                        return nil
+                    }
+                    return .init(
+                        field: field,
+                        direction: sort.direction == .asc ? .asc : .desc
                     )
-                else {
-                    return nil
-                }
-                return .init(
-                    field: field,
-                    direction: sort.direction == .asc ? .asc : .desc
-                )
-            },
+                },
             search: query.filters.search
         )
     }

@@ -24,7 +24,8 @@ struct AdminRouterTests {
         let routes = Page.Router.Routes(
             root: root.appending(pathComponent: "pages"),
             breadcrumb: [],
-            mediaAssetList: root
+            mediaAssetList:
+                root
                 .appending(pathComponent: "media")
                 .appending(pathComponent: "assets")
         )

@@ -1,4 +1,3 @@
-
 extension Permission {
     enum Post {}
 }

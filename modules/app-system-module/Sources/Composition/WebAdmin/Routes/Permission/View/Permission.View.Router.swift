@@ -3,8 +3,6 @@ import FeatherWebShared
 import Hummingbird
 import SystemModule
 
-
-
 extension Permission.View {
     struct Router {
         let controller: any Controller.Interface

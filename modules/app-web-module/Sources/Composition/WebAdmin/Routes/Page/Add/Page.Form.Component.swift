@@ -99,65 +99,66 @@ extension WebModule.Page.Form {
                             description: "Edit the page content and image."
                         )
                     ) {
-                    context.build(
-                        AdminFormFieldMediaPicker(
-                            state: .init(
-                                field: .init(
-                                    key: state.imageAssetId.key,
-                                    label: state.imageAssetId.label,
-                                    value: state.imageAssetId.value,
-                                    error: state.imageAssetId.error
-                                ),
-                                selectedAsset: state.selectedImageAsset.map {
-                                    .init(
-                                        id: $0.id,
-                                        name: $0.name,
-                                        slugPath: $0.slugPath,
-                                        url: $0.url,
-                                        extension: $0.extension,
-                                        contentType: $0.contentType,
-                                        sizeBytes: $0.sizeBytes,
-                                        variants: $0.variants,
-                                        title: $0.title,
-                                        altText: $0.altText,
-                                        status: $0.status
-                                    )
-                                },
-                                browsePath: imagePickerPath,
-                                defaultFolderPath: "web/pages",
-                                allowedExtensions: .images,
-                                previewStyle: .wide
+                        context.build(
+                            AdminFormFieldMediaPicker(
+                                state: .init(
+                                    field: .init(
+                                        key: state.imageAssetId.key,
+                                        label: state.imageAssetId.label,
+                                        value: state.imageAssetId.value,
+                                        error: state.imageAssetId.error
+                                    ),
+                                    selectedAsset: state.selectedImageAsset.map
+                                    {
+                                        .init(
+                                            id: $0.id,
+                                            name: $0.name,
+                                            slugPath: $0.slugPath,
+                                            url: $0.url,
+                                            extension: $0.extension,
+                                            contentType: $0.contentType,
+                                            sizeBytes: $0.sizeBytes,
+                                            variants: $0.variants,
+                                            title: $0.title,
+                                            altText: $0.altText,
+                                            status: $0.status
+                                        )
+                                    },
+                                    browsePath: imagePickerPath,
+                                    defaultFolderPath: "web/pages",
+                                    allowedExtensions: .images,
+                                    previewStyle: .wide
+                                )
                             )
                         )
-                    )
-                    context.build(
-                        AdminFormFieldInput(
-                            state: .init(
-                                name: state.title.key,
-                                label: state.title.label,
-                                value: state.title.value,
-                                error: state.title.error,
-                                isRequired: true
+                        context.build(
+                            AdminFormFieldInput(
+                                state: .init(
+                                    name: state.title.key,
+                                    label: state.title.label,
+                                    value: state.title.value,
+                                    error: state.title.error,
+                                    isRequired: true
+                                )
+                            )
+                            .setAsRemoveConfirmationLabel()
+                        )
+                        context.build(textarea(state.excerpt, rows: 4))
+                        context.build(
+                            AdminFormFieldRichContentEditor(
+                                state: .init(
+                                    key: state.content.key,
+                                    label: state.content.label,
+                                    value: state.content.value,
+                                    error: state.content.error,
+                                    mediaFolderPath: "web/pages"
+                                )
                             )
                         )
-                        .setAsRemoveConfirmationLabel()
-                    )
-                    context.build(textarea(state.excerpt, rows: 4))
-                    context.build(
-                        AdminFormFieldRichContentEditor(
-                            state: .init(
-                                key: state.content.key,
-                                label: state.content.label,
-                                value: state.content.value,
-                                error: state.content.error,
-                                mediaFolderPath: "web/pages"
-                            )
-                        )
-                    )
-                    Div {
-                        context.build(AdminSubmitButton(submitLabel))
-                    }
-                    .class("admin-form__actions")
+                        Div {
+                            context.build(AdminSubmitButton(submitLabel))
+                        }
+                        .class("admin-form__actions")
                     }
                 )
             }

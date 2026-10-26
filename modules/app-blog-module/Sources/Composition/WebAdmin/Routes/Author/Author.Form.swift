@@ -56,79 +56,80 @@ extension Author {
                             description: "Edit the author profile."
                         )
                     ) {
-                    context.build(
-                        AdminFormFieldMediaPicker(
-                            state: .init(
-                                field: .init(
-                                    key: state.profileImageAssetId.key,
-                                    label: state.profileImageAssetId.label,
-                                    value: state.profileImageAssetId.value,
-                                    error: state.profileImageAssetId.error
-                                ),
-                                selectedAsset: state.selectedProfileImage.map {
-                                    .init(
-                                        id: $0.id,
-                                        name: $0.name,
-                                        slugPath: $0.slugPath,
-                                        url: $0.url,
-                                        extension: $0.extension,
-                                        contentType: $0.contentType,
-                                        sizeBytes: $0.sizeBytes,
-                                        variants: $0.variants,
-                                        title: $0.title,
-                                        altText: $0.altText,
-                                        status: $0.status
-                                    )
-                                },
-                                browsePath: browsePath,
-                                defaultFolderPath: "blog/authors",
-                                allowedExtensions: .images,
-                                previewStyle: .square
-                            )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldInput(
-                            state: .init(
-                                name: state.name.key,
-                                label: state.name.label,
-                                value: state.name.value,
-                                error: state.name.error,
-                                isRequired: true
-                            )
-                        )
-                        .setAsRemoveConfirmationLabel()
-                    )
-                    context.build(
-                        AdminFormFieldTextArea(
-                            state: .init(
-                                name: state.excerpt.key,
-                                label: state.excerpt.label,
-                                value: state.excerpt.value,
-                                error: state.excerpt.error,
-                                style: .small,
-                                isRequired: true
-                            )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldTextArea(
-                            state: .init(
-                                name: state.content.key,
-                                label: state.content.label,
-                                value: state.content.value,
-                                error: state.content.error,
-                                style: .large,
-                                isRequired: true
-                            )
-                        )
-                    )
-                    Div {
                         context.build(
-                            AdminSubmitButton(submitLabel, style: .primary)
+                            AdminFormFieldMediaPicker(
+                                state: .init(
+                                    field: .init(
+                                        key: state.profileImageAssetId.key,
+                                        label: state.profileImageAssetId.label,
+                                        value: state.profileImageAssetId.value,
+                                        error: state.profileImageAssetId.error
+                                    ),
+                                    selectedAsset: state.selectedProfileImage
+                                        .map {
+                                            .init(
+                                                id: $0.id,
+                                                name: $0.name,
+                                                slugPath: $0.slugPath,
+                                                url: $0.url,
+                                                extension: $0.extension,
+                                                contentType: $0.contentType,
+                                                sizeBytes: $0.sizeBytes,
+                                                variants: $0.variants,
+                                                title: $0.title,
+                                                altText: $0.altText,
+                                                status: $0.status
+                                            )
+                                        },
+                                    browsePath: browsePath,
+                                    defaultFolderPath: "blog/authors",
+                                    allowedExtensions: .images,
+                                    previewStyle: .square
+                                )
+                            )
                         )
-                    }
-                    .class("admin-form__actions")
+                        context.build(
+                            AdminFormFieldInput(
+                                state: .init(
+                                    name: state.name.key,
+                                    label: state.name.label,
+                                    value: state.name.value,
+                                    error: state.name.error,
+                                    isRequired: true
+                                )
+                            )
+                            .setAsRemoveConfirmationLabel()
+                        )
+                        context.build(
+                            AdminFormFieldTextArea(
+                                state: .init(
+                                    name: state.excerpt.key,
+                                    label: state.excerpt.label,
+                                    value: state.excerpt.value,
+                                    error: state.excerpt.error,
+                                    style: .small,
+                                    isRequired: true
+                                )
+                            )
+                        )
+                        context.build(
+                            AdminFormFieldTextArea(
+                                state: .init(
+                                    name: state.content.key,
+                                    label: state.content.label,
+                                    value: state.content.value,
+                                    error: state.content.error,
+                                    style: .large,
+                                    isRequired: true
+                                )
+                            )
+                        )
+                        Div {
+                            context.build(
+                                AdminSubmitButton(submitLabel, style: .primary)
+                            )
+                        }
+                        .class("admin-form__actions")
                     }
                 )
             }

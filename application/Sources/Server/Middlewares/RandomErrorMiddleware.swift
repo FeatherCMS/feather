@@ -57,9 +57,10 @@ struct RandomErrorMiddleware: ServerMiddleware {
         body: HTTPBody?,
         metadata: ServerRequestMetadata,
         operationID: String,
-        next: @concurrent @Sendable (
-            HTTPRequest, HTTPBody?, ServerRequestMetadata
-        ) async throws -> (HTTPResponse, HTTPBody?)
+        next:
+            @concurrent @Sendable (
+                HTTPRequest, HTTPBody?, ServerRequestMetadata
+            ) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         guard shouldIntercept(request) else {
             return try await next(request, body, metadata)

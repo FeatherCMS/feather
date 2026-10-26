@@ -1,7 +1,7 @@
 import FeatherModuleKit
 public import RedirectAdminAPI
-import RedirectDomain
 import RedirectApplication
+import RedirectDomain
 import RedirectModule
 
 extension AdminAPIGateway {

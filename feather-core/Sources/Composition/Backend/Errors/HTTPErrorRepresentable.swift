@@ -6,6 +6,6 @@ public protocol HTTPErrorRepresentable: Error {
     var content: any HTTPErrorContent { get }
 }
 
-public extension HTTPErrorRepresentable {
-    var headers: HTTPHeaders? { nil }
+extension HTTPErrorRepresentable {
+    public var headers: HTTPHeaders? { nil }
 }

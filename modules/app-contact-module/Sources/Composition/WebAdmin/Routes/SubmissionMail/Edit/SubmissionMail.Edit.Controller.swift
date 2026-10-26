@@ -22,4 +22,3 @@ extension SubmissionMail.Edit.Controller {
             async throws -> Response
     }
 }
-

@@ -1,5 +1,5 @@
-public import FeatherApplication
 public import AccountModule
+public import FeatherApplication
 
 extension Invitation.Resend {
     public enum Error: UseCaseError {

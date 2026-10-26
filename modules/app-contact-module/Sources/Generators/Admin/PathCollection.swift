@@ -12,7 +12,8 @@ struct PathCollection: PathCollectionRepresentable {
             current
         }
         paths.merge(Contact.Submission.PathCollection().pathMap) {
-            current, _ in current
+            current,
+            _ in current
         }
         return paths
     }

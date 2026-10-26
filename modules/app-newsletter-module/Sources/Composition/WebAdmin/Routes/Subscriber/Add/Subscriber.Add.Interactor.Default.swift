@@ -3,8 +3,8 @@ import FeatherValidation
 import FeatherWebAdmin
 import HTML
 import Hummingbird
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 import OpenAPIRuntime
 import SGML
 import WebBuilders

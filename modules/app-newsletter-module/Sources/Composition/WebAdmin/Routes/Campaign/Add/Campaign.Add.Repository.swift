@@ -1,5 +1,5 @@
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 
 extension Campaign.Add.Repository {
     protocol Interface: Sendable {

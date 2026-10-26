@@ -1,5 +1,4 @@
-public struct AdminMediaAssetVariant: Sendable, Equatable, Codable, Hashable
-{
+public struct AdminMediaAssetVariant: Sendable, Equatable, Codable, Hashable {
     public let key: String
     public let name: String
     public let url: String

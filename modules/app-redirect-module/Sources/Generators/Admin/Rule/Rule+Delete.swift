@@ -1,4 +1,3 @@
-
 extension Rule {
     enum Delete {}
 }

@@ -1,12 +1,3 @@
 public enum Rule {
 
-
-
-
-
-
-
-
-
-
 }

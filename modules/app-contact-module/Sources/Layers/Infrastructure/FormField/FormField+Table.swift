@@ -1,6 +1,7 @@
-public import FeatherDBAL
-public import struct Foundation.Date
 public import ContactModule
+public import FeatherDBAL
+
+public import struct Foundation.Date
 
 extension FormField {
     public struct Table: DatabaseTable {
@@ -12,8 +13,12 @@ extension FormField {
             public let key = DatabaseTableColumn<String>(name: "key")
             public let type = DatabaseTableColumn<String>(name: "type")
             public let label = DatabaseTableColumn<String>(name: "label")
-            public let allowedValues = DatabaseTableColumn<String>(name: "allowed_values")
-            public let isRequired = DatabaseTableColumn<Bool>(name: "is_required")
+            public let allowedValues = DatabaseTableColumn<String>(
+                name: "allowed_values"
+            )
+            public let isRequired = DatabaseTableColumn<Bool>(
+                name: "is_required"
+            )
             public let createdAt = DatabaseTableColumn<Date>(name: "created_at")
             public let updatedAt = DatabaseTableColumn<Date>(name: "updated_at")
         }

@@ -179,10 +179,10 @@ func buildRouter(
         mediaUseCases: modules.media,
         mediaResolver: modules.mediaResolver
     )
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
+    .registerHandlers(
+        on: router,
+        middlewares: middlewares
+    )
     try WebBackend.AdminAPIGateway(useCases: modules.web)
         .registerHandlers(
             on: router,

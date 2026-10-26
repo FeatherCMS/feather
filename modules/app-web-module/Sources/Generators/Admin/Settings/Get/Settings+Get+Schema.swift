@@ -13,7 +13,8 @@ extension Settings.Get {
                 "tertiaryColor": Settings.Schemas.TertiaryColor(),
                 "primaryFont": Settings.Schemas.PrimaryFont(),
                 "secondaryFont": Settings.Schemas.SecondaryFont(),
-                "homePageId": Settings.Schemas.HomePageID().reference(required: false),
+                "homePageId": Settings.Schemas.HomePageID()
+                    .reference(required: false),
                 "locale": Settings.Schemas.Locale(),
                 "timezone": Settings.Schemas.Timezone(),
                 "title": Settings.Schemas.Title(),

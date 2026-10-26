@@ -1,9 +1,9 @@
 public import BlogAdminAPI
 import BlogApplication
 import BlogModule
-import WebApplication
 import FeatherModuleKit
 import Foundation
+import WebApplication
 
 extension AdminAPIGateway {
 

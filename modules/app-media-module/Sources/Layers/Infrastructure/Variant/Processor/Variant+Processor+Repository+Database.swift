@@ -44,7 +44,9 @@ extension Variant.Processor.Repository {
             self.accessLayer = .init(context: context)
         }
 
-        public func insert(_ model: Variant.Processor.Model.New) async throws -> Variant.Processor.Model {
+        public func insert(_ model: Variant.Processor.Model.New) async throws
+            -> Variant.Processor.Model
+        {
             let row = Variant.Processor.Table.Insert(
                 id: context.idGenerator.generate(),
                 variantId: model.variantId,
@@ -54,13 +56,20 @@ extension Variant.Processor.Repository {
                 isActive: model.isActive
             )
             try await accessLayer.insert(row)
-            guard let saved = try await accessLayer.selectFirst(by: \.id, equals: row.id) else {
+            guard
+                let saved = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: row.id
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return saved.asDomain
         }
 
-        public func update(_ model: Variant.Processor.Model) async throws -> Variant.Processor.Model {
+        public func update(_ model: Variant.Processor.Model) async throws
+            -> Variant.Processor.Model
+        {
             try await accessLayer.update(
                 .init(
                     name: model.name,
@@ -71,17 +80,25 @@ extension Variant.Processor.Repository {
                 where: \.id,
                 equals: model.id
             )
-            guard let updated = try await accessLayer.selectFirst(by: \.id, equals: model.id) else {
+            guard
+                let updated = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: model.id
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return updated.asDomain
         }
 
         public func find(id: String) async throws -> Variant.Processor.Model? {
-            try await accessLayer.selectFirst(by: \.id, equals: id).map(\.asDomain)
+            try await accessLayer.selectFirst(by: \.id, equals: id)
+                .map(\.asDomain)
         }
 
-        public func list(variantId: String) async throws -> [Variant.Processor.Model] {
+        public func list(variantId: String) async throws -> [Variant.Processor
+            .Model]
+        {
             try await accessLayer.select {
                 $0.where(\.variantId, equals: variantId).order(by: \.name)
             }
@@ -94,11 +111,12 @@ extension Variant.Processor.Repository {
                     .select { $0.where(\.isActive, equals: true) }
                     .map(\.id)
             )
-            return try await accessLayer.select {
-                $0.where(\.isActive, equals: true).order(by: \.name)
-            }
-            .filter { activeVariantIDs.contains($0.variantId) }
-            .map(\.asDomain)
+            return
+                try await accessLayer.select {
+                    $0.where(\.isActive, equals: true).order(by: \.name)
+                }
+                .filter { activeVariantIDs.contains($0.variantId) }
+                .map(\.asDomain)
         }
 
         public func delete(ids: [String]) async throws -> [String] {

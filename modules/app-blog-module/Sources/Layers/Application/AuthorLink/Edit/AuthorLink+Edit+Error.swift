@@ -1,5 +1,5 @@
-public import FeatherApplication
 public import BlogModule
+public import FeatherApplication
 
 extension AuthorLink.Edit {
     public struct Error: UseCaseError {

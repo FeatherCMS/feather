@@ -13,7 +13,8 @@ import WebModule
 
 extension UseCases {
 
-    func makeDetailPublicPageByID() -> WebApplication.Public.Page.Detail.UseCase {
+    func makeDetailPublicPageByID() -> WebApplication.Public.Page.Detail.UseCase
+    {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in

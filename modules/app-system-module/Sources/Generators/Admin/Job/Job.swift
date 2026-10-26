@@ -1,7 +1,3 @@
 public enum Job {
 
-
-
-
-
 }

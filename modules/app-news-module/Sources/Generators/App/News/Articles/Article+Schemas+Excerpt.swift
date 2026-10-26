@@ -1,7 +1,7 @@
 public import FeatherOpenAPI
 
-public extension Article.Schemas {
-    struct Excerpt: StringSchemaRepresentable {
+extension Article.Schemas {
+    public struct Excerpt: StringSchemaRepresentable {
         public var openAPIIdentifier: String { "NewsArticleExcerptField" }
         public var example: String? = "Short article summary."
 

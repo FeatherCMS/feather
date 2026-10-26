@@ -26,7 +26,8 @@ extension Invitation.Detail {
                                 )
                             ),
                             roleNamesProvider: { roleIDs in
-                                let roles = await Invitation.Form.Repository.Role
+                                let roles = await Invitation.Form.Repository
+                                    .Role
                                     .OpenAPI(
                                         api: UserWebAdmin.API.Client(
                                             environment: environment,

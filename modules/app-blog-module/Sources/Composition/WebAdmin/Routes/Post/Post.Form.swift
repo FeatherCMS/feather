@@ -68,115 +68,116 @@ extension Post {
                                 "Edit the post content and its related author and tags."
                         )
                     ) {
-                    context.build(
-                        AdminFormFieldMediaPicker(
-                            state: .init(
-                                field: .init(
-                                    key: state.imageAssetId.key,
-                                    label: state.imageAssetId.label,
-                                    value: state.imageAssetId.value,
-                                    error: state.imageAssetId.error
-                                ),
-                                selectedAsset: state.selectedImageAsset.map {
-                                    .init(
-                                        id: $0.id,
-                                        name: $0.name,
-                                        slugPath: $0.slugPath,
-                                        url: $0.url,
-                                        extension: $0.extension,
-                                        contentType: $0.contentType,
-                                        sizeBytes: $0.sizeBytes,
-                                        variants: $0.variants,
-                                        title: $0.title,
-                                        altText: $0.altText,
-                                        status: $0.status
-                                    )
-                                },
-                                browsePath: browsePath,
-                                defaultFolderPath: "blog/posts",
-                                allowedExtensions: .images,
-                                previewStyle: .wide
-                            )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldInput(
-                            state: .init(
-                                name: state.title.key,
-                                label: state.title.label,
-                                value: state.title.value,
-                                error: state.title.error,
-                                isRequired: true
-                            )
-                        )
-                        .setAsRemoveConfirmationLabel()
-                    )
-                    context.build(
-                        AdminFormFieldTextArea(
-                            state: .init(
-                                name: state.excerpt.key,
-                                label: state.excerpt.label,
-                                value: state.excerpt.value,
-                                error: state.excerpt.error,
-                                style: .small,
-                                isRequired: true
-                            )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldTextArea(
-                            state: .init(
-                                name: state.content.key,
-                                label: state.content.label,
-                                value: state.content.value,
-                                error: state.content.error,
-                                style: .large,
-                                isRequired: true
-                            )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldSelectAutocomplete(
-                            state: .init(
-                                name: "authorIds[]",
-                                label: "Authors",
-                                placeholder: "Search and select authors...",
-                                options: state.authorOptions.map {
-                                    .init(
-                                        label: $0.label,
-                                        value: $0.value,
-                                        isSelected: $0.isSelected
-                                    )
-                                },
-                                error: state.authorIdsError,
-                                selectionMode: .multiple
-                            )
-                        )
-                    )
-                    context.build(
-                        AdminFormFieldSelectAutocomplete(
-                            state: .init(
-                                name: "tagIds[]",
-                                label: "Tags",
-                                placeholder: "Search and select tags...",
-                                options: state.tagOptions.map {
-                                    .init(
-                                        label: $0.label,
-                                        value: $0.value,
-                                        isSelected: $0.isSelected
-                                    )
-                                },
-                                error: state.tagIdsError,
-                                selectionMode: .multiple
-                            )
-                        )
-                    )
-                    Div {
                         context.build(
-                            AdminSubmitButton(submitLabel, style: .primary)
+                            AdminFormFieldMediaPicker(
+                                state: .init(
+                                    field: .init(
+                                        key: state.imageAssetId.key,
+                                        label: state.imageAssetId.label,
+                                        value: state.imageAssetId.value,
+                                        error: state.imageAssetId.error
+                                    ),
+                                    selectedAsset: state.selectedImageAsset.map
+                                    {
+                                        .init(
+                                            id: $0.id,
+                                            name: $0.name,
+                                            slugPath: $0.slugPath,
+                                            url: $0.url,
+                                            extension: $0.extension,
+                                            contentType: $0.contentType,
+                                            sizeBytes: $0.sizeBytes,
+                                            variants: $0.variants,
+                                            title: $0.title,
+                                            altText: $0.altText,
+                                            status: $0.status
+                                        )
+                                    },
+                                    browsePath: browsePath,
+                                    defaultFolderPath: "blog/posts",
+                                    allowedExtensions: .images,
+                                    previewStyle: .wide
+                                )
+                            )
                         )
-                    }
-                    .class("admin-form__actions")
+                        context.build(
+                            AdminFormFieldInput(
+                                state: .init(
+                                    name: state.title.key,
+                                    label: state.title.label,
+                                    value: state.title.value,
+                                    error: state.title.error,
+                                    isRequired: true
+                                )
+                            )
+                            .setAsRemoveConfirmationLabel()
+                        )
+                        context.build(
+                            AdminFormFieldTextArea(
+                                state: .init(
+                                    name: state.excerpt.key,
+                                    label: state.excerpt.label,
+                                    value: state.excerpt.value,
+                                    error: state.excerpt.error,
+                                    style: .small,
+                                    isRequired: true
+                                )
+                            )
+                        )
+                        context.build(
+                            AdminFormFieldTextArea(
+                                state: .init(
+                                    name: state.content.key,
+                                    label: state.content.label,
+                                    value: state.content.value,
+                                    error: state.content.error,
+                                    style: .large,
+                                    isRequired: true
+                                )
+                            )
+                        )
+                        context.build(
+                            AdminFormFieldSelectAutocomplete(
+                                state: .init(
+                                    name: "authorIds[]",
+                                    label: "Authors",
+                                    placeholder: "Search and select authors...",
+                                    options: state.authorOptions.map {
+                                        .init(
+                                            label: $0.label,
+                                            value: $0.value,
+                                            isSelected: $0.isSelected
+                                        )
+                                    },
+                                    error: state.authorIdsError,
+                                    selectionMode: .multiple
+                                )
+                            )
+                        )
+                        context.build(
+                            AdminFormFieldSelectAutocomplete(
+                                state: .init(
+                                    name: "tagIds[]",
+                                    label: "Tags",
+                                    placeholder: "Search and select tags...",
+                                    options: state.tagOptions.map {
+                                        .init(
+                                            label: $0.label,
+                                            value: $0.value,
+                                            isSelected: $0.isSelected
+                                        )
+                                    },
+                                    error: state.tagIdsError,
+                                    selectionMode: .multiple
+                                )
+                            )
+                        )
+                        Div {
+                            context.build(
+                                AdminSubmitButton(submitLabel, style: .primary)
+                            )
+                        }
+                        .class("admin-form__actions")
                     }
                 )
             }

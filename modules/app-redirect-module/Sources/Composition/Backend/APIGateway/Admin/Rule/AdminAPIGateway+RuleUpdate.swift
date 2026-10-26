@@ -18,7 +18,8 @@ extension AdminAPIGateway {
 
         let useCase = self.useCases.makeEditRule()
         let subject = try await CurrentSubject.require()
-        guard let statusCode = Rule.Model.StatusCode(rawValue: body.statusCode) else {
+        guard let statusCode = Rule.Model.StatusCode(rawValue: body.statusCode)
+        else {
             throw Rule.Model.Error.invalidStatusCode
         }
         let result = try await useCase.execute(

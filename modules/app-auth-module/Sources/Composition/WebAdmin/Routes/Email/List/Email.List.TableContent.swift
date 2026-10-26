@@ -198,7 +198,7 @@ extension Email.List {
                                     context.build(
                                         AdminButton(
                                             "Add new",
-                                                href: state.routes.add.path
+                                            href: state.routes.add.path
                                         )
                                     )
                                 }

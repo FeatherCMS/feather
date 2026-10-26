@@ -1,6 +1,6 @@
+import FeatherDatabase
 import FeatherDatabaseTesting
 import FeatherHTTP
-import FeatherDatabase
 import Foundation
 import HTTPTypes
 import NewsletterAdminAPI

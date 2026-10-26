@@ -51,23 +51,48 @@ struct InfrastructureDatabaseTests {
                 "profile_image_asset_id", "created_at", "updated_at",
             ]
         )
-        #expect(profile.columns[0].constraints.contains {
-            if case .primaryKey = $0 { true } else { false }
-        })
-        #expect(profile.columns[1].constraints.contains {
-            if case .notNull = $0 { true } else { false }
-        })
+        #expect(
+            profile.columns[0].constraints
+                .contains {
+                    if case .primaryKey = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            profile.columns[1].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
         #expect(profile.columns[5].type == .timestamp)
         #expect(profile.columns[6].type == .timestamp)
         for column in [profile.columns[5], profile.columns[6]] {
-            #expect(column.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
-            #expect(column.constraints.contains {
-                guard case .default(let value) = $0 else { return false }
-                if case .currentTimestamp = value.storage { return true }
-                return false
-            })
+            #expect(
+                column.constraints.contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+            )
+            #expect(
+                column.constraints.contains {
+                    guard case .default(let value) = $0 else { return false }
+                    if case .currentTimestamp = value.storage { return true }
+                    return false
+                }
+            )
         }
         #expect(
             profile.indexes.map(\.name) == [
@@ -125,34 +150,77 @@ struct InfrastructureDatabaseTests {
                 "created_at", "updated_at",
             ]
         )
-        #expect(settings.columns[0].constraints.contains {
-            if case .primaryKey = $0 { true } else { false }
-        })
-        #expect(settings.columns[1].constraints.contains {
-            if case .notNull = $0 { true } else { false }
-        })
-        #expect(settings.columns[2].constraints.contains {
-            guard case .default(let value) = $0 else { return false }
-            guard case .string(let actual) = value.storage else { return false }
-            return actual == "en"
-        })
-        #expect(settings.columns[3].constraints.contains {
-            if case .notNull = $0 { true } else { false }
-        })
-        #expect(settings.columns[4].constraints.contains {
-            guard case .default(let value) = $0 else { return false }
-            guard case .integer(let actual) = value.storage else { return false }
-            return actual == 20
-        })
+        #expect(
+            settings.columns[0].constraints
+                .contains {
+                    if case .primaryKey = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            settings.columns[1].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            settings.columns[2].constraints
+                .contains {
+                    guard case .default(let value) = $0 else { return false }
+                    guard case .string(let actual) = value.storage else {
+                        return false
+                    }
+                    return actual == "en"
+                }
+        )
+        #expect(
+            settings.columns[3].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            settings.columns[4].constraints
+                .contains {
+                    guard case .default(let value) = $0 else { return false }
+                    guard case .integer(let actual) = value.storage else {
+                        return false
+                    }
+                    return actual == 20
+                }
+        )
         for column in [settings.columns[5], settings.columns[6]] {
-            #expect(column.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
-            #expect(column.constraints.contains {
-                guard case .default(let value) = $0 else { return false }
-                if case .currentTimestamp = value.storage { return true }
-                return false
-            })
+            #expect(
+                column.constraints.contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+            )
+            #expect(
+                column.constraints.contains {
+                    guard case .default(let value) = $0 else { return false }
+                    if case .currentTimestamp = value.storage { return true }
+                    return false
+                }
+            )
         }
         #expect(
             settings.constraints.contains {
@@ -188,31 +256,69 @@ struct InfrastructureDatabaseTests {
                 "created_at", "updated_at",
             ]
         )
-        #expect(invitation.columns[0].constraints.contains {
-            if case .primaryKey = $0 { true } else { false }
-        })
+        #expect(
+            invitation.columns[0].constraints
+                .contains {
+                    if case .primaryKey = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
         for index in [1, 2, 3, 4, 5] {
-            #expect(invitation.columns[index].constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
+            #expect(
+                invitation.columns[index].constraints
+                    .contains {
+                        if case .notNull = $0 {
+                            true
+                        }
+                        else {
+                            false
+                        }
+                    }
+            )
         }
-        #expect(invitation.columns[3].constraints.contains {
-            if case .unique = $0 { true } else { false }
-        })
-        #expect(invitation.columns[4].constraints.contains {
-            guard case .default(let value) = $0 else { return false }
-            guard case .string(let actual) = value.storage else { return false }
-            return actual == "[]"
-        })
+        #expect(
+            invitation.columns[3].constraints
+                .contains {
+                    if case .unique = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            invitation.columns[4].constraints
+                .contains {
+                    guard case .default(let value) = $0 else { return false }
+                    guard case .string(let actual) = value.storage else {
+                        return false
+                    }
+                    return actual == "[]"
+                }
+        )
         for column in [invitation.columns[6], invitation.columns[7]] {
-            #expect(column.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
-            #expect(column.constraints.contains {
-                guard case .default(let value) = $0 else { return false }
-                if case .currentTimestamp = value.storage { return true }
-                return false
-            })
+            #expect(
+                column.constraints.contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+            )
+            #expect(
+                column.constraints.contains {
+                    guard case .default(let value) = $0 else { return false }
+                    if case .currentTimestamp = value.storage { return true }
+                    return false
+                }
+            )
         }
         #expect(
             invitation.constraints.contains {

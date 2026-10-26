@@ -1,8 +1,8 @@
 public import AuthApplication
 public import AuthModule
+import FeatherApplication
 import FeatherDBAL
 import FeatherDatabase
-import FeatherApplication
 public import FeatherInfrastructure
 import Foundation
 

@@ -90,7 +90,8 @@ extension Subscriber.Model {
         guard case .set(let newStatus) = status else { return }
         if newStatus == .subscribed && self.status != .subscribed {
             subscribe(at: date)
-        } else if newStatus == .unsubscribed && self.status != .unsubscribed {
+        }
+        else if newStatus == .unsubscribed && self.status != .unsubscribed {
             unsubscribe(at: date)
         }
     }

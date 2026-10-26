@@ -6,13 +6,27 @@ public import MediaModule
 
 extension Asset.File.Variant.Table.Detail {
     var asDomain: Asset.File.Variant.Model {
-        .init(id: id, assetNodeFileId: assetNodeFileId, variantId: variantId, variantProcessorId: variantProcessorId, storageObjectId: storageObjectId, createdAt: createdAt)
+        .init(
+            id: id,
+            assetNodeFileId: assetNodeFileId,
+            variantId: variantId,
+            variantProcessorId: variantProcessorId,
+            storageObjectId: storageObjectId,
+            createdAt: createdAt
+        )
     }
 }
 
 extension Asset.File.Variant.Table.List {
     var asDomain: Asset.File.Variant.Model {
-        .init(id: id, assetNodeFileId: assetNodeFileId, variantId: variantId, variantProcessorId: variantProcessorId, storageObjectId: storageObjectId, createdAt: createdAt)
+        .init(
+            id: id,
+            assetNodeFileId: assetNodeFileId,
+            variantId: variantId,
+            variantProcessorId: variantProcessorId,
+            storageObjectId: storageObjectId,
+            createdAt: createdAt
+        )
     }
 }
 
@@ -26,7 +40,9 @@ extension Asset.File.Variant.Repository {
             self.accessLayer = .init(context: context)
         }
 
-        public func insert(_ model: Asset.File.Variant.Model.New) async throws -> Asset.File.Variant.Model {
+        public func insert(_ model: Asset.File.Variant.Model.New) async throws
+            -> Asset.File.Variant.Model
+        {
             let row = Asset.File.Variant.Table.Insert(
                 id: context.idGenerator.generate(),
                 assetNodeFileId: model.assetNodeFileId,
@@ -35,13 +51,20 @@ extension Asset.File.Variant.Repository {
                 storageObjectId: model.storageObjectId
             )
             try await accessLayer.insert(row)
-            guard let saved = try await accessLayer.selectFirst(by: \.id, equals: row.id) else {
+            guard
+                let saved = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: row.id
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return saved.asDomain
         }
 
-        public func insert(_ models: [Asset.File.Variant.Model.New]) async throws {
+        public func insert(_ models: [Asset.File.Variant.Model.New])
+            async throws
+        {
             let rows = models.map {
                 Asset.File.Variant.Table.Insert(
                     id: context.idGenerator.generate(),
@@ -54,30 +77,43 @@ extension Asset.File.Variant.Repository {
             try await accessLayer.insert(rows)
         }
 
-        public func find(nodeId: String, variantId: String) async throws -> Asset.File.Variant.Model? {
-            try await accessLayer.selectFirst(as: Asset.File.Variant.Table.Detail.self) {
-                $0.where(\.assetNodeFileId, equals: nodeId).where(\.variantId, equals: variantId)
+        public func find(nodeId: String, variantId: String) async throws
+            -> Asset.File.Variant.Model?
+        {
+            try await accessLayer.selectFirst(
+                as: Asset.File.Variant.Table.Detail.self
+            ) {
+                $0.where(\.assetNodeFileId, equals: nodeId)
+                    .where(\.variantId, equals: variantId)
             }
             .map(\.asDomain)
         }
 
-        public func list(nodeId: String) async throws -> [Asset.File.Variant.Model] {
+        public func list(nodeId: String) async throws -> [Asset.File.Variant
+            .Model]
+        {
             try await list(nodeIds: [nodeId])
         }
 
-        public func list(nodeIds: [String]) async throws -> [Asset.File.Variant.Model] {
+        public func list(nodeIds: [String]) async throws -> [Asset.File.Variant
+            .Model]
+        {
             guard !nodeIds.isEmpty else { return [] }
-            return try await accessLayer.select {
-                $0.where(\.assetNodeFileId, in: nodeIds)
-                    .order(by: \.assetNodeFileId)
-                    .order(by: \.createdAt)
-                    .order(by: \.id)
-            }
-            .map(\.asDomain)
+            return
+                try await accessLayer.select {
+                    $0.where(\.assetNodeFileId, in: nodeIds)
+                        .order(by: \.assetNodeFileId)
+                        .order(by: \.createdAt)
+                        .order(by: \.id)
+                }
+                .map(\.asDomain)
         }
 
         public func deleteAll(nodeId: String) async throws {
-            try await accessLayer.delete(where: \.assetNodeFileId, equals: nodeId)
+            try await accessLayer.delete(
+                where: \.assetNodeFileId,
+                equals: nodeId
+            )
         }
 
         public func deleteAll(nodeIds: [String]) async throws {

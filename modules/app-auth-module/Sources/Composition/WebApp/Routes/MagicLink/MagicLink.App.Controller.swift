@@ -25,4 +25,3 @@ extension MagicLink.App.Controller {
         ) async throws -> Response
     }
 }
-

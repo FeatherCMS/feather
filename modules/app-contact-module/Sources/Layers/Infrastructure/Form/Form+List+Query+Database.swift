@@ -26,10 +26,11 @@ extension Form.List.Query {
 
             var items: [Form.List.Output.Item] = []
             for form in forms {
-                let fieldRows = try await FormField.AccessLayer(
-                    connection: context.connection
-                )
-                .list(formId: form.id)
+                let fieldRows =
+                    try await FormField.AccessLayer(
+                        connection: context.connection
+                    )
+                    .list(formId: form.id)
                 let fields = try fieldRows.map { row in
                     let model = try row.asDomain
                     return Form.Field(model: model)

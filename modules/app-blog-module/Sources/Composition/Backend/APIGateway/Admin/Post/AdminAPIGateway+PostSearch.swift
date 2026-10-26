@@ -19,25 +19,28 @@ extension AdminAPIGateway {
         let useCase = self.useCases.makeSearchPosts()
         let pageDefaults = Search.Page()
         let objectQuery = Post.Search.Input.Query(
-            page: Search.Page(
-                size: query.page?.size ?? pageDefaults.size,
-                number: query.page?.number ?? pageDefaults.number
-            ).normalized(),
-            sort: (query.sort ?? []).map { item in
-                let field: Post.Search.Input.Query.Sort.Field
-                switch item.field {
-                case .id: field = .id
-                case .title: field = .title
-                case .createdAt: field = .createdAt
-                case .updatedAt: field = .updatedAt
-                }
-                let direction: Search.SortDirection
-                switch item.direction {
-                case .asc: direction = .asc
-                case .desc: direction = .desc
-                }
-                return .init(field: field, direction: direction)
-            },
+            page:
+                Search.Page(
+                    size: query.page?.size ?? pageDefaults.size,
+                    number: query.page?.number ?? pageDefaults.number
+                )
+                .normalized(),
+            sort: (query.sort ?? [])
+                .map { item in
+                    let field: Post.Search.Input.Query.Sort.Field
+                    switch item.field {
+                    case .id: field = .id
+                    case .title: field = .title
+                    case .createdAt: field = .createdAt
+                    case .updatedAt: field = .updatedAt
+                    }
+                    let direction: Search.SortDirection
+                    switch item.direction {
+                    case .asc: direction = .asc
+                    case .desc: direction = .desc
+                    }
+                    return .init(field: field, direction: direction)
+                },
             search: query.filters.search
         )
         let subject = try await CurrentSubject.require()
@@ -55,21 +58,23 @@ extension AdminAPIGateway {
                                 size: objectQuery.page.size,
                                 number: objectQuery.page.number
                             ),
-                            sort: query.sort?.map { item in
-                                let field: Components.Schemas
-                                    .PostQueryItemSearchResponseQuerySchema
-                                    .SortPayloadPayload.FieldPayload
-                                switch item.field {
-                                case .id: field = .id
-                                case .title: field = .title
-                                case .createdAt: field = .createdAt
-                                case .updatedAt: field = .updatedAt
-                                }
-                                return .init(
-                                    field: field,
-                                    direction: item.direction
-                                )
-                            },
+                            sort: query.sort?
+                                .map { item in
+                                    let field:
+                                        Components.Schemas
+                                            .PostQueryItemSearchResponseQuerySchema
+                                            .SortPayloadPayload.FieldPayload
+                                    switch item.field {
+                                    case .id: field = .id
+                                    case .title: field = .title
+                                    case .createdAt: field = .createdAt
+                                    case .updatedAt: field = .updatedAt
+                                    }
+                                    return .init(
+                                        field: field,
+                                        direction: item.direction
+                                    )
+                                },
                             filters: .init(search: query.filters.search)
                         ),
                         data: .init(

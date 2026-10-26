@@ -1,9 +1,9 @@
 public import AccountAdminAPI
 import AccountApplication
 import AccountModule
-import Foundation
 import FeatherDomain
 import FeatherModuleKit
+import Foundation
 
 extension AdminAPIGateway {
 

@@ -3,8 +3,8 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension Rule.List.Controller {
     struct Default: Interface {

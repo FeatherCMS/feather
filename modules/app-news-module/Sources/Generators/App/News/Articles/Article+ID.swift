@@ -1,3 +1,3 @@
-public extension Article {
-    enum ID {}
+extension Article {
+    public enum ID {}
 }

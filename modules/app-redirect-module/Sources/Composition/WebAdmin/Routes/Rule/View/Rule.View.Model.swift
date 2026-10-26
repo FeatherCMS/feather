@@ -1,5 +1,5 @@
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension Rule.View {
     struct Model: Sendable {

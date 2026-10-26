@@ -1,3 +1,3 @@
-public extension Article {
-    enum Schemas {}
+extension Article {
+    public enum Schemas {}
 }

@@ -1,6 +1,3 @@
 public enum Logout {
 
-
-
-
 }

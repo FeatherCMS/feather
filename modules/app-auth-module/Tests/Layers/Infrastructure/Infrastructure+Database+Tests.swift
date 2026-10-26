@@ -79,7 +79,10 @@ struct InfrastructureDatabaseTests {
         let requiredColumns: [[String]] = [
             ["identity_id", "email"],
             ["auth_email_id", "password_hash"],
-            ["auth_email_id", "token", "expires_at", "is_persistent", "is_used"],
+            [
+                "auth_email_id", "token", "expires_at", "is_persistent",
+                "is_used",
+            ],
             ["role_id", "permission_id"],
             [
                 "token", "identity_id", "authentication_type",
@@ -93,9 +96,17 @@ struct InfrastructureDatabaseTests {
             #expect(schema.columns.contains { $0.name == "created_at" })
             #expect(schema.columns.contains { $0.name == "updated_at" })
             for name in requiredColumns[index] {
-                #expect(schema.columns.first { $0.name == name }?.constraints.contains {
-                    if case .notNull = $0 { true } else { false }
-                } == true)
+                #expect(
+                    schema.columns.first { $0.name == name }?.constraints
+                        .contains {
+                            if case .notNull = $0 {
+                                true
+                            }
+                            else {
+                                false
+                            }
+                        } == true
+                )
             }
         }
         for schema in [schemas[0], schemas[1], schemas[2], schemas[4]] {
@@ -116,120 +127,142 @@ struct InfrastructureDatabaseTests {
         #expect(hasUniqueConstraint(schemas[2].columns[2].constraints))
         #expect(hasUniqueConstraint(schemas[4].columns[1].constraints))
         #expect(
-            schemas[0].constraints.contains {
-                if case .foreignKey(
-                    columns: let columns,
-                    referencesTable: "user_identity",
-                    referencedColumns: let referencedColumns,
-                    onDelete: .cascade,
-                    onUpdate: _
-                ) = $0 {
-                    columns.map(\.name) == ["identity_id"]
-                        && referencedColumns.map(\.name) == ["id"]
+            schemas[0].constraints
+                .contains {
+                    if case .foreignKey(
+                        columns: let columns,
+                        referencesTable: "user_identity",
+                        referencedColumns: let referencedColumns,
+                        onDelete: .cascade,
+                        onUpdate: _
+                    ) = $0 {
+                        columns.map(\.name) == ["identity_id"]
+                            && referencedColumns.map(\.name) == ["id"]
+                    }
+                    else {
+                        false
+                    }
                 }
-                else {
-                    false
-                }
-            }
         )
         #expect(
-            schemas[1].constraints.contains {
-                if case .foreignKey(
-                    columns: let columns,
-                    referencesTable: "auth_email",
-                    referencedColumns: let referencedColumns,
-                    onDelete: .cascade,
-                    onUpdate: _
-                ) = $0 {
-                    columns.map(\.name) == ["auth_email_id"]
-                        && referencedColumns.map(\.name) == ["id"]
+            schemas[1].constraints
+                .contains {
+                    if case .foreignKey(
+                        columns: let columns,
+                        referencesTable: "auth_email",
+                        referencedColumns: let referencedColumns,
+                        onDelete: .cascade,
+                        onUpdate: _
+                    ) = $0 {
+                        columns.map(\.name) == ["auth_email_id"]
+                            && referencedColumns.map(\.name) == ["id"]
+                    }
+                    else {
+                        false
+                    }
                 }
-                else {
-                    false
-                }
-            }
         )
         #expect(
-            schemas[2].constraints.contains {
-                if case .foreignKey(
-                    columns: let columns,
-                    referencesTable: "auth_email",
-                    referencedColumns: let referencedColumns,
-                    onDelete: .cascade,
-                    onUpdate: _
-                ) = $0 {
-                    columns.map(\.name) == ["auth_email_id"]
-                        && referencedColumns.map(\.name) == ["id"]
+            schemas[2].constraints
+                .contains {
+                    if case .foreignKey(
+                        columns: let columns,
+                        referencesTable: "auth_email",
+                        referencedColumns: let referencedColumns,
+                        onDelete: .cascade,
+                        onUpdate: _
+                    ) = $0 {
+                        columns.map(\.name) == ["auth_email_id"]
+                            && referencedColumns.map(\.name) == ["id"]
+                    }
+                    else {
+                        false
+                    }
                 }
-                else {
-                    false
-                }
-            }
         )
         #expect(
             schemas[3].indexes.map(\.name)
                 == ["auth_role_permission_permission_id_idx"]
         )
         #expect(
-            schemas[3].constraints.contains {
-                if case .foreignKey(
-                    columns: let columns,
-                    referencesTable: "user_role",
-                    referencedColumns: let referencedColumns,
-                    onDelete: .cascade,
-                    onUpdate: _
-                ) = $0 {
-                    columns.map(\.name) == ["role_id"]
-                        && referencedColumns.map(\.name) == ["id"]
+            schemas[3].constraints
+                .contains {
+                    if case .foreignKey(
+                        columns: let columns,
+                        referencesTable: "user_role",
+                        referencedColumns: let referencedColumns,
+                        onDelete: .cascade,
+                        onUpdate: _
+                    ) = $0 {
+                        columns.map(\.name) == ["role_id"]
+                            && referencedColumns.map(\.name) == ["id"]
+                    }
+                    else {
+                        false
+                    }
                 }
-                else {
-                    false
-                }
-            }
         )
         #expect(
-            schemas[3].constraints.contains {
-                if case .foreignKey(
-                    columns: let columns,
-                    referencesTable: "system_permission",
-                    referencedColumns: let referencedColumns,
-                    onDelete: .cascade,
-                    onUpdate: _
-                ) = $0 {
-                    columns.map(\.name) == ["permission_id"]
-                        && referencedColumns.map(\.name) == ["id"]
+            schemas[3].constraints
+                .contains {
+                    if case .foreignKey(
+                        columns: let columns,
+                        referencesTable: "system_permission",
+                        referencedColumns: let referencedColumns,
+                        onDelete: .cascade,
+                        onUpdate: _
+                    ) = $0 {
+                        columns.map(\.name) == ["permission_id"]
+                            && referencedColumns.map(\.name) == ["id"]
+                    }
+                    else {
+                        false
+                    }
                 }
-                else {
-                    false
-                }
-            }
         )
         for (index, schema) in schemas.enumerated() {
             for name in ["created_at", "updated_at"] {
                 let column = schema.columns.first { $0.name == name }
                 #expect(column?.type == .timestamp)
-                #expect(column?.constraints.contains {
-                    guard case .notNull = $0 else { return false }
-                    return true
-                } == true)
+                #expect(
+                    column?.constraints
+                        .contains {
+                            guard case .notNull = $0 else { return false }
+                            return true
+                        } == true
+                )
                 if index != 3 {
-                    #expect(column?.constraints.contains {
-                        guard case .default(let value) = $0 else { return false }
-                        if case .currentTimestamp = value.storage { return true }
-                        return false
-                    } == true)
+                    #expect(
+                        column?.constraints
+                            .contains {
+                                guard case .default(let value) = $0 else {
+                                    return false
+                                }
+                                if case .currentTimestamp = value.storage {
+                                    return true
+                                }
+                                return false
+                            } == true
+                    )
                 }
             }
         }
         for schema in [schemas[2], schemas[4]] {
-            for columnName in ["is_persistent", "is_used"] where
+            for columnName in ["is_persistent", "is_used"]
+            where
                 schema.columns.contains(where: { $0.name == columnName })
             {
-                #expect(schema.columns.first { $0.name == columnName }?.constraints.contains {
-                    guard case .default(let value) = $0 else { return false }
-                    guard case .boolean(let actual) = value.storage else { return false }
-                    return !actual
-                } == true)
+                #expect(
+                    schema.columns.first { $0.name == columnName }?.constraints
+                        .contains {
+                            guard case .default(let value) = $0 else {
+                                return false
+                            }
+                            guard case .boolean(let actual) = value.storage
+                            else { return false }
+                            return !actual
+                        } == true
+                )
             }
         }
         #expect(
@@ -271,26 +304,28 @@ struct InfrastructureDatabaseTests {
                 .count == 2
         )
         #expect(
-            schemas[4].constraints.contains {
-                if case .foreignKey(
-                    columns: let columns,
-                    referencesTable: "user_identity",
-                    referencedColumns: let referencedColumns,
-                    onDelete: .cascade,
-                    onUpdate: _
-                ) = $0 {
-                    columns.map(\.name) == ["identity_id"]
-                        && referencedColumns.map(\.name) == ["id"]
+            schemas[4].constraints
+                .contains {
+                    if case .foreignKey(
+                        columns: let columns,
+                        referencesTable: "user_identity",
+                        referencedColumns: let referencedColumns,
+                        onDelete: .cascade,
+                        onUpdate: _
+                    ) = $0 {
+                        columns.map(\.name) == ["identity_id"]
+                            && referencedColumns.map(\.name) == ["id"]
+                    }
+                    else {
+                        false
+                    }
                 }
-                else {
-                    false
-                }
-            }
         )
     }
 
     @Test
-    func credentialSearchQueryUsesJoinedFiltersPaginationAndCount() async throws {
+    func credentialSearchQueryUsesJoinedFiltersPaginationAndCount() async throws
+    {
         let date = Date(timeIntervalSince1970: 1_700_000_000)
         let connection = MockDatabaseConnection<QueryKey>(
             responses: [

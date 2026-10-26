@@ -16,7 +16,8 @@ extension Submission {
             public let submission: WebRoute
 
             public init(root: WebRoute) {
-                submission = root
+                submission =
+                    root
                     .appending(pathComponent: "api")
                     .appending(pathComponent: "v1")
                     .appending(pathComponent: "contact")

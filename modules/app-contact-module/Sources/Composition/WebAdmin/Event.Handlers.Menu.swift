@@ -1,5 +1,5 @@
-public import FeatherModuleKit
 import ContactModule
+public import FeatherModuleKit
 import FeatherWebAdmin
 import FeatherWebShared
 import SystemModule

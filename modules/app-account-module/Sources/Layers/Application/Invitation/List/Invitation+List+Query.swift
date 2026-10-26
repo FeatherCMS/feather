@@ -1,6 +1,5 @@
 public import AccountModule
 
-
 extension Invitation.List {
     public enum Query {
         public protocol Interface: Sendable {

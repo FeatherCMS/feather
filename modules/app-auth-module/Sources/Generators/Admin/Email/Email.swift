@@ -1,11 +1,3 @@
 public enum Email {
 
-
-
-
-
-
-
-
-
 }

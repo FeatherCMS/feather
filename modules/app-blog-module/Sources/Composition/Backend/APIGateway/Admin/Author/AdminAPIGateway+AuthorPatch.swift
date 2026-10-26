@@ -1,12 +1,12 @@
 public import BlogAdminAPI
 import BlogApplication
 import BlogModule
-import WebApplication
-import WebDomain
 import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
 import Foundation
+import WebApplication
+import WebDomain
 import WebModule
 
 extension AdminAPIGateway {
@@ -126,8 +126,10 @@ extension AdminAPIGateway {
                 referenceId: detail.metadata.referenceID,
                 slug: detail.metadata.slug,
                 template: detail.metadata.template,
-                publicationDate: detail.metadata.publicationDate.timeIntervalSince1970,
-                expirationDate: detail.metadata.expirationDate?.timeIntervalSince1970,
+                publicationDate: detail.metadata.publicationDate
+                    .timeIntervalSince1970,
+                expirationDate: detail.metadata.expirationDate?
+                    .timeIntervalSince1970,
                 status: detail.metadata.status.rawValue,
                 title: detail.metadata.title,
                 excerpt: detail.metadata.excerpt,
@@ -136,8 +138,10 @@ extension AdminAPIGateway {
                 noIndex: detail.metadata.noIndex,
                 primaryKeyword: detail.metadata.primaryKeyword ?? "",
                 cssCodeInjection: detail.metadata.cssCodeInjection,
-                javascriptCodeInjection: detail.metadata.javascriptCodeInjection,
-                structuredDataCodeInjection: detail.metadata.structuredDataCodeInjection,
+                javascriptCodeInjection: detail.metadata
+                    .javascriptCodeInjection,
+                structuredDataCodeInjection: detail.metadata
+                    .structuredDataCodeInjection,
                 createdAt: detail.metadata.createdAt.timeIntervalSince1970,
                 updatedAt: detail.metadata.updatedAt.timeIntervalSince1970
             ),

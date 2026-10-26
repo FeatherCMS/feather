@@ -1,8 +1,8 @@
 import FeatherDomain
 import FeatherModuleKit
+import Foundation
 public import WebAdminAPI
 import WebApplication
-import Foundation
 import WebDomain
 import WebModule
 

@@ -23,7 +23,6 @@ public enum WebModuleAPIClientSupport {
         )
     }
 
-
     public static func withOpenAPIRepositoryErrorMapping<
         Client: Sendable,
         Result: Sendable

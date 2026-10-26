@@ -1,8 +1,8 @@
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import MediaWebAdmin
 import MediaModule
+import MediaWebAdmin
 import OpenAPIRuntime
 import WebAdminAPI
 import WebModule
@@ -27,9 +27,11 @@ extension Page.Remove.Repository {
                         title: page.title,
                         excerpt: page.excerpt,
                         content: page.content,
-                        imageAsset: try await Asset.File.View.Repository.OpenAPI(
-                            api: api.mediaAdminAPI()
-                        ).loadImageAsset(assetId: page.imageAssetId),
+                        imageAsset: try await Asset.File.View.Repository
+                            .OpenAPI(
+                                api: api.mediaAdminAPI()
+                            )
+                            .loadImageAsset(assetId: page.imageAssetId),
                     )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound

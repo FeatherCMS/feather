@@ -2,8 +2,8 @@ import AccountModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import MediaWebAdmin
 import MediaModule
+import MediaWebAdmin
 
 extension Profile.Edit {
     struct Router {

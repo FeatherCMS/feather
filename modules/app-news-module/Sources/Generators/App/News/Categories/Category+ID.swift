@@ -1,3 +1,3 @@
-public extension Category {
-    enum ID {}
+extension Category {
+    public enum ID {}
 }

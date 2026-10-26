@@ -1,6 +1,6 @@
 public import RedirectAppAPI
-import RedirectDomain
 import RedirectApplication
+import RedirectDomain
 import RedirectModule
 
 extension AppAPIGateway {

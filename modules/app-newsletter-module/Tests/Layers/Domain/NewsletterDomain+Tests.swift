@@ -1,5 +1,5 @@
-import Testing
 import NewsletterModule
+import Testing
 
 import struct Foundation.Date
 

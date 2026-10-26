@@ -1,8 +1,8 @@
 import AccountModule
-import MediaWebAdmin
 public import FeatherWebAdmin
 public import FeatherWebShared
 public import Hummingbird
+import MediaWebAdmin
 
 public struct Router {
     public struct Routes: Sendable {
@@ -29,13 +29,13 @@ public struct Router {
             let userIdentityRoot =
                 userIdentityRoot
                 ?? admin
-                    .appending(pathComponent: "user")
-                    .appending(pathComponent: "identities")
+                .appending(pathComponent: "user")
+                .appending(pathComponent: "identities")
             let authMagicLinksRoot =
                 authMagicLinksRoot
                 ?? admin
-                    .appending(pathComponent: "auth")
-                    .appending(pathComponent: "magic-links")
+                .appending(pathComponent: "auth")
+                .appending(pathComponent: "magic-links")
             let settings = Settings.Router.Routes(
                 root: admin,
                 userIdentityRoot: userIdentityRoot,

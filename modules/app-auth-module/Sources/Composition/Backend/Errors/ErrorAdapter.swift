@@ -76,8 +76,7 @@ public enum ErrorAdapter {
                 logMessage: "Magic link not found: \(id)"
             )
         }
-        if let error = error as? Authorization.SignIn.Credentials.Error
-        {
+        if let error = error as? Authorization.SignIn.Credentials.Error {
             return AuthErrorAdapter(
                 error: error,
                 status: .unauthorized,

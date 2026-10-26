@@ -5,6 +5,8 @@ extension Asset.File.Post.Parameters {
         var openAPIIdentifier: String { "MediaAssetFileNameHeader" }
         var name: String { "X-Media-Asset-File-Name" }
         var description: String? { "Original file name" }
-        var schema: any OpenAPISchemaRepresentable { Asset.File.Schemas.HeaderValue() }
+        var schema: any OpenAPISchemaRepresentable {
+            Asset.File.Schemas.HeaderValue()
+        }
     }
 }

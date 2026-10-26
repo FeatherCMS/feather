@@ -14,7 +14,9 @@ extension WebApplication.Public.Metadata.List.Query {
             self.context = context
         }
 
-        public func list() async throws -> WebApplication.Public.Metadata.List.Output {
+        public func list() async throws
+            -> WebApplication.Public.Metadata.List.Output
+        {
             let rows = try await DatabaseAccessLayer<Metadata.Table>(
                 context: context
             )

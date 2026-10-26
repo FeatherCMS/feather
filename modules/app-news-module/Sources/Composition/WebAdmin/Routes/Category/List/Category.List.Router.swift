@@ -1,7 +1,7 @@
-import NewsApplication
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
+import NewsApplication
 import NewsModule
 
 extension Category.List {

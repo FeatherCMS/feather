@@ -1,9 +1,9 @@
 import ContactApplication
-import ContactModule
 import ContactInfrastructure
+import ContactModule
 public import FeatherApplication
-public import FeatherModuleKit
 public import FeatherInfrastructure
+public import FeatherModuleKit
 
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext

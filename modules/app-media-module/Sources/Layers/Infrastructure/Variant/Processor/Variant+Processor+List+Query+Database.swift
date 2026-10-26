@@ -25,7 +25,8 @@ extension Variant.Processor.List.Query {
                 $0.where(\.isActive, equals: true).order(by: \.name)
             }
             return .init(
-                items: processors
+                items:
+                    processors
                     .filter { activeVariantIDs.contains($0.variantId) }
                     .map(\.asDomain)
             )

@@ -7,7 +7,8 @@ extension Issue.Post {
             [
                 "subject": Issue.Schemas.Subject(),
                 "content": Newsletter.Schemas.Content(),
-                "scheduledAt": Newsletter.Schemas.Timestamp().reference(required: false),
+                "scheduledAt": Newsletter.Schemas.Timestamp()
+                    .reference(required: false),
             ]
         }
     }

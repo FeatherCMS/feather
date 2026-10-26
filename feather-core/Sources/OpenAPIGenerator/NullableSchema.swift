@@ -1,7 +1,7 @@
 public import FeatherOpenAPI
 
-public extension StringSchemaRepresentable {
-    func nullable() -> some StringSchemaRepresentable {
+extension StringSchemaRepresentable {
+    public func nullable() -> some StringSchemaRepresentable {
         NullableSchema(base: self)
     }
 }

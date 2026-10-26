@@ -1,6 +1,6 @@
+import NewsModule
 import Testing
 import WebDomain
-import NewsModule
 
 @testable import NewsDomain
 

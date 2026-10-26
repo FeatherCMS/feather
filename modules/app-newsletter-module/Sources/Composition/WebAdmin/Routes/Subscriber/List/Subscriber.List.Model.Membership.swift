@@ -1,5 +1,5 @@
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 
 extension Subscriber.List.Model {
     struct Membership: Sendable {

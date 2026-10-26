@@ -37,7 +37,8 @@ extension Variant.Processor.Table: DatabaseTableWithUpdate {
         }
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
-            values[Variant.Processor.Table.columns.updatedAt] = .currentTimestamp
+            values[Variant.Processor.Table.columns.updatedAt] =
+                .currentTimestamp
         }
     }
 }

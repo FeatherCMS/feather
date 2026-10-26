@@ -1,6 +1,6 @@
 public import FeatherApplication
-public import Foundation
 public import FeatherMail
+public import Foundation
 public import NewsletterModule
 
 extension Issue {

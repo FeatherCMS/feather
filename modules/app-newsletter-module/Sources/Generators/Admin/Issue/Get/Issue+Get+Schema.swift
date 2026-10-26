@@ -10,8 +10,10 @@ extension Issue.Get {
                 "subject": Issue.Schemas.Subject(),
                 "content": Newsletter.Schemas.Content(),
                 "status": Issue.Schemas.Status(),
-                "scheduledAt": Newsletter.Schemas.Timestamp().reference(required: false),
-                "sentAt": Newsletter.Schemas.Timestamp().reference(required: false),
+                "scheduledAt": Newsletter.Schemas.Timestamp()
+                    .reference(required: false),
+                "sentAt": Newsletter.Schemas.Timestamp()
+                    .reference(required: false),
                 "createdAt": Newsletter.Schemas.Timestamp(),
                 "updatedAt": Newsletter.Schemas.Timestamp(),
             ]

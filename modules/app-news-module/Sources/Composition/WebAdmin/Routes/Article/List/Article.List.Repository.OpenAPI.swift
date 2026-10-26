@@ -1,7 +1,7 @@
-import NewsApplication
 import FeatherWebAdmin
 import FeatherWebShared
 import NewsAdminAPI
+import NewsApplication
 import NewsModule
 import OpenAPIRuntime
 

@@ -1,7 +1,7 @@
 public import FeatherOpenAPI
 
-public extension Category.Parameters {
-    struct ID: PathParameterRepresentable {
+extension Category.Parameters {
+    public struct ID: PathParameterRepresentable {
         public var openAPIIdentifier: String { "NewsCategoryIdParameter" }
         public var name: String { "id" }
         public var description: String? { "News category identifier" }

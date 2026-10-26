@@ -30,14 +30,16 @@ extension Public.Post.List.Query {
                         title: $0.title,
                         excerpt: $0.excerpt,
                         imageAssetId: $0.imageAssetId,
-                        authorIds: try JSONDecoder().decode(
-                            [String].self,
-                            from: Data($0.authorIds.utf8)
-                        ),
-                        tagIds: try JSONDecoder().decode(
-                            [String].self,
-                            from: Data($0.tagIds.utf8)
-                        )
+                        authorIds: try JSONDecoder()
+                            .decode(
+                                [String].self,
+                                from: Data($0.authorIds.utf8)
+                            ),
+                        tagIds: try JSONDecoder()
+                            .decode(
+                                [String].self,
+                                from: Data($0.tagIds.utf8)
+                            )
                     )
                 }
             )
@@ -45,7 +47,9 @@ extension Public.Post.List.Query {
 
         public func findAuthor(id: String) async throws -> Author {
             guard
-                let row = try await DatabaseAccessLayer<BlogModule.Author.Table>(
+                let row = try await DatabaseAccessLayer<
+                    BlogModule.Author.Table
+                >(
                     context: context
                 )
                 .selectFirst(

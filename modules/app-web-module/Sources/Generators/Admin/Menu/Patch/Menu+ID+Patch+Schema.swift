@@ -8,9 +8,10 @@ extension Menu.ID.Patch {
             [
                 "key": Menu.Schemas.Key().reference(required: false),
                 "name": Menu.Schemas.Name().reference(required: false),
-                "notes": Menu.Schemas.Notes().nullable().reference(
-                    required: false
-                ),
+                "notes": Menu.Schemas.Notes().nullable()
+                    .reference(
+                        required: false
+                    ),
             ]
         }
     }

@@ -169,9 +169,10 @@ struct ErrorMiddleware: ServerMiddleware {
         body: HTTPBody?,
         metadata: ServerRequestMetadata,
         operationID: String,
-        next: @concurrent @Sendable (
-            HTTPRequest, HTTPBody?, ServerRequestMetadata
-        ) async throws -> (HTTPResponse, HTTPBody?)
+        next:
+            @concurrent @Sendable (
+                HTTPRequest, HTTPBody?, ServerRequestMetadata
+            ) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         do {
             return try await next(request, body, metadata)
@@ -182,13 +183,15 @@ struct ErrorMiddleware: ServerMiddleware {
             let httpError =
                 (adaptedError as? any HTTPErrorRepresentable)
                 ?? (adaptedError as? any ErrorTraceRepresentable)?
-                    .lookup((any HTTPErrorRepresentable).self)
+                .lookup((any HTTPErrorRepresentable).self)
             if let httpError {
-                let traceableError = adaptedError as? any ErrorTraceRepresentable
-                let trace = traceableError?.trace()
+                let traceableError =
+                    adaptedError as? any ErrorTraceRepresentable
+                let trace =
+                    traceableError?.trace()
                     ?? traceableError?
-                        .lookup((any ErrorTraceRepresentable).self)?
-                        .trace()
+                    .lookup((any ErrorTraceRepresentable).self)?
+                    .trace()
                 return try respond(
                     with: httpError.content,
                     status: httpError.status,
@@ -215,7 +218,8 @@ struct ErrorMiddleware: ServerMiddleware {
                         code: .internalServerError,
                         message: "Unknown error.",
                         reason: "\(error)",
-                        trace: (adaptedError as? any ErrorTraceRepresentable)?.trace()
+                        trace: (adaptedError as? any ErrorTraceRepresentable)?
+                            .trace()
                     ),
                     request: request,
                     operationID: operationID

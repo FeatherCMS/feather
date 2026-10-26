@@ -63,35 +63,37 @@ struct AnalyticsApplicationUseCasesTests {
 
     @Test
     func detailLogSuccess() async throws {
-        let query = Log.Detail.Query.Mock(result: .init(
-            id: "log-detail",
-            accountId: nil,
-            source: "web_app",
-            method: "GET",
-            url: "/page",
-            headers: "{}",
-            ip: nil,
-            path: "/page",
-            referer: nil,
-            origin: nil,
-            acceptLanguage: nil,
-            userAgent: nil,
-            language: nil,
-            region: nil,
-            osName: nil,
-            osVersion: nil,
-            browserName: nil,
-            browserVersion: nil,
-            engineName: nil,
-            engineVersion: nil,
-            deviceVendor: nil,
-            deviceType: nil,
-            deviceModel: nil,
-            cpu: nil,
-            responseCode: 200,
-            createdAt: 1,
-            updatedAt: 2
-        ))
+        let query = Log.Detail.Query.Mock(
+            result: .init(
+                id: "log-detail",
+                accountId: nil,
+                source: "web_app",
+                method: "GET",
+                url: "/page",
+                headers: "{}",
+                ip: nil,
+                path: "/page",
+                referer: nil,
+                origin: nil,
+                acceptLanguage: nil,
+                userAgent: nil,
+                language: nil,
+                region: nil,
+                osName: nil,
+                osVersion: nil,
+                browserName: nil,
+                browserVersion: nil,
+                engineName: nil,
+                engineVersion: nil,
+                deviceVendor: nil,
+                deviceType: nil,
+                deviceModel: nil,
+                cpu: nil,
+                responseCode: 200,
+                createdAt: 1,
+                updatedAt: 2
+            )
+        )
         let queryExecutor = FeatherTesting.QueryExecutor.Mock(
             context: Log.Detail.Scope(query: query)
         )

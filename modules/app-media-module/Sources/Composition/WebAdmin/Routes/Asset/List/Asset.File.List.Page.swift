@@ -90,7 +90,8 @@ extension Asset.File.List {
                 UnsafeRawProperty(name: "cursor", value: "pointer")
                 UnsafeRawProperty(
                     name: "transition",
-                    value: "border-color 120ms ease, background-color 120ms ease"
+                    value:
+                        "border-color 120ms ease, background-color 120ms ease"
                 )
             }
             Custom(
@@ -842,7 +843,10 @@ extension Asset.File.List.Page {
 
                     Div {
                         if let currentFolder = state.currentFolder {
-                            upCard(parentId: currentFolder.parentId, context: &context)
+                            upCard(
+                                parentId: currentFolder.parentId,
+                                context: &context
+                            )
                         }
                         for entry in state.entries {
                             switch entry {
@@ -1530,8 +1534,8 @@ extension Asset.File.List.Page {
                 .class("media-assets-table-name")
                 .title(folder.name)
         }
-            .data("label", "Name")
-            .setAsRemoveConfirmationLabel()
+        .data("label", "Name")
+        .setAsRemoveConfirmationLabel()
     }
 
     fileprivate func assetTitleCell(

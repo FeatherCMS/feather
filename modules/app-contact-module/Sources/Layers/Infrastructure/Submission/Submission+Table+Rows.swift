@@ -97,21 +97,30 @@ extension Submission.Table {
             let singleValue = try decoder.singleValueContainer()
             if singleValue.decodeNil() {
                 self = .null
-            } else if let value = try? singleValue.decode(Bool.self) {
+            }
+            else if let value = try? singleValue.decode(Bool.self) {
                 self = .boolean(value)
-            } else if let value = try? singleValue.decode(Int64.self) {
+            }
+            else if let value = try? singleValue.decode(Int64.self) {
                 self = .integer(value)
-            } else if let value = try? singleValue.decode(Double.self) {
+            }
+            else if let value = try? singleValue.decode(Double.self) {
                 self = .number(value)
-            } else if let value = try? singleValue.decode(String.self) {
+            }
+            else if let value = try? singleValue.decode(String.self) {
                 self = .string(value)
-            } else if let container = try? decoder.container(keyedBy: Key.self) {
+            }
+            else if let container = try? decoder.container(keyedBy: Key.self) {
                 var object: [String: Self] = [:]
                 for key in container.allKeys {
-                    object[key.stringValue] = try container.decode(Self.self, forKey: key)
+                    object[key.stringValue] = try container.decode(
+                        Self.self,
+                        forKey: key
+                    )
                 }
                 self = .object(object)
-            } else {
+            }
+            else {
                 var container = try decoder.unkeyedContainer()
                 var array: [Self] = []
                 while !container.isAtEnd {

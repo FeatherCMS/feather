@@ -8,8 +8,7 @@ extension AuthModule.Authorization.Token {
     public struct Scope: FeatherModuleKit.Scope {
         public let identity: any Identity.Repository.Interface
         public let roles: any Authorization.Roles.Query.Interface
-        public let permissions:
-            any Authorization.Permissions.Query.Interface
+        public let permissions: any Authorization.Permissions.Query.Interface
         public let session: any Session.Repository.Interface
 
         public init(

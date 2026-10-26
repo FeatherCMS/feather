@@ -144,14 +144,14 @@ extension RolePermission.Edit {
             .class("cms-section")
         }
     }
-    }
+}
 
-    private struct PermissionGroup: Sendable {
+private struct PermissionGroup: Sendable {
     let key: String
     let title: String
     let permissions:
         [SystemAdminAPI.Components.Schemas.SystemPermissionListItemSchema]
-    }
+}
 
 extension RolePermission.Edit.Matrix {
     fileprivate func matrixTable(

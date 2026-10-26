@@ -10,15 +10,19 @@ import struct Foundation.Data
 import class Foundation.JSONDecoder
 
 extension Post.Table.Detail {
-    func asApplicationDetail(metadata: WebModule.Metadata.Snapshot) throws -> Post.Detail.Output {
+    func asApplicationDetail(metadata: WebModule.Metadata.Snapshot) throws
+        -> Post.Detail.Output
+    {
         .init(
             id: id,
             title: title,
             excerpt: excerpt,
             content: content,
             imageAssetId: imageAssetId,
-            authorIds: try JSONDecoder().decode([String].self, from: Data(authorIds.utf8)),
-            tagIds: try JSONDecoder().decode([String].self, from: Data(tagIds.utf8)),
+            authorIds: try JSONDecoder()
+                .decode([String].self, from: Data(authorIds.utf8)),
+            tagIds: try JSONDecoder()
+                .decode([String].self, from: Data(tagIds.utf8)),
             metadata: metadata,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -41,8 +45,10 @@ extension Post.Detail.Query {
 
         public func find(id: String) async throws -> Post.Detail.Output {
             guard
-                let post = try await DatabaseAccessLayer<Post.Table>(context: context)
-                    .selectFirst(by: \.id, equals: id, as: Post.Table.Detail.self)
+                let post = try await DatabaseAccessLayer<Post.Table>(
+                    context: context
+                )
+                .selectFirst(by: \.id, equals: id, as: Post.Table.Detail.self)
             else {
                 throw RepositoryError.notFound
             }

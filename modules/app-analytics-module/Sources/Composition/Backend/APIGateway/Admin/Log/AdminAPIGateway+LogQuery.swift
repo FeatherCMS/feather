@@ -54,17 +54,19 @@ extension AdminAPIGateway {
     }
 
     private func mapResponseQuery(
-        _ query: Components.Schemas.AnalyticsLogQueryItemSearchRequestQuerySchema
+        _ query: Components.Schemas
+            .AnalyticsLogQueryItemSearchRequestQuerySchema
     ) -> Components.Schemas.AnalyticsLogQueryItemSearchResponseQuerySchema {
         let page = map(query.page).normalized()
         return .init(
             page: .init(size: page.size, number: page.number),
-            sort: query.sort?.map { item in
-                .init(
-                    field: .init(rawValue: item.field.rawValue) ?? .id,
-                    direction: item.direction
-                )
-            },
+            sort: query.sort?
+                .map { item in
+                    .init(
+                        field: .init(rawValue: item.field.rawValue) ?? .id,
+                        direction: item.direction
+                    )
+                },
             filters: .init(
                 search: query.filters.search,
                 source: query.filters.source,
@@ -77,26 +79,28 @@ extension AdminAPIGateway {
     }
 
     private func map(
-        _ query: Components.Schemas.AnalyticsLogQueryItemSearchRequestQuerySchema
+        _ query: Components.Schemas
+            .AnalyticsLogQueryItemSearchRequestQuerySchema
     ) -> Log.Search.Input.Query {
-        let sort = (query.sort ?? []).map { item in
-            let field: Log.Search.Input.Query.Sort.Field
-            switch item.field {
-            case .id: field = .id
-            case .accountId: field = .accountId
-            case .method: field = .method
-            case .source: field = .source
-            case .path: field = .path
-            case .responseCode: field = .responseCode
-            case .ip: field = .ip
-            case .browserName: field = .browserName
-            case .createdAt: field = .createdAt
+        let sort = (query.sort ?? [])
+            .map { item in
+                let field: Log.Search.Input.Query.Sort.Field
+                switch item.field {
+                case .id: field = .id
+                case .accountId: field = .accountId
+                case .method: field = .method
+                case .source: field = .source
+                case .path: field = .path
+                case .responseCode: field = .responseCode
+                case .ip: field = .ip
+                case .browserName: field = .browserName
+                case .createdAt: field = .createdAt
+                }
+                return Log.Search.Input.Query.Sort(
+                    field: field,
+                    direction: mapSortDirection(item.direction)
+                )
             }
-            return Log.Search.Input.Query.Sort(
-                field: field,
-                direction: mapSortDirection(item.direction)
-            )
-        }
 
         return .init(
             page: map(query.page),

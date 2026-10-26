@@ -1,6 +1,6 @@
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension Rule.Edit {
     struct Model: Sendable {

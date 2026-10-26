@@ -1,7 +1,7 @@
 import FeatherValidation
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension RedirectModule.Rule.Edit.Form.Input {
     private enum FieldValidators {

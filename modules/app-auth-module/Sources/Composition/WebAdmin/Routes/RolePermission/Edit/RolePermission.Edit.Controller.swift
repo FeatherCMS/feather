@@ -34,4 +34,3 @@ extension RolePermission.Edit.Controller {
         ) async throws -> Response
     }
 }
-

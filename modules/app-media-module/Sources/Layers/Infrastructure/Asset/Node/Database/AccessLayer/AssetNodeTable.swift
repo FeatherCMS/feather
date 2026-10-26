@@ -15,7 +15,9 @@ extension Asset.Node {
             let parentId = DatabaseTableColumn<String?>(name: "parent_id")
             let name = DatabaseTableColumn<String>(name: "name")
             let slug = DatabaseTableColumn<String>(name: "slug")
-            let absoluteSlug = DatabaseTableColumn<String>(name: "absolute_slug")
+            let absoluteSlug = DatabaseTableColumn<String>(
+                name: "absolute_slug"
+            )
             let createdAt = DatabaseTableColumn<Date>(name: "created_at")
             let updatedAt = DatabaseTableColumn<Date>(name: "updated_at")
             let deletedAt = DatabaseTableColumn<Date?>(name: "deleted_at")
@@ -135,15 +137,16 @@ extension Asset.Node {
         let context: DatabaseTransactionContext
 
         func create(row: Row.Create) async throws -> Row {
-            try await DatabaseAccessLayer<Self>(context: context).insert(
-                Insert(
-                    id: row.id,
-                    parentId: row.parentId,
-                    name: row.name,
-                    slug: row.slug,
-                    absoluteSlug: SlugPath.parent(of: row.slugPath)
+            try await DatabaseAccessLayer<Self>(context: context)
+                .insert(
+                    Insert(
+                        id: row.id,
+                        parentId: row.parentId,
+                        name: row.name,
+                        slug: row.slug,
+                        absoluteSlug: SlugPath.parent(of: row.slugPath)
+                    )
                 )
-            )
             guard let result = try await find(id: row.id) else {
                 throw RepositoryError.notFound
             }
@@ -154,16 +157,17 @@ extension Asset.Node {
             guard let old = try await find(id: row.id) else {
                 throw RepositoryError.notFound
             }
-            try await DatabaseAccessLayer<Self>(context: context).update(
-                Update(
-                    parentId: row.parentId,
-                    name: row.name,
-                    slug: row.slug,
-                    absoluteSlug: SlugPath.parent(of: row.slugPath)
-                ),
-                where: \.id,
-                equals: row.id
-            )
+            try await DatabaseAccessLayer<Self>(context: context)
+                .update(
+                    Update(
+                        parentId: row.parentId,
+                        name: row.name,
+                        slug: row.slug,
+                        absoluteSlug: SlugPath.parent(of: row.slugPath)
+                    ),
+                    where: \.id,
+                    equals: row.id
+                )
             if old.slugPath != row.slugPath {
                 try await SubtreeUpdateQuery(connection: connection)
                     .update(
@@ -271,5 +275,4 @@ extension Asset.Node {
             }
         }
     }
-    }
-
+}

@@ -23,4 +23,3 @@ extension SubmissionMail.Remove.Controller {
         ) async throws -> Response
     }
 }
-

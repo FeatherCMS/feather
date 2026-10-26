@@ -31,10 +31,11 @@ extension Asset.File.Resolve.Query {
                     )
                 )
                 .resolve(ids: ids)
-            let variantRows = try await Asset.File.VariantResolveQuery(
-                connection: context.connection
-            )
-            .resolve(nodeIds: ids, variantKeys: variants)
+            let variantRows = try await Asset.File
+                .VariantResolveQuery(
+                    connection: context.connection
+                )
+                .resolve(nodeIds: ids, variantKeys: variants)
             var variantsByAsset: [String: [Asset.File.Resolve.Output.Variant]] =
                 [:]
             var assetsByID: [String: Asset.File.Table.Row] = [:]

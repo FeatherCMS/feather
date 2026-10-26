@@ -14,19 +14,22 @@ extension Components {
                 public var json: Components.Schemas.UserAuthSessionListSchema {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.UserIdentitySessionListResponse.Body
+            public var body:
+                Components.Responses.UserIdentitySessionListResponse.Body
             /// Creates a new `UserIdentitySessionListResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.UserIdentitySessionListResponse.Body) {
+            public init(
+                body: Components.Responses.UserIdentitySessionListResponse.Body
+            ) {
                 self.body = body
             }
         }
@@ -34,31 +37,42 @@ extension Components {
             /// Creates a new `NoContentResponse`.
             public init() {}
         }
-        public struct UserIdentitySessionQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+        public struct UserIdentitySessionQueryItemSearchSchemaSearchResponse:
+            Sendable, Hashable
+        {
             /// - Remark: Generated from `#/components/responses/UserIdentitySessionQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/components/responses/UserIdentitySessionQueryItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.UserIdentitySessionQueryItemSearchSchema)
+                case json(
+                    Components.Schemas.UserIdentitySessionQueryItemSearchSchema
+                )
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.UserIdentitySessionQueryItemSearchSchema {
+                public var json:
+                    Components.Schemas.UserIdentitySessionQueryItemSearchSchema
+                {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.UserIdentitySessionQueryItemSearchSchemaSearchResponse.Body
+            public var body:
+                Components.Responses
+                    .UserIdentitySessionQueryItemSearchSchemaSearchResponse.Body
             /// Creates a new `UserIdentitySessionQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.UserIdentitySessionQueryItemSearchSchemaSearchResponse.Body) {
+            public init(
+                body: Components.Responses
+                    .UserIdentitySessionQueryItemSearchSchemaSearchResponse.Body
+            ) {
                 self.body = body
             }
         }
@@ -74,47 +88,61 @@ extension Components {
                 public var json: Components.Schemas.AuthCredentialDetailSchema {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.AuthCredentialDetailResponse.Body
+            public var body:
+                Components.Responses.AuthCredentialDetailResponse.Body
             /// Creates a new `AuthCredentialDetailResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AuthCredentialDetailResponse.Body) {
+            public init(
+                body: Components.Responses.AuthCredentialDetailResponse.Body
+            ) {
                 self.body = body
             }
         }
-        public struct AuthCredentialQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+        public struct AuthCredentialQueryItemSearchSchemaSearchResponse:
+            Sendable, Hashable
+        {
             /// - Remark: Generated from `#/components/responses/AuthCredentialQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/components/responses/AuthCredentialQueryItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.AuthCredentialQueryItemSearchSchema)
+                case json(
+                    Components.Schemas.AuthCredentialQueryItemSearchSchema
+                )
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthCredentialQueryItemSearchSchema {
+                public var json:
+                    Components.Schemas.AuthCredentialQueryItemSearchSchema
+                {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.AuthCredentialQueryItemSearchSchemaSearchResponse.Body
+            public var body:
+                Components.Responses
+                    .AuthCredentialQueryItemSearchSchemaSearchResponse.Body
             /// Creates a new `AuthCredentialQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AuthCredentialQueryItemSearchSchemaSearchResponse.Body) {
+            public init(
+                body: Components.Responses
+                    .AuthCredentialQueryItemSearchSchemaSearchResponse.Body
+            ) {
                 self.body = body
             }
         }
@@ -130,7 +158,7 @@ extension Components {
                 public var json: Components.Schemas.AuthEmailSchemasList {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
@@ -158,7 +186,7 @@ extension Components {
                 public var json: Components.Schemas.AuthEmailSchemasDetail {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
@@ -174,31 +202,42 @@ extension Components {
                 self.body = body
             }
         }
-        public struct AuthEmailQuerySchemasItemSearchSchemaSearchResponse: Sendable, Hashable {
+        public struct AuthEmailQuerySchemasItemSearchSchemaSearchResponse:
+            Sendable, Hashable
+        {
             /// - Remark: Generated from `#/components/responses/AuthEmailQuerySchemasItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/components/responses/AuthEmailQuerySchemasItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.AuthEmailQuerySchemasItemSearchSchema)
+                case json(
+                    Components.Schemas.AuthEmailQuerySchemasItemSearchSchema
+                )
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthEmailQuerySchemasItemSearchSchema {
+                public var json:
+                    Components.Schemas.AuthEmailQuerySchemasItemSearchSchema
+                {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.AuthEmailQuerySchemasItemSearchSchemaSearchResponse.Body
+            public var body:
+                Components.Responses
+                    .AuthEmailQuerySchemasItemSearchSchemaSearchResponse.Body
             /// Creates a new `AuthEmailQuerySchemasItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AuthEmailQuerySchemasItemSearchSchemaSearchResponse.Body) {
+            public init(
+                body: Components.Responses
+                    .AuthEmailQuerySchemasItemSearchSchemaSearchResponse.Body
+            ) {
                 self.body = body
             }
         }
@@ -211,50 +250,66 @@ extension Components {
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthRolePermissionDetailSchema {
+                public var json:
+                    Components.Schemas.AuthRolePermissionDetailSchema
+                {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.AuthRolePermissionDetailResponse.Body
+            public var body:
+                Components.Responses.AuthRolePermissionDetailResponse.Body
             /// Creates a new `AuthRolePermissionDetailResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AuthRolePermissionDetailResponse.Body) {
+            public init(
+                body: Components.Responses.AuthRolePermissionDetailResponse.Body
+            ) {
                 self.body = body
             }
         }
-        public struct AuthRolePermissionQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+        public struct AuthRolePermissionQueryItemSearchSchemaSearchResponse:
+            Sendable, Hashable
+        {
             /// - Remark: Generated from `#/components/responses/AuthRolePermissionQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/components/responses/AuthRolePermissionQueryItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.AuthRolePermissionQueryItemSearchSchema)
+                case json(
+                    Components.Schemas.AuthRolePermissionQueryItemSearchSchema
+                )
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthRolePermissionQueryItemSearchSchema {
+                public var json:
+                    Components.Schemas.AuthRolePermissionQueryItemSearchSchema
+                {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.AuthRolePermissionQueryItemSearchSchemaSearchResponse.Body
+            public var body:
+                Components.Responses
+                    .AuthRolePermissionQueryItemSearchSchemaSearchResponse.Body
             /// Creates a new `AuthRolePermissionQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AuthRolePermissionQueryItemSearchSchemaSearchResponse.Body) {
+            public init(
+                body: Components.Responses
+                    .AuthRolePermissionQueryItemSearchSchemaSearchResponse.Body
+            ) {
                 self.body = body
             }
         }
@@ -270,23 +325,28 @@ extension Components {
                 public var json: Components.Schemas.AuthMagicLinkDetailSchema {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.AuthMagicLinkDetailResponse.Body
+            public var body:
+                Components.Responses.AuthMagicLinkDetailResponse.Body
             /// Creates a new `AuthMagicLinkDetailResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AuthMagicLinkDetailResponse.Body) {
+            public init(
+                body: Components.Responses.AuthMagicLinkDetailResponse.Body
+            ) {
                 self.body = body
             }
         }
-        public struct AuthMagicLinkQueryItemSearchSchemaSearchResponse: Sendable, Hashable {
+        public struct AuthMagicLinkQueryItemSearchSchemaSearchResponse:
+            Sendable, Hashable
+        {
             /// - Remark: Generated from `#/components/responses/AuthMagicLinkQueryItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/components/responses/AuthMagicLinkQueryItemSearchSchemaSearchResponse/content/application\/json`.
@@ -295,22 +355,29 @@ extension Components {
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.AuthMagicLinkQueryItemSearchSchema {
+                public var json:
+                    Components.Schemas.AuthMagicLinkQueryItemSearchSchema
+                {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.AuthMagicLinkQueryItemSearchSchemaSearchResponse.Body
+            public var body:
+                Components.Responses
+                    .AuthMagicLinkQueryItemSearchSchemaSearchResponse.Body
             /// Creates a new `AuthMagicLinkQueryItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.AuthMagicLinkQueryItemSearchSchemaSearchResponse.Body) {
+            public init(
+                body: Components.Responses
+                    .AuthMagicLinkQueryItemSearchSchemaSearchResponse.Body
+            ) {
                 self.body = body
             }
         }

@@ -53,17 +53,18 @@ extension AdminAPIGateway {
                 size: query.page?.size ?? 20,
                 number: query.page?.number ?? 1
             ),
-            sort: (query.sort ?? []).map { rule in
-                let field: Session.Search.Input.Query.Sort.Field
-                switch rule.field {
-                case .id: field = .id
-                case .createdAt: field = .createdAt
-                }
-                return .init(
-                    field: field,
-                    direction: mapSessionSortDirection(rule.direction)
-                )
-            },
+            sort: (query.sort ?? [])
+                .map { rule in
+                    let field: Session.Search.Input.Query.Sort.Field
+                    switch rule.field {
+                    case .id: field = .id
+                    case .createdAt: field = .createdAt
+                    }
+                    return .init(
+                        field: field,
+                        direction: mapSessionSortDirection(rule.direction)
+                    )
+                },
             search: query.filters.search
         )
     }
@@ -71,26 +72,30 @@ extension AdminAPIGateway {
     private func sessionSearchResponseQuery(
         _ query: Components.Schemas
             .UserIdentitySessionQueryItemSearchRequestQuerySchema
-    ) -> Components.Schemas
+    )
+        -> Components.Schemas
         .UserIdentitySessionQueryItemSearchResponseQuerySchema
     {
-        let page = Search.Page(
-            size: query.page?.size ?? 20,
-            number: query.page?.number ?? 1
-        )
-        .normalized()
-        let sort = query.sort?.map { rule in
-            let field: Components.Schemas
-                .UserIdentitySessionQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload.FieldPayload
-            switch rule.field {
-            case .id: field = .id
-            case .createdAt: field = .createdAt
+        let page =
+            Search.Page(
+                size: query.page?.size ?? 20,
+                number: query.page?.number ?? 1
+            )
+            .normalized()
+        let sort = query.sort?
+            .map { rule in
+                let field:
+                    Components.Schemas
+                        .UserIdentitySessionQueryItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                switch rule.field {
+                case .id: field = .id
+                case .createdAt: field = .createdAt
+                }
+                return Components.Schemas
+                    .UserIdentitySessionQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload(field: field, direction: rule.direction)
             }
-            return Components.Schemas
-                .UserIdentitySessionQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload(field: field, direction: rule.direction)
-        }
         return .init(
             page: .init(size: page.size, number: page.number),
             sort: sort,

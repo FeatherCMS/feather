@@ -96,7 +96,9 @@ public struct DefaultTemplateLoader: TemplateLoader {
             case invalidAssetEntry(String)
         }
 
-        fileprivate static func parse(_ source: String) throws -> ParsedTemplateSource {
+        fileprivate static func parse(_ source: String) throws
+            -> ParsedTemplateSource
+        {
             let lines = source.split(
                 omittingEmptySubsequences: false,
                 whereSeparator: { character in
@@ -104,7 +106,8 @@ public struct DefaultTemplateLoader: TemplateLoader {
                 }
             )
             guard
-                lines.first.map(String.init)?.trimmingCharacters(in: .whitespaces)
+                lines.first.map(String.init)?
+                    .trimmingCharacters(in: .whitespaces)
                     == "---"
             else {
                 return .init(body: source, metadata: .init())
@@ -128,7 +131,8 @@ public struct DefaultTemplateLoader: TemplateLoader {
             try validateAssetValues(values)
 
             let bodyStart = lines.index(after: closingIndex)
-            let body = lines[bodyStart...].map(String.init).joined(separator: "\n")
+            let body = lines[bodyStart...].map(String.init)
+                .joined(separator: "\n")
             return .init(
                 body: body,
                 metadata: .init(
@@ -187,7 +191,8 @@ public struct DefaultTemplateLoader: TemplateLoader {
             let lines: [TemplateFrontMatter.FrontMatterLine]
             var index = 0
 
-            mutating func parse() throws -> [String: TemplateFrontMatter.Value] {
+            mutating func parse() throws -> [String: TemplateFrontMatter.Value]
+            {
                 guard let firstLine = lines.first else { return [:] }
                 let value = try parseBlock(indentation: firstLine.indentation)
                 guard case .object(let values) = value else {
@@ -227,12 +232,18 @@ public struct DefaultTemplateLoader: TemplateLoader {
                 while index < lines.endIndex {
                     let line = lines[index]
                     guard line.indentation == indentation else { break }
-                    guard !line.content.hasPrefix("- "), line.content != "-" else {
+                    guard !line.content.hasPrefix("- "), line.content != "-"
+                    else {
                         break
                     }
-                    guard let entry = TemplateFrontMatter.splitMapping(line.content)
+                    guard
+                        let entry = TemplateFrontMatter.splitMapping(
+                            line.content
+                        )
                     else {
-                        throw TemplateFrontMatter.Error.invalidEntry(line.content)
+                        throw TemplateFrontMatter.Error.invalidEntry(
+                            line.content
+                        )
                     }
                     index += 1
                     values[entry.key] = try parseValue(
@@ -250,7 +261,8 @@ public struct DefaultTemplateLoader: TemplateLoader {
                 while index < lines.endIndex {
                     let line = lines[index]
                     guard line.indentation == indentation else { break }
-                    guard line.content == "-" || line.content.hasPrefix("- ") else {
+                    guard line.content == "-" || line.content.hasPrefix("- ")
+                    else {
                         break
                     }
                     let item =
@@ -276,11 +288,14 @@ public struct DefaultTemplateLoader: TemplateLoader {
                         if index < lines.endIndex,
                             lines[index].indentation > indentation
                         {
-                            let continuationIndentation = lines[index].indentation
+                            let continuationIndentation = lines[index]
+                                .indentation
                             let continuation = try parseBlock(
                                 indentation: continuationIndentation
                             )
-                            guard case .object(let continuationObject) = continuation
+                            guard
+                                case .object(let continuationObject) =
+                                    continuation
                             else {
                                 throw TemplateFrontMatter.Error.invalidEntry(
                                     lines[index - 1].content
@@ -310,7 +325,9 @@ public struct DefaultTemplateLoader: TemplateLoader {
                 if !rawValue.isEmpty {
                     return TemplateFrontMatter.parseScalar(rawValue)
                 }
-                return try parseNestedValue(parentIndentation: parentIndentation)
+                return try parseNestedValue(
+                    parentIndentation: parentIndentation
+                )
             }
 
             private mutating func parseNestedValue(
@@ -386,7 +403,9 @@ public struct DefaultTemplateLoader: TemplateLoader {
                         into: [String: TemplateFrontMatter.Value]()
                     ) { result, entry in
                         guard let mapping = splitMapping(entry) else { return }
-                        result[unquote(mapping.key)] = parseScalar(mapping.rawValue)
+                        result[unquote(mapping.key)] = parseScalar(
+                            mapping.rawValue
+                        )
                     }
                 return .object(object)
             }
@@ -414,11 +433,13 @@ public struct DefaultTemplateLoader: TemplateLoader {
                 }
                 guard character == ",", quote == nil else { continue }
                 result.append(
-                    String(value[start..<index]).trimmingCharacters(in: .whitespaces)
+                    String(value[start..<index])
+                        .trimmingCharacters(in: .whitespaces)
                 )
                 start = value.index(after: index)
             }
-            let last = String(value[start...]).trimmingCharacters(in: .whitespaces)
+            let last = String(value[start...])
+                .trimmingCharacters(in: .whitespaces)
             if !last.isEmpty { result.append(last) }
             return result
         }
@@ -432,7 +453,8 @@ public struct DefaultTemplateLoader: TemplateLoader {
             else { return value }
             let unquoted = String(value.dropFirst().dropLast())
             if first == "\"" {
-                return unquoted
+                return
+                    unquoted
                     .replacingOccurrences(of: "\\\"", with: "\"")
                     .replacingOccurrences(of: "\\\\", with: "\\")
             }
@@ -458,7 +480,9 @@ public struct DefaultTemplateLoader: TemplateLoader {
         }
 
         private static func isValidAssetPath(_ value: String) -> Bool {
-            guard !value.isEmpty, !value.contains(".."), !value.contains("\u{0}") else {
+            guard !value.isEmpty, !value.contains(".."),
+                !value.contains("\u{0}")
+            else {
                 return false
             }
             return value.hasPrefix("/")

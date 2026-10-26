@@ -3,8 +3,8 @@ import FeatherWebShared
 import OpenAPIRuntime
 import RedirectAdminAPI
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension Rule.View.Repository {
     struct OpenAPI: Interface {
@@ -27,7 +27,9 @@ extension Rule.View.Repository {
                         id: rule.id,
                         source: rule.source,
                         destination: rule.destination,
-                        statusCode: Rule.Model.StatusCode(rawValue: rule.statusCode)!,
+                        statusCode: Rule.Model.StatusCode(
+                            rawValue: rule.statusCode
+                        )!,
                         notes: rule.notes
                     )
                 case .notFound:

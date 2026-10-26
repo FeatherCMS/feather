@@ -28,7 +28,8 @@ extension Category.Remove.Repository {
                         metadata: News.Metadata.Form.Input(
                             metadataSlug: schema.metadata.slug,
                             status: schema.metadata.status,
-                            publicationTimestamp: schema.metadata.publicationDate,
+                            publicationTimestamp: schema.metadata
+                                .publicationDate,
                             expirationTimestamp: schema.metadata.expirationDate,
                             title: schema.metadata.title,
                             excerpt: schema.metadata.excerpt,
@@ -37,8 +38,10 @@ extension Category.Remove.Repository {
                             noIndex: schema.metadata.noIndex,
                             primaryKeyword: schema.metadata.primaryKeyword,
                             cssCodeInjection: schema.metadata.cssCodeInjection,
-                            javascriptCodeInjection: schema.metadata.javascriptCodeInjection,
-                            structuredDataCodeInjection: schema.metadata.structuredDataCodeInjection
+                            javascriptCodeInjection: schema.metadata
+                                .javascriptCodeInjection,
+                            structuredDataCodeInjection: schema.metadata
+                                .structuredDataCodeInjection
                         )
                     )
                 case .unauthorized:

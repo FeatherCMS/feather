@@ -13,7 +13,8 @@ extension Post.List.Repository {
 
         let api: API.Client
 
-        func search(page: Int, search: String?) async throws -> Post.List.Model {
+        func search(page: Int, search: String?) async throws -> Post.List.Model
+        {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.blogPostQuery(
                     headers: .init(accept: [.init(contentType: .json)]),

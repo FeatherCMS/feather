@@ -7,9 +7,10 @@ extension Contact.Submission.Patch {
         }
         var propertyMap: SchemaMap {
             [
-                "status": Contact.Submission.Schemas.Status().reference(
-                    required: false
-                )
+                "status": Contact.Submission.Schemas.Status()
+                    .reference(
+                        required: false
+                    )
             ]
         }
     }

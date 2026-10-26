@@ -2,8 +2,8 @@ import FeatherWebAdmin
 import FeatherWebShared
 import RedirectAdminAPI
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension Rule.List.Interactor {
     struct Default: Interface {

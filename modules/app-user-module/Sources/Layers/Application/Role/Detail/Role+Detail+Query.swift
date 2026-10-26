@@ -1,6 +1,5 @@
-public import UserModule
-
 import FeatherModuleKit
+public import UserModule
 
 extension Role.Detail {
     public enum Query {

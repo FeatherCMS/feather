@@ -3,8 +3,8 @@ import FeatherValidation
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 
 extension Subscriber.Remove.Presenter {
     struct Default: Interface {

@@ -24,7 +24,7 @@ extension Asset.Folder.Search.Query {
                         totalSizeBytes: 0,
                         createdAt: .init(timeIntervalSince1970: 0),
                         updatedAt: .init(timeIntervalSince1970: 0)
-                    ),
+                    )
                 ],
                 total: 7
             )

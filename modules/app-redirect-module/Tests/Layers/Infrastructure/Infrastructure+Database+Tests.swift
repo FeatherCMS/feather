@@ -151,11 +151,13 @@ struct RedirectInfrastructureDatabaseTests {
                 }
         )
         for column in [schema.columns[5], schema.columns[6]] {
-            #expect(column.constraints.contains {
-                guard case .default(let value) = $0 else { return false }
-                if case .currentTimestamp = value.storage { return true }
-                return false
-            })
+            #expect(
+                column.constraints.contains {
+                    guard case .default(let value) = $0 else { return false }
+                    if case .currentTimestamp = value.storage { return true }
+                    return false
+                }
+            )
         }
         #expect(schema.indexes.isEmpty)
     }

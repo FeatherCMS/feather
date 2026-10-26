@@ -36,10 +36,10 @@ private enum QueryKeys {
         case search
         case count
     }
-    }
+}
 
-    @Suite
-    struct InfrastructureDatabaseTests {
+@Suite
+struct InfrastructureDatabaseTests {
 
     @Test
     func mockConnectionRecordsMultipleQueriesForTheSameKey() async throws {
@@ -263,9 +263,16 @@ private enum QueryKeys {
         #expect(permission.columns[5].type == .timestamp)
         #expect(hasCurrentTimestampDefault(permission.columns[5].constraints))
         for column in [permission.columns[4], permission.columns[5]] {
-            #expect(column.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
+            #expect(
+                column.constraints.contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+            )
         }
 
         #expect(
@@ -312,9 +319,16 @@ private enum QueryKeys {
         #expect(variable.columns[6].type == .timestamp)
         #expect(hasCurrentTimestampDefault(variable.columns[6].constraints))
         for column in [variable.columns[5], variable.columns[6]] {
-            #expect(column.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
+            #expect(
+                column.constraints.contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+            )
         }
         #expect(permission.indexes.isEmpty)
         #expect(variable.indexes.isEmpty)
@@ -341,7 +355,7 @@ private enum QueryKeys {
                             "notes": .null,
                         ])
                     ]
-                ),
+                )
             ])
         let query = SystemModule.Variable.List.Query.Database(
             context: DatabaseQueryContext(
@@ -427,11 +441,11 @@ private enum QueryKeys {
         #expect(select.bindings.contains(where: { $0.binding == .int(3) }))
         #expect(queries[.count]?.first?.sql.contains("COUNT(*)") == true)
     }
-    }
+}
 
-    private func hasCurrentTimestampDefault(
+private func hasCurrentTimestampDefault(
     _ constraints: [DatabaseTableColumnConstraintSchema]
-    ) -> Bool {
+) -> Bool {
     constraints.contains { constraint in
         guard case .default(let value) = constraint else { return false }
         if case .currentTimestamp = value.storage { return true }

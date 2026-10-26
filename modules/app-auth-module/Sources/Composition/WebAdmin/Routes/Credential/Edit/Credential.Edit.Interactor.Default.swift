@@ -19,8 +19,7 @@ extension Credential.Edit.Interactor {
     struct Default: Interface {
         let repository: any Credential.Edit.Repository.Interface
 
-        func listEmails() async throws -> [Email.Option]
-        {
+        func listEmails() async throws -> [Email.Option] {
             try await repository.listEmails()
         }
 

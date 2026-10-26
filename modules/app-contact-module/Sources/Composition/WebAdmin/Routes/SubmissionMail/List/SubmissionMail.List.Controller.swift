@@ -21,4 +21,3 @@ extension SubmissionMail.List.Controller {
             -> HTMLResponse
     }
 }
-

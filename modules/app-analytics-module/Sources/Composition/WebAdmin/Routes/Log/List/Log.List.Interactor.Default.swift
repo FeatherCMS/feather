@@ -1,5 +1,5 @@
-import AnalyticsModule
 import AnalyticsApplication
+import AnalyticsModule
 
 extension Log.List.Interactor {
     struct Default: Interface {

@@ -45,7 +45,10 @@ extension SubmissionMail.Remove {
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-            router.post(routes.formEmailRemove.routerPath, use: controller.remove)
+            router.post(
+                routes.formEmailRemove.routerPath,
+                use: controller.remove
+            )
         }
     }
 }

@@ -1,6 +1,6 @@
 public import FeatherApplication
-public import FeatherModuleKit
 import FeatherDomain
+public import FeatherModuleKit
 import NewsletterDomain
 public import NewsletterModule
 

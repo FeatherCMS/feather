@@ -26,7 +26,8 @@ extension Campaign.Edit {
                 throw AuthError(kind: .forbidden, message: action.key.rawValue)
             }
             return try await transaction.run { scope in
-                guard var value = try await scope.campaign.findBy(key: input.key)
+                guard
+                    var value = try await scope.campaign.findBy(key: input.key)
                 else {
                     throw Error.notFound
                 }

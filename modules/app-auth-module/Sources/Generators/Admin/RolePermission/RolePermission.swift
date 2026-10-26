@@ -1,9 +1,3 @@
 public enum RolePermission {
 
-
-
-
-
-
-
 }

@@ -8,8 +8,8 @@ import FeatherApplication
 import FeatherDomain
 import Testing
 
-@testable import FeatherModuleKit
 @testable import FeatherInfrastructure
+@testable import FeatherModuleKit
 
 @Suite
 struct InfrastructureTestSuite {

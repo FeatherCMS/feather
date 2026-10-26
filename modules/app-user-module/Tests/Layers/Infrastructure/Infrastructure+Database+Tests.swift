@@ -75,12 +75,28 @@ struct UserInfrastructureDatabaseTests {
                     }
                 }
         )
-        #expect(identity.columns[1].constraints.contains {
-            if case .notNull = $0 { true } else { false }
-        })
-        #expect(identity.columns[2].constraints.contains {
-            if case .notNull = $0 { true } else { false }
-        })
+        #expect(
+            identity.columns[1].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
+        #expect(
+            identity.columns[2].constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+        )
         #expect(identity.columns[4].type == .timestamp)
         #expect(
             identity.columns[4].constraints
@@ -111,9 +127,16 @@ struct UserInfrastructureDatabaseTests {
         #expect(hasCurrentTimestampDefault(identity.columns[4].constraints))
         #expect(hasCurrentTimestampDefault(identity.columns[5].constraints))
         for column in [identity.columns[4], identity.columns[5]] {
-            #expect(column.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
+            #expect(
+                column.constraints.contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+            )
         }
 
         #expect(
@@ -124,7 +147,12 @@ struct UserInfrastructureDatabaseTests {
         #expect(
             role.columns[0].constraints
                 .contains {
-                    if case .primaryKey = $0 { true } else { false }
+                    if case .primaryKey = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
                 }
         )
         #expect(
@@ -176,9 +204,16 @@ struct UserInfrastructureDatabaseTests {
         #expect(hasCurrentTimestampDefault(role.columns[4].constraints))
         #expect(hasCurrentTimestampDefault(role.columns[5].constraints))
         for column in [role.columns[4], role.columns[5]] {
-            #expect(column.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
+            #expect(
+                column.constraints.contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+            )
         }
 
         #expect(
@@ -213,9 +248,16 @@ struct UserInfrastructureDatabaseTests {
         #expect(hasCurrentTimestampDefault(identityRole.columns[2].constraints))
         #expect(hasCurrentTimestampDefault(identityRole.columns[3].constraints))
         for column in [identityRole.columns[2], identityRole.columns[3]] {
-            #expect(column.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            })
+            #expect(
+                column.constraints.contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
+                }
+            )
         }
         #expect(
             identityRole.constraints.contains {

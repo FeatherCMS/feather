@@ -29,4 +29,3 @@ extension MagicLink.View.Controller {
         ) async throws -> HTMLResponse
     }
 }
-

@@ -1,5 +1,5 @@
-public import FeatherApplication
 import BlogModule
+public import FeatherApplication
 
 extension Public.Author.Detail {
     public struct Error: UseCaseError {

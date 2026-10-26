@@ -134,9 +134,10 @@ extension FormField.List.Repository {
                 switch response {
                 case .ok(let value):
                     let form = try value.body.json
-                    return (form.items ?? []).map {
-                        .init(key: $0.key, label: $0.label)
-                    }
+                    return (form.items ?? [])
+                        .map {
+                            .init(key: $0.key, label: $0.label)
+                        }
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:

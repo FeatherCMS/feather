@@ -2,7 +2,9 @@ import FeatherOpenAPI
 
 extension Campaign.Schemas {
     struct Subscription: ObjectSchemaRepresentable {
-        var openAPIIdentifier: String { "AppNewsletterCampaignSubscriptionSchema" }
+        var openAPIIdentifier: String {
+            "AppNewsletterCampaignSubscriptionSchema"
+        }
         var propertyMap: SchemaMap {
             [
                 "email": Email(),

@@ -1,3 +1,3 @@
-public extension API {
-    enum App {}
+extension API {
+    public enum App {}
 }

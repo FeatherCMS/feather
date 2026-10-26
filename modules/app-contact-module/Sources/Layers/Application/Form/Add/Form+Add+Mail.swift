@@ -1,5 +1,5 @@
-public import FeatherApplication
 public import ContactModule
+public import FeatherApplication
 
 extension Form.Add {
     public struct Mail: DTO {

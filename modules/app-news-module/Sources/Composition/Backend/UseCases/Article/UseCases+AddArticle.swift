@@ -1,11 +1,11 @@
 import FeatherInfrastructure
+public import NewsApplication
 import NewsInfrastructure
+public import NewsModule
 import SystemInfrastructure
 import SystemModule
 import WebInfrastructure
 import WebModule
-public import NewsApplication
-public import NewsModule
 
 extension UseCases {
 

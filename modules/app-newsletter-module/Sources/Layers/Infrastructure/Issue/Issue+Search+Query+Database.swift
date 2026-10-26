@@ -26,11 +26,16 @@ extension Issue.Search.Query {
                 )
             else { return nil }
 
-            let items = try await accessLayer
+            let items =
+                try await accessLayer
                 .select(as: Issue.Table.List.self) { initial in
                     paginatedQuery(
-                        applyFilters(query, newsletterId: campaign.id, to: initial)
-                            .order(by: databaseOrders(for: query.sort)),
+                        applyFilters(
+                            query,
+                            newsletterId: campaign.id,
+                            to: initial
+                        )
+                        .order(by: databaseOrders(for: query.sort)),
                         using: query.page
                     )
                 }
@@ -80,7 +85,10 @@ extension Issue.Search.Query {
                 case .status:
                     DatabaseQueryOrder<Issue.Table>(by: \.status, direction)
                 case .scheduledDate:
-                    DatabaseQueryOrder<Issue.Table>(by: \.scheduledDate, direction)
+                    DatabaseQueryOrder<Issue.Table>(
+                        by: \.scheduledDate,
+                        direction
+                    )
                 case .createdAt:
                     DatabaseQueryOrder<Issue.Table>(by: \.createdAt, direction)
                 }
@@ -100,7 +108,9 @@ extension Issue.Search.Query {
         ) -> DatabaseQuerySelect<Issue.Table> {
             let page = page.normalized()
             let pageIndex = page.number - 1
-            let offset = pageIndex > Int.max / page.size ? Int.max : pageIndex * page.size
+            let offset =
+                pageIndex > Int.max / page.size
+                ? Int.max : pageIndex * page.size
             return query.limit(page.size).offset(offset)
         }
     }

@@ -6,6 +6,8 @@ extension Asset.File.Post.Parameters {
         var name: String { "X-Media-Asset-Parent-ID" }
         var required: Bool { false }
         var description: String? { "Optional parent folder id" }
-        var schema: any OpenAPISchemaRepresentable { Asset.File.Schemas.HeaderValue() }
+        var schema: any OpenAPISchemaRepresentable {
+            Asset.File.Schemas.HeaderValue()
+        }
     }
 }

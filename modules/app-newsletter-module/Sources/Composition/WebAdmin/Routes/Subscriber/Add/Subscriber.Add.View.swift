@@ -2,8 +2,8 @@ import FeatherWebAdmin
 import FeatherWebShared
 import HTML
 import Hummingbird
-import NewsletterModule
 import NewsletterApplication
+import NewsletterModule
 import SGML
 import WebBuilders
 import WebComponents

@@ -1,8 +1,8 @@
 public import FeatherModuleKit
 import FeatherWebAdmin
+import FeatherWebShared
 import SystemModule
 import SystemWebAdmin
-import FeatherWebShared
 
 extension Event {
     public enum Handlers {

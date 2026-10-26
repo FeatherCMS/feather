@@ -28,7 +28,8 @@ extension Login.Presenter {
                         "emailError": form.emailError ?? "",
                         "hasEmailError": form.emailError?.isEmpty == false,
                         "hasMessage": message?.isEmpty == false,
-                        "hasPasswordError": form.passwordError?.isEmpty == false,
+                        "hasPasswordError": form.passwordError?.isEmpty
+                            == false,
                         "hasTurnstile": form.turnstileSiteKey?.isEmpty == false,
                         "isPersistent": form.isPersistent,
                         "message": message ?? "",

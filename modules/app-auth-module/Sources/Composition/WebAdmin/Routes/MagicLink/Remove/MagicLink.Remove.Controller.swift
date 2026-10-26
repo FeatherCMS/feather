@@ -29,4 +29,3 @@ extension MagicLink.Remove.Controller {
         ) async throws -> Response
     }
 }
-

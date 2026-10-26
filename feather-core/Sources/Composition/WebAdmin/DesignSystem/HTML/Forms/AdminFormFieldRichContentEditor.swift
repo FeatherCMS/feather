@@ -837,7 +837,9 @@ public struct AdminFormFieldRichContentEditor: Component {
                 Cursor(.grab)
                 UserSelect(.none)
             },
-            Custom("\(root) .move-button, \(root) .duplicate-button, \(root) .remove") {
+            Custom(
+                "\(root) .move-button, \(root) .duplicate-button, \(root) .remove"
+            ) {
                 Border(0)
                 BorderRadius(6.px)
                 Padding(3.px)
@@ -856,7 +858,9 @@ public struct AdminFormFieldRichContentEditor: Component {
                 JustifyContent(.center)
                 BoxSizing(.borderBox)
             },
-            Custom("\(root) .move-button:hover, \(root) .duplicate-button:hover, \(root) .remove:hover") {
+            Custom(
+                "\(root) .move-button:hover, \(root) .duplicate-button:hover, \(root) .remove:hover"
+            ) {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
                 Color(.variable(TokenKey.Colors.Link.default))
             },
@@ -1095,7 +1099,9 @@ public struct AdminFormFieldRichContentEditor: Component {
                 AlignItems(.center)
                 Gap(6.px)
             },
-            Custom("\(root) .image-fields > input:first-child, \(root) .video-fields > input:first-child") {
+            Custom(
+                "\(root) .image-fields > input:first-child, \(root) .video-fields > input:first-child"
+            ) {
                 Width(100.percent)
                 MinWidth(0.px)
             },
@@ -1108,7 +1114,9 @@ public struct AdminFormFieldRichContentEditor: Component {
             Custom("\(root) .video-kind-switch") {
                 Margin(bottom: 8.px)
             },
-            Custom("\(root) .image-fields .media-picker-button, \(root) .video-fields .media-picker-button") {
+            Custom(
+                "\(root) .image-fields .media-picker-button, \(root) .video-fields .media-picker-button"
+            ) {
                 WhiteSpace(.nowrap)
                 Padding(vertical: 6.px, horizontal: 8.px)
             },
@@ -1122,7 +1130,9 @@ public struct AdminFormFieldRichContentEditor: Component {
                 Width(100.percent)
                 MinWidth(0.px)
             },
-            Custom("\(root) .removable-key-fields, \(root) .image-fields, \(root) .video-fields") {
+            Custom(
+                "\(root) .removable-key-fields, \(root) .image-fields, \(root) .video-fields"
+            ) {
                 Margin(right: 84.px)
             },
             Custom("\(root) .embed-picker-button") {
@@ -1174,7 +1184,9 @@ public struct AdminFormFieldRichContentEditor: Component {
             Custom("\(root) .contact-form-mode-switch") {
                 Margin(top: 8.px, bottom: 12.px)
             },
-            Custom("\(root) .contact-form-toolbar-heading, \(root) .contact-form-toolbar-separator") {
+            Custom(
+                "\(root) .contact-form-toolbar-heading, \(root) .contact-form-toolbar-separator"
+            ) {
                 GridColumn(.span(6))
             },
             Custom("\(root) .contact-form-toolbar-heading") {
@@ -1200,7 +1212,9 @@ public struct AdminFormFieldRichContentEditor: Component {
                 )
                 Margin(vertical: 4.px, horizontal: 0.px)
             },
-            Custom("\(root) .contact-form-field-preview, \(root) .contact-form-marker-preview") {
+            Custom(
+                "\(root) .contact-form-field-preview, \(root) .contact-form-marker-preview"
+            ) {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(5.px)
@@ -1231,10 +1245,14 @@ public struct AdminFormFieldRichContentEditor: Component {
                 FontSize(0.68.rem)
                 FontWeight(.number(500))
             },
-            Custom("\(root) .contact-form-field-option:disabled, \(root) .contact-form-marker-option:disabled") {
+            Custom(
+                "\(root) .contact-form-field-option:disabled, \(root) .contact-form-marker-option:disabled"
+            ) {
                 Cursor(.default)
             },
-            Custom("\(root) .contact-form-field-option.is-added .component-icon, \(root) .contact-form-marker-option.is-added .component-icon") {
+            Custom(
+                "\(root) .contact-form-field-option.is-added .component-icon, \(root) .contact-form-marker-option.is-added .component-icon"
+            ) {
                 BorderColor(.variable(TokenKey.Colors.Palette.Green.border))
                 Background(.variable(TokenKey.Colors.Palette.Green.background))
                 Color(.variable(TokenKey.Colors.Palette.Green.foreground))

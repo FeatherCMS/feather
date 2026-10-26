@@ -1,3 +1,3 @@
-public extension WebMetadata.Admin {
-    enum Detail {}
+extension WebMetadata.Admin {
+    public enum Detail {}
 }

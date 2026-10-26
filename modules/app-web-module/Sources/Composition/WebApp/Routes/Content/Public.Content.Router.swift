@@ -11,7 +11,9 @@ extension Public.Content {
     public struct Router {
         private enum Routes {
             static let rss = WebRoute.root.appending(pathComponent: "rss.xml")
-            static let sitemap = WebRoute.root.appending(pathComponent: "sitemap.xml")
+            static let sitemap = WebRoute.root.appending(
+                pathComponent: "sitemap.xml"
+            )
         }
 
         private let controller: any Controller.Interface

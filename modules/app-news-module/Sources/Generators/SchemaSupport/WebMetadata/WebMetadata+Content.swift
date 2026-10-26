@@ -1,3 +1,3 @@
-public extension WebMetadata {
-    enum Content {}
+extension WebMetadata {
+    public enum Content {}
 }

@@ -40,58 +40,66 @@ extension AdminAPIGateway {
     }
 
     private func mapAssetSearchQuery(
-        _ query: Components.Schemas.MediaAssetNodeQueryItemSearchRequestQuerySchema
+        _ query: Components.Schemas
+            .MediaAssetNodeQueryItemSearchRequestQuerySchema
     ) -> Asset.File.Search.Input.Query {
         let page = query.page ?? .init()
         return .init(
             page: .init(size: page.size ?? 20, number: page.number ?? 1),
-            sort: (query.sort ?? []).map { rule in
-                let field: Asset.File.Search.Input.Query.Sort.Field
-                switch rule.field {
-                case .id: field = .id
-                case .name: field = .name
-                case .slugPath: field = .slugPath
-                case ._extension: field = .extension
-                case .sizeBytes: field = .sizeBytes
-                case .status: field = .status
-                case .title: field = .title
-                case .createdAt: field = .createdAt
-                case .updatedAt: field = .updatedAt
-                }
-                let direction: Search.SortDirection
-                switch rule.direction {
-                case .asc: direction = .asc
-                case .desc: direction = .desc
-                }
-                return .init(field: field, direction: direction)
-            },
+            sort: (query.sort ?? [])
+                .map { rule in
+                    let field: Asset.File.Search.Input.Query.Sort.Field
+                    switch rule.field {
+                    case .id: field = .id
+                    case .name: field = .name
+                    case .slugPath: field = .slugPath
+                    case ._extension: field = .extension
+                    case .sizeBytes: field = .sizeBytes
+                    case .status: field = .status
+                    case .title: field = .title
+                    case .createdAt: field = .createdAt
+                    case .updatedAt: field = .updatedAt
+                    }
+                    let direction: Search.SortDirection
+                    switch rule.direction {
+                    case .asc: direction = .asc
+                    case .desc: direction = .desc
+                    }
+                    return .init(field: field, direction: direction)
+                },
             search: query.filters.search,
             parentId: (query.filters.parentId ?? "").emptyToNil
         )
     }
 
     private func assetSearchResponseQuery(
-        from query: Components.Schemas.MediaAssetNodeQueryItemSearchRequestQuerySchema
+        from query: Components.Schemas
+            .MediaAssetNodeQueryItemSearchRequestQuerySchema
     ) -> Components.Schemas.MediaAssetNodeQueryItemSearchResponseQuerySchema {
         let page = query.page ?? .init()
-        let sort = query.sort?.map { rule
-            -> Components.Schemas.MediaAssetNodeQueryItemSearchResponseQuerySchema.SortPayloadPayload in
-            let field: Components.Schemas
-                .MediaAssetNodeQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload.FieldPayload
-            switch rule.field {
-            case .id: field = .id
-            case .name: field = .name
-            case .slugPath: field = .slugPath
-            case ._extension: field = ._extension
-            case .sizeBytes: field = .sizeBytes
-            case .status: field = .status
-            case .title: field = .title
-            case .createdAt: field = .createdAt
-            case .updatedAt: field = .updatedAt
+        let sort = query.sort?
+            .map {
+                rule
+                    -> Components.Schemas
+                    .MediaAssetNodeQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload in
+                let field:
+                    Components.Schemas
+                        .MediaAssetNodeQueryItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                switch rule.field {
+                case .id: field = .id
+                case .name: field = .name
+                case .slugPath: field = .slugPath
+                case ._extension: field = ._extension
+                case .sizeBytes: field = .sizeBytes
+                case .status: field = .status
+                case .title: field = .title
+                case .createdAt: field = .createdAt
+                case .updatedAt: field = .updatedAt
+                }
+                return .init(field: field, direction: rule.direction)
             }
-            return .init(field: field, direction: rule.direction)
-        }
         return .init(
             page: .init(size: page.size ?? 20, number: page.number ?? 1),
             sort: sort,

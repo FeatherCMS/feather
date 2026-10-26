@@ -1,7 +1,7 @@
 import FeatherModuleKit
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension RedirectModule.Rule.Add.Form {
     public struct Input: Decodable, Sendable, Equatable, Hashable {

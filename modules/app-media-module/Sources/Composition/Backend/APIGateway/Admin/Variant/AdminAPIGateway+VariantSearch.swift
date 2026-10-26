@@ -35,22 +35,24 @@ extension AdminAPIGateway {
                                 size: query.page?.size ?? 20,
                                 number: query.page?.number ?? 1
                             ),
-                            sort: query.sort?.map { rule in
-                                let field: Components.Schemas
-                                    .MediaVariantQueryItemSearchResponseQuerySchema
-                                    .SortPayloadPayload.FieldPayload
-                                switch rule.field {
-                                case .id: field = .id
-                                case .key: field = .key
-                                case .name: field = .name
-                                case .isRequired: field = .isRequired
-                                case .isActive: field = .isActive
-                                }
-                                return .init(
-                                    field: field,
-                                    direction: rule.direction
-                                )
-                            },
+                            sort: query.sort?
+                                .map { rule in
+                                    let field:
+                                        Components.Schemas
+                                            .MediaVariantQueryItemSearchResponseQuerySchema
+                                            .SortPayloadPayload.FieldPayload
+                                    switch rule.field {
+                                    case .id: field = .id
+                                    case .key: field = .key
+                                    case .name: field = .name
+                                    case .isRequired: field = .isRequired
+                                    case .isActive: field = .isActive
+                                    }
+                                    return .init(
+                                        field: field,
+                                        direction: rule.direction
+                                    )
+                                },
                             filters: .init(search: query.filters.search)
                         ),
                         data: .init(

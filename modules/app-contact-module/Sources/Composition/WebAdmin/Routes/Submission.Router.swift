@@ -1,5 +1,5 @@
-import ContactModule
 import ContactApplication
+import ContactModule
 import FeatherWebAdmin
 import FeatherWebShared
 import Hummingbird

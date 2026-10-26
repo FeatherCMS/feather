@@ -5,8 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherApplication
-public import RedirectModule
 public import RedirectDomain
+public import RedirectModule
 
 extension Rule.List {
     public struct Output: DTO {

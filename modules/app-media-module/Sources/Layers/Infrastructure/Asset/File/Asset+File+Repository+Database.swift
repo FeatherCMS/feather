@@ -100,31 +100,36 @@ extension Asset.File.Repository {
             id: String,
             status: Asset.File.Model.Status
         ) async throws {
-            try await Asset.File.Table(connection: context.connection, context: context)
+            try await Asset.File
+                .Table(connection: context.connection, context: context)
                 .updateStatus(id: id, status: status.rawValue)
         }
 
         public func find(id: String) async throws -> Asset.File.Model? {
-            try await Asset.File.Table(connection: context.connection, context: context)
+            try await Asset.File
+                .Table(connection: context.connection, context: context)
                 .find(id: id)?
                 .asDomain
         }
 
         public func find(slugPath: String) async throws -> Asset.File.Model? {
-            try await Asset.File.Table(connection: context.connection, context: context)
+            try await Asset.File
+                .Table(connection: context.connection, context: context)
                 .find(slugPath: slugPath)?
                 .asDomain
         }
 
         public func list(folderIds: [String]) async throws -> [Asset.File.Model]
         {
-            try await Asset.File.Table(connection: context.connection, context: context)
+            try await Asset.File
+                .Table(connection: context.connection, context: context)
                 .list(folderIds: folderIds)
                 .map(\.asDomain)
         }
 
         public func delete(ids: [String]) async throws -> [String] {
-            try await Asset.File.Table(connection: context.connection, context: context)
+            try await Asset.File
+                .Table(connection: context.connection, context: context)
                 .delete(ids: ids)
         }
     }

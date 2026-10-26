@@ -15,4 +15,3 @@ extension Session.List.Controller {
         ) async throws -> HTMLResponse
     }
 }
-

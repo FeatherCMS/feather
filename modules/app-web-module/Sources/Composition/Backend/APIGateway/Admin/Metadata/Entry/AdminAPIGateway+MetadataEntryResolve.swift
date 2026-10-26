@@ -49,12 +49,14 @@ extension AdminAPIGateway {
             expirationDate: item.expirationDate?.timeIntervalSince1970,
             status: item.status.rawValue,
             availability: .init(
-                rawValue: Metadata.Model.Availability(
-                    status: item.status,
-                    publicationDate: item.publicationDate,
-                    expirationDate: item.expirationDate,
-                    at: date
-                ).rawValue
+                rawValue: Metadata.Model
+                    .Availability(
+                        status: item.status,
+                        publicationDate: item.publicationDate,
+                        expirationDate: item.expirationDate,
+                        at: date
+                    )
+                    .rawValue
             ) ?? .draft
         )
     }

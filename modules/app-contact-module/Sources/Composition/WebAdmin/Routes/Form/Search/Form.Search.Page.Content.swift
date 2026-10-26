@@ -126,7 +126,8 @@ extension ContactModule.Form.Search.Page {
                                                             }
                                                             identifierCell(
                                                                 item: item,
-                                                                context: &context
+                                                                context:
+                                                                    &context
                                                             )
                                                             if isPicker {
                                                                 Td {
@@ -266,8 +267,7 @@ extension ContactModule.Form.Search.Page {
         private func identifierCell(
             item: ContactModule.Form.Search.Model.Item,
             context: inout BuilderContext
-        ) -> Td
-        {
+        ) -> Td {
             Td {
                 Span {
                     Span(item.key)

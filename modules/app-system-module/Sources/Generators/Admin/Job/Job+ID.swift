@@ -1,4 +1,3 @@
-
 extension Job {
     enum ID {}
 }

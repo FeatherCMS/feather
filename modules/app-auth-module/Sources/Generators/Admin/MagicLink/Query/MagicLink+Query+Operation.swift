@@ -20,7 +20,8 @@ extension MagicLink.Query {
                 ],
                 filters: SearchFilterSchema(
                     additionalProperties: [
-                        "userId": Schemas
+                        "userId":
+                            Schemas
                             .UserID()
                             .reference(required: false)
                     ]

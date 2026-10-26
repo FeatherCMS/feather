@@ -1,11 +1,11 @@
 public import ContactApplication
 import ContactInfrastructure
+public import ContactModule
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
-public import ContactModule
+import FeatherModuleKit
 
 extension UseCases {
 

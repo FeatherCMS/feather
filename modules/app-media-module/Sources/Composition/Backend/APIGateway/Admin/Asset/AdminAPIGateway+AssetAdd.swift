@@ -49,18 +49,19 @@ extension AdminAPIGateway {
         )
         let subject = try await CurrentSubject.require()
         do {
-            let result = try await useCases.makeAddAsset().execute(
-                subject: subject,
-                input: .init(
-                    folderId: input.headers.xMediaAssetParentID?.emptyToNil,
-                    fileName: input.headers.xMediaAssetFileName,
-                    extension: input.headers.xMediaAssetExtension,
-                    title: input.headers.xMediaAssetTitle?.emptyToNil,
-                    altText: input.headers.xMediaAssetAltText?.emptyToNil,
-                    content: storageSequence,
-                    contentLength: contentLength
+            let result = try await useCases.makeAddAsset()
+                .execute(
+                    subject: subject,
+                    input: .init(
+                        folderId: input.headers.xMediaAssetParentID?.emptyToNil,
+                        fileName: input.headers.xMediaAssetFileName,
+                        extension: input.headers.xMediaAssetExtension,
+                        title: input.headers.xMediaAssetTitle?.emptyToNil,
+                        altText: input.headers.xMediaAssetAltText?.emptyToNil,
+                        content: storageSequence,
+                        contentLength: contentLength
+                    )
                 )
-            )
 
             return .created(
                 .init(

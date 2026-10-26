@@ -11,9 +11,10 @@ extension AppAPIGateway {
     public func newsArticleList(
         _: Operations.NewsArticleList.Input
     ) async throws -> Operations.NewsArticleList.Output {
-        let output = try await useCases.makeListPublicArticles().execute(
-            input: .init()
-        )
+        let output = try await useCases.makeListPublicArticles()
+            .execute(
+                input: .init()
+            )
         return .ok(.init(body: .json(output.items.map(mapArticleSummary))))
     }
 

@@ -1,5 +1,5 @@
-public import FeatherModuleKit
 public import ContactModule
+public import FeatherModuleKit
 
 extension Form.Submit {
     public struct MailTemplateValuesProvider: FeatherModuleKit.Event {

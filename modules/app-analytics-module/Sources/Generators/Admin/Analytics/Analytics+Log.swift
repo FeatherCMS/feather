@@ -1,3 +1,3 @@
-public extension Analytics {
-    enum Log {}
+extension Analytics {
+    public enum Log {}
 }

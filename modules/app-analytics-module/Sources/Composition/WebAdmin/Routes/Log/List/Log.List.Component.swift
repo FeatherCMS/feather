@@ -1,6 +1,6 @@
 import AnalyticsAdminAPI
-import AnalyticsModule
 import AnalyticsApplication
+import AnalyticsModule
 import CSS
 import FeatherWebAdmin
 import FeatherWebShared
@@ -364,8 +364,11 @@ extension Log.List {
                                                                     .Router
                                                                     .Routes
                                                                     .log.path(
-                                                                        parameter: "id",
-                                                                        value: log.id
+                                                                        parameter:
+                                                                            "id",
+                                                                        value:
+                                                                            log
+                                                                            .id
                                                                     ),
                                                                 style: .ghost(
                                                                     .primary

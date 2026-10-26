@@ -1,7 +1,7 @@
 public import FeatherOpenAPI
 
-public extension WebMetadata.Admin.Create {
-    struct Schema: ObjectSchemaRepresentable {
+extension WebMetadata.Admin.Create {
+    public struct Schema: ObjectSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataCreateSchema" }
         public var propertyMap: SchemaMap {
             [
@@ -19,10 +19,18 @@ public extension WebMetadata.Admin.Create {
                     required: false
                 ),
                 "status": WebMetadata.Admin.Schemas.Status(),
-                "title": WebMetadata.Admin.Schemas.NullableText(required: false),
-                "excerpt": WebMetadata.Admin.Schemas.NullableText(required: false),
-                "imageUrl": WebMetadata.Admin.Schemas.NullableText(required: false),
-                "canonicalUrl": WebMetadata.Admin.Schemas.NullableText(required: false),
+                "title": WebMetadata.Admin.Schemas.NullableText(
+                    required: false
+                ),
+                "excerpt": WebMetadata.Admin.Schemas.NullableText(
+                    required: false
+                ),
+                "imageUrl": WebMetadata.Admin.Schemas.NullableText(
+                    required: false
+                ),
+                "canonicalUrl": WebMetadata.Admin.Schemas.NullableText(
+                    required: false
+                ),
                 "noIndex": WebMetadata.Admin.Schemas.NoIndex()
                     .reference(required: false),
                 "primaryKeyword": WebMetadata.Admin.Schemas.NullableText(
@@ -31,12 +39,14 @@ public extension WebMetadata.Admin.Create {
                 "cssCodeInjection": WebMetadata.Admin.Schemas.NullableText(
                     required: false
                 ),
-                "javascriptCodeInjection": WebMetadata.Admin.Schemas.NullableText(
-                    required: false
-                ),
-                "structuredDataCodeInjection": WebMetadata.Admin.Schemas.NullableText(
-                    required: false
-                ),
+                "javascriptCodeInjection": WebMetadata.Admin.Schemas
+                    .NullableText(
+                        required: false
+                    ),
+                "structuredDataCodeInjection": WebMetadata.Admin.Schemas
+                    .NullableText(
+                        required: false
+                    ),
             ]
         }
 

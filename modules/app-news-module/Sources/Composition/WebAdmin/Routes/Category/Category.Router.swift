@@ -2,8 +2,8 @@ import FeatherWebAdmin
 import FeatherWebShared
 import Foundation
 import Hummingbird
-import MediaWebAdmin
 import MediaModule
+import MediaWebAdmin
 import NewsApplication
 import NewsModule
 
@@ -136,7 +136,9 @@ extension NewsModule.Category {
                                 request: request,
                                 context: context,
                                 mediaRepository: MediaModule.Asset.File.View
-                                    .Repository.OpenAPI(api: api.mediaAdminAPI()),
+                                    .Repository.OpenAPI(
+                                        api: api.mediaAdminAPI()
+                                    ),
                                 renderingEngine: renderingEngine,
                                 routes: routes
                             )

@@ -16,4 +16,3 @@ extension Session.Remove.Controller {
         ) async throws -> Response
     }
 }
-

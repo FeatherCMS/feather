@@ -1,4 +1,3 @@
-
 extension Email {
     enum List {}
 }

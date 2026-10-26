@@ -23,7 +23,8 @@ extension MenuItem.Edit {
             priority: FieldChange<Int> = .unchanged,
             isBlank: FieldChange<Bool> = .unchanged,
             permission: FieldChange<String> = .unchanged,
-            authentication: FieldChange<MenuItem.Model.Authentication> = .unchanged,
+            authentication: FieldChange<MenuItem.Model.Authentication> =
+                .unchanged,
             notes: OptionalFieldChange<String> = .unchanged
         ) {
             self.id = id

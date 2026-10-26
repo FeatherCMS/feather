@@ -29,7 +29,9 @@ public enum PublicContent {
     }
 
     private static func resolve(
-        _ context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>
+        _ context: WebModule.Public.Content.Event.Context<
+            PublicContentRuntimeContext
+        >
     ) async throws -> WebModule.Public.Content.Result? {
         let api = API.Client(
             apiBaseURL: context.runtime.apiBaseURL,
@@ -69,7 +71,9 @@ public enum PublicContent {
     }
 
     private static func resolvePost(
-        context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
+        context: WebModule.Public.Content.Event.Context<
+            PublicContentRuntimeContext
+        >,
         api: API.Client,
         mediaResolver: MediaResolver
     ) async throws -> WebModule.Public.Content.Result? {
@@ -91,7 +95,9 @@ public enum PublicContent {
     }
 
     private static func resolveAuthor(
-        context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
+        context: WebModule.Public.Content.Event.Context<
+            PublicContentRuntimeContext
+        >,
         api: API.Client,
         mediaResolver: MediaResolver
     ) async throws -> WebModule.Public.Content.Result? {
@@ -113,7 +119,9 @@ public enum PublicContent {
     }
 
     private static func resolveTag(
-        context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>,
+        context: WebModule.Public.Content.Event.Context<
+            PublicContentRuntimeContext
+        >,
         api: API.Client,
         mediaResolver: MediaResolver
     ) async throws -> WebModule.Public.Content.Result? {
@@ -207,7 +215,9 @@ public enum PublicContent {
     }
 
     private static func kind(
-        for context: WebModule.Public.Content.Event.Context<PublicContentRuntimeContext>
+        for context: WebModule.Public.Content.Event.Context<
+            PublicContentRuntimeContext
+        >
     ) -> Kind? {
         switch context.baseMetadata.template {
         case "blog.posts":

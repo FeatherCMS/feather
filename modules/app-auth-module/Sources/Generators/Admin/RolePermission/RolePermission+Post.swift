@@ -1,4 +1,3 @@
-
 extension RolePermission {
     enum Post {}
 }

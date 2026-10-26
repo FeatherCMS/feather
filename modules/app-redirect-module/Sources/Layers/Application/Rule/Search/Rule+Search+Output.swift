@@ -1,6 +1,6 @@
 public import FeatherApplication
-public import RedirectModule
 public import RedirectDomain
+public import RedirectModule
 
 public import struct Foundation.Date
 

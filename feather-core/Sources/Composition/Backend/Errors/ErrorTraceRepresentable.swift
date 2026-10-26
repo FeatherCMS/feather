@@ -12,9 +12,9 @@ public protocol ErrorTraceRepresentable {
     ) -> V?
 }
 
-public extension ErrorTraceRepresentable {
+extension ErrorTraceRepresentable {
 
-    func underlyingTraces() -> [ErrorTrace] {
+    public func underlyingTraces() -> [ErrorTrace] {
         var traces: [ErrorTrace] = []
         for error in underlyingErrors {
             if let traceable = error as? any ErrorTraceRepresentable {
@@ -33,7 +33,7 @@ public extension ErrorTraceRepresentable {
         return traces
     }
 
-    func lookup<T>(
+    public func lookup<T>(
         _ type: T.Type
     ) -> T? {
         for error in underlyingErrors {
@@ -49,7 +49,7 @@ public extension ErrorTraceRepresentable {
         return nil
     }
 
-    func lookup<T, V>(
+    public func lookup<T, V>(
         _ transform: (T) -> V?
     ) -> V? {
         lookup(T.self).flatMap(transform)

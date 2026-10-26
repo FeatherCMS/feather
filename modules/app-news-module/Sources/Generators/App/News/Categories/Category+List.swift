@@ -1,3 +1,3 @@
-public extension Category {
-    enum List {}
+extension Category {
+    public enum List {}
 }

@@ -6,7 +6,9 @@ import WebModule
 
 extension UseCases {
 
-    public func makeDetailPublicSettings() -> BlogModule.Settings.Public.Detail.UseCase {
+    public func makeDetailPublicSettings()
+        -> BlogModule.Settings.Public.Detail.UseCase
+    {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in

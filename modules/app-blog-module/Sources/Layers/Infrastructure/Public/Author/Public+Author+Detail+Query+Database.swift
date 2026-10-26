@@ -14,7 +14,9 @@ extension BlogApplication.Public.Author.Detail.Query {
 
         public func find(id: String) async throws -> Output {
             guard
-                let result = try await DatabaseAccessLayer<BlogModule.Author.Table>(
+                let result = try await DatabaseAccessLayer<
+                    BlogModule.Author.Table
+                >(
                     context: context
                 )
                 .selectFirst(
@@ -35,7 +37,9 @@ extension BlogApplication.Public.Author.Detail.Query {
         }
 
         public func links(authorID: String) async throws -> [Link] {
-            let result = try await DatabaseAccessLayer<BlogModule.AuthorLink.Table>(
+            let result = try await DatabaseAccessLayer<
+                BlogModule.AuthorLink.Table
+            >(
                 context: context
             )
             .select(as: BlogModule.AuthorLink.Table.List.self) {
@@ -58,10 +62,11 @@ extension BlogApplication.Public.Author.Detail.Query {
                 .limit(10_000)
             }
             return try result.compactMap { row in
-                let authorIDs = try JSONDecoder().decode(
-                    [String].self,
-                    from: Data(row.authorIds.utf8)
-                )
+                let authorIDs = try JSONDecoder()
+                    .decode(
+                        [String].self,
+                        from: Data(row.authorIds.utf8)
+                    )
                 guard authorIDs.contains(authorID) else { return nil }
                 return .init(
                     id: row.id,

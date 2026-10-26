@@ -33,7 +33,9 @@ extension Submission.Remove {
                 var ids: [String] = []
                 for id in input.ids {
                     guard
-                        let submission = try await scope.submission.findBy(id: id),
+                        let submission = try await scope.submission.findBy(
+                            id: id
+                        ),
                         submission.formId == form.id
                     else {
                         continue

@@ -1,5 +1,5 @@
-import FeatherValidation
 import FeatherModuleKit
+import FeatherValidation
 public import FeatherWebAdmin
 import FeatherWebShared
 import HTML
@@ -66,7 +66,8 @@ extension Asset.File.View.Repository {
             variants: [String] = ["preview"]
         ) async throws -> AdminMediaAsset {
             let asset = try await getAsset(id: id)
-            let resolve = try await api.withOpenAPIRepositoryErrorMapping { client in
+            let resolve = try await api.withOpenAPIRepositoryErrorMapping {
+                client in
                 let response = try await client.mediaAssetResolve(
                     .init(
                         headers: .init(accept: [.init(contentType: .json)]),

@@ -64,8 +64,10 @@ extension AppAPIGateway {
             metadata: .init(
                 slug: summary.metadata.slug,
                 template: template,
-                publicationDate: summary.metadata.publicationDate.timeIntervalSince1970,
-                expirationDate: summary.metadata.expirationDate?.timeIntervalSince1970,
+                publicationDate: summary.metadata.publicationDate
+                    .timeIntervalSince1970,
+                expirationDate: summary.metadata.expirationDate?
+                    .timeIntervalSince1970,
                 status: summary.metadata.status.rawValue,
                 title: resolvedMetadata.title,
                 excerpt: resolvedMetadata.excerpt,
@@ -73,8 +75,10 @@ extension AppAPIGateway {
                 canonicalURL: summary.metadata.canonicalURL,
                 noIndex: summary.metadata.noIndex,
                 cssCodeInjection: summary.metadata.cssCodeInjection,
-                javascriptCodeInjection: summary.metadata.javascriptCodeInjection,
-                structuredDataCodeInjection: summary.metadata.structuredDataCodeInjection
+                javascriptCodeInjection: summary.metadata
+                    .javascriptCodeInjection,
+                structuredDataCodeInjection: summary.metadata
+                    .structuredDataCodeInjection
             )
         )
     }

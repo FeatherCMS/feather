@@ -70,21 +70,24 @@ public struct TableSeedMigration: DatabaseMigration {
                 variantId: variant.id,
                 name: "ImageMagick",
                 matchExtensions: "png,jpg,jpeg,bmp",
-                commandTemplate: "convert -define jpeg:size=512x512 {input.fullname} -filter Triangle -resize 256x256^ -gravity center -background none -extent 256x256 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp",
+                commandTemplate:
+                    "convert -define jpeg:size=512x512 {input.fullname} -filter Triangle -resize 256x256^ -gravity center -background none -extent 256x256 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp",
                 isActive: true
             ),
             Variant.Processor.Model.create(
                 variantId: variant.id,
                 name: "Ghostscript",
                 matchExtensions: "pdf",
-                commandTemplate: "gs -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha -r300 -dFirstPage=1 -dLastPage=1 -dUseCropBox -dFIXEDMEDIA -dPDFFitPage -g256x256 -sOutputFile=\"{output.dirname}/{output.basename}.png\" \"{input.fullname}\"",
+                commandTemplate:
+                    "gs -dSAFER -dBATCH -dNOPAUSE -dNOPROMPT -sDEVICE=pngalpha -r300 -dFirstPage=1 -dLastPage=1 -dUseCropBox -dFIXEDMEDIA -dPDFFitPage -g256x256 -sOutputFile=\"{output.dirname}/{output.basename}.png\" \"{input.fullname}\"",
                 isActive: true
             ),
             Variant.Processor.Model.create(
                 variantId: variant.id,
                 name: "FFmpeg",
                 matchExtensions: "mp4,mov,avi",
-                commandTemplate: "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=256:256:force_original_aspect_ratio=decrease,pad=256:256:(ow-iw)/2:(oh-ih)/2\" \"{output.dirname}/{output.basename}.png\"",
+                commandTemplate:
+                    "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=256:256:force_original_aspect_ratio=decrease,pad=256:256:(ow-iw)/2:(oh-ih)/2\" \"{output.dirname}/{output.basename}.png\"",
                 isActive: true
             ),
         ]
@@ -113,14 +116,16 @@ public struct TableSeedMigration: DatabaseMigration {
                 variantId: coverVariant.id,
                 name: "ImageMagick",
                 matchExtensions: "png,jpg,jpeg,bmp",
-                commandTemplate: "convert -define jpeg:size=2560x1280 {input.fullname} -filter Triangle -resize 1920x960^ -gravity center -background none -extent 1920x960 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp",
+                commandTemplate:
+                    "convert -define jpeg:size=2560x1280 {input.fullname} -filter Triangle -resize 1920x960^ -gravity center -background none -extent 1920x960 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp",
                 isActive: true
             ),
             Variant.Processor.Model.create(
                 variantId: coverVariant.id,
                 name: "FFmpeg",
                 matchExtensions: "mp4,mov,avi",
-                commandTemplate: "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=1920:960:force_original_aspect_ratio=increase,crop=1920:960\" \"{output.dirname}/{output.basename}.png\"",
+                commandTemplate:
+                    "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=1920:960:force_original_aspect_ratio=increase,crop=1920:960\" \"{output.dirname}/{output.basename}.png\"",
                 isActive: true
             ),
         ]

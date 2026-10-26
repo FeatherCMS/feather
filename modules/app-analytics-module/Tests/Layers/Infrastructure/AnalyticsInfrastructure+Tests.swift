@@ -51,30 +51,49 @@ struct AnalyticsInfrastructureTests {
             schema.columns.first(where: { $0.name == "created_at" }),
             schema.columns.first(where: { $0.name == "updated_at" }),
         ] {
-            #expect(column?.constraints.contains {
-                if case .notNull = $0 { true } else { false }
-            } == true)
+            #expect(
+                column?.constraints
+                    .contains {
+                        if case .notNull = $0 {
+                            true
+                        }
+                        else {
+                            false
+                        }
+                    } == true
+            )
         }
         #expect(
             schema.columns.first(where: { $0.name == "source" })?.constraints
                 .contains {
                     guard case .default(let value) = $0 else { return false }
-                    guard case .string(let actual) = value.storage else { return false }
+                    guard case .string(let actual) = value.storage else {
+                        return false
+                    }
                     return actual == "backend_api"
                 } == true
         )
         #expect(
             schema.columns.first(where: { $0.name == "traffic_category" })?
-                .constraints.contains {
+                .constraints
+                .contains {
                     guard case .default(let value) = $0 else { return false }
-                    guard case .string(let actual) = value.storage else { return false }
+                    guard case .string(let actual) = value.storage else {
+                        return false
+                    }
                     return actual == "human"
                 } == true
         )
         #expect(
             schema.columns.first(where: { $0.name == "response_code" })?
-                .constraints.contains {
-                    if case .notNull = $0 { true } else { false }
+                .constraints
+                .contains {
+                    if case .notNull = $0 {
+                        true
+                    }
+                    else {
+                        false
+                    }
                 } == true
         )
         #expect(

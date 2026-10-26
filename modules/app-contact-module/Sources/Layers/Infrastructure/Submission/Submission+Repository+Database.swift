@@ -125,10 +125,11 @@ extension Submission.Repository {
         private static func decodeJSON(_ string: String) throws
             -> Submission.Table.JSONValue
         {
-            try JSONDecoder().decode(
-                Submission.Table.JSONValue.self,
-                from: Data(string.utf8)
-            )
+            try JSONDecoder()
+                .decode(
+                    Submission.Table.JSONValue.self,
+                    from: Data(string.utf8)
+                )
         }
     }
 }

@@ -8,7 +8,9 @@ import WebModule
 
 extension UseCases {
 
-    public func makeDetailPublicArticle() -> NewsApplication.Public.Article.Detail.UseCase {
+    public func makeDetailPublicArticle()
+        -> NewsApplication.Public.Article.Detail.UseCase
+    {
         NewsApplication.Public.Article.Detail.UseCase(
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
@@ -24,7 +26,8 @@ extension UseCases {
                         category: NewsApplication.Public.Article.Detail.Query
                             .Database(
                                 context: context,
-                                metadata: WebModule.Metadata.Resolve.Detail.Query
+                                metadata: WebModule.Metadata.Resolve.Detail
+                                    .Query
                                     .Database(context: context)
                             )
                     )

@@ -29,9 +29,10 @@ struct UnescapeHTTPHeadersMiddleware: ServerMiddleware {
         body: HTTPBody?,
         metadata: ServerRequestMetadata,
         operationID: String,
-        next: @concurrent @Sendable (
-            HTTPRequest, HTTPBody?, ServerRequestMetadata
-        ) async throws -> (HTTPResponse, HTTPBody?)
+        next:
+            @concurrent @Sendable (
+                HTTPRequest, HTTPBody?, ServerRequestMetadata
+            ) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         var (response, responseBody) = try await next(request, body, metadata)
 

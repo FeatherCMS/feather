@@ -45,7 +45,8 @@ public struct AdminButton: Component {
             link = link.href(href)
         }
         if style == .destructive, let href {
-            link = link
+            link =
+                link
                 .data("admin-dialog-url", href)
                 .data("admin-remove-confirm", "true")
         }

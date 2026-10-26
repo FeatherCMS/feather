@@ -6,13 +6,29 @@ public import MediaModule
 
 extension Variant.Table.Detail {
     var asDomain: Variant.Model {
-        .init(id: id, key: key, name: name, isRequired: isRequired, isActive: isActive, createdAt: createdAt, updatedAt: updatedAt)
+        .init(
+            id: id,
+            key: key,
+            name: name,
+            isRequired: isRequired,
+            isActive: isActive,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
     }
 }
 
 extension Variant.Table.List {
     var asDomain: Variant.Model {
-        .init(id: id, key: key, name: name, isRequired: isRequired, isActive: isActive, createdAt: createdAt, updatedAt: updatedAt)
+        .init(
+            id: id,
+            key: key,
+            name: name,
+            isRequired: isRequired,
+            isActive: isActive,
+            createdAt: createdAt,
+            updatedAt: updatedAt
+        )
     }
 }
 
@@ -26,7 +42,9 @@ extension Variant.Repository {
             self.accessLayer = .init(context: context)
         }
 
-        public func insert(_ model: Variant.Model.New) async throws -> Variant.Model {
+        public func insert(_ model: Variant.Model.New) async throws
+            -> Variant.Model
+        {
             let row = Variant.Table.Insert(
                 id: context.idGenerator.generate(),
                 key: model.key,
@@ -35,30 +53,48 @@ extension Variant.Repository {
                 isActive: model.isActive
             )
             try await accessLayer.insert(row)
-            guard let saved = try await accessLayer.selectFirst(by: \.id, equals: row.id) else {
+            guard
+                let saved = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: row.id
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return saved.asDomain
         }
 
-        public func update(_ model: Variant.Model) async throws -> Variant.Model {
+        public func update(_ model: Variant.Model) async throws -> Variant.Model
+        {
             try await accessLayer.update(
-                .init(key: model.key, name: model.name, isRequired: model.isRequired, isActive: model.isActive),
+                .init(
+                    key: model.key,
+                    name: model.name,
+                    isRequired: model.isRequired,
+                    isActive: model.isActive
+                ),
                 where: \.id,
                 equals: model.id
             )
-            guard let updated = try await accessLayer.selectFirst(by: \.id, equals: model.id) else {
+            guard
+                let updated = try await accessLayer.selectFirst(
+                    by: \.id,
+                    equals: model.id
+                )
+            else {
                 throw RepositoryError.notFound
             }
             return updated.asDomain
         }
 
         public func find(id: String) async throws -> Variant.Model? {
-            try await accessLayer.selectFirst(by: \.id, equals: id).map(\.asDomain)
+            try await accessLayer.selectFirst(by: \.id, equals: id)
+                .map(\.asDomain)
         }
 
         public func list() async throws -> [Variant.Model] {
-            try await accessLayer.select { $0.order(by: \.name) }.map(\.asDomain)
+            try await accessLayer.select { $0.order(by: \.name) }
+                .map(\.asDomain)
         }
 
         public func listActive() async throws -> [Variant.Model] {

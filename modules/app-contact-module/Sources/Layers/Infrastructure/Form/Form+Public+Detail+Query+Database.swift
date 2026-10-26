@@ -28,10 +28,11 @@ extension Form.Public.Detail.Query {
                 throw QueryError.notFound
             }
 
-            let fieldRows = try await FormField.AccessLayer(
-                connection: context.connection
-            )
-            .list(formId: form.id)
+            let fieldRows =
+                try await FormField.AccessLayer(
+                    connection: context.connection
+                )
+                .list(formId: form.id)
             let fields = try fieldRows.map { row in
                 guard let type = FormField.Model.ItemType(rawValue: row.type)
                 else {

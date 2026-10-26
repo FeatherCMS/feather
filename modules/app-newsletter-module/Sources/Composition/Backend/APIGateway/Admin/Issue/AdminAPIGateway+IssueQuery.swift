@@ -1,6 +1,6 @@
-import Foundation
 import FeatherApplication
 import FeatherModuleKit
+import Foundation
 public import NewsletterAdminAPI
 import NewsletterApplication
 import NewsletterDomain
@@ -18,22 +18,26 @@ extension AdminAPIGateway {
         }
 
         let defaults = FeatherApplication.Search.Page()
-        let page = FeatherApplication.Search.Page(
-            size: request.page?.size ?? defaults.size,
-            number: request.page?.number ?? defaults.number
-        ).normalized()
-        let sort = (request.sort ?? []).map { rule in
-            let field: Issue.Search.Input.Query.Sort.Field = switch rule.field {
-            case .subject: .subject
-            case .status: .status
-            case .scheduledAt: .scheduledDate
-            case .createdAt: .createdAt
-            }
-            return Issue.Search.Input.Query.Sort(
-                field: field,
-                direction: rule.direction == .asc ? .asc : .desc
+        let page = FeatherApplication.Search
+            .Page(
+                size: request.page?.size ?? defaults.size,
+                number: request.page?.number ?? defaults.number
             )
-        }
+            .normalized()
+        let sort = (request.sort ?? [])
+            .map { rule in
+                let field: Issue.Search.Input.Query.Sort.Field =
+                    switch rule.field {
+                    case .subject: .subject
+                    case .status: .status
+                    case .scheduledAt: .scheduledDate
+                    case .createdAt: .createdAt
+                    }
+                return Issue.Search.Input.Query.Sort(
+                    field: field,
+                    direction: rule.direction == .asc ? .asc : .desc
+                )
+            }
 
         let subject = try await CurrentSubject.require()
         let result = try await useCases.makeSearchIssues()
@@ -49,22 +53,25 @@ extension AdminAPIGateway {
                 )
             )
 
-        let responseSort = request.sort?.map { rule in
-            let field:
-                Components.Schemas
-                .NewsletterIssueQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload.FieldPayload = switch rule.field {
-                case .subject: .subject
-                case .status: .status
-                case .scheduledAt: .scheduledAt
-                case .createdAt: .createdAt
+        let responseSort = request.sort?
+            .map { rule in
+                let field:
+                    Components.Schemas
+                        .NewsletterIssueQueryItemSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload =
+                            switch rule.field {
+                            case .subject: .subject
+                            case .status: .status
+                            case .scheduledAt: .scheduledAt
+                            case .createdAt: .createdAt
+                            }
+                return Components.Schemas
+                    .NewsletterIssueQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload(
+                        field: field,
+                        direction: rule.direction
+                    )
             }
-            return Components.Schemas.NewsletterIssueQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload(
-                    field: field,
-                    direction: rule.direction
-                )
-        }
         return .ok(
             .init(
                 body: .json(
@@ -76,15 +83,17 @@ extension AdminAPIGateway {
                         ),
                         data: .init(
                             items: result.items.map { item in
-                                Components.Schemas.NewsletterIssueQueryItemSchema(
-                                    id: item.id,
-                                    subject: item.subject,
-                                    status: item.status.rawValue,
-                                    scheduledAt: item.scheduledDate.map {
-                                        $0.timeIntervalSince1970
-                                    },
-                                    createdAt: item.createdAt.timeIntervalSince1970
-                                )
+                                Components.Schemas
+                                    .NewsletterIssueQueryItemSchema(
+                                        id: item.id,
+                                        subject: item.subject,
+                                        status: item.status.rawValue,
+                                        scheduledAt: item.scheduledDate.map {
+                                            $0.timeIntervalSince1970
+                                        },
+                                        createdAt: item.createdAt
+                                            .timeIntervalSince1970
+                                    )
                             },
                             total: result.total
                         )

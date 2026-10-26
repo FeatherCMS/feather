@@ -1,8 +1,8 @@
-import NewsletterApplication
-import NewsletterModule
 import FeatherDatabase
 import FeatherInfrastructure
+import NewsletterApplication
 import NewsletterInfrastructure
+import NewsletterModule
 
 extension UseCases {
 

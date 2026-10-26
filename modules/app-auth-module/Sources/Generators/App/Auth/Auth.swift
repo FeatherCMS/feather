@@ -3,9 +3,6 @@ import FeatherOpenAPIGenerator
 
 enum Auth {
 
-
-
-
 }
 
 extension Auth {

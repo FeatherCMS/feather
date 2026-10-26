@@ -2,8 +2,8 @@ public import FeatherModuleKit
 public import FeatherWebAdmin
 public import FeatherWebShared
 public import Hummingbird
-import OpenAPIRuntime
 import MediaWebAdmin
+import OpenAPIRuntime
 import WebDomain
 import WebModule
 

@@ -34,10 +34,11 @@ func buildAppRoutes(
     )
     .route(on: router)
 
-    Campaign.Subscription.Router(
-        environment: environment,
-        route: newsletterSubmissionRoute
-    )
+    Campaign.Subscription
+        .Router(
+            environment: environment,
+            route: newsletterSubmissionRoute
+        )
         .route(on: router)
 
     Public.Content

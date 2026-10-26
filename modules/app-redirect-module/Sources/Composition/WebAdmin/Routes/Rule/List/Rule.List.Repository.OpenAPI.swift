@@ -3,8 +3,8 @@ import FeatherWebShared
 import OpenAPIRuntime
 import RedirectAdminAPI
 import RedirectApplication
-import RedirectModule
 import RedirectDomain
+import RedirectModule
 
 extension Rule.List.Repository {
     struct OpenAPI: Interface {

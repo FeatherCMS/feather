@@ -26,10 +26,12 @@ extension Issue.Search {
             }
 
             return try await query.run { scope in
-                guard let result = try await scope.issue.search(
-                    campaignKey: input.campaignKey,
-                    query: input.query
-                ) else { throw Error.campaignNotFound }
+                guard
+                    let result = try await scope.issue.search(
+                        campaignKey: input.campaignKey,
+                        query: input.query
+                    )
+                else { throw Error.campaignNotFound }
                 return result
             }
         }

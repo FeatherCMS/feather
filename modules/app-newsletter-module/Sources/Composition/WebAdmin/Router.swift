@@ -128,7 +128,8 @@ public struct Router {
                 routes: routes.campaign
             )
             .route(on: router)
-        Issue.TestEmail.Router(environment: environment, routes: routes.campaign)
+        Issue.TestEmail
+            .Router(environment: environment, routes: routes.campaign)
             .route(on: router)
 
         Campaign.Subscriber.View

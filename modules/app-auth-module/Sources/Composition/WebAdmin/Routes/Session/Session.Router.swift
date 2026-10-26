@@ -6,8 +6,6 @@ import Hummingbird
 
 extension Session {
 
-
-
     struct Router {
         struct Routes {
             let admin: WebRoute

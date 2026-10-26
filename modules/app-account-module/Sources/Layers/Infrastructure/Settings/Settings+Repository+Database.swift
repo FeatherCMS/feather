@@ -85,9 +85,9 @@ extension Settings.Repository {
                 .delete(where: \.userId, equals: userId)
         }
     }
-    }
+}
 
-    extension Settings.Table.Detail {
+extension Settings.Table.Detail {
     fileprivate var asDomain: Settings.Model {
         .init(
             userId: userId,

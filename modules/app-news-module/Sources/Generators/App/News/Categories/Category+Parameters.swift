@@ -1,3 +1,3 @@
-public extension Category {
-    enum Parameters {}
+extension Category {
+    public enum Parameters {}
 }

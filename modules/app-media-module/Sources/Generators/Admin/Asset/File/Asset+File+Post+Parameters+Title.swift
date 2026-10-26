@@ -6,6 +6,8 @@ extension Asset.File.Post.Parameters {
         var name: String { "X-Media-Asset-Title" }
         var required: Bool { false }
         var description: String? { "Optional asset title" }
-        var schema: any OpenAPISchemaRepresentable { Asset.File.Schemas.HeaderValue() }
+        var schema: any OpenAPISchemaRepresentable {
+            Asset.File.Schemas.HeaderValue()
+        }
     }
 }

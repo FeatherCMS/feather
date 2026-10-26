@@ -6,8 +6,8 @@ import NewsAdminAPI
 import NewsApplication
 import NewsModule
 import OpenAPIRuntime
-import WebModuleWebAdmin
 import WebModule
+import WebModuleWebAdmin
 
 extension NewsModule.Category.Add.Repository {
     struct OpenAPI: Interface {
@@ -32,23 +32,37 @@ extension NewsModule.Category.Add.Repository {
                                     ? nil
                                     : input.imageAssetId,
                                 metadata: .init(
-                                    slug: input.metadata.slug.trimmingCharacters(
-                                        in: .whitespacesAndNewlines
-                                    ),
+                                    slug: input.metadata.slug
+                                        .trimmingCharacters(
+                                            in: .whitespacesAndNewlines
+                                        ),
                                     status: input.metadata.status,
-                                    publicationDate: WebModule.Metadata.SchemaBuilder
-                                        .parseTimestamp(input.metadata.publicationDate),
-                                    expirationDate: WebModule.Metadata.SchemaBuilder
-                                        .parseTimestamp(input.metadata.expirationDate),
+                                    publicationDate: WebModule.Metadata
+                                        .SchemaBuilder
+                                        .parseTimestamp(
+                                            input.metadata.publicationDate
+                                        ),
+                                    expirationDate: WebModule.Metadata
+                                        .SchemaBuilder
+                                        .parseTimestamp(
+                                            input.metadata.expirationDate
+                                        ),
                                     title: input.metadata.metaTitle.emptyToNil,
-                                    excerpt: input.metadata.metaExcerpt.emptyToNil,
-                                    imageURL: input.metadata.imageURL.emptyToNil,
-                                    canonicalURL: input.metadata.canonicalURL.emptyToNil,
+                                    excerpt: input.metadata.metaExcerpt
+                                        .emptyToNil,
+                                    imageURL: input.metadata.imageURL
+                                        .emptyToNil,
+                                    canonicalURL: input.metadata.canonicalURL
+                                        .emptyToNil,
                                     noIndex: input.metadata.noIndex ?? false,
-                                    primaryKeyword: input.metadata.primaryKeyword.emptyToNil,
-                                    cssCodeInjection: input.metadata.cssCodeInjection.emptyToNil,
-                                    javascriptCodeInjection: input.metadata.javascriptCodeInjection.emptyToNil,
-                                    structuredDataCodeInjection: input.metadata.structuredDataCodeInjection.emptyToNil
+                                    primaryKeyword: input.metadata
+                                        .primaryKeyword.emptyToNil,
+                                    cssCodeInjection: input.metadata
+                                        .cssCodeInjection.emptyToNil,
+                                    javascriptCodeInjection: input.metadata
+                                        .javascriptCodeInjection.emptyToNil,
+                                    structuredDataCodeInjection: input.metadata
+                                        .structuredDataCodeInjection.emptyToNil
                                 )
                             )
                         )

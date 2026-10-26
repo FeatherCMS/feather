@@ -56,4 +56,3 @@ struct HierarchicalObjectKeyGeneratorTests {
         #expect(try generator.generate(from: "123456789") == "123456789")
     }
 }
-

@@ -1,5 +1,5 @@
-public import FeatherModuleKit
 public import ContactModule
+public import FeatherModuleKit
 import WebModuleWebApp
 
 public enum Event {

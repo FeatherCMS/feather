@@ -41,7 +41,8 @@ public struct ErrorTrace: Encodable {
     ) -> String {
         let type = String(reflecting: currentStack.type)
         let branch = prefix.isEmpty ? "" : (isLast ? "└─ " : "├─ ")
-        var output = "\(prefix)\(branch)\(type): \"\(currentStack.logMessage)\"\n"
+        var output =
+            "\(prefix)\(branch)\(type): \"\(currentStack.logMessage)\"\n"
         let childPrefix = prefix + (isLast ? "    " : "│   ")
 
         for (index, child) in currentStack.children.enumerated() {

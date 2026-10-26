@@ -11,7 +11,8 @@ extension Credential.Query {
             .init(
                 items: Schemas.Item(),
                 sortFieldKeys: ["userId", "email"],
-                filters: Schemas
+                filters:
+                    Schemas
                     .Filter()
             )
         }

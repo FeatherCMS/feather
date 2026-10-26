@@ -8,13 +8,14 @@ extension AdminAPIGateway {
     ) async throws -> Operations.MediaAssetVariantList.Output {
         let subject = try await CurrentSubject.require()
         do {
-            let result = try await useCases.makeResolveAssets().execute(
-                subject: subject,
-                input: .init(
-                    ids: [input.path.mediaAssetId],
-                    variants: nil
+            let result = try await useCases.makeResolveAssets()
+                .execute(
+                    subject: subject,
+                    input: .init(
+                        ids: [input.path.mediaAssetId],
+                        variants: nil
+                    )
                 )
-            )
             guard let asset = result.items.first else {
                 return .notFound(
                     .init(
@@ -38,7 +39,9 @@ extension AdminAPIGateway {
                                     variantId: $0.id,
                                     name: $0.name,
                                     _extension: $0.extension,
-                                    url: mediaResolver.resolve(imagePath: $0.url)
+                                    url: mediaResolver.resolve(
+                                        imagePath: $0.url
+                                    )
                                         ?? $0.url
                                 )
                             }

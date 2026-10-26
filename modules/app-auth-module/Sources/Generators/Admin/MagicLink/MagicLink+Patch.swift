@@ -1,4 +1,3 @@
-
 extension MagicLink {
     enum Patch {}
 }

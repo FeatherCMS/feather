@@ -14,7 +14,7 @@ extension Components {
                 public var json: Components.Schemas.AuthSchemasResponse {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }
@@ -42,7 +42,7 @@ extension Components {
                 public var json: Components.Schemas.AuthSchemasResponse {
                     get throws {
                         switch self {
-                        case let .json(body):
+                        case .json(let body):
                             return body
                         }
                     }

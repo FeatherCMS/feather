@@ -1,9 +1,9 @@
 import FeatherInfrastructure
+public import NewsApplication
 import NewsInfrastructure
+public import NewsModule
 import WebInfrastructure
 import WebModule
-public import NewsApplication
-public import NewsModule
 
 extension UseCases {
 
@@ -14,7 +14,9 @@ extension UseCases {
                 databaseContext: databaseContext,
                 scope: { context in
                     Category.Edit.Scope(
-                        category: Category.Repository.Database(context: context),
+                        category: Category.Repository.Database(
+                            context: context
+                        ),
                         metadata: WebModule.Metadata.Repository.Database(
                             context: context
                         )

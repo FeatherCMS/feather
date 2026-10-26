@@ -3,9 +3,9 @@
 //  feather-core
 //
 
-public import FeatherModuleKit
 import FeatherDatabase
 public import FeatherDomain
+public import FeatherModuleKit
 
 public struct DatabaseTransactionExecutor<S: Scope>:
     ContextualTransactionExecutor

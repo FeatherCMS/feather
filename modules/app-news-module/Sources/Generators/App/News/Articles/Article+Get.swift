@@ -1,3 +1,3 @@
-public extension Article {
-    enum Get {}
+extension Article {
+    public enum Get {}
 }

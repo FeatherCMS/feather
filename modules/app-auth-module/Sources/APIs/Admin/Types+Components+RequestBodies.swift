@@ -13,7 +13,8 @@ extension Components {
             case json(Components.Schemas.AuthCredentialCreateSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/AuthCredentialUpdateRequestBody`.
-        @frozen public enum AuthCredentialUpdateRequestBody: Sendable, Hashable {
+        @frozen public enum AuthCredentialUpdateRequestBody: Sendable, Hashable
+        {
             /// - Remark: Generated from `#/components/requestBodies/AuthCredentialUpdateRequestBody/content/application\/json`.
             case json(Components.Schemas.AuthCredentialCreateSchema)
         }
@@ -38,7 +39,8 @@ extension Components {
             case json(Components.Schemas.AuthRolePermissionCreateSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/AuthMagicLinkManagementRequestBody`.
-        @frozen public enum AuthMagicLinkManagementRequestBody: Sendable, Hashable {
+        @frozen
+        public enum AuthMagicLinkManagementRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/AuthMagicLinkManagementRequestBody/content/application\/json`.
             case json(Components.Schemas.AuthMagicLinkCreateSchema)
         }

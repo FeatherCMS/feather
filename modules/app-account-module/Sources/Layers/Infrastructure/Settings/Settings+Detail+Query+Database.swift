@@ -12,7 +12,8 @@ extension Settings.Detail.Query {
             self.context = context
         }
 
-        public func find(userId: String) async throws -> Settings.Detail.Output {
+        public func find(userId: String) async throws -> Settings.Detail.Output
+        {
             guard
                 let detail = try await DatabaseAccessLayer<Settings.Table>(
                     context: context

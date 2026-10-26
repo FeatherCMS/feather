@@ -1,25 +1,25 @@
 public import FeatherOpenAPI
 
-public extension WebMetadata.Content {
-    enum Schemas {}
+extension WebMetadata.Content {
+    public enum Schemas {}
 }
 
-public extension WebMetadata.Content.Schemas {
-    struct Slug: StringSchemaRepresentable {
+extension WebMetadata.Content.Schemas {
+    public struct Slug: StringSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataSlugField" }
         public var example: String? = "homepage"
 
         public init() {}
     }
 
-    struct Template: StringSchemaRepresentable {
+    public struct Template: StringSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataTemplateField" }
         public var example: String? = "default"
 
         public init() {}
     }
 
-    struct Status: StringSchemaRepresentable {
+    public struct Status: StringSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataStatusField" }
         public var enumValues: [String]? = ["draft", "published", "archived"]
         public var example: String? = "published"
@@ -27,49 +27,50 @@ public extension WebMetadata.Content.Schemas {
         public init() {}
     }
 
-    struct Timestamp: DoubleSchemaRepresentable {
+    public struct Timestamp: DoubleSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataTimestampField" }
         public var example: Double? { 1_760_000_000 }
 
         public init() {}
     }
 
-    struct Title: StringSchemaRepresentable {
+    public struct Title: StringSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataTitleField" }
         public var example: String? = "Hello world"
 
         public init() {}
     }
 
-    struct Excerpt: StringSchemaRepresentable {
+    public struct Excerpt: StringSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataExcerptField" }
         public var example: String? = "Short summary"
 
         public init() {}
     }
 
-    struct ImageURL: StringSchemaRepresentable {
+    public struct ImageURL: StringSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataImageURLField" }
-        public var example: String? = "/public/12/34/56789/originals/example.png"
+        public var example: String? =
+            "/public/12/34/56789/originals/example.png"
 
         public init() {}
     }
 
-    struct CanonicalURL: StringSchemaRepresentable {
+    public struct CanonicalURL: StringSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataCanonicalURLField" }
         public var example: String? = "https://example.com/posts/hello-world"
 
         public init() {}
     }
 
-    struct NoIndex: BoolSchemaRepresentable {
+    public struct NoIndex: BoolSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataNoIndexField" }
         public var example: Bool? = false
 
         public init() {}
     }
 
-    struct CodeInjection: StringSchemaRepresentable {
+    public struct CodeInjection: StringSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataCodeInjectionField" }
         public var example: String? = "<p>Hello world</p>"
 
@@ -77,8 +78,8 @@ public extension WebMetadata.Content.Schemas {
     }
 }
 
-public extension WebMetadata.Content {
-    struct Schema: ObjectSchemaRepresentable {
+extension WebMetadata.Content {
+    public struct Schema: ObjectSchemaRepresentable {
         public var openAPIIdentifier: String { "WebMetadataContentSchema" }
         public var propertyMap: SchemaMap {
             [

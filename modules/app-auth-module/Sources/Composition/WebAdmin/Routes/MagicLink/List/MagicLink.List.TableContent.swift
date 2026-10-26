@@ -108,7 +108,8 @@ extension MagicLink.List {
                                                                     href: state
                                                                         .routes
                                                                         .detailsPath(
-                                                                            link.id
+                                                                            link
+                                                                                .id
                                                                         ),
                                                                     style:
                                                                         .ghost(
@@ -121,9 +122,12 @@ extension MagicLink.List {
                                                                 ),
                                                                 .init(
                                                                     "Edit",
-                                                                    href: state.routes.editPath(
-                                                                        link.id
-                                                                    ),
+                                                                    href: state
+                                                                        .routes
+                                                                        .editPath(
+                                                                            link
+                                                                                .id
+                                                                        ),
                                                                     style:
                                                                         .ghost(
                                                                             .secondary

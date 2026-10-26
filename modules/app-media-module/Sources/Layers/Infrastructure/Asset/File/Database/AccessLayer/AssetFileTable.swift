@@ -35,7 +35,9 @@ extension Asset.File {
 
         struct Columns: DatabaseTableColumns {
             let assetNodeId = DatabaseTableColumn<String>(name: "asset_node_id")
-            let storageObjectId = DatabaseTableColumn<String>(name: "storage_object_id")
+            let storageObjectId = DatabaseTableColumn<String>(
+                name: "storage_object_id"
+            )
             let status = DatabaseTableColumn<String>(name: "status")
             let title = DatabaseTableColumn<String?>(name: "title")
             let altText = DatabaseTableColumn<String?>(name: "alt_text")
@@ -77,7 +79,8 @@ extension Asset.File {
         let context: DatabaseTransactionContext
 
         func create(row: Row.Create) async throws -> Row {
-            _ = try await Asset.Node.Table(connection: connection, context: context)
+            _ = try await Asset.Node
+                .Table(connection: connection, context: context)
                 .create(
                     row: .init(
                         id: row.id,
@@ -87,15 +90,16 @@ extension Asset.File {
                         slugPath: row.slugPath
                     )
                 )
-            try await DatabaseAccessLayer<Self>(context: context).insert(
-                Insert(
-                    assetNodeId: row.id,
-                    storageObjectId: row.storageObjectId,
-                    status: row.status,
-                    title: row.title,
-                    altText: row.altText
+            try await DatabaseAccessLayer<Self>(context: context)
+                .insert(
+                    Insert(
+                        assetNodeId: row.id,
+                        storageObjectId: row.storageObjectId,
+                        status: row.status,
+                        title: row.title,
+                        altText: row.altText
+                    )
                 )
-            )
             guard let saved = try await find(id: row.id) else {
                 throw RepositoryError.notFound
             }
@@ -149,7 +153,8 @@ extension Asset.File {
         }
 
         func update(row: Row) async throws -> Row {
-            _ = try await Asset.Node.Table(connection: connection, context: context)
+            _ = try await Asset.Node
+                .Table(connection: connection, context: context)
                 .update(
                     row: .init(
                         id: row.id,
@@ -159,11 +164,16 @@ extension Asset.File {
                         slugPath: row.slugPath
                     )
                 )
-            try await DatabaseAccessLayer<Self>(context: context).update(
-                Update(status: row.status, title: row.title, altText: row.altText),
-                where: \.assetNodeId,
-                equals: row.id
-            )
+            try await DatabaseAccessLayer<Self>(context: context)
+                .update(
+                    Update(
+                        status: row.status,
+                        title: row.title,
+                        altText: row.altText
+                    ),
+                    where: \.assetNodeId,
+                    equals: row.id
+                )
             guard let result = try await find(id: row.id) else {
                 throw RepositoryError.notFound
             }
@@ -171,11 +181,12 @@ extension Asset.File {
         }
 
         func updateStatus(id: String, status: String) async throws {
-            try await DatabaseAccessLayer<Self>(context: context).update(
-                Update(status: status),
-                where: \.assetNodeId,
-                equals: id
-            )
+            try await DatabaseAccessLayer<Self>(context: context)
+                .update(
+                    Update(status: status),
+                    where: \.assetNodeId,
+                    equals: id
+                )
         }
 
         func delete(ids: [String]) async throws -> [String] {
@@ -197,9 +208,9 @@ extension Asset.File {
             }
         }
     }
-    }
+}
 
-    private let mediaAssetNodeFileSelectPrefix = #"""
+private let mediaAssetNodeFileSelectPrefix = #"""
     SELECT
         n.id,
         n.parent_id AS folder_id,
@@ -220,4 +231,3 @@ extension Asset.File {
     JOIN media_asset_node_file f ON f.asset_node_id = n.id
     JOIN media_storage_object o ON o.id = f.storage_object_id AND o.key = 'original'
     """#
-

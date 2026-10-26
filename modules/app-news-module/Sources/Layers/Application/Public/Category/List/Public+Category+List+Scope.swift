@@ -11,7 +11,8 @@ extension Public.Category.List {
 
         public init(
             category: any Query.Interface,
-            metadataDetails: any WebModule.Metadata.Resolve.Detail.Query.Interface
+            metadataDetails: any WebModule.Metadata.Resolve.Detail.Query
+                .Interface
         ) {
             self.category = category
             self.metadataDetails = metadataDetails

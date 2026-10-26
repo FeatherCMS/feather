@@ -7,8 +7,10 @@ extension Delivery.List {
             [
                 "subscriberEmail": Newsletter.Schemas.Email(),
                 "status": Delivery.Schemas.Status().reference(),
-                "sentAt": Newsletter.Schemas.Timestamp().reference(required: false),
-                "failureReason": Newsletter.Schemas.Content().reference(required: false),
+                "sentAt": Newsletter.Schemas.Timestamp()
+                    .reference(required: false),
+                "failureReason": Newsletter.Schemas.Content()
+                    .reference(required: false),
                 "createdAt": Newsletter.Schemas.Timestamp(),
                 "updatedAt": Newsletter.Schemas.Timestamp(),
             ]

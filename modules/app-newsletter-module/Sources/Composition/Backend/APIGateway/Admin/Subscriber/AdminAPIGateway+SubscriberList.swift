@@ -1,9 +1,9 @@
 import FeatherModuleKit
 import Foundation
-import NewsletterModule
 public import NewsletterAdminAPI
 import NewsletterApplication
 import NewsletterDomain
+import NewsletterModule
 
 extension AdminAPIGateway {
     public func newsletterSubscriberList(

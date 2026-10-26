@@ -3,10 +3,10 @@
 //  feather-core
 //
 
-public import FeatherModuleKit
 public import FeatherDBAL
 import FeatherDatabase
 public import FeatherDomain
+public import FeatherModuleKit
 
 public struct DatabaseQueryExecutor<S: Scope>:
     ContextualQueryExecutor

@@ -1,6 +1,6 @@
+public import FeatherModuleKit
 public import FeatherWebAdmin
 import FeatherWebShared
-public import FeatherModuleKit
 
 extension Dashboard.Event {
     public struct Context: ExecutionContext {

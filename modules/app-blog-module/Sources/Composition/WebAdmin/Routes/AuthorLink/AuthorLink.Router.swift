@@ -81,7 +81,8 @@ extension AuthorLink {
                     .path(parameter: "authorID", value: authorID)
             }
 
-            func authorLinkEditPath(_ authorID: String, _ id: String) -> String {
+            func authorLinkEditPath(_ authorID: String, _ id: String) -> String
+            {
                 resolvedPath(
                     authors.appending(parameter: "authorID")
                         .appending(pathComponent: "links")

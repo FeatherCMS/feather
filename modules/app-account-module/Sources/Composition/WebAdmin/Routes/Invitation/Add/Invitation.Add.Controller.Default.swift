@@ -8,7 +8,9 @@ extension Invitation.Add.Controller {
 
     struct Default: Interface {
         let routes: Invitation.Router.Routes
-        let roleRepository: @Sendable (AuthenticatedRequestContext) -> any Invitation.Form.Repository.Role.Interface
+        let roleRepository:
+            @Sendable (AuthenticatedRequestContext) -> any Invitation.Form
+                .Repository.Role.Interface
         let buildRuntime:
             @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
                 any Invitation.Add.Interactor.Interface,
@@ -131,9 +133,10 @@ extension Invitation.Add.Controller {
         private func roleOptions(
             _ context: AuthenticatedRequestContext
         ) async -> [Invitation.Form.Component.RoleOptionState] {
-            await roleRepository(context).list().map {
-                .init(value: $0.id, label: $0.name, isSelected: false)
-            }
+            await roleRepository(context).list()
+                .map {
+                    .init(value: $0.id, label: $0.name, isSelected: false)
+                }
         }
 
         private func createResponse(

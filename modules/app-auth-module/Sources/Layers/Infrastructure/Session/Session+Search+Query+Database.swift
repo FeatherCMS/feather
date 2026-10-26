@@ -16,7 +16,8 @@ extension Session.Search.Query {
             identityId: String,
             query: Session.Search.Input.Query
         ) async throws -> Session.Search.Output {
-            let items = try await accessLayer
+            let items =
+                try await accessLayer
                 .select(as: Session.Table.List.self) { initial in
                     paginate(
                         applyFilters(
@@ -78,7 +79,10 @@ extension Session.Search.Query {
                 case .id:
                     DatabaseQueryOrder<Session.Table>(by: \.id, direction)
                 case .createdAt:
-                    DatabaseQueryOrder<Session.Table>(by: \.createdAt, direction)
+                    DatabaseQueryOrder<Session.Table>(
+                        by: \.createdAt,
+                        direction
+                    )
                 }
             }
             if !rules.contains(where: { $0.field == .id }) {

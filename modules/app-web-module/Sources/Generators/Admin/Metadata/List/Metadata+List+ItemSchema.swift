@@ -7,11 +7,17 @@ extension Metadata.List {
         var propertyMap: SchemaMap {
             [
                 "id": MetadataIdField().reference(),
-                "referenceType": Metadata.Schemas.ReferenceType().reference(required: false),
-                "referenceId": Metadata.Schemas.ReferenceID().reference(required: false),
+                "referenceType": Metadata.Schemas.ReferenceType()
+                    .reference(required: false),
+                "referenceId": Metadata.Schemas.ReferenceID()
+                    .reference(required: false),
                 "slug": Metadata.Schemas.Slug().reference(),
-                "publicationDate": MetadataNullableTimestampField(required: false),
-                "expirationDate": MetadataNullableTimestampField(required: false),
+                "publicationDate": MetadataNullableTimestampField(
+                    required: false
+                ),
+                "expirationDate": MetadataNullableTimestampField(
+                    required: false
+                ),
                 "status": Metadata.Schemas.Status().reference(),
                 "availability": MetadataAvailabilityField().reference(),
                 "title": Metadata.Schemas.Title().reference(),

@@ -50,7 +50,8 @@ extension Asset.Folder.Edit {
                     throw Error.invalidName
                 }
                 if folder.slugPath != previousSlugPath,
-                    try await scope.folders.find(slugPath: folder.slugPath) != nil
+                    try await scope.folders.find(slugPath: folder.slugPath)
+                        != nil
                 {
                     throw Error.duplicatePath
                 }

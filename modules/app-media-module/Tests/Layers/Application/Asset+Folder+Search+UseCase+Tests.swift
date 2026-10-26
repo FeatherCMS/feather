@@ -21,7 +21,7 @@ struct AssetFolderSearchUseCaseTests {
         let inputQuery = Asset.Folder.Search.Input.Query(
             page: .init(size: 5, number: 2),
             sort: [
-                .init(field: .assetCount, direction: .desc),
+                .init(field: .assetCount, direction: .desc)
             ],
             parentId: "parent-1"
         )

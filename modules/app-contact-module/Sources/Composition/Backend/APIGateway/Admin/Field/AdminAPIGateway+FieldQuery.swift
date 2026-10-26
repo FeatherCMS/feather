@@ -17,17 +17,19 @@ extension AdminAPIGateway {
         }
 
         let defaults = Search.Page()
-        let page = Search.Page(
-            size: requestQuery.page?.size ?? defaults.size,
-            number: requestQuery.page?.number ?? defaults.number
-        )
-        .normalized()
-        let sort = (requestQuery.sort ?? []).map { rule in
-            FormField.Search.Input.Query.Sort(
-                field: searchSortField(from: rule.field),
-                direction: rule.direction == .asc ? .asc : .desc
+        let page =
+            Search.Page(
+                size: requestQuery.page?.size ?? defaults.size,
+                number: requestQuery.page?.number ?? defaults.number
             )
-        }
+            .normalized()
+        let sort = (requestQuery.sort ?? [])
+            .map { rule in
+                FormField.Search.Input.Query.Sort(
+                    field: searchSortField(from: rule.field),
+                    direction: rule.direction == .asc ? .asc : .desc
+                )
+            }
         let requestedForm = requestQuery.filters.form
         let isUnassigned = requestedForm == "__unassigned__"
         let formKey = isUnassigned ? nil : requestedForm
@@ -45,14 +47,15 @@ extension AdminAPIGateway {
                 )
             )
 
-        let responseSort = requestQuery.sort?.map { rule in
-            Components.Schemas
-                .ContactFieldQueryItemSearchResponseQuerySchema
-                .SortPayloadPayload(
-                    field: responseSortField(from: rule.field),
-                    direction: rule.direction
-                )
-        }
+        let responseSort = requestQuery.sort?
+            .map { rule in
+                Components.Schemas
+                    .ContactFieldQueryItemSearchResponseQuerySchema
+                    .SortPayloadPayload(
+                        field: responseSortField(from: rule.field),
+                        direction: rule.direction
+                    )
+            }
         let responseForm: String? = isUnassigned ? "__unassigned__" : formKey
 
         return .ok(
@@ -94,7 +97,8 @@ extension AdminAPIGateway {
         from field: Components.Schemas
             .ContactFieldQueryItemSearchRequestQuerySchema.SortPayloadPayload
             .FieldPayload
-    ) -> Components.Schemas
+    )
+        -> Components.Schemas
         .ContactFieldQueryItemSearchResponseQuerySchema
         .SortPayloadPayload.FieldPayload
     {

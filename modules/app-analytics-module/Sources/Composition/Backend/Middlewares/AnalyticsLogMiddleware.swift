@@ -1,6 +1,6 @@
 import AnalyticsApplication
-public import AnalyticsModule
 import AnalyticsDomain
+public import AnalyticsModule
 import Foundation
 import HTTPTypes
 public import Hummingbird

@@ -3,8 +3,6 @@ import FeatherWebShared
 import Hummingbird
 import SystemModule
 
-
-
 extension Job.View {
     struct Router {
         let controller: any Controller.Interface

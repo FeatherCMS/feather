@@ -83,7 +83,8 @@ public struct DefaultPublicPageRenderer: PublicPageRenderer {
     ) -> String {
         var url = base
         if !url.hasSuffix("/") { url += "/" }
-        let normalizedPath = path.hasPrefix("/")
+        let normalizedPath =
+            path.hasPrefix("/")
             ? String(path.dropFirst())
             : path
         if normalizedPath.isEmpty { return url }

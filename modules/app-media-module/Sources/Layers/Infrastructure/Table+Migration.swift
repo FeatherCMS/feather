@@ -1,5 +1,5 @@
-public import FeatherDatabase
 public import FeatherDBAL
+public import FeatherDatabase
 public import FeatherInfrastructure
 import MediaModule
 
@@ -7,7 +7,10 @@ public struct TableMigration: DatabaseMigration {
     public let connection: any DatabaseConnection
     public let platform: any DatabasePlatform
 
-    public init(connection: any DatabaseConnection, platform: any DatabasePlatform) {
+    public init(
+        connection: any DatabaseConnection,
+        platform: any DatabasePlatform
+    ) {
         self.connection = connection
         self.platform = platform
     }
@@ -23,7 +26,9 @@ public struct TableMigration: DatabaseMigration {
             Asset.File.Variant.Table.tableCreationSchema,
         ]
         for schema in schemas {
-            for query in DatabaseQueryCreate(schema: schema, using: platform).build() {
+            for query in DatabaseQueryCreate(schema: schema, using: platform)
+                .build()
+            {
                 try await connection.run(query: query) { _ in }
             }
         }
