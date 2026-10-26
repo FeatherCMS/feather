@@ -1,0 +1,72 @@
+import Foundation
+import RSS
+import SGML
+import WebModule
+
+extension Public.RSS {
+    enum XML {
+
+        static func render(
+            title: String,
+            description: String,
+            siteURL: String,
+            items: [WebModule.Public.RSS.Item]
+        ) -> String {
+            let sortedItems =
+                items
+                .filter { !$0.url.isEmpty }
+                .sorted { lhs, rhs in
+                    if let lhsPublicationDate = lhs.publicationDate {
+                        guard let rhsPublicationDate = rhs.publicationDate
+                        else {
+                            return true
+                        }
+                        return lhsPublicationDate > rhsPublicationDate
+                    }
+                    guard rhs.publicationDate == nil else { return false }
+                    return lhs.title.localizedCaseInsensitiveCompare(rhs.title)
+                        == .orderedAscending
+                }
+
+            let channelItems = sortedItems.map(makeItem)
+            let document = Document(
+                type: .xml,
+                root: Rss(
+                    channels: [
+                        Channel(
+                            children: [
+                                Title(title),
+                                Description(description),
+                                Link(siteURL),
+                            ] + channelItems
+                        )
+                    ]
+                )
+            )
+            return document.render(indent: 4)
+        }
+
+        private static func makeItem(
+            _ item: WebModule.Public.RSS.Item
+        ) -> Item {
+            var children: [any ItemContent] = [
+                Guid(item.url, isPermalink: true),
+                Title(item.title),
+                Description(item.description),
+            ]
+            if let publicationDate = item.publicationDate {
+                children.append(PubDate(dateString(publicationDate)))
+            }
+            return Item(children: children)
+        }
+
+        private static func dateString(_ date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+            return formatter.string(from: date)
+        }
+
+    }
+}

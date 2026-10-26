@@ -1,16 +1,15 @@
 //
-//  File.swift
-//  openapi-generator
+//  Document.swift
+//  app-media-module
 //
 //  Created by Tibor Bödecs on 2026. 03. 24..
 //
 
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct Info: InfoRepresentable {
-    var title: String { "Admin API" }
+    var title: String { "Media Admin API" }
     var version: String { "0.1.0" }
 }
 

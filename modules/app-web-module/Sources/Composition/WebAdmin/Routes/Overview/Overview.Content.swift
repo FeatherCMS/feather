@@ -1,0 +1,125 @@
+import CSS
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import SGML
+import WebBuilders
+import WebComponents
+import WebModule
+
+extension Overview {
+    struct Content: Component {
+        let routes: Router.Routes
+
+        struct Destination {
+            let title: String
+            let description: String
+            let href: String
+            let icon: String
+        }
+
+        private var destinations: [Destination] {
+            [
+                Destination(
+                    title: "Pages",
+                    description:
+                        "Manage the web pages published by the application.",
+                    href: routes.pages.path,
+                    icon: "fileText"
+                ),
+                Destination(
+                    title: "Menus",
+                    description: "Manage navigation menus and their items.",
+                    href: routes.menus.path,
+                    icon: "menu"
+                ),
+                Destination(
+                    title: "Settings",
+                    description: "Manage the public web settings.",
+                    href: routes.settings.path,
+                    icon: "settings"
+                ),
+            ]
+        }
+
+        func rules() -> [any Rule] {
+            Media {
+                Custom(".web-home-destinations") {
+                    Margin(top: 8.px)
+                    RowGap(16.px)
+                    ColumnGap(16.px)
+                }
+                Custom(".web-home-destination") {
+                    Display(.flex)
+                    FlexDirection(.column)
+                    AlignItems(.flexStart)
+                    Gap(12.px)
+                    Padding(24.px)
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Tertiary.border)
+                    )
+                    BorderRadius(12.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Tertiary.tint)
+                    )
+                }
+                Custom(".web-home-destination h2, .web-home-destination p") {
+                    Margin(0)
+                }
+                Custom(".web-home-destination h2 + p") {
+                    Margin(top: (-6).px)
+                }
+                Custom(".web-home-destination p") {
+                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                    LineHeight(1.5)
+                }
+                Custom(".web-home-destination .admin-button") {
+                    Margin(top: 4.px)
+                }
+            }
+        }
+
+        func html(context: inout BuilderContext) -> Section {
+            Section {
+                context.build(
+                    AdminBreadcrumb(links: routes.breadcrumb)
+                )
+                context.build(
+                    AdminPageHeader(
+                        state: .primary(
+                            title: "Web",
+                            description:
+                                "Manage pages, menus, and web settings."
+                        )
+                    )
+                )
+                Div {
+                    for destination in destinations {
+                        Div {
+                            if let icon = FeatherIcons.get(
+                                named: destination.icon
+                            ) {
+                                icon
+                            }
+                            H2(destination.title)
+                            P(destination.description)
+                            context.build(
+                                AdminButton(
+                                    "Open",
+                                    href: destination.href,
+                                    style: .primary
+                                )
+                            )
+                        }
+                        .class("web-home-destination")
+                    }
+                }
+                .class("grid grid-221 web-home-destinations")
+            }
+            .class("cms-section")
+        }
+    }
+}

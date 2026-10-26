@@ -1,0 +1,3 @@
+extension Credential {
+    enum Query {}
+}

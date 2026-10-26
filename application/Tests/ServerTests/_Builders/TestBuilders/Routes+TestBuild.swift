@@ -1,4 +1,5 @@
 import Hummingbird
+import FeatherWebShared
 
 @testable import Server
 

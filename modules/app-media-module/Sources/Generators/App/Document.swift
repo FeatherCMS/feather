@@ -1,9 +1,8 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct Info: InfoRepresentable {
-    var title: String { "App API" }
+    var title: String { "Media App API" }
     var version: String { "0.1.0" }
 }
 

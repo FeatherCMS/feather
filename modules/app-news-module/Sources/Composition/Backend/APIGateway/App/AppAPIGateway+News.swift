@@ -1,56 +1,84 @@
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 public import NewsAppAPI
 import NewsApplication
 import WebApplication
 import WebDomain
+import WebModule
 
 extension AppAPIGateway {
 
     public func newsArticleList(
         _: Operations.NewsArticleList.Input
     ) async throws -> Operations.NewsArticleList.Output {
-        let items = try await useCases.makeListPublicArticles().execute()
-        return .ok(.init(body: .json(items.map(mapArticleSummary))))
+        let output = try await useCases.makeListPublicArticles().execute(
+            input: .init()
+        )
+        return .ok(.init(body: .json(output.items.map(mapArticleSummary))))
     }
 
     public func newsArticleGet(
         _ input: Operations.NewsArticleGet.Input
     ) async throws -> Operations.NewsArticleGet.Output {
         do {
-            let item = try await useCases.makeGetPublicArticle()
-                .execute(id: input.path.id)
+            let item = try await useCases.makeDetailPublicArticle()
+                .execute(input: .init(id: input.path.id))
             return .ok(.init(body: .json(mapArticleDetail(item))))
         }
         catch {
-            return .notFound
+            return .notFound(
+                .init(
+                    body: .json(
+                        notFoundErrorEnvelope(
+                            message: "Not Found",
+                            reason: "News article not found"
+                        )
+                    )
+                )
+            )
         }
     }
 
     public func newsCategoryList(
         _: Operations.NewsCategoryList.Input
     ) async throws -> Operations.NewsCategoryList.Output {
-        let items = try await useCases.makeListPublicCategories().execute()
-        return .ok(.init(body: .json(items.map(mapCategorySummary))))
+        let output = try await useCases.makeListPublicCategories().execute()
+        return .ok(.init(body: .json(output.items.map(mapCategorySummary))))
     }
 
     public func newsCategoryGet(
         _ input: Operations.NewsCategoryGet.Input
     ) async throws -> Operations.NewsCategoryGet.Output {
         do {
-            let item = try await useCases.makeGetPublicCategory()
-                .execute(id: input.path.id)
+            let item = try await useCases.makeDetailPublicCategory()
+                .execute(input: .init(id: input.path.id))
             return .ok(.init(body: .json(mapCategoryDetail(item))))
         }
         catch {
-            return .notFound
+            return .notFound(
+                .init(
+                    body: .json(
+                        notFoundErrorEnvelope(
+                            message: "Not Found",
+                            reason: "News category not found"
+                        )
+                    )
+                )
+            )
         }
     }
 }
 
+private func notFoundErrorEnvelope(
+    message: String,
+    reason: String
+) -> Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+    .init(error: .init(message: message, reason: reason))
+}
+
 extension AppAPIGateway {
     fileprivate func mapArticleSummary(
-        _ item: PublicNewsArticleSummary
+        _ item: NewsApplication.Public.Article.Summary.Item
     ) -> Components.Schemas.NewsArticleSummarySchema {
         .init(
             id: item.id,
@@ -68,7 +96,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapArticleDetail(
-        _ item: PublicNewsArticleDetail
+        _ item: NewsApplication.Public.Article.Detail.Output
     ) -> Components.Schemas.NewsArticleDetailSchema {
         .init(
             id: item.id,
@@ -88,7 +116,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapCategorySummary(
-        _ item: PublicNewsCategorySummary
+        _ item: NewsApplication.Public.Category.Summary.Item
     ) -> Components.Schemas.NewsCategorySummarySchema {
         .init(
             id: item.id,
@@ -106,7 +134,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapCategoryDetail(
-        _ item: PublicNewsCategoryDetail
+        _ item: NewsApplication.Public.Category.Detail.Output
     ) -> Components.Schemas.NewsCategoryDetailSchema {
         .init(
             id: item.id,
@@ -126,7 +154,7 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapMedia(
-        _ media: PublicContentMedia?
+        _ media: WebApplication.Public.Media?
     ) -> Components.Schemas.MediaAssetSchema? {
         guard let media else { return nil }
         return .init(
@@ -143,12 +171,12 @@ extension AppAPIGateway {
     }
 
     fileprivate func mapMetadata(
-        _ metadata: MetadataDetail,
+        _ metadata: WebModule.Metadata.Snapshot,
         title: String,
         excerpt: String,
         imageURL: String
     ) -> Components.Schemas.WebMetadataContentSchema {
-        let resolved = ResolvedMetadata(
+        let resolved = WebModule.Metadata.Snapshot.Resolved(
             metadata: metadata,
             fallbackTitle: title,
             fallbackExcerpt: excerpt,

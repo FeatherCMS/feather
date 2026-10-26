@@ -1,0 +1,3 @@
+extension Post {
+    enum Schemas {}
+}

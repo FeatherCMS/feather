@@ -1,0 +1,3 @@
+extension Author {
+    enum Query {}
+}

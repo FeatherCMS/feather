@@ -1,0 +1,12 @@
+import ContactApplication
+import ContactModule
+
+extension FormField.Edit.Interactor {
+    enum Error: Swift.Error, Sendable {
+        case notFound
+        case unauthorized
+        case forbidden
+        case conflict
+        case unavailable
+    }
+}

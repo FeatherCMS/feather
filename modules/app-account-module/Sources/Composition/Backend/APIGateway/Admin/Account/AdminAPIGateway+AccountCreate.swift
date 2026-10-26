@@ -1,6 +1,6 @@
 public import AccountAdminAPI
 import AccountApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
@@ -14,7 +14,7 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeCreateAccount()
+        let result = try await useCases.makeAddAccount()
             .execute(
                 subject: subject,
                 input: .init(

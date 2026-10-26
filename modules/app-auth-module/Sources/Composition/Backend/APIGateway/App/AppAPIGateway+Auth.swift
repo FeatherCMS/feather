@@ -1,7 +1,8 @@
 public import AuthAppAPI
 import AuthApplication
 import AuthDomain
-import FeatherContracts
+import AuthModule
+import FeatherModuleKit
 import UserApplication
 import UserDomain
 
@@ -11,7 +12,7 @@ extension AppAPIGateway {
         _ input: Operations.AuthMe.Input
     ) async throws -> Operations.AuthMe.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = useCases.makeGetCurrentUser()
+        let useCase = useCases.makeCurrentUser()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: subject.id)
@@ -47,11 +48,9 @@ extension AppAPIGateway {
 
         let result = try await useCase.execute(
             .init(
-                object: .init(
-                    email: body.email,
-                    password: body.password,
-                    isPersistent: body.isPersistent
-                )
+                email: body.email,
+                password: body.password,
+                isPersistent: body.isPersistent
             )
         )
 
@@ -77,7 +76,18 @@ extension AppAPIGateway {
         _ input: Operations.AuthLogout.Input
     ) async throws -> Operations.AuthLogout.Output {
         guard (try? await CurrentSubject.require()) != nil else {
-            return .unauthorized
+            return .unauthorized(
+                .init(
+                    body: .json(
+                        .init(
+                            error: .init(
+                                message: "Unauthorized",
+                                reason: "Authentication is required."
+                            )
+                        )
+                    )
+                )
+            )
         }
         return .noContent
     }
@@ -136,8 +146,19 @@ extension AppAPIGateway {
                 )
             )
         }
-        catch is AuthApplication.UseCaseError {
-            return .unauthorized
+        catch is AuthModule.Authorization.SignIn.MagicLink.Error {
+            return .unauthorized(
+                .init(
+                    body: .json(
+                        .init(
+                            error: .init(
+                                message: "Unauthorized",
+                                reason: "The magic link is invalid or expired."
+                            )
+                        )
+                    )
+                )
+            )
         }
     }
 }

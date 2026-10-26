@@ -7,9 +7,9 @@ extension AppAPIGateway {
     public func appContactFormGet(
         _ input: Operations.AppContactFormGet.Input
     ) async throws -> Operations.AppContactFormGet.Output {
-        let result = try await self.useCases.makeGetPublicForm()
+        let result = try await self.useCases.makeDetailPublicForm()
             .execute(
-                .init(key: input.path.contactFormKey)
+                input: .init(key: input.path.contactFormKey)
             )
         return .ok(
             .init(
@@ -52,9 +52,9 @@ extension AppAPIGateway {
         let metadataJSON = try body.metadata.map {
             try String(decoding: JSONEncoder().encode($0), as: UTF8.self)
         }
-        let result = try await self.useCases.makeSubmitContactForm()
+        let result = try await self.useCases.makeSubmitForm()
             .execute(
-                .init(
+                input: .init(
                     formKey: input.path.contactFormKey,
                     valuesJSON: valuesJSON,
                     itemsSnapshotJSON: "{}",

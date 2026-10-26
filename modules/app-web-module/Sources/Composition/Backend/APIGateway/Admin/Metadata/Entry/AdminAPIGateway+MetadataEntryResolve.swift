@@ -1,14 +1,16 @@
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 public import WebAdminAPI
 import WebApplication
+import WebDomain
+import WebModule
 
 extension AdminAPIGateway {
 
-    public func webMetadataResolve(
-        _ input: Operations.WebMetadataResolve.Input
-    ) async throws -> Operations.WebMetadataResolve.Output {
-        let query: Components.Schemas.WebMetadataResolveRequestSchema
+    public func metadataResolve(
+        _ input: Operations.MetadataResolve.Input
+    ) async throws -> Operations.MetadataResolve.Output {
+        let query: Components.Schemas.MetadataResolveRequestSchema
         switch input.body {
         case .json(let value):
             query = value
@@ -28,11 +30,32 @@ extension AdminAPIGateway {
         return .ok(
             .init(
                 body: .json(
-                    items.map {
-                        useCases.mapResolveMetadata($0, at: now)
+                    items.items.map {
+                        mapResolvedMetadata($0, at: now)
                     }
                 )
             )
+        )
+    }
+
+    private func mapResolvedMetadata(
+        _ item: Metadata.Resolve.Output.Item,
+        at date: Date
+    ) -> Components.Schemas.MetadataResolveItemSchema {
+        .init(
+            referenceId: item.referenceID,
+            slug: item.slug,
+            publicationDate: item.publicationDate.timeIntervalSince1970,
+            expirationDate: item.expirationDate?.timeIntervalSince1970,
+            status: item.status.rawValue,
+            availability: .init(
+                rawValue: Metadata.Model.Availability(
+                    status: item.status,
+                    publicationDate: item.publicationDate,
+                    expirationDate: item.expirationDate,
+                    at: date
+                ).rawValue
+            ) ?? .draft
         )
     }
 }

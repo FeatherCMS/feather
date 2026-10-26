@@ -1,0 +1,21 @@
+import FeatherWebAdmin
+import OpenAPIRuntime
+import WebModule
+
+extension MenuItem.Add.Interactor {
+    struct Default: Interface {
+        let repository: any MenuItem.Add.Repository.Interface
+        let permissionRepository: any MenuItem.Permission.Repository.Interface
+
+        func loadPermissions() async throws -> [String] {
+            try await permissionRepository.listNames()
+        }
+
+        func execute(
+            menuId: String,
+            input: MenuItem.Form.Input
+        ) async throws {
+            try await repository.create(menuId: menuId, input: input)
+        }
+    }
+}

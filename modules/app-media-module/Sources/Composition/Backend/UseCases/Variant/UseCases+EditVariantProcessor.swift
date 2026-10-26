@@ -1,7 +1,23 @@
+import FeatherInfrastructure
 public import MediaApplication
+import MediaInfrastructure
+public import MediaModule
 
 extension UseCases {
-    public func makeEditVariantProcessor() -> EditMediaVariantProcessor {
-        .init(authorizer: authorizer, transaction: writeTransaction())
+    public func makeEditVariantProcessor() -> Variant.Processor.Edit.UseCase {
+        .init(
+            authorizer: authorizer,
+            transaction: DatabaseTransactionExecutor(
+                databaseContext: databaseContext,
+                scope: { context in
+                    Variant.Processor.Edit.Scope(
+                        variantProcessors: Variant.Processor.Repository
+                            .Database(
+                                context: context
+                            )
+                    )
+                }
+            )
+        )
     }
 }

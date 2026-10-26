@@ -1,6 +1,8 @@
-import FeatherContracts
+import FeatherModuleKit
+import Foundation
 public import MediaAdminAPI
 import MediaApplication
+import MediaModule
 
 extension AdminAPIGateway {
 
@@ -20,7 +22,27 @@ extension AdminAPIGateway {
             )
 
         return .ok(
-            .init(body: .json(result.items.map(map)))
+            .init(body: .json(result.items.map(mapResolvedAsset)))
+        )
+    }
+
+    private func mapResolvedAsset(
+        _ item: Asset.File.Resolve.Output.Item
+    ) -> Components.Schemas.MediaAssetResolveItemSchema {
+        .init(
+            id: item.id,
+            url: mediaResolver.resolve(imagePath: item.url) ?? item.url,
+            _extension: item.extension,
+            title: item.title,
+            altText: item.altText,
+            variants: item.variants.map {
+                .init(
+                    key: $0.key,
+                    name: $0.name,
+                    url: mediaResolver.resolve(imagePath: $0.url) ?? $0.url,
+                    _extension: $0.extension
+                )
+            }
         )
     }
 }

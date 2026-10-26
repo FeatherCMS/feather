@@ -1,0 +1,35 @@
+import BlogAppAPI
+public import BlogModule
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import WebBuilders
+import WebComponents
+public import WebModuleWebApp
+
+extension Tag.Get {
+    public struct Model: Sendable {
+        public let title: String
+        public let excerpt: String
+        public let imageURL: String?
+        public let content: String
+        public let posts: [Post.Summary.Model]
+        public let metadata: Public.Metadata.Model
+
+        public init(
+            title: String,
+            excerpt: String,
+            imageURL: String?,
+            content: String,
+            posts: [Post.Summary.Model],
+            metadata: Public.Metadata.Model
+        ) {
+            self.title = title
+            self.excerpt = excerpt
+            self.imageURL = imageURL
+            self.content = content
+            self.posts = posts
+            self.metadata = metadata
+        }
+    }
+}

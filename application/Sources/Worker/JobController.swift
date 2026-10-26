@@ -4,7 +4,9 @@ import FeatherInfrastructure
 import FeatherMail
 import Jobs
 import MediaInfrastructure
+import MediaModule
 import NewsletterInfrastructure
+import NewsletterModule
 
 struct JobController {
     init(
@@ -18,12 +20,12 @@ struct JobController {
             on: queue,
             mailClient: mailClient
         )
-        JobQueueNewsletterIssueJobController.register(
+        Issue.JobController.JobQueue.register(
             on: queue,
             databaseContext: databaseContext,
             mailClient: mailClient
         )
-        JobQueueMediaJobController.register(
+        Asset.File.GenerateVariant.JobController.JobQueue.register(
             on: queue,
             databaseContext: databaseContext,
             storageContext: storageContext,

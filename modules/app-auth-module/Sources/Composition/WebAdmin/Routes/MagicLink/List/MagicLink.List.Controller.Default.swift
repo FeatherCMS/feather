@@ -1,0 +1,100 @@
+import AuthAdminAPI
+import AuthModule
+import CSS
+import FeatherModuleKit
+import FeatherValidation
+import FeatherValidationFoundation
+import FeatherWebAdmin
+import FeatherWebShared
+import Foundation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemWebAdmin
+import UserAdminAPI
+import UserWebAdmin
+import WebBuilders
+import WebComponents
+
+extension MagicLink.List.Controller {
+    struct Default: Interface {
+        let routes: MagicLink.Router.Routes
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any MagicLink.List.Interactor.Interface,
+                any MagicLink.List.Presenter.Interface
+            >
+
+        func getAuthMagicLinks(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse {
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
+            let permissionSet = context.currentUserPermissions
+            let permissions = MagicLink.Permissions.list
+            let canAccess = context.isCurrentUserAllowed(
+                to: permissions
+            )
+            let page = request.queryPage()
+            let pageSize = 20
+            let search = request.querySearch()
+            let userID = request.uri.queryParameters["userId"].map(String.init)
+            guard
+                context.isCurrentUserAllowed(
+                    to: MagicLink.Permissions.list
+                )
+            else {
+                return try await presenter.renderError(error: .forbidden)
+            }
+
+            do {
+                let result: MagicLink.List.Result =
+                    canAccess
+                    ? try await interactor.execute(
+                        page: page,
+                        size: pageSize,
+                        search: search,
+                        userID: userID
+                    )
+                    : .init(
+                        items: [],
+                        emailByAuthEmailId: [:],
+                        total: 0,
+                        page: page,
+                        size: pageSize
+                    )
+
+                let state = MagicLink.List.Component.State(
+                    isAdded: request.hasQueryFlag("added"),
+                    isEdited: request.hasQueryFlag("edited"),
+                    isRemoved: request.hasQueryFlag("removed"),
+                    canAccess: canAccess,
+                    permissions: permissionSet,
+                    canAdd: permissionSet.contains(
+                        MagicLink.Permissions.create.rawValue
+                    ),
+                    links: result.items,
+                    emailByAuthEmailId: result.emailByAuthEmailId,
+                    page: result.page,
+                    pageSize: result.size,
+                    total: result.total,
+                    search: search ?? "",
+                    userID: userID,
+                    deniedInfo: "Forbidden",
+                    deniedMessage:
+                        "Your identity cannot access user magic links.",
+                    breadcrumb: routes.listBreadcrumb,
+                    routes: routes
+                )
+                return try await presenter.renderPage(state: state)
+            }
+            catch let error as OpenAPIRepositoryError {
+                return try await presenter.renderError(error: error)
+            }
+        }
+    }
+}

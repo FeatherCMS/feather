@@ -1,7 +1,7 @@
 //import FeatherSpec
 //import FeatherSpecHummingbird
 //import FeatherMail
-//import FeatherMailEphemeral
+//import FeatherMailTesting
 //import HTTPTypes
 //import Logging
 //import UserAdminAPI
@@ -17,7 +17,7 @@
 //
 //    private func check(
 //        _ testBlock:
-//            @Sendable @escaping (SpecRunnerHummingbird, MailClientEphemeral)
+//            @Sendable @escaping (SpecRunnerHummingbird, TestMailClient)
 //            async throws -> Void
 //    ) async throws {
 //        var logger = Logger(label: "server-auth-tests")
@@ -25,7 +25,7 @@
 //        let testDatabase = await TestDatabase.shared(logger: logger)
 //
 //        try await testDatabase.createNew { database in
-//            let mailClient = MailClientEphemeral()
+//            let mailClient = TestMailClient()
 //            let app = try await buildTestServer(
 //                database: database,
 //                config: testingConfig(),

@@ -1,27 +1,19 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
-import SystemInfrastructure
-import WebAdminAPI
-import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    func makeRemovePage() -> RemovePage {
+    func makeRemovePage() -> Page.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WritePageMetadata(
-                    page: PageDatabaseRepository(context: context),
-                    metadata: MetadataDatabaseRepository(context: context),
-                    settings: SettingsDatabaseRepository(context: context),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
-                    )
+                Page.Remove.Scope(
+                    page: Page.Repository.Database(context: context),
+                    metadata: Metadata.Repository.Database(context: context),
+                    settings: Settings.Repository.Database(context: context)
                 )
             }
         )

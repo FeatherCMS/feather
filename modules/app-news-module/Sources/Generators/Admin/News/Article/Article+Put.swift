@@ -1,0 +1,3 @@
+extension Article {
+    enum Put {}
+}

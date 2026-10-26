@@ -1,10 +1,9 @@
 import Hummingbird
+import FeatherWebShared
 import Logging
 
-typealias DefaultRequestContext = BasicRequestContext
-
-func buildRouter() -> Router<DefaultRequestContext> {
-    let router = Router(context: DefaultRequestContext.self)
+func buildRouter() -> Router<BasicRequestContext> {
+    let router = Router(context: BasicRequestContext.self)
 
     router.addMiddleware {
         LogRequestsMiddleware(.info)

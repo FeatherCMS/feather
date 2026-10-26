@@ -1,14 +1,18 @@
-import FeatherContracts
+import FeatherModuleKit
 import FeatherInfrastructure
 import AuthApplication
 import AuthInfrastructure
+import AuthModule
 import UserInfrastructure
+import UserModule
 import MediaBackend
 import MediaInfrastructure
+import MediaModule
 import AnalyticsBackend
 import WebBackend
 import NewsletterBackend
 import NewsletterInfrastructure
+import NewsletterModule
 import RedirectBackend
 import BlogBackend
 import AccountBackend
@@ -48,17 +52,19 @@ struct AppModules: Sendable {
         let query = DatabaseQueryExecutor(
             databaseContext: infrastructure.databaseContext,
             scope: { context in
-                return AuthScope(
-                    identity: IdentityDatabaseQueries(
+                return AuthModule.Authorization.Scope(
+                    permissions: AuthModule.Authorization.Database(
                         context: context
                     ),
-                    rolePermissions: RolePermissionDatabaseQueries(
+                    rolePermissions: RolePermission.Lookup.Query.Database(
                         context: context
                     )
                 )
             }
         )
-        self.authorizer = DefaultAuthorizer(query: query)
+        self.authorizer = AuthModule.Authorization.Authorizer.Default(
+            query: query
+        )
 
         let system = SystemBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
@@ -103,7 +109,9 @@ struct AppModules: Sendable {
             databaseContext: infrastructure.databaseContext,
             storageContext: infrastructure.storageContext,
             authorizer: authorizer,
-            jobs: JobQueueMediaJobController(queue: infrastructure.jobQueue)
+            jobs: Asset.File.GenerateVariant.JobController.JobQueue(
+                queue: infrastructure.jobQueue
+            )
         )
         self.media = media
         let blog = BlogBackend.UseCases(
@@ -128,7 +136,7 @@ struct AppModules: Sendable {
         let newsletter = NewsletterBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            jobs: JobQueueNewsletterIssueJobController(
+            jobs: Issue.JobController.JobQueue(
                 queue: infrastructure.jobQueue,
                 mailJobs: JobQueueSendMailJobController(
                     queue: infrastructure.jobQueue

@@ -1,207 +1,100 @@
-# Admin Web Feature Module Guide
+# System Module Guide
 
-This folder is the reference implementation for an admin web frontend feature
-module. New CRUD-style admin features should follow this structure unless the
-feature has materially different requirements.
+Use this guide as the System module's source of truth for target boundaries,
+namespaces, application operations, database adapters, OpenAPI generation,
+WebAdmin composition, and tests.
 
-## Feature shape
+## Module structure
 
-Create one directory for each user-facing operation:
+- `SystemModule`, `SystemDomain`, `SystemApplication`,
+  `SystemInfrastructure`, `SystemAdminAPI`, `SystemBackend`, and
+  `SystemWebAdmin` are separate targets with the boundaries described in
+  `Package.swift`.
+- Domain entities are `Permission`, `Variable`, and `Job`. Keep their models,
+  application operations, queries, tables, and persistence adapters under the
+  corresponding entity namespace and directory.
+- `Job` is read-only from this module's perspective. Do not add mutation
+  operations or an API surface the module does not own.
+- Keep frontend-only declarations in `SystemWebAdmin`; backend, application,
+  and domain targets must not gain a WebAdmin namespace dependency.
+- System owns the Admin API, its OpenAPI generator, the generated YAML and
+  Swift API, and the WebAdmin client. Change handwritten generator sources,
+  then regenerate through the checked-in script/Makefile; do not edit generated
+  Swift or YAML by hand.
 
-- `Add`
-- `Edit`
-- `Get`
-- `List`
-- `Remove`
+## Application and database
 
-Each operation is split into:
+- Model application operations as sibling namespace declarations, for example
+  `Variable.Add.Input|Output|Scope|UseCase`, `Variable.List.*`, and
+  `Variable.Search.*`. `List` is for lightweight list results; `Search` backs
+  structured query results. Keep their criteria and result types separate.
+- Query criteria belong to the input's named `Query` value. Keep database
+  adapters under their owning query/repository namespace and use DBAL table,
+  column, and schema definitions; do not introduce driver-specific SQL or
+  driver dependencies into the module's ordinary infrastructure target.
+- Keep aggregate migrations and seed migration/event registration at the
+  infrastructure root. Each table's `Columns` declarations and creation schema
+  must describe the same columns.
+- Infrastructure tests use the shared mock connection and mock platform.
+  Assert generated schema details—columns, timestamp fields, defaults, keys,
+  and indexes—not only query counts or table names. Application tests cover
+  use-case success/authorization and behavior independently of HTTP tests.
 
-- `Abstraction/` — controller, interactor, presenter, and repository protocols.
-- `Implementation/` — default implementations, OpenAPI repository, models, and views.
-- A feature composition file — for example `AdminAddSystemVariable.swift` — for wiring the runtime dependencies.
+## Backend and API
 
-Keep cross-operation route definitions in a sibling `<Feature>Routes.swift`
-file. Keep operation-specific models and views inside the operation directory.
+- Backend gateways adapt generated Admin API operations to application
+  use-cases; group factories under `UseCases/<Entity>/`. Keep request/response
+  mapping functions in the gateway operation file that uses them; do not create
+  standalone mapping/helper files.
+- HTTP `List` and `Query` are separate API operations with separately owned
+  schemas. The application `Search` use-case serves structured `Query`
+  requests; the simple `List` endpoint remains appropriate for lightweight
+  lookups/autocomplete.
+- PATCH endpoints use the required update-mask contract. Preserve the
+  distinction between omitted fields, selected nullable fields being cleared,
+  and invalid/missing selected values through gateway and application layers.
+- Keep API error schemas and documented statuses aligned with actual gateway
+  and middleware responses.
 
-## Models and views
+## WebAdmin
 
-Models describe feature-local state and transport results; they do not render
-HTML or perform request orchestration. Keep form input models, validation
-extensions, edit/get models, and list state models in the operation's
-`Implementation/Models/` directory.
+- Put routes under `Sources/Composition/WebAdmin/Routes/<Entity>/<Operation>/`.
+  Extend the entity/operation namespace with `Controller`, `Interactor`,
+  `Presenter`, `Repository`, and `Router` as needed. Keep interfaces and default
+  implementations in matching files; do not create generic `Feature`,
+  `Abstraction/`, or `Implementation/` wrappers.
+- Feature routers construct their collaborators and register handlers. The
+  entity/top-level router supplies route roots, `AppEnvironment`, and rendering
+  configuration. Use `WebRoute` values for route templates and links.
+- Create API clients at the authenticated request boundary from
+  `AppEnvironment` plus `AuthenticatedRequestContext`; the environment provides
+  API configuration and the request context provides request credentials.
+- Controllers own HTTP boundary concerns, permission gates, input decoding,
+  nonce validation, and error branching. Interactors coordinate operations;
+  repositories map generated API types and documented responses; presenters
+  prepare user-facing state and responses.
+- Use existing `Admin` UI components. Views render prepared state and supplied
+  actions; they do not make API calls or decide authorization. Hide actions the
+  current user cannot perform and render permission/error states through the
+  presenter.
+- Form payload models contain feature fields only. Wrap them in
+  `NonceRequest<Input>` at the controller boundary. Normalize optional empty
+  strings consistently, preserve submitted values on validation errors, and
+  associate errors with their fields.
+- List and remove flows preserve search/pagination and origin context. Removal
+  uses a nonce-protected confirmation POST and returns cancellation to the
+  page from which removal began.
 
-Views are `Component` types responsible only for rendering the supplied state.
-Use dedicated page, form, table, row, and details components where the view
-has a distinct responsibility. Keep permission decisions and API calls out of
-views; pass already-prepared state and action permissions into them.
+## Validation and documentation
 
-Use the existing `Admin` design-system components for admin UI, including
-breadcrumbs, page headers, forms, fields, buttons, tables, list actions,
-pagination, empty states, status pages, confirmations, and notifications.
-Do not invent or duplicate UI components, styles, or markup when an existing
-`Admin` component provides the required behavior. Create a new component
-only when the feature explicitly requires UI that the existing components
-cannot represent.
-
-When a new component is explicitly required, place it at the narrowest feature
-scope that needs it, keep it state-driven, and follow the existing component
-selector and accessibility conventions.
-
-## Request flow
-
-Use this direction for every operation:
-
-```text
-Router
-  -> Controller
-  -> Interactor
-  -> OpenAPI Repository
-  -> Shared API client
-```
-
-The response path reverses the direction:
-
-```text
-Shared API client
-  -> Repository model
-  -> Presenter
-  -> HTML component
-  -> HTMLResponse / redirect
-```
-
-Controllers should remain thin. They are responsible for request decoding,
-route parameters, permission gates, nonce handling, error branching, and
-delegating to the interactor/presenter. They should not contain API mapping or
-HTML construction.
-
-Interactors coordinate one operation and normalize form input before passing it
-to the repository. They should not know about HTTP, routing, or HTML.
-
-Repositories translate generated OpenAPI request and response types into
-feature-local models and map all documented response statuses to
-`OpenAPIRepositoryError`. Do not discard response enums from mutating API
-calls.
-
-## Composition and runtime wiring
-
-The operation-level composition file constructs the default controller with a
-`buildRuntime` closure. The closure receives the request and context and builds:
-
-1. The OpenAPI repository from `context.systemAdminAPI()`.
-2. The default interactor with that repository.
-3. The default presenter with the request, context, and rendering engine.
-
-Keep this wiring isolated from the controller and interactor. Do not introduce
-global state or put feature behavior on the request context.
-
-## Permissions
-
-Every operation must enforce its own permission in the controller before doing
-work:
-
-- Add: `create`
-- Edit: `update`
-- Get: `read`
-- List: `list`
-- Remove: `delete`
-
-Use `context.isCurrentUserAllowed(to:)` for individual gates. Use
-`context.currentUserAdminListActions` when a view needs multiple action checks.
-Do not manually convert `Set<String>` permission values in feature code.
-
-Permission denial for an HTML page should render a presenter-provided
-`AdminStatusView`. Invalid nonces are request-level failures and should be
-rendered as a dedicated bad-request page. List, details, edit, and remove views
-must not display actions the current user cannot execute.
-
-## Add and edit forms
-
-The standard field order for variables and similar configuration records is:
-
-```text
-Key -> Value -> Name -> Notes
-```
-
-Keep the following concerns separate:
-
-- `FormInput.swift` — Decodable request payload and normalized values.
-- `FormInput+Validation.swift` — frontend validation rules.
-- `Form.swift` — field state, field order, rendering, and form actions.
-- `Page.swift` — breadcrumb, page header, and form composition.
-
-Only fields that are actually required should set `isRequired: true` and
-`required: true`. Keep these two declarations consistent. Optional empty text
-fields should normalize through the feature's `emptyToNil` convention where
-the API model is nullable.
-
-Only `NonceRequest<Input>` should contain the nonce. Form inputs remain focused
-on the submitted feature fields.
-
-When validation fails, preserve the submitted normalized values and attach
-failures to the matching field names. Shared input and textarea components
-already render field errors in red and expose them through
-`aria-errormessage`; use the field state error rather than rendering ad hoc
-error markup.
-
-## List, details, and empty values
-
-The list operation should pass page and search state through the repository,
-interactor, presenter, table, pagination, remove form, and redirects.
-
-Use `AdminListActions` for list row actions, toolbar actions, selection, and
-detail-page actions. Build actions conditionally rather than filtering by
-button labels.
-
-When a nullable or empty value is displayed to an administrator, use `—` so
-unset data is distinguishable from missing markup. For strings where whitespace
-only should count as empty, use `emptyToNil`.
-
-## Remove flow
-
-Removal is a two-step flow:
-
-1. GET confirmation page with selected IDs and origin context.
-2. POST nonce-protected deletion, then redirect with a flash notification.
-
-Encode IDs with the route helper. Preserve list page/search state. Track the
-origin explicitly when removal starts from details or edit so cancellation
-returns to the correct page; list-originated cancellation returns to the list.
-
-Confirmation labels should prefer display name, then key, then a diagnostic
-fallback. A missing optional name does not mean the entity is missing.
-
-## Status and error handling
-
-Present user-facing API failures with the operation presenter and
-`AdminStatusView`. Include a useful title, message, and cancel destination
-for destructive flows. Handle documented OpenAPI statuses explicitly, including
-unauthorized, forbidden, not found, and conflict/undocumented responses.
-
-Repositories expose `OpenAPIRepositoryError`; interactors translate it into
-feature-specific errors; controllers branch on those feature errors; presenters
-own user-facing wording, HTML, response status codes, and success redirects.
-
-## Naming and file rules
-
-- Prefix operation types with `Admin<Operation>System<Feature>`.
-- Name default implementations `...DefaultController`, `...DefaultInteractor`, and `...DefaultPresenter`.
-- Name API adapters `...OpenAPIRepository`.
-- Name HTML components after the rendered page, form, table, row, or details view.
-- Keep one primary object per file.
-- Do not place SQL, backend use cases, or domain models in this frontend folder.
-
-## Completion checklist
-
-Before considering a feature complete, verify:
-
-- All operation routes are registered.
-- Every operation has abstraction and default implementation layers.
-- Composition creates the repository, interactor, and presenter.
-- Permissions are enforced and unauthorized actions are hidden.
-- Forms normalize and validate consistently.
-- Field errors are attached to the correct fields and remain accessible.
-- List pagination/search state survives navigation and removal.
-- Empty values display as `—` where appropriate.
-- API response statuses are not discarded.
-- Remove cancellation returns to the correct origin.
-- The owning Swift package builds successfully.
+- Do not mirror every Swift import with a direct package dependency. Rely on
+  transitive module availability when SwiftPM/the compiler permits it; add a
+  direct product dependency only when required to build. Remove unused direct
+  dependencies after code moves, and use `public import` only for deliberate
+  re-exports.
+- Keep this guide aligned with the current source layout. Do not restore
+  instructions for the old `Features/Admin`, `Abstraction/Implementation`, or
+  frontend `buildRuntime` structure.
+- Repository-level `AGENTS.md` forbids running tests or validations in agent
+  workflows. Record formatting, package, generator, and downstream-consumer
+  checks in the handoff notes when relevant, but do not execute them here.

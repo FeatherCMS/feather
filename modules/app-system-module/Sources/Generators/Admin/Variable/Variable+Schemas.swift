@@ -1,0 +1,3 @@
+extension Variable {
+    enum Schemas {}
+}

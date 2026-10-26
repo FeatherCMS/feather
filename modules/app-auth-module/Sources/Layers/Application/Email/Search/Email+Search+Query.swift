@@ -1,0 +1,9 @@
+public import AuthModule
+
+extension Email.Search {
+    public enum Query {
+        public protocol Interface: Sendable {
+            func search(query: Input.Query) async throws -> Output
+        }
+    }
+}

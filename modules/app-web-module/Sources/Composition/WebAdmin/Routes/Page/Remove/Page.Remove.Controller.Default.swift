@@ -1,0 +1,100 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import WebModule
+
+extension Page.Remove.Controller {
+    struct Default: Interface {
+        let routes: Page.Router.Routes
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any Page.Remove.Interactor.Interface,
+                any Page.Remove.Presenter.Interface
+            >
+
+        func getRemovePage(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse {
+            let runtime = buildRuntime(request, context)
+            let id = try context.requiredID()
+            guard
+                context.isCurrentUserAllowed(
+                    to: Page.Permissions.delete
+                )
+            else {
+                return HTMLResponse(content: "", status: .forbidden)
+            }
+            do {
+                let page = try await runtime.interactor.get(id: id)
+                return try await runtime.presenter.renderRemovePage(
+                    item: .init(id: id, label: page.title)
+                )
+            }
+            catch let error as OpenAPIRepositoryError {
+                return try await runtime.presenter.renderErrorPage(
+                    id: id,
+                    info: error.errorTitle,
+                    message: error.errorDescription
+                )
+            }
+        }
+
+        func postRemovePage(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let runtime = buildRuntime(request, context)
+            guard
+                context.isCurrentUserAllowed(
+                    to: Page.Permissions.delete
+                )
+            else { return Response(status: .forbidden) }
+            let nonceRequest = try await request.decode(
+                as: NonceRequest<AdminListRemoveFormInput>.self,
+                context: context
+            )
+            guard
+                await AdminNonceStore.shared.consume(
+                    nonceRequest.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else { return Response(status: .badRequest) }
+            let ids = nonceRequest.input.normalizedIds
+            let location = AdminLocation.url(
+                path: routes.list.path,
+                page: nonceRequest.input.normalizedPage,
+                search: nonceRequest.input.normalizedSearch
+            )
+            guard !ids.isEmpty else {
+                return Response(
+                    status: .seeOther,
+                    headers: [.location: location]
+                )
+            }
+            do {
+                try await runtime.interactor.delete(ids: ids)
+                return AdminNotification.redirect(
+                    to: location,
+                    notification: .init(
+                        title: "Removed",
+                        message: ids.count == 1
+                            ? "Web page removed successfully."
+                            : "Web pages removed successfully."
+                    )
+                )
+            }
+            catch let error as OpenAPIRepositoryError {
+                return try await runtime.presenter
+                    .renderErrorPage(
+                        id: ids[0],
+                        info: error.errorTitle,
+                        message: error.errorDescription
+                    )
+                    .response(from: request, context: context)
+            }
+        }
+    }
+}

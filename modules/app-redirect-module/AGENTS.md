@@ -1,25 +1,83 @@
-# Admin Redirect Frontend Module Guide
+# Redirect Module Guide
 
-Redirect admin features use the same operation boundaries as the system and
-user modules. Each `Add`, `Edit`, `Get`, `List`, and `Remove` operation owns
-its controller, interactor, repository, presenter, and implementation models
-and views where applicable. Operation models and views live under
-`Implementation/Models` and `Implementation/Views`; `Abstraction` contains
-protocols only.
+## Module structure and ownership
 
-The module overview lives under `Overview/Get`, with its implementation models
-and views under that operation's `Implementation` directory. Each rule
-operation owns its feature-specific models and views under that operation's
-`Implementation/Models` and `Implementation/Views` directories. Do not create
-a `Rule/Shared` folder.
+- Keep `RedirectModule`, `RedirectDomain`, `RedirectApplication`,
+  `RedirectInfrastructure`, `RedirectBackend`, `RedirectAdminAPI`,
+  `RedirectAppAPI`, `RedirectAdminOpenAPIGenerator`,
+  `RedirectAppOpenAPIGenerator`, `RedirectWebAdmin`, and `RedirectWebApp` in
+  their separate package targets.
+- Use the top-level `Rule` namespace as the domain namespace. Keep rule models,
+  application operations, queries, tables, and persistence adapters grouped
+  under their owning entity/operation namespaces.
+- Keep module-wide events under `Event`, the module permission aggregate under
+  `Permissions`, and rule-specific permission keys under `Rule.Permissions`.
+- Preserve the existing permission key strings when reorganizing their
+  declarations.
+- Redirect rules are resolved by the app-facing API. Keep the Admin API for
+  rule management and the App API for public redirect resolution; do not merge
+  their generators, generated API targets, or contracts.
 
-The request flow is Router → Controller → Interactor → OpenAPI Repository →
-API client. Controllers own route parameters, permissions, request decoding,
-nonce consumption, validation, and error branching. Interactors translate
-`OpenAPIRepositoryError` into operation-specific errors. Presenters own
-user-facing wording, admin HTML, response status codes, and redirects.
+## Application and persistence
 
-Use Admin components only. Form inputs contain feature fields only and are
-wrapped in `NonceRequest<Input>` at the controller boundary. List and remove
-flows preserve pagination, search, and filter state; bulk removal belongs to
-the Remove operation and is a single repository call.
+- Keep `Rule.Add`, `Rule.Edit`, `Rule.Detail`, `Rule.List`, `Rule.Resolve`,
+  `Rule.Search`, and `Rule.Remove` as distinct application operations with
+  their relevant action, input, output, scope, use-case, and query contracts.
+- `List` is for lightweight lookup results; `Search` handles structured
+  criteria and paginated table results. Keep their schemas and result models
+  distinct.
+- Persist redirect rules through `Rule.Table` and Feather DBAL.
+  Keep table columns, row models, indexes, and migrations consistent.
+- Ordinary tests use the shared mock database/platform and must not require
+  PostgreSQL, certificates, or persistent volumes. Cover application behavior
+  independently from HTTP composition.
+
+## Backend and API
+
+- `RedirectBackend` owns server-side Admin and App API gateways and adapts
+  generated operations to application use-cases. It must not depend on
+  `RedirectWebApp` or its middleware/client implementation.
+- The Admin API owns rule-management `List` and `Query` operations with
+  distinct schemas. WebAdmin tables use query/search; lightweight lookup
+  controls may use list.
+- The App API owns public redirect resolution. Keep its generated API client in
+  `RedirectWebApp`, where the redirect middleware consumes it.
+- Keep documented error schemas and statuses aligned with gateway and
+  middleware responses.
+
+## WebAdmin and WebApp
+
+- Keep admin routes under
+  `Sources/Composition/WebAdmin/Routes/Rule/<Operation>/`. Route components
+  follow the System module's controller/interactor/presenter/repository/router
+  structure and receive `AppEnvironment` through the router hierarchy.
+- Construct Admin API clients at the authenticated request boundary from the
+  environment and `AuthenticatedRequestContext`; do not pass only a URL
+  through every feature or share request credentials globally.
+- Keep the App API client, redirect middleware, and `RedirectRuleResolver` in
+  `RedirectWebApp`. The resolver owns both lookup eligibility and async rule
+  resolution. `DefaultRedirectRuleResolver` handles 404 GET/HEAD requests and
+  excludes admin/auth paths and static assets; consuming apps may supply their
+  own resolver and policy.
+- Install redirect middleware after ordinary route handling so an existing
+  application response takes precedence. If redirect lookup fails, preserve
+  the original response and log the failure.
+
+## OpenAPI, package, and validation
+
+- Generate OpenAPI YAML and Swift API sources using
+  `scripts/generate-openapi.sh`; do not edit generated YAML or API Swift files
+  directly. Serve the generated OAS 3.2 documents with the pinned
+  `swaggerapi/swagger-ui` Compose services.
+- Keep Admin generator declarations nested under `Rule` and its HTTP operation
+  namespaces, with operation schemas, request bodies, and responses in their
+  corresponding operation directories. Preserve component identifiers when
+  reorganizing generator source files.
+- Do not mirror every Swift import with a direct package dependency. Rely on
+  transitive module availability when SwiftPM/the compiler permits it; add a
+  direct product dependency only when required to build. Remove unused direct
+  dependencies after code moves, and use `public import` only for deliberate
+  re-exports.
+- Repository-level `AGENTS.md` forbids running tests or validations in agent
+  workflows. Record formatting, package, generator, and downstream-consumer
+  checks in the handoff notes when relevant, but do not execute them here.

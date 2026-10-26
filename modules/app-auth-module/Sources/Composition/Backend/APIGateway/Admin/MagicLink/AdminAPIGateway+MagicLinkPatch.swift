@@ -1,8 +1,18 @@
 public import AuthAdminAPI
 import AuthApplication
-import FeatherContracts
+import AuthModule
+import FeatherBackend
+import FeatherDomain
+import FeatherModuleKit
+import Foundation
+import Hummingbird
 
 extension AdminAPIGateway {
+
+    private enum UpdateMaskFields: String, Sendable {
+        case credentialId
+        case isPersistent
+    }
 
     public func authMagicLinkPatch(
         _ input: Operations.AuthMagicLinkPatch.Input
@@ -13,21 +23,55 @@ extension AdminAPIGateway {
             body = value
         }
 
+        let fields: UpdateMask<UpdateMaskFields>
+        do {
+            fields = try .init(input.query.updateMask)
+        }
+        catch {
+            throw HTTPError(.badRequest)
+        }
+
+        let authEmailId = try FieldChange(
+            value: body.credentialId,
+            shouldApply: fields.contains(.credentialId),
+            onMissing: { HTTPError(.badRequest) }
+        )
+        let isPersistent = try FieldChange(
+            value: body.isPersistent,
+            shouldApply: fields.contains(.isPersistent),
+            onMissing: { HTTPError(.badRequest) }
+        )
+
         let subject = try await CurrentSubject.require()
         let useCase = self.useCases.makeEditMagicLink()
         let result = try await useCase.execute(
             subject: subject,
-            input: AuthApplication.EditMagicLink.Input(
+            input: MagicLink.Edit.Input(
                 id: input.path.authMagicLinkId,
-                authEmailId: body.credentialId,
-                isPersistent: body.isPersistent
+                authEmailId: authEmailId,
+                isPersistent: isPersistent
             )
         )
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(mapMagicLink(result))
             )
+        )
+    }
+}
+
+extension AdminAPIGateway {
+    private func mapMagicLink(
+        _ output: MagicLink.Edit.Output
+    ) -> Components.Schemas.AuthMagicLinkDetailSchema {
+        .init(
+            id: output.id,
+            credentialId: output.authEmailId,
+            token: output.token,
+            expiresAt: output.expiresAt.timeIntervalSince1970,
+            isPersistent: output.isPersistent,
+            isUsed: output.isUsed
         )
     }
 }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "7eeae70ec6b3b6669532d4b1d51385136dd9801a1ffa58a3bc15aee2a209754a",
+  "originHash" : "792c64dfa9633e56dd58fb782431c4424f749a2e4eddd9fa8eeb1880681330c2",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -15,8 +15,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-database",
       "state" : {
-        "revision" : "d290d92b2617ad5768c293c4edcdd66b4f178d48",
-        "version" : "1.0.0-rc.2"
+        "revision" : "9a885148b6470cea32f40854f5359a872154dbf1",
+        "version" : "1.0.0-rc.3"
+      }
+    },
+    {
+      "identity" : "feather-dbal",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-dbal",
+      "state" : {
+        "revision" : "3507e6b8933425e02e823ce74db7c5a98907c93b",
+        "version" : "1.0.0-alpha.1"
       }
     },
     {
@@ -24,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-mail",
       "state" : {
-        "revision" : "699738895348bb43516c8dc351ad53ed6f356997",
-        "version" : "1.0.0-rc.1"
+        "revision" : "1bc59ff85b3f21f2dfe211d4f7270a7a1f2a91db",
+        "version" : "1.0.0-rc.2"
       }
     },
     {
@@ -33,8 +42,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-openapi",
       "state" : {
-        "revision" : "a94e95aed20bc0002cb4c271df3f5e4534a2adf7",
-        "version" : "1.0.0-rc.1"
+        "revision" : "a3d72f160a93db1d16b6fe1a90a612cde5bfb3b3",
+        "version" : "1.0.0-rc.2"
+      }
+    },
+    {
+      "identity" : "feather-sql",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-sql",
+      "state" : {
+        "revision" : "6f9e5ef57a25d0e36e489ebc71ee8ce133e8c6ed",
+        "version" : "1.0.0-alpha.1"
       }
     },
     {
@@ -42,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-storage",
       "state" : {
-        "revision" : "8ec237eadbbe98c36c41b5f26b677fbae441d303",
-        "version" : "1.0.0-rc.2"
+        "revision" : "7a327f8d2b9f67893e84864b0372776c12fc6a41",
+        "version" : "1.0.0-rc.3"
       }
     },
     {
@@ -141,8 +159,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
-        "revision" : "6675bc0ff86e61436e615df6fc5174e043e57924",
-        "version" : "1.4.1"
+        "revision" : "35a1edcb8ebd2bfe251d587f0b69e62af28f508c",
+        "version" : "1.7.3"
       }
     },
     {
@@ -195,8 +213,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-http-types",
       "state" : {
-        "revision" : "db774a277f60063a32d854f2980299caf06da041",
-        "version" : "1.6.0"
+        "revision" : "bff4b6903cdc99dda49649dd52f46c11cfd3ed50",
+        "version" : "1.8.0"
       }
     },
     {
@@ -303,8 +321,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "9e53df53e043b53046a371b31aaf0a1e26eef946",
-        "version" : "1.12.1"
+        "revision" : "478bf6ce34f71734bc88b79b37b842118312d133",
+        "version" : "1.13.2"
       }
     },
     {

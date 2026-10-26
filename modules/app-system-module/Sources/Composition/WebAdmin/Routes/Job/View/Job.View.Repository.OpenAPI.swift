@@ -1,0 +1,35 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import OpenAPIRuntime
+import SystemAdminAPI
+import SystemModule
+
+extension Job.View.Repository {
+    struct OpenAPI: Interface {
+        let api: API.Client
+
+        func get(id: String) async throws -> Job.View.Result {
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.systemJobGet(
+                    path: .init(systemJobId: id),
+                    headers: .init(accept: [.init(contentType: .json)])
+                )
+                switch response {
+                case .ok(let value):
+                    return .init(job: try value.body.json)
+                case .notFound:
+                    throw OpenAPIRepositoryError.notFound
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+        }
+    }
+}

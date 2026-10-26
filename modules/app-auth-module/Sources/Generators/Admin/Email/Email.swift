@@ -1,0 +1,11 @@
+public enum Email {
+
+
+
+
+
+
+
+
+
+}

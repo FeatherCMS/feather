@@ -1,0 +1,318 @@
+import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import WebDomain
+import WebModule
+
+extension MenuItem.Edit.Controller {
+    struct Default: Interface {
+        let routes: MenuItem.Router.Routes
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any MenuItem.Edit.Interactor.Interface,
+                any MenuItem.Edit.Presenter.Interface
+            >
+
+        func getEditMenuItem(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse {
+            let runtime = buildRuntime(request, context)
+            let menuId = try context.requiredID()
+            let id = try context.requiredParameter("itemId")
+            let permissions = context.currentUserPermissions
+            do {
+                let item = try await runtime.interactor.load(
+                    menuId: menuId,
+                    id: id
+                )
+                var availablePermissions: [String] = []
+                var permissionLoadError: String?
+                do {
+                    availablePermissions = try await runtime.interactor
+                        .loadPermissions()
+                }
+                catch {
+                    permissionLoadError = error.displayMessage
+                }
+                var state = formState(
+                    label: item.label,
+                    url: item.url,
+                    priority: "\(item.priority)",
+                    isBlank: item.isBlank,
+                    permission: item.permission,
+                    permissionOptions: availablePermissions,
+                    authentication: item.authentication,
+                    notes: item.notes
+                )
+                state.error = permissionLoadError
+                return try await runtime.presenter.renderEditPage(
+                    menuId: menuId,
+                    id: id,
+                    state: state,
+                    permissions: permissions
+                )
+            }
+            catch let error as OpenAPIRepositoryError {
+                return try await runtime.presenter.renderErrorPage(
+                    menuId: menuId,
+                    id: id,
+                    info: error.errorTitle,
+                    message: error.errorDescription,
+                    permissions: permissions
+                )
+            }
+        }
+
+        func postEditMenuItem(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let runtime = buildRuntime(request, context)
+            let menuId = try context.requiredID()
+            let id = try context.requiredParameter("itemId")
+            let permissions = context.currentUserPermissions
+            var lastPayload: MenuItem.Form.Input?
+            var availablePermissions: [String] = []
+
+            do {
+                let payload = try await request.decode(
+                    as: MenuItem.Form.Input.self,
+                    context: context
+                )
+                lastPayload = payload
+                try await payload.validate()
+
+                var permissionLoadError: String?
+                do {
+                    availablePermissions = try await runtime.interactor
+                        .loadPermissions()
+                }
+                catch {
+                    permissionLoadError = error.displayMessage
+                }
+
+                if let permissionLoadError,
+                    !payload.permission.isEmpty
+                {
+                    var state = formState(
+                        label: payload.normalizedLabel,
+                        url: payload.normalizedURL,
+                        priority: payload.normalizedPriority,
+                        isBlank: payload.isBlank.value,
+                        permission: payload.permission,
+                        permissionOptions: availablePermissions,
+                        authentication: payload.normalizedAuthentication,
+                        notes: payload.normalizedNotes
+                    )
+                    state.error = permissionLoadError
+                    return try await runtime.presenter
+                        .renderEditPage(
+                            menuId: menuId,
+                            id: id,
+                            state: state,
+                            permissions: permissions
+                        )
+                        .response(from: request, context: context)
+                }
+
+                if permissionLoadError == nil,
+                    !payload.hasValidPermission(
+                        availablePermissions: Set(availablePermissions)
+                    )
+                {
+                    var state = formState(
+                        label: payload.normalizedLabel,
+                        url: payload.normalizedURL,
+                        priority: payload.normalizedPriority,
+                        isBlank: payload.isBlank.value,
+                        permission: payload.permission,
+                        permissionOptions: availablePermissions,
+                        authentication: payload.normalizedAuthentication,
+                        notes: payload.normalizedNotes
+                    )
+                    state.apply(errors: [
+                        "permission": "Select a valid permission."
+                    ])
+                    return try await runtime.presenter
+                        .renderEditPage(
+                            menuId: menuId,
+                            id: id,
+                            state: state,
+                            permissions: permissions
+                        )
+                        .response(from: request, context: context)
+                }
+
+                guard payload.parsedPriority != nil else {
+                    var state = formState(
+                        label: payload.normalizedLabel,
+                        url: payload.normalizedURL,
+                        priority: payload.normalizedPriority,
+                        isBlank: payload.isBlank.value,
+                        permission: payload.permission,
+                        permissionOptions: availablePermissions,
+                        authentication: payload.normalizedAuthentication,
+                        notes: payload.normalizedNotes
+                    )
+                    state.apply(errors: [
+                        "priority": "Priority must be a valid integer."
+                    ])
+                    return try await runtime.presenter
+                        .renderEditPage(
+                            menuId: menuId,
+                            id: id,
+                            state: state,
+                            permissions: permissions
+                        )
+                        .response(from: request, context: context)
+                }
+                try await runtime.interactor.update(
+                    menuId: menuId,
+                    id: id,
+                    input: payload
+                )
+
+                return AdminNotification.redirect(
+                    to: routes.itemEditPath(menuID: menuId, itemID: id),
+                    notification: .init(
+                        title: "Saved",
+                        message: "Item edited successfully."
+                    )
+                )
+            }
+            catch let error as ValidationError {
+                var errors: [String: String] = [:]
+                for failure in error.failures {
+                    errors[failure.key] = failure.message
+                }
+                var state = formState(
+                    label: lastPayload?.normalizedLabel ?? "",
+                    url: lastPayload?.normalizedURL ?? "",
+                    priority: lastPayload?.normalizedPriority ?? "0",
+                    isBlank: lastPayload?.isBlank.value ?? false,
+                    permission: lastPayload?.permission ?? "",
+                    permissionOptions: availablePermissions,
+                    authentication: lastPayload?.normalizedAuthentication
+                        ?? "any",
+                    notes: lastPayload?.normalizedNotes ?? ""
+                )
+                state.apply(errors: errors)
+                return try await runtime.presenter
+                    .renderEditPage(
+                        menuId: menuId,
+                        id: id,
+                        state: state,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+            catch let error as OpenAPIRepositoryError {
+                var state = formState(
+                    label: lastPayload?.normalizedLabel ?? "",
+                    url: lastPayload?.normalizedURL ?? "",
+                    priority: lastPayload?.normalizedPriority ?? "0",
+                    isBlank: lastPayload?.isBlank.value ?? false,
+                    permission: lastPayload?.permission ?? "",
+                    permissionOptions: availablePermissions,
+                    authentication: lastPayload?.normalizedAuthentication
+                        ?? "any",
+                    notes: lastPayload?.normalizedNotes ?? ""
+                )
+                state.error = error.errorDescription
+                return try await runtime.presenter
+                    .renderEditPage(
+                        menuId: menuId,
+                        id: id,
+                        state: state,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+            catch {
+                var state = formState(
+                    label: lastPayload?.normalizedLabel ?? "",
+                    url: lastPayload?.normalizedURL ?? "",
+                    priority: lastPayload?.normalizedPriority ?? "0",
+                    isBlank: lastPayload?.isBlank.value ?? false,
+                    permission: lastPayload?.permission ?? "",
+                    permissionOptions: availablePermissions,
+                    authentication: lastPayload?.normalizedAuthentication
+                        ?? "any",
+                    notes: lastPayload?.normalizedNotes ?? ""
+                )
+                state.error = error.displayMessage
+                return try await runtime.presenter
+                    .renderEditPage(
+                        menuId: menuId,
+                        id: id,
+                        state: state,
+                        permissions: permissions
+                    )
+                    .response(from: request, context: context)
+            }
+        }
+
+        private func formState(
+            label: String = "",
+            url: String = "",
+            priority: String = "0",
+            isBlank: Bool = false,
+            permission: String = "",
+            permissionOptions: [String] = [],
+            authentication: String = "any",
+            notes: String? = nil
+        ) -> MenuItem.Form.Component.State {
+            .init(
+                label: .init(
+                    key: "label",
+                    label: "Label",
+                    value: label,
+                    error: nil
+                ),
+                url: .init(
+                    key: "url",
+                    label: "URL",
+                    value: url,
+                    error: nil
+                ),
+                priority: .init(
+                    key: "priority",
+                    label: "Priority",
+                    value: priority,
+                    error: nil
+                ),
+                isBlank: .init(
+                    key: "isBlank",
+                    label: "Open in new tab",
+                    value: isBlank,
+                    error: nil
+                ),
+                permission: .init(
+                    key: "permission",
+                    label: "Permission",
+                    value: permission,
+                    error: nil
+                ),
+                permissionOptions: permissionOptions,
+                authentication: .init(
+                    key: "authentication",
+                    label: "Visible to",
+                    value: authentication,
+                    error: nil
+                ),
+                notes: .init(
+                    key: "notes",
+                    label: "Notes",
+                    value: notes,
+                    error: nil
+                ),
+                error: nil,
+                success: nil
+            )
+        }
+    }
+}

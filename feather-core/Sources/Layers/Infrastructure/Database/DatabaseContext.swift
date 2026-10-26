@@ -1,5 +1,6 @@
-public import FeatherDatabase
+public import FeatherDBAL
+public import FeatherDomain
 
-public protocol DatabaseContext: Sendable {
-    var connection: any DatabaseConnection { get }
+public protocol DatabaseContext: DatabaseAccessContext {
+    var idGenerator: any IDGenerator { get }
 }

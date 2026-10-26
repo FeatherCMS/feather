@@ -1,0 +1,4 @@
+
+extension Variable {
+    enum Delete {}
+}

@@ -1,0 +1,4 @@
+
+extension Email {
+    enum ID {}
+}

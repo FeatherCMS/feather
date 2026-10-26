@@ -21,7 +21,6 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
-
 let package = Package(
     name: "application",
     platforms: [
@@ -89,42 +88,57 @@ let package = Package(
             from: "2.0.0"
         ),
         .package(
-            url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-database-postgres",
-            exact: "1.0.0-rc.2"
+            url:
+                "https://github.com/feather-framework/feather-database-postgres",
+            exact: "1.0.0-rc.3"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            url:
+                "https://github.com/feather-framework/feather-http-hummingbird-testing",
             exact: "1.0.0-beta.1"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-mail-ses",
-            exact: "1.0.0-rc.2"
+            exact: "1.0.0-rc.3"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-mail",
-            exact: "1.0.0-rc.1"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-mail-ephemeral",
-            exact: "1.0.0-rc.1"
-        ),
-        .package(
-            url: "https://github.com/feather-framework/feather-storage-fs",
             exact: "1.0.0-rc.2"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-storage",
-            exact: "1.0.0-rc.2"
+            exact: "1.0.0-rc.3"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-storage-s3",
+            exact: "1.0.0-rc.3"
         ),
         .package(
             url: "https://github.com/soto-project/soto-core",
             from: "7.0.0"
         ),
         .package(path: "../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-sql",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-sql-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(path: "../modules/app-system-module"),
         .package(path: "../modules/app-analytics-module"),
         .package(path: "../modules/app-redirect-module"),
@@ -142,10 +156,18 @@ let package = Package(
         .target(
             name: "Environment",
             dependencies: [
+                .product(
+                    name: "AnalyticsModule",
+                    package: "app-analytics-module"
+                ),
+                .product(
+                    name: "RedirectWebApp",
+                    package: "app-redirect-module"
+                ),
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "Jobs", package: "swift-jobs"),
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core"),
             ],
             swiftSettings: swiftSettings
         ),
@@ -156,26 +178,87 @@ let package = Package(
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(
+                    name: "FeatherDatabasePostgres",
+                    package: "feather-database-postgres"
+                ),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(
+                    name: "FeatherDBALPostgres",
+                    package: "feather-dbal-postgres"
+                ),
+                .product(
+                    name: "FeatherSQLPostgres",
+                    package: "feather-sql-postgres"
+                ),
+                .product(name: "FeatherSQL", package: "feather-sql"),
                 // kernel & module infrastructure
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "SystemInfrastructure", package: "app-system-module"),
-                .product(name: "SystemApplication", package: "app-system-module"),
-                .product(name: "AnalyticsInfrastructure", package: "app-analytics-module"),
-                .product(name: "RedirectInfrastructure", package: "app-redirect-module"),
+                .product(
+                    name: "SystemInfrastructure",
+                    package: "app-system-module"
+                ),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
+                .product(
+                    name: "AnalyticsInfrastructure",
+                    package: "app-analytics-module"
+                ),
+                .product(
+                    name: "RedirectInfrastructure",
+                    package: "app-redirect-module"
+                ),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
-                .product(name: "BlogInfrastructure", package: "app-blog-module"),
+                .product(
+                    name: "BlogInfrastructure",
+                    package: "app-blog-module"
+                ),
+                .product(name: "BlogModule", package: "app-blog-module"),
 
-                .product(name: "NewsInfrastructure", package: "app-news-module"),
-                .product(name: "UserInfrastructure", package: "app-user-module"),
+                .product(
+                    name: "NewsInfrastructure",
+                    package: "app-news-module"
+                ),
+                .product(
+                    name: "UserInfrastructure",
+                    package: "app-user-module"
+                ),
                 .product(name: "AuthApplication", package: "app-auth-module"),
-                .product(name: "AuthInfrastructure", package: "app-auth-module"),
-                .product(name: "MediaInfrastructure", package: "app-media-module"),
-                .product(name: "ContactInfrastructure", package: "app-contact-module"),
-                .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
-                .product(name: "AccountInfrastructure", package: "app-account-module"),
+                .product(
+                    name: "AuthInfrastructure",
+                    package: "app-auth-module"
+                ),
+                .product(name: "AuthModule", package: "app-auth-module"),
+                .product(
+                    name: "MediaInfrastructure",
+                    package: "app-media-module"
+                ),
+                .product(
+                    name: "ContactInfrastructure",
+                    package: "app-contact-module"
+                ),
+                .product(
+                    name: "NewsletterInfrastructure",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "AccountInfrastructure",
+                    package: "app-account-module"
+                ),
+                .product(name: "AccountModule", package: "app-account-module"),
+                .product(
+                    name: "RedirectModule",
+                    package: "app-redirect-module"
+                ),
+                .product(name: "MediaModule", package: "app-media-module"),
                 .target(name: "Environment"),
             ],
             swiftSettings: swiftSettings
@@ -187,34 +270,79 @@ let package = Package(
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(
+                    name: "FeatherDatabasePostgres",
+                    package: "feather-database-postgres"
+                ),
+                .product(
+                    name: "FeatherDBALPostgres",
+                    package: "feather-dbal-postgres"
+                ),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
 
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherMailSES", package: "feather-mail-ses"),
-                .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
+                .product(name: "FeatherStorageS3", package: "feather-storage-s3"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "SotoCore", package: "soto-core"),
 
                 // kernel & module infrastructure
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "SystemInfrastructure", package: "app-system-module"),
-                .product(name: "AnalyticsInfrastructure", package: "app-analytics-module"),
-                .product(name: "RedirectInfrastructure", package: "app-redirect-module"),
+                .product(
+                    name: "SystemInfrastructure",
+                    package: "app-system-module"
+                ),
+                .product(
+                    name: "AnalyticsInfrastructure",
+                    package: "app-analytics-module"
+                ),
+                .product(
+                    name: "RedirectInfrastructure",
+                    package: "app-redirect-module"
+                ),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
-                .product(name: "BlogInfrastructure", package: "app-blog-module"),
+                .product(
+                    name: "BlogInfrastructure",
+                    package: "app-blog-module"
+                ),
 
-                .product(name: "UserInfrastructure", package: "app-user-module"),
-                .product(name: "AuthInfrastructure", package: "app-auth-module"),
+                .product(
+                    name: "UserInfrastructure",
+                    package: "app-user-module"
+                ),
+                .product(
+                    name: "AuthInfrastructure",
+                    package: "app-auth-module"
+                ),
+                .product(name: "AuthModule", package: "app-auth-module"),
                 .product(name: "MediaApplication", package: "app-media-module"),
-                .product(name: "MediaInfrastructure", package: "app-media-module"),
-                .product(name: "ContactInfrastructure", package: "app-contact-module"),
-                .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
-                .product(name: "AccountInfrastructure", package: "app-account-module"),
+                .product(
+                    name: "MediaInfrastructure",
+                    package: "app-media-module"
+                ),
+                .product(
+                    name: "ContactInfrastructure",
+                    package: "app-contact-module"
+                ),
+                .product(
+                    name: "NewsletterInfrastructure",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "NewsletterModule",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "AccountInfrastructure",
+                    package: "app-account-module"
+                ),
                 .target(name: "Environment"),
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core"),
             ],
             swiftSettings: swiftSettings
         ),
@@ -225,7 +353,10 @@ let package = Package(
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Logging", package: "swift-log"),
-                .product(name: "ServiceLifecycle", package: "swift-service-lifecycle"),
+                .product(
+                    name: "ServiceLifecycle",
+                    package: "swift-service-lifecycle"
+                ),
                 .product(name: "SystemPackage", package: "swift-system"),
             ],
             swiftSettings: swiftSettings
@@ -234,36 +365,91 @@ let package = Package(
         .executableTarget(
             name: "WebApp",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .product(name: "WebContracts", package: "app-web-module"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebApp", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "WebModule", package: "app-web-module"),
 
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
                 .product(name: "Mustache", package: "swift-mustache"),
 
-                .product(name: "SystemFrontend", package: "app-system-module"),
-                .product(name: "UserFrontend", package: "app-user-module"),
-                .product(name: "AccountFrontend", package: "app-account-module"),
-                .product(name: "RedirectFrontend", package: "app-redirect-module"),
-                .product(name: "AnalyticsFrontend", package: "app-analytics-module"),
-                .product(name: "WebFrontend", package: "app-web-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
+                .product(name: "UserWebAdmin", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
+                .product(
+                    name: "AccountWebAdmin",
+                    package: "app-account-module"
+                ),
+                .product(
+                    name: "AccountAdminAPI",
+                    package: "app-account-module"
+                ),
+                .product(name: "AccountWebApp", package: "app-account-module"),
+                .product(
+                    name: "RedirectWebAdmin",
+                    package: "app-redirect-module"
+                ),
+                .product(
+                    name: "RedirectModule",
+                    package: "app-redirect-module"
+                ),
+                .product(
+                    name: "RedirectWebApp",
+                    package: "app-redirect-module"
+                ),
+                .product(
+                    name: "AnalyticsWebAdmin",
+                    package: "app-analytics-module"
+                ),
+                .product(
+                    name: "AnalyticsWebApp",
+                    package: "app-analytics-module"
+                ),
+                .product(
+                    name: "AnalyticsModule",
+                    package: "app-analytics-module"
+                ),
+                .product(name: "WebModuleWebApp", package: "app-web-module"),
+                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
-                .product(name: "NewsletterFrontend", package: "app-newsletter-module"),
-                .product(name: "ContactFrontend", package: "app-contact-module"),
-                .product(name: "MediaFrontend", package: "app-media-module"),
-                .product(name: "BlogFrontend", package: "app-blog-module"),
-                .product(name: "NewsFrontend", package: "app-news-module"),
-                .product(name: "AuthFrontend", package: "app-auth-module"),
+                .product(
+                    name: "NewsletterWebAdmin",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "NewsletterWebApp",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "NewsletterModule",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "ContactWebAdmin",
+                    package: "app-contact-module"
+                ),
+                .product(name: "ContactWebApp", package: "app-contact-module"),
+                .product(name: "MediaWebAdmin", package: "app-media-module"),
+                .product(name: "BlogWebAdmin", package: "app-blog-module"),
+                .product(name: "BlogWebApp", package: "app-blog-module"),
+                .product(name: "NewsWebAdmin", package: "app-news-module"),
+                .product(name: "NewsWebApp", package: "app-news-module"),
+                .product(name: "AuthWebApp", package: "app-auth-module"),
+                .product(name: "AuthWebAdmin", package: "app-auth-module"),
+                .product(name: "AuthModule", package: "app-auth-module"),
+                .product(name: "ContactModule", package: "app-contact-module"),
 
                 .product(name: "ContactAppAPI", package: "app-contact-module"),
                 .product(name: "BlogAppAPI", package: "app-blog-module"),
                 .product(name: "NewsAppAPI", package: "app-news-module"),
+                .target(name: "Environment"),
 
             ],
             resources: [
-                .copy("Resources/Templates"),
+                .copy("Resources/Templates")
             ],
             swiftSettings: swiftSettings
         ),
@@ -276,37 +462,98 @@ let package = Package(
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
 
                 .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "OpenAPIHummingbird", package: "swift-openapi-hummingbird"),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
 
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(
+                    name: "FeatherDatabasePostgres",
+                    package: "feather-database-postgres"
+                ),
+                .product(
+                    name: "FeatherDBALPostgres",
+                    package: "feather-dbal-postgres"
+                ),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherBackend", package: "feather-core"),
-                .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherStorageS3", package: "feather-storage-s3"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
+                .product(name: "SotoCore", package: "soto-core"),
 
                 .product(name: "UserAdminAPI", package: "app-user-module"),
-                .product(name: "UserAppAPI", package: "app-user-module"),
-                .product(name: "AccountAdminAPI", package: "app-account-module"),
+                .product(
+                    name: "AccountAdminAPI",
+                    package: "app-account-module"
+                ),
                 .product(name: "AccountAppAPI", package: "app-account-module"),
                 .product(name: "AccountBackend", package: "app-account-module"),
+                .product(
+                    name: "AccountApplication",
+                    package: "app-account-module"
+                ),
+                .product(name: "AccountDomain", package: "app-account-module"),
+                .product(name: "AccountModule", package: "app-account-module"),
                 .product(name: "AuthAdminAPI", package: "app-auth-module"),
                 .product(name: "AuthAppAPI", package: "app-auth-module"),
                 .product(name: "AuthBackend", package: "app-auth-module"),
-                .product(name: "RedirectAdminAPI", package: "app-redirect-module"),
-                .product(name: "RedirectAppAPI", package: "app-redirect-module"),
-                .product(name: "AnalyticsBackend", package: "app-analytics-module"),
+                .product(
+                    name: "RedirectAdminAPI",
+                    package: "app-redirect-module"
+                ),
+                .product(
+                    name: "RedirectAppAPI",
+                    package: "app-redirect-module"
+                ),
+                .product(
+                    name: "RedirectApplication",
+                    package: "app-redirect-module"
+                ),
+                .product(
+                    name: "RedirectModule",
+                    package: "app-redirect-module"
+                ),
+                .product(
+                    name: "AnalyticsBackend",
+                    package: "app-analytics-module"
+                ),
                 .product(name: "WebAdminAPI", package: "app-web-module"),
                 .product(name: "WebAppAPI", package: "app-web-module"),
                 .product(name: "WebBackend", package: "app-web-module"),
-                .product(name: "NewsletterAdminAPI", package: "app-newsletter-module"),
-                .product(name: "NewsletterAppAPI", package: "app-newsletter-module"),
-                .product(name: "NewsletterApplication", package: "app-newsletter-module"),
-                .product(name: "NewsletterBackend", package: "app-newsletter-module"),
-                .product(name: "ContactAdminAPI", package: "app-contact-module"),
+                .product(
+                    name: "NewsletterAdminAPI",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "NewsletterAppAPI",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "NewsletterApplication",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "NewsletterBackend",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "NewsletterModule",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "ContactAdminAPI",
+                    package: "app-contact-module"
+                ),
                 .product(name: "ContactAppAPI", package: "app-contact-module"),
-                .product(name: "ContactApplication", package: "app-contact-module"),
+                .product(
+                    name: "ContactApplication",
+                    package: "app-contact-module"
+                ),
                 .product(name: "ContactBackend", package: "app-contact-module"),
                 .product(name: "MediaAdminAPI", package: "app-media-module"),
                 .product(name: "MediaBackend", package: "app-media-module"),
@@ -320,23 +567,64 @@ let package = Package(
                 .product(name: "NewsApplication", package: "app-news-module"),
 
                 // kernel & module infrastructure
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherDomain", package: "feather-core"),
-                .product(name: "SystemInfrastructure", package: "app-system-module"),
-                .product(name: "RedirectInfrastructure", package: "app-redirect-module"),
+                .product(
+                    name: "SystemInfrastructure",
+                    package: "app-system-module"
+                ),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(
+                    name: "RedirectInfrastructure",
+                    package: "app-redirect-module"
+                ),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
-                .product(name: "BlogInfrastructure", package: "app-blog-module"),
+                .product(
+                    name: "BlogInfrastructure",
+                    package: "app-blog-module"
+                ),
+                .product(name: "BlogModule", package: "app-blog-module"),
 
-                .product(name: "NewsInfrastructure", package: "app-news-module"),
-                .product(name: "UserInfrastructure", package: "app-user-module"),
-                .product(name: "AuthInfrastructure", package: "app-auth-module"),
-                .product(name: "MediaInfrastructure", package: "app-media-module"),
-                .product(name: "ContactInfrastructure", package: "app-contact-module"),
-                .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
-                .product(name: "AccountInfrastructure", package: "app-account-module"),
+                .product(
+                    name: "NewsInfrastructure",
+                    package: "app-news-module"
+                ),
+                .product(
+                    name: "UserInfrastructure",
+                    package: "app-user-module"
+                ),
+                .product(name: "UserDomain", package: "app-user-module"),
+                .product(
+                    name: "AuthInfrastructure",
+                    package: "app-auth-module"
+                ),
+                .product(name: "AuthModule", package: "app-auth-module"),
+                .product(
+                    name: "MediaInfrastructure",
+                    package: "app-media-module"
+                ),
+                .product(
+                    name: "ContactInfrastructure",
+                    package: "app-contact-module"
+                ),
+                .product(
+                    name: "NewsletterInfrastructure",
+                    package: "app-newsletter-module"
+                ),
+                .product(
+                    name: "AccountInfrastructure",
+                    package: "app-account-module"
+                ),
                 .product(name: "SystemBackend", package: "app-system-module"),
-                .product(name: "RedirectBackend", package: "app-redirect-module"),
+                .product(
+                    name: "RedirectBackend",
+                    package: "app-redirect-module"
+                ),
                 .product(name: "UserBackend", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
 
                 .target(name: "Environment"),
             ],
@@ -346,18 +634,44 @@ let package = Package(
         .testTarget(
             name: "ServerTests",
             dependencies: [
-                .product(name: "FeatherHTTPHummingbirdTesting", package: "feather-http-hummingbird-testing"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(
+                    name: "FeatherDatabasePostgres",
+                    package: "feather-database-postgres"
+                ),
+                .product(
+                    name: "FeatherDBALPostgres",
+                    package: "feather-dbal-postgres"
+                ),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
-                .product(name: "PostgresMigrations", package: "postgres-migrations"),
-                .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
+                .product(
+                    name: "PostgresMigrations",
+                    package: "postgres-migrations"
+                ),
+                .product(name: "FeatherStorageTesting", package: "feather-storage"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
-                .product(name: "AccountAdminAPI", package: "app-account-module"),
+                .product(
+                    name: "AccountAdminAPI",
+                    package: "app-account-module"
+                ),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
-                .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(name: "BlogModule", package: "app-blog-module"),
+                .product(
+                    name: "MediaInfrastructure",
+                    package: "app-media-module"
+                ),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .target(name: "Server"),
             ],
             swiftSettings: swiftSettings
@@ -368,7 +682,7 @@ let package = Package(
             dependencies: [
                 .target(name: "Worker"),
                 .product(name: "FeatherMail", package: "feather-mail"),
-                .product(name: "FeatherMailEphemeral", package: "feather-mail-ephemeral"),
+                .product(name: "FeatherMailTesting", package: "feather-mail"),
                 .target(name: "Environment"),
             ],
             swiftSettings: swiftSettings
@@ -378,10 +692,17 @@ let package = Package(
             name: "WebAppTests",
             dependencies: [
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
-                .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
-                .product(name: "AccountFrontend", package: "app-account-module"),
-                .product(name: "WebFrontend", package: "app-web-module"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "AuthModule", package: "app-auth-module"),
+                .product(
+                    name: "AccountWebAdmin",
+                    package: "app-account-module"
+                ),
+                .product(name: "AccountWebApp", package: "app-account-module"),
+                .product(name: "WebModuleWebApp", package: "app-web-module"),
+                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
                 .target(name: "WebApp"),
             ],
             swiftSettings: swiftSettings

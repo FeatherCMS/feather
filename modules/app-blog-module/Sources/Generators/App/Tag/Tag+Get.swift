@@ -1,0 +1,3 @@
+extension Tag {
+    enum Get {}
+}

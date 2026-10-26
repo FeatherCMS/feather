@@ -1,5 +1,7 @@
 import AnalyticsApplication
+public import AnalyticsModule
 import AnalyticsDomain
+import Foundation
 import HTTPTypes
 public import Hummingbird
 
@@ -8,13 +10,16 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
     private static let forwardedFor = HTTPField.Name("x-forwarded-for")!
     private let analytics: AnalyticsBackend.UseCases
     private let resolveAccountID: @Sendable (Request) async -> String?
+    private let logFilter: any Log.Filter.Interface
 
     public init(
         analytics: AnalyticsBackend.UseCases,
-        resolveAccountID: @escaping @Sendable (Request) async -> String?
+        resolveAccountID: @escaping @Sendable (Request) async -> String?,
+        logFilter: any Log.Filter.Interface
     ) {
         self.analytics = analytics
         self.resolveAccountID = resolveAccountID
+        self.logFilter = logFilter
     }
 
     public func handle(
@@ -24,22 +29,23 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
             @concurrent (Request, BasicRequestContext) async throws -> Response
     ) async throws -> Response {
         let path = request.uri.path
+        let url = request.uri.description
+        let method = request.method.rawValue
         let response = try await next(request, context)
         let responseCode = Int(response.status.code)
-        guard shouldTrack(path: path, responseCode: responseCode) else {
+        guard
+            logFilter.shouldTrack(
+                path: path,
+                method: method,
+                responseCode: responseCode
+            )
+        else {
             return response
         }
 
         let useCase = analytics.makeTrackLog()
         let accountId = await resolveAccountID(request)
-        let headers = request.headers.reduce(into: [String: String]()) {
-            result,
-            field in
-            result[field.name.rawName.lowercased()] = field.value
-        }
-        let headersString = AnalyticsLogRequestMetadata.headersJSONString(
-            headers
-        )
+        let headers = Self.storedHeaders(from: request)
         let acceptLanguage = request.headers[.acceptLanguage]
         let userAgent = request.headers[.userAgent]
         let languageComponents =
@@ -54,15 +60,19 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
                 input: .init(
                     accountId: accountId,
                     source: .backendAPI,
-                    method: request.method.rawValue,
-                    url: request.uri.description,
-                    headers: headersString,
+                    method: method,
+                    url: url,
+                    headers: headers,
                     ip: request.headers[Self.forwardedFor],
                     path: path,
                     referer: request.headers[.referer],
                     origin: request.headers[.origin],
                     acceptLanguage: acceptLanguage,
                     userAgent: userAgent,
+                    trafficCategory:
+                        AnalyticsLogRequestMetadata.classifyUserAgent(
+                            userAgent
+                        ),
                     language: languageComponents.language,
                     region: languageComponents.region,
                     osName: userAgentComponents.osName,
@@ -86,22 +96,22 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
         return response
     }
 
-    private func shouldTrack(
-        path: String,
-        responseCode: Int
-    ) -> Bool {
-        if path == "/health" {
-            return false
+    private static func storedHeaders(from request: Request) -> String {
+        let allowedNames: Set<String> = ["accept", "content-type"]
+        let headers = request.headers.reduce(into: [String: String]()) {
+            result,
+            field in
+            let name = field.name.canonicalName
+            guard allowedNames.contains(name) else { return }
+            result[name] = String(field.value.prefix(256))
         }
-        if path.hasPrefix("/api/v1/admin/analytics/") {
-            return false
+        guard
+            let data = try? JSONEncoder().encode(headers),
+            let json = String(data: data, encoding: .utf8)
+        else {
+            return "{}"
         }
-        if path == "/api/v1/analytics/logs/track" {
-            return false
-        }
-        if responseCode == 404 {
-            return true
-        }
-        return true
+        return json
     }
+
 }

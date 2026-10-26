@@ -21,7 +21,31 @@ struct WorkerConfigLoader {
         let workerScope = reader.scoped(to: "worker")
         let mediaScope = reader.scoped(to: "media")
         let objectKeyScope = reader.scoped(to: "storage.object_key")
+        let storageScope = reader.scoped(to: "storage.s3")
         let sesScope = reader.scoped(to: "ses")
+        let storageEndpoint = storageScope.string(
+            forKey: "endpoint",
+            default: ""
+        )
+        let s3 = S3StorageConfig(
+            accessKeyId: storageScope.string(
+                forKey: "access_key_id",
+                default: ""
+            ),
+            secretAccessKey: storageScope.string(
+                forKey: "secret_access_key",
+                default: ""
+            ),
+            region: storageScope.string(
+                forKey: "region",
+                default: ""
+            ),
+            endpoint: storageEndpoint.isEmpty ? nil : storageEndpoint,
+            bucket: storageScope.string(
+                forKey: "bucket",
+                default: ""
+            )
+        )
 
         return .init(
             system: systemConfigLoader.load(reader: reader),
@@ -109,6 +133,7 @@ struct WorkerConfigLoader {
                 )
             ),
             storage: .init(
+                s3: s3,
                 objectKey: .init(
                     depth: max(
                         0,
@@ -121,10 +146,6 @@ struct WorkerConfigLoader {
                 )
             ),
             media: .init(
-                storageRootPath: mediaScope.string(
-                    forKey: "storage_root_path",
-                    default: "/tmp/backend-media"
-                ),
                 maxConcurrentProcessing: max(
                     1,
                     mediaScope.int(

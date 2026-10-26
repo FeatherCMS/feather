@@ -1,10 +1,9 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-let swiftSettings: [SwiftSetting] = [
+let sharedSwiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
     .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -21,6 +20,10 @@ let swiftSettings: [SwiftSetting] = [
     ),
 ]
 
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
 
 let package = Package(
     name: "app-news-module",
@@ -33,16 +36,27 @@ let package = Package(
     ],
     products: [
         .library(name: "NewsDomain", targets: ["NewsDomain"]),
-        .library(name: "NewsContracts", targets: ["NewsContracts"]),
+        .library(name: "NewsModule", targets: ["NewsModule"]),
         .library(name: "NewsApplication", targets: ["NewsApplication"]),
         .library(name: "NewsInfrastructure", targets: ["NewsInfrastructure"]),
         .library(name: "NewsAdminAPI", targets: ["NewsAdminAPI"]),
         .library(name: "NewsAppAPI", targets: ["NewsAppAPI"]),
-        .library(name: "NewsSharedOpenAPIGenerator", targets: ["NewsSharedOpenAPIGenerator"]),
-        .executable(name: "NewsAdminOpenAPIGenerator", targets: ["NewsAdminOpenAPIGenerator"]),
-        .executable(name: "NewsAppOpenAPIGenerator", targets: ["NewsAppOpenAPIGenerator"]),
+        .library(
+            name: "NewsOpenAPIGeneratorSupport",
+            targets: ["NewsOpenAPIGeneratorSupport"]
+        ),
+        .executable(
+            name: "NewsAdminOpenAPIGenerator",
+            targets: ["NewsAdminOpenAPIGenerator"]
+        ),
+        .executable(
+            name: "NewsAppOpenAPIGenerator",
+            targets: ["NewsAppOpenAPIGenerator"]
+        ),
         .library(name: "NewsBackend", targets: ["NewsBackend"]),
-        .library(name: "NewsFrontend", targets: ["NewsFrontend"]),
+        .library(name: "NewsWebShared", targets: ["NewsWebShared"]),
+        .library(name: "NewsWebAdmin", targets: ["NewsWebAdmin"]),
+        .library(name: "NewsWebApp", targets: ["NewsWebApp"]),
     ],
     dependencies: [
         .package(
@@ -59,23 +73,42 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
             from: "2.27.0"
         ),
         .package(
-            url: "https://github.com/swift-server/async-http-client",
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            from: "2.0.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-http",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url:
+                "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url: "https://github.com/apple/swift-http-types",
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/swift-server/swift-openapi-async-http-client",
+            url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
         .package(
             url: "https://github.com/apple/swift-nio",
             from: "2.0.0"
+        ),
+        .package(
+            url:
+                "https://github.com/swift-server/swift-openapi-async-http-client",
+            from: "1.0.0"
         ),
         .package(
             url: "https://github.com/apple/swift-nio-ssl",
@@ -86,26 +119,35 @@ let package = Package(
             exact: "1.0.0-beta.4"
         ),
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(path: "../app-system-module"),
         .package(path: "../app-web-module"),
         .package(path: "../app-media-module"),
     ],
     targets: [
         .target(
-            name: "NewsContracts",
+            name: "NewsModule",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
-            path: "Sources/Contracts",
+            path: "Sources/Module",
             swiftSettings: swiftSettings
         ),
         .target(
             name: "NewsDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
-                .target(name: "NewsContracts"),
+                .target(name: "NewsModule"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -114,9 +156,15 @@ let package = Package(
             name: "NewsApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
 
+                .target(name: "NewsModule"),
                 .target(name: "NewsDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -125,12 +173,26 @@ let package = Package(
         .target(
             name: "NewsInfrastructure",
             dependencies: [
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "MediaDomain", package: "app-media-module"),
-                .product(name: "MediaInfrastructure", package: "app-media-module"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "MediaInfrastructure",
+                    package: "app-media-module"
+                ),
+                .product(name: "MediaModule", package: "app-media-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
 
+                .target(name: "NewsModule"),
                 .target(name: "NewsApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -140,32 +202,38 @@ let package = Package(
         .target(
             name: "NewsAppAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/App",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         .target(
             name: "NewsAdminAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: swiftSettings
+            swiftSettings: sharedSwiftSettings + [
+                .unsafeFlags(["-suppress-warnings"])
+            ]
         ),
         // MARK: -
-        .target(
-            name: "NewsSharedOpenAPIGenerator",
-            dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
-            ],
-            path: "Sources/Generators/Shared",
-            swiftSettings: swiftSettings
-        ),
         .executableTarget(
             name: "NewsAdminOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
             ],
@@ -175,25 +243,43 @@ let package = Package(
         .executableTarget(
             name: "NewsAppOpenAPIGenerator",
             dependencies: [
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-
-                .target(name: "NewsSharedOpenAPIGenerator"),
+                .target(name: "NewsOpenAPIGeneratorSupport"),
             ],
             path: "Sources/Generators/App",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "NewsOpenAPIGeneratorSupport",
+            dependencies: [
+                .product(name: "OpenAPIKit30", package: "OpenAPIKit"),
+            ],
+            path: "Sources/Generators/SchemaSupport",
             swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
             name: "NewsBackend",
             dependencies: [
-                .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherApplication", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "WebApplication", package: "app-web-module"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
-                .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .product(
+                    name: "SystemInfrastructure",
+                    package: "app-system-module"
+                ),
+                .target(name: "NewsModule"),
+                .target(name: "NewsDomain"),
 
                 .target(name: "NewsApplication"),
                 .target(name: "NewsInfrastructure"),
@@ -204,29 +290,59 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "NewsFrontend",
+            name: "NewsWebShared",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
-
-                .product(name: "Hummingbird", package: "hummingbird"),
-                .product(name: "MediaFrontend", package: "app-media-module"),
-                .product(name: "SystemContracts", package: "app-system-module"),
-                .product(name: "WebContracts", package: "app-web-module"),
-                .product(name: "WebFrontend", package: "app-web-module"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "OpenAPIAsyncHTTPClient", package: "swift-openapi-async-http-client"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
+            path: "Sources/Composition/WebShared",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "NewsWebAdmin",
+            dependencies: [
+                .target(name: "NewsWebShared"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+
+                .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "MediaWebAdmin", package: "app-media-module"),
+                .product(name: "MediaModule", package: "app-media-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
+                .product(name: "WebModule", package: "app-web-module"),
+                .product(name: "WebModuleWebAdmin", package: "app-web-module"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
                 .product(name: "CSS", package: "swift-web-standards"),
                 .product(name: "HTML", package: "swift-web-standards"),
                 .product(name: "SGML", package: "swift-web-standards"),
                 .product(name: "WebBuilders", package: "swift-web-standards"),
                 .product(name: "WebComponents", package: "swift-web-standards"),
-                .target(name: "NewsContracts"),
+                .target(name: "NewsModule"),
+                .target(name: "NewsApplication"),
                 .target(name: "NewsAdminAPI"),
+            ],
+            path: "Sources/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "NewsWebApp",
+            dependencies: [
+                .target(name: "NewsWebShared"),
+                .product(name: "FeatherWebApp", package: "feather-core"),
+                .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "WebModule", package: "app-web-module"),
                 .target(name: "NewsAppAPI"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebApp",
             resources: [
                 .copy("Resources/Templates")
             ],
@@ -234,20 +350,92 @@ let package = Package(
         ),
         // MARK: - tests
         .testTarget(
-            name: "NewsModuleTests",
+            name: "NewsDomainTests",
             dependencies: [
-                .target(name: "NewsApplication"),
                 .target(name: "NewsDomain"),
+                .target(name: "NewsModule"),
             ],
+            path: "Tests/Layers/Domain",
             swiftSettings: swiftSettings
         ),
         .testTarget(
-            name: "NewsFrontendTests",
+            name: "NewsApplicationTests",
             dependencies: [
-                .target(name: "NewsFrontend"),
+                .product(
+                    name: "FeatherApplication",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .target(name: "NewsApplication"),
+                .target(name: "NewsDomain"),
+                .target(name: "NewsModule"),
+            ],
+            path: "Tests/Layers/Application",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "NewsWebAdminTests",
+            dependencies: [
+                .product(
+                    name: "FeatherWebShared",
+                    package: "feather-core"
+                ),
+                .target(name: "NewsWebAdmin"),
                 .product(name: "Hummingbird", package: "hummingbird"),
             ],
-            path: "Tests/NewsFrontendTests",
+            path: "Tests/Composition/WebAdmin",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "NewsInfrastructureTests",
+            dependencies: [
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .target(name: "NewsInfrastructure"),
+                .target(name: "NewsModule"),
+            ],
+            path: "Tests/Layers/Infrastructure",
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "NewsBackendTests",
+            dependencies: [
+                .product(name: "FeatherHTTP", package: "feather-http"),
+                .product(name: "HTTPTypes", package: "swift-http-types"),
+                .product(
+                    name: "FeatherModuleKit",
+                    package: "feather-core"
+                ),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
+                .product(name: "FeatherTesting", package: "feather-core"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
+                .product(name: "HummingbirdTesting", package: "hummingbird"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
+                .product(name: "FeatherDBALTesting", package: "feather-dbal"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+
+                .target(name: "NewsBackend"),
+                .target(name: "NewsAdminAPI"),
+                .target(name: "NewsApplication"),
+                .target(name: "NewsDomain"),
+                .target(name: "NewsInfrastructure"),
+                .target(name: "NewsModule"),
+            ],
+            path: "Tests/Composition/Backend",
             swiftSettings: swiftSettings
         ),
     ]

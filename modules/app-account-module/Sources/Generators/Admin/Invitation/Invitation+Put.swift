@@ -1,0 +1,3 @@
+extension Invitation {
+    enum Put {}
+}

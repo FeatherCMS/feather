@@ -1,0 +1,77 @@
+public import FeatherOpenAPI
+import FeatherOpenAPIGenerator
+import MediaOpenAPIGeneratorSupport
+
+public struct BlogPostIdField: StringSchemaRepresentable {
+    public var example: String? = "blog_post_1"
+
+    public init() {}
+}
+
+public struct BlogPostContentField: StringSchemaRepresentable {
+    public var example: String? = "<p>Hello world</p>"
+
+    public init() {}
+}
+
+public struct BlogPostExcerptField: StringSchemaRepresentable {
+    public var example: String? = "Short post summary."
+
+    public init() {}
+}
+
+public struct BlogPostImageURLField: StringSchemaRepresentable {
+    public var example: String? = "/public/12/34/56789/originals/blog-post.png"
+
+    public init() {}
+}
+
+public struct BlogPostSummaryListSchema: ArraySchemaRepresentable {
+    public var items: (any SchemaRepresentable)? {
+        BlogPostSummarySchema().reference()
+    }
+
+    public init() {}
+}
+
+public struct BlogPostSummarySchema: ObjectSchemaRepresentable {
+    public var propertyMap: SchemaMap {
+        [
+            "id": BlogPostIdField().reference(),
+            "excerpt": BlogPostExcerptField().reference(),
+            "imageURL": BlogPostImageURLField().reference(),
+            "media": Media.Asset.Schema().reference(required: false),
+            "metadata": WebMetadataContentSchema().reference(),
+            "authors": BlogAuthorSummaryListSchema().reference(),
+            "tags": BlogTagSummaryListSchema().reference(),
+        ]
+    }
+
+    public init() {}
+}
+
+public struct BlogPostDetailSchema: ObjectSchemaRepresentable {
+    public var propertyMap: SchemaMap {
+        [
+            "id": BlogPostIdField().reference(),
+            "excerpt": BlogPostExcerptField().reference(),
+            "content": BlogPostContentField().reference(),
+            "imageURL": BlogPostImageURLField().reference(),
+            "media": Media.Asset.Schema().reference(required: false),
+            "metadata": WebMetadataContentSchema().reference(),
+            "authors": BlogAuthorSummaryListSchema().reference(),
+            "tags": BlogTagSummaryListSchema().reference(),
+            "relatedPosts": BlogPostSummaryListSchema().reference(),
+        ]
+    }
+
+    public init() {}
+}
+
+public struct BlogPostListSchema: ArraySchemaRepresentable {
+    public var items: (any SchemaRepresentable)? {
+        BlogPostSummarySchema().reference()
+    }
+
+    public init() {}
+}

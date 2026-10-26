@@ -1,15 +1,16 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    public func makeAddAuthorLink() -> AddAuthorLink {
+    public func makeAddAuthorLink() -> AuthorLink.Add.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteAuthorLink(
-                    authorLink: AuthorLinkDatabaseRepository(
+                AuthorLink.Add.Scope(
+                    authorLink: AuthorLink.Repository.Database(
                         context: context
                     )
                 )

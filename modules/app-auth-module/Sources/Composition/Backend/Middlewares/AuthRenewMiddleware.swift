@@ -1,7 +1,7 @@
 import FeatherApplication
-public import FeatherBackend
-import FeatherContracts
+import FeatherBackend
 import FeatherDomain
+import FeatherModuleKit
 public import HTTPTypes
 import Hummingbird
 public import OpenAPIRuntime
@@ -28,7 +28,9 @@ public struct AuthRenewMiddleware: ServerMiddleware {
         body: HTTPBody?,
         metadata: ServerRequestMetadata,
         operationID: String,
-        next: MiddlewareNextBlock
+        next: @concurrent @Sendable (
+            HTTPRequest, HTTPBody?, ServerRequestMetadata
+        ) async throws -> (HTTPResponse, HTTPBody?)
     ) async throws -> (HTTPResponse, HTTPBody?) {
         //        if let acl = try await AccessControl.get(ACL.self) {
         //            guard acl.userInfo["isPersistent"] == "true" else {

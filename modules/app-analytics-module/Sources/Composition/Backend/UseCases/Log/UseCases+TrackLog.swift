@@ -1,15 +1,17 @@
 import AnalyticsApplication
+import AnalyticsDomain
 import AnalyticsInfrastructure
+import AnalyticsModule
 import FeatherInfrastructure
 
 extension UseCases {
 
-    func makeTrackLog() -> TrackLog {
+    func makeTrackLog() -> Log.Track.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteLog(
-                    log: LogDatabaseRepository(context: context)
+                Log.Track.Scope(
+                    log: Log.Repository.Database(context: context)
                 )
             }
         )

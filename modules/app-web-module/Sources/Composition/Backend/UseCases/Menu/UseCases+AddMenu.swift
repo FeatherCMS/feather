@@ -1,22 +1,24 @@
 import FeatherApplication
-import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
 import WebApplication
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    func makeAddMenu() -> AddMenu {
+    func makeAddMenu() -> Menu.Add.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteMenu(
-                    menu: MenuDatabaseRepository(context: context)
+                Menu.Add.Scope(
+                    menu: Menu.Repository.Database(context: context)
                 )
             }
         )

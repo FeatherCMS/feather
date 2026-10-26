@@ -7,10 +7,10 @@ import PostgresNIO
 import Environment
 import FeatherInfrastructure
 import FeatherStorage
-import FeatherStorageFS
+import FeatherStorageTesting
 import Jobs
 import MediaInfrastructure
-import FeatherContracts
+import FeatherModuleKit
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
@@ -44,9 +44,7 @@ func buildTestServer(
             events: eventPublisher,
             jobQueue: jobQueue,
             storageContext: .init(
-                storage: StorageClientFS(
-                    rootPath: config.media.storageRootPath
-                ),
+                storage: TestStorageClient(),
                 objectKeyGenerator: HierarchicalObjectKeyGenerator()
             )
         ),

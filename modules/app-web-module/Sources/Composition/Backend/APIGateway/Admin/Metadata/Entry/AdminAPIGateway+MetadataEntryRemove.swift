@@ -1,12 +1,12 @@
-import FeatherContracts
+import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMetadataRemove(
-        _ input: Operations.WebMetadataRemove.Input
-    ) async throws -> Operations.WebMetadataRemove.Output {
+    public func metadataRemove(
+        _ input: Operations.MetadataRemove.Input
+    ) async throws -> Operations.MetadataRemove.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value):
@@ -16,33 +16,10 @@ extension AdminAPIGateway {
         let useCase = useCases.makeRemoveMetadata()
         let subject = try await CurrentSubject.require()
 
-        let deletedIds = try await useCase.execute(
+        _ = try await useCase.execute(
             subject: subject,
             input: .init(ids: body.ids)
         )
-        let results = body.ids.map {
-            Components.Schemas.DeleteResultListSchemaPayload(
-                id: $0,
-                status: deletedIds.contains($0) ? .deleted : .notFound
-            )
-        }
-
-        return .ok(
-            .init(
-                body: .json(
-                    .init(
-                        results: body.results ? results : nil,
-                        summary: body.summary
-                            ? .init(
-                                requested: body.ids.count,
-                                deleted: deletedIds.count,
-                                omitted:
-                                    results.filter { $0.status != .deleted }
-                                    .count
-                            ) : nil
-                    )
-                )
-            )
-        )
+        return .noContent(.init())
     }
 }

@@ -8,7 +8,7 @@ import FeatherApplication
 import FeatherDomain
 import Testing
 
-@testable import FeatherContracts
+@testable import FeatherModuleKit
 @testable import FeatherInfrastructure
 
 @Suite
@@ -58,6 +58,21 @@ struct InfrastructureTestSuite {
                 "context:value:second",
             ]
         )
+    }
+
+    @Test
+    func registersAndTriggersWithDefaultEventContext() async throws {
+        var events = EventRegistry()
+
+        events.register(event: TestEvent.self) { event in
+            "default:\(event.value)"
+        }
+
+        let results = try await events.trigger(
+            event: TestEvent(value: "value")
+        )
+
+        #expect(results == ["default:value"])
     }
 
     @Test

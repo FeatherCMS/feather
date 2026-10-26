@@ -1,7 +1,25 @@
+import FeatherDatabase
+import FeatherInfrastructure
 public import MediaApplication
+import MediaInfrastructure
+public import MediaModule
 
 extension UseCases {
-    public func makeSearchVariantProcessors() -> SearchMediaVariantProcessors {
-        .init(authorizer: authorizer, transaction: writeTransaction())
+    public func makeSearchVariantProcessors()
+        -> Variant.Processor.Search.UseCase
+    {
+        .init(
+            authorizer: authorizer,
+            query: DatabaseQueryExecutor(
+                databaseContext: databaseContext,
+                scope: { context in
+                    Variant.Processor.Search.Scope(
+                        query: Variant.Processor.Search.Query.Database(
+                            context: context
+                        )
+                    )
+                }
+            )
+        )
     }
 }

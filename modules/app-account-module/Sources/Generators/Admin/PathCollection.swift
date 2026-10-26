@@ -1,25 +1,19 @@
-import AccountSharedOpenAPIGenerator
 import FeatherOpenAPI
-import OpenAPIKit30
+import FeatherOpenAPIGenerator
 
 struct PathCollection: PathCollectionRepresentable {
     var pathMap: PathMap {
-        [
-            "api/v1/admin/account/users": AccountCreatePathItems(),
-            "api/v1/admin/account/settings": AccountSettingsPathItems(),
-            "api/v1/admin/account/users/{userId}/profile":
-                AdminAccountProfilePathItems(),
-            "api/v1/admin/account/users/{userId}/settings":
-                AdminAccountSettingsPathItems(),
-            "api/v1/admin/account/invitations": AccountInvitationPathItems(),
-            "api/v1/admin/account/invitations/":
-                AccountInvitationListPathItems(),
-            "api/v1/admin/account/invitations/search":
-                AccountInvitationSearchPathItems(),
-            "api/v1/admin/account/invitations/{accountInvitationId}":
-                AccountInvitationIdPathItems(),
-            "api/v1/admin/account/invitations/{accountInvitationId}/resend":
-                AccountInvitationResendPathItems(),
-        ]
+        var paths: PathMap = [:]
+        paths.merge(Account.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Profile.PathCollection().pathMap) {
+            current,
+            _ in current
+        }
+        paths.merge(Settings.PathCollection().pathMap) { current, _ in current }
+        paths.merge(Invitation.PathCollection().pathMap) {
+            current,
+            _ in current
+        }
+        return paths
     }
 }

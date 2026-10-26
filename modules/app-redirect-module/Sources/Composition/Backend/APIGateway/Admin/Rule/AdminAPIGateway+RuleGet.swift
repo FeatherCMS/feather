@@ -1,6 +1,8 @@
-import FeatherContracts
+import FeatherModuleKit
 public import RedirectAdminAPI
+import RedirectDomain
 import RedirectApplication
+import RedirectModule
 
 extension AdminAPIGateway {
 
@@ -8,7 +10,7 @@ extension AdminAPIGateway {
         _ input: Operations.RedirectRuleGet.Input
     ) async throws -> Operations.RedirectRuleGet.Output {
         let subject = try await CurrentSubject.require()
-        let useCase = self.useCases.makeGetRule()
+        let useCase = self.useCases.makeDetailRule()
         let result = try await useCase.execute(
             subject: subject,
             input: .init(id: input.path.redirectRuleId)
@@ -18,6 +20,18 @@ extension AdminAPIGateway {
             .init(
                 body: .json(map(result))
             )
+        )
+    }
+
+    private func map(
+        _ detail: Rule.Detail.Output
+    ) -> Components.Schemas.RedirectRuleDetailSchema {
+        .init(
+            id: detail.id,
+            source: detail.source,
+            destination: detail.destination,
+            statusCode: detail.statusCode.rawValue,
+            notes: detail.notes
         )
     }
 }

@@ -13,37 +13,6 @@ security:
 - bearerAuth: []
 paths:
   /api/v1/admin/news/articles:
-    post:
-      tags:
-      - NewsArticles
-      operationId: newsArticleCreate
-      requestBody:
-        $ref: '#/components/requestBodies/NewsArticleRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/NewsArticleDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - NewsArticles
-      operationId: newsArticleRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/news/articles/:
     get:
       tags:
       - NewsArticles
@@ -53,28 +22,90 @@ paths:
           $ref: '#/components/responses/NewsArticleListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/news/articles/search:
     post:
       tags:
       - NewsArticles
-      operationId: newsArticleSearch
+      operationId: newsArticlePost
+      requestBody:
+        $ref: '#/components/requestBodies/NewsArticleRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/NewsArticleDetailResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - NewsArticles
+      operationId: newsArticleDelete
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/news/articles/query:
+    post:
+      tags:
+      - NewsArticles
+      operationId: newsArticleQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewsArticleListItemSearchQuerySchema'
+              $ref: '#/components/schemas/NewsArticleQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/NewsArticleListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/NewsArticleQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/news/articles/{newsArticleId}:
@@ -89,16 +120,28 @@ paths:
           $ref: '#/components/responses/NewsArticleDetailResponse'
         404:
           description: News article not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
       tags:
       - NewsArticles
-      operationId: newsArticleUpdate
+      operationId: newsArticlePut
       parameters:
       - $ref: '#/components/parameters/NewsArticleIDParameter'
       requestBody:
@@ -108,44 +151,25 @@ paths:
           $ref: '#/components/responses/NewsArticleDetailResponse'
         404:
           description: News article not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/news/categories:
-    post:
-      tags:
-      - NewsCategories
-      operationId: newsCategoryCreate
-      requestBody:
-        $ref: '#/components/requestBodies/NewsCategoryRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/NewsCategoryDetailResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - NewsCategories
-      operationId: newsCategoryRemove
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/news/categories/:
     get:
       tags:
       - NewsCategories
@@ -155,28 +179,90 @@ paths:
           $ref: '#/components/responses/NewsCategoryListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/news/categories/search:
     post:
       tags:
       - NewsCategories
-      operationId: newsCategorySearch
+      operationId: newsCategoryPost
+      requestBody:
+        $ref: '#/components/requestBodies/NewsCategoryRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/NewsCategoryDetailResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - NewsCategories
+      operationId: newsCategoryDelete
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        204:
+          $ref: '#/components/responses/NoContentResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
+      security:
+      - bearerAuth: []
+  /api/v1/admin/news/categories/query:
+    post:
+      tags:
+      - NewsCategories
+      operationId: newsCategoryQuery
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/NewsCategoryListItemSearchQuerySchema'
+              $ref: '#/components/schemas/NewsCategoryQueryItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/NewsCategoryListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/NewsCategoryQueryItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/news/categories/{newsCategoryId}:
@@ -191,16 +277,28 @@ paths:
           $ref: '#/components/responses/NewsCategoryDetailResponse'
         404:
           description: News category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
       tags:
       - NewsCategories
-      operationId: newsCategoryUpdate
+      operationId: newsCategoryPut
       parameters:
       - $ref: '#/components/parameters/NewsCategoryIDParameter'
       requestBody:
@@ -210,14 +308,106 @@ paths:
           $ref: '#/components/responses/NewsCategoryDetailResponse'
         404:
           description: News category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
   schemas:
+    NewsArticleListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsArticleListItemSchema'
+    NewsArticleListItemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: example
+        title:
+          type: string
+          example: example
+        excerpt:
+          type: string
+          example: example
+        imageAssetId:
+          $ref: '#/components/schemas/ArticleSchemasStringField'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+    ArticleSchemasStringField:
+      type: string
+      example: example
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     NewsArticleCreateSchema:
       type: object
       properties:
@@ -231,9 +421,9 @@ components:
           type: string
           example: example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/ArticleSchemasStringField'
         categoryIds:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsCategoryIDsField'
+          $ref: '#/components/schemas/ArticleSchemasCategoryIDsField'
         metadata:
           $ref: '#/components/schemas/NewsMetadataInputSchema'
       required:
@@ -241,13 +431,10 @@ components:
       - excerpt
       - content
       - metadata
-    NewsAdminOpenAPIComponentsStringField:
-      type: string
-      example: example
-    NewsAdminOpenAPIComponentsCategoryIDsField:
+    ArticleSchemasCategoryIDsField:
       type: array
       items:
-        $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+        $ref: '#/components/schemas/ArticleSchemasStringField'
     NewsMetadataInputSchema:
       type: object
       properties:
@@ -258,35 +445,38 @@ components:
           type: string
           example: draft
         publicationDate:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsTimestampField'
+          $ref: '#/components/schemas/MetadataSchemasTimestampField'
         expirationDate:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsTimestampField'
+          $ref: '#/components/schemas/MetadataSchemasTimestampField'
         title:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         excerpt:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         imageURL:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         canonicalURL:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         noIndex:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsBooleanField'
+          $ref: '#/components/schemas/MetadataSchemasBooleanField'
         primaryKeyword:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         cssCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         javascriptCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         structuredDataCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
       required:
       - slug
       - status
-    NewsAdminOpenAPIComponentsTimestampField:
+    MetadataSchemasTimestampField:
       type: number
       format: double
       example: 1.76e+9
-    NewsAdminOpenAPIComponentsBooleanField:
+    MetadataSchemasStringField:
+      type: string
+      example: example
+    MetadataSchemasBooleanField:
       type: boolean
       example: false
     NewsArticleDetailSchema:
@@ -305,11 +495,11 @@ components:
           type: string
           example: example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/ArticleSchemasStringField'
         categoryIds:
           type: array
           items:
-            $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+            $ref: '#/components/schemas/ArticleSchemasStringField'
         metadata:
           $ref: '#/components/schemas/NewsMetadataDetailSchema'
         createdAt:
@@ -352,29 +542,29 @@ components:
           format: double
           example: 1.76e+9
         expirationDate:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsTimestampField'
+          $ref: '#/components/schemas/MetadataSchemasTimestampField'
         status:
           type: string
           example: draft
         title:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         excerpt:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         imageURL:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         canonicalURL:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         noIndex:
           type: boolean
           example: false
         primaryKeyword:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         cssCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         javascriptCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         structuredDataCodeInjection:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/MetadataSchemasStringField'
         createdAt:
           type: number
           format: double
@@ -402,90 +592,9 @@ components:
           items:
             type: string
             example: id1
-        results:
-          type: boolean
-          example: true
-        summary:
-          type: boolean
-          example: true
       required:
       - ids
-      - results
-      - summary
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-    DeleteResultListSchema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            example: id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            example: deleted
-        required:
-        - id
-        - status
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          example: 1
-        deleted:
-          type: integer
-          example: 1
-        omitted:
-          type: integer
-          example: 1
-      required:
-      - requested
-      - deleted
-      - omitted
-    NewsArticleListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/NewsArticleListItemSchema'
-    NewsArticleListItemSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          example: example
-        title:
-          type: string
-          example: example
-        excerpt:
-          type: string
-          example: example
-        imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
-        createdAt:
-          type: number
-          format: double
-          example: 1.76e+9
-        updatedAt:
-          type: number
-          format: double
-          example: 1.76e+9
-      required:
-      - id
-      - title
-      - excerpt
-      - createdAt
-      - updatedAt
-    NewsArticleListItemSearchQuerySchema:
+    NewsArticleQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -516,7 +625,6 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     SearchPageSchema:
       type: object
@@ -525,14 +633,17 @@ components:
           $ref: '#/components/schemas/SearchPageSizeField'
         number:
           $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
     SearchPageSizeField:
       type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
       example: 20
     SearchPageNumberField:
       type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
       example: 1
     SortDirection:
       type: string
@@ -543,18 +654,18 @@ components:
     SearchStringField:
       type: string
       example: foo
-    NewsArticleListItemSearchSchema:
+    NewsArticleQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/NewsArticleListItemSearchQuerySchema'
+          $ref: '#/components/schemas/NewsArticleQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/NewsArticleListItemSchema'
+                $ref: '#/components/schemas/NewsArticleQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -564,6 +675,112 @@ components:
       required:
       - query
       - data
+    NewsArticleQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+    NewsArticleQueryItemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: example
+        title:
+          type: string
+          example: example
+        excerpt:
+          type: string
+          example: example
+        imageAssetId:
+          $ref: '#/components/schemas/ArticleSchemasStringField'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+    NewsCategoryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsCategoryListItemSchema'
+    NewsCategoryListItemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: example
+        title:
+          type: string
+          example: example
+        excerpt:
+          type: string
+          example: example
+        imageAssetId:
+          $ref: '#/components/schemas/CategorySchemasStringField'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
+    CategorySchemasStringField:
+      type: string
+      example: example
     NewsCategoryCreateSchema:
       type: object
       properties:
@@ -577,7 +794,7 @@ components:
           type: string
           example: example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/CategorySchemasStringField'
         metadata:
           $ref: '#/components/schemas/NewsMetadataInputSchema'
       required:
@@ -601,7 +818,7 @@ components:
           type: string
           example: example
         imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+          $ref: '#/components/schemas/CategorySchemasStringField'
         metadata:
           $ref: '#/components/schemas/NewsMetadataDetailSchema'
         createdAt:
@@ -620,39 +837,7 @@ components:
       - metadata
       - createdAt
       - updatedAt
-    NewsCategoryListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/NewsCategoryListItemSchema'
-    NewsCategoryListItemSchema:
-      type: object
-      properties:
-        id:
-          type: string
-          example: example
-        title:
-          type: string
-          example: example
-        excerpt:
-          type: string
-          example: example
-        imageAssetId:
-          $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
-        createdAt:
-          type: number
-          format: double
-          example: 1.76e+9
-        updatedAt:
-          type: number
-          format: double
-          example: 1.76e+9
-      required:
-      - id
-      - title
-      - excerpt
-      - createdAt
-      - updatedAt
-    NewsCategoryListItemSearchQuerySchema:
+    NewsCategoryQueryItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -683,20 +868,19 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
-    NewsCategoryListItemSearchSchema:
+    NewsCategoryQueryItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/NewsCategoryListItemSearchQuerySchema'
+          $ref: '#/components/schemas/NewsCategoryQueryItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/NewsCategoryListItemSchema'
+                $ref: '#/components/schemas/NewsCategoryQueryItemSchema'
             total:
               type: integer
               example: 123
@@ -706,63 +890,120 @@ components:
       required:
       - query
       - data
+    NewsCategoryQueryItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    NewsCategoryQueryItemSchema:
+      type: object
+      properties:
+        id:
+          type: string
+          example: example
+        title:
+          type: string
+          example: example
+        excerpt:
+          type: string
+          example: example
+        imageAssetId:
+          $ref: '#/components/schemas/CategorySchemasStringField'
+        createdAt:
+          type: number
+          format: double
+          example: 1.76e+9
+        updatedAt:
+          type: number
+          format: double
+          example: 1.76e+9
+      required:
+      - id
+      - title
+      - excerpt
+      - createdAt
+      - updatedAt
   responses:
-    NewsArticleDetailResponse:
-      description: News article response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewsArticleDetailSchema'
-    DeleteResponse:
-      description: Delete response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
     NewsArticleListResponse:
       description: News article list response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/NewsArticleListSchema'
-    NewsArticleListItemSearchSchemaSearchResponse:
+    NewsArticleDetailResponse:
+      description: News article response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsArticleDetailSchema'
+    NoContentResponse:
+      description: Delete succeeded
+    NewsArticleQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/NewsArticleListItemSearchSchema'
-    NewsCategoryDetailResponse:
-      description: News category response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NewsCategoryDetailSchema'
+            $ref: '#/components/schemas/NewsArticleQueryItemSearchSchema'
     NewsCategoryListResponse:
       description: News category list response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/NewsCategoryListSchema'
-    NewsCategoryListItemSearchSchemaSearchResponse:
+    NewsCategoryDetailResponse:
+      description: News category response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsCategoryDetailSchema'
+    NewsCategoryQueryItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/NewsCategoryListItemSearchSchema'
+            $ref: '#/components/schemas/NewsCategoryQueryItemSearchSchema'
   parameters:
     NewsArticleIDParameter:
       name: newsArticleId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+        $ref: '#/components/schemas/ArticleSchemasStringField'
       description: News article identifier
     NewsCategoryIDParameter:
       name: newsCategoryId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/NewsAdminOpenAPIComponentsStringField'
+        $ref: '#/components/schemas/CategorySchemasStringField'
       description: News category identifier
   requestBodies:
     NewsArticleRequestBody:

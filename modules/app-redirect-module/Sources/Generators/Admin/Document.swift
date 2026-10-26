@@ -1,9 +1,8 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 struct Info: InfoRepresentable {
-    var title: String { "System Admin API" }
+    var title: String { "Redirect Admin API" }
     var version: String { "0.1.0" }
 }
 

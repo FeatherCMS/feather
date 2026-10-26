@@ -1,64 +1,66 @@
-import FeatherDatabase
 public import WebAppAPI
 import WebApplication
-
-extension Error {
-    fileprivate var isResolveWebRouteNotFound: Bool {
-        if self is ResolveWebRoute.Error {
-            return true
-        }
-        if let databaseError = self as? DatabaseError {
-            return databaseError.isResolveWebRouteNotFound
-        }
-        if let transactionError = self as? any DatabaseTransactionError {
-            return transactionError.closureError?.isResolveWebRouteNotFound
-                ?? false
-        }
-        return false
-    }
-}
-
-extension DatabaseError {
-    fileprivate var isResolveWebRouteNotFound: Bool {
-        switch self {
-        case .connection(let error):
-            return error.isResolveWebRouteNotFound
-        case .query(let error):
-            return error.isResolveWebRouteNotFound
-        case .transaction(let error):
-            return error.closureError?.isResolveWebRouteNotFound ?? false
-        }
-    }
-}
+import WebModule
 
 extension AppAPIGateway {
-    public func webMetadataGet(
-        _ input: Operations.WebMetadataGet.Input
-    ) async throws -> Operations.WebMetadataGet.Output {
-        do {
-            let route = try await useCases.makeResolveWebRoute()
-                .execute(
-                    slug: input.path.slug
-                )
-            return .ok(
+    public func metadataGet(
+        _ input: Operations.MetadataGet.Input
+    ) async throws -> Operations.MetadataGet.Output {
+        guard let metadata = try await resolveMetadata(slug: input.path.slug)
+        else {
+            return .notFound(
                 .init(
                     body: .json(
                         .init(
-                            referenceType: route.referenceType,
-                            referenceId: route.referenceID,
-                            slug: route.slug,
-                            template: route.template
+                            error: .init(
+                                message: "Page not found",
+                                reason:
+                                    "No published page exists for this route."
+                            )
                         )
                     )
                 )
             )
         }
-        catch is ResolveWebRoute.Error {
-            return .notFound
+        return .ok(.init(body: .json(metadata)))
+    }
+
+    public func metadataRootGet(
+        _ input: Operations.MetadataRootGet.Input
+    ) async throws -> Operations.MetadataRootGet.Output {
+        guard let metadata = try await resolveMetadata(slug: "") else {
+            return .notFound(
+                .init(
+                    body: .json(
+                        .init(
+                            error: .init(
+                                message: "Page not found",
+                                reason:
+                                    "No published page exists for this route."
+                            )
+                        )
+                    )
+                )
+            )
         }
-        catch let error as DatabaseError
-        where error.isResolveWebRouteNotFound {
-            return .notFound
+        return .ok(.init(body: .json(metadata)))
+    }
+
+    private func resolveMetadata(
+        slug: String
+    ) async throws -> Components.Schemas.MetadataSchema? {
+        do {
+            let route = try await useCases.makeResolveWebRoute()
+                .execute(input: WebRoute.Resolve.Input(slug: slug))
+            return .init(
+                referenceType: route.referenceType,
+                referenceId: route.referenceID,
+                slug: route.slug,
+                template: route.template
+            )
+        }
+        catch is WebApplication.WebRoute.Resolve.Error {
+            return nil
         }
     }
 }

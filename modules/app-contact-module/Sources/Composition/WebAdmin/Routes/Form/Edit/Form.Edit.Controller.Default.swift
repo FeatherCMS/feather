@@ -1,0 +1,190 @@
+import ContactApplication
+import ContactModule
+import FeatherValidation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+extension ContactModule.Form.Edit.Controller {
+    struct Default: Interface {
+        let routes: ContactModule.Form.Router.Routes
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any ContactModule.Form.Edit.Interactor.Interface,
+                any ContactModule.Form.Edit.Presenter.Interface
+            >
+
+        func edit(request: Request, context: AuthenticatedRequestContext)
+            async throws
+            -> HTMLResponse
+        {
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
+            let formKey = try context.requiredParameter("formKey")
+            do {
+                return try await presenter.renderPage(
+                    item: try await interactor.get(key: formKey),
+                    error: nil,
+                    permissions: context.currentUserPermissions
+                )
+            }
+            catch let error as ContactModule.Form.Edit.Repository.Error {
+                return try await presenter.renderErrorPage(error: error)
+            }
+        }
+
+        func fields(request: Request, context: AuthenticatedRequestContext)
+            async throws
+            -> HTMLResponse
+        {
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
+            let formKey = try context.requiredParameter("formKey")
+            do {
+                return try await presenter.renderFieldsPage(
+                    item: try await interactor.get(key: formKey),
+                    error: nil,
+                    permissions: context.currentUserPermissions
+                )
+            }
+            catch let error as ContactModule.Form.Edit.Repository.Error {
+                return try await presenter.renderErrorPage(error: error)
+            }
+        }
+
+        func update(request: Request, context: AuthenticatedRequestContext)
+            async throws
+            -> Response
+        {
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
+            let formKey = try context.requiredParameter("formKey")
+            let form = try await request.decode(
+                as: ContactModule.Form.Edit.Input.self,
+                context: context
+            )
+            let current: ContactModule.Form.Details.Item
+            do {
+                current = try await interactor.get(key: formKey)
+            }
+            catch let error as ContactModule.Form.Edit.Repository.Error {
+                return
+                    try await presenter
+                    .renderErrorPage(error: error)
+                    .response(from: request, context: context)
+            }
+            do {
+                _ = try await interactor.update(
+                    key: formKey,
+                    newKey: form.key,
+                    name: form.name,
+                    successMessage: form.successMessage ?? "",
+                    failureMessage: form.failureMessage ?? "",
+                    redirectUrl: form.redirectUrl,
+                    fieldIDs: form.fieldIds ?? current.selectedFieldIDs,
+                    mails: form.mails.isEmpty ? current.mails : form.mails
+                )
+                return AdminNotification.redirect(
+                    to: routes.formEditPath(form.key),
+                    notification: .init(
+                        title: "Saved",
+                        message: "Contact form updated successfully."
+                    )
+                )
+            }
+            catch let error as ContactModule.Form.Edit.Repository.Error {
+                return
+                    try await presenter.renderEditError(
+                        key: formKey,
+                        item: .init(
+                            key: form.key,
+                            name: form.name,
+                            successMessage: form.successMessage ?? "",
+                            failureMessage: form.failureMessage ?? "",
+                            redirectUrl: form.redirectUrl,
+                            selectedFieldIDs: form.fieldIds ?? [],
+                            availableFields: current.availableFields,
+                            mails: form.mails.isEmpty
+                                ? current.mails : form.mails
+                        ),
+                        error: error,
+                        permissions: context.currentUserPermissions
+                    )
+                    .response(from: request, context: context)
+            }
+        }
+        func updateFields(
+            request: Request,
+            context: AuthenticatedRequestContext
+        )
+            async throws
+            -> Response
+        {
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
+            let formKey = try context.requiredParameter("formKey")
+            let form = try await request.decode(
+                as: ContactModule.Form.Edit.Fields.Input.self,
+                context: context
+            )
+            let current: ContactModule.Form.Details.Item
+            do {
+                current = try await interactor.get(key: formKey)
+            }
+            catch let error as ContactModule.Form.Edit.Repository.Error {
+                return
+                    try await presenter
+                    .renderErrorPage(error: error)
+                    .response(from: request, context: context)
+            }
+            do {
+                _ = try await interactor.update(
+                    key: formKey,
+                    newKey: current.key,
+                    name: current.name,
+                    successMessage: current.successMessage,
+                    failureMessage: current.failureMessage,
+                    redirectUrl: current.redirectUrl,
+                    fieldIDs: form.fieldIds ?? [],
+                    mails: current.mails
+                )
+                return AdminNotification.redirect(
+                    to: routes.formFieldsPath(formKey),
+                    notification: .init(
+                        title: "Saved",
+                        message: "Contact form fields updated successfully."
+                    )
+                )
+            }
+            catch {
+                let attempted = ContactModule.Form.Details.Item(
+                    key: current.key,
+                    name: current.name,
+                    successMessage: current.successMessage,
+                    failureMessage: current.failureMessage,
+                    redirectUrl: current.redirectUrl,
+                    selectedFieldIDs: form.fieldIds ?? [],
+                    availableFields: current.availableFields,
+                    mails: current.mails
+                )
+                return
+                    try await presenter.renderFieldsPage(
+                        item: attempted,
+                        error:
+                            "The fields could not be saved. Please try again.",
+                        permissions: context.currentUserPermissions
+                    )
+                    .response(from: request, context: context)
+            }
+        }
+    }
+}

@@ -1,0 +1,42 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+import OpenAPIRuntime
+import UserAdminAPI
+import UserModule
+
+extension Identity.Detail.Repository.Role {
+    struct OpenAPI: Interface {
+        let api: API.Client
+
+        func names(for ids: [String]) async throws -> [String] {
+            guard !ids.isEmpty else { return [] }
+
+            return try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.userRoleList(
+                    query: .init(limit: 100),
+                    headers: .init(accept: [.init(contentType: .json)])
+                )
+                switch response {
+                case .ok(let ok):
+                    var namesByID: [String: String] = [:]
+                    for item in try ok.body.json {
+                        if let name = item.name {
+                            namesByID[item.id] = name
+                        }
+                    }
+                    return ids.compactMap { namesByID[$0] }
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+        }
+    }
+}

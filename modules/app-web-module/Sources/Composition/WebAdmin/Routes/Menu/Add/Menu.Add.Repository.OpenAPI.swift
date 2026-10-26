@@ -1,0 +1,44 @@
+import FeatherWebAdmin
+import FeatherWebShared
+import Hummingbird
+import OpenAPIRuntime
+import WebAdminAPI
+import WebDomain
+import WebModule
+
+extension WebModule.Menu.Add.Repository {
+    struct OpenAPI: Interface {
+        let api: API.Client
+
+        func create(
+            input: WebModule.Menu.Form.Input
+        ) async throws {
+            try await api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.menuCreate(
+                    headers: .init(accept: [.init(contentType: .json)]),
+                    body: .json(
+                        .init(
+                            key: input.normalizedKey,
+                            name: input.normalizedName,
+                            notes: input.normalizedNotes
+                        )
+                    )
+                )
+
+                switch response {
+                case .created:
+                    return
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+        }
+    }
+}

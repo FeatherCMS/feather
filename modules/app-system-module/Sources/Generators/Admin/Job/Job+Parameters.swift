@@ -1,0 +1,3 @@
+extension Job {
+    enum Parameters {}
+}

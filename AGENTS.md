@@ -10,7 +10,7 @@ never list sources or exclude files in a package.swift files a folder path shoul
 
 never write sql code outside of a Database/AccessLayer folder. SQL code is only allowed within that folder.
 
-never write functionality on a Scope object. Always use a repository or query for managing database models, always use the table representation objects and never use direct SQL code. 
+Never put functionality on a Scope object. Use repositories or queries for database operations and table representations for standard CRUD. Use parameterized SQL only inside `Database/AccessLayer` when FeatherDBAL cannot express the required behavior.
 
 never use typealias-es. never use tuples, except if user explicitly asks for this.
 
@@ -54,7 +54,10 @@ Use the FATHOMS style described in the docs:
 - `Application`
   - `UseCase` implementations, DTOs, scopes, permissions/actions, and orchestration.
 - `Infrastructure`
-  - SQL-first table access, repository/query adapters, migration code, and technical helpers.
+  - FeatherDBAL table schemas, row representations, repository/query adapters, and migrations.
+  - Keep standard CRUD and schema creation on DBAL; partial updates should encode only the fields being changed rather than falling back to SQL.
+  - Isolate custom SQL in `Database/AccessLayer` only when DBAL cannot express the required behavior.
+  - Bind scalar and collection values through `DatabaseQuery` interpolation; reserve unescaped interpolation for trusted SQL fragments and allowlisted identifiers.
 - `Server`
   - HTTP/OpenAPI assembly, routes, middleware, adapters, and request/response mapping.
 - `Migrator`
@@ -77,8 +80,10 @@ Dependency direction must stay inward:
 
 - Keep OpenAPI types in the shared OpenAPI package.
 - Use generated request/response types at the HTTP boundary.
-- Keep schema/DTO conversion in dedicated adapter or helper files.
-- Keep handlers thin: parse input, call use-case, map output.
+- Keep request parsing, the use-case call, and response mapping together in the
+  gateway operation file that handles that generated operation.
+- Do not create standalone mapping/helper files or shared mapping extensions.
+  Keep each mapping function beside the gateway operation that uses it.
 
 ### 2.4 Web app feature pattern
 
@@ -117,9 +122,9 @@ Dependency direction must stay inward:
 
 - Use feature-oriented file names that describe the primary object.
 - Prefer names that match the contained type or extension:
-  - `AdminListUserRolePresenter.swift`
-  - `UserInvitationForm.swift`
-  - `ObjectToSchema+<Feature>.swift`
+  - `Identity+Search+Query+Database.swift` for
+    `Identity.Search.Query.Database`
+  - `Invitation.Add.swift` for the `Invitation.Add` namespace extension
 - Avoid vague names like `Helpers.swift` unless the file is truly shared and narrowly scoped.
 
 ### 3.3 Layer boundaries
@@ -131,9 +136,10 @@ Dependency direction must stay inward:
 
 ### 3.4 Mapping and adapter code
 
-- Keep request/response mapping close to adapter layers.
-- Avoid manual field-by-field mapping in handlers when a dedicated mapping helper is the existing pattern.
-- Prefer small adapter files over large mixed-purpose files.
+- Keep request/response mapping in the corresponding gateway operation file.
+- Do not create dedicated `*Mapping.swift`, `*Mappings.swift`, or shared
+  mapping-helper files. Define each mapping function in the gateway operation
+  that invokes the use-case; keep unrelated operation mappings separate.
 
 ### 3.5 OpenAPI generation rule
 

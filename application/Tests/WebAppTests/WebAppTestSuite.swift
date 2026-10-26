@@ -1,18 +1,21 @@
+import SystemModule
 import CSS
-import AuthFrontend
-import AuthContracts
-import FeatherAdmin
-import FeatherContracts
+import AuthWebAdmin
+import AuthModule
+import FeatherWebAdmin
+import FeatherModuleKit
 import HTML
 import SGML
-import SystemFrontend
+import SystemWebAdmin
 import Testing
-import UserFrontend
-import AccountFrontend
-@testable import WebFrontend
+import UserWebAdmin
+import AccountWebAdmin
+import AccountWebApp
+@testable import WebModuleWebApp
+@testable import WebModuleWebAdmin
 import FeatherValidation
 
-@testable import WebApp
+@testable import WebModuleWebApp
 
 @Suite
 struct WebAppTestSuite {
@@ -20,18 +23,23 @@ struct WebAppTestSuite {
     @Test
     func authCredentialsMenuItemUsesRegisteredPermission() async throws {
         var events = EventRegistry()
-        AuthAdminMenuEventHandlers.register(in: &events)
+        AuthWebAdmin.Event.Handlers.registerMenu(in: &events)
 
         let items = try await events.trigger(
-            event: AdminMenuItemProvider(menuKey: "auth"),
-            using: AdminEventContext(path: "/admin/auth/", permissions: [])
+            event: SystemWebAdmin.Admin.Menu.Item.Provider(
+                menuKey: "auth"
+            ),
+            using: SystemWebAdmin.Admin.Menu.Context(
+                path: "/admin/auth/",
+                permissions: []
+            )
         )
 
         let credentials = items.flatMap { $0 }
             .first { $0.link == "/admin/auth/credentials/" }
 
         #expect(
-            credentials?.permission == AuthPermissions.Credential.list.rawValue
+            credentials?.permission == Credential.Permissions.list.rawValue
         )
     }
 

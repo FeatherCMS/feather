@@ -1,0 +1,200 @@
+import AuthAdminAPI
+import AuthModule
+import CSS
+import FeatherValidation
+import FeatherValidationFoundation
+import FeatherWebAdmin
+import FeatherWebShared
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemWebAdmin
+import UserAdminAPI
+import UserWebAdmin
+import WebBuilders
+import WebComponents
+
+extension MagicLink.Edit.Controller {
+    struct Default: Interface {
+        let routes: MagicLink.Router.Routes
+
+        let buildRuntime:
+            @Sendable (Request, AuthenticatedRequestContext) -> WebAdminRuntime<
+                any MagicLink.Edit.Interactor.Interface,
+                any MagicLink.Edit.Presenter.Interface
+            >
+
+        func getEditAuthMagicLink(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse {
+            let id = try context.requiredID()
+            let isEdited = request.hasQueryFlag("edited")
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
+            let permissions = context.currentUserPermissions
+            guard
+                context.isCurrentUserAllowed(
+                    to: MagicLink.Permissions.update
+                )
+            else {
+                return try await presenter.renderError(
+                    id: id,
+                    error: .forbidden,
+                    permissions: permissions
+                )
+            }
+            do {
+                let link = try await interactor.get(id: id)
+                let emails = try await interactor.listEmails()
+                return try await presenter.renderPage(
+                    id: id,
+                    isEdited: isEdited,
+                    form: presenter.formState(
+                        credentialId: link.credentialId,
+                        emails: emails,
+                        isPersistent: link.isPersistent
+                    ),
+                    permissions: permissions
+                )
+            }
+            catch let error as OpenAPIRepositoryError {
+                return try await presenter.renderError(
+                    id: id,
+                    error: error,
+                    permissions: permissions
+                )
+            }
+        }
+
+        func postEditAuthMagicLink(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let id = try context.requiredID()
+            let runtime = buildRuntime(request, context)
+            let interactor = runtime.interactor
+            let presenter = runtime.presenter
+            guard
+                context.isCurrentUserAllowed(
+                    to: MagicLink.Permissions.update
+                )
+            else {
+                return
+                    try await presenter.renderError(
+                        id: id,
+                        error: .forbidden,
+                        permissions: context.currentUserPermissions
+                    )
+                    .response(from: request, context: context)
+            }
+            var lastPayload: MagicLink.Edit.Form.Input?
+            do {
+                let nonceRequest = try await request.decode(
+                    as: NonceRequest<MagicLink.Edit.Form.Input>.self,
+                    context: context
+                )
+                guard
+                    await AdminNonceStore.shared.consume(
+                        nonceRequest.nonce,
+                        sessionToken: context.sessionToken
+                    )
+                else {
+                    var state = presenter.formState(
+                        credentialId: "",
+                        isPersistent: false
+                    )
+                    state.error =
+                        "This form has expired. Please reload the page."
+                    return try await updateResponse(
+                        request: request,
+                        context: context,
+                        id: id,
+                        presenter: presenter,
+                        state: state
+                    )
+                }
+                let payload = nonceRequest.input
+                lastPayload = payload
+                try await payload.validate()
+                try await interactor.execute(
+                    entity: .init(
+                        id: id,
+                        credentialId: payload.normalizedCredentialId,
+                        isPersistent: payload.isPersistent.value
+                    )
+                )
+                return AdminNotification.redirect(
+                    to: routes.editPath(id),
+                    notification: .init(
+                        title: "Saved",
+                        message: "User magic link edited successfully."
+                    )
+                )
+            }
+            catch let error as ValidationError {
+                var errs: [String: String] = [:]
+                for f in error.failures { errs[f.key] = f.message }
+                var state = presenter.formState(
+                    credentialId: lastPayload?.normalizedCredentialId ?? "",
+                    isPersistent: lastPayload?.isPersistent.value ?? false
+                )
+                state.apply(errors: errs)
+                return try await updateResponse(
+                    request: request,
+                    context: context,
+                    id: id,
+                    presenter: presenter,
+                    state: state
+                )
+            }
+            catch let error as OpenAPIRepositoryError {
+                var state = presenter.formState(
+                    credentialId: lastPayload?.normalizedCredentialId ?? "",
+                    isPersistent: lastPayload?.isPersistent.value ?? false
+                )
+                state.error = presenter.format(error: error)
+                return try await updateResponse(
+                    request: request,
+                    context: context,
+                    id: id,
+                    presenter: presenter,
+                    state: state
+                )
+            }
+            catch {
+                var state = presenter.formState(
+                    credentialId: lastPayload?.normalizedCredentialId ?? "",
+                    isPersistent: lastPayload?.isPersistent.value ?? false
+                )
+                state.error = error.displayMessage
+                return try await updateResponse(
+                    request: request,
+                    context: context,
+                    id: id,
+                    presenter: presenter,
+                    state: state
+                )
+            }
+        }
+
+        private func updateResponse(
+            request: Request,
+            context: AuthenticatedRequestContext,
+            id: String,
+            presenter: any MagicLink.Edit.Presenter.Interface,
+            state: MagicLink.Add.Form.State
+        ) async throws -> Response {
+            try await presenter.renderPage(
+                id: id,
+                isEdited: false,
+                form: state,
+                permissions: context.currentUserPermissions
+            )
+            .response(from: request, context: context)
+        }
+    }
+}

@@ -1,4 +1,5 @@
 import FeatherDatabase
+import FeatherDBALPostgres
 import FeatherInfrastructure
 import FeatherHTTP
 import HTTPTypes
@@ -108,6 +109,7 @@ struct AppAPIPublicWebMenuListTests {
         connection: any DatabaseConnection
     ) async throws {
         let context = DatabaseTransactionContext(
+            platform: PostgresDatabasePlatform(),
             connection: connection,
             idGenerator: NanoIDGenerator()
         )

@@ -1,29 +1,34 @@
 public import BlogApplication
 import BlogInfrastructure
+public import BlogModule
 import FeatherApplication
-import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
 import MediaBackend
+import SystemApplication
 import SystemInfrastructure
+import SystemModule
+import WebDomain
 import WebInfrastructure
+import WebModule
 
 extension UseCases {
 
-    public func makeEditTag() -> EditTag {
+    public func makeEditTag() -> Tag.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteTagMetadata(
-                    tag: TagDatabaseRepository(
+                Tag.Edit.Scope(
+                    tag: Tag.Repository.Database(
                         context: context
                     ),
-                    metadata: MetadataDatabaseRepository(
+                    metadata: WebModule.Metadata.Repository.Database(
                         context: context
                     ),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
+                    variable: SystemModule.Variable.Lookup.Query.Database(
+                        context: context
                     )
                 )
             }
