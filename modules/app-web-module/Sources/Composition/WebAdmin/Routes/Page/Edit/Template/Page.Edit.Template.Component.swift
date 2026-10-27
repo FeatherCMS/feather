@@ -455,6 +455,9 @@ extension Page.Edit.Template {
                     item.removeAttribute("data-template-list-prototype");
                     var idSuffix = Date.now().toString(36) + Math.random().toString(36).slice(2);
                     var idMap = {};
+                    item.querySelectorAll("[name]").forEach(function (element) {
+                      element.name = element.name + "-" + idSuffix;
+                    });
                     item.querySelectorAll("[id]").forEach(function (element) {
                       var previousID = element.id;
                       element.id = previousID + "-" + idSuffix;
@@ -498,7 +501,6 @@ extension Page.Edit.Template {
                     renumber(root);
                     updateRemoveButtons(root);
                     sync(root);
-                    if (status) { status.textContent = "Item removed."; }
                   }
                 });
 

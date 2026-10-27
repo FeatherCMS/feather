@@ -142,7 +142,8 @@ extension Page.Edit.Template {
                         value: value,
                         controlPrefix: "template-list-\(index)",
                         context: &context,
-                        required: itemKind != .boolean
+                        required: itemKind != .boolean,
+                        isDisabled: isPrototype
                     )
                 }
             }

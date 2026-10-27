@@ -1,4 +1,5 @@
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 import WebDomain
 public import WebModule
@@ -40,6 +41,11 @@ extension Metadata.Edit {
                     throw Error(message: "Metadata not found")
                 }
 
+                let templateData = input.template.apply(to: model.template)
+                    == model.template
+                    ? input.templateData
+                    : .clear
+
                 try model.update(
                     template: input.template,
                     slug: input.slug,
@@ -56,7 +62,7 @@ extension Metadata.Edit {
                     javascriptCodeInjection: input.javascriptCodeInjection,
                     structuredDataCodeInjection: input
                         .structuredDataCodeInjection,
-                    templateData: input.templateData
+                    templateData: templateData
                 )
 
                 return try await scope.metadata.update(model)

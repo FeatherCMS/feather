@@ -86,7 +86,7 @@ extension AdminAPIGateway {
                 ),
                 templateData: .init(
                     value: body.templateData,
-                    shouldApply: true
+                    shouldApply: body.templateData != nil
                 )
             )
         )
