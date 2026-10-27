@@ -47,8 +47,30 @@ extension Log.List.Controller {
             let requestedToValue = request.queryString("to")?
                 .whitespaceTrimmed
                 .emptyToNil
-            let fromDate = requestedFromValue.flatMap(dateFormatter.date(from:))
-            let toDate = requestedToValue.flatMap(dateFormatter.date(from:))
+            let iso8601DateFormatter = ISO8601DateFormatter()
+            iso8601DateFormatter.formatOptions = [
+                .withInternetDateTime,
+                .withFractionalSeconds,
+            ]
+            let iso8601DateFormatterWithoutFractionalSeconds =
+                ISO8601DateFormatter()
+            iso8601DateFormatterWithoutFractionalSeconds.formatOptions = [
+                .withInternetDateTime
+            ]
+            let fromDate = requestedFromValue.flatMap {
+                dateFormatter.date(from: $0)
+                    ?? iso8601DateFormatter.date(from: $0)
+                    ?? iso8601DateFormatterWithoutFractionalSeconds.date(
+                        from: $0
+                    )
+            }
+            let toDate = requestedToValue.flatMap {
+                dateFormatter.date(from: $0)
+                    ?? iso8601DateFormatter.date(from: $0)
+                    ?? iso8601DateFormatterWithoutFractionalSeconds.date(
+                        from: $0
+                    )
+            }
             let isValidRange: Bool
             if let fromDate, let toDate {
                 isValidRange = fromDate < toDate

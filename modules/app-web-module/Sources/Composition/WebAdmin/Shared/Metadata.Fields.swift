@@ -242,7 +242,7 @@ extension WebModule.Metadata {
                                 )
                             )
                             context.build(
-                                AdminFormFieldDatePicker(
+                                AdminFormFieldDateTimePicker(
                                     state: .init(
                                         name: state.publicationDate.key,
                                         label: state.publicationDate.label,
@@ -253,7 +253,7 @@ extension WebModule.Metadata {
                                 )
                             )
                             context.build(
-                                AdminFormFieldDatePicker(
+                                AdminFormFieldDateTimePicker(
                                     state: .init(
                                         name: state.expirationDate.key,
                                         label: state.expirationDate.label,

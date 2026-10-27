@@ -426,7 +426,7 @@ extension Log.List {
             Form {
                 Div {
                     context.build(
-                        AdminFormFieldDatePicker(
+                        AdminFormFieldDateTimePicker(
                             state: .init(
                                 name: "from",
                                 label: "From",
@@ -436,7 +436,7 @@ extension Log.List {
                         )
                     )
                     context.build(
-                        AdminFormFieldDatePicker(
+                        AdminFormFieldDateTimePicker(
                             state: .init(
                                 name: "to",
                                 label: "To",
