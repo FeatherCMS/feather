@@ -29,7 +29,7 @@ extension WebModule.Metadata.Edit.Form {
             var referenceId: FieldState?
             var slug: FieldState
             var template: FieldState
-            var templateOptions: [WebModule.Metadata.Edit.TemplateOption]
+            var templateOptions: [WebModule.Metadata.TemplateOption]
             var publicationDate: FieldState
             var expirationDate: FieldState
             var status: FieldState

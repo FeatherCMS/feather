@@ -18,6 +18,11 @@ extension Post.Remove.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> Response {
             let runtime = buildRuntime(request, context)
+            guard
+                context.isCurrentUserAllowed(
+                    to: Post.Permissions.delete
+                )
+            else { return Response(status: .forbidden) }
             let nonceRequest = try await request.decode(
                 as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context

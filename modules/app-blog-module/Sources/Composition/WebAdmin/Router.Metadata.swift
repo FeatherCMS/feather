@@ -23,9 +23,9 @@ extension Router {
             environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             events: any EventPublisher,
-            postRoutes: Post.Routes,
-            authorRoutes: Author.Routes,
-            tagRoutes: Tag.Routes
+            postRoutes: Post.Router.Routes,
+            authorRoutes: Author.Router.Routes,
+            tagRoutes: Tag.Router.Routes
         ) {
             let routes = [
                 Route(
@@ -34,8 +34,8 @@ extension Router {
                     title: "Edit post metadata",
                     breadcrumb: postRoutes.postsBreadcrumb,
                     mediaAssetList: postRoutes.mediaAssetList,
-                    editPath: postRoutes.postEdit,
-                    metadataPath: postRoutes.postEditMetadata
+                    editPath: postRoutes.postEditPath,
+                    metadataPath: postRoutes.postEditMetadataPath
                 ),
                 Route(
                     path: authorRoutes.authorEditMetadataRoute(),
@@ -43,8 +43,8 @@ extension Router {
                     title: "Edit author metadata",
                     breadcrumb: authorRoutes.authorsBreadcrumb,
                     mediaAssetList: authorRoutes.mediaAssetList,
-                    editPath: authorRoutes.authorEdit,
-                    metadataPath: authorRoutes.authorEditMetadata
+                    editPath: authorRoutes.authorEditPath,
+                    metadataPath: authorRoutes.authorEditMetadataPath
                 ),
                 Route(
                     path: tagRoutes.tagEditMetadataRoute(),
@@ -52,8 +52,8 @@ extension Router {
                     title: "Edit tag metadata",
                     breadcrumb: tagRoutes.tagsBreadcrumb,
                     mediaAssetList: tagRoutes.mediaAssetList,
-                    editPath: tagRoutes.tagEdit,
-                    metadataPath: tagRoutes.tagEditMetadata
+                    editPath: tagRoutes.tagEditPath,
+                    metadataPath: tagRoutes.tagEditMetadataPath
                 ),
             ]
 

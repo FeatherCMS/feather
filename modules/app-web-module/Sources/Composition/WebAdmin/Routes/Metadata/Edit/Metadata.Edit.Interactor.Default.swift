@@ -8,7 +8,7 @@ extension WebModule.Metadata.Edit.Interactor {
         let repository: any WebModule.Metadata.Edit.Repository.Interface
         let events: any EventPublisher
 
-        func getTemplateOptions() async throws -> [WebModule.Metadata.Edit
+        func getTemplateOptions() async throws -> [WebModule.Metadata
             .TemplateOption]
         {
             let providers = try await events.trigger(

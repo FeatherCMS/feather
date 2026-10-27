@@ -30,7 +30,9 @@ extension Tag.Edit {
                             moreActions: [
                                 .init(
                                     label: "Remove tag",
-                                    href: state.routes.tagRemovePath(state.id),
+                                    href: state.routes.tagRemovePath(
+                                        ids: [state.id]
+                                    ),
                                     style: .destructive
                                 )
                             ]

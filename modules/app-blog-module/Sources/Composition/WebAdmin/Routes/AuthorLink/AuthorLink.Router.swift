@@ -15,21 +15,21 @@ extension AuthorLink {
             }
 
             var authorLinkAddRoute: WebRoute {
-                authors.appending(parameter: "authorID")
+                authors.appending(parameter: "id")
                     .appending(pathComponent: "links")
                     .appending(pathComponent: "add")
             }
 
             var authorLinkRemoveRoute: WebRoute {
-                authors.appending(parameter: "authorID")
+                authors.appending(parameter: "id")
                     .appending(pathComponent: "links")
                     .appending(pathComponent: "remove")
             }
 
             var authorLinkEditRoute: WebRoute {
-                authors.appending(parameter: "authorID")
+                authors.appending(parameter: "id")
                     .appending(pathComponent: "links")
-                    .appending(parameter: "id")
+                    .appending(parameter: "itemId")
                     .appending(pathComponent: "edit")
             }
 
@@ -57,40 +57,40 @@ extension AuthorLink {
 
             func authorLinkPath(_ authorID: String, _ id: String) -> String {
                 resolvedPath(
-                    authors.appending(parameter: "authorID")
+                    authors.appending(parameter: "id")
                         .appending(pathComponent: "links")
-                        .appending(parameter: "id"),
+                        .appending(parameter: "itemId"),
                     parameters: [
-                        "authorID": authorID,
-                        "id": id,
+                        "id": authorID,
+                        "itemId": id,
                     ]
                 )
             }
 
             func authorLinkAddPath(_ authorID: String) -> String {
-                authors.appending(parameter: "authorID")
+                authors.appending(parameter: "id")
                     .appending(pathComponent: "links")
                     .appending(pathComponent: "add")
-                    .path(parameter: "authorID", value: authorID)
+                    .path(parameter: "id", value: authorID)
             }
 
             func authorLinkRemovePath(_ authorID: String) -> String {
-                authors.appending(parameter: "authorID")
+                authors.appending(parameter: "id")
                     .appending(pathComponent: "links")
                     .appending(pathComponent: "remove")
-                    .path(parameter: "authorID", value: authorID)
+                    .path(parameter: "id", value: authorID)
             }
 
             func authorLinkEditPath(_ authorID: String, _ id: String) -> String
             {
                 resolvedPath(
-                    authors.appending(parameter: "authorID")
+                    authors.appending(parameter: "id")
                         .appending(pathComponent: "links")
-                        .appending(parameter: "id")
+                        .appending(parameter: "itemId")
                         .appending(pathComponent: "edit"),
                     parameters: [
-                        "authorID": authorID,
-                        "id": id,
+                        "id": authorID,
+                        "itemId": id,
                     ]
                 )
             }

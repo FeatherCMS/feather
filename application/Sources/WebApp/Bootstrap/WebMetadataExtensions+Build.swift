@@ -9,7 +9,7 @@ import WebModule
 import WebModuleWebApp
 
 func buildWebMetadataExtensions() async throws -> (
-    templates: [PageTemplateOption],
+    templates: [WebModule.Metadata.TemplateOption],
     templateDefinitions: [WebModule.Template.Definition],
     templatePaths: [URL]
 ) {

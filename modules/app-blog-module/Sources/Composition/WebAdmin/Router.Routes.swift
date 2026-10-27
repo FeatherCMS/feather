@@ -8,15 +8,15 @@ extension Router {
         public let blog: WebRoute
         let mediaAssetList: WebRoute
         public let breadcrumb: [AdminBreadcrumb.Link]
-        public let post: Post.Routes
-        public let author: Author.Routes
-        public let authorLink: AuthorLink.Routes
-        public let tag: Tag.Routes
-        public let settings: Settings.Routes
+        public let post: Post.Router.Routes
+        public let author: Author.Router.Routes
+        public let authorLink: AuthorLink.Router.Routes
+        public let tag: Tag.Router.Routes
+        public let settings: Settings.Router.Routes
 
         public static let standard = Self(
             root: WebRoute.root.appending(pathComponent: "admin"),
-            mediaAssetList: MediaWebAdmin.Routes.standard.assetList
+            mediaAssetList: MediaWebAdmin.Router.Routes.standard.assetList
         )
 
         public init(
@@ -31,7 +31,7 @@ extension Router {
 
             self.blog = blog
             let mediaAssetList =
-                mediaAssetList ?? MediaWebAdmin.Routes.standard.assetList
+                mediaAssetList ?? MediaWebAdmin.Router.Routes.standard.assetList
             self.mediaAssetList = mediaAssetList
             self.breadcrumb = breadcrumb
             self.post = .init(

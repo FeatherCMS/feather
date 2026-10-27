@@ -18,6 +18,7 @@ import ContactWebAdmin
 import ContactWebApp
 import NewsletterWebAdmin
 import NewsletterWebApp
+import NewsletterModule
 import WebModuleWebAdmin
 import WebModule
 import WebModuleWebApp
@@ -39,7 +40,7 @@ import Logging
 
 func buildRouter(
     environment: AppEnvironment,
-    templateOptions: [PageTemplateOption],
+    templateOptions: [WebModule.Metadata.TemplateOption],
     templateDefinitions: [WebModule.Template.Definition],
     templatePaths: [URL],
     turnstileVerifier: (any TurnstileVerifier)? = nil

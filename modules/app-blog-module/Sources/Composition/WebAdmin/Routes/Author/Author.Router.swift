@@ -47,11 +47,6 @@ extension Author {
                 authors.appending(pathComponent: "remove")
             }
 
-            var authorRemoveByIDRoute: WebRoute {
-                authors.appending(parameter: "id")
-                    .appending(pathComponent: "remove")
-            }
-
             var authorStatusRoute: WebRoute {
                 authors.appending(parameter: "id")
                     .appending(pathComponent: "status")
@@ -70,9 +65,12 @@ extension Author {
                 authorRemoveRoute.path
             }
 
-            func authorRemovePath(_ id: String) -> String {
-                authorRemoveByIDRoute
-                    .path(parameter: "id", value: id)
+            func authorRemovePath(ids: [String]) -> String {
+                var components = URLComponents(string: authorRemoveRoute.path)
+                components?.queryItems = ids.map {
+                    URLQueryItem(name: "ids", value: $0)
+                }
+                return components?.string ?? authorRemoveRoute.path
             }
 
             func authorEditPath(_ id: String) -> String {

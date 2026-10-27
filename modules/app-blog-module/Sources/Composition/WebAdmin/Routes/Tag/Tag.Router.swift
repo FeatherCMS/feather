@@ -47,11 +47,6 @@ extension Tag {
                 tags.appending(pathComponent: "remove")
             }
 
-            var tagRemoveByIDRoute: WebRoute {
-                tags.appending(parameter: "id")
-                    .appending(pathComponent: "remove")
-            }
-
             var tagStatusRoute: WebRoute {
                 tags.appending(parameter: "id")
                     .appending(pathComponent: "status")
@@ -70,9 +65,12 @@ extension Tag {
                 tagRemoveRoute.path
             }
 
-            func tagRemovePath(_ id: String) -> String {
-                tagRemoveByIDRoute
-                    .path(parameter: "id", value: id)
+            func tagRemovePath(ids: [String]) -> String {
+                var components = URLComponents(string: tagRemoveRoute.path)
+                components?.queryItems = ids.map {
+                    URLQueryItem(name: "ids", value: $0)
+                }
+                return components?.string ?? tagRemoveRoute.path
             }
 
             func tagEditPath(_ id: String) -> String {

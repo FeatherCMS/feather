@@ -152,7 +152,7 @@ extension Post.List {
                                                                     .href(
                                                                         state
                                                                             .routes
-                                                                            .post(
+                                                                            .postPath(
                                                                                 item
                                                                                     .id
                                                                             )
@@ -228,7 +228,7 @@ extension Post.List {
                                                                             href:
                                                                                 state
                                                                                 .routes
-                                                                                .post(
+                                                                                .postPath(
                                                                                     item
                                                                                         .id
                                                                                 ),
@@ -258,32 +258,6 @@ extension Post.List {
                                                                                 Post
                                                                                 .Permissions
                                                                                 .update
-                                                                        ),
-                                                                        .init(
-                                                                            "Delete",
-                                                                            href:
-                                                                                AdminLocation
-                                                                                .remove(
-                                                                                    path:
-                                                                                        state
-                                                                                        .routes
-                                                                                        .postRemovePath(),
-                                                                                    ids: [
-                                                                                        item
-                                                                                            .id
-                                                                                    ],
-                                                                                    returnTo:
-                                                                                        state
-                                                                                        .routes
-                                                                                        .posts
-                                                                                        .path
-                                                                                ),
-                                                                            style:
-                                                                                .destructive,
-                                                                            permission:
-                                                                                Post
-                                                                                .Permissions
-                                                                                .delete
                                                                         ),
                                                                     ],
                                                                     permissions:

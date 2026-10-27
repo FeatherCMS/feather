@@ -47,11 +47,6 @@ extension Post {
                 posts.appending(pathComponent: "remove")
             }
 
-            var postRemoveByIDRoute: WebRoute {
-                posts.appending(parameter: "id")
-                    .appending(pathComponent: "remove")
-            }
-
             var postStatusRoute: WebRoute {
                 posts.appending(parameter: "id")
                     .appending(pathComponent: "status")
@@ -70,9 +65,12 @@ extension Post {
                 postRemoveRoute.path
             }
 
-            func postRemovePath(_ id: String) -> String {
-                postRemoveByIDRoute
-                    .path(parameter: "id", value: id)
+            func postRemovePath(ids: [String]) -> String {
+                var components = URLComponents(string: postRemoveRoute.path)
+                components?.queryItems = ids.map {
+                    URLQueryItem(name: "ids", value: $0)
+                }
+                return components?.string ?? postRemoveRoute.path
             }
 
             func postEditPath(_ id: String) -> String {

@@ -63,7 +63,7 @@ extension Author.List {
             router.get(routes.authors.routerPath, use: controller.get)
             router.post(
                 routes.authorStatusRoute.routerPath,
-                use: controller.postStatus
+                use: controller.postStatusPath
             )
         }
     }

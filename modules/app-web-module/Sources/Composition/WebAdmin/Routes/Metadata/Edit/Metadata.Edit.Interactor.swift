@@ -9,7 +9,7 @@ extension WebModule.Metadata.Edit {
 extension WebModule.Metadata.Edit.Interactor {
     protocol Interface: Sendable {
 
-        func getTemplateOptions() async throws -> [WebModule.Metadata.Edit
+        func getTemplateOptions() async throws -> [WebModule.Metadata
             .TemplateOption]
 
         func load(

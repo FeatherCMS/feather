@@ -287,32 +287,6 @@ extension Author.List {
                                                                                 .Permissions
                                                                                 .update
                                                                         ),
-                                                                        .init(
-                                                                            "Delete",
-                                                                            href:
-                                                                                AdminLocation
-                                                                                .remove(
-                                                                                    path:
-                                                                                        state
-                                                                                        .routes
-                                                                                        .authorRemovePath(),
-                                                                                    ids: [
-                                                                                        item
-                                                                                            .id
-                                                                                    ],
-                                                                                    returnTo:
-                                                                                        state
-                                                                                        .routes
-                                                                                        .authors
-                                                                                        .path
-                                                                                ),
-                                                                            style:
-                                                                                .destructive,
-                                                                            permission:
-                                                                                Author
-                                                                                .Permissions
-                                                                                .delete
-                                                                        ),
                                                                     ],
                                                                     permissions:
                                                                         state

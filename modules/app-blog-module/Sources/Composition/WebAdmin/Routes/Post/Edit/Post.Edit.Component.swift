@@ -35,7 +35,9 @@ extension Post.Edit {
                             moreActions: [
                                 .init(
                                     label: "Remove post",
-                                    href: state.routes.postRemovePath(state.id),
+                                    href: state.routes.postRemovePath(
+                                        ids: [state.id]
+                                    ),
                                     style: .destructive
                                 )
                             ]

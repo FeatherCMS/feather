@@ -31,7 +31,7 @@ extension Author.Edit {
                                 .init(
                                     label: "Remove author",
                                     href: state.routes.authorRemovePath(
-                                        state.id
+                                        ids: [state.id]
                                     ),
                                     style: .destructive
                                 )
