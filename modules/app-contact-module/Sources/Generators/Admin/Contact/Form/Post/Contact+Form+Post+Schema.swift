@@ -10,8 +10,7 @@ extension Contact.Form.Post {
                 "successMessage": Contact.Schemas.Content().reference(),
                 "failureMessage": Contact.Schemas.Content().reference(),
                 "submitLabel": Contact.Schemas.Content().reference(),
-                "redirectUrl": Contact.Schemas.Content()
-                    .reference(required: false),
+                "redirectUrl": Contact.Schemas.Content().reference(),
                 "fieldIds": Contact.Field.Schemas.IDs()
                     .reference(required: false),
                 "mails": Contact.Form.Email.Inputs()

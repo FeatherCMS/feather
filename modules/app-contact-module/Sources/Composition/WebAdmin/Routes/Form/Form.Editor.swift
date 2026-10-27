@@ -162,8 +162,9 @@ extension ContactModule.Form {
                             state: .init(
                                 name: "redirectUrl",
                                 label: "Redirect URL",
-                                value: state.redirectUrl ?? "",
-                                help: "Optional URL to use after submission.",
+                                value: state.redirectUrl ?? "/",
+                                help: "URL to open after submission.",
+                                isRequired: true,
                                 isReadOnly: isReadOnly
                             )
                         )

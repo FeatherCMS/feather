@@ -336,7 +336,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/submitLabel`.
             public var submitLabel: Components.Schemas.ContactContentField
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/redirectUrl`.
-            public var redirectUrl: Components.Schemas.ContactContentField?
+            public var redirectUrl: Components.Schemas.ContactContentField
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/fieldIds`.
             public var fieldIds: Components.Schemas.ContactFieldIDsSchema?
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/mails`.
@@ -358,7 +358,7 @@ extension Components {
                 successMessage: Components.Schemas.ContactContentField,
                 failureMessage: Components.Schemas.ContactContentField,
                 submitLabel: Components.Schemas.ContactContentField,
-                redirectUrl: Components.Schemas.ContactContentField? = nil,
+                redirectUrl: Components.Schemas.ContactContentField,
                 fieldIds: Components.Schemas.ContactFieldIDsSchema? = nil,
                 mails: Components.Schemas.SubmissionMailInputsSchema? = nil
             ) {

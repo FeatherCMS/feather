@@ -686,7 +686,8 @@ components:
       - successMessage
       - failureMessage
       - submitLabel
-      minProperties: 5
+      - redirectUrl
+      minProperties: 6
     ContactFieldIDsSchema:
       type: array
       items:

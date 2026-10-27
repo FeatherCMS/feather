@@ -667,6 +667,7 @@ components:
       - successMessage
       - failureMessage
       - submitLabel
+      - redirectUrl
     ContactFieldIDsSchema:
       type: array
       items:

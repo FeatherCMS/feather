@@ -25,10 +25,8 @@ extension AdminAPIGateway {
                         successMessage: body.successMessage,
                         failureMessage: body.failureMessage,
                         submitLabel: body.submitLabel,
-                        redirectUrl:
-                            body.redirectUrl.flatMap {
-                                $0.isEmpty ? nil : $0
-                            } ?? "/",
+                        redirectUrl: body.redirectUrl.isEmpty
+                            ? "/" : body.redirectUrl,
                         fieldIds: body.fieldIds ?? [],
                         mails: (body.mails ?? [])
                             .map {

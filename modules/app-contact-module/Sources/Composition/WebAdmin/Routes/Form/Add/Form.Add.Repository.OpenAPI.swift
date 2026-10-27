@@ -48,7 +48,9 @@ extension Form.Add.Repository {
                             successMessage: entity.successMessage,
                             failureMessage: entity.failureMessage,
                             submitLabel: entity.submitLabel,
-                            redirectUrl: entity.redirectUrl,
+                            redirectUrl: entity.redirectUrl.flatMap {
+                                $0.isEmpty ? nil : $0
+                            } ?? "/",
                             fieldIds: entity.fieldIDs,
                             mails: entity.mails.map {
                                 (mail: ContactModule.Form.Email)

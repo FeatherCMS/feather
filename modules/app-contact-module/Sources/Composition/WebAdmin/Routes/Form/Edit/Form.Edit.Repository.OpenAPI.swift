@@ -61,7 +61,9 @@ extension ContactModule.Form.Edit.Repository {
                             successMessage: successMessage,
                             failureMessage: failureMessage,
                             submitLabel: submitLabel,
-                            redirectUrl: redirectUrl,
+                            redirectUrl: redirectUrl.flatMap {
+                                $0.isEmpty ? nil : $0
+                            } ?? "/",
                             fieldIds: fieldIDs,
                             mails: mails.map {
                                 .init(
