@@ -32,16 +32,23 @@ extension Issue.Search {
                             ["failed", "bounced"].contains($0.status)
                         }
                         .count
+                    let totalCount = item.deliveries.count
                     Div {
                         context.build(
                             AdminChip(
-                                label: "\(sentCount) sent",
+                                label: "Total: \(totalCount)",
+                                color: .gray
+                            )
+                        )
+                        context.build(
+                            AdminChip(
+                                label: "Sent: \(sentCount)",
                                 color: sentCount > 0 ? .green : .gray
                             )
                         )
                         context.build(
                             AdminChip(
-                                label: "\(failedCount) failed",
+                                label: "Failed: \(failedCount)",
                                 color: failedCount > 0 ? .red : .gray
                             )
                         )

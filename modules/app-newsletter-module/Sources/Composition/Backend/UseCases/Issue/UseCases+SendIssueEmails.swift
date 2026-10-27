@@ -11,6 +11,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Issue.Send.Scope(
+                    issue: Issue.Repository.Database(context: context),
                     newsletter: Campaign.Repository.Database(context: context),
                     subscriber: Subscriber.Repository.Database(
                         context: context

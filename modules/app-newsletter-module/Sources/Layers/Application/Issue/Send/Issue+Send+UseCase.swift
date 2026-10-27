@@ -1,6 +1,7 @@
 public import FeatherApplication
 import FeatherMail
 public import FeatherModuleKit
+import Foundation
 import NewsletterDomain
 public import NewsletterModule
 
@@ -68,8 +69,24 @@ extension Issue.Send {
                     newsletterId: input.newsletterId
                 )
             }
-            for listedSubscriber in subscribers
-            where listedSubscriber.status == .subscribed {
+            let recipients = subscribers.filter { $0.status == .subscribed }
+            if input.scheduledDate == nil {
+                try await transaction.run { scope in
+                    guard
+                        var issue = try await scope.issue.findBy(
+                            id: input.issueId
+                        )
+                    else {
+                        throw Error.issueNotFound
+                    }
+                    issue.status = recipients.isEmpty ? .sent : .sending
+                    if recipients.isEmpty {
+                        issue.sentDate = Date()
+                    }
+                    _ = try await scope.issue.update(issue)
+                }
+            }
+            for listedSubscriber in recipients {
                 var subscriber = listedSubscriber
                 if subscriber.unsubscribeToken == nil {
                     subscriber.ensureUnsubscribeToken()

@@ -146,6 +146,54 @@ struct NewsletterApplicationUseCasesTests {
         }
     }
 
+    private actor IssueSendIssueRepositoryMock: Issue.Repository.Interface {
+        enum UnexpectedCall: Swift.Error {
+            case insert
+        }
+
+        private var issue: Issue.Model
+
+        init(issue: Issue.Model) {
+            self.issue = issue
+        }
+
+        func list(newsletterId: String) async throws -> [Issue.Model] {
+            issue.newsletterId == newsletterId ? [issue] : []
+        }
+
+        func findBy(id: String) async throws -> Issue.Model? {
+            issue.id == id ? issue : nil
+        }
+
+        func insert(_ model: Issue.Model.New) async throws -> Issue.Model {
+            throw UnexpectedCall.insert
+        }
+
+        func update(_ model: Issue.Model) async throws -> Issue.Model {
+            issue = model
+            return model
+        }
+
+        func delete(ids: [String]) async throws -> [String] {
+            []
+        }
+    }
+
+    private func issueModel() -> Issue.Model {
+        .init(
+            id: "issue-1",
+            newsletterId: "campaign-1",
+            subject: "Weekly update",
+            previewText: "",
+            content: "<p>Issue content</p>",
+            status: .draft,
+            scheduledDate: nil,
+            sentDate: nil,
+            createdAt: Date(timeIntervalSince1970: 100),
+            updatedAt: Date(timeIntervalSince1970: 100)
+        )
+    }
+
     private actor IssueSendJobsMock:
         NewsletterModule.Issue.JobController.Interface
     {
@@ -424,6 +472,7 @@ struct NewsletterApplicationUseCasesTests {
             authorizer: FeatherTesting.Authorizer.Mock(result: true),
             transaction: FeatherTesting.TransactionExecutor.Mock(
                 context: NewsletterModule.Issue.Send.Scope(
+                    issue: IssueSendIssueRepositoryMock(issue: issueModel()),
                     newsletter: CampaignRepositoryMock(model: campaign),
                     subscriber: subscribers,
                     delivery: deliveries
@@ -503,6 +552,7 @@ struct NewsletterApplicationUseCasesTests {
             authorizer: FeatherTesting.Authorizer.Mock(result: true),
             transaction: FeatherTesting.TransactionExecutor.Mock(
                 context: NewsletterModule.Issue.Send.Scope(
+                    issue: IssueSendIssueRepositoryMock(issue: issueModel()),
                     newsletter: CampaignRepositoryMock(model: campaign),
                     subscriber: subscribers,
                     delivery: deliveries
