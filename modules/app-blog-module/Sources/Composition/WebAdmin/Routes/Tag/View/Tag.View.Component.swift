@@ -102,7 +102,9 @@ extension Tag.View {
                 result.append(
                     .init(
                         label: "Remove tag",
-                        href: state.routes.tagRemovePath(state.model.id),
+                        href: state.routes.tagRemovePath(
+                            ids: [state.model.id]
+                        ),
                         style: .destructive,
                     )
                 )

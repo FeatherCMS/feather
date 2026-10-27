@@ -32,13 +32,13 @@ cleanup() {
         fi
     done
     wait 2>/dev/null || true
-    "${COMPOSE[@]}" stop postgres minio >/dev/null 2>&1 || true
 }
 
 stop_existing_local_instances() {
-    local app_dir project_root process_name pid executable attempt line state
+    local app_dir process_name pid executable attempt line state
     local -a pids=()
 
+    echo "Stopping existing local application processes..."
     while IFS= read -r line; do
         read -r pid executable _ <<< "$line"
         [[ -n "$pid" && -n "$executable" ]] || continue
@@ -59,20 +59,10 @@ stop_existing_local_instances() {
         done
     done < <(ps -axo pid=,command=)
 
-    for project_root in "$CMS_ROOT/feather" "$CMS_ROOT/ava"; do
-        if [[ -f "$project_root/docker-compose.yaml" ]]; then
-            echo "Stopping existing Docker runtime services in $project_root..."
-            docker compose \
-                --project-directory "$project_root" \
-                -f "$project_root/docker-compose.yaml" \
-                stop server worker web-static web-app minio >/dev/null 2>&1 || true
-        fi
-    done
-
     for attempt in {1..50}; do
         local running=0
         for pid in "${pids[@]}"; do
-            state="$(ps -p "$pid" -o stat= 2>/dev/null | tr -d ' ')"
+            state="$(ps -p "$pid" -o stat= 2>/dev/null | tr -d ' ' || true)"
             if [[ -n "$state" && "$state" != Z* ]]; then
                 running=1
                 break
@@ -83,12 +73,39 @@ stop_existing_local_instances() {
     done
 
     for pid in "${pids[@]}"; do
-        state="$(ps -p "$pid" -o stat= 2>/dev/null | tr -d ' ')"
+        state="$(ps -p "$pid" -o stat= 2>/dev/null | tr -d ' ' || true)"
         if [[ -n "$state" && "$state" != Z* ]]; then
             echo "Force-stopping unresponsive local process (PID $pid)..."
             kill -KILL "$pid" 2>/dev/null || true
         fi
     done
+}
+
+check_port_available() {
+    local port="$1"
+    local service="$2"
+    local pids
+
+    command -v lsof >/dev/null || return 0
+    pids="$(lsof -nP -t -iTCP:"$port" -sTCP:LISTEN 2>/dev/null | sort -u || true)"
+    [[ -z "$pids" ]] && return 0
+
+    echo "Cannot start local $service: TCP port $port is already in use." >&2
+    lsof -nP -iTCP:"$port" -sTCP:LISTEN >&2 || true
+    echo "Docker services were left running. Stop or reconfigure the service using this port, then retry." >&2
+    return 1
+}
+
+ensure_compose_service_running() {
+    local service="$1"
+
+    if [[ -n "$("${COMPOSE[@]}" ps --status running -q "$service")" ]]; then
+        echo "$service is already running; keeping it as-is."
+        return
+    fi
+
+    echo "Starting $service..."
+    "${COMPOSE[@]}" up -d "$service"
 }
 
 trap cleanup EXIT INT TERM
@@ -107,15 +124,30 @@ if [[ -f "$ROOT_DIR/.env" ]]; then
     set +a
 fi
 
-echo "Starting PostgreSQL and MinIO in Docker..."
-"${COMPOSE[@]}" up certificates
-"${COMPOSE[@]}" up -d postgres minio
+if [[ -s "$CERT_DIR/ca.pem" ]]; then
+    echo "PostgreSQL CA certificate is already available; skipping certificate generation."
+else
+    echo "Generating PostgreSQL certificates in Docker..."
+    "${COMPOSE[@]}" up certificates
+fi
 
-echo "Exporting PostgreSQL CA certificate..."
-docker run --rm \
-    -v "$CERT_VOLUME:/from:ro" \
-    -v "$CERT_DIR:/to" \
-    alpine sh -c 'cp /from/ca.pem /to/ca.pem'
+POSTGRES_WAS_RUNNING=0
+if [[ -n "$("${COMPOSE[@]}" ps --status running -q postgres)" ]]; then
+    POSTGRES_WAS_RUNNING=1
+fi
+
+ensure_compose_service_running postgres
+ensure_compose_service_running minio
+
+if [[ "$POSTGRES_WAS_RUNNING" == 1 && -s "$CERT_DIR/ca.pem" ]]; then
+    echo "PostgreSQL CA certificate is already exported; skipping copy."
+else
+    echo "Exporting PostgreSQL CA certificate..."
+    docker run --rm \
+        -v "$CERT_VOLUME:/from:ro" \
+        -v "$CERT_DIR:/to" \
+        alpine sh -c 'cp /from/ca.pem /to/ca.pem'
+fi
 
 echo "Waiting for PostgreSQL..."
 until "${COMPOSE[@]}" exec -T postgres pg_isready -U postgres -d postgres >/dev/null 2>&1; do
@@ -154,6 +186,12 @@ export WEB_PUBLIC_BASE_URL="${WEB_PUBLIC_BASE_URL:-http://127.0.0.1:3456}"
 export STATIC_PUBLIC_BASE_URL="${STATIC_PUBLIC_BASE_URL:-http://127.0.0.1:4567}"
 export MEDIA_PUBLIC_BASE_URL="${MEDIA_PUBLIC_BASE_URL:-http://127.0.0.1:9000/$STORAGE_S3_BUCKET}"
 
+check_port_available "$SERVER_HTTP_PORT" "Server"
+if [[ "$MODE" == "all" ]]; then
+    check_port_available 3456 "WebApp"
+    check_port_available 4567 "Static"
+fi
+
 echo "Running database migrations..."
 (
     cd "$APPLICATION_DIR"
@@ -185,6 +223,6 @@ if [[ "$MODE" == "all" ]]; then
     echo "Static assets: http://127.0.0.1:4567"
 fi
 
-echo "Press Ctrl-C to stop local processes and PostgreSQL."
+echo "Press Ctrl-C to stop local processes. Docker services will keep running."
 
 wait "$SERVER_PID" "$WORKER_PID" "$WEB_APP_PID" "$STATIC_PID"
