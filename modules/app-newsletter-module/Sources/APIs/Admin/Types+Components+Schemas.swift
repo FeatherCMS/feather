@@ -611,27 +611,35 @@ extension Components {
             public var content: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsletterIssueCreateSchema/scheduledAt`.
             public var scheduledAt: Components.Schemas.NewsletterTimestampField?
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueCreateSchema/sendNow`.
+            public var sendNow: Components.Schemas.NewsletterIssueSendNowField?
             /// Creates a new `NewsletterIssueCreateSchema`.
             ///
             /// - Parameters:
             ///   - subject:
             ///   - content:
             ///   - scheduledAt:
+            ///   - sendNow:
             public init(
                 subject: Swift.String,
                 content: Swift.String,
-                scheduledAt: Components.Schemas.NewsletterTimestampField? = nil
+                scheduledAt: Components.Schemas.NewsletterTimestampField? = nil,
+                sendNow: Components.Schemas.NewsletterIssueSendNowField? = nil
             ) {
                 self.subject = subject
                 self.content = content
                 self.scheduledAt = scheduledAt
+                self.sendNow = sendNow
             }
             public enum CodingKeys: String, CodingKey {
                 case subject
                 case content
                 case scheduledAt
+                case sendNow
             }
         }
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueSendNowField`.
+        public typealias NewsletterIssueSendNowField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema`.
         public struct NewsletterIssueSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/id`.

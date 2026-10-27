@@ -68,7 +68,7 @@ struct SendNewsletterIssueJobHandlerTests {
         let messages = await mailbox.getMessages()
         let message = try #require(messages.first)
         let unsubscribeURL =
-            "https://example.com/newsletter/unsubscribe/weekly/token-123"
+            "https://example.com/newsletter/unsubscribe/token-123"
         #expect(messages.count == 1)
         #expect(message.to.map(\.email) == ["reader@example.com"])
         #expect(

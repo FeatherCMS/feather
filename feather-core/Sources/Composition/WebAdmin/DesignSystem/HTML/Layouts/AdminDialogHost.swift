@@ -357,6 +357,25 @@ public struct AdminDialogHost: Component {
                         return;
                     }
 
+                    var presentationDialogLink = target.closest("a[href]");
+                    if (
+                        presentationDialogLink &&
+                        presentationDialogLink.getAttribute("target") !== "_blank"
+                    ) {
+                        var presentationURL = new URL(
+                            presentationDialogLink.href,
+                            window.location.href
+                        );
+                        if (
+                            presentationURL.origin === window.location.origin &&
+                            presentationURL.searchParams.get("presentation") === "dialog"
+                        ) {
+                            event.preventDefault();
+                            open(presentationURL.href, presentationURL.href);
+                            return;
+                        }
+                    }
+
                     var dialogLink = target.closest(
                         "dialog[data-admin-dialog] a[href]"
                     );

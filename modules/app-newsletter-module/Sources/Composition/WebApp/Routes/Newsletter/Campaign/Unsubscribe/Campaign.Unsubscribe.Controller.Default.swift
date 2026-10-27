@@ -15,9 +15,6 @@ extension Campaign.Unsubscribe.Controller {
             context: DefaultRequestContext
         ) async throws -> WebAppHTMLResponse {
             let action = try route.confirmationAction.path(parameters: [
-                "newsletterCampaignKey": context.requiredParameter(
-                    "newsletterCampaignKey"
-                ),
                 "unsubscribeToken": context.requiredParameter(
                     "unsubscribeToken"
                 ),
@@ -61,11 +58,6 @@ extension Campaign.Unsubscribe.Controller {
                 )
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.appNewsletterCampaignUnsubscribe(
-                        path: .init(
-                            newsletterCampaignKey: context.requiredParameter(
-                                "newsletterCampaignKey"
-                            )
-                        ),
                         body: .json(
                             .init(
                                 token: context.requiredParameter(

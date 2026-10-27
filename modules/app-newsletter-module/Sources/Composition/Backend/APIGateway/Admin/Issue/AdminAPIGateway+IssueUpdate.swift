@@ -62,7 +62,7 @@ extension AdminAPIGateway {
                     )
                 )
             )
-        if current.scheduledDate == nil {
+        if result.scheduledDate == nil {
             try await useCases.makeSendIssueEmails()
                 .execute(
                     subject: subject,

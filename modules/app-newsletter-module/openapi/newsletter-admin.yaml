@@ -908,9 +908,13 @@ components:
           type: string
         scheduledAt:
           $ref: '#/components/schemas/NewsletterTimestampField'
+        sendNow:
+          $ref: '#/components/schemas/NewsletterIssueSendNowField'
       required:
       - subject
       - content
+    NewsletterIssueSendNowField:
+      type: boolean
     NewsletterIssueSchema:
       type: object
       properties:

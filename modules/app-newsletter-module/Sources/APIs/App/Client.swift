@@ -88,18 +88,16 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     public func appNewsletterCampaignUnsubscribe(_ input: Operations.AppNewsletterCampaignUnsubscribe.Input) async throws -> Operations.AppNewsletterCampaignUnsubscribe.Output {
         try await client.send(
             input: input,
             forOperation: Operations.AppNewsletterCampaignUnsubscribe.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/newsletter/campaign/{}/unsubscribe",
-                    parameters: [
-                        input.path.newsletterCampaignKey
-                    ]
+                    template: "/api/v1/newsletter/unsubscribe",
+                    parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
                     soar_path: path,

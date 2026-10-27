@@ -104,47 +104,34 @@ extension Issue.Edit.Controller {
             let issueId = try context.requiredParameter("issueId")
 
             do {
-                let model = try await runtime.interactor.get(
-                    newsletterId: newsletterId,
-                    issueId: issueId
+                let form = try await request.decode(
+                    as: Issue.Form.Input.self,
+                    context: context
                 )
-                guard model.scheduledAt.isEmpty else {
-                    return AdminNotification.redirect(
-                        to: routes.issueDetailsPath(
-                            newsletterId: newsletterId,
-                            issueId: issueId
-                        ),
-                        notification: .init(
-                            title: "Scheduled",
-                            message:
-                                "This issue will be sent at its scheduled time."
-                        )
-                    )
-                }
                 try await runtime.interactor.edit(
                     newsletterId: newsletterId,
                     issueId: issueId,
                     form: .init(
-                        subject: model.subject,
-                        content: model.content,
-                        scheduledAt: model.scheduledAt
+                        subject: form.subject,
+                        content: form.content,
+                        scheduledAt: ""
                     )
                 )
                 return AdminNotification.redirect(
-                    to: routes.issueDetailsPath(
+                    to: routes.issueEditPath(
                         newsletterId: newsletterId,
                         issueId: issueId
                     ),
                     notification: .init(
                         title: "Queued",
                         message:
-                            "Issue deliveries have been queued for subscribed recipients."
+                            "Issue deliveries have been queued for immediate delivery to subscribed recipients."
                     )
                 )
             }
             catch {
                 return AdminNotification.redirect(
-                    to: routes.issueDetailsPath(
+                    to: routes.issueEditPath(
                         newsletterId: newsletterId,
                         issueId: issueId
                     ),

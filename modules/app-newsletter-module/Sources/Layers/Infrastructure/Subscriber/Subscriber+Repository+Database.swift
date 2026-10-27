@@ -116,13 +116,11 @@ extension Subscriber.Repository {
         }
 
         public func findBy(
-            newsletterId: String,
             unsubscribeToken: String
         ) async throws -> Subscriber.Model? {
             try await accessLayer.selectFirst(as: Subscriber.Table.Detail.self)
             {
-                $0.where(\.newsletterId, equals: newsletterId)
-                    .where(\.unsubscribeToken, equals: unsubscribeToken)
+                $0.where(\.unsubscribeToken, equals: unsubscribeToken)
             }
             .map { try $0.asDomain }
         }

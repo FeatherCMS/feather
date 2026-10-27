@@ -91,35 +91,17 @@ public enum Operations {
             case undocumented(statusCode: Swift.Int, OpenAPIRuntime.UndocumentedPayload)
         }
     }
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     public enum AppNewsletterCampaignUnsubscribe {
         public static let id: Swift.String = "appNewsletterCampaignUnsubscribe"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/POST/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/POST/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.AppNewsletterCampaignKeyParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.AppNewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
-                }
-            }
-            public var path: Operations.AppNewsletterCampaignUnsubscribe.Input.Path
             public var body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
-            ///   - path:
             ///   - body:
-            public init(
-                path: Operations.AppNewsletterCampaignUnsubscribe.Input.Path,
-                body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody
-            ) {
-                self.path = path
+            public init(body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody) {
                 self.body = body
             }
         }
@@ -130,13 +112,13 @@ public enum Operations {
             }
             /// Subscriber unsubscribed
             ///
-            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/newsletter/unsubscribe/post(appNewsletterCampaignUnsubscribe)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Operations.AppNewsletterCampaignUnsubscribe.Output.NoContent)
             /// Subscriber unsubscribed
             ///
-            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/newsletter/unsubscribe/post(appNewsletterCampaignUnsubscribe)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {

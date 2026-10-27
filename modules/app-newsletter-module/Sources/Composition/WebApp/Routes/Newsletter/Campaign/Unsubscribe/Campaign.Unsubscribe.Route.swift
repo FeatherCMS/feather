@@ -7,7 +7,6 @@ extension Campaign.Unsubscribe {
             confirmation: WebRoute.root
                 .appending(pathComponent: "newsletter")
                 .appending(pathComponent: "unsubscribe")
-                .appending(parameter: "newsletterCampaignKey")
                 .appending(parameter: "unsubscribeToken")
         )
 

@@ -84,7 +84,8 @@ extension Issue.Search.Table {
                                         name: "newsletter-issues",
                                         columns: [
                                             .fraction(2), .fraction(1),
-                                            .fraction(1), .fraction(1),
+                                            .fraction(2), .fraction(1),
+                                            .fraction(1),
                                             .actions,
                                         ]
                                     ),
@@ -94,6 +95,7 @@ extension Issue.Search.Table {
                                             Tr {
                                                 Th("Subject")
                                                 Th("Status")
+                                                Th("Delivery")
                                                 Th("Scheduled")
                                                 Th("Created")
                                                 Th("Actions")

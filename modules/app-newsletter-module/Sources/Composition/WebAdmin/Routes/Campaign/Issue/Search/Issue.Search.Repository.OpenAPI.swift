@@ -39,8 +39,7 @@ extension Issue.Search.Repository {
                     for issue in result.data.items {
                         let deliveries = try await self.deliveries(
                             newsletterId: newsletterId,
-                            issueId: issue.id,
-                            subject: issue.subject
+                            issueId: issue.id
                         )
                         items.append(
                             .init(
@@ -80,8 +79,7 @@ extension Issue.Search.Repository {
 
         private func deliveries(
             newsletterId: String,
-            issueId: String,
-            subject: String
+            issueId: String
         ) async throws -> [Issue.Search.DeliveryItem] {
             let response = try await api.withOpenAPIRepositoryErrorMapping {
                 client in
@@ -96,15 +94,7 @@ extension Issue.Search.Repository {
             case .ok(let value):
                 return try value.body.json.map {
                     .init(
-                        issueSubject: subject,
-                        subscriberEmail: $0.subscriberEmail,
-                        status: $0.status,
-                        sentAt: $0.sentAt.map {
-                            DateFormatting.formatUnixTimestamp($0)
-                        } ?? "—",
-                        failureReason: Self.displayFailureReason(
-                            $0.failureReason
-                        )
+                        status: $0.status
                     )
                 }
             case .unauthorized:
@@ -121,11 +111,5 @@ extension Issue.Search.Repository {
             }
         }
 
-        private static func displayFailureReason(_ reason: String?) -> String {
-            guard let reason else { return "—" }
-            guard reason.contains("MessageRejected") else { return reason }
-            return
-                "Amazon SES rejected the message. Verify the sender identity and sending permissions in the configured SES region."
-        }
     }
 }

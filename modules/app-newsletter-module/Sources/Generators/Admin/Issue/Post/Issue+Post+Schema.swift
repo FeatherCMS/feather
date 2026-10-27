@@ -9,7 +9,12 @@ extension Issue.Post {
                 "content": Newsletter.Schemas.Content(),
                 "scheduledAt": Newsletter.Schemas.Timestamp()
                     .reference(required: false),
+                "sendNow": SendNow().reference(required: false),
             ]
+        }
+
+        struct SendNow: BoolSchemaRepresentable {
+            var openAPIIdentifier: String { "NewsletterIssueSendNowField" }
         }
     }
 }

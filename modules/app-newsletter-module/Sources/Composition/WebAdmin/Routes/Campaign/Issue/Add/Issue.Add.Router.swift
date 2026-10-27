@@ -49,6 +49,7 @@ extension Issue.Add {
         ) {
             router.get(routes.issueAdd.routerPath, use: controller.get)
             router.post(routes.issueAdd.routerPath, use: controller.add)
+            router.post(routes.issueAddSend.routerPath, use: controller.send)
         }
     }
 }

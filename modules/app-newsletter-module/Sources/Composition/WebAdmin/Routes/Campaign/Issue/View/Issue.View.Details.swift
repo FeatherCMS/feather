@@ -106,16 +106,28 @@ extension Issue.View {
                                 "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
                             )
                         }
-                        if model.scheduledAt.isEmpty,
-                            permissions.allows(Issue.Permissions.update)
-                        {
+                        if permissions.allows(Issue.Permissions.update) {
                             Div {
                                 context.build(
                                     AdminForm(
                                         action: routes.issueSendPath(
                                             newsletterId: newsletterId,
                                             issueId: issueId
-                                        )
+                                        ),
+                                        hiddenFields: [
+                                            .init(
+                                                name: "subject",
+                                                value: model.subject
+                                            ),
+                                            .init(
+                                                name: "content",
+                                                value: model.content
+                                            ),
+                                            .init(
+                                                name: "scheduledAt",
+                                                value: model.scheduledAt
+                                            ),
+                                        ]
                                     ) {
                                         context.build(
                                             AdminSubmitButton(
@@ -124,7 +136,7 @@ extension Issue.View {
                                             )
                                         )
                                         P(
-                                            "Queues the issue for subscribed recipients and retries failed deliveries."
+                                            "Sends immediately to subscribed recipients and retries failed deliveries."
                                         )
                                     }
                                 )

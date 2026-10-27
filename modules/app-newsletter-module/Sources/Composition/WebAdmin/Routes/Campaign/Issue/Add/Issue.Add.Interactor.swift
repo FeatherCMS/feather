@@ -18,7 +18,8 @@ extension Issue.Add.Interactor {
         func get(newsletterId: String) async throws -> Issue.Form.Model
         func add(
             newsletterId: String,
-            payload: Issue.Form.Input
+            payload: Issue.Form.Input,
+            sendImmediately: Bool
         ) async throws -> Issue.Form.Model
     }
 }

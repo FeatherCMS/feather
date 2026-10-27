@@ -20,8 +20,8 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe`.
     /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/post(appNewsletterCampaignSubscribe)`.
     func appNewsletterCampaignSubscribe(_ input: Operations.AppNewsletterCampaignSubscribe.Input) async throws -> Operations.AppNewsletterCampaignSubscribe.Output
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     func appNewsletterCampaignUnsubscribe(_ input: Operations.AppNewsletterCampaignUnsubscribe.Input) async throws -> Operations.AppNewsletterCampaignUnsubscribe.Output
 }
 
@@ -38,16 +38,10 @@ extension APIProtocol {
             body: body
         ))
     }
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
-    public func appNewsletterCampaignUnsubscribe(
-        path: Operations.AppNewsletterCampaignUnsubscribe.Input.Path,
-        body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody
-    ) async throws -> Operations.AppNewsletterCampaignUnsubscribe.Output {
-        try await appNewsletterCampaignUnsubscribe(Operations.AppNewsletterCampaignUnsubscribe.Input(
-            path: path,
-            body: body
-        ))
+    /// - Remark: HTTP `POST /api/v1/newsletter/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    public func appNewsletterCampaignUnsubscribe(body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody) async throws -> Operations.AppNewsletterCampaignUnsubscribe.Output {
+        try await appNewsletterCampaignUnsubscribe(Operations.AppNewsletterCampaignUnsubscribe.Input(body: body))
     }
 }
 

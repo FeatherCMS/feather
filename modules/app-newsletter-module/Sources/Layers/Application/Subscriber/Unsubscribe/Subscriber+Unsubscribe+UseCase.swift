@@ -21,15 +21,7 @@ extension Subscriber.Unsubscribe {
             let now = Date()
             return try await transaction.run { scope in
                 guard
-                    let campaign = try await scope.newsletter.findBy(
-                        key: input.campaignKey
-                    )
-                else {
-                    throw Error(message: "Newsletter campaign not found")
-                }
-                guard
                     var model = try await scope.subscriber.findBy(
-                        newsletterId: campaign.id,
                         unsubscribeToken: input.token
                     )
                 else {

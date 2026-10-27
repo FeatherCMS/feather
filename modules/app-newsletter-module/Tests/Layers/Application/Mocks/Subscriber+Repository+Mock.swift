@@ -35,12 +35,10 @@ actor SubscriberRepositoryMock: Subscriber.Repository.Interface {
     }
 
     func findBy(
-        newsletterId: String,
         unsubscribeToken: String
     ) async throws -> Subscriber.Model? {
         guard
             let storedModel,
-            storedModel.newsletterId == newsletterId,
             storedModel.unsubscribeToken == unsubscribeToken
         else {
             return nil

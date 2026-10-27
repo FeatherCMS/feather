@@ -53,17 +53,19 @@ extension AdminAPIGateway {
             )
         }
         else {
-            try await useCases.makeSendIssueEmails()
-                .execute(
-                    subject: subject,
-                    input: .init(
-                        issueId: created.id,
-                        newsletterId: created.newsletterId,
-                        subject: created.subject,
-                        content: created.content,
-                        scheduledDate: created.scheduledDate
+            if body.sendNow == true {
+                try await useCases.makeSendIssueEmails()
+                    .execute(
+                        subject: subject,
+                        input: .init(
+                            issueId: created.id,
+                            newsletterId: created.newsletterId,
+                            subject: created.subject,
+                            content: created.content,
+                            scheduledDate: nil
+                        )
                     )
-                )
+            }
             issueSchema = map(
                 created,
                 campaignKey: input.path.newsletterCampaignKey

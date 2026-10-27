@@ -35,12 +35,10 @@ struct NewsletterApplicationUseCasesTests {
         }
 
         func findBy(
-            newsletterId: String,
             unsubscribeToken: String
         ) async throws -> Subscriber.Model? {
             subscribers.first {
-                $0.newsletterId == newsletterId
-                    && $0.unsubscribeToken == unsubscribeToken
+                $0.unsubscribeToken == unsubscribeToken
             }
         }
 
@@ -322,13 +320,12 @@ struct NewsletterApplicationUseCasesTests {
         let unsubscribe = Subscriber.Unsubscribe.UseCase(
             transaction: FeatherTesting.TransactionExecutor.Mock(
                 context: Subscriber.Unsubscribe.Scope(
-                    newsletter: campaignRepository,
                     subscriber: subscriberRepository
                 )
             )
         )
         let unsubscription = try await unsubscribe.execute(
-            input: .init(campaignKey: "weekly", token: token)
+            input: .init(token: token)
         )
 
         #expect(firstSubscription.status == .subscribed)

@@ -134,6 +134,10 @@ extension Campaign.Router {
             issues.appending(pathComponent: "add")
         }
 
+        var issueAddSend: WebRoute {
+            issueAdd.appending(pathComponent: "send")
+        }
+
         var issueDetails: WebRoute {
             issues.appending(parameter: "issueId")
         }
@@ -164,6 +168,10 @@ extension Campaign.Router {
 
         func issueAddPath(newsletterId: String) -> String {
             issueAdd.path(parameter: "newsletterId", value: newsletterId)
+        }
+
+        func issueAddSendPath(newsletterId: String) -> String {
+            issueAddSend.path(parameter: "newsletterId", value: newsletterId)
         }
 
         func issueEditPath(newsletterId: String, issueId: String) -> String {

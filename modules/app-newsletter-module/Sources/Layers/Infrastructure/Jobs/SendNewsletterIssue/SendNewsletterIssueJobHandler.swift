@@ -64,17 +64,13 @@ public enum SendNewsletterIssueJobHandler {
         parameters: SendNewsletterIssueJobParameter,
         publicBaseURL: URL
     ) -> SendMailJobParameters {
-        guard
-            let newsletterKey = parameters.newsletterKey,
-            let unsubscribeToken = parameters.unsubscribeToken
-        else {
+        guard let unsubscribeToken = parameters.unsubscribeToken else {
             return parameters.mail
         }
         let unsubscribeURL =
             publicBaseURL
             .appending(path: "newsletter")
             .appending(path: "unsubscribe")
-            .appending(path: newsletterKey)
             .appending(path: unsubscribeToken)
         let url = unsubscribeURL.absoluteString
         return SendMailJobParameters(

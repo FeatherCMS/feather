@@ -31,7 +31,6 @@ extension AppAPIGateway {
         _ = try await self.useCases.makeUnsubscribeFromNewsletter()
             .execute(
                 input: .init(
-                    campaignKey: input.path.newsletterCampaignKey,
                     token: body.token
                 )
             )

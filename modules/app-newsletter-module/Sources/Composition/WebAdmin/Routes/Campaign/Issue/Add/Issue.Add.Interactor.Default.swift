@@ -26,12 +26,14 @@ extension Issue.Add.Interactor {
 
         func add(
             newsletterId: String,
-            payload: Issue.Form.Input
+            payload: Issue.Form.Input,
+            sendImmediately: Bool
         ) async throws -> Issue.Form.Model {
             do {
                 try await repository.createIssue(
                     newsletterId: newsletterId,
-                    form: payload
+                    form: payload,
+                    sendImmediately: sendImmediately
                 )
                 return .init(
                     subject: "",

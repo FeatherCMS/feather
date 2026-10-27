@@ -20,13 +20,11 @@ paths:
       responses:
         204:
           description: Subscriber added
-  /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe:
+  /api/v1/newsletter/unsubscribe:
     post:
       tags:
       - Newsletter
       operationId: appNewsletterCampaignUnsubscribe
-      parameters:
-      - $ref: '#/components/parameters/AppNewsletterCampaignKeyParameter'
       requestBody:
         $ref: '#/components/requestBodies/AppNewsletterCampaignUnsubscribeRequestBody'
       responses:

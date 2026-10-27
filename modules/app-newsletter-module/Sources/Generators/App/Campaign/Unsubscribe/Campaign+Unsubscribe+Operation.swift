@@ -6,9 +6,6 @@ extension Campaign.Unsubscribe {
         var operationId: String? { "appNewsletterCampaignUnsubscribe" }
 
         var tags: [any TagRepresentable] { [Campaign.Tag()] }
-        var parameters: [any ParameterRepresentable] {
-            [Campaign.Parameters.Key().reference()]
-        }
         var requestBody: (any RequestBodyRepresentable)? {
             RequestBody().reference()
         }

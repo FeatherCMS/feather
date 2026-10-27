@@ -140,7 +140,6 @@ struct NewsletterAppAPITests {
     func unsubscribeAPIChangesSubscriberStatusByToken() async throws {
         let connection = MockDatabaseConnection<NewsletterAppAPIQueryKey>(
             responses: [
-                .init(key: .campaignLookup, rows: [campaignRow()]),
                 .init(
                     key: .subscriberLookup,
                     rows: [
@@ -166,7 +165,6 @@ struct NewsletterAppAPITests {
 
         let output = try await gateway.appNewsletterCampaignUnsubscribe(
             .init(
-                path: .init(newsletterCampaignKey: "weekly"),
                 body: .json(.init(token: "unsubscribe-token"))
             )
         )

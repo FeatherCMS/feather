@@ -15,7 +15,6 @@ extension Subscriber {
             ) async throws -> Model?
 
             func findBy(
-                newsletterId: String,
                 unsubscribeToken: String
             ) async throws -> Model?
 

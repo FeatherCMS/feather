@@ -21,6 +21,25 @@ extension Issue.Form {
         let state: State
 
         func html(context: inout BuilderContext) -> some BasicTag {
+            let testEmailURL =
+                state.issueId.map {
+                    state.routes.issueDetailTestEmailPath(
+                        newsletterId: state.newsletterId,
+                        issueId: $0
+                    )
+                }
+                ?? state.routes.issueTestEmailPath(
+                    newsletterId: state.newsletterId
+                )
+            let testEmailDialogURL = "\(testEmailURL)?presentation=dialog"
+            let pageHeader = state.pageHeader
+                .addingMoreActions([
+                    .init(
+                        label: "Send test email",
+                        href: testEmailDialogURL,
+                        style: .secondary
+                    )
+                ])
             let action =
                 state.issueId.map {
                     state.routes.issueEditPath(
@@ -34,7 +53,7 @@ extension Issue.Form {
                         links: state.routes.campaignBreadcrumb
                     )
                 )
-                context.build(AdminPageHeader(state: state.pageHeader))
+                context.build(AdminPageHeader(state: pageHeader))
                 context.build(
                     Campaign.Tabs(
                         id: state.newsletterId,
@@ -77,30 +96,22 @@ extension Issue.Form {
                     )
                     Div {
                         context.build(
-                            AdminSubmitButton(
-                                state.issueId == nil
-                                    ? "Add issue" : "Save issue",
-                                style: .primary
-                            )
+                            AdminSubmitButton("Save issue", style: .primary)
                         )
-                        context.build(
-                            AdminControlButton(
-                                "Send test email",
-                                style: .secondary
-                            )
-                        )
-                        .data(
-                            "admin-dialog-url",
-                            state.issueId.map {
-                                state.routes.issueDetailTestEmailPath(
-                                    newsletterId: state.newsletterId,
-                                    issueId: $0
-                                )
-                            }
-                                ?? state.routes.issueTestEmailPath(
+                        Button("Send now")
+                            .type(.submit)
+                            .class("button", "secondary")
+                            .setAttribute(
+                                name: "formaction",
+                                value: state.issueId.map {
+                                    state.routes.issueSendPath(
+                                        newsletterId: state.newsletterId,
+                                        issueId: $0
+                                    )
+                                } ?? state.routes.issueAddSendPath(
                                     newsletterId: state.newsletterId
                                 )
-                        )
+                            )
                     }
                     .class("admin-form__actions")
                 }

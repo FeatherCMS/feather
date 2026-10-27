@@ -56,7 +56,7 @@ extension APIProtocol {
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix("/api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe")
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/newsletter/unsubscribe")
         )
     }
 }
@@ -121,8 +121,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     func appNewsletterCampaignUnsubscribe(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -137,11 +137,6 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 APIHandler.appNewsletterCampaignUnsubscribe($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.AppNewsletterCampaignUnsubscribe.Input.Path = .init(newsletterCampaignKey: try converter.getPathParameterAsURI(
-                    in: metadata.pathParameters,
-                    name: "newsletterCampaignKey",
-                    as: Components.Parameters.AppNewsletterCampaignKeyParameter.self
-                ))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.AppNewsletterCampaignUnsubscribeRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -162,10 +157,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.AppNewsletterCampaignUnsubscribe.Input(
-                    path: path,
-                    body: body
-                )
+                return Operations.AppNewsletterCampaignUnsubscribe.Input(body: body)
             },
             serializer: { output, request in
                 switch output {
