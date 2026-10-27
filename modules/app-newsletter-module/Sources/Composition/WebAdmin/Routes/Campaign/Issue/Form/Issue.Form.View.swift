@@ -92,7 +92,7 @@ extension Issue.Form {
                                 label: "Content",
                                 value: state.content,
                                 help:
-                                    "Use {{email}} for the recipient's email address and {{name}} for their full name.",
+                                    "Use {{email}} for the recipient's email address and {{name}} for their full name in the subject or content.",
                                 style: .large,
                                 isRequired: true
                             )

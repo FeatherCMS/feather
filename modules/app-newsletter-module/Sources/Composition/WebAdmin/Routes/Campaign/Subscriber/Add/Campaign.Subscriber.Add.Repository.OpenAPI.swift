@@ -13,7 +13,7 @@ extension Campaign.Subscriber.Add.Repository {
         {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterSubscriberCreate(
-                    path: .init(newsletterCampaignKey: newsletterId),
+                    path: .init(newsletterCampaignId: newsletterId),
                     body: .json(
                         .init(
                             email: form.email,

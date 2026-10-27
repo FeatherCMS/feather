@@ -28,7 +28,7 @@ extension Campaign.Edit.Presenter {
                         id: item.id,
                         routes: routes,
                         form: .init(
-                            key: item.id,
+                            key: item.key,
                             name: item.name,
                             fromEmail: item.fromEmail,
                             error: error,

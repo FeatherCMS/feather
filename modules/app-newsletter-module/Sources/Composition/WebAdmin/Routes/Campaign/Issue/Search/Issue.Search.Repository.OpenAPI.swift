@@ -28,7 +28,7 @@ extension Issue.Search.Repository {
                     )
                 let response = try await client.newsletterIssueQuery(
                     .init(
-                        path: .init(newsletterCampaignKey: newsletterId),
+                        path: .init(newsletterCampaignId: newsletterId),
                         body: .json(request)
                     )
                 )
@@ -85,7 +85,7 @@ extension Issue.Search.Repository {
                 client in
                 try await client.newsletterIssueDeliveryList(
                     path: .init(
-                        newsletterCampaignKey: newsletterId,
+                        newsletterCampaignId: newsletterId,
                         newsletterIssueId: issueId
                     )
                 )

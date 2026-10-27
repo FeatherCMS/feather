@@ -19,6 +19,28 @@ extension Issue {
                 )
         }
 
+        static func renderSubject(
+            _ subject: String,
+            email: String,
+            name: String
+        ) -> String {
+            subject
+                .replacingOccurrences(
+                    of: "{{email}}",
+                    with: subjectSafe(email)
+                )
+                .replacingOccurrences(
+                    of: "{{name}}",
+                    with: subjectSafe(name)
+                )
+        }
+
+        private static func subjectSafe(_ value: String) -> String {
+            value
+                .components(separatedBy: .newlines)
+                .joined(separator: " ")
+        }
+
         private static func htmlEscaped(_ value: String) -> String {
             value
                 .replacingOccurrences(of: "&", with: "&amp;")

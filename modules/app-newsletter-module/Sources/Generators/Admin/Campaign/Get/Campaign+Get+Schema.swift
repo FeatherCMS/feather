@@ -5,6 +5,7 @@ extension Campaign.Get {
         var openAPIIdentifier: String { "NewsletterCampaignSchema" }
         var propertyMap: SchemaMap {
             [
+                "id": Newsletter.Schemas.ID(),
                 "key": Newsletter.Schemas.Key(),
                 "name": Newsletter.Schemas.Name(),
                 "fromEmail": Newsletter.Schemas.Email(),

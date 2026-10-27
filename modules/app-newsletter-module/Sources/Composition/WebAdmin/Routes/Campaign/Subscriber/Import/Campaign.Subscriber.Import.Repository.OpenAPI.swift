@@ -88,7 +88,7 @@ extension Campaign.Subscriber.Import.Repository {
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterSubscriberCreate(
-                    path: .init(newsletterCampaignKey: newsletterId),
+                    path: .init(newsletterCampaignId: newsletterId),
                     body: .json(
                         .init(
                             email: record.email,

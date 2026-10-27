@@ -12,7 +12,7 @@ extension AdminAPIGateway {
         let result = try await self.useCases.makeDetailCampaign()
             .execute(
                 subject: subject,
-                input: .init(key: input.path.newsletterCampaignKey)
+                input: .init(id: input.path.newsletterCampaignId)
             )
         return .ok(.init(body: .json(map(result))))
     }
@@ -21,6 +21,7 @@ extension AdminAPIGateway {
         _ value: Campaign.Detail.Output
     ) -> Components.Schemas.NewsletterCampaignSchema {
         .init(
+            id: value.id,
             key: value.key,
             name: value.name,
             fromEmail: value.fromEmail,

@@ -20,7 +20,7 @@ extension Issue.Remove.Repository {
         func remove(newsletterId: String, issueId: String) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterIssueRemove(
-                    path: .init(newsletterCampaignKey: newsletterId),
+                    path: .init(newsletterCampaignId: newsletterId),
                     body: .json(.init(ids: [issueId]))
                 )
                 switch response {

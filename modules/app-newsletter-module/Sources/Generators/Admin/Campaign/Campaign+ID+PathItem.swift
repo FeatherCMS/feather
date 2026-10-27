@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 
-extension Campaign.Key {
+extension Campaign.ID {
     struct PathItem: PathItemRepresentable {
         var get: (any OperationRepresentable)? {
             Campaign.Get.Operation()

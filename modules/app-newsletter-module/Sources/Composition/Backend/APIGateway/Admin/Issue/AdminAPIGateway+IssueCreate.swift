@@ -10,6 +10,10 @@ extension AdminAPIGateway {
         _ input: Operations.NewsletterIssueCreate.Input
     ) async throws -> Operations.NewsletterIssueCreate.Output {
         let subject = try await CurrentSubject.require()
+        let campaignKey = try await campaignKey(
+            for: input.path.newsletterCampaignId,
+            subject: subject
+        )
         let body: Components.Schemas.NewsletterIssueCreateSchema
         switch input.body {
         case .json(let value): body = value
@@ -19,7 +23,7 @@ extension AdminAPIGateway {
             .execute(
                 subject: subject,
                 input: .init(
-                    campaignKey: input.path.newsletterCampaignKey,
+                    campaignKey: campaignKey,
                     subject: body.subject,
                     content: body.content
                 )
@@ -49,7 +53,7 @@ extension AdminAPIGateway {
                 )
             issueSchema = map(
                 scheduled,
-                campaignKey: input.path.newsletterCampaignKey
+                campaignKey: campaignKey
             )
         }
         else {
@@ -68,7 +72,7 @@ extension AdminAPIGateway {
             }
             issueSchema = map(
                 created,
-                campaignKey: input.path.newsletterCampaignKey
+                campaignKey: campaignKey
             )
         }
 

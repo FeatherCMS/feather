@@ -14,7 +14,7 @@ extension Campaign.Subscriber.Remove.Repository {
                 let email = try await api.withOpenAPIRepositoryErrorMapping {
                     client in
                     let response = try await client.newsletterSubscriberList(
-                        path: .init(newsletterCampaignKey: newsletterId)
+                        path: .init(newsletterCampaignId: newsletterId)
                     )
                     switch response {
                     case .ok(let value):
@@ -39,7 +39,7 @@ extension Campaign.Subscriber.Remove.Repository {
                 }
                 try await api.withOpenAPIRepositoryErrorMapping { client in
                     _ = try await client.newsletterSubscriberRemove(
-                        path: .init(newsletterCampaignKey: newsletterId),
+                        path: .init(newsletterCampaignId: newsletterId),
                         body: .json(.init(ids: [email]))
                     )
                 }

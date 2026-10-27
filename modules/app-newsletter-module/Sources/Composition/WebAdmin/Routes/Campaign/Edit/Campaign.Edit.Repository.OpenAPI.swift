@@ -13,13 +13,14 @@ extension Campaign.Edit.Repository {
         func get(id: String) async throws -> Campaign.Item {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterCampaignGet(
-                    path: .init(newsletterCampaignKey: id)
+                    path: .init(newsletterCampaignId: id)
                 )
                 switch response {
                 case .ok(let value):
                     let item = try value.body.json
                     return .init(
-                        id: item.key,
+                        id: item.id,
+                        key: item.key,
                         name: item.name,
                         fromEmail: item.fromEmail
                     )
@@ -46,7 +47,7 @@ extension Campaign.Edit.Repository {
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterCampaignUpdate(
-                    path: .init(newsletterCampaignKey: id),
+                    path: .init(newsletterCampaignId: id),
                     query: .init(updateMask: "key,name,fromEmail"),
                     body: .json(
                         .init(

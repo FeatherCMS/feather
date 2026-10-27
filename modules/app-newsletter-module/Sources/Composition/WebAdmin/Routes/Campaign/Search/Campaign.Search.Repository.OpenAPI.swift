@@ -32,7 +32,8 @@ extension Campaign.Search.Repository {
                     return .init(
                         items: body.data.items.map {
                             Campaign.Search.Item(
-                                id: $0.key,
+                                id: $0.id,
+                                key: $0.key,
                                 name: $0.name,
                                 fromEmail: $0.fromEmail,
                                 subscriberCount: $0.subscriberCount,

@@ -19,14 +19,14 @@ extension Campaign.Search.Table {
 
             return Tr {
                 if canDelete {
-                    context.build(AdminListRowCheckbox(id: item.id))
+                    context.build(AdminListRowCheckbox(id: item.key))
                 }
                 identifierCell(context: &context)
                 if isPicker {
                     Td {
                         Button(item.name)
                             .type(.button)
-                            .data("mce-picker-item", item.id)
+                            .data("mce-picker-item", item.key)
                             .data("mce-picker-label", item.name)
                     }
                     .data("label", "Name")
@@ -70,12 +70,12 @@ extension Campaign.Search.Table {
         private func identifierCell(context: inout BuilderContext) -> Td {
             Td {
                 Span {
-                    Span(item.id)
+                    Span(item.key)
                     if actions.allows(Campaign.Permissions.read) {
                         context.build(
                             AdminCopyButton(
-                                value: "@NewsletterCampaign(key: \(item.id))",
-                                label: "Copy campaign key \(item.id)",
+                                value: "@NewsletterCampaign(key: \(item.key))",
+                                label: "Copy campaign key \(item.key)",
                                 copiedMessage:
                                     "Newsletter campaign key copied to clipboard"
                             )

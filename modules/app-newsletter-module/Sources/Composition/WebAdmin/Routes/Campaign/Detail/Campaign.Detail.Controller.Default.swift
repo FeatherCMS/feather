@@ -21,7 +21,12 @@ extension Campaign.Detail.Controller {
             else {
                 return try await runtime.presenter.render(
                     id: campaignId,
-                    item: .init(id: campaignId, name: "", fromEmail: ""),
+                    item: .init(
+                        id: campaignId,
+                        key: "",
+                        name: "",
+                        fromEmail: ""
+                    ),
                     error: "Your account cannot view newsletter campaigns.",
                     permissions: context.currentUserPermissions
                 )
@@ -38,7 +43,12 @@ extension Campaign.Detail.Controller {
             catch {
                 return try await runtime.presenter.render(
                     id: campaignId,
-                    item: .init(id: campaignId, name: "", fromEmail: ""),
+                    item: .init(
+                        id: campaignId,
+                        key: "",
+                        name: "",
+                        fromEmail: ""
+                    ),
                     error: error.displayMessage,
                     permissions: context.currentUserPermissions
                 )

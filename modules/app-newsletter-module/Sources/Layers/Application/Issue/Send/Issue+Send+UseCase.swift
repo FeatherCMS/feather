@@ -154,27 +154,30 @@ extension Issue.Send {
                     return true
                 }
                 guard shouldEnqueue else { continue }
+                let subscriberName = [
+                    subscriber.firstName,
+                    subscriber.lastName,
+                ]
+                .map {
+                    $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+                .filter { !$0.isEmpty }
+                .joined(separator: " ")
                 do {
                     try await jobs.enqueueIssue(
                         mail: .init(
                             from: .init(newsletter.fromEmail),
                             to: [.init(subscriberEmail)],
-                            subject: input.subject,
+                            subject: Issue.PersonalizedContent.renderSubject(
+                                input.subject,
+                                email: subscriber.email,
+                                name: subscriberName
+                            ),
                             body: .html(
                                 Issue.PersonalizedContent.render(
                                     input.content,
                                     email: subscriber.email,
-                                    name: [
-                                        subscriber.firstName,
-                                        subscriber.lastName,
-                                    ]
-                                    .map {
-                                        $0.trimmingCharacters(
-                                            in: .whitespacesAndNewlines
-                                        )
-                                    }
-                                    .filter { !$0.isEmpty }
-                                    .joined(separator: " ")
+                                    name: subscriberName
                                 )
                             )
                         ),

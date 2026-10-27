@@ -106,13 +106,13 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignId}:
     get:
       tags:
       - Newsletter
       operationId: newsletterCampaignGet
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       responses:
         200:
           $ref: '#/components/responses/NewsletterCampaignResponse'
@@ -141,7 +141,7 @@ paths:
       - Newsletter
       operationId: newsletterCampaignUpdate
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       - $ref: '#/components/parameters/NewsletterCampaignUpdateMaskParameter'
       requestBody:
         $ref: '#/components/requestBodies/NewsletterCampaignPatchRequestBody'
@@ -174,13 +174,13 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues:
     get:
       tags:
       - Newsletter
       operationId: newsletterIssueList
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       responses:
         200:
           $ref: '#/components/responses/NewsletterIssueListResponse'
@@ -203,7 +203,7 @@ paths:
       - Newsletter
       operationId: newsletterIssueCreate
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       requestBody:
         $ref: '#/components/requestBodies/NewsletterIssueCreateRequestBody'
       responses:
@@ -228,7 +228,7 @@ paths:
       - Newsletter
       operationId: newsletterIssueRemove
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -248,13 +248,13 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query:
     post:
       tags:
       - Newsletter
       operationId: newsletterIssueQuery
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       requestBody:
         content:
           application/json:
@@ -278,13 +278,13 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email:
     post:
       tags:
       - Newsletter
       operationId: newsletterCampaignTestEmail
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       requestBody:
         $ref: '#/components/requestBodies/NewsletterIssueTestEmailRequestBody'
       responses:
@@ -304,13 +304,13 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}:
     get:
       tags:
       - Newsletter
       operationId: newsletterIssueGet
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       - $ref: '#/components/parameters/NewsletterIssueIdParameter'
       responses:
         200:
@@ -340,7 +340,7 @@ paths:
       - Newsletter
       operationId: newsletterIssueUpdate
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       - $ref: '#/components/parameters/NewsletterIssueIdParameter'
       - $ref: '#/components/parameters/NewsletterIssueUpdateMaskParameter'
       requestBody:
@@ -374,13 +374,13 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email:
     post:
       tags:
       - Newsletter
       operationId: newsletterIssueTestEmail
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       - $ref: '#/components/parameters/NewsletterIssueIdParameter'
       requestBody:
         $ref: '#/components/requestBodies/NewsletterIssueTestEmailRequestBody'
@@ -407,13 +407,13 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries:
     get:
       tags:
       - Newsletter
       operationId: newsletterIssueDeliveryList
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       - $ref: '#/components/parameters/NewsletterIssueIdParameter'
       responses:
         200:
@@ -438,13 +438,13 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers:
     get:
       tags:
       - Newsletter
       operationId: newsletterSubscriberList
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       responses:
         200:
           $ref: '#/components/responses/NewsletterSubscriberListResponse'
@@ -467,7 +467,7 @@ paths:
       - Newsletter
       operationId: newsletterSubscriberCreate
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       requestBody:
         $ref: '#/components/requestBodies/NewsletterSubscriberCreateRequestBody'
       responses:
@@ -492,7 +492,7 @@ paths:
       - Newsletter
       operationId: newsletterSubscriberRemove
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -540,13 +540,13 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}:
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}:
     get:
       tags:
       - Newsletter
       operationId: newsletterSubscriberGet
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       - $ref: '#/components/parameters/NewsletterSubscriberEmailParameter'
       responses:
         200:
@@ -576,7 +576,7 @@ paths:
       - Newsletter
       operationId: newsletterSubscriberUpdate
       parameters:
-      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterCampaignIDParameter'
       - $ref: '#/components/parameters/NewsletterSubscriberEmailParameter'
       - $ref: '#/components/parameters/NewsletterSubscriberUpdateMaskParameter'
       requestBody:
@@ -619,6 +619,8 @@ components:
     NewsletterCampaignSchema:
       type: object
       properties:
+        id:
+          type: string
         key:
           type: string
         name:
@@ -632,6 +634,7 @@ components:
           type: number
           format: double
       required:
+      - id
       - key
       - name
       - fromEmail
@@ -1411,12 +1414,12 @@ components:
           schema:
             $ref: '#/components/schemas/NewsletterSubscriberQueryItemSearchSchema'
   parameters:
-    NewsletterCampaignKeyParameter:
-      name: newsletterCampaignKey
+    NewsletterCampaignIDParameter:
+      name: newsletterCampaignId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/NewsletterKeyField'
+        $ref: '#/components/schemas/NewsletterIdField'
     NewsletterCampaignUpdateMaskParameter:
       name: updateMask
       allowEmptyValue: true

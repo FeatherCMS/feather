@@ -24,7 +24,7 @@ extension Issue.TestEmail.Repository {
                 if let issueID {
                     let response = try await client.newsletterIssueTestEmail(
                         path: .init(
-                            newsletterCampaignKey: newsletterKey,
+                            newsletterCampaignId: newsletterKey,
                             newsletterIssueId: issueID
                         ),
                         body: body
@@ -47,7 +47,7 @@ extension Issue.TestEmail.Repository {
                 }
 
                 let response = try await client.newsletterCampaignTestEmail(
-                    path: .init(newsletterCampaignKey: newsletterKey),
+                    path: .init(newsletterCampaignId: newsletterKey),
                     body: body
                 )
                 switch response {

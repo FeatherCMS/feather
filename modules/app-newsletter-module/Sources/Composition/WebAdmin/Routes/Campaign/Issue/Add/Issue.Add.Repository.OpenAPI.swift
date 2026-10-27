@@ -22,7 +22,7 @@ extension Issue.Add.Repository {
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterIssueCreate(
-                    path: .init(newsletterCampaignKey: newsletterId),
+                    path: .init(newsletterCampaignId: newsletterId),
                     body: .json(
                         .init(
                             subject: form.normalizedSubject,

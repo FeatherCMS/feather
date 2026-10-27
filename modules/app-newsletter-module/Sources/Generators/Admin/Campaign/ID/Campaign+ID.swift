@@ -1,3 +1,3 @@
 extension Campaign {
-    enum Key {}
+    enum ID {}
 }

@@ -17,7 +17,7 @@ extension Issue.Edit.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterIssueGet(
                     path: .init(
-                        newsletterCampaignKey: newsletterId,
+                        newsletterCampaignId: newsletterId,
                         newsletterIssueId: issueId
                     )
                 )
@@ -67,7 +67,7 @@ extension Issue.Edit.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterIssueUpdate(
                     path: .init(
-                        newsletterCampaignKey: newsletterId,
+                        newsletterCampaignId: newsletterId,
                         newsletterIssueId: issueId
                     ),
                     query: .init(updateMask: "subject,content"),
