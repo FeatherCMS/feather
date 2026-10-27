@@ -177,10 +177,9 @@ extension Page.Edit.Template.Interactor {
                     else {
                         throw Page.Edit.Template.Error.invalidValue(field.title)
                     }
-                    guard items.count >= field.minimumItems else {
-                        throw Page.Edit.Template.Error.minimumItems(
-                            field.title,
-                            field.minimumItems
+                    guard !field.required || !items.isEmpty else {
+                        throw Page.Edit.Template.Error.requiredValue(
+                            field.title
                         )
                     }
                     if case .string = itemKind,
@@ -269,10 +268,9 @@ extension Page.Edit.Template.Interactor {
                     if case .list(let itemKind) = field.kind,
                         case .array(let items) = item
                     {
-                        guard items.count >= field.minimumItems else {
-                            throw Page.Edit.Template.Error.minimumItems(
-                                field.title,
-                                field.minimumItems
+                        guard !field.required || !items.isEmpty else {
+                            throw Page.Edit.Template.Error.requiredValue(
+                                field.title
                             )
                         }
                         if case .string = itemKind,

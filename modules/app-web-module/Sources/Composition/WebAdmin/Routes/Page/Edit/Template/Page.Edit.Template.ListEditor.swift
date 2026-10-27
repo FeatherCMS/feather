@@ -13,7 +13,7 @@ extension Page.Edit.Template {
         let title: String
         let itemKind: WebModule.Template.Field.Kind
         let editor: WebModule.Template.Field.Editor
-        let minimumItems: Int
+        let required: Bool
         let values: [WebModule.Template.Value]
 
         func selectors() -> [any CSS.Selector] {
@@ -104,7 +104,7 @@ extension Page.Edit.Template {
             .data("template-list-editor", "true")
             .data("template-list-name", name)
             .data("template-list-title", singularTitle)
-            .data("template-list-minimum-items", String(minimumItems))
+            .data("template-list-required", required ? "true" : "false")
         }
 
         private func itemCard(

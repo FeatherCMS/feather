@@ -80,7 +80,7 @@ extension Page.Edit.Template {
                                                 title: definition.title,
                                                 itemKind: itemKind,
                                                 editor: definition.editor,
-                                                minimumItems: definition.minimumItems,
+                                                required: definition.required,
                                                 values: listValues(
                                                     for: definition.key
                                                 )
@@ -322,7 +322,7 @@ extension Page.Edit.Template {
                         title: field.title,
                         itemKind: itemKind,
                         editor: field.editor,
-                        minimumItems: field.minimumItems,
+                        required: field.required,
                         values: listValues(for: field.key)
                     )
                 )
@@ -433,7 +433,7 @@ extension Page.Edit.Template {
                 var itemCount = root.querySelectorAll(
                   "[data-template-list-item]:not([data-template-list-prototype])"
                 ).length;
-                var minimumItems = Number(root.dataset.templateListMinimumItems || 0);
+                var minimumItems = root.dataset.templateListRequired === "true" ? 1 : 0;
                 root.querySelectorAll("[data-template-list-remove]")
                   .forEach(function (button) {
                     button.disabled = itemCount <= minimumItems;
@@ -492,7 +492,7 @@ extension Page.Edit.Template {
                     var itemCount = root.querySelectorAll(
                       "[data-template-list-item]:not([data-template-list-prototype])"
                     ).length;
-                    var minimumItems = Number(root.dataset.templateListMinimumItems || 0);
+                    var minimumItems = root.dataset.templateListRequired === "true" ? 1 : 0;
                     if (itemCount <= minimumItems) { return; }
                     remove.closest("[data-template-list-item]").remove();
                     renumber(root);

@@ -22,7 +22,6 @@ extension Template {
         public let editor: Editor
         public let required: Bool
         public let defaultValue: Value?
-        public let minimumItems: Int
 
         public init(
             key: String,
@@ -30,8 +29,7 @@ extension Template {
             kind: Kind,
             required: Bool = false,
             defaultValue: Value? = nil,
-            editor: Editor = .input,
-            minimumItems: Int = 0
+            editor: Editor = .input
         ) {
             self.key = key
             self.title = title
@@ -39,7 +37,6 @@ extension Template {
             self.editor = editor
             self.required = required
             self.defaultValue = defaultValue
-            self.minimumItems = minimumItems
         }
     }
 }
