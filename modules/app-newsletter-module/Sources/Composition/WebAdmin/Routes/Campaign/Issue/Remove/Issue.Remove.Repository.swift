@@ -10,7 +10,7 @@ extension Issue.Remove.Repository {
 
         func remove(
             newsletterId: String,
-            issueId: String
+            issueIds: [String]
         ) async throws
     }
 }

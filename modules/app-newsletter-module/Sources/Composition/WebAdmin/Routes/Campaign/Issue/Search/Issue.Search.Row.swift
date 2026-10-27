@@ -16,6 +16,9 @@ extension Issue.Search {
 
         func html(context: inout BuilderContext) -> Tr {
             Tr {
+                if permissions.allows(Issue.Permissions.delete) {
+                    context.build(AdminListRowCheckbox(id: item.id))
+                }
                 Td(item.subject).data("label", "Subject")
                 Td {
                     context.build(statusChip(item.status))

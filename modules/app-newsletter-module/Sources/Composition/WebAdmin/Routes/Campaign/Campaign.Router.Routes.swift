@@ -49,7 +49,7 @@ extension Campaign.Router {
         }
 
         var campaignBreadcrumb: [AdminBreadcrumb.Link] {
-            breadcrumb + [.init(label: "Campaign", link: list.path)]
+            breadcrumb + [.init(label: "Campaigns", link: list.path)]
         }
 
         var subscribers: WebRoute {
@@ -154,6 +154,10 @@ extension Campaign.Router {
             issueDetails.appending(pathComponent: "remove")
         }
 
+        var issueRemoveSelected: WebRoute {
+            issues.appending(pathComponent: "remove")
+        }
+
         var issueTestEmail: WebRoute {
             issues.appending(pathComponent: "test-email")
         }
@@ -211,6 +215,13 @@ extension Campaign.Router {
                     "newsletterId": newsletterId,
                     "issueId": issueId,
                 ]
+            )
+        }
+
+        func issueRemoveSelectedPath(newsletterId: String) -> String {
+            issueRemoveSelected.path(
+                parameter: "newsletterId",
+                value: newsletterId
             )
         }
 

@@ -13,6 +13,6 @@ extension Issue.Remove.Interactor {
             issueId: String
         ) async throws -> AdminRemoveItemContext
 
-        func remove(newsletterId: String, issueId: String) async throws
+        func remove(newsletterId: String, issueIds: [String]) async throws
     }
 }
