@@ -8,7 +8,6 @@ Beta.1
 
 - tib [ ] Transport error middleware
 - tib [ ] Autocomplete reuqests instead of states, like city & country
-- tib [ ] contact custom submit label + rce display data 
 - tib [ ] webPublicBaseURL -> proper app environment for all targets
 
 Next round

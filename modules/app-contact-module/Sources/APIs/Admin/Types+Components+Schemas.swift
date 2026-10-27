@@ -30,6 +30,8 @@ extension Components {
             public var successMessage: Swift.String
             /// - Remark: Generated from `#/components/schemas/ContactFormSchema/failureMessage`.
             public var failureMessage: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/submitLabel`.
+            public var submitLabel: Swift.String
             /// - Remark: Generated from `#/components/schemas/ContactFormSchema/redirectUrl`.
             public var redirectUrl: Components.Schemas.ContactContentField?
             /// - Remark: Generated from `#/components/schemas/ContactFormSchema/items`.
@@ -47,6 +49,7 @@ extension Components {
             ///   - name:
             ///   - successMessage:
             ///   - failureMessage:
+            ///   - submitLabel:
             ///   - redirectUrl:
             ///   - items:
             ///   - mails:
@@ -57,6 +60,7 @@ extension Components {
                 name: Swift.String,
                 successMessage: Swift.String,
                 failureMessage: Swift.String,
+                submitLabel: Swift.String,
                 redirectUrl: Components.Schemas.ContactContentField? = nil,
                 items: Components.Schemas.FormFieldsSchema? = nil,
                 mails: Components.Schemas.SubmissionMailsSchema? = nil,
@@ -67,6 +71,7 @@ extension Components {
                 self.name = name
                 self.successMessage = successMessage
                 self.failureMessage = failureMessage
+                self.submitLabel = submitLabel
                 self.redirectUrl = redirectUrl
                 self.items = items
                 self.mails = mails
@@ -78,6 +83,7 @@ extension Components {
                 case name
                 case successMessage
                 case failureMessage
+                case submitLabel
                 case redirectUrl
                 case items
                 case mails
@@ -324,11 +330,13 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/name`.
             public var name: Swift.String
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/successMessage`.
-            public var successMessage: Components.Schemas.ContactContentField?
+            public var successMessage: Components.Schemas.ContactContentField
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/failureMessage`.
-            public var failureMessage: Components.Schemas.ContactContentField?
+            public var failureMessage: Components.Schemas.ContactContentField
+            /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/submitLabel`.
+            public var submitLabel: Components.Schemas.ContactContentField
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/redirectUrl`.
-            public var redirectUrl: Components.Schemas.ContactContentField?
+            public var redirectUrl: Components.Schemas.ContactContentField
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/fieldIds`.
             public var fieldIds: Components.Schemas.ContactFieldIDsSchema?
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/mails`.
@@ -340,15 +348,17 @@ extension Components {
             ///   - name:
             ///   - successMessage:
             ///   - failureMessage:
+            ///   - submitLabel:
             ///   - redirectUrl:
             ///   - fieldIds:
             ///   - mails:
             public init(
                 key: Swift.String,
                 name: Swift.String,
-                successMessage: Components.Schemas.ContactContentField? = nil,
-                failureMessage: Components.Schemas.ContactContentField? = nil,
-                redirectUrl: Components.Schemas.ContactContentField? = nil,
+                successMessage: Components.Schemas.ContactContentField,
+                failureMessage: Components.Schemas.ContactContentField,
+                submitLabel: Components.Schemas.ContactContentField,
+                redirectUrl: Components.Schemas.ContactContentField,
                 fieldIds: Components.Schemas.ContactFieldIDsSchema? = nil,
                 mails: Components.Schemas.SubmissionMailInputsSchema? = nil
             ) {
@@ -356,6 +366,7 @@ extension Components {
                 self.name = name
                 self.successMessage = successMessage
                 self.failureMessage = failureMessage
+                self.submitLabel = submitLabel
                 self.redirectUrl = redirectUrl
                 self.fieldIds = fieldIds
                 self.mails = mails
@@ -365,6 +376,7 @@ extension Components {
                 case name
                 case successMessage
                 case failureMessage
+                case submitLabel
                 case redirectUrl
                 case fieldIds
                 case mails

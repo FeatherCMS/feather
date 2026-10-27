@@ -73,6 +73,7 @@ extension Form.Edit {
                     name: input.name,
                     successMessage: input.successMessage,
                     failureMessage: input.failureMessage,
+                    submitLabel: input.submitLabel,
                     redirectUrl: input.redirectUrl
                 )
                 let current = try await scope.field.listBy(formId: value.id)
@@ -114,6 +115,7 @@ extension Form.Edit {
                     name: saved.name,
                     successMessage: saved.successMessage,
                     failureMessage: saved.failureMessage,
+                    submitLabel: saved.submitLabel,
                     redirectUrl: saved.redirectUrl,
                     fields: fields,
                     mails: mails,

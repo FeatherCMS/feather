@@ -57,6 +57,7 @@ extension ContactModule.Form.View.Repository {
                         name: item.name,
                         successMessage: item.successMessage,
                         failureMessage: item.failureMessage,
+                        submitLabel: item.submitLabel,
                         redirectUrl: item.redirectUrl,
                         selectedFieldIDs: (item.items ?? []).map(\.id),
                         availableFields: fields,

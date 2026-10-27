@@ -35,6 +35,10 @@ public struct TableMigration: DatabaseMigration {
                 try await connection.run(query: query) { _ in }
             }
         }
+        try await connection.run(
+            query:
+                #"ALTER TABLE contact_form ADD COLUMN IF NOT EXISTS submit_label TEXT NOT NULL DEFAULT 'Submit';"#
+        ) { _ in }
         try await FormField.AccessLayer.applyCheckConstraints(on: connection)
         try await Submission.Table.applyStatusConstraint(on: connection)
     }

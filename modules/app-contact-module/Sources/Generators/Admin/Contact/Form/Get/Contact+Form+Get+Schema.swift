@@ -9,6 +9,7 @@ extension Contact.Form.Get {
                 "name": Contact.Schemas.Name(),
                 "successMessage": Contact.Schemas.Content(),
                 "failureMessage": Contact.Schemas.Content(),
+                "submitLabel": Contact.Schemas.Content(),
                 "redirectUrl": Contact.Schemas.Content()
                     .reference(required: false),
                 "items": Contact.Field.Schemas.FormFields()

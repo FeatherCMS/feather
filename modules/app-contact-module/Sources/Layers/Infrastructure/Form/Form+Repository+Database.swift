@@ -12,6 +12,7 @@ extension Form.Table.Detail {
             name: name,
             successMessage: successMessage,
             failureMessage: failureMessage,
+            submitLabel: submitLabel,
             redirectUrl: redirectUrl,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -27,6 +28,7 @@ extension Form.Table.List {
             name: name,
             successMessage: successMessage,
             failureMessage: failureMessage,
+            submitLabel: submitLabel,
             redirectUrl: redirectUrl,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -58,6 +60,7 @@ extension Form.Repository {
                 name: model.name,
                 successMessage: model.successMessage,
                 failureMessage: model.failureMessage,
+                submitLabel: model.submitLabel,
                 redirectUrl: model.redirectUrl
             )
             try await accessLayer.insert(row)
@@ -98,6 +101,7 @@ extension Form.Repository {
                     name: model.name,
                     successMessage: model.successMessage,
                     failureMessage: model.failureMessage,
+                    submitLabel: model.submitLabel,
                     redirectUrl: model.redirectUrl
                 ),
                 where: \.id,

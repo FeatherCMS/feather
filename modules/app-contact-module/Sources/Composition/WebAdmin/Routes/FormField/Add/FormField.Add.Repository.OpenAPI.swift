@@ -88,7 +88,8 @@ extension FormField.Add.Repository {
                                     name: form.name,
                                     successMessage: form.successMessage,
                                     failureMessage: form.failureMessage,
-                                    redirectUrl: form.redirectUrl,
+                                    submitLabel: form.submitLabel,
+                                    redirectUrl: form.redirectUrl ?? "/",
                                     fieldIds: fieldIDs,
                                     mails: (form.mails ?? [])
                                         .map {

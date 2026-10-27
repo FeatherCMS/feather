@@ -30,6 +30,8 @@ extension Components {
             public var successMessage: Swift.String
             /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/failureMessage`.
             public var failureMessage: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/submitLabel`.
+            public var submitLabel: Swift.String
             /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/redirectUrl`.
             public var redirectUrl: Components.Schemas.AppContactContentField?
             /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/items`.
@@ -41,6 +43,7 @@ extension Components {
             ///   - name:
             ///   - successMessage:
             ///   - failureMessage:
+            ///   - submitLabel:
             ///   - redirectUrl:
             ///   - items:
             public init(
@@ -48,6 +51,7 @@ extension Components {
                 name: Swift.String,
                 successMessage: Swift.String,
                 failureMessage: Swift.String,
+                submitLabel: Swift.String,
                 redirectUrl: Components.Schemas.AppContactContentField? = nil,
                 items: [Components.Schemas.AppFormFieldSchema]
             ) {
@@ -55,6 +59,7 @@ extension Components {
                 self.name = name
                 self.successMessage = successMessage
                 self.failureMessage = failureMessage
+                self.submitLabel = submitLabel
                 self.redirectUrl = redirectUrl
                 self.items = items
             }
@@ -63,6 +68,7 @@ extension Components {
                 case name
                 case successMessage
                 case failureMessage
+                case submitLabel
                 case redirectUrl
                 case items
             }

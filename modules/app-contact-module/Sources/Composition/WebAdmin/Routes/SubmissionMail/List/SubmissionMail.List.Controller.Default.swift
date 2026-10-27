@@ -40,6 +40,7 @@ extension SubmissionMail.List.Controller {
                         name: "",
                         successMessage: "",
                         failureMessage: "",
+                        submitLabel: "Submit",
                         redirectUrl: nil,
                         selectedFieldIDs: [],
                         availableFields: [],

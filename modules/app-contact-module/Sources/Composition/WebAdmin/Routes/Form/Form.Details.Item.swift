@@ -6,6 +6,7 @@ extension ContactModule.Form.Details {
         public let name: String
         public let successMessage: String
         public let failureMessage: String
+        public let submitLabel: String
         public let redirectUrl: String?
         public let selectedFieldIDs: [String]
         public let availableFields: [ContactModule.FormField.Option]

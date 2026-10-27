@@ -36,6 +36,7 @@ extension ContactModule.Form.View.Controller {
                         name: "",
                         successMessage: "",
                         failureMessage: "",
+                        submitLabel: "Submit",
                         redirectUrl: nil,
                         selectedFieldIDs: [],
                         availableFields: [],

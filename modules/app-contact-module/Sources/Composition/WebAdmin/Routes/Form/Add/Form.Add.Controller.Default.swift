@@ -26,9 +26,11 @@ extension Form.Add.Controller {
                 item: .init(
                     key: "",
                     name: "",
-                    successMessage: "",
-                    failureMessage: "",
-                    redirectUrl: nil,
+                    successMessage: "Your message has been sent.",
+                    failureMessage:
+                        "Your message could not be sent. Please try again.",
+                    submitLabel: "Submit",
+                    redirectUrl: "/",
                     selectedFieldIDs: [],
                     availableFields: availableFields,
                     mails: []
@@ -54,8 +56,9 @@ extension Form.Add.Controller {
                     entity: .init(
                         key: form.key,
                         name: form.name,
-                        successMessage: form.successMessage ?? "",
-                        failureMessage: form.failureMessage ?? "",
+                        successMessage: form.successMessage,
+                        failureMessage: form.failureMessage,
+                        submitLabel: form.submitLabel,
                         redirectUrl: form.redirectUrl,
                         fieldIDs: form.fieldIds ?? [],
                         mails: form.mails.map {
@@ -74,7 +77,7 @@ extension Form.Add.Controller {
                     status: .seeOther,
                     headers: [
                         .location: AdminNotificationRedirect.location(
-                            defaultPath: routes.forms.path,
+                            defaultPath: routes.formEditPath(form.key),
                             title: "Added",
                             message: "Contact form added successfully."
                         )
@@ -89,8 +92,9 @@ extension Form.Add.Controller {
                         item: .init(
                             key: form.key,
                             name: form.name,
-                            successMessage: form.successMessage ?? "",
-                            failureMessage: form.failureMessage ?? "",
+                            successMessage: form.successMessage,
+                            failureMessage: form.failureMessage,
+                            submitLabel: form.submitLabel,
                             redirectUrl: form.redirectUrl,
                             selectedFieldIDs: form.fieldIds ?? [],
                             availableFields: availableFields,

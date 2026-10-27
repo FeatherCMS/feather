@@ -88,6 +88,7 @@ extension Form.Detail.Query {
                 name: form.name,
                 successMessage: form.successMessage,
                 failureMessage: form.failureMessage,
+                submitLabel: form.submitLabel,
                 redirectUrl: form.redirectUrl,
                 fields: fields,
                 mails: mails,

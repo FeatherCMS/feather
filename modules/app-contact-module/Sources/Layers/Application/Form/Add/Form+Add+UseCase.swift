@@ -59,6 +59,7 @@ extension Form.Add {
                     name: input.name,
                     successMessage: input.successMessage,
                     failureMessage: input.failureMessage,
+                    submitLabel: input.submitLabel,
                     redirectUrl: input.redirectUrl
                 )
                 let saved = try await scope.form.insert(model)
@@ -95,6 +96,7 @@ extension Form.Add {
                     name: saved.name,
                     successMessage: saved.successMessage,
                     failureMessage: saved.failureMessage,
+                    submitLabel: saved.submitLabel,
                     redirectUrl: saved.redirectUrl,
                     fields: fields,
                     mails: mails,

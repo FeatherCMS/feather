@@ -65,6 +65,7 @@ extension Form.List.Query {
                     name: form.name,
                     successMessage: form.successMessage,
                     failureMessage: form.failureMessage,
+                    submitLabel: form.submitLabel,
                     redirectUrl: form.redirectUrl,
                     createdAt: form.createdAt,
                     updatedAt: form.updatedAt
