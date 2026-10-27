@@ -18,6 +18,9 @@ extension Form {
             public let failureMessage = DatabaseTableColumn<String>(
                 name: "failure_message"
             )
+            public let submitLabel = DatabaseTableColumn<String>(
+                name: "submit_label"
+            )
             public let redirectUrl = DatabaseTableColumn<String?>(
                 name: "redirect_url"
             )

@@ -8,6 +8,7 @@ extension Form.Edit {
         public let name: String
         public let successMessage: String
         public let failureMessage: String
+        public let submitLabel: String
         public let redirectUrl: String?
         public let fieldIds: [String]
         public let mails: [Mail]
@@ -18,6 +19,7 @@ extension Form.Edit {
             name: String,
             successMessage: String = "",
             failureMessage: String = "",
+            submitLabel: String = "Submit",
             redirectUrl: String? = nil,
             fieldIds: [String] = [],
             mails: [Mail] = []
@@ -27,6 +29,7 @@ extension Form.Edit {
             self.name = name
             self.successMessage = successMessage
             self.failureMessage = failureMessage
+            self.submitLabel = submitLabel
             self.redirectUrl = redirectUrl
             self.fieldIds = fieldIds
             self.mails = mails

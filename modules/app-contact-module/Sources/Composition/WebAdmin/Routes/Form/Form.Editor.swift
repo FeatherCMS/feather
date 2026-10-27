@@ -13,6 +13,7 @@ extension ContactModule.Form {
             var name: String
             var successMessage: String
             var failureMessage: String
+            var submitLabel: String
             var redirectUrl: String?
             var fieldIDs: [String]
             var availableFields: [ContactModule.FormField.Option]
@@ -38,6 +39,15 @@ extension ContactModule.Form {
                     Display(.grid)
                     Gap(16.px)
                     MarginTop(8.px)
+                },
+                Class("contact-form-separator") {
+                    Border(0)
+                    BorderBottom(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Tertiary.border)
+                    )
+                    MarginBottom(10.px)
                 },
                 Class("contact-form-field-group") {
                     Display(.grid)
@@ -150,10 +160,23 @@ extension ContactModule.Form {
                     context.build(
                         AdminFormFieldInput(
                             state: .init(
+                                name: "redirectUrl",
+                                label: "Redirect URL",
+                                value: state.redirectUrl ?? "",
+                                help: "Optional URL to use after submission.",
+                                isReadOnly: isReadOnly
+                            )
+                        )
+                    )
+                    Hr().class("contact-form-separator")
+                    context.build(
+                        AdminFormFieldInput(
+                            state: .init(
                                 name: "successMessage",
                                 label: "Success message",
                                 value: state.successMessage,
                                 help: "Shown after a successful submission.",
+                                isRequired: true,
                                 isReadOnly: isReadOnly
                             )
                         )
@@ -166,6 +189,7 @@ extension ContactModule.Form {
                                 value: state.failureMessage,
                                 help:
                                     "Shown when a submission cannot be processed.",
+                                isRequired: true,
                                 isReadOnly: isReadOnly
                             )
                         )
@@ -173,10 +197,12 @@ extension ContactModule.Form {
                     context.build(
                         AdminFormFieldInput(
                             state: .init(
-                                name: "redirectUrl",
-                                label: "Redirect URL",
-                                value: state.redirectUrl ?? "",
-                                help: "Optional URL to use after submission.",
+                                name: "submitLabel",
+                                label: "Submit label",
+                                value: state.submitLabel,
+                                help:
+                                    "Text shown on the public form submit button.",
+                                isRequired: true,
                                 isReadOnly: isReadOnly
                             )
                         )

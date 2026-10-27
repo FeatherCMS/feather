@@ -18,6 +18,7 @@ extension Form {
             public let name: String
             public let successMessage: String
             public let failureMessage: String
+            public let submitLabel: String
             public let redirectUrl: String?
         }
 
@@ -26,6 +27,7 @@ extension Form {
         public var name: String
         public var successMessage: String
         public var failureMessage: String
+        public var submitLabel: String
         public var redirectUrl: String?
         public let createdAt: Date
         public let updatedAt: Date
@@ -36,6 +38,7 @@ extension Form {
             name: String,
             successMessage: String,
             failureMessage: String,
+            submitLabel: String,
             redirectUrl: String?,
             createdAt: Date,
             updatedAt: Date
@@ -45,6 +48,7 @@ extension Form {
             self.name = name
             self.successMessage = successMessage
             self.failureMessage = failureMessage
+            self.submitLabel = submitLabel
             self.redirectUrl = redirectUrl
             self.createdAt = createdAt
             self.updatedAt = updatedAt
@@ -81,6 +85,7 @@ extension Form.Model {
         name: String,
         successMessage: String = "",
         failureMessage: String = "",
+        submitLabel: String = "Submit",
         redirectUrl: String? = nil
     ) throws(Self.Error) -> Self.New {
         try validate(key: key)
@@ -90,6 +95,7 @@ extension Form.Model {
             name: name,
             successMessage: successMessage,
             failureMessage: failureMessage,
+            submitLabel: submitLabel,
             redirectUrl: redirectUrl
         )
     }
@@ -99,6 +105,7 @@ extension Form.Model {
         name: String? = nil,
         successMessage: String? = nil,
         failureMessage: String? = nil,
+        submitLabel: String? = nil,
         redirectUrl: String?? = nil
     ) throws(Self.Error) {
         let newKey = key ?? self.key
@@ -109,6 +116,7 @@ extension Form.Model {
         self.name = newName
         if let successMessage { self.successMessage = successMessage }
         if let failureMessage { self.failureMessage = failureMessage }
+        if let submitLabel { self.submitLabel = submitLabel }
         if let redirectUrl { self.redirectUrl = redirectUrl }
     }
 }

@@ -47,6 +47,7 @@ extension Form.Add.Repository {
                             name: entity.name,
                             successMessage: entity.successMessage,
                             failureMessage: entity.failureMessage,
+                            submitLabel: entity.submitLabel,
                             redirectUrl: entity.redirectUrl,
                             fieldIds: entity.fieldIDs,
                             mails: entity.mails.map {
@@ -72,6 +73,7 @@ extension Form.Add.Repository {
                         name: item.name,
                         successMessage: item.successMessage,
                         failureMessage: item.failureMessage,
+                        submitLabel: item.submitLabel,
                         redirectUrl: item.redirectUrl,
                         selectedFieldIDs: [],
                         availableFields: [],

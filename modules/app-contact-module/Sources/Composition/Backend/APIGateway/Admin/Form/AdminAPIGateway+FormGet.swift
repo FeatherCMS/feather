@@ -23,6 +23,7 @@ extension AdminAPIGateway {
                         name: result.name,
                         successMessage: result.successMessage,
                         failureMessage: result.failureMessage,
+                        submitLabel: result.submitLabel,
                         redirectUrl: result.redirectUrl,
                         fields: result.fields,
                         mails: result.mails,
@@ -39,6 +40,7 @@ extension AdminAPIGateway {
         name: String,
         successMessage: String,
         failureMessage: String,
+        submitLabel: String,
         redirectUrl: String?,
         fields: [Form.Field],
         mails: [Form.Mail],
@@ -50,6 +52,7 @@ extension AdminAPIGateway {
             name: name,
             successMessage: successMessage,
             failureMessage: failureMessage,
+            submitLabel: submitLabel,
             redirectUrl: redirectUrl,
             items: fields.map {
                 .init(

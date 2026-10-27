@@ -19,6 +19,7 @@ extension AppAPIGateway {
                         name: result.name,
                         successMessage: result.successMessage,
                         failureMessage: result.failureMessage,
+                        submitLabel: result.submitLabel,
                         redirectUrl: result.redirectUrl,
                         items: result.fields.map {
                             .init(

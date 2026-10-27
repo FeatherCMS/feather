@@ -22,6 +22,7 @@ public struct AdminFormFieldHelp: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 FontSize(0.8.rem)
                 LineHeight(1.35)
+                MarginBottom(10.px)
             }
         ]
     }

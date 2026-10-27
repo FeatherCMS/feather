@@ -12,6 +12,7 @@ extension Form.List {
             public let name: String
             public let successMessage: String
             public let failureMessage: String
+            public let submitLabel: String
             public let redirectUrl: String?
             public let fields: [Form.Field]
             public let mails: [Form.Mail]
@@ -28,6 +29,7 @@ extension Form.List {
                 name = model.name
                 successMessage = model.successMessage
                 failureMessage = model.failureMessage
+                submitLabel = model.submitLabel
                 redirectUrl = model.redirectUrl
                 self.fields = fields
                 self.mails = mails

@@ -27,6 +27,11 @@ extension Form.Table {
                     type: .text,
                     constraints: [.notNull, .default(.value(""))]
                 ),
+                .init(
+                    name: columns.submitLabel.name,
+                    type: .string,
+                    constraints: [.notNull, .default(.value("Submit"))]
+                ),
                 .init(name: columns.redirectUrl.name, type: .string),
                 .init(
                     name: columns.createdAt.name,

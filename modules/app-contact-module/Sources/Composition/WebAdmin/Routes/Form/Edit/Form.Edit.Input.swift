@@ -5,8 +5,9 @@ extension ContactModule.Form.Edit {
     struct Input: Decodable {
         public let key: String
         public let name: String
-        public let successMessage: String?
-        public let failureMessage: String?
+        public let successMessage: String
+        public let failureMessage: String
+        public let submitLabel: String
         public let redirectUrl: String?
         public let fieldIds: [String]?
         public let mailFrom: [String]?

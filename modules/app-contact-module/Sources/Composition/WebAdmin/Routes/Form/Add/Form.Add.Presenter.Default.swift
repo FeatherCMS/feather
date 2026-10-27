@@ -27,6 +27,7 @@ extension ContactModule.Form.Add.Presenter {
                             name: item.name,
                             successMessage: item.successMessage,
                             failureMessage: item.failureMessage,
+                            submitLabel: item.submitLabel,
                             redirectUrl: item.redirectUrl,
                             fieldIDs: item.selectedFieldIDs,
                             availableFields: item.availableFields,

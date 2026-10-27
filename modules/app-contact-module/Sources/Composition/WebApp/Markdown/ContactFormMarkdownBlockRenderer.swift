@@ -90,7 +90,7 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
             children.append(contentsOf: fields.map(renderField))
             appendCaptcha(to: &children)
             children.append(
-                Button("Submit")
+                Button(form.submitLabel)
                     .type(.submit)
                     .setClass("button primary")
             )
@@ -143,7 +143,7 @@ struct ContactFormMarkdownBlockRenderer: MarkdownBlockRenderer {
             case "contactformsubmit":
                 submitCount += 1
                 return Document(
-                    root: Button("Submit")
+                    root: Button(form.submitLabel)
                         .type(.submit)
                         .setClass("button primary")
                 )

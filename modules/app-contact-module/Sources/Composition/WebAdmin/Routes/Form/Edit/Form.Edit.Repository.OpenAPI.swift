@@ -23,6 +23,7 @@ extension ContactModule.Form.Edit.Repository {
             name: String,
             successMessage: String,
             failureMessage: String,
+            submitLabel: String,
             redirectUrl: String?,
             fieldIDs: [String],
             mails: [ContactModule.Form.Email]
@@ -45,6 +46,7 @@ extension ContactModule.Form.Edit.Repository {
             name: String,
             successMessage: String,
             failureMessage: String,
+            submitLabel: String,
             redirectUrl: String?,
             fieldIDs: [String],
             mails: [ContactModule.Form.Email]
@@ -58,6 +60,7 @@ extension ContactModule.Form.Edit.Repository {
                             name: name,
                             successMessage: successMessage,
                             failureMessage: failureMessage,
+                            submitLabel: submitLabel,
                             redirectUrl: redirectUrl,
                             fieldIds: fieldIDs,
                             mails: mails.map {
@@ -80,6 +83,7 @@ extension ContactModule.Form.Edit.Repository {
                         name: item.name,
                         successMessage: item.successMessage,
                         failureMessage: item.failureMessage,
+                        submitLabel: item.submitLabel,
                         redirectUrl: item.redirectUrl,
                         selectedFieldIDs: (item.items ?? []).map(\.id),
                         availableFields: [],

@@ -51,6 +51,7 @@ extension SubmissionMail.Edit.Repository {
                     name: name,
                     successMessage: successMessage,
                     failureMessage: failureMessage,
+                    submitLabel: try await get(id: id).submitLabel,
                     redirectUrl: redirectUrl,
                     fieldIDs: fieldIDs,
                     mails: mails

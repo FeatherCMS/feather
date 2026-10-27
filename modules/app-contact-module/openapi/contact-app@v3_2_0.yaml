@@ -45,6 +45,8 @@ components:
           type: string
         failureMessage:
           type: string
+        submitLabel:
+          type: string
         redirectUrl:
           $ref: '#/components/schemas/AppContactContentField'
         items:
@@ -58,8 +60,9 @@ components:
       - name
       - successMessage
       - failureMessage
+      - submitLabel
       - items
-      minProperties: 5
+      minProperties: 6
     AppContactContentField:
       type: string
     AppFormFieldSchema:

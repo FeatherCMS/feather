@@ -497,6 +497,8 @@ components:
           type: string
         failureMessage:
           type: string
+        submitLabel:
+          type: string
         redirectUrl:
           $ref: '#/components/schemas/ContactContentField'
         items:
@@ -514,6 +516,7 @@ components:
       - name
       - successMessage
       - failureMessage
+      - submitLabel
       - createdAt
       - updatedAt
     ContactContentField:
@@ -650,6 +653,8 @@ components:
           $ref: '#/components/schemas/ContactContentField'
         failureMessage:
           $ref: '#/components/schemas/ContactContentField'
+        submitLabel:
+          $ref: '#/components/schemas/ContactContentField'
         redirectUrl:
           $ref: '#/components/schemas/ContactContentField'
         fieldIds:
@@ -659,6 +664,9 @@ components:
       required:
       - key
       - name
+      - successMessage
+      - failureMessage
+      - submitLabel
     ContactFieldIDsSchema:
       type: array
       items:

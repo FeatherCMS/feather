@@ -10,6 +10,7 @@ extension Form.Table: DatabaseTableWithInsert {
         public let name: String
         public let successMessage: String
         public let failureMessage: String
+        public let submitLabel: String
         public let redirectUrl: String?
 
         enum CodingKeys: String, CodingKey {
@@ -18,6 +19,7 @@ extension Form.Table: DatabaseTableWithInsert {
             case name
             case successMessage = "success_message"
             case failureMessage = "failure_message"
+            case submitLabel = "submit_label"
             case redirectUrl = "redirect_url"
         }
     }
@@ -29,6 +31,7 @@ extension Form.Table: DatabaseTableWithUpdate {
         public let name: String
         public let successMessage: String
         public let failureMessage: String
+        public let submitLabel: String
         public let redirectUrl: String?
 
         public func afterEncode(values: inout DatabaseTableRowValues) throws {
@@ -40,6 +43,7 @@ extension Form.Table: DatabaseTableWithUpdate {
             case name
             case successMessage = "success_message"
             case failureMessage = "failure_message"
+            case submitLabel = "submit_label"
             case redirectUrl = "redirect_url"
         }
     }
@@ -52,6 +56,7 @@ extension Form.Table: DatabaseTableWithDetail {
         public let name: String
         public let successMessage: String
         public let failureMessage: String
+        public let submitLabel: String
         public let redirectUrl: String?
         public let createdAt: Date
         public let updatedAt: Date
@@ -62,6 +67,7 @@ extension Form.Table: DatabaseTableWithDetail {
             case name = "name"
             case successMessage = "success_message"
             case failureMessage = "failure_message"
+            case submitLabel = "submit_label"
             case redirectUrl = "redirect_url"
             case createdAt = "created_at"
             case updatedAt = "updated_at"
@@ -76,6 +82,7 @@ extension Form.Table: DatabaseTableWithList {
         public let name: String
         public let successMessage: String
         public let failureMessage: String
+        public let submitLabel: String
         public let redirectUrl: String?
         public let createdAt: Date
         public let updatedAt: Date
@@ -86,6 +93,7 @@ extension Form.Table: DatabaseTableWithList {
             case name = "name"
             case successMessage = "success_message"
             case failureMessage = "failure_message"
+            case submitLabel = "submit_label"
             case redirectUrl = "redirect_url"
             case createdAt = "created_at"
             case updatedAt = "updated_at"

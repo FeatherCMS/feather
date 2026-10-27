@@ -14,6 +14,7 @@ extension ContactModule.Form.Edit.Interactor {
             name: String,
             successMessage: String,
             failureMessage: String,
+            submitLabel: String,
             redirectUrl: String?,
             fieldIDs: [String],
             mails: [ContactModule.Form.Email]

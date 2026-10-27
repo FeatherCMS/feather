@@ -7,6 +7,7 @@ extension Form.Add {
         let name: String
         let successMessage: String
         let failureMessage: String
+        let submitLabel: String
         let redirectUrl: String?
         let fieldIDs: [String]
         let mails: [ContactModule.Form.Email]
