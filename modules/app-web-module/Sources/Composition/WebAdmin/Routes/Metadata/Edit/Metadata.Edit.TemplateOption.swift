@@ -1,6 +1,6 @@
 public import WebModule
 
-extension WebModule.Metadata.Edit {
+extension WebModule.Metadata {
     public struct TemplateOption: Sendable, Hashable, Codable {
         public let value: String
         public let title: String

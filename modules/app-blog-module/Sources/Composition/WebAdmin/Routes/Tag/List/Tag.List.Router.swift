@@ -63,7 +63,7 @@ extension Tag.List {
             router.get(routes.tags.routerPath, use: controller.get)
             router.post(
                 routes.tagStatusRoute.routerPath,
-                use: controller.postStatus
+                use: controller.postStatusPath
             )
         }
     }

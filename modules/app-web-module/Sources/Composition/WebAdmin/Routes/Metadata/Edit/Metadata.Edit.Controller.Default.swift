@@ -256,7 +256,7 @@ extension WebModule.Metadata.Edit.Controller {
             expirationDate: String = "",
             status: String = "draft",
             template: String = "default",
-            templateOptions: [WebModule.Metadata.Edit.TemplateOption] = [],
+            templateOptions: [WebModule.Metadata.TemplateOption] = [],
             title: String = "",
             excerpt: String = "",
             imageUrl: String = "",

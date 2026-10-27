@@ -152,7 +152,7 @@ extension Post.List {
                                                                     .href(
                                                                         state
                                                                             .routes
-                                                                            .post(
+                                                                            .postPath(
                                                                                 item
                                                                                     .id
                                                                             )
@@ -228,7 +228,7 @@ extension Post.List {
                                                                             href:
                                                                                 state
                                                                                 .routes
-                                                                                .post(
+                                                                                .postPath(
                                                                                     item
                                                                                         .id
                                                                                 ),
