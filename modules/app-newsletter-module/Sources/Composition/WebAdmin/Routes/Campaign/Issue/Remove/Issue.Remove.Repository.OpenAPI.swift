@@ -17,11 +17,11 @@ extension Issue.Remove.Repository {
                 .get(newsletterId: newsletterId, issueId: issueId)
         }
 
-        func remove(newsletterId: String, issueId: String) async throws {
+        func remove(newsletterId: String, issueIds: [String]) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterIssueRemove(
-                    path: .init(newsletterCampaignKey: newsletterId),
-                    body: .json(.init(ids: [issueId]))
+                    path: .init(newsletterCampaignId: newsletterId),
+                    body: .json(.init(ids: issueIds))
                 )
                 switch response {
                 case .noContent:

@@ -104,11 +104,11 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/feather-framework/feather-mail-ses",
-            exact: "1.0.0-rc.3"
+            exact: "1.0.0-rc.4"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-mail",
-            exact: "1.0.0-rc.2"
+            exact: "1.0.0-rc.3"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-storage",
@@ -350,6 +350,7 @@ let package = Package(
         .executableTarget(
             name: "Static",
             dependencies: [
+                .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Logging", package: "swift-log"),

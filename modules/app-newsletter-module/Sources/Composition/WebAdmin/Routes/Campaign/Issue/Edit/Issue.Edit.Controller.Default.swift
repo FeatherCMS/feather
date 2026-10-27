@@ -82,7 +82,7 @@ extension Issue.Edit.Controller {
                         model: .init(
                             subject: form.subject,
                             content: form.content,
-                            scheduledAt: form.scheduledAt,
+                            scheduledAt: "",
                             newsletterId: newsletterId,
                             error: error.displayMessage
                         ),
@@ -90,6 +90,55 @@ extension Issue.Edit.Controller {
                         permissions: context.currentUserPermissions
                     )
                     .response(from: request, context: context)
+            }
+        }
+
+        func send(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            guard context.isCurrentUserAllowed(to: Issue.Permissions.update)
+            else { return Response(status: .forbidden) }
+            let runtime = buildRuntime(request, context)
+            let newsletterId = try context.requiredParameter("newsletterId")
+            let issueId = try context.requiredParameter("issueId")
+
+            do {
+                let form = try await request.decode(
+                    as: Issue.Form.Input.self,
+                    context: context
+                )
+                try await runtime.interactor.edit(
+                    newsletterId: newsletterId,
+                    issueId: issueId,
+                    form: .init(
+                        subject: form.subject,
+                        content: form.content
+                    )
+                )
+                return AdminNotification.redirect(
+                    to: routes.issueEditPath(
+                        newsletterId: newsletterId,
+                        issueId: issueId
+                    ),
+                    notification: .init(
+                        title: "Queued",
+                        message:
+                            "Issue deliveries have been queued for immediate delivery to subscribed recipients."
+                    )
+                )
+            }
+            catch {
+                return AdminNotification.redirect(
+                    to: routes.issueEditPath(
+                        newsletterId: newsletterId,
+                        issueId: issueId
+                    ),
+                    notification: .init(
+                        title: "Unable to queue issue",
+                        message: error.displayMessage
+                    )
+                )
             }
         }
     }

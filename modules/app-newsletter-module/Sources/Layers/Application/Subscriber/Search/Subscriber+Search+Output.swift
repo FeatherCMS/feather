@@ -1,3 +1,4 @@
+public import Foundation
 public import NewsletterDomain
 public import NewsletterModule
 
@@ -7,15 +8,21 @@ extension Subscriber.Search {
             public let campaignKey: String
             public let campaignName: String
             public let status: Subscriber.Model.Status
+            public let subscriptionDate: Date
+            public let unsubscriptionDate: Date?
 
             package init(
                 campaignKey: String,
                 campaignName: String,
-                status: Subscriber.Model.Status
+                status: Subscriber.Model.Status,
+                subscriptionDate: Date,
+                unsubscriptionDate: Date?
             ) {
                 self.campaignKey = campaignKey
                 self.campaignName = campaignName
                 self.status = status
+                self.subscriptionDate = subscriptionDate
+                self.unsubscriptionDate = unsubscriptionDate
             }
         }
 

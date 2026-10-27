@@ -1,5 +1,5 @@
 {
-  "originHash" : "e4329c0a4c6a3668ad6ce5b46bf70c3694a5c41331ce3ecdcf53865614d1cdc5",
+  "originHash" : "af10951897bb91268b24a90ead368f756a2ee3930ca599dd400a77c58c3dfb67",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-mail",
       "state" : {
-        "revision" : "1bc59ff85b3f21f2dfe211d4f7270a7a1f2a91db",
-        "version" : "1.0.0-rc.2"
+        "revision" : "1f8832c46d548fab81e7a39adab1a9179d9edb79",
+        "version" : "1.0.0-rc.3"
       }
     },
     {

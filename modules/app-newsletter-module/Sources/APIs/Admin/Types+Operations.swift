@@ -776,25 +776,25 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/get(newsletterCampaignGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/get(newsletterCampaignGet)`.
     public enum NewsletterCampaignGet {
         public static let id: Swift.String = "newsletterCampaignGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/GET/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/GET/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterCampaignGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterCampaignGet.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -822,7 +822,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/get(newsletterCampaignGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/get(newsletterCampaignGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterCampaignResponse)
@@ -844,9 +844,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/GET/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/GET/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/GET/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/GET/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -873,7 +873,7 @@ public enum Operations {
             }
             /// Newsletter not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/get(newsletterCampaignGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/get(newsletterCampaignGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.NewsletterCampaignGet.Output.NotFound)
@@ -895,9 +895,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -924,7 +924,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/get(newsletterCampaignGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/get(newsletterCampaignGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterCampaignGet.Output.Unauthorized)
@@ -946,9 +946,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -975,7 +975,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/get(newsletterCampaignGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/get(newsletterCampaignGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterCampaignGet.Output.Forbidden)
@@ -1027,29 +1027,29 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/patch(newsletterCampaignUpdate)`.
     public enum NewsletterCampaignUpdate {
         public static let id: Swift.String = "newsletterCampaignUpdate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterCampaignUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/query`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/query`.
             public struct Query: Sendable, Hashable {
                 /// Comma-separated list of fields to update.
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/query/updateMask`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/query/updateMask`.
                 public var updateMask: Components.Parameters.NewsletterCampaignUpdateMaskParameter
                 /// Creates a new `Query`.
                 ///
@@ -1060,7 +1060,7 @@ public enum Operations {
                 }
             }
             public var query: Operations.NewsletterCampaignUpdate.Input.Query
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterCampaignUpdate.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -1095,7 +1095,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/patch(newsletterCampaignUpdate)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterCampaignResponse)
@@ -1117,9 +1117,9 @@ public enum Operations {
                 }
             }
             public struct BadRequest: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/400/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/responses/400/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/400/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/responses/400/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1146,7 +1146,7 @@ public enum Operations {
             }
             /// Bad Request
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)/responses/400`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/patch(newsletterCampaignUpdate)/responses/400`.
             ///
             /// HTTP response code: `400 badRequest`.
             case badRequest(Operations.NewsletterCampaignUpdate.Output.BadRequest)
@@ -1168,9 +1168,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1197,7 +1197,7 @@ public enum Operations {
             }
             /// Newsletter not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/patch(newsletterCampaignUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.NewsletterCampaignUpdate.Output.NotFound)
@@ -1219,9 +1219,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1248,7 +1248,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/patch(newsletterCampaignUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterCampaignUpdate.Output.Unauthorized)
@@ -1270,9 +1270,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/PATCH/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/PATCH/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1299,7 +1299,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/patch(newsletterCampaignUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterCampaignUpdate.Output.Forbidden)
@@ -1351,25 +1351,25 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/get(newsletterIssueList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/get(newsletterIssueList)`.
     public enum NewsletterIssueList {
         public static let id: Swift.String = "newsletterIssueList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/GET/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/GET/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterIssueList.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueList.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -1397,7 +1397,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter issue list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/get(newsletterIssueList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/get(newsletterIssueList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterIssueListResponse)
@@ -1419,9 +1419,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1448,7 +1448,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/get(newsletterIssueList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/get(newsletterIssueList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterIssueList.Output.Unauthorized)
@@ -1470,9 +1470,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1499,7 +1499,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/get(newsletterIssueList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/get(newsletterIssueList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterIssueList.Output.Forbidden)
@@ -1551,25 +1551,25 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/post(newsletterIssueCreate)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/post(newsletterIssueCreate)`.
     public enum NewsletterIssueCreate {
         public static let id: Swift.String = "newsletterIssueCreate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/POST/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/POST/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterIssueCreate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueCreate.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -1601,7 +1601,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter issue response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/post(newsletterIssueCreate)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/post(newsletterIssueCreate)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
             case created(Components.Responses.NewsletterIssueResponse)
@@ -1623,9 +1623,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1652,7 +1652,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/post(newsletterIssueCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/post(newsletterIssueCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterIssueCreate.Output.Unauthorized)
@@ -1674,9 +1674,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1703,7 +1703,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/post(newsletterIssueCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/post(newsletterIssueCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterIssueCreate.Output.Forbidden)
@@ -1755,25 +1755,25 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/delete(newsletterIssueRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)`.
     public enum NewsletterIssueRemove {
         public static let id: Swift.String = "newsletterIssueRemove"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/DELETE/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/DELETE/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/DELETE/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/DELETE/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterIssueRemove.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/DELETE/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueRemove.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -1805,13 +1805,13 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/delete(newsletterIssueRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Components.Responses.NoContentResponse)
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/delete(newsletterIssueRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -1835,9 +1835,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/DELETE/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/DELETE/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/DELETE/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/DELETE/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1864,7 +1864,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/delete(newsletterIssueRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterIssueRemove.Output.Unauthorized)
@@ -1886,9 +1886,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/DELETE/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/DELETE/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/DELETE/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/DELETE/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -1915,7 +1915,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/delete(newsletterIssueRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterIssueRemove.Output.Forbidden)
@@ -1967,25 +1967,25 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/post(newsletterIssueQuery)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/post(newsletterIssueQuery)`.
     public enum NewsletterIssueQuery {
         public static let id: Swift.String = "newsletterIssueQuery"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/POST/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/POST/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterIssueQuery.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueQuery.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -1997,9 +1997,9 @@ public enum Operations {
                 }
             }
             public var headers: Operations.NewsletterIssueQuery.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/POST/requestBody`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/POST/requestBody/content/application\/json`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/POST/requestBody/content/application\/json`.
                 case json(Components.Schemas.NewsletterIssueQueryItemSearchRequestQuerySchema)
             }
             public var body: Operations.NewsletterIssueQuery.Input.Body
@@ -2022,7 +2022,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/post(newsletterIssueQuery)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/post(newsletterIssueQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterIssueQueryItemSearchSchemaSearchResponse)
@@ -2044,9 +2044,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2073,7 +2073,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/post(newsletterIssueQuery)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/post(newsletterIssueQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterIssueQuery.Output.Unauthorized)
@@ -2095,9 +2095,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2124,7 +2124,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/query/post(newsletterIssueQuery)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/query/post(newsletterIssueQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterIssueQuery.Output.Forbidden)
@@ -2176,25 +2176,25 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/post(newsletterCampaignTestEmail)`.
     public enum NewsletterCampaignTestEmail {
         public static let id: Swift.String = "newsletterCampaignTestEmail"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/POST/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/POST/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterCampaignTestEmail.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterCampaignTestEmail.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -2230,13 +2230,13 @@ public enum Operations {
             }
             /// Test email queued
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/post(newsletterCampaignTestEmail)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Operations.NewsletterCampaignTestEmail.Output.NoContent)
             /// Test email queued
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/post(newsletterCampaignTestEmail)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -2260,9 +2260,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2289,7 +2289,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/post(newsletterCampaignTestEmail)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterCampaignTestEmail.Output.Unauthorized)
@@ -2311,9 +2311,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2340,7 +2340,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/post(newsletterCampaignTestEmail)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterCampaignTestEmail.Output.Forbidden)
@@ -2392,32 +2392,32 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/get(newsletterIssueGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/get(newsletterIssueGet)`.
     public enum NewsletterIssueGet {
         public static let id: Swift.String = "newsletterIssueGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/path/newsletterIssueId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/path/newsletterIssueId`.
                 public var newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
+                ///   - newsletterCampaignId:
                 ///   - newsletterIssueId:
                 public init(
-                    newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter,
+                    newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter,
                     newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
                 ) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                    self.newsletterCampaignId = newsletterCampaignId
                     self.newsletterIssueId = newsletterIssueId
                 }
             }
             public var path: Operations.NewsletterIssueGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueGet.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -2445,7 +2445,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter issue response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/get(newsletterIssueGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/get(newsletterIssueGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterIssueResponse)
@@ -2467,9 +2467,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2496,7 +2496,7 @@ public enum Operations {
             }
             /// Newsletter issue not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/get(newsletterIssueGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/get(newsletterIssueGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.NewsletterIssueGet.Output.NotFound)
@@ -2518,9 +2518,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2547,7 +2547,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/get(newsletterIssueGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/get(newsletterIssueGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterIssueGet.Output.Unauthorized)
@@ -2569,9 +2569,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2598,7 +2598,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/get(newsletterIssueGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/get(newsletterIssueGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterIssueGet.Output.Forbidden)
@@ -2650,36 +2650,36 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
     public enum NewsletterIssueUpdate {
         public static let id: Swift.String = "newsletterIssueUpdate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/path/newsletterIssueId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/path/newsletterIssueId`.
                 public var newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
+                ///   - newsletterCampaignId:
                 ///   - newsletterIssueId:
                 public init(
-                    newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter,
+                    newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter,
                     newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
                 ) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                    self.newsletterCampaignId = newsletterCampaignId
                     self.newsletterIssueId = newsletterIssueId
                 }
             }
             public var path: Operations.NewsletterIssueUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/query`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/query`.
             public struct Query: Sendable, Hashable {
                 /// Comma-separated list of fields to update.
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/query/updateMask`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/query/updateMask`.
                 public var updateMask: Components.Parameters.NewsletterIssueUpdateMaskParameter
                 /// Creates a new `Query`.
                 ///
@@ -2690,7 +2690,7 @@ public enum Operations {
                 }
             }
             public var query: Operations.NewsletterIssueUpdate.Input.Query
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueUpdate.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -2725,7 +2725,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter issue response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterIssueResponse)
@@ -2747,9 +2747,9 @@ public enum Operations {
                 }
             }
             public struct BadRequest: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/400/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/responses/400/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/400/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/responses/400/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2776,7 +2776,7 @@ public enum Operations {
             }
             /// Bad Request
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/400`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/400`.
             ///
             /// HTTP response code: `400 badRequest`.
             case badRequest(Operations.NewsletterIssueUpdate.Output.BadRequest)
@@ -2798,9 +2798,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2827,7 +2827,7 @@ public enum Operations {
             }
             /// Newsletter issue not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.NewsletterIssueUpdate.Output.NotFound)
@@ -2849,9 +2849,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2878,7 +2878,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterIssueUpdate.Output.Unauthorized)
@@ -2900,9 +2900,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/PATCH/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/PATCH/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -2929,7 +2929,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterIssueUpdate.Output.Forbidden)
@@ -2981,32 +2981,32 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
     public enum NewsletterIssueTestEmail {
         public static let id: Swift.String = "newsletterIssueTestEmail"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/path/newsletterIssueId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/path/newsletterIssueId`.
                 public var newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
+                ///   - newsletterCampaignId:
                 ///   - newsletterIssueId:
                 public init(
-                    newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter,
+                    newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter,
                     newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
                 ) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                    self.newsletterCampaignId = newsletterCampaignId
                     self.newsletterIssueId = newsletterIssueId
                 }
             }
             public var path: Operations.NewsletterIssueTestEmail.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueTestEmail.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -3042,13 +3042,13 @@ public enum Operations {
             }
             /// Test email queued
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Operations.NewsletterIssueTestEmail.Output.NoContent)
             /// Test email queued
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -3072,9 +3072,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3101,7 +3101,7 @@ public enum Operations {
             }
             /// Newsletter issue not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.NewsletterIssueTestEmail.Output.NotFound)
@@ -3123,9 +3123,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3152,7 +3152,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterIssueTestEmail.Output.Unauthorized)
@@ -3174,9 +3174,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3203,7 +3203,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterIssueTestEmail.Output.Forbidden)
@@ -3255,32 +3255,32 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
     public enum NewsletterIssueDeliveryList {
         public static let id: Swift.String = "newsletterIssueDeliveryList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/path/newsletterIssueId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/path/newsletterIssueId`.
                 public var newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
+                ///   - newsletterCampaignId:
                 ///   - newsletterIssueId:
                 public init(
-                    newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter,
+                    newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter,
                     newsletterIssueId: Components.Parameters.NewsletterIssueIdParameter
                 ) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                    self.newsletterCampaignId = newsletterCampaignId
                     self.newsletterIssueId = newsletterIssueId
                 }
             }
             public var path: Operations.NewsletterIssueDeliveryList.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterIssueDeliveryList.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -3308,7 +3308,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter delivery list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterDeliveryListResponse)
@@ -3330,9 +3330,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3359,7 +3359,7 @@ public enum Operations {
             }
             /// Newsletter issue not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.NewsletterIssueDeliveryList.Output.NotFound)
@@ -3381,9 +3381,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3410,7 +3410,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterIssueDeliveryList.Output.Unauthorized)
@@ -3432,9 +3432,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3461,7 +3461,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterIssueDeliveryList.Output.Forbidden)
@@ -3513,25 +3513,25 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/get(newsletterSubscriberList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/get(newsletterSubscriberList)`.
     public enum NewsletterSubscriberList {
         public static let id: Swift.String = "newsletterSubscriberList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/GET/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/GET/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterSubscriberList.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterSubscriberList.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -3559,7 +3559,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter subscriber list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/get(newsletterSubscriberList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/get(newsletterSubscriberList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterSubscriberListResponse)
@@ -3581,9 +3581,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3610,7 +3610,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/get(newsletterSubscriberList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/get(newsletterSubscriberList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterSubscriberList.Output.Unauthorized)
@@ -3632,9 +3632,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3661,7 +3661,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/get(newsletterSubscriberList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/get(newsletterSubscriberList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterSubscriberList.Output.Forbidden)
@@ -3713,25 +3713,25 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/post(newsletterSubscriberCreate)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/post(newsletterSubscriberCreate)`.
     public enum NewsletterSubscriberCreate {
         public static let id: Swift.String = "newsletterSubscriberCreate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/POST/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/POST/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterSubscriberCreate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterSubscriberCreate.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -3763,7 +3763,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter subscriber response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/post(newsletterSubscriberCreate)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/post(newsletterSubscriberCreate)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
             case created(Components.Responses.NewsletterSubscriberResponse)
@@ -3785,9 +3785,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/POST/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/POST/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/POST/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3814,7 +3814,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/post(newsletterSubscriberCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/post(newsletterSubscriberCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterSubscriberCreate.Output.Unauthorized)
@@ -3836,9 +3836,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/POST/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/POST/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/POST/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -3865,7 +3865,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/post(newsletterSubscriberCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/post(newsletterSubscriberCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterSubscriberCreate.Output.Forbidden)
@@ -3917,25 +3917,25 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/delete(newsletterSubscriberRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)`.
     public enum NewsletterSubscriberRemove {
         public static let id: Swift.String = "newsletterSubscriberRemove"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/DELETE/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/DELETE/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/DELETE/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/DELETE/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
-                public init(newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                ///   - newsletterCampaignId:
+                public init(newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter) {
+                    self.newsletterCampaignId = newsletterCampaignId
                 }
             }
             public var path: Operations.NewsletterSubscriberRemove.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/DELETE/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterSubscriberRemove.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -3967,13 +3967,13 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/delete(newsletterSubscriberRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Components.Responses.NoContentResponse)
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/delete(newsletterSubscriberRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -3997,9 +3997,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/DELETE/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/DELETE/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/DELETE/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/DELETE/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4026,7 +4026,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/delete(newsletterSubscriberRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterSubscriberRemove.Output.Unauthorized)
@@ -4048,9 +4048,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/DELETE/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/DELETE/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/DELETE/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/DELETE/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4077,7 +4077,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/delete(newsletterSubscriberRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterSubscriberRemove.Output.Forbidden)
@@ -4322,32 +4322,32 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/get(newsletterSubscriberGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/get(newsletterSubscriberGet)`.
     public enum NewsletterSubscriberGet {
         public static let id: Swift.String = "newsletterSubscriberGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/path/email`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/path/email`.
                 public var email: Components.Parameters.NewsletterSubscriberEmailParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
+                ///   - newsletterCampaignId:
                 ///   - email:
                 public init(
-                    newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter,
+                    newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter,
                     email: Components.Parameters.NewsletterSubscriberEmailParameter
                 ) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                    self.newsletterCampaignId = newsletterCampaignId
                     self.email = email
                 }
             }
             public var path: Operations.NewsletterSubscriberGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterSubscriberGet.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -4375,7 +4375,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter subscriber response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/get(newsletterSubscriberGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/get(newsletterSubscriberGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterSubscriberResponse)
@@ -4397,9 +4397,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4426,7 +4426,7 @@ public enum Operations {
             }
             /// Newsletter subscriber not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/get(newsletterSubscriberGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/get(newsletterSubscriberGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.NewsletterSubscriberGet.Output.NotFound)
@@ -4448,9 +4448,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4477,7 +4477,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/get(newsletterSubscriberGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/get(newsletterSubscriberGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterSubscriberGet.Output.Unauthorized)
@@ -4499,9 +4499,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/GET/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4528,7 +4528,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/get(newsletterSubscriberGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/get(newsletterSubscriberGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterSubscriberGet.Output.Forbidden)
@@ -4580,36 +4580,36 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/patch(newsletterSubscriberUpdate)`.
     public enum NewsletterSubscriberUpdate {
         public static let id: Swift.String = "newsletterSubscriberUpdate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/path/newsletterCampaignKey`.
-                public var newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/path/email`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/path/newsletterCampaignId`.
+                public var newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/path/email`.
                 public var email: Components.Parameters.NewsletterSubscriberEmailParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignKey:
+                ///   - newsletterCampaignId:
                 ///   - email:
                 public init(
-                    newsletterCampaignKey: Components.Parameters.NewsletterCampaignKeyParameter,
+                    newsletterCampaignId: Components.Parameters.NewsletterCampaignIDParameter,
                     email: Components.Parameters.NewsletterSubscriberEmailParameter
                 ) {
-                    self.newsletterCampaignKey = newsletterCampaignKey
+                    self.newsletterCampaignId = newsletterCampaignId
                     self.email = email
                 }
             }
             public var path: Operations.NewsletterSubscriberUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/query`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/query`.
             public struct Query: Sendable, Hashable {
                 /// Comma-separated list of fields to update.
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/query/updateMask`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/query/updateMask`.
                 public var updateMask: Components.Parameters.NewsletterSubscriberUpdateMaskParameter
                 /// Creates a new `Query`.
                 ///
@@ -4620,7 +4620,7 @@ public enum Operations {
                 }
             }
             public var query: Operations.NewsletterSubscriberUpdate.Input.Query
-            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.NewsletterSubscriberUpdate.AcceptableContentType>]
                 /// Creates a new `Headers`.
@@ -4655,7 +4655,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Newsletter subscriber response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.NewsletterSubscriberResponse)
@@ -4677,9 +4677,9 @@ public enum Operations {
                 }
             }
             public struct BadRequest: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/400/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/responses/400/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/400/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/responses/400/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4706,7 +4706,7 @@ public enum Operations {
             }
             /// Bad Request
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/400`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/400`.
             ///
             /// HTTP response code: `400 badRequest`.
             case badRequest(Operations.NewsletterSubscriberUpdate.Output.BadRequest)
@@ -4728,9 +4728,9 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/404/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/responses/404/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/404/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/responses/404/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4757,7 +4757,7 @@ public enum Operations {
             }
             /// Newsletter subscriber not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.NewsletterSubscriberUpdate.Output.NotFound)
@@ -4779,9 +4779,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/responses/401/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4808,7 +4808,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.NewsletterSubscriberUpdate.Output.Unauthorized)
@@ -4830,9 +4830,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/PATCH/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/PATCH/responses/403/content/application\/json`.
                     case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
                     /// The associated value of the enum case if `self` is `.json`.
                     ///
@@ -4859,7 +4859,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/patch(newsletterSubscriberUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.NewsletterSubscriberUpdate.Output.Forbidden)

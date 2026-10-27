@@ -1,8 +1,10 @@
 import FeatherWebAdmin
+import FeatherWebShared
 import HTML
 import Hummingbird
 import NewsletterApplication
 import NewsletterModule
+import SGML
 import WebBuilders
 import WebComponents
 
@@ -20,6 +22,10 @@ extension Issue.Search.Table {
         }
 
         private var searchValue: String { search ?? "" }
+
+        private var returnTo: String {
+            AdminLocation.url(path: path, page: pageState.page, search: search)
+        }
 
         func html(context: inout BuilderContext) -> Div {
             let canCreate = permissions.allows(Issue.Permissions.create)
@@ -79,42 +85,81 @@ extension Issue.Search.Table {
                         }
                         else {
                             context.build(
-                                AdminListShell(
-                                    layout: .init(
-                                        name: "newsletter-issues",
-                                        columns: [
-                                            .fraction(2), .fraction(1),
-                                            .fraction(1), .fraction(1),
-                                            .actions,
-                                        ]
+                                AdminListSelectionForm(
+                                    state: .init(
+                                        action: AdminLocation.remove(
+                                            path: routes
+                                                .issueRemoveSelectedPath(
+                                                    newsletterId: newsletterId
+                                                ),
+                                            ids: [],
+                                            returnTo: returnTo
+                                        ),
+                                        pageState: pageState,
+                                        search: searchValue,
+                                        button: .init(
+                                            "Remove selected",
+                                            style: .destructive
+                                        ),
+                                        isEnabled: permissions.allows(
+                                            Issue.Permissions.delete
+                                        )
                                     ),
-                                    hasSelection: false,
-                                    table: Table {
-                                        Thead {
-                                            Tr {
-                                                Th("Subject")
-                                                Th("Status")
-                                                Th("Scheduled")
-                                                Th("Created")
-                                                Th("Actions")
+                                    table: context.build(
+                                        AdminListShell(
+                                            layout: .init(
+                                                name: "newsletter-issues",
+                                                columns: [
+                                                    .fraction(2), .fraction(1),
+                                                    .fraction(2), .fraction(1),
+                                                    .fraction(1), .actions,
+                                                ]
+                                            ),
+                                            hasSelection: permissions.allows(
+                                                Issue.Permissions.delete
+                                            ),
+                                            table: Table {
+                                                Thead {
+                                                    Tr {
+                                                        if permissions.allows(
+                                                            Issue.Permissions
+                                                                .delete
+                                                        ) {
+                                                            context.build(
+                                                                AdminListSelectAllCheckbox()
+                                                            )
+                                                        }
+                                                        Th("Subject")
+                                                        Th("Status")
+                                                        Th("Delivery")
+                                                        Th("Scheduled")
+                                                        Th("Created")
+                                                        Th("Actions")
+                                                    }
+                                                }
+                                                Tbody {
+                                                    for item in items {
+                                                        context.build(
+                                                            Issue.Search.Row(
+                                                                newsletterId:
+                                                                    newsletterId,
+                                                                item: item,
+                                                                permissions:
+                                                                    permissions,
+                                                                routes: routes
+                                                            )
+                                                        )
+                                                    }
+                                                }
                                             }
-                                        }
-                                        Tbody {
-                                            for item in items {
-                                                context.build(
-                                                    Issue.Search.Row(
-                                                        newsletterId:
-                                                            newsletterId,
-                                                        item: item,
-                                                        permissions:
-                                                            permissions,
-                                                        routes: routes
-                                                    )
-                                                )
+                                            .class("cms-table", "action-table")
+                                            .if(permissions.allows(
+                                                Issue.Permissions.delete
+                                            )) {
+                                                $0.class("select-table")
                                             }
-                                        }
-                                    }
-                                    .class("cms-table", "action-table")
+                                        )
+                                    )
                                 )
                             )
                         }

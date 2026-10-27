@@ -20,7 +20,8 @@ func buildAppRoutes(
     themeRenderer: DefaultThemeRenderer,
     publicContentEvents: any EventPublisher,
     mediaResolver: MediaResolver,
-    publicOrigins: AppPublicOriginConfiguration
+    publicOrigins: AppPublicOriginConfiguration,
+    newsletterTemplateRenderer: any TemplateRenderer
 ) {
     AccountWebApp.Router(
         environment: environment,
@@ -38,6 +39,13 @@ func buildAppRoutes(
         .Router(
             environment: environment,
             route: newsletterSubmissionRoute
+        )
+        .route(on: router)
+
+    Campaign.Unsubscribe
+        .Router(
+            environment: environment,
+            templateRenderer: newsletterTemplateRenderer
         )
         .route(on: router)
 

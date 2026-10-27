@@ -24,7 +24,7 @@ extension Public.Post.List.Query {
                 .limit(10_000)
             }
             return .init(
-                items: result.map {
+                items: try result.map {
                     .init(
                         id: $0.id,
                         title: $0.title,

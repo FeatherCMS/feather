@@ -47,8 +47,18 @@ extension Issue.TestEmail {
                 .init(
                     from: .init(newsletter.fromEmail),
                     to: [.init(input.email)],
-                    subject: input.subject,
-                    body: .html(input.content)
+                    subject: Issue.PersonalizedContent.renderSubject(
+                        input.subject,
+                        email: input.email,
+                        name: ""
+                    ),
+                    body: .html(
+                        Issue.PersonalizedContent.render(
+                            input.content,
+                            email: input.email,
+                            name: ""
+                        )
+                    )
                 )
             )
         }

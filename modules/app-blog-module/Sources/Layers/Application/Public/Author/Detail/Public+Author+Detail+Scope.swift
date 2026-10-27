@@ -1,4 +1,3 @@
-public import BlogModule
 public import FeatherModuleKit
 public import WebApplication
 import WebDomain

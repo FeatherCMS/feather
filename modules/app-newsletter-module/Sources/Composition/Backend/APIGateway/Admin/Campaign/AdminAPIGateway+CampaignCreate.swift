@@ -31,6 +31,7 @@ extension AdminAPIGateway {
         _ value: Campaign.Add.Output
     ) -> Components.Schemas.NewsletterCampaignSchema {
         .init(
+            id: value.id,
             key: value.key,
             name: value.name,
             fromEmail: value.fromEmail,

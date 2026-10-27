@@ -9,14 +9,14 @@ extension Subscriber {
 
 extension Subscriber.Operation {
     var parameters: [any ParameterRepresentable] {
-        [Campaign.Parameters.Key().reference()]
+        [Campaign.Parameters.ID().reference()]
     }
 }
 
 extension Subscriber.IDOperation {
     var parameters: [any ParameterRepresentable] {
         [
-            Campaign.Parameters.Key().reference(),
+            Campaign.Parameters.ID().reference(),
             Subscriber.Parameters.Email().reference(),
         ]
     }

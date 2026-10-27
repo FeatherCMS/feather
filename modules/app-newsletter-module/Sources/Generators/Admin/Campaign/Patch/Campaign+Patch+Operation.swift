@@ -2,12 +2,12 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 extension Campaign.Patch {
-    struct Operation: Campaign.KeyOperation {
+    struct Operation: Campaign.IDOperation {
         var operationId: String? { "newsletterCampaignUpdate" }
 
         var parameters: [any ParameterRepresentable] {
             [
-                Campaign.Parameters.Key().reference(),
+                Campaign.Parameters.ID().reference(),
                 Campaign.Parameters.UpdateMask().reference(),
             ]
         }

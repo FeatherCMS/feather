@@ -49,7 +49,7 @@ extension Campaign.Router {
         }
 
         var campaignBreadcrumb: [AdminBreadcrumb.Link] {
-            breadcrumb + [.init(label: "Campaign", link: list.path)]
+            breadcrumb + [.init(label: "Campaigns", link: list.path)]
         }
 
         var subscribers: WebRoute {
@@ -59,6 +59,10 @@ extension Campaign.Router {
 
         var subscriberAdd: WebRoute {
             subscribers.appending(pathComponent: "add")
+        }
+
+        var subscriberImport: WebRoute {
+            subscribers.appending(pathComponent: "import")
         }
 
         var subscriberDetails: WebRoute {
@@ -79,6 +83,13 @@ extension Campaign.Router {
 
         func subscriberAddPath(newsletterId: String) -> String {
             subscriberAdd.path(parameter: "newsletterId", value: newsletterId)
+        }
+
+        func subscriberImportPath(newsletterId: String) -> String {
+            subscriberImport.path(
+                parameter: "newsletterId",
+                value: newsletterId
+            )
         }
 
         func subscriberDetailsPath(
@@ -123,6 +134,10 @@ extension Campaign.Router {
             issues.appending(pathComponent: "add")
         }
 
+        var issueAddSend: WebRoute {
+            issueAdd.appending(pathComponent: "send")
+        }
+
         var issueDetails: WebRoute {
             issues.appending(parameter: "issueId")
         }
@@ -131,8 +146,16 @@ extension Campaign.Router {
             issueDetails.appending(pathComponent: "edit")
         }
 
+        var issueSend: WebRoute {
+            issueDetails.appending(pathComponent: "send")
+        }
+
         var issueRemove: WebRoute {
             issueDetails.appending(pathComponent: "remove")
+        }
+
+        var issueRemoveSelected: WebRoute {
+            issues.appending(pathComponent: "remove")
         }
 
         var issueTestEmail: WebRoute {
@@ -151,9 +174,23 @@ extension Campaign.Router {
             issueAdd.path(parameter: "newsletterId", value: newsletterId)
         }
 
+        func issueAddSendPath(newsletterId: String) -> String {
+            issueAddSend.path(parameter: "newsletterId", value: newsletterId)
+        }
+
         func issueEditPath(newsletterId: String, issueId: String) -> String {
             resolvedPath(
                 for: issueEdit,
+                parameters: [
+                    "newsletterId": newsletterId,
+                    "issueId": issueId,
+                ]
+            )
+        }
+
+        func issueSendPath(newsletterId: String, issueId: String) -> String {
+            resolvedPath(
+                for: issueSend,
                 parameters: [
                     "newsletterId": newsletterId,
                     "issueId": issueId,
@@ -178,6 +215,13 @@ extension Campaign.Router {
                     "newsletterId": newsletterId,
                     "issueId": issueId,
                 ]
+            )
+        }
+
+        func issueRemoveSelectedPath(newsletterId: String) -> String {
+            issueRemoveSelected.path(
+                parameter: "newsletterId",
+                value: newsletterId
             )
         }
 

@@ -23,13 +23,17 @@ enum NewsletterAPIQueryKey: DatabaseQueryKey {
     case count
 }
 
-private struct MockIssueJobController: Issue.JobController.Interface {
+private struct MockIssueJobController: NewsletterModule.Issue.JobController
+        .Interface
+{
     func enqueue(_ mail: Mail) async throws {}
 
     func enqueueIssue(
         mail: Mail,
         issueId: String,
         newsletterId: String,
+        newsletterKey: String,
+        unsubscribeToken: String,
         scheduledAt: Date?
     ) async throws {}
 }

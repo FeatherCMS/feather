@@ -63,7 +63,9 @@ extension AdminAPIGateway {
                                         id: item.id,
                                         key: item.key,
                                         name: item.name,
-                                        fromEmail: item.fromEmail
+                                        fromEmail: item.fromEmail,
+                                        subscriberCount: item.subscriberCount,
+                                        sentIssueCount: item.sentIssueCount
                                     )
                             },
                             total: result.total

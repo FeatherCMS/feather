@@ -15,17 +15,20 @@ extension Issue.Add.Repository {
     struct OpenAPI: Interface {
         let api: API.Client
 
-        func createIssue(newsletterId: String, form: Issue.Form.Input)
-            async throws
-        {
+        func createIssue(
+            newsletterId: String,
+            form: Issue.Form.Input,
+            sendImmediately: Bool
+        ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterIssueCreate(
-                    path: .init(newsletterCampaignKey: newsletterId),
+                    path: .init(newsletterCampaignId: newsletterId),
                     body: .json(
                         .init(
                             subject: form.normalizedSubject,
                             content: form.content,
-                            scheduledAt: form.scheduledAtTimestamp
+                            scheduledAt: nil,
+                            sendNow: sendImmediately
                         )
                     )
                 )

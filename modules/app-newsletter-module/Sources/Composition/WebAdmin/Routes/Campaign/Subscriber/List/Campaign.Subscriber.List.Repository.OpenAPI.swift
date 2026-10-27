@@ -15,6 +15,26 @@ extension Campaign.Subscriber.List.Repository {
             page: Int
         ) async throws -> Campaign.Subscriber.List.Result {
             try await api.withOpenAPIRepositoryErrorMapping { client in
+                let campaignResponse = try await client.newsletterCampaignGet(
+                    path: .init(newsletterCampaignId: newsletterId)
+                )
+                let campaignKey: String
+                switch campaignResponse {
+                case .ok(let value):
+                    campaignKey = try value.body.json.key
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .notFound:
+                    throw OpenAPIRepositoryError.notFound
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+
                 let response = try await client.newsletterSubscriberQuery(
                     body: .json(
                         .init(
@@ -22,7 +42,7 @@ extension Campaign.Subscriber.List.Repository {
                             sort: [.init(field: .email, direction: .asc)],
                             filters: .init(
                                 search: search,
-                                campaignKey: newsletterId
+                                campaignKey: campaignKey
                             )
                         )
                     )
@@ -34,7 +54,7 @@ extension Campaign.Subscriber.List.Repository {
                         result.data.items.compactMap { item in
                             guard
                                 let membership = item.memberships.first(where: {
-                                    $0.campaignKey == newsletterId
+                                    $0.campaignKey == campaignKey
                                 })
                             else {
                                 return nil
@@ -47,7 +67,16 @@ extension Campaign.Subscriber.List.Repository {
                                     .replacingOccurrences(of: "=", with: ""),
                                 email: item.email,
                                 name: item.name,
-                                status: membership.status
+                                status: membership.status,
+                                subscriptionDate:
+                                    DateFormatting.formatUnixTimestamp(
+                                        membership.subscriptionDate
+                                    ),
+                                unsubscriptionDate:
+                                    membership.unsubscriptionDate.map {
+                                        DateFormatting
+                                            .formatUnixTimestamp($0)
+                                    } ?? "—"
                             )
                         }
                     return .init(items: items, total: result.data.total)

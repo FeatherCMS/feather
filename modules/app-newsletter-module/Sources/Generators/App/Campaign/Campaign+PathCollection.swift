@@ -7,7 +7,7 @@ extension Campaign {
             [
                 "api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe":
                     Subscribe.PathItem(),
-                "api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe":
+                "api/v1/newsletter/unsubscribe":
                     Unsubscribe.PathItem(),
             ]
         }

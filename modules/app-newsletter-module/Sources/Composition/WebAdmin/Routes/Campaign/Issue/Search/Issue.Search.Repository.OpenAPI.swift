@@ -28,7 +28,7 @@ extension Issue.Search.Repository {
                     )
                 let response = try await client.newsletterIssueQuery(
                     .init(
-                        path: .init(newsletterCampaignKey: newsletterId),
+                        path: .init(newsletterCampaignId: newsletterId),
                         body: .json(request)
                     )
                 )
@@ -39,8 +39,7 @@ extension Issue.Search.Repository {
                     for issue in result.data.items {
                         let deliveries = try await self.deliveries(
                             newsletterId: newsletterId,
-                            issueId: issue.id,
-                            subject: issue.subject
+                            issueId: issue.id
                         )
                         items.append(
                             .init(
@@ -80,14 +79,13 @@ extension Issue.Search.Repository {
 
         private func deliveries(
             newsletterId: String,
-            issueId: String,
-            subject: String
+            issueId: String
         ) async throws -> [Issue.Search.DeliveryItem] {
             let response = try await api.withOpenAPIRepositoryErrorMapping {
                 client in
                 try await client.newsletterIssueDeliveryList(
                     path: .init(
-                        newsletterCampaignKey: newsletterId,
+                        newsletterCampaignId: newsletterId,
                         newsletterIssueId: issueId
                     )
                 )
@@ -96,13 +94,7 @@ extension Issue.Search.Repository {
             case .ok(let value):
                 return try value.body.json.map {
                     .init(
-                        issueSubject: subject,
-                        subscriberEmail: $0.subscriberEmail,
-                        status: $0.status,
-                        sentAt: $0.sentAt.map {
-                            DateFormatting.formatUnixTimestamp($0)
-                        } ?? "—",
-                        failureReason: $0.failureReason ?? "—"
+                        status: $0.status
                     )
                 }
             case .unauthorized:
@@ -118,5 +110,6 @@ extension Issue.Search.Repository {
                 )
             }
         }
+
     }
 }

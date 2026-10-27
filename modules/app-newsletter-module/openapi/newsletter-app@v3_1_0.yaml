@@ -20,15 +20,13 @@ paths:
       responses:
         204:
           description: Subscriber added
-  /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe:
+  /api/v1/newsletter/unsubscribe:
     post:
       tags:
       - Newsletter
       operationId: appNewsletterCampaignUnsubscribe
-      parameters:
-      - $ref: '#/components/parameters/AppNewsletterCampaignKeyParameter'
       requestBody:
-        $ref: '#/components/requestBodies/AppNewsletterCampaignSubscriptionRequestBody'
+        $ref: '#/components/requestBodies/AppNewsletterCampaignUnsubscribeRequestBody'
       responses:
         204:
           description: Subscriber unsubscribed
@@ -50,6 +48,14 @@ components:
       minProperties: 1
     AppNewsletterNameField:
       type: string
+    AppNewsletterCampaignUnsubscribeSchema:
+      type: object
+      properties:
+        token:
+          type: string
+      required:
+      - token
+      minProperties: 1
   parameters:
     AppNewsletterCampaignKeyParameter:
       name: newsletterCampaignKey
@@ -63,4 +69,10 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/AppNewsletterCampaignSubscriptionSchema'
+      required: true
+    AppNewsletterCampaignUnsubscribeRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppNewsletterCampaignUnsubscribeSchema'
       required: true

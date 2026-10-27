@@ -29,7 +29,6 @@ extension Issue.Add.Presenter {
                     state: .init(
                         subject: model.subject,
                         content: model.content,
-                        scheduledAt: model.scheduledAt,
                         newsletterId: model.newsletterId,
                         issueId: nil,
                         error: model.error,

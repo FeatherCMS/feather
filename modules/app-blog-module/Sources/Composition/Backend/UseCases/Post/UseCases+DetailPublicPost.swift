@@ -7,12 +7,14 @@ import WebModule
 
 extension UseCases {
 
-    public func makeDetailPublicPost() -> Public.Post.Detail.UseCase {
+    public func makeDetailPublicPost()
+        -> BlogApplication.Public.Post.Detail.UseCase
+    {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Public.Post.Detail.Scope(
-                    post: Public.Post.Detail.Query.Database(
+                BlogApplication.Public.Post.Detail.Scope(
+                    post: BlogApplication.Public.Post.Detail.Query.Database(
                         context: context
                     ),
                     metadata: WebModule.Metadata.Reference.Query.Database(

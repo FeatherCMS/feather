@@ -7,7 +7,7 @@ extension Issue.Patch {
 
         var parameters: [any ParameterRepresentable] {
             [
-                Campaign.Parameters.Key().reference(),
+                Campaign.Parameters.ID().reference(),
                 Issue.Parameters.ID().reference(),
                 Issue.Parameters.UpdateMask().reference(),
             ]

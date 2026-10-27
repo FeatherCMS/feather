@@ -9,7 +9,11 @@ extension Issue.TestEmail {
         let controller: any Controller.Interface
         let routes: Campaign.Router.Routes
 
-        init(environment: AppEnvironment, routes: Campaign.Router.Routes) {
+        init(
+            environment: AppEnvironment,
+            renderingEngine: any RenderingEngine,
+            routes: Campaign.Router.Routes
+        ) {
             self.routes = routes
             self.controller = Controller.Default(
                 repository: { context in
@@ -20,12 +24,18 @@ extension Issue.TestEmail {
                         )
                     )
                 },
-                routes: routes
+                routes: routes,
+                renderingEngine: renderingEngine
             )
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+            router.get(routes.issueTestEmail.routerPath, use: controller.get)
             router.post(routes.issueTestEmail.routerPath, use: controller.send)
+            router.get(
+                routes.issueDetailTestEmail.routerPath,
+                use: controller.get
+            )
             router.post(
                 routes.issueDetailTestEmail.routerPath,
                 use: controller.send

@@ -18,6 +18,7 @@ extension AdminAPIGateway {
         _ value: Campaign.List.Item
     ) -> Components.Schemas.NewsletterCampaignSchema {
         .init(
+            id: value.id,
             key: value.key,
             name: value.name,
             fromEmail: value.fromEmail,

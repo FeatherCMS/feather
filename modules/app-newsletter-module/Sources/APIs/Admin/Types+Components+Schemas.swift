@@ -22,6 +22,8 @@ extension Components {
         public typealias NewsletterCampaignListSchema = [Components.Schemas.NewsletterCampaignSchema]
         /// - Remark: Generated from `#/components/schemas/NewsletterCampaignSchema`.
         public struct NewsletterCampaignSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/NewsletterCampaignSchema/id`.
+            public var id: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsletterCampaignSchema/key`.
             public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsletterCampaignSchema/name`.
@@ -35,18 +37,21 @@ extension Components {
             /// Creates a new `NewsletterCampaignSchema`.
             ///
             /// - Parameters:
+            ///   - id:
             ///   - key:
             ///   - name:
             ///   - fromEmail:
             ///   - createdAt:
             ///   - updatedAt:
             public init(
+                id: Swift.String,
                 key: Swift.String,
                 name: Swift.String,
                 fromEmail: Swift.String,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
+                self.id = id
                 self.key = key
                 self.name = name
                 self.fromEmail = fromEmail
@@ -54,6 +59,7 @@ extension Components {
                 self.updatedAt = updatedAt
             }
             public enum CodingKeys: String, CodingKey {
+                case id
                 case key
                 case name
                 case fromEmail
@@ -470,6 +476,10 @@ extension Components {
             public var name: Components.Schemas.NewsletterNameField
             /// - Remark: Generated from `#/components/schemas/NewsletterCampaignQueryItemSchema/fromEmail`.
             public var fromEmail: Components.Schemas.NewsletterEmailField
+            /// - Remark: Generated from `#/components/schemas/NewsletterCampaignQueryItemSchema/subscriberCount`.
+            public var subscriberCount: Components.Schemas.NewsletterCampaignSubscriberCount
+            /// - Remark: Generated from `#/components/schemas/NewsletterCampaignQueryItemSchema/sentIssueCount`.
+            public var sentIssueCount: Components.Schemas.NewsletterCampaignSentIssueCount
             /// Creates a new `NewsletterCampaignQueryItemSchema`.
             ///
             /// - Parameters:
@@ -477,22 +487,30 @@ extension Components {
             ///   - key:
             ///   - name:
             ///   - fromEmail:
+            ///   - subscriberCount:
+            ///   - sentIssueCount:
             public init(
                 id: Components.Schemas.NewsletterIdField,
                 key: Components.Schemas.NewsletterKeyField,
                 name: Components.Schemas.NewsletterNameField,
-                fromEmail: Components.Schemas.NewsletterEmailField
+                fromEmail: Components.Schemas.NewsletterEmailField,
+                subscriberCount: Components.Schemas.NewsletterCampaignSubscriberCount,
+                sentIssueCount: Components.Schemas.NewsletterCampaignSentIssueCount
             ) {
                 self.id = id
                 self.key = key
                 self.name = name
                 self.fromEmail = fromEmail
+                self.subscriberCount = subscriberCount
+                self.sentIssueCount = sentIssueCount
             }
             public enum CodingKeys: String, CodingKey {
                 case id
                 case key
                 case name
                 case fromEmail
+                case subscriberCount
+                case sentIssueCount
             }
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterIdField`.
@@ -503,6 +521,10 @@ extension Components {
         public typealias NewsletterNameField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterEmailField`.
         public typealias NewsletterEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/NewsletterCampaignSubscriberCount`.
+        public typealias NewsletterCampaignSubscriberCount = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/NewsletterCampaignSentIssueCount`.
+        public typealias NewsletterCampaignSentIssueCount = Swift.Int
         /// - Remark: Generated from `#/components/schemas/NewsletterCampaignUpdateMask`.
         public typealias NewsletterCampaignUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterCampaignPatchSchema`.
@@ -611,27 +633,35 @@ extension Components {
             public var content: Swift.String
             /// - Remark: Generated from `#/components/schemas/NewsletterIssueCreateSchema/scheduledAt`.
             public var scheduledAt: Components.Schemas.NewsletterTimestampField?
+            /// - Remark: Generated from `#/components/schemas/NewsletterIssueCreateSchema/sendNow`.
+            public var sendNow: Components.Schemas.NewsletterIssueSendNowField?
             /// Creates a new `NewsletterIssueCreateSchema`.
             ///
             /// - Parameters:
             ///   - subject:
             ///   - content:
             ///   - scheduledAt:
+            ///   - sendNow:
             public init(
                 subject: Swift.String,
                 content: Swift.String,
-                scheduledAt: Components.Schemas.NewsletterTimestampField? = nil
+                scheduledAt: Components.Schemas.NewsletterTimestampField? = nil,
+                sendNow: Components.Schemas.NewsletterIssueSendNowField? = nil
             ) {
                 self.subject = subject
                 self.content = content
                 self.scheduledAt = scheduledAt
+                self.sendNow = sendNow
             }
             public enum CodingKeys: String, CodingKey {
                 case subject
                 case content
                 case scheduledAt
+                case sendNow
             }
         }
+        /// - Remark: Generated from `#/components/schemas/NewsletterIssueSendNowField`.
+        public typealias NewsletterIssueSendNowField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema`.
         public struct NewsletterIssueSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/NewsletterIssueSchema/id`.
@@ -1495,25 +1525,37 @@ extension Components {
             public var campaignName: Components.Schemas.NewsletterNameField
             /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema/status`.
             public var status: Components.Schemas.NewsletterSubscriberStatusField
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema/subscriptionDate`.
+            public var subscriptionDate: Components.Schemas.NewsletterTimestampField
+            /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberQueryMembershipSchema/unsubscriptionDate`.
+            public var unsubscriptionDate: Components.Schemas.NewsletterTimestampField?
             /// Creates a new `NewsletterSubscriberQueryMembershipSchema`.
             ///
             /// - Parameters:
             ///   - campaignKey:
             ///   - campaignName:
             ///   - status:
+            ///   - subscriptionDate:
+            ///   - unsubscriptionDate:
             public init(
                 campaignKey: Components.Schemas.NewsletterKeyField,
                 campaignName: Components.Schemas.NewsletterNameField,
-                status: Components.Schemas.NewsletterSubscriberStatusField
+                status: Components.Schemas.NewsletterSubscriberStatusField,
+                subscriptionDate: Components.Schemas.NewsletterTimestampField,
+                unsubscriptionDate: Components.Schemas.NewsletterTimestampField? = nil
             ) {
                 self.campaignKey = campaignKey
                 self.campaignName = campaignName
                 self.status = status
+                self.subscriptionDate = subscriptionDate
+                self.unsubscriptionDate = unsubscriptionDate
             }
             public enum CodingKeys: String, CodingKey {
                 case campaignKey
                 case campaignName
                 case status
+                case subscriptionDate
+                case unsubscriptionDate
             }
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterSubscriberUpdateMask`.

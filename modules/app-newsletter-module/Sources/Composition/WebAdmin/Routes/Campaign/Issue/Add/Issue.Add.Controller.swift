@@ -24,5 +24,9 @@ extension Issue.Add.Controller {
             request: Request,
             context: AuthenticatedRequestContext
         ) async throws -> Response
+        func send(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
     }
 }

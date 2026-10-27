@@ -8,12 +8,14 @@ import WebModule
 
 extension UseCases {
 
-    public func makeDetailPublicAuthor() -> Public.Author.Detail.UseCase {
+    public func makeDetailPublicAuthor()
+        -> BlogApplication.Public.Author.Detail.UseCase
+    {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Public.Author.Detail.Scope(
-                    author: Public.Author.Detail.Query.Database(
+                BlogApplication.Public.Author.Detail.Scope(
+                    author: BlogApplication.Public.Author.Detail.Query.Database(
                         context: context
                     ),
                     metadata: WebModule.Metadata.Reference.Query.Database(

@@ -2,7 +2,7 @@ import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 extension Campaign.Get {
-    struct Operation: Campaign.KeyOperation {
+    struct Operation: Campaign.IDOperation {
         var operationId: String? { "newsletterCampaignGet" }
 
         var responseMap: ResponseMap {

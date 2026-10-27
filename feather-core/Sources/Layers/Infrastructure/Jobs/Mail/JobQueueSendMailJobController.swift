@@ -26,7 +26,8 @@ public struct JobQueueSendMailJobController: SendMailJobController {
                 additionalHeaders:
                     mail.cc.map { "Cc: \($0.email)" }
                     + mail.bcc.map { "Bcc: \($0.email)" }
-                    + mail.replyTo.map { "Reply-To: \($0.email)" },
+                    + mail.replyTo.map { "Reply-To: \($0.email)" }
+                    + mail.customHeaders.map { "\($0.name): \($0.value)" },
                 body: body.value,
                 contentType: body.contentType
             )

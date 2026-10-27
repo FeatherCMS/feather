@@ -62,7 +62,8 @@ extension Issue.Add.Controller {
             )
             let model = try await runtime.interactor.add(
                 newsletterId: newsletterId,
-                payload: payload
+                payload: payload,
+                sendImmediately: false
             )
             if model.error == nil {
                 return AdminNotification.redirect(
@@ -70,6 +71,46 @@ extension Issue.Add.Controller {
                     notification: .init(
                         title: "Added",
                         message: "Campaign issue added successfully."
+                    )
+                )
+            }
+            return try await runtime.presenter
+                .renderPage(
+                    model: model,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
+        }
+
+        func send(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let runtime = buildRuntime(request, context)
+            guard
+                let newsletterId = context.parameters.get(
+                    "newsletterId",
+                    as: String.self
+                )
+            else {
+                return Response(status: .badRequest)
+            }
+            let payload = try await request.decode(
+                as: Issue.Form.Input.self,
+                context: context
+            )
+            let model = try await runtime.interactor.add(
+                newsletterId: newsletterId,
+                payload: payload,
+                sendImmediately: true
+            )
+            if model.error == nil {
+                return AdminNotification.redirect(
+                    to: routes.issuesPath(newsletterId: newsletterId),
+                    notification: .init(
+                        title: "Queued",
+                        message:
+                            "Issue deliveries have been queued for immediate delivery to subscribed recipients."
                     )
                 )
             }

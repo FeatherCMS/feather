@@ -7,7 +7,7 @@ extension Subscriber.Patch {
 
         var parameters: [any ParameterRepresentable] {
             [
-                Campaign.Parameters.Key().reference(),
+                Campaign.Parameters.ID().reference(),
                 Subscriber.Parameters.Email().reference(),
                 Subscriber.Parameters.UpdateMask().reference(),
             ]

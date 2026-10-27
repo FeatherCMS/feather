@@ -3,6 +3,7 @@ import FeatherWebAdmin
 import Foundation
 import HTML
 import Hummingbird
+import NewsletterApplication
 import NewsletterModule
 import SGML
 import WebBuilders
@@ -104,6 +105,39 @@ extension Issue.View {
                             .style(
                                 "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
                             )
+                        }
+                        if permissions.allows(Issue.Permissions.update) {
+                            Div {
+                                context.build(
+                                    AdminForm(
+                                        action: routes.issueSendPath(
+                                            newsletterId: newsletterId,
+                                            issueId: issueId
+                                        ),
+                                        hiddenFields: [
+                                            .init(
+                                                name: "subject",
+                                                value: model.subject
+                                            ),
+                                            .init(
+                                                name: "content",
+                                                value: model.content
+                                            ),
+                                        ]
+                                    ) {
+                                        context.build(
+                                            AdminSubmitButton(
+                                                "Send issue",
+                                                style: .primary
+                                            )
+                                        )
+                                        P(
+                                            "Sends immediately to subscribed recipients and retries failed deliveries."
+                                        )
+                                    }
+                                )
+                            }
+                            .style("margin-top: 20px;")
                         }
                     }
                 )

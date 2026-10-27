@@ -10,18 +10,22 @@ extension AdminAPIGateway {
         _ input: Operations.NewsletterIssueGet.Input
     ) async throws -> Operations.NewsletterIssueGet.Output {
         let subject = try await CurrentSubject.require()
+        let campaignKey = try await campaignKey(
+            for: input.path.newsletterCampaignId,
+            subject: subject
+        )
         let result = try await self.useCases.makeDetailIssue()
             .execute(
                 subject: subject,
                 input: .init(
-                    campaignKey: input.path.newsletterCampaignKey,
+                    campaignKey: campaignKey,
                     id: input.path.newsletterIssueId
                 )
             )
         return .ok(
             .init(
                 body: .json(
-                    map(result, campaignKey: input.path.newsletterCampaignKey)
+                    map(result, campaignKey: campaignKey)
                 )
             )
         )

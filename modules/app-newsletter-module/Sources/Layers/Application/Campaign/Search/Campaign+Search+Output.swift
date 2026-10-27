@@ -8,17 +8,23 @@ extension Campaign.Search {
             public let key: String
             public let name: String
             public let fromEmail: String
+            public let subscriberCount: Int
+            public let sentIssueCount: Int
 
             public init(
                 id: String,
                 key: String,
                 name: String,
-                fromEmail: String
+                fromEmail: String,
+                subscriberCount: Int,
+                sentIssueCount: Int
             ) {
                 self.id = id
                 self.key = key
                 self.name = name
                 self.fromEmail = fromEmail
+                self.subscriberCount = subscriberCount
+                self.sentIssueCount = sentIssueCount
             }
         }
 

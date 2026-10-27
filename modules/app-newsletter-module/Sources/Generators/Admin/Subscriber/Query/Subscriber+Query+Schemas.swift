@@ -15,6 +15,10 @@ extension Subscriber.Query.Schemas {
                 "campaignKey": Newsletter.Schemas.Key().reference(),
                 "campaignName": Newsletter.Schemas.Name().reference(),
                 "status": Subscriber.Schemas.Status().reference(),
+                "subscriptionDate": Newsletter.Schemas.Timestamp()
+                    .reference(),
+                "unsubscriptionDate": Newsletter.Schemas.Timestamp()
+                    .reference(required: false),
             ]
         }
     }

@@ -37,6 +37,10 @@ struct NewsletterInfrastructureTests {
                             "campaign_key": .string("weekly"),
                             "campaign_name": .string("Weekly"),
                             "status": .string("subscribed"),
+                            "subscription_date": .date(
+                                Date(timeIntervalSince1970: 100)
+                            ),
+                            "unsubscription_date": .null,
                         ]),
                         .init([
                             "email": .string("person@example.com"),
@@ -45,6 +49,12 @@ struct NewsletterInfrastructureTests {
                             "campaign_key": .string("monthly"),
                             "campaign_name": .string("Monthly"),
                             "status": .string("unsubscribed"),
+                            "subscription_date": .date(
+                                Date(timeIntervalSince1970: 200)
+                            ),
+                            "unsubscription_date": .date(
+                                Date(timeIntervalSince1970: 300)
+                            ),
                         ]),
                     ]
                 ),
@@ -81,7 +91,6 @@ struct NewsletterInfrastructureTests {
             result.items[0].memberships.map(\.status)
                 == [.subscribed, .unsubscribed]
         )
-
         let queries = await connection.executedQueries()
         let search = try #require(queries[.search]?.first)
         #expect(search.sql.contains("COUNT") == false)

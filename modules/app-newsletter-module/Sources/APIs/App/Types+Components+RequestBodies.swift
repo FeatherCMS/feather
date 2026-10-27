@@ -23,5 +23,10 @@ extension Components {
             /// - Remark: Generated from `#/components/requestBodies/AppNewsletterCampaignSubscriptionRequestBody/content/application\/json`.
             case json(Components.Schemas.AppNewsletterCampaignSubscriptionSchema)
         }
+        /// - Remark: Generated from `#/components/requestBodies/AppNewsletterCampaignUnsubscribeRequestBody`.
+        @frozen public enum AppNewsletterCampaignUnsubscribeRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/AppNewsletterCampaignUnsubscribeRequestBody/content/application\/json`.
+            case json(Components.Schemas.AppNewsletterCampaignUnsubscribeSchema)
+        }
     }
 }

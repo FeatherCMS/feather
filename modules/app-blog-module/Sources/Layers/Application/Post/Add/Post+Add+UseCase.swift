@@ -4,6 +4,7 @@ public import FeatherApplication
 public import FeatherModuleKit
 import SystemApplication
 import WebApplication
+import WebDomain
 
 //
 //  Post+Add+UseCase.swift

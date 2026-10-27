@@ -31,10 +31,13 @@ extension Campaign.Search.Repository {
                     let body = try value.body.json
                     return .init(
                         items: body.data.items.map {
-                            .init(
-                                id: $0.key,
+                            Campaign.Search.Item(
+                                id: $0.id,
+                                key: $0.key,
                                 name: $0.name,
-                                fromEmail: $0.fromEmail
+                                fromEmail: $0.fromEmail,
+                                subscriberCount: $0.subscriberCount,
+                                sentIssueCount: $0.sentIssueCount
                             )
                         },
                         pageState: .init(

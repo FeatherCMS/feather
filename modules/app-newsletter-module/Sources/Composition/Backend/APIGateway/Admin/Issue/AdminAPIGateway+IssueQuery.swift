@@ -40,11 +40,15 @@ extension AdminAPIGateway {
             }
 
         let subject = try await CurrentSubject.require()
+        let campaignKey = try await campaignKey(
+            for: input.path.newsletterCampaignId,
+            subject: subject
+        )
         let result = try await useCases.makeSearchIssues()
             .execute(
                 subject: subject,
                 input: .init(
-                    campaignKey: input.path.newsletterCampaignKey,
+                    campaignKey: campaignKey,
                     query: .init(
                         page: page,
                         sort: sort,

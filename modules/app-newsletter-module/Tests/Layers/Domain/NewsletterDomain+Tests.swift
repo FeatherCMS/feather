@@ -24,6 +24,7 @@ struct NewsletterDomainTests {
             email: "person@example.com",
             subscriptionDate: date
         )
+        #expect(subscriber.unsubscribeToken?.count == 32)
         var model = Subscriber.Model(
             newsletterId: subscriber.newsletterId,
             email: subscriber.email,

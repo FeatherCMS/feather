@@ -22,7 +22,7 @@ extension Campaign.Edit.Controller {
             guard context.isCurrentUserAllowed(to: Campaign.Permissions.update)
             else {
                 return try await runtime.presenter.render(
-                    item: .init(id: id, name: "", fromEmail: ""),
+                    item: .init(id: id, key: "", name: "", fromEmail: ""),
                     error: "Your account cannot edit newsletter campaigns.",
                     permissions: context.currentUserPermissions
                 )
@@ -75,7 +75,8 @@ extension Campaign.Edit.Controller {
                     .renderEditError(
                         id: id,
                         item: .init(
-                            id: form.key,
+                            id: id,
+                            key: form.key,
                             name: form.name,
                             fromEmail: form.fromEmail
                         ),

@@ -10,7 +10,7 @@ import WebComponents
 extension Campaign.Search {
     struct Table: Component {
         struct State {
-            let items: [Campaign.Item]
+            let items: [Campaign.Search.Item]
             let pageState: AdminListPageState
             let search: String?
             let actions: AdminListActions

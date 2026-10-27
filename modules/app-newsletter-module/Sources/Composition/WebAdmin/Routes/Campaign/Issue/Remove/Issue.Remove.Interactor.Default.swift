@@ -17,10 +17,10 @@ extension Issue.Remove.Interactor {
             return .init(id: issueId, label: issue.subject)
         }
 
-        func remove(newsletterId: String, issueId: String) async throws {
+        func remove(newsletterId: String, issueIds: [String]) async throws {
             try await repository.remove(
                 newsletterId: newsletterId,
-                issueId: issueId
+                issueIds: issueIds
             )
         }
     }

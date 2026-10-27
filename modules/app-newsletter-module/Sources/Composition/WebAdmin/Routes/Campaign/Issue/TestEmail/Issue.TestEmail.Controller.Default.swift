@@ -13,6 +13,29 @@ extension Issue.TestEmail.Controller {
                 AuthenticatedRequestContext
             ) -> any Issue.TestEmail.Repository.Interface
         let routes: Campaign.Router.Routes
+        let renderingEngine: any RenderingEngine
+
+        func get(request: Request, context: AuthenticatedRequestContext)
+            async throws -> HTMLResponse
+        {
+            guard context.isCurrentUserAllowed(to: Issue.Permissions.update)
+            else {
+                return HTMLResponse(content: "Forbidden", status: .forbidden)
+            }
+            let newsletterKey = try context.requiredParameter("newsletterId")
+            let issueId = context.parameters.get("issueId", as: String.self)
+            return try await renderingEngine.renderAdminDialog(
+                request: request,
+                context: context,
+                title: "Send test email",
+                content: Issue.TestEmail.Dialog(
+                    newsletterId: newsletterKey,
+                    issueId: issueId,
+                    routes: routes
+                ),
+                size: .small
+            )
+        }
 
         func send(request: Request, context: AuthenticatedRequestContext)
             async throws -> Response

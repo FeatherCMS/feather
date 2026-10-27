@@ -41,6 +41,10 @@ extension Issue.Remove {
         func route(
             on router: any RouterMethods<AuthenticatedRequestContext>
         ) {
+            router.post(
+                routes.issueRemoveSelected.routerPath,
+                use: controller.removeSelected
+            )
             router.get(routes.issueRemove.routerPath, use: controller.confirm)
             router.post(routes.issueRemove.routerPath, use: controller.remove)
         }

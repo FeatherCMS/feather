@@ -16,6 +16,11 @@ extension Issue.Edit.Controller {
             context: AuthenticatedRequestContext
         ) async throws -> HTMLResponse
 
+        func send(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response
+
         func edit(
             request: Request,
             context: AuthenticatedRequestContext

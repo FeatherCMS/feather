@@ -1,3 +1,4 @@
+import CSS
 import FeatherWebAdmin
 import HTML
 import Hummingbird
@@ -11,7 +12,6 @@ extension Issue.Form {
         struct State {
             let subject: String
             let content: String
-            let scheduledAt: String
             let newsletterId: String
             let issueId: String?
             let error: String?
@@ -20,7 +20,37 @@ extension Issue.Form {
         }
         let state: State
 
+        func rules() -> [any Rule] {
+            Media {
+                Custom(".newsletter-issue-content textarea") {
+                    UnsafeRawProperty(
+                        name: "min-height",
+                        value: "50vh"
+                    )
+                }
+            }
+        }
+
         func html(context: inout BuilderContext) -> some BasicTag {
+            let testEmailURL =
+                state.issueId.map {
+                    state.routes.issueDetailTestEmailPath(
+                        newsletterId: state.newsletterId,
+                        issueId: $0
+                    )
+                }
+                ?? state.routes.issueTestEmailPath(
+                    newsletterId: state.newsletterId
+                )
+            let testEmailDialogURL = "\(testEmailURL)?presentation=dialog"
+            let pageHeader = state.pageHeader
+                .addingMoreActions([
+                    .init(
+                        label: "Send test email",
+                        href: testEmailDialogURL,
+                        style: .secondary
+                    )
+                ])
             let action =
                 state.issueId.map {
                     state.routes.issueEditPath(
@@ -34,7 +64,7 @@ extension Issue.Form {
                         links: state.routes.campaignBreadcrumb
                     )
                 )
-                context.build(AdminPageHeader(state: state.pageHeader))
+                context.build(AdminPageHeader(state: pageHeader))
                 context.build(
                     Campaign.Tabs(
                         id: state.newsletterId,
@@ -61,38 +91,33 @@ extension Issue.Form {
                                 name: "content",
                                 label: "Content",
                                 value: state.content,
+                                help:
+                                    "Use {{email}} for the recipient's email address and {{name}} for their full name in the subject or content.",
                                 style: .large,
                                 isRequired: true
                             )
                         )
                     )
-                    context.build(
-                        AdminFormFieldDatePicker(
-                            state: .init(
-                                name: "scheduledAt",
-                                label: "Schedule",
-                                value: state.scheduledAt
-                            )
-                        )
-                    )
+                    .class("newsletter-issue-content")
                     Div {
                         context.build(
-                            AdminSubmitButton(
-                                state.issueId == nil
-                                    ? "Add issue" : "Save issue",
-                                style: .primary
+                            AdminSubmitButton("Save issue", style: .primary)
+                        )
+                        Button("Send now")
+                            .type(.submit)
+                            .class("button", "secondary")
+                            .setAttribute(
+                                name: "formaction",
+                                value: state.issueId.map {
+                                    state.routes.issueSendPath(
+                                        newsletterId: state.newsletterId,
+                                        issueId: $0
+                                    )
+                                }
+                                    ?? state.routes.issueAddSendPath(
+                                        newsletterId: state.newsletterId
+                                    )
                             )
-                        )
-                        context.build(
-                            AdminControlButton(
-                                "Send test email",
-                                style: .secondary
-                            )
-                        )
-                        .data(
-                            "newsletter-test-email-open",
-                            "newsletterTestEmailModal"
-                        )
                     }
                     .class("admin-form__actions")
                 }
@@ -101,88 +126,11 @@ extension Issue.Form {
                         pageHeader: .secondary(
                             title: "Issue content",
                             description:
-                                "Compose the subject, message, and delivery schedule."
+                                "Compose the subject and message."
                         )
                     ) {
                         context.build(form)
                     }
-                )
-                Div {
-                    Div {
-                        Div {
-                            H3("Send test email")
-                            context.build(
-                                AdminControlButton(
-                                    "Close",
-                                    style: .ghost(.primary)
-                                )
-                            )
-                            .data(
-                                "newsletter-test-email-close",
-                                "newsletterTestEmailModal"
-                            )
-                        }
-                        .class("newsletter-test-email-lightbox-header")
-                        context.build(
-                            AdminForm(
-                                action: state.issueId.map {
-                                    state.routes.issueDetailTestEmailPath(
-                                        newsletterId: state.newsletterId,
-                                        issueId: $0
-                                    )
-                                }
-                                    ?? state.routes.issueTestEmailPath(
-                                        newsletterId: state.newsletterId
-                                    ),
-                                hiddenFields: [
-                                    .init(
-                                        name: "subject",
-                                        value: state.subject
-                                    ),
-                                    .init(
-                                        name: "content",
-                                        value: state.content
-                                    ),
-                                ]
-                            ) {
-                                context.build(
-                                    AdminFormFieldInput(
-                                        state: .init(
-                                            name: "email",
-                                            label: "Test email address",
-                                            type: .email,
-                                            isRequired: true
-                                        )
-                                    )
-                                )
-                                Div {
-                                    context.build(
-                                        AdminSubmitButton(
-                                            "Send",
-                                            style: .primary
-                                        )
-                                    )
-                                }
-                                .class("admin-form__actions")
-                            }
-                        )
-                    }
-                    .class("newsletter-test-email-lightbox-card")
-                }
-                .id("newsletterTestEmailModal")
-                .class("newsletter-test-email-lightbox")
-                Style(
-                    """
-                        .newsletter-test-email-lightbox { display: none; position: fixed; inset: 0; z-index: 1000; align-items: center; justify-content: center; background: rgb(0 0 0 / .7); padding: 1rem; }
-                        .newsletter-test-email-lightbox.is-visible { display: flex; }
-                        .newsletter-test-email-lightbox-card { --material-color-primary-tint: #fff; --material-color-primary-text: #000; --material-color-primary-border: #d8dee7; --material-color-primary-hover: #f5f6f8; --material-color-secondary-tint: #f8fafc; --material-color-secondary-text: #111827; --material-color-secondary-border: #edf0f4; --material-color-secondary-hover: #edf0f4; --material-color-tertiary-tint: #f2f2f7; --material-color-tertiary-text: #374151; --material-color-tertiary-border: #d9dce1; --material-color-tertiary-hover: #e6e8eb; width: min(32rem, 100%); background: #fff; color: #000; color-scheme: light; padding: 1.5rem; border-radius: .5rem; box-shadow: 0 1rem 3rem rgb(15 23 42 / .22); }
-                        .newsletter-test-email-lightbox-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-                    """
-                )
-                Script(
-                    """
-                        (function() { var modal = document.getElementById('newsletterTestEmailModal'); if (!modal) return; document.querySelectorAll('[data-newsletter-test-email-open="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { var issueForm = document.querySelector('.admin-form'); if (issueForm) { var subject = issueForm.querySelector('[name="subject"]'); var content = issueForm.querySelector('[name="content"]'); var testSubject = modal.querySelector('input[type="hidden"][name="subject"]'); var testContent = modal.querySelector('input[type="hidden"][name="content"]'); if (subject && testSubject) testSubject.value = subject.value; if (content && testContent) testContent.value = content.value; } modal.classList.add('is-visible'); modal.querySelector('input[name="email"]').focus(); }); }); document.querySelectorAll('[data-newsletter-test-email-close="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { modal.classList.remove('is-visible'); }); }); modal.addEventListener('click', function(event) { if (event.target === modal) modal.classList.remove('is-visible'); }); }());
-                    """
                 )
             }
             .class("cms-section")

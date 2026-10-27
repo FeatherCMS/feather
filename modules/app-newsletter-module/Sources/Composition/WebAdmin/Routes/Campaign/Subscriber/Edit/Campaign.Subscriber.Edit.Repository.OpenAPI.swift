@@ -15,7 +15,7 @@ extension Campaign.Subscriber.Edit.Repository {
             let email = try await api.withOpenAPIRepositoryErrorMapping {
                 client in
                 let response = try await client.newsletterSubscriberList(
-                    path: .init(newsletterCampaignKey: newsletterId)
+                    path: .init(newsletterCampaignId: newsletterId)
                 )
                 switch response {
                 case .ok(let value):
@@ -41,7 +41,7 @@ extension Campaign.Subscriber.Edit.Repository {
             return try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterSubscriberGet(
                     path: .init(
-                        newsletterCampaignKey: newsletterId,
+                        newsletterCampaignId: newsletterId,
                         email: email
                     )
                 )
@@ -78,7 +78,7 @@ extension Campaign.Subscriber.Edit.Repository {
             let email = try await api.withOpenAPIRepositoryErrorMapping {
                 client in
                 let response = try await client.newsletterSubscriberList(
-                    path: .init(newsletterCampaignKey: newsletterId)
+                    path: .init(newsletterCampaignId: newsletterId)
                 )
                 switch response {
                 case .ok(let value):
@@ -104,7 +104,7 @@ extension Campaign.Subscriber.Edit.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.newsletterSubscriberUpdate(
                     path: .init(
-                        newsletterCampaignKey: newsletterId,
+                        newsletterCampaignId: newsletterId,
                         email: email
                     ),
                     query: .init(updateMask: "firstName,lastName,status"),

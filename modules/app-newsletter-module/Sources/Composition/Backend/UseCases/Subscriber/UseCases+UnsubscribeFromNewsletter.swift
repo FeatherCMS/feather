@@ -11,7 +11,6 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Subscriber.Unsubscribe.Scope(
-                    newsletter: Campaign.Repository.Database(context: context),
                     subscriber: Subscriber.Repository.Database(context: context)
                 )
             }

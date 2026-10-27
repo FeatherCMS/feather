@@ -9,14 +9,14 @@ extension Issue {
 
 extension Issue.Operation {
     var parameters: [any ParameterRepresentable] {
-        [Campaign.Parameters.Key().reference()]
+        [Campaign.Parameters.ID().reference()]
     }
 }
 
 extension Issue.IDOperation {
     var parameters: [any ParameterRepresentable] {
         [
-            Campaign.Parameters.Key().reference(),
+            Campaign.Parameters.ID().reference(),
             Issue.Parameters.ID().reference(),
         ]
     }

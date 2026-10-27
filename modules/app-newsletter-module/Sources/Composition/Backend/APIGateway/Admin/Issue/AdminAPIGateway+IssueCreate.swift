@@ -10,6 +10,10 @@ extension AdminAPIGateway {
         _ input: Operations.NewsletterIssueCreate.Input
     ) async throws -> Operations.NewsletterIssueCreate.Output {
         let subject = try await CurrentSubject.require()
+        let campaignKey = try await campaignKey(
+            for: input.path.newsletterCampaignId,
+            subject: subject
+        )
         let body: Components.Schemas.NewsletterIssueCreateSchema
         switch input.body {
         case .json(let value): body = value
@@ -19,7 +23,7 @@ extension AdminAPIGateway {
             .execute(
                 subject: subject,
                 input: .init(
-                    campaignKey: input.path.newsletterCampaignKey,
+                    campaignKey: campaignKey,
                     subject: body.subject,
                     content: body.content
                 )
@@ -49,24 +53,26 @@ extension AdminAPIGateway {
                 )
             issueSchema = map(
                 scheduled,
-                campaignKey: input.path.newsletterCampaignKey
+                campaignKey: campaignKey
             )
         }
         else {
-            try await useCases.makeSendIssueEmails()
-                .execute(
-                    subject: subject,
-                    input: .init(
-                        issueId: created.id,
-                        newsletterId: created.newsletterId,
-                        subject: created.subject,
-                        content: created.content,
-                        scheduledDate: created.scheduledDate
+            if body.sendNow == true {
+                try await useCases.makeSendIssueEmails()
+                    .execute(
+                        subject: subject,
+                        input: .init(
+                            issueId: created.id,
+                            newsletterId: created.newsletterId,
+                            subject: created.subject,
+                            content: created.content,
+                            scheduledDate: nil
+                        )
                     )
-                )
+            }
             issueSchema = map(
                 created,
-                campaignKey: input.path.newsletterCampaignKey
+                campaignKey: campaignKey
             )
         }
 
