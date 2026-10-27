@@ -47,7 +47,7 @@ extension Issue.Add.Interactor {
                 return .init(
                     subject: payload.subject,
                     content: payload.content,
-                    scheduledAt: payload.scheduledAt,
+                    scheduledAt: "",
                     newsletterId: newsletterId,
                     error: error.errorDescription
                 )

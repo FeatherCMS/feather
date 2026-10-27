@@ -1,3 +1,4 @@
+import CSS
 import FeatherWebAdmin
 import HTML
 import Hummingbird
@@ -23,6 +24,17 @@ extension Campaign.Subscriber.List {
 
         private var returnTo: String {
             AdminLocation.url(path: path, page: pageState.page, search: search)
+        }
+
+        func rules() -> [any Rule] {
+            Media {
+                Custom(".newsletter-subscriber-list-actions") {
+                    Display(.flex)
+                    AlignItems(.center)
+                    Gap(8.px)
+                    FlexWrap(.wrap)
+                }
+            }
         }
 
         func html(context: inout BuilderContext) -> Div {
@@ -176,25 +188,29 @@ extension Campaign.Subscriber.List {
                         if canCreate {
                             context.build(
                                 AdminListToolbar {
-                                    context.build(
-                                        AdminButton(
-                                            "Import CSV",
-                                            href:
-                                                routes
-                                                .subscriberImportPath(
+                                    Div {
+                                        context.build(
+                                            AdminButton(
+                                                "Add new",
+                                                href: routes.subscriberAddPath(
                                                     newsletterId: newsletterId
-                                                ),
-                                            style: .secondary
-                                        )
-                                    )
-                                    context.build(
-                                        AdminButton(
-                                            "Add new",
-                                            href: routes.subscriberAddPath(
-                                                newsletterId: newsletterId
+                                                )
                                             )
                                         )
-                                    )
+                                        context.build(
+                                            AdminButton(
+                                                "Import CSV",
+                                                href:
+                                                    routes
+                                                    .subscriberImportPath(
+                                                        newsletterId:
+                                                            newsletterId
+                                                    ),
+                                                style: .secondary
+                                            )
+                                        )
+                                    }
+                                    .class("newsletter-subscriber-list-actions")
                                 }
                             )
                         }

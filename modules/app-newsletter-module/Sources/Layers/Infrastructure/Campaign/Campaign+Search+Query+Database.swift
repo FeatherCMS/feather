@@ -2,20 +2,25 @@ import FeatherApplication
 import FeatherDBAL
 public import FeatherInfrastructure
 public import NewsletterApplication
+import NewsletterDomain
 public import NewsletterModule
 
 extension Campaign.Search.Query {
     public struct Database: Interface {
         private let accessLayer: DatabaseAccessLayer<Campaign.Table>
+        private let subscriberAccessLayer: DatabaseAccessLayer<Subscriber.Table>
+        private let issueAccessLayer: DatabaseAccessLayer<Issue.Table>
 
         public init(context: any DatabaseContext) {
             self.accessLayer = .init(context: context)
+            self.subscriberAccessLayer = .init(context: context)
+            self.issueAccessLayer = .init(context: context)
         }
 
         public func search(
             query: Campaign.Search.Input.Query
         ) async throws -> Campaign.Search.Output {
-            let items =
+            let campaigns =
                 try await accessLayer
                 .select(as: Campaign.Table.List.self) { initial in
                     paginatedQuery(
@@ -24,14 +29,39 @@ extension Campaign.Search.Query {
                         using: query.page
                     )
                 }
-                .map {
-                    Campaign.Search.Output.Item(
-                        id: $0.id,
-                        key: $0.key,
-                        name: $0.name,
-                        fromEmail: $0.fromEmail
-                    )
+            var items: [Campaign.Search.Output.Item] = []
+            for campaign in campaigns {
+                let subscriberCount =
+                    try await subscriberAccessLayer
+                    .selectCount { initial in
+                        initial
+                            .where(\.newsletterId, equals: campaign.id)
+                            .where(
+                                \.status,
+                                equals: Subscriber.Model.Status.subscribed
+                                    .rawValue
+                            )
+                    }
+                let sentIssueCount = try await issueAccessLayer.selectCount {
+                    initial in
+                    initial
+                        .where(\.newsletterId, equals: campaign.id)
+                        .where(
+                            \.status,
+                            equals: Issue.Model.Status.sent.rawValue
+                        )
                 }
+                items.append(
+                    Campaign.Search.Output.Item(
+                        id: campaign.id,
+                        key: campaign.key,
+                        name: campaign.name,
+                        fromEmail: campaign.fromEmail,
+                        subscriberCount: subscriberCount,
+                        sentIssueCount: sentIssueCount
+                    )
+                )
+            }
             let total = try await accessLayer.selectCount { initial in
                 applyFilters(query, to: initial)
             }

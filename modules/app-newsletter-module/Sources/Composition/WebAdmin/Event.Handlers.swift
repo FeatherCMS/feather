@@ -38,13 +38,6 @@ extension Event {
                         link: routes.campaign.list.path,
                         permission: "newsletter:campaigns:list"
                     ),
-                    .init(
-                        menuKey: "newsletter",
-                        label: "Subscribers",
-                        icon: "users",
-                        link: routes.subscriber.list.path,
-                        permission: "newsletter:subscribers:list"
-                    ),
                 ]
             }
         }

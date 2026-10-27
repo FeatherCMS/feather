@@ -873,12 +873,18 @@ components:
           $ref: '#/components/schemas/NewsletterNameField'
         fromEmail:
           $ref: '#/components/schemas/NewsletterEmailField'
+        subscriberCount:
+          $ref: '#/components/schemas/NewsletterCampaignSubscriberCount'
+        sentIssueCount:
+          $ref: '#/components/schemas/NewsletterCampaignSentIssueCount'
       required:
       - id
       - key
       - name
       - fromEmail
-      minProperties: 4
+      - subscriberCount
+      - sentIssueCount
+      minProperties: 6
     NewsletterIdField:
       type: string
     NewsletterKeyField:
@@ -887,6 +893,14 @@ components:
       type: string
     NewsletterEmailField:
       type: string
+    NewsletterCampaignSubscriberCount:
+      type: integer
+      examples:
+      - 42
+    NewsletterCampaignSentIssueCount:
+      type: integer
+      examples:
+      - 3
     NewsletterCampaignUpdateMask:
       type: string
       examples:

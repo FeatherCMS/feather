@@ -9,20 +9,13 @@ public struct Router {
         public let admin: WebRoute
         public let root: WebRoute
         let campaign: Campaign.Router.Routes
-        let subscriber: Subscriber.Router.Routes
         let overview: Overview.Router.Routes
 
         public init(admin: WebRoute, root: WebRoute) {
             let campaign = Campaign.Router.Routes(admin: admin, root: root)
-            let subscriber = Subscriber.Router.Routes(
-                admin: admin,
-                root: root,
-                campaigns: campaign
-            )
             self.admin = admin
             self.root = root
             self.campaign = campaign
-            self.subscriber = subscriber
             self.overview = .init(admin: admin, root: root)
         }
 
@@ -175,34 +168,6 @@ public struct Router {
             .Router(
                 environment: environment,
                 routes: routes.campaign
-            )
-            .route(on: router)
-        Subscriber.List
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes.subscriber
-            )
-            .route(on: router)
-        Subscriber.View
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes.subscriber
-            )
-            .route(on: router)
-        Subscriber.Add
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes.subscriber
-            )
-            .route(on: router)
-        Subscriber.Remove
-            .Router(
-                environment: environment,
-                renderingEngine: renderingEngine,
-                routes: routes.subscriber
             )
             .route(on: router)
     }

@@ -123,10 +123,6 @@ extension Issue.View {
                                                 name: "content",
                                                 value: model.content
                                             ),
-                                            .init(
-                                                name: "scheduledAt",
-                                                value: model.scheduledAt
-                                            ),
                                         ]
                                     ) {
                                         context.build(

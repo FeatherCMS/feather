@@ -82,7 +82,7 @@ extension Issue.Edit.Controller {
                         model: .init(
                             subject: form.subject,
                             content: form.content,
-                            scheduledAt: form.scheduledAt,
+                            scheduledAt: "",
                             newsletterId: newsletterId,
                             error: error.displayMessage
                         ),
@@ -113,8 +113,7 @@ extension Issue.Edit.Controller {
                     issueId: issueId,
                     form: .init(
                         subject: form.subject,
-                        content: form.content,
-                        scheduledAt: ""
+                        content: form.content
                     )
                 )
                 return AdminNotification.redirect(

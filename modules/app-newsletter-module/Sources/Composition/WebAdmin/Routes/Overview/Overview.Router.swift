@@ -8,13 +8,11 @@ extension Overview {
             let admin: WebRoute
             let overview: WebRoute
             let campaigns: WebRoute
-            let subscribers: WebRoute
 
             init(admin: WebRoute, root: WebRoute) {
                 self.admin = admin
                 self.overview = root
                 self.campaigns = root.appending(pathComponent: "campaigns")
-                self.subscribers = root.appending(pathComponent: "subscribers")
             }
         }
 

@@ -10,7 +10,7 @@ import WebComponents
 
 extension Campaign.Search.Table {
     struct Content: Component {
-        let items: [Campaign.Item]
+        let items: [Campaign.Search.Item]
         let pageState: AdminListPageState
         let search: String?
         let actions: AdminListActions
@@ -103,11 +103,19 @@ extension Campaign.Search.Table {
                                         AdminListShell(
                                             layout: .init(
                                                 name: "newsletter-campaigns",
-                                                columns: [
-                                                    .fraction(1),
-                                                    .fraction(2),
-                                                    .actions,
-                                                ]
+                                                columns: isPicker
+                                                    ? [
+                                                        .fraction(1),
+                                                        .fraction(2),
+                                                        .actions,
+                                                    ]
+                                                    : [
+                                                        .fraction(1),
+                                                        .fraction(2),
+                                                        .fraction(1),
+                                                        .fraction(1),
+                                                        .actions,
+                                                    ]
                                             ),
                                             hasSelection: canDelete,
                                             table: Table {
@@ -120,6 +128,10 @@ extension Campaign.Search.Table {
                                                         }
                                                         Th("Key")
                                                         Th("Name")
+                                                        if !isPicker {
+                                                            Th("Subscribers")
+                                                            Th("Issues sent")
+                                                        }
                                                         Th("Actions")
                                                     }
                                                 }

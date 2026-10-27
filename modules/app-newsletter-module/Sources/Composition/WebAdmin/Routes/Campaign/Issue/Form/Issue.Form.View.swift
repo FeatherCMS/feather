@@ -1,3 +1,4 @@
+import CSS
 import FeatherWebAdmin
 import HTML
 import Hummingbird
@@ -11,7 +12,6 @@ extension Issue.Form {
         struct State {
             let subject: String
             let content: String
-            let scheduledAt: String
             let newsletterId: String
             let issueId: String?
             let error: String?
@@ -19,6 +19,17 @@ extension Issue.Form {
             let routes: Campaign.Router.Routes
         }
         let state: State
+
+        func rules() -> [any Rule] {
+            Media {
+                Custom(".newsletter-issue-content textarea") {
+                    UnsafeRawProperty(
+                        name: "min-height",
+                        value: "50vh"
+                    )
+                }
+            }
+        }
 
         func html(context: inout BuilderContext) -> some BasicTag {
             let testEmailURL =
@@ -80,20 +91,14 @@ extension Issue.Form {
                                 name: "content",
                                 label: "Content",
                                 value: state.content,
+                                help:
+                                    "Use {{email}} for the recipient's email address and {{name}} for their full name.",
                                 style: .large,
                                 isRequired: true
                             )
                         )
                     )
-                    context.build(
-                        AdminFormFieldDatePicker(
-                            state: .init(
-                                name: "scheduledAt",
-                                label: "Schedule",
-                                value: state.scheduledAt
-                            )
-                        )
-                    )
+                    .class("newsletter-issue-content")
                     Div {
                         context.build(
                             AdminSubmitButton("Save issue", style: .primary)
@@ -108,9 +113,10 @@ extension Issue.Form {
                                         newsletterId: state.newsletterId,
                                         issueId: $0
                                     )
-                                } ?? state.routes.issueAddSendPath(
-                                    newsletterId: state.newsletterId
-                                )
+                                }
+                                    ?? state.routes.issueAddSendPath(
+                                        newsletterId: state.newsletterId
+                                    )
                             )
                     }
                     .class("admin-form__actions")
@@ -120,7 +126,7 @@ extension Issue.Form {
                         pageHeader: .secondary(
                             title: "Issue content",
                             description:
-                                "Compose the subject, message, and delivery schedule."
+                                "Compose the subject and message."
                         )
                     ) {
                         context.build(form)

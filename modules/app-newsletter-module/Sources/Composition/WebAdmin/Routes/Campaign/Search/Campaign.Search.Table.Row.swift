@@ -8,7 +8,7 @@ import WebComponents
 
 extension Campaign.Search.Table {
     struct Row: Component {
-        let item: Campaign.Item
+        let item: Campaign.Search.Item
         let actions: AdminListActions
         let returnTo: String
         let isPicker: Bool
@@ -35,6 +35,12 @@ extension Campaign.Search.Table {
                     Td(item.name)
                         .data("label", "Name")
                         .setAsRemoveConfirmationLabel()
+                }
+                if !isPicker {
+                    Td(String(item.subscriberCount))
+                        .data("label", "Subscribers")
+                    Td(String(item.sentIssueCount))
+                        .data("label", "Issues sent")
                 }
                 context.build(
                     AdminListRowActions(

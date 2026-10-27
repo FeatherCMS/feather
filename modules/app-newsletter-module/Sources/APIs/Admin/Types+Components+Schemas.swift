@@ -470,6 +470,10 @@ extension Components {
             public var name: Components.Schemas.NewsletterNameField
             /// - Remark: Generated from `#/components/schemas/NewsletterCampaignQueryItemSchema/fromEmail`.
             public var fromEmail: Components.Schemas.NewsletterEmailField
+            /// - Remark: Generated from `#/components/schemas/NewsletterCampaignQueryItemSchema/subscriberCount`.
+            public var subscriberCount: Components.Schemas.NewsletterCampaignSubscriberCount
+            /// - Remark: Generated from `#/components/schemas/NewsletterCampaignQueryItemSchema/sentIssueCount`.
+            public var sentIssueCount: Components.Schemas.NewsletterCampaignSentIssueCount
             /// Creates a new `NewsletterCampaignQueryItemSchema`.
             ///
             /// - Parameters:
@@ -477,22 +481,30 @@ extension Components {
             ///   - key:
             ///   - name:
             ///   - fromEmail:
+            ///   - subscriberCount:
+            ///   - sentIssueCount:
             public init(
                 id: Components.Schemas.NewsletterIdField,
                 key: Components.Schemas.NewsletterKeyField,
                 name: Components.Schemas.NewsletterNameField,
-                fromEmail: Components.Schemas.NewsletterEmailField
+                fromEmail: Components.Schemas.NewsletterEmailField,
+                subscriberCount: Components.Schemas.NewsletterCampaignSubscriberCount,
+                sentIssueCount: Components.Schemas.NewsletterCampaignSentIssueCount
             ) {
                 self.id = id
                 self.key = key
                 self.name = name
                 self.fromEmail = fromEmail
+                self.subscriberCount = subscriberCount
+                self.sentIssueCount = sentIssueCount
             }
             public enum CodingKeys: String, CodingKey {
                 case id
                 case key
                 case name
                 case fromEmail
+                case subscriberCount
+                case sentIssueCount
             }
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterIdField`.
@@ -503,6 +515,10 @@ extension Components {
         public typealias NewsletterNameField = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterEmailField`.
         public typealias NewsletterEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/NewsletterCampaignSubscriberCount`.
+        public typealias NewsletterCampaignSubscriberCount = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/NewsletterCampaignSentIssueCount`.
+        public typealias NewsletterCampaignSentIssueCount = Swift.Int
         /// - Remark: Generated from `#/components/schemas/NewsletterCampaignUpdateMask`.
         public typealias NewsletterCampaignUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/NewsletterCampaignPatchSchema`.

@@ -80,7 +80,8 @@ extension Issue.Send {
                             ($0.subscriberEmail, $0)
                         }
                     )
-                    let hasDeliveriesToQueue = recipients.contains { recipient in
+                    let hasDeliveriesToQueue = recipients.contains {
+                        recipient in
                         guard
                             let delivery = deliveriesByEmail[recipient.email]
                         else {
@@ -159,7 +160,23 @@ extension Issue.Send {
                             from: .init(newsletter.fromEmail),
                             to: [.init(subscriberEmail)],
                             subject: input.subject,
-                            body: .html(input.content)
+                            body: .html(
+                                Issue.PersonalizedContent.render(
+                                    input.content,
+                                    email: subscriber.email,
+                                    name: [
+                                        subscriber.firstName,
+                                        subscriber.lastName,
+                                    ]
+                                    .map {
+                                        $0.trimmingCharacters(
+                                            in: .whitespacesAndNewlines
+                                        )
+                                    }
+                                    .filter { !$0.isEmpty }
+                                    .joined(separator: " ")
+                                )
+                            )
                         ),
                         issueId: input.issueId,
                         newsletterId: input.newsletterId,

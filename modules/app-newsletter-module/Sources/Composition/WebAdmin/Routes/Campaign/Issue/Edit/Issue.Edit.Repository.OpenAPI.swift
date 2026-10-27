@@ -70,12 +70,11 @@ extension Issue.Edit.Repository {
                         newsletterCampaignKey: newsletterId,
                         newsletterIssueId: issueId
                     ),
-                    query: .init(updateMask: "subject,content,scheduledAt"),
+                    query: .init(updateMask: "subject,content"),
                     body: .json(
                         .init(
                             subject: form.normalizedSubject,
-                            content: form.content,
-                            scheduledAt: form.scheduledAtTimestamp
+                            content: form.content
                         )
                     )
                 )

@@ -24,7 +24,6 @@ extension Issue.Edit.Presenter {
                     state: .init(
                         subject: model.subject,
                         content: model.content,
-                        scheduledAt: model.scheduledAt,
                         newsletterId: model.newsletterId,
                         issueId: issueId,
                         error: model.error,

@@ -19,13 +19,6 @@ extension Overview {
                     href: routes.campaigns.path,
                     icon: "send"
                 ),
-                Destination(
-                    title: "Subscribers",
-                    description:
-                        "Manage newsletter subscribers and subscriptions.",
-                    href: routes.subscribers.path,
-                    icon: "users"
-                ),
             ]
         }
 
@@ -83,7 +76,7 @@ extension Overview {
                         state: .primary(
                             title: "Newsletter",
                             description:
-                                "Manage newsletter campaigns and subscribers."
+                                "Manage newsletter campaigns and their issues."
                         )
                     )
                 )
