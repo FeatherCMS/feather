@@ -29,6 +29,7 @@ extension Metadata.Patch {
                 "structuredDataCodeInjection": MetadataNullableTextField(
                     required: false
                 ),
+                "templateData": MetadataNullableTextField(required: false),
             ]
         }
     }

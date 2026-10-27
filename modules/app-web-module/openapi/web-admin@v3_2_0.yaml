@@ -1770,6 +1770,10 @@ components:
           type:
           - string
           - 'null'
+        templateData:
+          type:
+          - string
+          - 'null'
       required:
       - slug
       - status
@@ -1848,6 +1852,10 @@ components:
           - string
           - 'null'
         structuredDataCodeInjection:
+          type:
+          - string
+          - 'null'
+        templateData:
           type:
           - string
           - 'null'
@@ -2135,6 +2143,10 @@ components:
           - string
           - 'null'
         structuredDataCodeInjection:
+          type:
+          - string
+          - 'null'
+        templateData:
           type:
           - string
           - 'null'

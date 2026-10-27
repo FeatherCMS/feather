@@ -33,6 +33,7 @@ extension Metadata.Post {
                 "structuredDataCodeInjection": MetadataNullableTextField(
                     required: false
                 ),
+                "templateData": MetadataNullableTextField(required: false),
             ]
         }
     }

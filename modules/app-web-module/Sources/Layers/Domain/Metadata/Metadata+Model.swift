@@ -103,6 +103,7 @@ extension Metadata {
             public let cssCodeInjection: String?
             public let javascriptCodeInjection: String?
             public let structuredDataCodeInjection: String?
+            public let templateData: String?
 
             public init(
                 template: String,
@@ -118,7 +119,8 @@ extension Metadata {
                 primaryKeyword: String? = nil,
                 cssCodeInjection: String? = nil,
                 javascriptCodeInjection: String? = nil,
-                structuredDataCodeInjection: String? = nil
+                structuredDataCodeInjection: String? = nil,
+                templateData: String? = nil
             ) {
                 self.template = template
                 self.slug = slug
@@ -134,6 +136,7 @@ extension Metadata {
                 self.cssCodeInjection = cssCodeInjection
                 self.javascriptCodeInjection = javascriptCodeInjection
                 self.structuredDataCodeInjection = structuredDataCodeInjection
+                self.templateData = templateData
             }
         }
 
@@ -170,6 +173,7 @@ extension Metadata {
             public let cssCodeInjection: String?
             public let javascriptCodeInjection: String?
             public let structuredDataCodeInjection: String?
+            public let templateData: String?
 
             public mutating func set(
                 referenceID id: String
@@ -197,6 +201,7 @@ extension Metadata {
         public var cssCodeInjection: String?
         public var javascriptCodeInjection: String?
         public var structuredDataCodeInjection: String?
+        public var templateData: String?
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -217,6 +222,7 @@ extension Metadata {
             cssCodeInjection: String?,
             javascriptCodeInjection: String?,
             structuredDataCodeInjection: String?,
+            templateData: String? = nil,
             createdAt: Date,
             updatedAt: Date
         ) {
@@ -236,6 +242,7 @@ extension Metadata {
             self.cssCodeInjection = cssCodeInjection
             self.javascriptCodeInjection = javascriptCodeInjection
             self.structuredDataCodeInjection = structuredDataCodeInjection
+            self.templateData = templateData
             self.createdAt = createdAt
             self.updatedAt = updatedAt
         }
@@ -392,7 +399,8 @@ extension Metadata.Model {
             primaryKeyword: base.primaryKeyword,
             cssCodeInjection: base.cssCodeInjection,
             javascriptCodeInjection: base.javascriptCodeInjection,
-            structuredDataCodeInjection: base.structuredDataCodeInjection
+            structuredDataCodeInjection: base.structuredDataCodeInjection,
+            templateData: base.templateData
         )
     }
 
@@ -411,7 +419,8 @@ extension Metadata.Model {
         primaryKeyword: String? = nil,
         cssCodeInjection: String? = nil,
         javascriptCodeInjection: String? = nil,
-        structuredDataCodeInjection: String? = nil
+        structuredDataCodeInjection: String? = nil,
+        templateData: String? = nil
     ) throws(Self.Error) -> Self.New {
         let canonicalURL = canonicalURL?.emptyToNil
         let primaryKeyword = primaryKeyword?.emptyToNil
@@ -449,7 +458,8 @@ extension Metadata.Model {
             primaryKeyword: primaryKeyword,
             cssCodeInjection: cssCodeInjection,
             javascriptCodeInjection: javascriptCodeInjection,
-            structuredDataCodeInjection: structuredDataCodeInjection
+            structuredDataCodeInjection: structuredDataCodeInjection,
+            templateData: templateData
         )
     }
 
@@ -467,7 +477,8 @@ extension Metadata.Model {
         primaryKeyword: OptionalFieldChange<String> = .unchanged,
         cssCodeInjection: OptionalFieldChange<String> = .unchanged,
         javascriptCodeInjection: OptionalFieldChange<String> = .unchanged,
-        structuredDataCodeInjection: OptionalFieldChange<String> = .unchanged
+        structuredDataCodeInjection: OptionalFieldChange<String> = .unchanged,
+        templateData: OptionalFieldChange<String> = .unchanged
     ) throws(Self.Error) {
         let newTemplate = template.apply(to: self.template)
         let newSlug = slug.apply(to: self.slug)
@@ -494,6 +505,9 @@ extension Metadata.Model {
             to: self.structuredDataCodeInjection
         )?
         .emptyToNil
+        let newTemplateData = templateData.apply(
+            to: self.templateData
+        )?.emptyToNil
 
         try Self.validate(slug: newSlug)
         try Self.validate(
@@ -525,5 +539,6 @@ extension Metadata.Model {
         self.cssCodeInjection = newCSSCodeInjection
         self.javascriptCodeInjection = newJavaScriptCodeInjection
         self.structuredDataCodeInjection = newStructuredDataCodeInjection
+        self.templateData = newTemplateData
     }
 }

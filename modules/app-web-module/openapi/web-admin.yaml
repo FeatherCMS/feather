@@ -1635,6 +1635,9 @@ components:
         structuredDataCodeInjection:
           type: string
           nullable: true
+        templateData:
+          type: string
+          nullable: true
       required:
       - slug
       - status
@@ -1696,6 +1699,9 @@ components:
           type: string
           nullable: true
         structuredDataCodeInjection:
+          type: string
+          nullable: true
+        templateData:
           type: string
           nullable: true
         createdAt:
@@ -1936,6 +1942,9 @@ components:
           type: string
           nullable: true
         structuredDataCodeInjection:
+          type: string
+          nullable: true
+        templateData:
           type: string
           nullable: true
     PageListSchema:

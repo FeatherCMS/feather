@@ -16,6 +16,7 @@ extension Page {
             let detailsRemove: WebRoute
             let edit: WebRoute
             let metadata: WebRoute
+            let template: WebRoute
             let status: WebRoute
             let listBreadcrumb: [AdminBreadcrumb.Link]
             let breadcrumb: [AdminBreadcrumb.Link]
@@ -35,6 +36,10 @@ extension Page {
                 self.metadata =
                     edit
                     .appending(pathComponent: "metadata")
+                    .appending(parameter: "metadataID")
+                self.template =
+                    edit
+                    .appending(pathComponent: "template")
                     .appending(parameter: "metadataID")
                 self.status = details.appending(pathComponent: "status")
                 self.listBreadcrumb = breadcrumb
@@ -73,6 +78,12 @@ extension Page {
 
             func metadataPath(pageID: String, metadataID: String) -> String {
                 try! metadata.path(
+                    parameters: ["id": pageID, "metadataID": metadataID]
+                )
+            }
+
+            func templatePath(pageID: String, metadataID: String) -> String {
+                try! template.path(
                     parameters: ["id": pageID, "metadataID": metadataID]
                 )
             }
@@ -131,6 +142,14 @@ extension Page {
                 routes.metadata.routerPath,
                 use: metadata.post
             )
+
+            Edit.Template.Router(
+                environment: environment,
+                renderingEngine: renderingEngine,
+                events: events,
+                routes: routes
+            )
+            .route(on: router)
 
             Remove.Router(
                 environment: environment,

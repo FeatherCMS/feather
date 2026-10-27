@@ -60,6 +60,7 @@ extension Page.Detail.Query {
                 javascriptCodeInjection: metadata.javascriptCodeInjection,
                 structuredDataCodeInjection:
                     metadata.structuredDataCodeInjection,
+                templateData: metadata.templateData,
                 createdAt: metadata.createdAt,
                 updatedAt: metadata.updatedAt
             )

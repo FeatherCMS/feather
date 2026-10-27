@@ -224,6 +224,7 @@ public enum PublicContent {
                         || page.metadata.status != "published",
                     "contents": ["html": page.content]
                         as [String: any Sendable],
+                    "templateData": page.metadata.templateData ?? "{}",
                 ]
 
                 if let image {

@@ -52,6 +52,7 @@ extension AdminAPIGateway {
             cssCodeInjection: detail.cssCodeInjection,
             javascriptCodeInjection: detail.javascriptCodeInjection,
             structuredDataCodeInjection: detail.structuredDataCodeInjection,
+            templateData: detail.templateData,
             createdAt: detail.createdAt.timeIntervalSince1970,
             updatedAt: detail.updatedAt.timeIntervalSince1970
         )
@@ -81,6 +82,7 @@ extension AdminAPIGateway {
             cssCodeInjection: detail.cssCodeInjection,
             javascriptCodeInjection: detail.javascriptCodeInjection,
             structuredDataCodeInjection: detail.structuredDataCodeInjection,
+            templateData: detail.templateData,
             createdAt: detail.createdAt.timeIntervalSince1970,
             updatedAt: detail.updatedAt.timeIntervalSince1970
         )

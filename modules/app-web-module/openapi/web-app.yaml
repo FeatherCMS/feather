@@ -346,6 +346,8 @@ components:
           $ref: '#/components/schemas/MetadataCodeInjectionField'
         structuredDataCodeInjection:
           $ref: '#/components/schemas/MetadataCodeInjectionField'
+        templateData:
+          $ref: '#/components/schemas/MetadataCodeInjectionField'
       required:
       - slug
       - status

@@ -59,7 +59,7 @@ extension Log.List.Filter {
             ) {
                 Div {
                     context.build(
-                        AdminFormFieldDatePicker(
+                        AdminFormFieldDateTimePicker(
                             state: .init(
                                 name: "from",
                                 label: "From",
@@ -69,7 +69,7 @@ extension Log.List.Filter {
                         )
                     )
                     context.build(
-                        AdminFormFieldDatePicker(
+                        AdminFormFieldDateTimePicker(
                             state: .init(
                                 name: "to",
                                 label: "To",

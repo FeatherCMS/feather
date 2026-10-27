@@ -1304,6 +1304,8 @@ extension Components {
             public var javascriptCodeInjection: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/structuredDataCodeInjection`.
             public var structuredDataCodeInjection: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MetadataCreateSchema/templateData`.
+            public var templateData: Swift.String?
             /// Creates a new `MetadataCreateSchema`.
             ///
             /// - Parameters:
@@ -1323,6 +1325,7 @@ extension Components {
             ///   - cssCodeInjection:
             ///   - javascriptCodeInjection:
             ///   - structuredDataCodeInjection:
+            ///   - templateData:
             public init(
                 slug: Swift.String,
                 template: Components.Schemas.MetadataTemplateField? = nil,
@@ -1339,7 +1342,8 @@ extension Components {
                 primaryKeyword: Swift.String? = nil,
                 cssCodeInjection: Swift.String? = nil,
                 javascriptCodeInjection: Swift.String? = nil,
-                structuredDataCodeInjection: Swift.String? = nil
+                structuredDataCodeInjection: Swift.String? = nil,
+                templateData: Swift.String? = nil
             ) {
                 self.slug = slug
                 self.template = template
@@ -1357,6 +1361,7 @@ extension Components {
                 self.cssCodeInjection = cssCodeInjection
                 self.javascriptCodeInjection = javascriptCodeInjection
                 self.structuredDataCodeInjection = structuredDataCodeInjection
+                self.templateData = templateData
             }
             public enum CodingKeys: String, CodingKey {
                 case slug
@@ -1375,6 +1380,7 @@ extension Components {
                 case cssCodeInjection
                 case javascriptCodeInjection
                 case structuredDataCodeInjection
+                case templateData
             }
         }
         /// - Remark: Generated from `#/components/schemas/MetadataTemplateField`.
@@ -1419,6 +1425,8 @@ extension Components {
             public var javascriptCodeInjection: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/structuredDataCodeInjection`.
             public var structuredDataCodeInjection: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/templateData`.
+            public var templateData: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/createdAt`.
             public var createdAt: Swift.Double
             /// - Remark: Generated from `#/components/schemas/MetadataDetailSchema/updatedAt`.
@@ -1444,6 +1452,7 @@ extension Components {
             ///   - cssCodeInjection:
             ///   - javascriptCodeInjection:
             ///   - structuredDataCodeInjection:
+            ///   - templateData:
             ///   - createdAt:
             ///   - updatedAt:
             public init(
@@ -1465,6 +1474,7 @@ extension Components {
                 cssCodeInjection: Swift.String? = nil,
                 javascriptCodeInjection: Swift.String? = nil,
                 structuredDataCodeInjection: Swift.String? = nil,
+                templateData: Swift.String? = nil,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
@@ -1486,6 +1496,7 @@ extension Components {
                 self.cssCodeInjection = cssCodeInjection
                 self.javascriptCodeInjection = javascriptCodeInjection
                 self.structuredDataCodeInjection = structuredDataCodeInjection
+                self.templateData = templateData
                 self.createdAt = createdAt
                 self.updatedAt = updatedAt
             }
@@ -1508,6 +1519,7 @@ extension Components {
                 case cssCodeInjection
                 case javascriptCodeInjection
                 case structuredDataCodeInjection
+                case templateData
                 case createdAt
                 case updatedAt
             }
@@ -1915,6 +1927,8 @@ extension Components {
             public var javascriptCodeInjection: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/structuredDataCodeInjection`.
             public var structuredDataCodeInjection: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MetadataPatchSchema/templateData`.
+            public var templateData: Swift.String?
             /// Creates a new `MetadataPatchSchema`.
             ///
             /// - Parameters:
@@ -1932,6 +1946,7 @@ extension Components {
             ///   - cssCodeInjection:
             ///   - javascriptCodeInjection:
             ///   - structuredDataCodeInjection:
+            ///   - templateData:
             public init(
                 slug: Components.Schemas.MetadataSlugField? = nil,
                 template: Components.Schemas.MetadataTemplateField? = nil,
@@ -1946,7 +1961,8 @@ extension Components {
                 primaryKeyword: Swift.String? = nil,
                 cssCodeInjection: Swift.String? = nil,
                 javascriptCodeInjection: Swift.String? = nil,
-                structuredDataCodeInjection: Swift.String? = nil
+                structuredDataCodeInjection: Swift.String? = nil,
+                templateData: Swift.String? = nil
             ) {
                 self.slug = slug
                 self.template = template
@@ -1962,6 +1978,7 @@ extension Components {
                 self.cssCodeInjection = cssCodeInjection
                 self.javascriptCodeInjection = javascriptCodeInjection
                 self.structuredDataCodeInjection = structuredDataCodeInjection
+                self.templateData = templateData
             }
             public enum CodingKeys: String, CodingKey {
                 case slug
@@ -1978,6 +1995,7 @@ extension Components {
                 case cssCodeInjection
                 case javascriptCodeInjection
                 case structuredDataCodeInjection
+                case templateData
             }
         }
         /// - Remark: Generated from `#/components/schemas/PageListSchema`.

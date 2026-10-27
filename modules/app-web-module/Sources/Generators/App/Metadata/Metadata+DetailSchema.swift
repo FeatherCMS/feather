@@ -81,6 +81,7 @@ public struct MetadataDetailSchema: ObjectSchemaRepresentable {
             "structuredDataCodeInjection": MetadataNullableTextField(
                 required: false
             ),
+            "templateData": MetadataNullableTextField(required: false),
             "createdAt": MetadataTimestampField(),
             "updatedAt": MetadataTimestampField(),
         ]

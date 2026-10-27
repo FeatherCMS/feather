@@ -416,6 +416,8 @@ extension Components {
             public var javascriptCodeInjection: Components.Schemas.MetadataCodeInjectionField?
             /// - Remark: Generated from `#/components/schemas/MetadataContentSchema/structuredDataCodeInjection`.
             public var structuredDataCodeInjection: Components.Schemas.MetadataCodeInjectionField?
+            /// - Remark: Generated from `#/components/schemas/MetadataContentSchema/templateData`.
+            public var templateData: Components.Schemas.MetadataCodeInjectionField?
             /// Creates a new `MetadataContentSchema`.
             ///
             /// - Parameters:
@@ -432,6 +434,7 @@ extension Components {
             ///   - cssCodeInjection:
             ///   - javascriptCodeInjection:
             ///   - structuredDataCodeInjection:
+            ///   - templateData:
             public init(
                 slug: Components.Schemas.MetadataSlugField,
                 template: Components.Schemas.MetadataTemplateField? = nil,
@@ -445,7 +448,8 @@ extension Components {
                 noIndex: Components.Schemas.MetadataNoIndexField,
                 cssCodeInjection: Components.Schemas.MetadataCodeInjectionField? = nil,
                 javascriptCodeInjection: Components.Schemas.MetadataCodeInjectionField? = nil,
-                structuredDataCodeInjection: Components.Schemas.MetadataCodeInjectionField? = nil
+                structuredDataCodeInjection: Components.Schemas.MetadataCodeInjectionField? = nil,
+                templateData: Components.Schemas.MetadataCodeInjectionField? = nil
             ) {
                 self.slug = slug
                 self.template = template
@@ -460,6 +464,7 @@ extension Components {
                 self.cssCodeInjection = cssCodeInjection
                 self.javascriptCodeInjection = javascriptCodeInjection
                 self.structuredDataCodeInjection = structuredDataCodeInjection
+                self.templateData = templateData
             }
             public enum CodingKeys: String, CodingKey {
                 case slug
@@ -475,6 +480,7 @@ extension Components {
                 case cssCodeInjection
                 case javascriptCodeInjection
                 case structuredDataCodeInjection
+                case templateData
             }
         }
         /// - Remark: Generated from `#/components/schemas/MetadataTimestampField`.

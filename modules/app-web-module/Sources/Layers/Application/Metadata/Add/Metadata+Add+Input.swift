@@ -22,6 +22,7 @@ extension Metadata.Add {
         public let cssCodeInjection: String?
         public let javascriptCodeInjection: String?
         public let structuredDataCodeInjection: String?
+        public let templateData: String?
 
         public init(
             referenceType: String,
@@ -39,7 +40,8 @@ extension Metadata.Add {
             primaryKeyword: String,
             cssCodeInjection: String?,
             javascriptCodeInjection: String?,
-            structuredDataCodeInjection: String?
+            structuredDataCodeInjection: String?,
+            templateData: String? = nil
         ) {
             self.referenceType = referenceType
             self.referenceID = referenceID
@@ -57,6 +59,7 @@ extension Metadata.Add {
             self.cssCodeInjection = cssCodeInjection
             self.javascriptCodeInjection = javascriptCodeInjection
             self.structuredDataCodeInjection = structuredDataCodeInjection
+            self.templateData = templateData
         }
     }
 }

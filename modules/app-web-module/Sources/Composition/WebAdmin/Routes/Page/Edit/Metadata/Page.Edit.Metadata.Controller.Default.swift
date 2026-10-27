@@ -73,6 +73,14 @@ extension Page.Edit.Metadata.Controller {
                         ),
                         isCurrent: true
                     ),
+                    .init(
+                        label: "Template",
+                        href: routes.templatePath(
+                            pageID: pageID,
+                            metadataID: metadataID
+                        ),
+                        isCurrent: false
+                    ),
                 ]
             )
         }
