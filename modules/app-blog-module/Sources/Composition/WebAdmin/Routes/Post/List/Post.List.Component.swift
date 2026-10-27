@@ -259,32 +259,6 @@ extension Post.List {
                                                                                 .Permissions
                                                                                 .update
                                                                         ),
-                                                                        .init(
-                                                                            "Delete",
-                                                                            href:
-                                                                                AdminLocation
-                                                                                .remove(
-                                                                                    path:
-                                                                                        state
-                                                                                        .routes
-                                                                                        .postRemovePath(),
-                                                                                    ids: [
-                                                                                        item
-                                                                                            .id
-                                                                                    ],
-                                                                                    returnTo:
-                                                                                        state
-                                                                                        .routes
-                                                                                        .posts
-                                                                                        .path
-                                                                                ),
-                                                                            style:
-                                                                                .destructive,
-                                                                            permission:
-                                                                                Post
-                                                                                .Permissions
-                                                                                .delete
-                                                                        ),
                                                                     ],
                                                                     permissions:
                                                                         state

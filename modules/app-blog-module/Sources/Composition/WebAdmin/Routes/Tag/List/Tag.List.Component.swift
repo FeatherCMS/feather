@@ -259,32 +259,6 @@ extension Tag.List {
                                                                                 .Permissions
                                                                                 .update
                                                                         ),
-                                                                        .init(
-                                                                            "Delete",
-                                                                            href:
-                                                                                AdminLocation
-                                                                                .remove(
-                                                                                    path:
-                                                                                        state
-                                                                                        .routes
-                                                                                        .tagRemovePath(),
-                                                                                    ids: [
-                                                                                        item
-                                                                                            .id
-                                                                                    ],
-                                                                                    returnTo:
-                                                                                        state
-                                                                                        .routes
-                                                                                        .tags
-                                                                                        .path
-                                                                                ),
-                                                                            style:
-                                                                                .destructive,
-                                                                            permission:
-                                                                                Tag
-                                                                                .Permissions
-                                                                                .delete
-                                                                        ),
                                                                     ],
                                                                     permissions:
                                                                         state
