@@ -1,3 +1,4 @@
+public import FeatherWebApp
 public import FeatherWebShared
 public import Hummingbird
 public import NewsletterModule
@@ -8,10 +9,12 @@ extension Campaign.Unsubscribe {
 
         public init(
             environment: AppEnvironment,
+            templateRenderer: any TemplateRenderer,
             route: Route = .standard
         ) {
             self.controller = Controller.Default(
                 environment: environment,
+                templateRenderer: templateRenderer,
                 route: route
             )
         }

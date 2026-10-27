@@ -72,6 +72,25 @@ extension Issue.Send {
             let recipients = subscribers.filter { $0.status == .subscribed }
             if input.scheduledDate == nil {
                 try await transaction.run { scope in
+                    let deliveries = try await scope.delivery.list(
+                        issueId: input.issueId
+                    )
+                    let deliveriesByEmail = Dictionary(
+                        uniqueKeysWithValues: deliveries.map {
+                            ($0.subscriberEmail, $0)
+                        }
+                    )
+                    let hasDeliveriesToQueue = recipients.contains { recipient in
+                        guard
+                            let delivery = deliveriesByEmail[recipient.email]
+                        else {
+                            return true
+                        }
+                        return delivery.status == .failed
+                    }
+                    let hasPendingDeliveries = deliveries.contains {
+                        $0.status == .pending
+                    }
                     guard
                         var issue = try await scope.issue.findBy(
                             id: input.issueId
@@ -79,8 +98,18 @@ extension Issue.Send {
                     else {
                         throw Error.issueNotFound
                     }
-                    issue.status = recipients.isEmpty ? .sent : .sending
-                    if recipients.isEmpty {
+                    if hasDeliveriesToQueue || hasPendingDeliveries {
+                        issue.status = .sending
+                        issue.sentDate = nil
+                    }
+                    else if deliveries.contains(where: {
+                        $0.status == .failed || $0.status == .bounced
+                    }) {
+                        issue.status = .failed
+                        issue.sentDate = nil
+                    }
+                    else {
+                        issue.status = .sent
                         issue.sentDate = Date()
                     }
                     _ = try await scope.issue.update(issue)
@@ -154,8 +183,31 @@ extension Issue.Send {
                         delivery.failureReason = failureReason
                         _ = try await scope.delivery.update(delivery)
                     }
+                    try? await markIssueFailedIfDeliveriesFinished(
+                        issueId: input.issueId
+                    )
                     throw error
                 }
+            }
+        }
+
+        private func markIssueFailedIfDeliveriesFinished(
+            issueId: String
+        ) async throws {
+            try await transaction.run { scope in
+                let deliveries = try await scope.delivery.list(
+                    issueId: issueId
+                )
+                guard
+                    !deliveries.isEmpty,
+                    deliveries.allSatisfy({ $0.status != .pending }),
+                    var issue = try await scope.issue.findBy(id: issueId)
+                else {
+                    return
+                }
+                issue.status = .failed
+                issue.sentDate = nil
+                _ = try await scope.issue.update(issue)
             }
         }
 

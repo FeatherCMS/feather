@@ -15,6 +15,10 @@ private enum NewsletterDeliveryQueryKey: DatabaseQueryKey {
     case find
     case update
     case updated
+    case list
+    case issueFind
+    case issueUpdate
+    case issueUpdated
 }
 
 @Suite
@@ -31,6 +35,24 @@ struct SendNewsletterIssueJobHandlerTests {
             "status": .string(status),
             "sent_date": sentDate.map(MockDatabaseRow.Value.date) ?? .null,
             "failure_reason": .null,
+            "created_at": .date(Date(timeIntervalSince1970: 100)),
+            "updated_at": .date(Date(timeIntervalSince1970: 100)),
+        ])
+    }
+
+    private func issueRow(
+        status: String,
+        sentDate: Date?
+    ) -> MockDatabaseRow {
+        .init([
+            "id": .string("issue-1"),
+            "newsletter_id": .string("newsletter-1"),
+            "subject": .string("Issue subject"),
+            "preview_text": .string(""),
+            "content": .string("<p>Issue content</p>"),
+            "status": .string(status),
+            "scheduled_date": .null,
+            "sent_date": sentDate.map(MockDatabaseRow.Value.date) ?? .null,
             "created_at": .date(Date(timeIntervalSince1970: 100)),
             "updated_at": .date(Date(timeIntervalSince1970: 100)),
         ])
@@ -101,6 +123,19 @@ struct SendNewsletterIssueJobHandlerTests {
                 .init(
                     key: .updated,
                     rows: [deliveryRow(status: "sent", sentDate: sentDate)]
+                ),
+                .init(
+                    key: .list,
+                    rows: [deliveryRow(status: "sent", sentDate: sentDate)]
+                ),
+                .init(
+                    key: .issueFind,
+                    rows: [issueRow(status: "sending", sentDate: nil)]
+                ),
+                .init(key: .issueUpdate),
+                .init(
+                    key: .issueUpdated,
+                    rows: [issueRow(status: "sent", sentDate: sentDate)]
                 ),
             ]
         )

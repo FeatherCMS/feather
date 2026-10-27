@@ -236,7 +236,10 @@ func buildRouter(
         themeRenderer: themeRenderer,
         publicContentEvents: publicContentEvents,
         mediaResolver: mediaResolver,
-        publicOrigins: environment.publicOrigins
+        publicOrigins: environment.publicOrigins,
+        newsletterTemplateRenderer:
+            try NewsletterWebApp
+            .MustacheTemplateRenderer()
     )
 
     AuthWebApp.Router(

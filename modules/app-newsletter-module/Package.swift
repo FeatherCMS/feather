@@ -83,6 +83,10 @@ let package = Package(
             from: "2.27.0"
         ),
         .package(
+            url: "https://github.com/hummingbird-project/swift-mustache",
+            from: "2.1.1"
+        ),
+        .package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
@@ -302,13 +306,16 @@ let package = Package(
                     package: "feather-validation"
                 ),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "Mustache", package: "swift-mustache"),
                 .product(name: "WebModuleWebApp", package: "app-web-module"),
                 .target(name: "NewsletterModule"),
                 .target(name: "NewsletterAppAPI"),
             ],
             path: "Sources/Composition/WebApp",
+            resources: [.copy("Resources/Templates")],
             swiftSettings: swiftSettings
         ),
         // MARK: -
