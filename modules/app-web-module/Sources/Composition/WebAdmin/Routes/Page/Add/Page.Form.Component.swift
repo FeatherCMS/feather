@@ -42,6 +42,7 @@ extension WebModule.Page.Form {
         var state: State
         var mediaAssetList: WebRoute
         var metadataHref: String? = nil
+        var templateHref: String? = nil
         var action: String
         var submitLabel: String
 
@@ -58,6 +59,15 @@ extension WebModule.Page.Form {
                     .init(
                         label: "Metadata",
                         href: metadataHref,
+                        isCurrent: false
+                    )
+                )
+            }
+            if let templateHref {
+                links.append(
+                    .init(
+                        label: "Template",
+                        href: templateHref,
                         isCurrent: false
                     )
                 )

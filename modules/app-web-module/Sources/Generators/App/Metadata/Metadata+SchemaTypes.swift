@@ -132,6 +132,8 @@ public struct MetadataContentSchema: ObjectSchemaRepresentable {
                 .reference(required: false),
             "structuredDataCodeInjection": MetadataCodeInjectionField()
                 .reference(required: false),
+            "templateData": MetadataCodeInjectionField()
+                .reference(required: false),
         ]
     }
 

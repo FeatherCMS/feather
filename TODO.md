@@ -14,8 +14,7 @@ Beta.1
 
 Next round
 - [ ] Telemetry, CI, auto-deployment
-- [ ] Template editor for web module
-- [ ] list order support
+- [ ] List order support
 - [ ] Metadata reference permission checks based on content
 - [ ] https://github.com/hummingbird-project/hummingbird-compression
 - [ ] HTTP2 support (enable HB HTTP2)
@@ -25,6 +24,6 @@ Next round
 - [ ] Storage context, database context, worker context unification
 - [ ] Duplicate feature
 - [ ] RCE undo / redo feature
-- [ ] protocol buffer api 
-- [ ] review admin css
-- [ ] renderer abstraction for admin/app
+- [ ] Protocol buffer api 
+- [ ] Review admin css
+- [ ] Renderer abstraction for admin/app

@@ -55,7 +55,8 @@ extension Metadata.Add {
                         cssCodeInjection: input.cssCodeInjection,
                         javascriptCodeInjection: input.javascriptCodeInjection,
                         structuredDataCodeInjection: input
-                            .structuredDataCodeInjection
+                            .structuredDataCodeInjection,
+                        templateData: input.templateData
                     )
                 )
             }
@@ -77,6 +78,7 @@ extension Metadata.Add {
                 cssCodeInjection: model.cssCodeInjection,
                 javascriptCodeInjection: model.javascriptCodeInjection,
                 structuredDataCodeInjection: model.structuredDataCodeInjection,
+                templateData: model.templateData,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

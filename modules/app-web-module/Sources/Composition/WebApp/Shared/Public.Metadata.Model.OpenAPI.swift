@@ -15,7 +15,8 @@ extension Public.Metadata.Model {
             structuredDataCodeInjection: schema.structuredDataCodeInjection,
             publicationDateText: schema.publicationDate.map {
                 DateFormatting.formatUnixTimestamp($0)
-            }
+            },
+            templateData: schema.templateData
         )
     }
 }

@@ -196,7 +196,8 @@ func buildRouter(
         ),
         templatePath: { identifier in
             templateDefinitions.first { $0.id == identifier }?.path
-        }
+        },
+        templateDefinitions: templateDefinitions
     )
     var publicContentEvents = EventRegistry()
     WebModuleWebApp.PublicContent.Event.Handlers.register(

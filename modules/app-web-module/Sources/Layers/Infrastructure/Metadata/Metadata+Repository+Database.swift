@@ -30,6 +30,7 @@ extension Metadata.Table.Detail {
             cssCodeInjection: cssCodeInjection,
             javascriptCodeInjection: javascriptCodeInjection,
             structuredDataCodeInjection: structuredDataCodeInjection,
+            templateData: templateData,
             createdAt: createdAt,
             updatedAt: updatedAt
         )
@@ -80,7 +81,8 @@ extension Metadata.Repository {
                     cssCodeInjection: model.cssCodeInjection,
                     javascriptCodeInjection: model.javascriptCodeInjection,
                     structuredDataCodeInjection: model
-                        .structuredDataCodeInjection
+                        .structuredDataCodeInjection,
+                    templateData: model.templateData
                 )
             )
             guard
@@ -161,7 +163,8 @@ extension Metadata.Repository {
                     cssCodeInjection: model.cssCodeInjection,
                     javascriptCodeInjection: model.javascriptCodeInjection,
                     structuredDataCodeInjection: model
-                        .structuredDataCodeInjection
+                        .structuredDataCodeInjection,
+                    templateData: model.templateData
                 ),
                 where: \.id,
                 equals: model.id

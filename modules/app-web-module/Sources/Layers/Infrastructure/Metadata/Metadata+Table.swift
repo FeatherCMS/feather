@@ -49,6 +49,9 @@ extension Metadata {
             let structuredDataCodeInjection = DatabaseTableColumn<String?>(
                 name: "structured_data_code_injection"
             )
+            let templateData = DatabaseTableColumn<String?>(
+                name: "template_data"
+            )
             let createdAt = DatabaseTableColumn<Date>(name: "created_at")
             let updatedAt = DatabaseTableColumn<Date>(name: "updated_at")
         }

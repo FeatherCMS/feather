@@ -32,5 +32,9 @@ public struct TableMigration: DatabaseMigration {
             }
         }
 
+        try await Metadata.TemplateDataMigrationAccessLayer.addColumn(
+            connection: connection
+        )
+
     }
 }

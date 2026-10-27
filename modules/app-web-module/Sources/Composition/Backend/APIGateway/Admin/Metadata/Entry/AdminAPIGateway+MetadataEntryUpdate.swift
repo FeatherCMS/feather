@@ -83,6 +83,10 @@ extension AdminAPIGateway {
                 structuredDataCodeInjection: .init(
                     value: body.structuredDataCodeInjection,
                     shouldApply: true
+                ),
+                templateData: .init(
+                    value: body.templateData,
+                    shouldApply: true
                 )
             )
         )
@@ -122,6 +126,7 @@ extension AdminAPIGateway {
             cssCodeInjection: output.cssCodeInjection,
             javascriptCodeInjection: output.javascriptCodeInjection,
             structuredDataCodeInjection: output.structuredDataCodeInjection,
+            templateData: output.templateData,
             createdAt: output.createdAt.timeIntervalSince1970,
             updatedAt: output.updatedAt.timeIntervalSince1970
         )

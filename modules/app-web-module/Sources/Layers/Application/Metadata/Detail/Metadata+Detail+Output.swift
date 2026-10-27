@@ -23,6 +23,7 @@ extension Metadata.Detail {
         public let cssCodeInjection: String?
         public let javascriptCodeInjection: String?
         public let structuredDataCodeInjection: String?
+        public let templateData: String?
         public let createdAt: Date
         public let updatedAt: Date
 
@@ -44,6 +45,7 @@ extension Metadata.Detail {
             cssCodeInjection: String?,
             javascriptCodeInjection: String?,
             structuredDataCodeInjection: String?,
+            templateData: String? = nil,
             createdAt: Date,
             updatedAt: Date
         ) {
@@ -64,6 +66,7 @@ extension Metadata.Detail {
             self.cssCodeInjection = cssCodeInjection
             self.javascriptCodeInjection = javascriptCodeInjection
             self.structuredDataCodeInjection = structuredDataCodeInjection
+            self.templateData = templateData
             self.createdAt = createdAt
             self.updatedAt = updatedAt
         }

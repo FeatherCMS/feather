@@ -9,6 +9,7 @@ extension Public.Metadata {
         public let cssCodeInjection: String?
         public let javascriptCodeInjection: String?
         public let structuredDataCodeInjection: String?
+        public let templateData: String?
         public let publicationDateText: String?
 
         public init(
@@ -21,7 +22,8 @@ extension Public.Metadata {
             cssCodeInjection: String?,
             javascriptCodeInjection: String?,
             structuredDataCodeInjection: String?,
-            publicationDateText: String?
+            publicationDateText: String?,
+            templateData: String? = nil
         ) {
             self.slug = slug
             self.title = title
@@ -32,6 +34,7 @@ extension Public.Metadata {
             self.cssCodeInjection = cssCodeInjection
             self.javascriptCodeInjection = javascriptCodeInjection
             self.structuredDataCodeInjection = structuredDataCodeInjection
+            self.templateData = templateData
             self.publicationDateText = publicationDateText
         }
 

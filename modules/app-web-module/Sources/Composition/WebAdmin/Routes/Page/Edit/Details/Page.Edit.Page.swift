@@ -53,6 +53,10 @@ extension Page.Edit {
                             pageID: state.id,
                             metadataID: state.id
                         ),
+                        templateHref: state.routes.templatePath(
+                            pageID: state.id,
+                            metadataID: state.id
+                        ),
                         action: state.routes.editPath(state.id),
                         submitLabel: "Edit page",
                     )

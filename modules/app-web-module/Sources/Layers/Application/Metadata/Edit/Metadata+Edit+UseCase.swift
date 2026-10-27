@@ -55,7 +55,8 @@ extension Metadata.Edit {
                     cssCodeInjection: input.cssCodeInjection,
                     javascriptCodeInjection: input.javascriptCodeInjection,
                     structuredDataCodeInjection: input
-                        .structuredDataCodeInjection
+                        .structuredDataCodeInjection,
+                    templateData: input.templateData
                 )
 
                 return try await scope.metadata.update(model)
@@ -78,6 +79,7 @@ extension Metadata.Edit {
                 cssCodeInjection: model.cssCodeInjection,
                 javascriptCodeInjection: model.javascriptCodeInjection,
                 structuredDataCodeInjection: model.structuredDataCodeInjection,
+                templateData: model.templateData,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt
             )

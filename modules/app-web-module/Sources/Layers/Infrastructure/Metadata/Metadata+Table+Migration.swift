@@ -59,6 +59,7 @@ extension Metadata.Table {
                     name: columns.structuredDataCodeInjection.name,
                     type: .text
                 ),
+                .init(name: columns.templateData.name, type: .text),
                 .init(
                     name: columns.createdAt.name,
                     type: .timestamp,

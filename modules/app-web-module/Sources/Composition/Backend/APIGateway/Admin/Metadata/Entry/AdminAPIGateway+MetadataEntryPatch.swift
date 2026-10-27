@@ -25,6 +25,7 @@ extension AdminAPIGateway {
         case cssCodeInjection
         case javascriptCodeInjection
         case structuredDataCodeInjection
+        case templateData
     }
 
     public func metadataPatch(
@@ -118,6 +119,10 @@ extension AdminAPIGateway {
                 structuredDataCodeInjection: .init(
                     value: body.structuredDataCodeInjection,
                     shouldApply: fields.contains(.structuredDataCodeInjection)
+                ),
+                templateData: .init(
+                    value: body.templateData,
+                    shouldApply: fields.contains(.templateData)
                 )
             )
         )

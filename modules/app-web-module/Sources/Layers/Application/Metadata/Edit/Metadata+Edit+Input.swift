@@ -22,6 +22,7 @@ extension Metadata.Edit {
         public let cssCodeInjection: OptionalFieldChange<String>
         public let javascriptCodeInjection: OptionalFieldChange<String>
         public let structuredDataCodeInjection: OptionalFieldChange<String>
+        public let templateData: OptionalFieldChange<String>
 
         public init(
             id: String,
@@ -39,7 +40,8 @@ extension Metadata.Edit {
             cssCodeInjection: OptionalFieldChange<String> = .unchanged,
             javascriptCodeInjection: OptionalFieldChange<String> = .unchanged,
             structuredDataCodeInjection: OptionalFieldChange<String> =
-                .unchanged
+                .unchanged,
+            templateData: OptionalFieldChange<String> = .unchanged
         ) {
             self.id = id
             self.template = template
@@ -56,6 +58,7 @@ extension Metadata.Edit {
             self.cssCodeInjection = cssCodeInjection
             self.javascriptCodeInjection = javascriptCodeInjection
             self.structuredDataCodeInjection = structuredDataCodeInjection
+            self.templateData = templateData
         }
     }
 }

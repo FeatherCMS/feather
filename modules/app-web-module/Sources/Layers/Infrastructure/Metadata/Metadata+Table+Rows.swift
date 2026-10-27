@@ -23,6 +23,7 @@ extension Metadata.Table: DatabaseTableWithInsert {
         let cssCodeInjection: String?
         let javascriptCodeInjection: String?
         let structuredDataCodeInjection: String?
+        let templateData: String?
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Metadata.Table.columns.publicationDate] = .value(
                 publicationDate
@@ -55,6 +56,7 @@ extension Metadata.Table: DatabaseTableWithInsert {
             case cssCodeInjection = "css_code_injection"
             case javascriptCodeInjection = "javascript_code_injection"
             case structuredDataCodeInjection = "structured_data_code_injection"
+            case templateData = "template_data"
         }
     }
 }
@@ -77,6 +79,7 @@ extension Metadata.Table: DatabaseTableWithUpdate {
         let cssCodeInjection: String?
         let javascriptCodeInjection: String?
         let structuredDataCodeInjection: String?
+        let templateData: String?
 
         func afterEncode(values: inout DatabaseTableRowValues) throws {
             values[Metadata.Table.columns.updatedAt] = .currentTimestamp
@@ -111,6 +114,7 @@ extension Metadata.Table: DatabaseTableWithUpdate {
             case cssCodeInjection = "css_code_injection"
             case javascriptCodeInjection = "javascript_code_injection"
             case structuredDataCodeInjection = "structured_data_code_injection"
+            case templateData = "template_data"
         }
     }
 }
@@ -134,6 +138,7 @@ extension Metadata.Table: DatabaseTableWithDetail {
         let cssCodeInjection: String?
         let javascriptCodeInjection: String?
         let structuredDataCodeInjection: String?
+        let templateData: String?
         let createdAt: Date
         let updatedAt: Date
 
@@ -155,6 +160,7 @@ extension Metadata.Table: DatabaseTableWithDetail {
             case cssCodeInjection = "css_code_injection"
             case javascriptCodeInjection = "javascript_code_injection"
             case structuredDataCodeInjection = "structured_data_code_injection"
+            case templateData = "template_data"
             case createdAt = "created_at"
             case updatedAt = "updated_at"
         }

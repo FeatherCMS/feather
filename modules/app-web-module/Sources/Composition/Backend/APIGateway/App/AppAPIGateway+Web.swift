@@ -132,7 +132,8 @@ extension AppAPIGateway {
             noIndex: metadata.noIndex,
             cssCodeInjection: metadata.cssCodeInjection,
             javascriptCodeInjection: metadata.javascriptCodeInjection,
-            structuredDataCodeInjection: metadata.structuredDataCodeInjection
+            structuredDataCodeInjection: metadata.structuredDataCodeInjection,
+            templateData: metadata.templateData
         )
     }
 }

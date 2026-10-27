@@ -24,6 +24,7 @@ extension Metadata.Table.Detail {
             cssCodeInjection: cssCodeInjection,
             javascriptCodeInjection: javascriptCodeInjection,
             structuredDataCodeInjection: structuredDataCodeInjection,
+            templateData: templateData,
             createdAt: createdAt,
             updatedAt: updatedAt
         )

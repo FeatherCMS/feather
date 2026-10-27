@@ -47,7 +47,8 @@ extension AdminAPIGateway {
             primaryKeyword: body.primaryKeyword ?? "",
             cssCodeInjection: body.cssCodeInjection,
             javascriptCodeInjection: body.javascriptCodeInjection,
-            structuredDataCodeInjection: body.structuredDataCodeInjection
+            structuredDataCodeInjection: body.structuredDataCodeInjection,
+            templateData: body.templateData
         )
 
         let result = try await useCase.execute(
@@ -90,6 +91,7 @@ extension AdminAPIGateway {
             cssCodeInjection: output.cssCodeInjection,
             javascriptCodeInjection: output.javascriptCodeInjection,
             structuredDataCodeInjection: output.structuredDataCodeInjection,
+            templateData: output.templateData,
             createdAt: output.createdAt.timeIntervalSince1970,
             updatedAt: output.updatedAt.timeIntervalSince1970
         )
