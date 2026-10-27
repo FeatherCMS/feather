@@ -95,6 +95,18 @@ extension WebModule.Metadata {
             guard !value.isEmpty else {
                 return nil
             }
+            let iso8601 = ISO8601DateFormatter()
+            iso8601.formatOptions = [
+                .withInternetDateTime,
+                .withFractionalSeconds,
+            ]
+            if let date = iso8601.date(from: value) {
+                return date.timeIntervalSince1970
+            }
+            iso8601.formatOptions = [.withInternetDateTime]
+            if let date = iso8601.date(from: value) {
+                return date.timeIntervalSince1970
+            }
             if let date = makeDateTimeFormatter().date(from: value) {
                 return date.timeIntervalSince1970
             }
@@ -111,10 +123,14 @@ extension WebModule.Metadata {
             guard let timestamp else {
                 return ""
             }
-            return makeDateTimeFormatter()
-                .string(
-                    from: Date(timeIntervalSince1970: timestamp)
-                )
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [
+                .withInternetDateTime,
+                .withFractionalSeconds,
+            ]
+            return formatter.string(
+                from: Date(timeIntervalSince1970: timestamp)
+            )
         }
 
         private static func normalizeOverride(

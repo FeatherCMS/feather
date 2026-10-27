@@ -6,7 +6,6 @@ Beta.1
 - vkf [ ] Full slug vs last slug component -> type? trim, split, etc.
 - vkf [ ] Sign in with magic link + flow
 
-- tib [ ] Datepicker date only mode & other improvements
 - tib [ ] Transport error middleware
 - tib [ ] Autocomplete reuqests instead of states, like city & country
 - tib [ ] contact custom submit label + rce display data 
