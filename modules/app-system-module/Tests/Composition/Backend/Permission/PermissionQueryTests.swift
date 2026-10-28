@@ -22,7 +22,7 @@ struct PermissionQueryTests {
     private func permissionRow() -> MockDatabaseRow {
         .init([
             "id": .string("permission-1"),
-            "key": .string("system.admin.access"),
+            "key": .string("system:admin:access"),
             "name": .string("Admin access"),
             "notes": .null,
         ])
@@ -62,7 +62,7 @@ struct PermissionQueryTests {
         let data = try #require(json["data"] as? [String: Any])
         #expect(data["total"] as? Int == 1)
         let items = try #require(data["items"] as? [[String: Any]])
-        #expect(items.first?["key"] as? String == "system.admin.access")
+        #expect(items.first?["key"] as? String == "system:admin:access")
         try await connection.assertAllResponsesConsumed()
     }
 

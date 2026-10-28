@@ -72,6 +72,19 @@ extension RolePermission.Edit.Presenter {
             )
         }
 
+        func format(error: RolePermission.Edit.Error) -> String {
+            switch error {
+            case .unauthorized:
+                "Your session has expired. Please sign in again."
+            case .forbidden:
+                "You do not have permission to update access control."
+            case .conflict:
+                "One or more selected permissions are already assigned to this role. Refresh the matrix to load the current assignments, then try again."
+            case .unavailable:
+                "The role permissions could not be saved. Please try again."
+            }
+        }
+
         private func normalizedSearch(
             _ search: String?
         ) -> String {

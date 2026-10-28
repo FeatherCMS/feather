@@ -56,26 +56,54 @@ extension RolePermission.Edit.Repository {
             .UserRoleListItemSchema]
         {
             try await userAPI.withOpenAPIRepositoryErrorMapping { client in
-                let response =
-                    try await client
-                    .userRoleList(
-                        query: .init(limit: 300),
-                        headers: .init(accept: [.init(contentType: .json)])
-                    )
+                var roles: [UserAdminAPI.Components.Schemas
+                    .UserRoleListItemSchema] = []
+                var hasMorePages = true
+                var pageNumber = 1
 
-                switch response {
-                case .ok(let ok):
-                    return try ok.body.json
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await userAPI.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
+                while hasMorePages {
+                    let response =
+                        try await client
+                        .userRoleQuery(
+                            headers: .init(
+                                accept: [.init(contentType: .json)]
+                            ),
+                            body: .json(
+                                .init(
+                                    page: .init(size: 100, number: pageNumber),
+                                    filters: .init(search: nil)
+                                )
+                            )
+                        )
+
+                    switch response {
+                    case .ok(let ok):
+                        let body = try ok.body.json
+                        roles.append(
+                            contentsOf: body.data.items.map {
+                                .init(
+                                    id: $0.id,
+                                    key: $0.key,
+                                    name: $0.name
+                                )
+                            }
+                        )
+                        hasMorePages = roles.count < body.data.total
+                    case .unauthorized:
+                        throw OpenAPIRepositoryError.unauthorized
+                    case .forbidden:
+                        throw OpenAPIRepositoryError.forbidden
+                    case .undocumented(let statusCode, let response):
+                        throw try await userAPI.failure(
+                            statusCode: statusCode,
+                            responseBody: response.body
+                        )
+                    }
+
+                    pageNumber += 1
                 }
+
+                return roles
             }
         }
 
@@ -84,38 +112,55 @@ extension RolePermission.Edit.Repository {
             .SystemPermissionListItemSchema]
         {
             try await systemAPI.withOpenAPIRepositoryErrorMapping { client in
-                let response =
-                    try await client
-                    .systemPermissionQuery(
-                        headers: .init(accept: [.init(contentType: .json)]),
-                        body: .json(
-                            .init(
-                                page: .init(size: 300, number: 1),
-                                filters: .init(search: nil)
+                var permissions: [SystemAdminAPI.Components.Schemas
+                    .SystemPermissionListItemSchema] = []
+                var hasMorePages = true
+                var pageNumber = 1
+
+                while hasMorePages {
+                    let response =
+                        try await client
+                        .systemPermissionQuery(
+                            headers: .init(
+                                accept: [.init(contentType: .json)]
+                            ),
+                            body: .json(
+                                .init(
+                                    page: .init(size: 100, number: pageNumber),
+                                    filters: .init(search: nil)
+                                )
                             )
                         )
-                    )
 
-                switch response {
-                case .ok(let ok):
-                    return try ok.body.json.data.items.map {
-                        .init(
-                            id: $0.id,
-                            key: $0.key,
-                            name: $0.name,
-                            notes: $0.notes
+                    switch response {
+                    case .ok(let ok):
+                        let body = try ok.body.json
+                        permissions.append(
+                            contentsOf: body.data.items.map {
+                                .init(
+                                    id: $0.id,
+                                    key: $0.key,
+                                    name: $0.name,
+                                    notes: $0.notes
+                                )
+                            }
+                        )
+                        hasMorePages = permissions.count < body.data.total
+                    case .unauthorized:
+                        throw OpenAPIRepositoryError.unauthorized
+                    case .forbidden:
+                        throw OpenAPIRepositoryError.forbidden
+                    case .undocumented(let statusCode, let response):
+                        throw try await systemAPI.failure(
+                            statusCode: statusCode,
+                            responseBody: response.body
                         )
                     }
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await systemAPI.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
+
+                    pageNumber += 1
                 }
+
+                return permissions
             }
         }
 
@@ -123,39 +168,52 @@ extension RolePermission.Edit.Repository {
             RolePermission.Edit.Pair
         > {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response =
-                    try await client
-                    .authRolePermissionQuery(
-                        headers: .init(accept: [.init(contentType: .json)]),
-                        body: .json(
-                            .init(
-                                page: .init(size: 10_000, number: 1),
-                                filters: .init(search: nil)
+                var pairs: Set<RolePermission.Edit.Pair> = []
+                var hasMorePages = true
+                var pageNumber = 1
+
+                while hasMorePages {
+                    let response =
+                        try await client
+                        .authRolePermissionQuery(
+                            headers: .init(
+                                accept: [.init(contentType: .json)]
+                            ),
+                            body: .json(
+                                .init(
+                                    page: .init(size: 100, number: pageNumber),
+                                    filters: .init(search: nil)
+                                )
                             )
                         )
-                    )
 
-                switch response {
-                case .ok(let ok):
-                    let body = try ok.body.json
-                    return Set(
-                        body.data.items.map {
-                            RolePermission.Edit.Pair(
-                                roleId: $0.roleId,
-                                permissionId: $0.permissionId
-                            )
-                        }
-                    )
-                case .unauthorized:
-                    throw OpenAPIRepositoryError.unauthorized
-                case .forbidden:
-                    throw OpenAPIRepositoryError.forbidden
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
+                    switch response {
+                    case .ok(let ok):
+                        let body = try ok.body.json
+                        pairs.formUnion(
+                            body.data.items.map {
+                                RolePermission.Edit.Pair(
+                                    roleId: $0.roleId,
+                                    permissionId: $0.permissionId
+                                )
+                            }
+                        )
+                        hasMorePages = pairs.count < body.data.total
+                    case .unauthorized:
+                        throw OpenAPIRepositoryError.unauthorized
+                    case .forbidden:
+                        throw OpenAPIRepositoryError.forbidden
+                    case .undocumented(let statusCode, let response):
+                        throw try await api.failure(
+                            statusCode: statusCode,
+                            responseBody: response.body
+                        )
+                    }
+
+                    pageNumber += 1
                 }
+
+                return pairs
             }
         }
 

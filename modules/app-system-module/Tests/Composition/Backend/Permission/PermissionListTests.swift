@@ -21,7 +21,7 @@ struct PermissionListTests {
     private func permissionRow() -> MockDatabaseRow {
         .init([
             "id": .string("permission-1"),
-            "key": .string("system.admin.access"),
+            "key": .string("system:admin:access"),
             "name": .string("Admin access"),
             "notes": .null,
         ])
@@ -56,7 +56,7 @@ struct PermissionListTests {
         let items = try array(from: body)
         #expect(items.count == 1)
         #expect(items.first?["id"] as? String == "permission-1")
-        #expect(items.first?["key"] as? String == "system.admin.access")
+        #expect(items.first?["key"] as? String == "system:admin:access")
         try await connection.assertAllResponsesConsumed()
     }
 }

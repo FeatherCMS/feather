@@ -21,7 +21,7 @@ struct PermissionGetTests {
     private func permissionRow() -> MockDatabaseRow {
         .init([
             "id": .string("permission-1"),
-            "key": .string("system.admin.access"),
+            "key": .string("system:admin:access"),
             "name": .string("Admin access"),
             "notes": .null,
         ])
@@ -54,7 +54,7 @@ struct PermissionGetTests {
         )
         let json = try object(from: body)
         #expect(json["id"] as? String == "permission-1")
-        #expect(json["key"] as? String == "system.admin.access")
+        #expect(json["key"] as? String == "system:admin:access")
         try await connection.assertAllResponsesConsumed()
     }
 }
