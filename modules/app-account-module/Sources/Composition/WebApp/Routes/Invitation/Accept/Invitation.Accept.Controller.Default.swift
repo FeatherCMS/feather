@@ -190,6 +190,8 @@ extension Invitation.Accept.Controller {
                 imagePath: "images/puppy.png",
                 content: Invitation.Accept.View.Page(
                     action: routes.accept.path,
+                    loginPath:
+                        "\(routes.login.path)?redirect=%2Fadmin%2F",
                     token: token,
                     email: email,
                     password: password,
