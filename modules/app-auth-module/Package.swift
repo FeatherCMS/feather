@@ -254,11 +254,13 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherValidation", package: "feather-validation"),
                 .product(name: "FeatherValidationFoundation", package: "feather-validation"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherWebApp", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Mustache", package: "swift-mustache"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "AuthModule"),
                 .target(name: "AuthAppAPI"),
@@ -275,7 +277,9 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherWebShared", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
 
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "UserWebAdmin", package: "app-user-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
 

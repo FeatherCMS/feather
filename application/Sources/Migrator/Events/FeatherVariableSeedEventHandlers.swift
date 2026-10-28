@@ -24,6 +24,18 @@ enum FeatherVariableSeedEventHandlers {
                     notes:
                         "Optional sender display name for system-generated emails."
                 ),
+                .init(
+                    key: "auth.magic_link.email.subject",
+                    value: "Application - Sign In Link",
+                    name: "Magic link email subject",
+                    notes: "Subject line for magic link sign-in emails."
+                ),
+                .init(
+                    key: "account.invitation.email.subject",
+                    value: "Application - Invitation",
+                    name: "Invitation email subject",
+                    notes: "Subject line for account invitation emails."
+                ),
             ]
         }
     }

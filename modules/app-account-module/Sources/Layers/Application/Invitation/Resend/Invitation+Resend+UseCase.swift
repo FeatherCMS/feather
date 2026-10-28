@@ -12,6 +12,7 @@ extension Invitation.Resend {
         private struct MailContext: Sendable {
             let invitation: Invitation.Model
             let publicBaseURL: String
+            let mailSubject: String
             let mailFromAddress: String
             let mailFromName: String?
         }
@@ -78,6 +79,12 @@ extension Invitation.Resend {
                 return MailContext(
                     invitation: try await scope.invitation.update(invitation),
                     publicBaseURL: publicBaseURL,
+                    mailSubject:
+                        try await scope.variable.get(
+                            "account.invitation.email.subject"
+                        )?
+                        .whitespaceTrimmed.emptyToNil
+                            ?? "Application - Invitation",
                     mailFromAddress: mailFromAddress,
                     mailFromName: mailFromName
                 )
@@ -90,7 +97,7 @@ extension Invitation.Resend {
                         name: result.mailFromName
                     ),
                     to: [.init(result.invitation.email)],
-                    subject: "Application - Invitation",
+                    subject: result.mailSubject,
                     body: .plainText(
                         """
                         Hello,

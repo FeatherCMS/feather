@@ -20,6 +20,7 @@ extension Invitation.Add {
         private struct MailContext: Sendable {
             let invitation: Invitation.Model
             let publicBaseURL: String
+            let mailSubject: String
             let mailFromAddress: String
             let mailFromName: String?
         }
@@ -112,6 +113,12 @@ extension Invitation.Add {
                 return MailContext(
                     invitation: invitation,
                     publicBaseURL: publicBaseURL,
+                    mailSubject:
+                        try await scope.variable.get(
+                            "account.invitation.email.subject"
+                        )?
+                        .whitespaceTrimmed.emptyToNil
+                            ?? "Application - Invitation",
                     mailFromAddress: mailFromAddress,
                     mailFromName: mailFromName
                 )
@@ -124,7 +131,7 @@ extension Invitation.Add {
                         name: model.mailFromName
                     ),
                     to: [.init(model.invitation.email)],
-                    subject: "Application - Invitation",
+                    subject: model.mailSubject,
                     body: .plainText(
                         #"""
                         Hello,

@@ -48,7 +48,7 @@ public enum SendMailJobHandler {
         }
         try await mailClient.send(
             .init(
-                from: .init(parameters.from),
+                from: .init(parameters.from, name: parameters.fromName),
                 to: parameters.to.map { .init($0) },
                 cc: headers["cc", default: []].map { .init($0) },
                 bcc: headers["bcc", default: []].map { .init($0) },

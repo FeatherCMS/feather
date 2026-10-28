@@ -1,8 +1,10 @@
 import AuthModule
 import FeatherWebApp
+import FeatherModuleKit
 import FeatherWebShared
 import Foundation
 import Hummingbird
+import SystemModule
 
 extension MagicLink.App.Controller {
     struct Default: Interface {
@@ -122,10 +124,15 @@ extension MagicLink.App.Controller {
                     httpOnly: true,
                     sameSite: .lax
                 )
+                let redirectPath = result.permissions.contains(
+                    Admin.Permissions.access.rawValue
+                )
+                    ? routes.admin.path
+                    : routes.home.path
                 return Response(
                     status: .seeOther,
                     headers: [
-                        .location: routes.home.path,
+                        .location: redirectPath,
                         .setCookie: cookie.description,
                     ]
                 )

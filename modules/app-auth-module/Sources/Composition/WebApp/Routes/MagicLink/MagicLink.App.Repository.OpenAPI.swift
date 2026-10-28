@@ -51,7 +51,10 @@ extension MagicLink.App.Repository {
                 switch response {
                 case .ok(let ok):
                     let result = try ok.body.json
-                    return .init(token: result.token)
+                    return .init(
+                        token: result.token,
+                        permissions: result.permissions
+                    )
                 case .unauthorized:
                     throw OpenAPIRepositoryError.unauthorized
                 case .undocumented(let statusCode, let response):
