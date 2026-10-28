@@ -70,6 +70,19 @@ extension Invitation.Accept.Controller {
                         )
                 }
             }
+            catch let error as OpenAPIRepositoryError {
+                return render(
+                    request: request,
+                    token: token,
+                    email: nil,
+                    password: "",
+                    confirmation: "",
+                    error: Invitation.Accept.Error(
+                        repositoryError: error
+                    ).message,
+                    success: nil
+                )
+            }
             catch {
                 return render(
                     request: request,
@@ -77,8 +90,7 @@ extension Invitation.Accept.Controller {
                     email: nil,
                     password: "",
                     confirmation: "",
-                    error: (error as? OpenAPIRepositoryError)?.errorDescription
-                        ?? String(describing: error),
+                    error: Invitation.Accept.Error.requestFailed.message,
                     success: nil
                 )
             }
@@ -158,6 +170,19 @@ extension Invitation.Accept.Controller {
                         )
                 }
             }
+            catch let error as OpenAPIRepositoryError {
+                return render(
+                    request: request,
+                    token: payload.token,
+                    email: nil,
+                    password: payload.password,
+                    confirmation: payload.confirmation,
+                    error: Invitation.Accept.Error(
+                        repositoryError: error
+                    ).message,
+                    success: nil
+                )
+            }
             catch {
                 return render(
                     request: request,
@@ -165,8 +190,7 @@ extension Invitation.Accept.Controller {
                     email: nil,
                     password: payload.password,
                     confirmation: payload.confirmation,
-                    error: (error as? OpenAPIRepositoryError)?.errorDescription
-                        ?? String(describing: error),
+                    error: Invitation.Accept.Error.requestFailed.message,
                     success: nil
                 )
             }
