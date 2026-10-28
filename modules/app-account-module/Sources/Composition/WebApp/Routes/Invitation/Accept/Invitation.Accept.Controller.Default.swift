@@ -138,15 +138,12 @@ extension Invitation.Accept.Controller {
                 switch response {
                 case AccountAppAPI.Operations.AccountInvitationExchange.Output
                     .ok(_):
-                    return render(
-                        request: request,
-                        token: payload.token,
-                        email: nil,
-                        password: "",
-                        confirmation: "",
-                        error: nil,
-                        success:
-                            "Your account was created successfully. You can now sign in."
+                    return Response(
+                        status: .seeOther,
+                        headers: [
+                            .location:
+                                "\(routes.login.path)?redirect=%2Fadmin%2F"
+                        ]
                     )
                 case AccountAppAPI.Operations.AccountInvitationExchange.Output
                     .undocumented(let statusCode, let response):

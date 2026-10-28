@@ -20,7 +20,9 @@ extension Invitation.Accept.View {
         func selectors() -> [any Selector] {
             [
                 Custom("body") {
-                    BackgroundColor(.color("#f3f4f6"))
+                    Margin(0.px)
+                    Color(.color("#1f2937"))
+                    BackgroundColor(.color("#f4f1fb"))
                 },
                 Custom("main") {
                     Display(.flex)
@@ -29,71 +31,119 @@ extension Invitation.Accept.View {
                     BoxSizing(.borderBox)
                     MinHeight(100.vh)
                     Padding(vertical: 32.px, horizontal: 20.px)
-                    BackgroundColor(.color("#f3f4f6"))
+                    BackgroundColor(.color("#f4f1fb"))
                 },
-                Custom("main > div") {
+                Custom(".invitation-card") {
                     Width(100.percent)
-                    MaxWidth(440.px)
+                    MaxWidth(460.px)
                     BoxSizing(.borderBox)
-                    Padding(32.px)
-                    Border(.values(.length(1.px), .solid, .color("#d1d5db")))
-                    BorderRadius(20.px)
+                    Padding(36.px)
+                    Border(.values(.length(1.px), .solid, .color("#e5def0")))
+                    BorderRadius(24.px)
                     BackgroundColor(.color("#ffffff"))
                     BoxShadow(
                         0.px,
-                        12.px,
-                        blur: 26.px,
-                        spread: 2.px,
-                        color: CSSColor(stringLiteral: "#00000020")
+                        18.px,
+                        blur: 44.px,
+                        spread: 0.px,
+                        color: CSSColor(stringLiteral: "#30204a18")
                     )
                 },
-                Custom("main > div h1") {
-                    Margin(bottom: 8.px)
+                Custom(".invitation-brand") {
+                    Margin(0.px)
+                    Color(.color("#6536ab"))
+                    FontSize(0.75.rem)
+                    FontWeight(.number(700))
                 },
-                Custom("main > div form") {
+                Custom(".invitation-card h1") {
+                    Margin(top: 12.px, bottom: 8.px)
+                    Color(.color("#181321"))
+                    FontSize(1.8.rem)
+                    FontWeight(.number(700))
+                },
+                Custom(".invitation-description") {
+                    Margin(0.px)
+                    Color(.color("#5f596a"))
+                    LineHeight(1.5)
+                },
+                Custom(".invitation-card form") {
                     Display(.flex)
                     FlexDirection(.column)
-                    Gap(.length(16.px), .length(16.px))
-                    MarginTop(24.px)
+                    Gap(.length(18.px), .length(18.px))
+                    MarginTop(28.px)
                 },
-                Custom("main > div label") {
+                Custom(".invitation-card label") {
                     Display(.flex)
                     FlexDirection(.column)
-                    Gap(.length(8.px), .length(8.px))
+                    Gap(.length(9.px), .length(9.px))
+                    Color(.color("#343041"))
+                    FontWeight(.number(600))
                 },
                 Custom(
-                    "main > div input:not([type='hidden']), main > div button, main > div a"
+                    ".invitation-card input:not([type='hidden'])"
                 ) {
                     BoxSizing(.borderBox)
                     Width(100.percent)
-                    Padding(vertical: 12.px, horizontal: 14.px)
-                    Border(.values(.length(1.px), .solid, .color("#9ca3af")))
-                    BorderRadius(8.px)
+                    Padding(vertical: 13.px, horizontal: 14.px)
+                    Border(.values(.length(1.px), .solid, .color("#d8d1e2")))
+                    BorderRadius(10.px)
+                    BackgroundColor(.color("#fcfbfe"))
                     FontSize(1.rem)
                 },
-                Custom("main > div button, main > div a") {
+                Custom(".invitation-card button, .invitation-card a") {
                     Border(0)
-                    BackgroundColor(.color("#005cff"))
+                    BorderRadius(999.px)
+                    Padding(vertical: 13.px, horizontal: 18.px)
+                    BackgroundColor(.color("#6536ab"))
                     Color(.white)
+                    FontSize(1.rem)
+                    FontWeight(.number(700))
                     TextAlign(.center)
                     TextDecoration(.none)
                     Cursor(.pointer)
                 },
-                Custom("main > div > div") {
+                Custom(".invitation-card button") {
+                    Width(100.percent)
+                },
+                Custom(
+                    ".invitation-card button:hover, .invitation-card a:hover"
+                ) {
+                    BackgroundColor(.color("#4b2780"))
+                },
+                Custom(".invitation-actions") {
                     Display(.flex)
-                    AlignItems(.stretch)
-                    MarginTop(24.px)
+                    MarginTop(4.px)
                 },
                 Custom(".invitation-success") {
-                    Margin(top: 24.px)
+                    Margin(top: 28.px)
                     Padding(vertical: 12.px, horizontal: 14.px)
                     BorderRadius(8.px)
                     Border(.values(.length(1.px), .solid, .color("#86efac")))
                     BackgroundColor(.color("#f0fdf4"))
                     Color(.color("#166534"))
                 },
+                Custom(".invitation-error") {
+                    Margin(0.px)
+                    Padding(vertical: 12.px, horizontal: 14.px)
+                    BorderRadius(8.px)
+                    Border(.values(.length(1.px), .solid, .color("#fecaca")))
+                    BackgroundColor(.color("#fef2f2"))
+                    Color(.color("#991b1b"))
+                    LineHeight(1.4)
+                },
                 Custom(".invitation-email") {
-                    Color(.color("#4b5563"))
+                    Margin(top: 22.px)
+                    Padding(vertical: 12.px, horizontal: 14.px)
+                    BorderRadius(10.px)
+                    BackgroundColor(.color("#f7f4fb"))
+                    Color(.color("#4b4454"))
+                    LineHeight(1.4)
+                },
+                Custom(".invitation-hint") {
+                    Margin(top: 0.px)
+                    Color(.color("#716a7d"))
+                    FontSize(0.875.rem)
+                    LineHeight(1.45)
                 },
             ]
         }
@@ -101,6 +151,8 @@ extension Invitation.Accept.View {
         func html(context: inout BuilderContext) -> Main {
             Main {
                 Div {
+                    P("FEATHER · ACCOUNT INVITATION")
+                        .class("invitation-brand")
                     H1(
                         success == nil
                             ? "Create your account" : "Account created"
@@ -109,7 +161,7 @@ extension Invitation.Accept.View {
                         success == nil
                             ? "Complete your registration using the invitation."
                             : "Your invitation is complete. Sign in to continue to the admin."
-                    )
+                    ).class("invitation-description")
 
                     if let success {
                         P(success).class("invitation-success")
@@ -126,7 +178,7 @@ extension Invitation.Accept.View {
                                     .class("invitation-email")
                             }
                             if let error {
-                                P(error).class("admin-form__error")
+                                P(error).class("invitation-error")
                             }
                             Label {
                                 "Password"
@@ -138,14 +190,19 @@ extension Invitation.Accept.View {
                                 Input().type(.password).name("confirmation")
                                     .value(confirmation).required()
                             }
+                            P(
+                                "Use at least 8 characters. You can use this password to sign in after registration."
+                            )
+                                .class("invitation-hint")
                             Div {
                                 Button("Create account").type(.submit)
-                            }
+                            }.class("invitation-actions")
                         }
                         .action(action)
                         .method(.post)
                     }
                 }
+                .class("invitation-card")
                 .role("main")
             }
         }

@@ -7,12 +7,15 @@ extension Invitation.Accept {
     struct Router {
         struct Routes: Sendable {
             let accept: WebRoute
+            let login: WebRoute
 
             init() {
-                accept = WebRoute.root
+                let root = WebRoute.root
+                accept = root
                     .appending(pathComponent: "account")
                     .appending(pathComponent: "invitation")
                     .appending(pathComponent: "accept")
+                login = root.appending(pathComponent: "login")
             }
         }
 

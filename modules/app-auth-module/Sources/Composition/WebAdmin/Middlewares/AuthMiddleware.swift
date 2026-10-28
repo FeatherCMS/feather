@@ -1,3 +1,4 @@
+import Foundation
 public import FeatherModuleKit
 public import FeatherWebShared
 public import Hummingbird
@@ -27,9 +28,19 @@ public struct AuthMiddleware: RouterMiddleware {
             Response
     ) async throws -> Response {
         guard let account = context.account else {
+            var components = URLComponents()
+            components.path = loginPath
+            components.queryItems = [
+                URLQueryItem(
+                    name: "redirect",
+                    value: request.uri.description
+                )
+            ]
             return Response(
                 status: .seeOther,
-                headers: [.location: loginPath]
+                headers: [
+                    .location: components.string ?? loginPath
+                ]
             )
         }
         guard account.canAccess(requiredPermission.rawValue) else {
